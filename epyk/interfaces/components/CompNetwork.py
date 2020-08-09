@@ -55,6 +55,10 @@ class Network(object):
 
       - :class:`epyk.core.html.HtmlMessaging.Chat`
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/chat.py
+
     Attributes:
     ----------
     :param htmlCode:
@@ -77,6 +81,10 @@ class Network(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlMessaging.Bot`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/bot.py
 
     Attributes:
     ----------
@@ -115,6 +123,10 @@ class Network(object):
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/alerts/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
 
     Attributes:
     ----------
@@ -275,6 +287,10 @@ class Network(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlMessaging.News`
+
+    Temapltes:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/news.py
 
     Attributes:
     ----------

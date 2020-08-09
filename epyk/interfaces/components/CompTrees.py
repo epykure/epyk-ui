@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Trees(object):
@@ -21,6 +24,10 @@ class Trees(object):
 
       - :class:`epyk.core.html.HtmlTrees.Tree`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
+
     Attributes:
     ----------
     :param data:
@@ -29,6 +36,8 @@ class Trees(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
@@ -51,6 +60,8 @@ class Trees(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.TreeInput(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
@@ -74,6 +85,8 @@ class Trees(object):
 
     #TODO Ask if this module is still maintained
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
@@ -105,6 +118,8 @@ class Trees(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dftl_options = {"width": 70}
     dftl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper,

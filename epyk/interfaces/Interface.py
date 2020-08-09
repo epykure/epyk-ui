@@ -89,8 +89,13 @@ class Components(object):
     Description:
     ------------
     Change the CSS Style of the main container in the page
+
+    Attributes:
+    ----------
+    :param cssAttrs: Dictionary. The CSS attributes to be applied
     """
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
+    return self
 
   @property
   def codes(self):
@@ -471,6 +476,7 @@ class Components(object):
     Shortcut property to the various delimiters styles
 
     Related Pages:
+
       https://codepen.io/ibrahimjabbari/pen/ozinB
     """
     return CompLayouts.Delimiter(self)
@@ -481,7 +487,10 @@ class Components(object):
     ------------
     Add a content table to the page
 
-    Related Pages:
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contents_table.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
     Attributes:
     ----------
@@ -491,6 +500,7 @@ class Components(object):
     :param left:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
     html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, options, profile)
@@ -534,8 +544,6 @@ class Components(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextEditor.Tags
     """
     return html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile)
 
@@ -565,11 +573,16 @@ class Components(object):
     Add Breadcrum information to the page
 
     Usage::
+
         page.ui.breadcrumb([
           {"text": 'part 1', 'url': 'part1'},
           {"text": 'part 2', 'url': 'part2'},
           {"text": 'part 3', 'url': 'part3'},
         ])
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/breadcrumb.py
 
     Attributes:
     ----------
@@ -658,6 +671,10 @@ class Components(object):
     """
     Description:
     ------------
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
 
     Attributes:
     ----------

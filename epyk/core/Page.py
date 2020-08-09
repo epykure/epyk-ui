@@ -122,6 +122,8 @@ class Report(object):
     Description:
     ------------
     Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
+
+    :rtype: Imports.ImportManager
     """
     if self.__import_manage is None:
       self.__import_manage = Imports.ImportManager(online, report=self)
@@ -277,6 +279,10 @@ class Report(object):
       rptObj.register([obj1, obj2])
       rptObj.ui.div('this is a div')
       rptObj.register(obj3)
+
+    Attributes:
+    ----------
+    :param ext_components:
     """
     if type(ext_components) != list:
       ext_components = [ext_components]

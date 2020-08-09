@@ -311,6 +311,10 @@ class Panels(object):
     Description:
     ------------
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
+
     Attributes:
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit

@@ -1,6 +1,9 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Titles(object):
@@ -13,16 +16,23 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param text:
     :param options:
     :param tooltip:
+    :param align:
     :param width:
     :param height:
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -42,6 +52,11 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param text:
@@ -52,6 +67,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -68,6 +85,11 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
+
     Attributes:
     ----------
     :param text:
@@ -78,6 +100,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -103,6 +127,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -117,6 +143,10 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param text:
@@ -127,6 +157,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -140,6 +172,10 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param text:
@@ -150,6 +186,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -163,6 +201,10 @@ class Titles(object):
     Description:
     ------------
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param text:
@@ -173,6 +215,8 @@ class Titles(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -204,6 +248,8 @@ class Titles(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     title = self.context.rptObj.ui.title(text=text, name=name, contents=contents, color=color, picture=picture, icon=icon,
             marginTop=marginTop, htmlCode=htmlCode, width=width, height=height, align=align, options=options, profile=profile)
     title.style.css.font_size = Defaults_css.font(3)

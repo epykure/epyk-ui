@@ -13,6 +13,7 @@ except:
 
 from epyk.core import html
 from epyk.core.css import Defaults
+from epyk.interfaces import Arguments
 
 
 class Lists(object):
@@ -81,6 +82,8 @@ class Lists(object):
     :param multiple: Boolean. To set if the component can handle multiple selections
     :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     records = records or []
     options = {} if options is None else options
 
@@ -143,6 +146,8 @@ class Lists(object):
     :param multiple: Boolean. To set if the component can handle multiple selections
     :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     options = {} if options is None else options
     html_select = html.HtmlSelect.Lookup(self.context.rptObj, lookupData, htmlCode, width, height, filter, profile, multiple, options)
     return html_select
@@ -186,7 +191,24 @@ class Lists(object):
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list_dragdrop.py
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
     return html_list
@@ -195,14 +217,31 @@ class Lists(object):
     """
     Description:
     ------------
-    Default list with text items
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list_custom.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list_filter.py
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param column:
+    :param options:
+    :param htmlCode:
+    :param profile:
+    :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     if column is not None:
       values = set()
       for rec in records:
         values.add(rec[column])
       records = sorted(list(values))
-
     html_item = html.HtmlList.Items(self.context.rptObj, 'text', records or [], width, height, options, htmlCode, profile, helper)
     html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
@@ -213,7 +252,24 @@ class Lists(object):
     Description:
     ------------
     Special list configuration for a list of box with a title with a text and a list of icons
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list_box.py
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param column:
+    :param options:
+    :param htmlCode:
+    :param profile:
+    :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     if column is not None:
       values = set()
       for rec in records:
@@ -242,6 +298,8 @@ class Lists(object):
       https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'decimal'})
     return html_list
@@ -256,14 +314,16 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
@@ -278,15 +338,16 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
-    :return:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
@@ -307,14 +368,17 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param align:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'circle'})
     if align == "center":
@@ -335,17 +399,23 @@ class Lists(object):
 
       https://www.w3schools.com/cssref/pr_list-style-type.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
+
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'disc'})
     return html_list
@@ -370,14 +440,16 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'square'})
     return html_list
@@ -412,6 +484,8 @@ class Lists(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     data = data or []
     categories = categories or [""]
     if len(data) > 0:
@@ -439,11 +513,16 @@ class Lists(object):
 
     ----------
     :param data:
+    :param color:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options, profile)
     return html_tree
 
@@ -462,14 +541,24 @@ class Lists(object):
       https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
       https://codepen.io/svnt/pen/beEgre
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/dropdown.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
+
     Attributes:
     ----------
     :param recordSet:
+    :param text:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dftl_options = {"width": 90}
     dftl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper, dftl_options, profile)
@@ -490,7 +579,9 @@ class Lists(object):
 
       - :class:`epyk.core.html.HtmlList.Checks`
 
-    Related Pages:
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
     ----------
@@ -500,8 +591,11 @@ class Lists(object):
     :param column:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if column is not None:
       values = set()
       for rec in data:
@@ -534,14 +628,23 @@ class Lists(object):
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       https://v4-alpha.getbootstrap.com/components/list-group/
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param data:
     :param width:
     :param height:
+    :param column:
+    :param htmlCode:
+    :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if column is not None:
       values = set()
       for rec in data:
@@ -579,9 +682,14 @@ class Lists(object):
     :param data:
     :param width:
     :param height:
+    :param column:
+    :param htmlCode:
+    :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if column is not None:
       values = set()
       for rec in data:
@@ -612,11 +720,14 @@ class Lists(object):
     :param group_name:
     :param width:
     :param height:
+    :param column:
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if column is not None:
       values = set()
       for rec in data:
@@ -629,6 +740,20 @@ class Lists(object):
     return html_list
 
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param recordSet:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     return html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options or {}, profile)
 
   def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -649,6 +774,11 @@ class Lists(object):
 
       https://www.w3schools.com/howto/howto_css_contact_chips.asp
 
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/chips.py
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+
     Attributes:
     ----------
     :param items: List. Selected items
@@ -658,8 +788,11 @@ class Lists(object):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px', 'margin': '2px',
                                  "width": 'auto', 'display': 'inline', 'background': 'white'},
                     'category': category, 'visible': True,

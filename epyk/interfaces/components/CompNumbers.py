@@ -37,6 +37,10 @@ class Numbers(object):
 
       https://www.w3schools.com/tags/tag_span.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/numbers.py
+
     Attributes:
     ----------
     :param text: Optional. The string value to be displayed in the component

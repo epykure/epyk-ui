@@ -430,10 +430,15 @@ class Navigation(object):
     self.context.rptObj.body.style.css.padding_bottom = height[0]
     return footer
 
-  def side(self, components=None, anchor=None, size=262, position='right', profile=False):
+  def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
     """
     Description:
     ------------
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/news.py
 
     Attributes:
     ----------
@@ -441,6 +446,7 @@ class Navigation(object):
     :param anchor:
     :param size:
     :param position:
+    :param options:
     :param profile:
     """
     d = self.context.rptObj.ui.div(components)
@@ -481,6 +487,10 @@ class Navigation(object):
     """
     Description:
     ------------
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
 
     Attributes:
     ----------
@@ -541,6 +551,10 @@ class Banners(object):
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+
     Attributes:
     ----------
     :param data:
@@ -569,6 +583,10 @@ class Banners(object):
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+
     Attributes:
     ----------
     :param data:
@@ -596,6 +614,10 @@ class Banners(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
 
     Attributes:
     ----------

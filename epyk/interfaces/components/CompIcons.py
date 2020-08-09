@@ -29,6 +29,11 @@ class Icons(object):
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -90,6 +95,10 @@ class Icons(object):
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -117,6 +126,10 @@ class Icons(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
+
+    templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
 
     Attributes:
     ----------
@@ -874,6 +887,10 @@ class Icons(object):
 
       - :class:`epyk.core.html.HtmlImage.Image`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
     :param align:
@@ -904,9 +921,15 @@ class Icons(object):
 
       - :class:`epyk.core.html.HtmlEvent.SignIn
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
+
     Attributes:
     ----------
+    :param text:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param icon:
     """
     width = Arguments.size(width, unit="px")
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)
@@ -921,6 +944,10 @@ class Icons(object):
     Usage::
 
       Related Pages:
+
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/chips.py
 
     Attributes:
     ----------

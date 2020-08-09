@@ -360,6 +360,12 @@ class Inputs(object):
 
       - :class:`epyk.core.html.HtmlInput.Input`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
+
     Attributes:
     ----------
     :param text:
@@ -370,9 +376,6 @@ class Inputs(object):
     :param options:
     :param attrs:
     :param profile:
-
-    :rtype: html.HtmlInput.Input
-    :return:
     """
     return self.d_text(text, placeholder, width, height, htmlCode, options, attrs, profile)
 
@@ -419,6 +422,10 @@ class Inputs(object):
 
       - :class:`epyk.core.html.HtmlInput.Checkbox`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
     Attributes:
     ----------
     :param flag:
@@ -452,6 +459,10 @@ class Inputs(object):
 
       https://www.w3schools.com/tags/att_input_type_radio.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/radio.py
+
     Attributes:
     ----------
     :param flag:
@@ -460,6 +471,8 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
@@ -540,6 +553,10 @@ class Inputs(object):
 
       https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list_filter.py
+
     Attributes:
     ----------
     :param text:
@@ -569,6 +586,10 @@ class Inputs(object):
       - :class:`epyk.core.html.HtmlInput.Input`
       - :class:`epyk.core.html.HtmlText.Label`
       - :class:`epyk.core.html.HtmlContainer.Div`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
     Attributes:
     ----------

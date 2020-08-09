@@ -57,6 +57,11 @@ class Layouts(object):
 
       https://www.w3schools.com/tags/tag_br.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+
     Attributes:
     ----------
     :param count: Optional, The number of empty line to put. Default 1
@@ -302,6 +307,10 @@ class Layouts(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
+
     Attributes:
     ----------
     :param htmlObjs:
@@ -427,6 +436,11 @@ class Layouts(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.IconsMenu`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
     ----------

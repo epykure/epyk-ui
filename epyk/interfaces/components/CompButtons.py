@@ -66,6 +66,13 @@ class Buttons(object):
       https://www.w3schools.com/tags/tag_button.asp
       http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button
@@ -91,10 +98,15 @@ class Buttons(object):
     Description:
     ------------
     Display a button on the page regardless the current layoyt of components
+    By default the button will be center on the page.
 
     Usage::
 
       rptObj.ui.buttons.absolute("Test")
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
     ----------
@@ -137,6 +149,10 @@ class Buttons(object):
 
       rptObj.ui.buttons.small("Small button")
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button
@@ -175,6 +191,10 @@ class Buttons(object):
       https://www.w3schools.com/tags/tag_button.asp
       http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
     Attributes:
     ----------
     :param text: Optional. The value to be displayed to the button
@@ -212,6 +232,10 @@ class Buttons(object):
       https://www.w3schools.com/tags/tag_button.asp
         http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
     Attributes:
     ----------
     :param text: Optional. The value to be displayed to the button
@@ -246,6 +270,10 @@ class Buttons(object):
 
       https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
     ----------
@@ -282,6 +310,10 @@ class Buttons(object):
       https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
     Attributes:
     ----------
     :param text: Optional. The value to be displayed to the button
@@ -316,6 +348,10 @@ class Buttons(object):
 
       https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
     ----------
@@ -352,6 +388,11 @@ class Buttons(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
 
     Attributes:
     ----------
@@ -404,6 +445,11 @@ class Buttons(object):
 http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     https://codepen.io/mburnette/pen/LxNxNg
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
+
     Attributes:
     ----------
     :param recordSet: Dictionary.
@@ -438,6 +484,10 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
     ----------
@@ -492,8 +542,12 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
       - :class:`epyk.core.html.HtmlButton.CheckButton`
 
-    Related Pages:
-Attributes:
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
+    Attributes:
     ----------
     :param flag: Optional. The value of the checkbox. Default False
     :param tooltip: Optional. A string with the value of the tooltip
@@ -528,6 +582,11 @@ Attributes:
 
       https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
+
     Attributes:
     ----------
     :param record:
@@ -556,6 +615,10 @@ Attributes:
     Related Pages:
 
       https://play.google.com/intl/en_us/badges/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
     ----------

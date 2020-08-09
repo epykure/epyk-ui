@@ -31,6 +31,14 @@ class Texts(object):
 
       https://www.w3schools.com/tags/tag_font.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
+
     Attributes:
     ----------
     :param text: The string value to be displayed in the component
@@ -43,8 +51,6 @@ class Texts(object):
     :param options: Optional. The component options
     :param helper:
     :param profile: Optional. A flag to set the component performance storage
-
-    :return: The text HTML object
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -244,6 +250,11 @@ class Texts(object):
 
       https://getbootstrap.com/docs/4.3/components/alerts/
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
+
     Attributes:
     ----------
     :param text: Optional. The string value to be displayed in the component
@@ -356,6 +367,10 @@ class Texts(object):
     Related Pages:
 
       https://www.w3schools.com/html/html_styles.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
     Attributes:
     ----------

@@ -34,6 +34,10 @@ class Images(object):
       https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
       https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
     :param image: String. The image file name
@@ -43,6 +47,7 @@ class Images(object):
     :param align:
     :param htmlCode:
     :param profile:
+    :param tooltip:
     :param options:
     """
     width = Arguments.size(width, unit="%")
@@ -187,6 +192,10 @@ class Images(object):
       https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
     :param image: String. The image file name
@@ -226,10 +235,16 @@ class Images(object):
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlImage.Image`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
+    :param text:
     :param image:
     :param path:
+    :param status:
     :param width:
     :param height:
     :param align:
@@ -384,6 +399,10 @@ class Images(object):
 
       https://www.cssscript.com/basic-pure-css-slideshow-carousel/
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
     :param images: List. With the different picture file names
@@ -400,7 +419,7 @@ class Images(object):
     html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
     return html_i
 
-  def emoji(self, symbole=None, top=(20, 'px'), profile=None):
+  def emoji(self, symbole=None, top=(20, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -417,10 +436,15 @@ class Images(object):
 
       https://github.com/wedgies/jquery-emoji-picker
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
     Attributes:
     ----------
     :param symbole:
     :param top:
+    :param options:
     :param profile:
     """
     top = Arguments.size(top, "px")
@@ -484,6 +508,11 @@ class Images(object):
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/badge/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
     Attributes:
     ----------

@@ -21,6 +21,10 @@ class Calendar(object):
     Usage::
 
 
+    Related Pages:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
+
     Attributes:
     ----------
     :param month:
@@ -102,6 +106,9 @@ class Calendar(object):
 
     Usage::
 
+    Related Pages:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
     ----------
@@ -142,6 +149,10 @@ class Calendar(object):
     Usage::
 
 
+    Related Pages:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
+
     Attributes:
     ----------
     :param records:
@@ -179,6 +190,10 @@ class Calendar(object):
 
     Usage::
 
+
+    Related Pages:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
     ----------

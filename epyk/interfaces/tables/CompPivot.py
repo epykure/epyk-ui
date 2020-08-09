@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import tables as html_tables
+from epyk.interfaces import Arguments
 
 
 class Pivottable(object):
@@ -22,6 +25,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotTable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     return table
@@ -41,6 +46,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotUITable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     return table
@@ -60,6 +67,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotUITable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     table.sub_total()
@@ -80,6 +89,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotTable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     table.renderers.heatmap()
@@ -102,6 +113,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotUITable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     table.renderers.c3.bar()
@@ -122,6 +135,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotUITable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                   helper, options, profile)
     table.renderers.treemap()
@@ -142,6 +157,8 @@ class Pivottable(object):
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     table = html_tables.HtmlTablePivot.PivotUITable(self.parent.context.rptObj, recordSet, rows, cols, width, height, htmlCode,
                                                     helper, options, profile)
     table.renderers.plotly.bar()

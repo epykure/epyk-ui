@@ -27,6 +27,10 @@ class Links(object):
 
       https://www.w3schools.com/TagS/att_a_href.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+
     Attributes:
     ----------
     :param text: The string value to be displayed in the component
@@ -54,6 +58,10 @@ class Links(object):
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+
     Attributes:
     ----------
     :param text:
@@ -64,7 +72,6 @@ class Links(object):
     :param decoration:
     :param options:
     :param profile:
-    :return:
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -124,6 +131,10 @@ class Links(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlLinks.DataLink`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
     Attributes:
     ----------

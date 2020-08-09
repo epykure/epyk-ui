@@ -186,6 +186,10 @@ class Rich(object):
 
       - :class:`epyk.core.html.HtmlDates.LastUpdated`
 
+    Related Pages:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
+
     Attributes:
     ----------
     :param label: The label to be displayed close to the date. Default Last Update
@@ -208,6 +212,10 @@ class Rich(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTextEditor.Console`
+
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
     ----------
@@ -344,6 +352,10 @@ class Rich(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTextEditor.Editor`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
 
     Attributes:
     ----------

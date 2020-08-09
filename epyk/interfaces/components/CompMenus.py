@@ -346,11 +346,15 @@ class Menus(object):
   def selections(self, data, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                   helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Menu`
 
+    Attributes:
+    ----------
     :param data:
     :param width:
     :param height:
@@ -359,7 +363,6 @@ class Menus(object):
     :param helper:
     :param options:
     :param profile:
-    :return:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -379,8 +382,11 @@ class Menus(object):
       menu = rptObj.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
       rptObj.ui.title("Test").attach_menu(menu)
 
-    Related Pages:
-Attributes:
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+
+    Attributes:
     ----------
     :param records: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit

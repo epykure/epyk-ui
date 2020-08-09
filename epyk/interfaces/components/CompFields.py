@@ -40,6 +40,11 @@ class Fields(object):
 
       https://jqueryui.com/datepicker/
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value: Optional. The value to be displayed to the time component. Default now
@@ -79,6 +84,11 @@ class Fields(object):
     Related Pages:
 
       https://jqueryui.com/datepicker/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
     ----------
@@ -120,6 +130,10 @@ class Fields(object):
 
       https://jqueryui.com/datepicker/
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param label: Optional. The text of label to be added to the component
@@ -160,6 +174,10 @@ class Fields(object):
 
       https://github.com/jonthornton/jquery-timepicker
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param label: Optional. The text of label to be added to the component
@@ -194,6 +212,10 @@ class Fields(object):
 
       https://github.com/jonthornton/jquery-timepicker
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value: Optional. The value to be displayed to the time component. Default now
@@ -221,6 +243,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -230,6 +256,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -250,6 +278,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldAutocomplete`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -259,6 +291,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -280,6 +314,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -289,6 +327,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -313,6 +353,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -322,6 +366,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -345,6 +391,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldInteger`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -354,6 +404,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -375,6 +427,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldFile`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -384,6 +440,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -405,6 +463,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldPassword`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -414,6 +476,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -436,6 +500,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldTextArea`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -445,6 +513,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -471,6 +541,10 @@ class Fields(object):
 
       https://www.w3schools.com/tags/att_input_type_checkbox.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -479,6 +553,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -507,6 +583,10 @@ class Fields(object):
 
       https://www.w3schools.com/tags/att_input_type_radio.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -516,6 +596,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -549,6 +631,10 @@ class Fields(object):
 
       https://www.w3schools.com/tags/att_input_type_range.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -561,6 +647,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -583,6 +671,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -591,6 +683,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -615,6 +709,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -623,6 +721,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     import calendar
@@ -655,6 +755,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -663,6 +767,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -698,6 +804,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -706,6 +816,8 @@ class Fields(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -736,6 +848,10 @@ class Fields(object):
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
     Attributes:
     ----------
     :param value:
@@ -744,6 +860,8 @@ class Fields(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper:
+    :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
     import calendar

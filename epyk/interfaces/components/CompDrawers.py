@@ -18,6 +18,9 @@ class Drawers(object):
 
     Usage::
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/drawers.py
 
     Attributes:
     ----------
@@ -90,6 +93,9 @@ class Drawers(object):
 
     Usage::
 
+    Temapltes:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/multi_drawers.py
 
     Attributes:
     ----------

@@ -11,8 +11,8 @@ def size(value, unit="%"):
 
   Attributes:
   ----------
-  :param value:
-  :param unit:
+  :param value: Integer. The value for this argument
+  :param unit: String. Optional. The unit for the argument. Default %
   """
   if isinstance(value, tuple):
     return value

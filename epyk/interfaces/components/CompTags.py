@@ -25,6 +25,10 @@ class Tags(object):
 
       https://www.w3schools.com/tags/tag_a.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
+
     Attributes:
     ----------
     :param text: String with the content to be added to the component
