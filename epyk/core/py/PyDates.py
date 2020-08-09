@@ -373,7 +373,8 @@ class PyDates(object):
     date = date + datetime.timedelta(minutes=-1 * (int(offset) + reference))
     return date.strftime('%Y-%m-%d %H:%M:%S')
 
-  def elapsed(self, delta_time, with_time=False):
+  @staticmethod
+  def elapsed(delta_time, with_time=False):
     """
     Description:
     ------------
