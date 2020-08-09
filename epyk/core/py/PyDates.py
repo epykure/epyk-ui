@@ -16,6 +16,7 @@ import datetime
 
 
 class PyDates(object):
+
   class __internal(object):
     _props, _context = {}, {}
 
@@ -371,3 +372,25 @@ class PyDates(object):
     date = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
     date = date + datetime.timedelta(minutes=-1 * (int(offset) + reference))
     return date.strftime('%Y-%m-%d %H:%M:%S')
+
+  def elapsed(self, delta_time, with_time=False):
+    """
+    Description:
+    ------------
+    Get the time between two dates
+
+    Attributes:
+    ----------
+    :param delta_time: delta_time: The delta time between two python dates
+    :param with_time: Boolean. Optional. A flag to mention if the time should be computed
+    """
+    year = delta_time.days // 365
+    months = (delta_time.days - year * 365) // 12
+    days = delta_time.days - year * 365 - months * 12
+    if not with_time:
+      return {"year": year, 'months': months, 'days': days}
+
+    hours = int(delta_time.seconds / 3600)
+    minutes = int((delta_time.seconds - hours * 3600) / 60)
+    seconds = delta_time.seconds - hours * 3600 - minutes * 60
+    return {"years": year, 'months': months, 'days': days, 'hours': hours, 'minutes': minutes, 'seconds': seconds}

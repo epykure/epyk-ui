@@ -616,7 +616,7 @@ class PyExt(object):
     return text.decode(encoding)
 
   @staticmethod
-  def format_number(value, digits=0, thousand_sep=",", decimal_sep=".", lang='ENG'):
+  def format_number(value, digits=0, thousand_sep=",", decimal_sep="."):
     """
     Description:
     ------------
@@ -645,7 +645,7 @@ class PyExt(object):
     return "%s%s%s" % ("".join(reversed(r)), decimal_sep, d[:digits])
 
   @staticmethod
-  def format_money(text, digits=0, thousand_sep=",", decimal_sep=".", symbol="£", format="%s%v", lang='ENG'):
+  def format_money(text, digits=0, thousand_sep=",", decimal_sep=".", symbol="£", format="%s%v"):
     """
     Description:
     ------------
@@ -659,7 +659,7 @@ class PyExt(object):
     :param symbol:
     :param format:
     """
-    text = PyExt.format_number(text, digits, thousand_sep, decimal_sep, lang)
+    text = PyExt.format_number(text, digits, thousand_sep, decimal_sep)
     if symbol not in ["£"]:
       format = "%v %s"
     conv_format = format.replace("%s", "%(text)s").replace("%v", "%(value)s")

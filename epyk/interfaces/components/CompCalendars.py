@@ -122,7 +122,9 @@ class Calendar(object):
     """
     today = datetime.date.today()
     content = content or {}
-    labels = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    options = options or {}
+    labels = options.get('months', ["January", "February", "March", "April", "May", "June", "July", "August",
+                                    "September", "October", "November", "December"])
     rows, tasks = [], {}
     for i, l in enumerate(labels):
       record = []
@@ -182,7 +184,7 @@ class Calendar(object):
     html_legend = html.HtmlOthers.Legend(self.context.rptObj, data, width, height, align, dfl_options, profile)
     return html_legend
 
-  def forecast(self, month_period, content=None, width=(100, "%"), height=(None, "px"), poaition="top", options=None, profile=None):
+  def forecast(self, month_period, content=None, width=(100, "%"), height=(None, "px"), position="top", options=None, profile=None):
     """
     Description:
     ------------
@@ -201,7 +203,7 @@ class Calendar(object):
     :param content:
     :param width:
     :param height:
-    :param poaition:
+    :param position:
     :param options:
     :param profile:
     """
@@ -219,7 +221,7 @@ class Calendar(object):
         row.append([calendar, self.context.rptObj.ui.calendars.legend(calendar.tasks)])
       else:
         row.append(calendar)
-    return self.context.rptObj.ui.grid([row], position=poaition, profile=profile)
+    return self.context.rptObj.ui.grid([row], position=position, profile=profile)
 
   def google(self, task, start, end, details=None, location=None, icon="fab fa-google-plus", text="Add to Google Calendar", options=None, profile=None):
     """
@@ -240,10 +242,15 @@ class Calendar(object):
 
     Attributes:
     ----------
-    :param text:
     :param task:
     :param start: String. Date format YYYYMMDD
     :param end: String. Date format YYYYMMDD
+    :param details:
+    :param location:
+    :param icon:
+    :param text:
+    :param options:
+    :param profile:
     """
     icon = self.context.rptObj.ui.icons.awesome(icon)
     icon.icon.style.css.font_factor(5)
@@ -275,6 +282,18 @@ class Calendar(object):
     https://codepen.io/vlemoine/pen/MLwygX
 
     TODO: improve the time management in this component
+
+    Attributes:
+    ----------
+    :param task:
+    :param start:
+    :param end:
+    :param details:
+    :param location:
+    :param icon:
+    :param text:
+    :param options:
+    :param profile:
     """
     # Default options
     calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}

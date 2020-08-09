@@ -22,9 +22,12 @@ def requires(pyk_file, autoinstall=None, autoreload=False):
 
     requires('/usr/local/my_pyk_file.py')
 
+  Attributes:
+  ----------
   :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
   :param components: list of objects to import, if None all the objects declared in the pyk file will be available
   :param autoinstall: specify whether we need to check github or pypi
+
   :return: a pyk object
   """
 
