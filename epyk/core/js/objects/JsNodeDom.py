@@ -70,6 +70,8 @@ class JsDomEvents(object):
 
       https://www.w3schools.com/jsref/event_onclick.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -90,6 +92,8 @@ class JsDomEvents(object):
 
       https://www.w3schools.com/jsref/event_onchange.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -107,6 +111,8 @@ class JsDomEvents(object):
 
       https://www.w3schools.com/jsref/event_ondblclick.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -124,6 +130,8 @@ class JsDomEvents(object):
 
       https://www.w3schools.com/jsref/event_onfocusin.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -135,12 +143,16 @@ class JsDomEvents(object):
     """
     Description:
     ------------
+    Description:
+    ------------
     The event occurs when an element is about to get focus
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onfocusin.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -150,12 +162,16 @@ class JsDomEvents(object):
 
   def focusout(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when an element is about to lose focus
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onfocusout.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -165,12 +181,16 @@ class JsDomEvents(object):
 
   def keydown(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user is pressing a key
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeydown.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -180,12 +200,16 @@ class JsDomEvents(object):
 
   def keypress(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user presses a key
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -195,12 +219,16 @@ class JsDomEvents(object):
 
   def keyup(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user releases a key
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeyup.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -210,12 +238,16 @@ class JsDomEvents(object):
 
   def mousedown(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user presses a mouse button over an element
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmousedown.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -225,12 +257,16 @@ class JsDomEvents(object):
 
   def mouseenter(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the pointer is moved onto an element
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseenter.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -240,6 +276,8 @@ class JsDomEvents(object):
 
   def mouseleave(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the pointer is moved out of an element
 
     Example
@@ -249,6 +287,8 @@ class JsDomEvents(object):
 
       https://www.w3schools.com/jsref/event_onmouseleave.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -258,12 +298,16 @@ class JsDomEvents(object):
 
   def mouseover(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the pointer is moved onto an element, or onto one of its children
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseover.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -273,12 +317,16 @@ class JsDomEvents(object):
 
   def mouseup(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when a user releases a mouse button over an element
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseup.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -288,12 +336,16 @@ class JsDomEvents(object):
 
   def mouseout(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when a user releases a mouse button over an element
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseout.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -301,8 +353,10 @@ class JsDomEvents(object):
     self._js.append('addEventListener("mouseout", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
-  def trigger(self, event, withFocus=True):
+  def trigger(self, event, withFocus=True, options=None):
     """
+    Description:
+    ------------
     Trigger a javascript event
 
     Related Pages:
@@ -310,16 +364,35 @@ class JsDomEvents(object):
       https://www.w3schools.com/jsref/met_html_focus.asp
     https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
 
+    Usage::
+
+      page.body.onReady([
+        b.dom.events.trigger("click")
+      ])
+
+    Attributes:
+    ----------
     :param event: The event name
     :param withFocus: Optional, a boolean to define if the focus needs to be set to this component
+    :param options: Dictionary. Possibility to pass timr option in second to set an implicit interval on the event
 
     :return: The Javascript string of this function
     """
     item = "document.getElementById('%(htmlCode)s')" % {'htmlCode': self._src.htmlCode}
     if withFocus:
-      return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
+      if options is not None and 'timer' in options:
+        return JsFncs.JsFunction(
+          "setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {
+            "event": event, "elem": item, 'timer': options['timer'] * 1000})
 
-    return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
+      else:
+        return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
+
+    if options is not None and 'timer' in options:
+      return JsFncs.JsFunction("setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {"event": event, "elem": item, 'timer': options['timer'] * 1000})
+
+    else:
+      return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
 
   def toStr(self):
     if self._src.htmlCode is None:
