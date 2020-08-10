@@ -237,3 +237,7 @@ class CssDivHorizontalRotate(CssStyle.Style):
   _selectors = {'child': '.inner-flip'}
 
   _hover = {'transform': 'rotateY(180deg)'}
+
+
+class CssDivNoFocusOutline(CssStyle.Style):
+  _focus = {'outline': 0}

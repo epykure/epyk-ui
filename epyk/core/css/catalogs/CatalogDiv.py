@@ -133,6 +133,10 @@ class CatalogDiv(Catalog.CatalogGroup):
   def rorate_horizontal(self):
     """"""
     return self._set_class(CssStylesDiv.CssDivHorizontalRotate)
+  
+  def no_focus_outline(self):
+    """"""
+    return self._set_class(CssStylesDiv.CssDivNoFocusOutline)
 
 
 class CatalogDrawer(Catalog.CatalogGroup):
