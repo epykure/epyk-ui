@@ -80,11 +80,24 @@ class Catalog(object):
     return self.__ctx['button']
 
   @property
+  def select(self):
+    """
+    Description:
+    ------------
+    CSS Classes specific to the select compatibility components
+
+    :rtype: CatalogMedia.CatalogSelect
+    """
+    if "select" not in self.__ctx:
+      self.__ctx['select'] = CatalogSelect.CatalogSelect(self.__rptObj, self.__class_list_type)
+    return self.__ctx['select']
+
+  @property
   def screens(self):
     """
     Description:
     ------------
-    CSS Classes specific to the screen compatility components
+    CSS Classes specific to the screen compatibility components
 
     :rtype: CatalogMedia.CatalogMedia
     """

@@ -41,10 +41,15 @@ class CssSelectSearchBoxInput(CssStyle.Style):
 
 
 class CssSelectToggle(CssStyle.Style):
-  classname = "dropdown-toggle"
 
   def customize(self):
     self.css({"background-color": self.rptObj.theme.colors[0], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+
+
+class CssSelectToggleNoBg(CssStyle.Style):
+
+  def customize(self):
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
 
 
 class CssSelectOption(CssStyle.Style):

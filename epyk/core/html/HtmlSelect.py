@@ -65,6 +65,8 @@ class Select(Html.Html):
     if multiple:
       self.attr['multiple'] = None
     self.__options = OptSelect.OptionsSelect(self, options)
+    if options.get('button-bg', True):
+      self.style.add_classes.select.toggle()
 
   @property
   def options(self):
@@ -143,8 +145,7 @@ class Select(Html.Html):
           for(var a in attrs){
             var attrVal = data[idx][attrs[a]];
             if (typeof attrVal !== 'undefined'){opt.setAttribute("data-"+ attrs[a], attrVal) }}
-          selectObj.append(opt); 
-      }
+          selectObj.append(opt)}
       selectObj.selectpicker(options).selectpicker('refresh');''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, emtpyFncs=None, profile=False):

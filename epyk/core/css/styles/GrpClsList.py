@@ -17,7 +17,6 @@ class ClassSelect(GrpCls.ClassHtml):
     self.classList['main'].add(self.cls_item_option)
     self.classList['main'].add(self.cls_item_options)
     self.classList['other'].add(self.cls_item_selected)
-    self.classList['other'].add(self.cls_toggle)
 
   @property
   def cls_item_selected(self):
@@ -28,16 +27,6 @@ class ClassSelect(GrpCls.ClassHtml):
     if self._css_item_selected is None:
       self._css_item_selected = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['other']).selected()
     return self._css_item_selected
-
-  @property
-  def cls_toggle(self):
-    """
-
-    :rtype: Classes.CatalogTree.CatalogDropDown
-    """
-    if self._css_menu_li is None:
-      self._css_menu_li = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['other']).toggle()
-    return self._css_menu_li
 
   @property
   def cls_select(self):
