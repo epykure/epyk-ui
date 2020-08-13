@@ -80,6 +80,24 @@ class HtmlNavBar(Html.Html):
       self._report.body.style.css.padding_top = 0
     return self
 
+  def add_right(self, component):
+    """
+    Description:
+    -----------
+    Add component to the right
+    
+    Attributes:
+    ----------
+    :param component:
+    """
+    if not hasattr( self, '_right'):
+      self._right = self._report.ui.div(width=("auto", ''))
+      self._right.style.css.display = 'inline-block'
+      self._right.style.css.float = 'right'
+      self.add(self._right)
+    self._right.add(component)
+    return self
+
   def add_text(self, text):
     """
     Description:
