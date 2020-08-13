@@ -8,13 +8,14 @@ class ClassSelect(GrpCls.ClassHtml):
   def __init__(self, htmlObj):
     super(ClassSelect, self).__init__(htmlObj)
     self._css_class_dt, self._css_class_dt_ui, self._css_select = None, None, None
-    self._css_select_input, self._css_item_option, self._css_item_selected = None, None, None
+    self._css_select_input, self._css_item_option, self._css_item_options, self._css_item_selected = None, None, None, None
     self._css_menu_li, self._css_select_search, self._css_select_menu_hover = None, None, None
     self.classList['main'].add(self.cls_select)
     self.classList['main'].add(self.cls_select_button)
     self.classList['main'].add(self.cls_select_outline)
     self.classList['other'].add(self.cls_select_input)
     self.classList['main'].add(self.cls_item_option)
+    self.classList['main'].add(self.cls_item_options)
     self.classList['other'].add(self.cls_item_selected)
     self.classList['other'].add(self.cls_toggle)
 
@@ -67,6 +68,16 @@ class ClassSelect(GrpCls.ClassHtml):
     if self._css_class_dt_ui is None:
       self._css_class_dt_ui = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['main']).outline()
     return self._css_class_dt_ui
+
+  @property
+  def cls_item_options(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_item_options is None:
+      self._css_item_options = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['main']).option()
+    return self._css_item_options
 
   @property
   def cls_item_option(self):

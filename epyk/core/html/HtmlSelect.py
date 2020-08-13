@@ -20,13 +20,16 @@ class Option(Html.Html):
   name = 'Select Option'
   builder_name = False
 
-  def __init__(self, report, value, text, icon, selected):
+  def __init__(self, report, value, text, icon, selected, options=None):
     super(Option, self).__init__(report, text)
     self.set_attrs(name="value", value=value)
     if selected:
       self.set_attrs(name="selected", value=selected)
-    if icon is not None:
-      self.set_attrs(name="data-icon", value=icon)
+    if options is not None:
+      if 'data' in options:
+        for k, v in options.get('data', {}).items():
+          if v is not None:
+            self.set_attrs(name="data-%s" % k, value=v)
 
   def __str__(self):
     return "<option %s>%s</option>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
@@ -52,7 +55,13 @@ class Select(Html.Html):
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                  profile=profile)
-    self.selected = None
+    self._vals = records
+    if htmlCode in self._report.inputs:
+      for v in self._vals:
+        if v['value'] == self._report.inputs[htmlCode]:
+          options['selected'] = v['value']
+    if width[1] == 'px':
+      self.attr["data-width"] = "%spx" % width[0]
     if multiple:
       self.attr['multiple'] = None
     self.__options = OptSelect.OptionsSelect(self, options)
@@ -125,11 +134,18 @@ class Select(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      var selectObj = %s; selectObj.empty(); 
+      var selectObj = %s; selectObj.empty();
+      const attrs = ['icon', 'content'];  
       for (var idx in data) {
-          const text = (typeof data[idx].text !== 'undefined')? data[idx].text : data[idx].value;
-          selectObj.append('<option value=' + data[idx].value + '>' + text + '</option>'); }
-      selectObj.selectpicker(options).val().selectpicker('refresh');''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+          var opt = document.createElement("OPTION");
+          opt.value = data[idx].value;
+          opt.text = (typeof data[idx].name !== 'undefined')? data[idx].name : data[idx].value;
+          for(var a in attrs){
+            var attrVal = data[idx][attrs[a]];
+            if (typeof attrVal !== 'undefined'){opt.setAttribute("data-"+ attrs[a], attrVal) }}
+          selectObj.append(opt); 
+      }
+      selectObj.selectpicker(options).selectpicker('refresh');''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, emtpyFncs=None, profile=False):
     """
@@ -178,7 +194,7 @@ class Select(Html.Html):
   def __str__(self):
     options, opt_groups = [], {}
     for val in self.val:
-      opt = Option(self._report, val['value'], val['name'], None, self.selected is not None and self.selected == val['value'])
+      opt = Option(self._report, val['value'], val['name'], None, self.options.selected is not None and self.options.selected == val['value'], options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
       if 'group' in val:
         opt_groups.setdefault(val['group'], []).append(opt)

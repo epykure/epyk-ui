@@ -283,6 +283,19 @@ class OptionsSelect(Options):
     self._config(value)
 
   @property
+  def selected(self):
+    """
+    Description:
+    ------------
+    The selected items
+    """
+    return self.get(None)
+
+  @selected.setter
+  def selected(self, value):
+    self.set(value)
+
+  @property
   def selectAllText(self):
     """
     Description:

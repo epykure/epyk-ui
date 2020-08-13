@@ -689,10 +689,11 @@ class Fields(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
+    options = options or {}
     if options is not None and 'align' in options:
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options or {}, profile)
-    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
     return html_input
 
   def months(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,

@@ -86,7 +86,7 @@ class Lists(object):
     height = Arguments.size(height, unit="%")
     records = records or []
     options = {} if options is None else options
-
+    options['selected'] = selected
     all_selected = options.get("allSelected", False)
     empty_selected = options.get("empty_selected", True)
     if column is not None:

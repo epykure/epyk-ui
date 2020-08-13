@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStyle
 from epyk.core.html import Defaults as Defaults_html
@@ -49,7 +51,7 @@ class CssSelectOption(CssStyle.Style):
   classname = "dropdown-menu"
 
   def customize(self):
-    self.css({"background": self.rptObj.theme.greys[-1], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):
@@ -58,6 +60,8 @@ class CssSelectOptionItems(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
+    self.css({'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
+    self.hover.css({'color': self.rptObj.theme.success[1]}, important=True)
     self.active.css({"background-color": self.rptObj.theme.success[1]})
 
 
