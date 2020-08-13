@@ -85,7 +85,7 @@ class HtmlNavBar(Html.Html):
     Description:
     -----------
     Add component to the right
-    
+
     Attributes:
     ----------
     :param component:

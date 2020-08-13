@@ -112,7 +112,7 @@ class OptionPanelTabs(Options):
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
-    return self.get({"border-bottom": "1px solid %s" % self._report.theme.success[1]})
+    return self.get({"border-bottom": "1px solid %s" % self._report._report.theme.success[1]})
 
   @css_tab_clicked.setter
   def css_tab_clicked(self, attrs):

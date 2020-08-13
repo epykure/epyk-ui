@@ -738,7 +738,7 @@ class Fields(object):
     values = [{"name": calendar.month_name[i], 'value': i} for i in range(12)]
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.selected is None:
+    if html_input.input.options.selected is None:
       html_input.input.selected = value
     return html_input
 
@@ -787,7 +787,7 @@ class Fields(object):
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.selected is None:
+    if html_input.input.options.selected is None:
       html_input.input.selected = value
     return html_input
 
@@ -831,7 +831,7 @@ class Fields(object):
     values = [{"name": i, 'value': i} for i in range(dt.year+1)][::-1]
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.selected is None:
+    if html_input.input.options.selected is None:
       html_input.input.selected = value
     return html_input
 
@@ -877,7 +877,7 @@ class Fields(object):
     values = [{"name": calendar.day_name[i], 'value': i} for i in range(7)]
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.selected is None:
+    if html_input.input.options.selected is None:
       html_input.input.selected = value
     return html_input
 
@@ -1032,7 +1032,7 @@ class Timelines(object):
     values = ["Documentation", 'Analysis', 'Design', 'Implementation', 'Training']
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper,
                                             options or {}, profile)
-    if html_input.input.selected is None:
+    if html_input.input.options.selected is None:
       html_input.input.selected = value
     return html_input
 

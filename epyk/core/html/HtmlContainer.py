@@ -146,7 +146,7 @@ class PanelSlide(Panel):
     self.title.options.managed = False
     self.title.css({"cursor": 'pointer', "padding": "5px"})
     self._vals, self.__clicks = [self.title] + self._vals, []
-    self.__options = OptPanel.OptionPanelSliding(report, options)
+    self.__options = OptPanel.OptionPanelSliding(self, options)
 
   @property
   def options(self):
@@ -438,7 +438,7 @@ class TSection(Html.Html):
   def __init__(self, report, type, rows=None, options=None, profile=None):
     super(TSection, self).__init__(report, [])
     self.__section = type
-    self.__options = OptPanel.OptionPanelTable(report, options)
+    self.__options = OptPanel.OptionPanelTable(self, options)
     if rows is not None:
       for row in rows:
         self.__add__(row)
@@ -478,7 +478,7 @@ class Table(Html.Html):
     super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height, 'table-layout': 'auto',
             'white-space': 'nowrap', 'border-collapse': 'collapse', 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.__options = OptPanel.OptionPanelTable(report, options)
+    self.__options = OptPanel.OptionPanelTable(self, options)
     self.header, self.body, self.footer = TSection(self._report, 'thead', options=options), TSection(self._report, 'tbody', options=options), TSection(self._report, 'tfoot', options=options)
     self.header.options.managed = False
     self.body.options.managed = False
@@ -646,7 +646,7 @@ class Col(Html.Html):
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], profile=profile)
-    self.__options, self.__set_size = OptPanel.OptionGrid(report, options), None
+    self.__options, self.__set_size = OptPanel.OptionGrid(self, options), None
     self.style.clear_all(no_default=True)
     self.css({"width": width, "height": height})
     if htmlObjs is not None:
@@ -741,7 +741,7 @@ class Row(Html.Html):
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position = position
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptPanel.OptionGrid(report, options)
+    self.__options = OptPanel.OptionGrid(self, options)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -802,7 +802,7 @@ class Grid(Html.Html):
 
   def __init__(self, report, rows, width, height, align, position, options, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options, self.position = OptPanel.OptionGrid(report, options), position
+    self.__options, self.position = OptPanel.OptionGrid(self, options), position
     self.style.clear(no_default=True)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add(self.options.classe)
@@ -892,7 +892,7 @@ class Tabs(Html.Html):
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.options.managed = False
     self.add_helper(helper)
-    self.__options = OptPanel.OptionPanelTabs(report, options)
+    self.__options = OptPanel.OptionPanelTabs(self, options)
 
   @property
   def options(self):
