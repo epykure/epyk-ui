@@ -66,18 +66,36 @@ class ClassPage(object):
 
   @property
   def scrollbar_webkit(self):
+    """
+    Description:
+    ------------
+
+    :rtype: CssStyleScrollbar.CssWebkitScrollbar
+    """
     if not self.__webkitscrollbar:
       self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report)
     return  self.__webkitscrollbar
 
   @property
   def scrollbar_webkit_thumb(self):
+    """
+    Description:
+    ------------
+
+    :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
+    """
     if not self.__webkitscrollbar_thumb:
       self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.htmlObj._report)
     return  self.__webkitscrollbar_thumb
 
   @property
   def scrollbar_webkit_track(self):
+    """
+    Description:
+    ------------
+
+    :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
+    """
     if not self.__webkitscrollbar_track:
       self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report)
     return  self.__webkitscrollbar_track
@@ -88,7 +106,11 @@ class ClassPage(object):
     Description:
     ------------
 
-    https://www.w3schools.com/howto/howto_css_text_selection.asp
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_css_text_selection.asp
+
+    :rtype: CssStyleScrollbar.CssWebkitSelection
     """
     if not self.__selection:
       self.__selection = CssStyleScrollbar.CssWebkitSelection(self.htmlObj._report)
@@ -100,7 +122,11 @@ class ClassPage(object):
     Description:
     ------------
 
-    https://www.w3schools.com/howto/howto_css_text_selection.asp
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_css_text_selection.asp
+
+    :rtype: CssStyleScrollbar.CssWebkitMozSelection
     """
     if not self.__moz_selection:
       self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.htmlObj._report)

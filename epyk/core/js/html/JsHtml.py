@@ -275,7 +275,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Check if the component is in the visible part of the page (the viewpport)
-    
+
     :rtype: JsObject.JsObject
 
     :return: A Javascript boolean
