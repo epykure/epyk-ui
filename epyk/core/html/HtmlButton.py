@@ -472,6 +472,76 @@ class IconEdit(Html.Html):
       self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, family=options.get("icon_family"))
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
 
+  def spin(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+    """
+    self.icon.spin()
+    return self
+
+  def pulse(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+    """
+    self.icon.pulse()
+    return self
+
+  def border(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+    """
+    self.icon.border()
+    return self
+
+  def rotate(self, value):
+    """
+    Description:
+    ------------
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
+
+    Attributes:
+    ----------
+    :param value: Integer. The rotation angle
+    """
+    self.icon.rotate(value)
+    return self
+
+  def pull(self, position='left'):
+    """
+    Description:
+    ------------
+    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+
+    Attributes:
+    ----------
+    :param position:
+    """
+    self.icon.pull(position)
+    return self
+
   def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:

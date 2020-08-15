@@ -383,14 +383,14 @@ class JsDomEvents(object):
     if withFocus:
       if options is not None and 'timer' in options:
         return JsFncs.JsFunction(
-          "setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {
-            "event": event, "elem": item, 'timer': options['timer'] * 1000})
+          "window['%(htmlCode)s_timer'] = setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {
+            "htmlCode": self._src.htmlCode, "event": event, "elem": item, 'timer': options['timer'] * 1000})
 
       else:
         return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
 
     if options is not None and 'timer' in options:
-      return JsFncs.JsFunction("setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {"event": event, "elem": item, 'timer': options['timer'] * 1000})
+      return JsFncs.JsFunction("window['%(htmlCode)s_timer'] = setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {"htmlCode": self._src.htmlCode, "event": event, "elem": item, 'timer': options['timer'] * 1000})
 
     else:
       return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
@@ -1126,6 +1126,23 @@ class JsDoms(JsObject.JsObject):
       self._js.append('%s.setAttribute("class", %s.getAttribute("class") + " %s")' % (self.varId, self.varId, clsName))
     else:
       self._js.append('%s.setAttribute("class", "%s")' % (self.varId, clsName))
+    return self
+
+  def removeClass(self, clsName):
+    """
+    Description:
+    -----------
+    Remove a class from the defined classes of the DOM element
+
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_js_remove_class.asp
+
+    Attributes:
+    ----------
+    :param clsName: String. The classname
+    """
+    self._js.append('%s.classList.remove("%s")' % (self.varId, clsName))
     return self
 
   def css(self, type, jsObject=None, duration=None):

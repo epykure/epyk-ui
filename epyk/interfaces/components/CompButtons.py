@@ -638,3 +638,54 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       badge.style.css.margin = "auto"
       badge.style.css.display = "block"
     return badge
+
+  def live(self, time, jsFncs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), profile=None, options=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param time: Integer. Interval time in second
+    :param jsFncs:
+    :param icon: String. The font awesome icon reference
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param profile:
+    :param options: Optional. Specific Python options available for this component
+    """
+    dflt_options = {"started": True}
+    if options is not None:
+      dflt_options.update(options)
+    live = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, options=options, profile=profile)
+    live.style.css.color = self.context.rptObj.theme.danger[1]
+    live.style.css.border = "1px solid %s" % self.context.rptObj.theme.success[1]
+    live.style.css.border_radius = "50px"
+    live.style.css.padding = "2px"
+    live.style.css.margin = 0
+    live.icon.style.css.font_factor(2)
+    live.icon.style.css.margin_right = 0
+    live.icon.style.css.margin = 0
+    live.icon.style.css.padding_bottom = "2px"
+    if dflt_options["started"]:
+      live.attr["data-active"] = 1
+      live.icon.style.effects.blink(2)
+      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % live.htmlCode, time * 1000)])
+    else:
+      live.attr["data-active"] = 0
+    live.click([
+      self.context.rptObj.js.if_(live.dom.getAttribute("data-active") == 1, [
+        live.dom.setAttribute("data-active", 0).r,
+        live.dom.css("border-color", self.context.rptObj.theme.danger[1]).r,
+        live.icon.dom.css("color", self.context.rptObj.theme.danger[1]).r,
+        live.icon.dom.css("animation", 'none').r,
+        self.context.rptObj.js.window.clearInterval("%s_timer" % live.htmlCode)
+      ]).else_([
+        live.dom.setAttribute("data-active", 1).r,
+        live.dom.css("border-color", self.context.rptObj.theme.success[1]).r,
+        live.icon.dom.css("color", self.context.rptObj.theme.success[1]).r,
+        live.icon.dom.effects.blink(2),
+        self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % live.htmlCode, time)
+      ]),
+    ])
+    return live

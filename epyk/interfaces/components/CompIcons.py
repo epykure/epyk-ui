@@ -1076,3 +1076,38 @@ class Icons(object):
     html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
     html_dt.input.style.css.width = 0
     return html_dt
+
+  def timer(self, time, jsFncs, icon="far fa-clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param time: Integer. Interval time in second
+    :param jsFncs:
+    :param icon: String. The font awesome icon reference
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile:
+    """
+    dflt_options = {"started": True}
+    if options is not None:
+      dflt_options.update(options)
+    t = self.awesome(icon, width=width, height=height, profile=profile)
+    if dflt_options["started"]:
+      t.spin().attr["data-active"] = 1
+      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % t.htmlCode, time * 1000)])
+    else:
+      t.attr["data-active"] = 0
+    t.click([
+      self.context.rptObj.js.if_(t.dom.getAttribute("data-active") == 1, [
+        t.icon.dom.removeClass("fa-spin").r, t.dom.setAttribute("data-active", 0),
+        self.context.rptObj.js.window.clearInterval("%s_timer" % t.htmlCode)
+      ]).else_([
+        t.icon.dom.addClass("fa-spin"), t.dom.setAttribute("data-active", 1),
+        self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % t.htmlCode, time)
+      ]),
+    ])
+    return t

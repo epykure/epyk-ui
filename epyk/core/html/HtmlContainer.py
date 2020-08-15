@@ -716,7 +716,7 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-    :param n:
+    :param n: Integer. Teh size of the component in the bootstrap row
     """
     if self.__set_size is None:
       if not n:
@@ -775,6 +775,9 @@ class Row(Html.Html):
     if self._dom is None:
       self._dom = JsHtmlPanels.JsHtmlRow(self, report=self._report)
     return self._dom
+
+  def __len__(self):
+    return len(self.val)
 
   def __add__(self, htmlObj):
     """ Add items to a container """

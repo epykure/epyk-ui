@@ -114,34 +114,35 @@ class ImgCarrousel(Html.Html):
   name = 'Carrousel'
 
   def __init__(self, report, images, path, selected, width, height, options, profile):
-    if path is None:
-      if Defaults.SERVER_PATH is not None:
-        path = Defaults.SERVER_PATH
-      else:
-        path = os.path.split(images[0])[0]
-        images = os.path.split(images[0])[-1]
     self.items, self.__click_items = [], []
     super(ImgCarrousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
     self.attr['data-current_picture'] = 0
     for i, rec in enumerate(images):
-      if not isinstance(rec, dict):
-        rec = {"image": rec, 'title': "picture %s" % (i+1)}
-      if not 'path' in rec:
-        rec['path'] = path
-      if rec.get('selected') is not None:
-        selected = i
-      img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60, height[1]))
-      div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none', "text-align": "center"})
+      if not hasattr(rec, 'options'):
+        if not isinstance(rec, dict):
+          rec = {"image": rec, 'title': "picture %s" % (i+1)}
+        if not 'path' in rec:
+          rec['path'] = path
+        if rec.get('selected') is not None:
+          selected = i
+        img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60, height[1]))
+        div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css(
+          {"display": 'none', "text-align": "center"})
+      else:
+        div = report.ui.layouts.div(rec, htmlCode="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none', "text-align": "center"})
       div.set_attrs(name="name", value="%s_img" % self.htmlCode)
       div.options.managed = False
       self.items.append(div)
     self.__point_display = options.get('points', True)
+    self.__inifity = options.get('inifity', False)
+    self.container = self._report.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
+    self.container.options.managed = False
     if 'arrows' in options:
-      self.next = self._report.ui.icon("fas fa-chevron-right").css({"position": 'absolute',
+      self.next = self._report.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css({"position": 'absolute',
                  "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
       self.next.options.managed = False
 
-      self.previous = self._report.ui.icon("fas fa-chevron-left").css({"position": 'absolute',
+      self.previous = self._report.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css({"position": 'absolute',
                  "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
       self.previous.options.managed = False
     else:
@@ -182,8 +183,7 @@ class ImgCarrousel(Html.Html):
       })''' % {'color': self._report.theme.colors[9]}
 
   def __str__(self):
-    img_cont = self._report.ui.layouts.div(self.items).css({"display": 'block', "width": "100%", "text-align": "center"})
-    img_cont.options.managed = False
+    self.container._vals = self.items
     self.attr['data-last_picture'] = len(self.items)-1
     points = self._report.ui.navigation.points(len(self.items), htmlCode="%s_points" % self.htmlCode)
     points.options.managed = False
@@ -202,7 +202,10 @@ class ImgCarrousel(Html.Html):
           self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
           "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent)})()" %
           self._report.js.getElementsByName("%s_points" % self.htmlCode)[
-            self.dom.getAttribute('data-current_picture').toString().parseFloat()]])
+            self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
+              self.dom.attr("data-current_picture", -1),
+              self.next.dom.events.trigger("click")
+        ] if self.__inifity else None)
       ])
     if hasattr(self.previous, 'html'):
       self.previous.click([
@@ -211,10 +214,13 @@ class ImgCarrousel(Html.Html):
           self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
           "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent) })()" %
           self._report.js.getElementsByName("%s_points" % self.htmlCode)[
-            self.dom.getAttribute('data-current_picture').toString().parseFloat()]])
+            self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
+              self.dom.attr("data-current_picture", len(self.items)),
+              self.previous.dom.events.trigger("click")
+        ] if self.__inifity else None)
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
-      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': img_cont.html(),
+      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),
              "points": points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '', 'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
 
 
@@ -268,6 +274,139 @@ class Icon(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassIcon(self)
     return self._styleObj
+
+  def spin(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+    """
+    if 'font-awesome' in self.requirements:
+      self.attr['class'].add("fa-spin")
+    return self
+
+  def pulse(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+    """
+    if 'font-awesome' in self.requirements:
+      self.attr['class'].add("fa-pulse")
+    return self
+
+  def border(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+    """
+    if 'font-awesome' in self.requirements:
+      self.attr['class'].add("fa-border")
+    return self
+
+  def size(self, value):
+    """
+    Description:
+    ------------
+    Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
+    With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons
+
+    Attributes:
+    ----------
+    :param value:
+    """
+    if 'font-awesome' in self.requirements:
+      if isinstance(value, int):
+        self.attr['class'].add("fa-%sx" % value)
+      else:
+        self.attr['class'].add("fa-%s" % value)
+    return self
+
+  def fixed_width(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/fixed-width-icons
+    """
+    if 'font-awesome' in self.requirements:
+      self.attr['class'].add("fa-fw")
+    return self
+
+  def rotate(self, value):
+    """
+    Description:
+    ------------
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
+
+    Attributes:
+    ----------
+    :param value: Integer. The rotation angle
+    """
+    if 'font-awesome' in self.requirements:
+      self.attr['class'].add("fa-rotate-%s" % value)
+    return self
+
+  def flip(self, direction='h'):
+    """
+    Description:
+    ------------
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
+
+    Attributes:
+    ----------
+    :param direction:
+    """
+    if 'font-awesome' in self.requirements:
+      if direction.lower() == 'h':
+        self.attr['class'].add("fa-flip-horizontal")
+      elif direction.lower() == 'v':
+        self.attr['class'].add("fa-flip-vertical")
+      else:
+        self.attr['class'].add("fa-flip-both")
+    return self
+
+  def pull(self, position='left'):
+    """
+    Description:
+    ------------
+    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+
+    Related Pages:
+
+      https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+
+    Attributes:
+    ----------
+    :param position:
+    """
+    if 'font-awesome' in self.requirements:
+        self.attr['class'].add("fa-pull-%s" % position)
+    return self
 
   def set_icon(self, value):
     """
