@@ -36,6 +36,21 @@ class ClassPage(object):
     return self._css_struct
 
   @property
+  def css_class(self):
+    """
+    Description:
+    ------------
+    The internal class used to put a custom Style to this object.
+    Only 1 CSS class can be added to an HTML object
+
+    :rtype: Classes.CatalogDiv.CatalogDiv
+    """
+    if self._css_class is None:
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'],
+                                                      html_id=self.htmlObj.htmlCode).no_border()
+    return self._css_class
+
+  @property
   def globals(self):
     """
     Description:
@@ -70,6 +85,8 @@ class ClassPage(object):
   @property
   def selection(self):
     """
+    Description:
+    ------------
 
     https://www.w3schools.com/howto/howto_css_text_selection.asp
     """
@@ -80,6 +97,8 @@ class ClassPage(object):
   @property
   def moz_selection(self):
     """
+    Description:
+    ------------
 
     https://www.w3schools.com/howto/howto_css_text_selection.asp
     """
@@ -140,7 +159,6 @@ class ClassPage(object):
     Description:
     ------------
 
-    :return:
     """
     css_frgs = {}
     for css_cls in self.classList.values():

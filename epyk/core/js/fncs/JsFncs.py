@@ -437,12 +437,16 @@ class JsAnonymous(object):
 
   def params(self, pmts):
     """
+    Description:
+    ------------
     """
     self.__paramsFnc = pmts
     return self
 
   def call(self, *args, **kwargs):
     """
+    Description:
+    ------------
 
     :param args:
     :param kwargs:

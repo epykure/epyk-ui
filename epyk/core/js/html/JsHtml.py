@@ -270,16 +270,32 @@ class JsHtml(JsNodeDom.JsDoms):
     return self
 
   @property
-  def inViewPort(self):
+  def isInViewPort(self):
     """
     Description:
     -----------
+    Check if the component is in the visible part of the page (the viewpport)
+    
+    :rtype: JsObject.JsObject
 
+    :return: A Javascript boolean
     """
     bool = JsBoolean.JsBoolean("!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True, isPyData=False)
     bool._js.insert(0, self._report.js.viewHeight.setVar('viewHeight'))
     bool._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(bool.r).return_("visibleFlag").call()
+
+  def onViewPort(self, jsFncs):
+    """
+    Description:
+    -----------
+    Trigger some code when the component is visible on the visible part of the page (the viewpport)
+
+    Attributes:
+    ----------
+    :param jsFncs: List. The Javascript events
+    """
+    return self._src.js.if_(self.isInViewPort, jsFncs)
 
   @property
   def content(self):
@@ -320,6 +336,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Wrapper to the D3 library
 
     :rtype: JsD3.D3Select
     """
@@ -332,8 +349,9 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Wrapper to the JqueryUI component
 
-    :rtype: JsQuery.JQuery
+    :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
@@ -364,6 +382,8 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def format(self):
     """
+    Description:
+    ------------
     Specific formatters for the HTML components
     """
     return Formatters(self._report, self.content.toStr())
@@ -795,6 +815,8 @@ class JsHtmlList(JsHtml):
   @property
   def val(self):
     """
+    Description:
+    ------------
 
     :return:
     """

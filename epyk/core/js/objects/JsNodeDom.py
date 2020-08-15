@@ -1,6 +1,7 @@
 
 from epyk.core.js.fncs import JsFncs
 from epyk.core.css import Colors
+from epyk.core.css.styles.effects import Effects
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
@@ -729,6 +730,29 @@ class JsDomsTransforms(object):
     return "%s.style.transform = 'rotateZ(%s%s)'" % (self.selector, r, unit)
 
 
+class JsDomEffects(object):
+
+  def __init__(self, src, component):
+    self._effects = Effects.Effects(src)
+    self._htmlObj = component
+
+  def glow(self, color, radius=50, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate", fill_mode='forwards'):
+    name = self._effects.glow(color, radius, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
+    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
+
+  def blink(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate", fill_mode='forwards'):
+    name = self._effects.blink(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
+    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction))
+
+  def fade_out(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal", fill_mode='forwards'):
+    name = self._effects.fade_out(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
+    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction))
+
+  def fade_in(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal", fill_mode='forwards'):
+    name = self._effects.fade_in(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
+    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
+
+
 class JsDoms(JsObject.JsObject):
   _id = None
   display_value = 'block'
@@ -811,7 +835,12 @@ class JsDoms(JsObject.JsObject):
     Shortcup function to emtpy an HTML compnent.
     This will only reuse the innerHTML property
     """
-    return JsObject.JsObject('%s.innerHTML = ""' % (self.varId))
+    return JsObject.JsObject('%s.innerHTML = ""' % self.varId)
+
+  @property
+  def effects(self):
+    """ Add CSS pre defined events from a dom object """
+    return JsDomEffects(self._report, self._src)
 
   @property
   def transform(self):
@@ -1124,18 +1153,18 @@ class JsDoms(JsObject.JsObject):
       for k, v in type.items():
         if "-" in k:
           split_css = k.split("-")
-          k = "%s%s" % (split_css[0], split_css[1].title())
+          k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
       if "-" in type:
         split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
 
     else:
       if "-" in type:
         split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
@@ -1908,17 +1937,17 @@ class JsDomsList(JsArray.JsArray):
       for k, v in type.items():
         if "-" in k:
           split_css = k.split("-")
-          k = "%s%s" % (split_css[0], split_css[1].title())
+          k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
         self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
       if "-" in type:
         split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       return JsObject.JsObject("for(let e of %s){ e.style.%s }" % (self.varId, type))
     else:
       if "-" in type:
         split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 

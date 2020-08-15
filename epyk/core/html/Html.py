@@ -286,6 +286,12 @@ class Html(object):
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpCls.ClassHtml
+    """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtml(self)
     return self._styleObj
@@ -332,7 +338,6 @@ class Html(object):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
@@ -1106,6 +1111,9 @@ Attributes:
   def click(self, jsFncs, profile=False, source_event=None):
     return self.on("click", jsFncs, profile, source_event)
 
+  def scroll(self, jsFncs, profile=False, source_event=None):
+    return self.on("scroll", jsFncs, profile, source_event)
+
   def mouse(self, on_fncs=None, out_fncs=None, profile=False, source_event=None):
     """
     Description:
@@ -1333,6 +1341,13 @@ class Body(Html):
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+
+    :rtype: GrpCls.ClassPage
+    """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassPage(self)
     return self._styleObj
@@ -1340,6 +1355,8 @@ class Body(Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -1353,6 +1370,11 @@ class Body(Html):
       self._dom = JsHtml.JsHtml(self, report=self._report)
       self._dom.varName = "document.body"
     return self._dom
+
+  def scroll(self, jsFncs, profile=False, source_event=None):
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._report.js.onReady(self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(jsFncs, toStr=True)))
 
   def onReady(self, jsFncs):
     """
