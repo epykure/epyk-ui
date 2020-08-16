@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.options import Options
+from epyk.core.js.packages import packageImport
 
 
 class OptionsLi(Options):
@@ -91,6 +94,50 @@ class OptionsItems(Options):
   @icon.setter
   def icon(self, attrs):
     self._config(attrs)
+
+  @property
+  def markdown(self):
+    """
+    Description:
+    ------------
+    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    Showdown can be used client side (in the browser) or server side (with NodeJs).
+
+    Related Pages:
+
+      https://github.com/showdownjs/showdown
+    """
+    return self._config_get(False)
+
+  @markdown.setter
+  @packageImport("showdown")
+  def markdown(self, values):
+    if isinstance(values, bool):
+      self._config(values)
+      self._config({} if values is True else values, 'showdown')
+    else:
+      self._config(True)
+      self._config(values, 'showdown')
+
+  @property
+  def showdown(self):
+    """
+    Description:
+    ------------
+    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    Showdown can be used client side (in the browser) or server side (with NodeJs).
+
+    Related Pages:
+
+      https://github.com/showdownjs/showdown
+    """
+    return self._config_get(False)
+
+  @showdown.setter
+  @packageImport("showdown")
+  def showdown(self, values):
+    self._config(True, 'markdown')
+    self._config(values)
 
 
 class OptionsTagItems(Options):

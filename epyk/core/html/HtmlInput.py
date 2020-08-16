@@ -38,6 +38,8 @@ class Input(Html.Html):
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
     self.__options, self.__focus = OptInputs.OptionsInput(self, options), False
+    if width[0] is None:
+      self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
 
   @property
   def options(self):
@@ -242,6 +244,9 @@ class InputTime(Input):
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
     super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsTimePicker(self, options)
+    self.style.css.background_color = report.theme.colors[0]
+    self.style.css.line_height = Defaults.LINE_HEIGHT
+    self.style.css.text_align = "center"
 
   @property
   def options(self):
@@ -539,7 +544,7 @@ class Field(Html.Html):
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
-    self.add_label(label, options=options)
+    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input

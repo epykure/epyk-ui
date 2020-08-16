@@ -56,7 +56,7 @@ class CssSelectOption(CssStyle.Style):
   classname = "dropdown-menu"
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit), 'z-index': 0}, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):

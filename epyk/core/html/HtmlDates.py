@@ -31,8 +31,7 @@ class DatePicker(Html.Html):
       self.icon = None
     if self.icon is not None:
       self.icon.click([self.input.dom.events.trigger("click").toStr()])
-      self.icon.tooltip(self.input.dom.content)
-    self.add_label(label, css={'height': 'auto'}, options=options)
+    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
@@ -61,6 +60,7 @@ class DatePicker(Html.Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     if self.icon is not None:
+      self.icon.tooltip(self.input.dom.content)
       jsFncs.append(self.icon.dom.setattr("title", self.input.dom.content))
     self.input.options.onSelect = jsFncs
     return self
@@ -101,8 +101,9 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param key: A string or a Python dictionary with the options to set
-    :param val: Optional.
+    :param options:
+    :param name: Optional. A string or a Python dictionary with the options to set
+    :param value: Optional.
     """
     if options is None and name is None:
       raise Exception("Either the attrs or the name should be specified")
@@ -110,7 +111,7 @@ class DatePicker(Html.Html):
     if options is None:
       options = {name: value}
     for k, v in options.items():
-      self.vals['options'][k] = v
+      setattr(self.input.options, k, v)
     return self
 
   def __str__(self):
@@ -123,14 +124,13 @@ class TimePicker(Html.Html):
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, None, htmlCode=htmlCode, profile=profile)
-    # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value, options=options)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
-    self.add_label(label, css={'height': 'auto'}, options=options)
+    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle"})
 
@@ -146,22 +146,6 @@ class TimePicker(Html.Html):
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
-
-  # @property
-  # def options(self):
-  #   """
-  #   Description:
-  #   -----------
-  #   The progress bar is designed to display the current percent complete for a process.
-  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
-  #
-  #   Related Pages:
-  #
-	# 		https://api.jqueryui.com/menu
-  #
-  #   :rtype: OptInputs.OptionsTimePicker
-  #   """
-  #   return self.input.options
 
   def change(self, jsFnc):
     """

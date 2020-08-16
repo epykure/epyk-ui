@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -388,7 +390,7 @@ class Vignets(object):
       container[-1].style.css.border_left = "1px solid %s" % self.context.rptObj.theme.greys[3]
     return container
 
-  def price(self, value, title, items, align="center", width=(300, 'px'), currency="£"):
+  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), currency="£"):
     """
     Description:
     ------------
@@ -403,6 +405,7 @@ class Vignets(object):
     :param currency:
     """
     container = self.context.rptObj.ui.div(align=align, width=width)
+    container.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
     container.style.css.margin = "auto"
     if not hasattr(title, 'options'):
       title = self.context.rptObj.ui.titles.title(title)
@@ -413,8 +416,16 @@ class Vignets(object):
       value = self.context.rptObj.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency})
       value.style.css.font_size = Defaults_css.font(30)
     container.add(value)
+    if url is not None:
+      button = self.context.rptObj.ui.button("Subscribe", align="center")
+      button.style.css.background_color = self.context.rptObj.theme.success[1]
+      button.style.css.color = 'white'
+      button.style.css.margin_top = 10
+      button.style.css.margin_bottom = 10
+      container.add(button)
     if not hasattr(items, 'options'):
       items = self.context.rptObj.ui.lists.icons(items)
+      items.style.css.margin = "auto 20%"
       items.style.css.text_align = "left"
     container.add(items)
     return container

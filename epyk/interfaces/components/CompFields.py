@@ -740,7 +740,7 @@ class Fields(object):
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     if html_input.input.options.selected is None:
-      html_input.input.selected = value
+      html_input.input.options.selected = value
     return html_input
 
   def weeks(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -789,7 +789,7 @@ class Fields(object):
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     if html_input.input.options.selected is None:
-      html_input.input.selected = value
+      html_input.input.options.selected = value
     return html_input
 
   def years(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -833,7 +833,7 @@ class Fields(object):
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     if html_input.input.options.selected is None:
-      html_input.input.selected = value
+      html_input.input.options.selected = value
     return html_input
 
   def days(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -879,7 +879,7 @@ class Fields(object):
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     if html_input.input.options.selected is None:
-      html_input.input.selected = value
+      html_input.input.options.selected = value
     return html_input
 
 

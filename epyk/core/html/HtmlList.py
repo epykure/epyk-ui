@@ -301,6 +301,8 @@ class Items(Html.Html):
   def _js__builder__(self):
     return ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
+          var item = converter.makeHtml(item).replace("<p>", "<p style='display:inline-block;margin:0'>")};
         var li = document.createElement("li");
         if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
         else{window['%(alias)s' + item.type](li, item, options)};

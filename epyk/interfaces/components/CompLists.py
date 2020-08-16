@@ -696,7 +696,7 @@ class Lists(object):
         values.add(rec[column])
       data = sorted(list(values))
 
-    dft_options = {"icon": "fas fa-check"}
+    dft_options = {"icon": "fas fa-check", 'markdown': True}
     if options is not None:
       dft_options.update(options)
 

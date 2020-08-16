@@ -137,7 +137,7 @@ class Select(Html.Html):
   def _js__builder__(self):
     return '''
       var selectObj = %s; selectObj.empty();
-      const attrs = ['icon', 'content'];  
+      const attrs = ['icon', 'content'];
       for (var idx in data) {
           var opt = document.createElement("OPTION");
           opt.value = data[idx].value;
@@ -179,6 +179,10 @@ class Select(Html.Html):
 
     Attributes:
     ----------
+    :param url:
+    :param jsData:
+    :param is_json:
+    :param method:
     :param options:
     """
     self.options.liveSearch = True
