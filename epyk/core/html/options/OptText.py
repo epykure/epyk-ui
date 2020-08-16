@@ -99,7 +99,7 @@ class OptionsText(Options):
 
     Related Pages:
 """
-    return self._config_get(self._report.theme.success[1])
+    return self._config_get(self._report._report.theme.success[1])
 
   @green.setter
   def green(self, value):
@@ -113,7 +113,7 @@ class OptionsText(Options):
 
     Related Pages:
 """
-    return self._config_get(self._report.theme.warning[1])
+    return self._config_get(self._report._report.theme.warning[1])
 
   @orange.setter
   def orange(self, value):
@@ -131,6 +131,20 @@ class OptionsText(Options):
 
   @font_size.setter
   def font_size(self, value):
+    self._config(value)
+
+  @property
+  def status(self):
+    return self._config_get('none')
+
+  @status.setter
+  def status(self, value):
+    if hasattr(self._report._report.theme, str(value)):
+      color = getattr(self._report._report.theme, str(value))[1]
+    else:
+      color = self._report._report.theme.colors[-1]
+    self._report.style.css.border_left = '5px solid %s' % color
+    self._report.style.css.padding_left = 5
     self._config(value)
 
 

@@ -482,7 +482,7 @@ Attributes:
         self.icon.css(css)
     return self
 
-  def add_label(self, text, css=None, position="before", for_=None):
+  def add_label(self, text, css=None, position="before", for_=None, options=None):
     """
     Description:
     -----------
@@ -503,7 +503,7 @@ Attributes:
     """
     self.label = ""
     if text is not None:
-      self.label = self._report.ui.texts.label(text)
+      self.label = self._report.ui.texts.label(text, options=options)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_

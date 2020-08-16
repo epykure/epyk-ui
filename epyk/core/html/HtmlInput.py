@@ -539,7 +539,7 @@ class Field(Html.Html):
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
-    self.add_label(label)
+    self.add_label(label, options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input

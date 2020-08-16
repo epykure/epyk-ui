@@ -262,7 +262,8 @@ class Fields(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
+    options = options or {}
+    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     return html_input
 
   def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -272,7 +273,7 @@ class Fields(object):
 
     Usage::
 
-      rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+      page.ui.fields.autocomplete("", label="Range Example", icon="fas fa-unlock-alt")
 
     Underlying HTML Objects:
 

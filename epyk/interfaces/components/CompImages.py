@@ -115,6 +115,8 @@ class Images(object):
     :param height:
     :param size:
     :param margin:
+    :param align:
+    :param position:
     """
     div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width))
     div.style.css.background_url(url, size=size, margin=margin)

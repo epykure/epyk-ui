@@ -32,9 +32,9 @@ class DatePicker(Html.Html):
     if self.icon is not None:
       self.icon.click([self.input.dom.events.trigger("click").toStr()])
       self.icon.tooltip(self.input.dom.content)
-    self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_label(label, css={'height': 'auto'}, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto', 'margin-top': '2px'})
+    self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
   @property
   def dom(self):
@@ -130,9 +130,9 @@ class TimePicker(Html.Html):
     self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
-    self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_label(label, css={'height': 'auto'}, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
+    self.css({"color": color or 'inherit', "vertical-align": "middle"})
 
   @property
   def dom(self):
