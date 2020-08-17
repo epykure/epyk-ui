@@ -1663,6 +1663,8 @@ class CssMixin(object):
   @max_height.setter
   def max_height(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"max-height": val})
 
   @property

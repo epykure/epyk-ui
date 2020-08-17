@@ -267,7 +267,7 @@ class Images(object):
 
     bgcolor, margin_top = None, -5
     if image is not None:
-      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align, htmlCode, profile, options)
+      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align=align, htmlCode=htmlCode, profile=profile, options=options)
       img.style.css.border_radius = 50
       img.style.css.margin = 2
       margin_top = -8
