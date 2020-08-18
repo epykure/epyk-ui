@@ -216,6 +216,36 @@ class Tags(object):
     html_d.style.clear()
     return html_d
 
+  def figcaption(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+    """
+    Description:
+    ------------
+    The <figcaption> tag defines a caption for a <figure> element.
+
+    The <figcaption> element can be placed as the first or last child of the <figure> element.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_figcaption.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_f = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                           height, htmlCode, tooltip, options, profile)
+    html_f.style.clear()
+    return html_f
+
   def u(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:

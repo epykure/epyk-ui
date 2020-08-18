@@ -350,15 +350,39 @@ class Effects(object):
     return name
 
   def reduce(self):
+    """
+    Description:
+    ------------
+    Reduce the component size when the mouse is hover
+    """
     self._htmlObj.style.add_classes.layout.hover_reduce()
     return self
 
   def zoom(self):
+    """
+    Description:
+    ------------
+    Zoom on the component when the mouse is hover
+    """
     self._htmlObj.style.add_classes.layout.hover_zoom()
     return self
 
   def rotate(self):
+    """
+    Description:
+    ------------
+    Rotate the component when the mouse is hover
+    """
     self._htmlObj.style.add_classes.layout.hover_rotate()
+    return self
+
+  def colored(self):
+    """
+    Description:
+    ------------
+    Display the color component when the mouse is hover
+    """
+    self._htmlObj.style.add_classes.layout.hover_colored()
     return self
 
   def disappear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate", fill_mode='forwards'):

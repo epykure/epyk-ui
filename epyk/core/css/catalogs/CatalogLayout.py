@@ -92,6 +92,10 @@ class CatalogLayout(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesCommon.CssHoverReduce)
 
+  def hover_colored(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssHoverColored)
+
   def hover_zoom(self):
     """  """
     return self._set_class(CssStylesCommon.CssHoverZoom)

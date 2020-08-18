@@ -61,6 +61,46 @@ class Images(object):
       html_image.style.css.max_width = '100%'
     return html_image
 
+  def figure(self, image=None, caption=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
+          profile=None, tooltip=None, options=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_figcaption.asp
+
+    Usage::
+
+      page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption", path=picture_path, width=(100, 'px'))
+
+    Attributes:
+    ----------
+    :param image:
+    :param caption:
+    :param path:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param profile:
+    :param tooltip:
+    :param options:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    container = html.HtmlImage.Figure(self.context.rptObj, [], None, None, width, None, height, False, align, None, htmlCode, "figure", None, options or {}, profile)
+    container.img = self.context.rptObj.ui.img(image=image, path=path, width=(100, "%"), height=(None, "px"), align="center",
+                                               htmlCode=htmlCode, profile=profile, tooltip=tooltip, options=options)
+    container.add(container.img)
+    if caption is not None:
+      container.caption = self.context.rptObj.ui.tags.figcaption(caption)
+      container.add(container.caption)
+    if width[0] == 'auto':
+      container.style.css.display = "inline-block"
+    return container
+
   def container(self, component, max_width=(900, 'px'), align="center", profile=None, options=None):
     """
     Description:

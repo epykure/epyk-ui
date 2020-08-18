@@ -73,3 +73,9 @@ class CssHoverZoom(CssStyle.Style):
 class CssHoverRotate(CssStyle.Style):
   _hover = {"transform": 'rotate(10deg)', 'z-index': 10}
 
+
+class CssHoverColored(CssStyle.Style):
+  _attrs = {"-webkit-filter": "grayscale(100%)", "filter": "grayscale(100%)", "-webkit-transition": '.3s ease-in-out',
+            "transition": ".3s ease-in-out"}
+
+  _hover = {"-webkit-filter": 'grayscale(0)', 'filter': "grayscale(0)"}

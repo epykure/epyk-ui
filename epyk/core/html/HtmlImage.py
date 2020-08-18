@@ -4,6 +4,7 @@
 import os
 
 from epyk.core.html import Html
+from epyk.core.html import HtmlContainer
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptButton
 
@@ -555,3 +556,19 @@ class Badge(Html.Html):
 
   def __str__(self):
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
+
+
+class Figure(HtmlContainer.Div):
+  name = 'Figure container'
+
+  def __str__(self):
+    rows = []
+    for htmlObj in self.val:
+      if hasattr(htmlObj, 'html'):
+        if self._sort_propagate:
+          htmlObj.sortable(self._sort_options)
+        rows.append(htmlObj.html())
+      else:
+        rows.append(str(htmlObj))
+
+    return "<figure %s>%s</figure>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
