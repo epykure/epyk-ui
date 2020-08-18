@@ -251,6 +251,8 @@ class Div(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
+    if isinstance(htmlObj, list):
+      htmlObj = self._report.ui.row(htmlObj)
     htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'

@@ -41,22 +41,34 @@ def transpile(args):
   report_path = utils.get_report_path(project_path, raise_error=False)
   sys.path.append(report_path)
   ui_setting_path = os.path.join(report_path, '..', 'ui_settings.py')
-  install_modules, split_files, view_folder = False, False, 'views'
+  install_modules, split_files, view_folder, settings = False, False, 'views', None
   if os.path.exists(ui_setting_path):
     settings = __import__('ui_settings')
     install_modules = settings.INSTALL_MODULES
     split_files = settings.SPLIT_FILES
     view_folder = settings.VIEWS_FOLDER
-  mod = __import__(args.name, fromlist=['object'])
-  page = utils.get_page(mod)
-  page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
-  if not os.path.exists(view_folder):
-    # If it is not an aboslute path
-    view_folder = os.path.join(report_path, '..', '..', view_folder)
-  output = page.outs.html_file(path=view_folder, name=args.name, split_files=split_files, install_modules=install_modules,
-                               options={"css_route": '/css', "js_route": '/js'})
-  print(output)
-
+  views = []
+  if args.name is None:
+    for v in os.listdir(report_path):
+      if v.endswith(".py"):
+        views.append(v[:-3])
+  else:
+    views = [args.name]
+  for v in views:
+    try:
+      mod = __import__(v, fromlist=['object'])
+      page = utils.get_page(mod)
+      if settings is not None:
+        page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
+      if not os.path.exists(view_folder):
+        # If it is not an aboslute path
+        view_folder = os.path.join(report_path, '..', '..', view_folder)
+      output = page.outs.html_file(path=view_folder, name=v, split_files=split_files, install_modules=install_modules,
+                                   options={"css_route": '/css', "js_route": '/js'})
+      print(output)
+    except Exception as err:
+      print(err)
+      print("")
 
 def angular_parser(subparser):
   """
