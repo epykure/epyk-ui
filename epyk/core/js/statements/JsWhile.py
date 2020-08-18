@@ -7,7 +7,8 @@ from epyk.core.js.primitives import JsObject
 
 class JsWhile(object):
 
-  def __init__(self, jsPivot, options=None):
+  def __init__(self, jsPivot, options=None, context=None):
+    self._context = context
     self.options = {"var": 'i'}
     if options is not None:
       self.options.update(options)
@@ -49,6 +50,7 @@ class JsWhile(object):
       raise Exception("next() function must be used to avoid infinite loops !!")
 
     fncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
+    print("while(%s){%s; %s}" % (self.__pivot, fncs, self.__next))
     return "while(%s){%s; %s}" % (self.__pivot, fncs, self.__next)
 
 

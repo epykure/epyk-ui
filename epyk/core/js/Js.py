@@ -27,6 +27,7 @@ from epyk.core.js.primitives import JsString
 
 # All the predefined Javascript Statements
 from epyk.core.js.statements import JsIf
+from epyk.core.js.statements import JsWhile
 from epyk.core.js.statements import JsSwitch
 
 
@@ -743,6 +744,27 @@ class JsBase(object):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
     self.__if = JsIf.JsIf(jsCond, jsFnc, self._src)
     return self.__if
+
+  def while_(self, jsCond, jsFnc, options=None):
+    """
+    Description:
+    ------------
+    The while loop loops through a block of code as long as a specified condition is true.
+    
+    Related Pages:
+
+      https://www.w3schools.com/js/js_loop_while.asp
+
+    Attributes:
+    ----------
+    :param jsCond:
+    :param jsFnc:
+    :param options:
+    """
+    if isinstance(jsCond, list):
+      jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
+    self.__while = JsWhile.JsWhile(jsCond, options, self._src).fncs(jsFnc)
+    return self.__while
 
   def return_(self, jsData):
     """

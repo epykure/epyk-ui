@@ -205,6 +205,20 @@ class ContentFormatters(object):
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     return JsObjects.JsObjects.get("accounting.formatMoney(%s,%s, %s, %s, %s)" % (self.selector, symbol, digit, thousand_sep, decimal_sep))
 
+  @packageImport("accounting")
+  def unformat(self):
+    """
+    Description:
+    ------------
+    parse a value from any formatted number/currency string
+
+    Related Pages:
+
+      http://openexchangerates.github.io/accounting.js/
+
+    """
+    return JsObjects.JsNumber.JsNumber("accounting.unformat(%s)" % self.selector)
+
   @property
   def number(self):
     """
