@@ -60,15 +60,13 @@ def transpile(args):
       page = utils.get_page(mod)
       if settings is not None:
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
-      if not os.path.exists(view_folder):
-        # If it is not an aboslute path
-        view_folder = os.path.join(report_path, '..', '..', view_folder)
       output = page.outs.html_file(path=view_folder, name=v, split_files=split_files, install_modules=install_modules,
                                    options={"css_route": '/css', "js_route": '/js'})
       print(output)
     except Exception as err:
       print(err)
       print("")
+
 
 def angular_parser(subparser):
   """

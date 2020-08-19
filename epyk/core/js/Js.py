@@ -750,7 +750,7 @@ class JsBase(object):
     Description:
     ------------
     The while loop loops through a block of code as long as a specified condition is true.
-    
+
     Related Pages:
 
       https://www.w3schools.com/js/js_loop_while.asp
