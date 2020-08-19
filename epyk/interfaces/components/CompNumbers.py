@@ -223,18 +223,21 @@ class Numbers(object):
   def plotly(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"),
              htmlCode=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
+    Attributes:
+    ----------
     :param value:
     :param profile:
     :param options:
     :param width:
     :param height:
     :param htmlCode:
-    :return:
     """
     ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
     ind.add_trace({'value': value}, mode="number")
@@ -243,17 +246,21 @@ class Numbers(object):
   def plotly_with_delta(self, value, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
+    Attributes:
+    ----------
     :param value:
     :param profile:
     :param options:
     :param width:
     :param height:
     :param htmlCode:
-    :return:
     """
     ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
     ind.add_trace({'value': value}, mode="number+delta")

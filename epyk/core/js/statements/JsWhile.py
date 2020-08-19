@@ -50,7 +50,6 @@ class JsWhile(object):
       raise Exception("next() function must be used to avoid infinite loops !!")
 
     fncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
-    print("while(%s){%s; %s}" % (self.__pivot, fncs, self.__next))
     return "while(%s){%s; %s}" % (self.__pivot, fncs, self.__next)
 
 

@@ -76,6 +76,8 @@ class Components(object):
     self.chips = self.lists.chips #: shortcut for chips :func:`epyk.interfaces.components.CompLists.Lists.chips`
     self.contextual = self.menus.contextual #: shortcut for chips :func:`epyk.interfaces.components.CompMenus.Menus.contextual`
     self.hidden = self.fields.hidden #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
+    self.number = self.numbers.number #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
+    self.euro = self.numbers.euro #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label

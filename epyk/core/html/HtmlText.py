@@ -719,6 +719,46 @@ class Numeric(Html.Html):
     return self
 
   @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlNumeric
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlNumeric(self, report=self._report)
+    return self._dom
+
+  def to(self, number, timer=1):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param number:
+    :param timer: Integer. the spped of the increase in millisecond
+    """
+    self._report.body.onReady([
+      self._report.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
+      self._report.js.window.setInterval([
+        self._report.js.if_(
+          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self._report.js.objects.number(
+              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+              varName="window.%s_counter" % self.htmlCode, setVar=True),
+            self.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+      ], "%s_interval" % self.htmlCode, timer)
+    ])
+    return self
+
+  @property
   def options(self):
     """
     Description:

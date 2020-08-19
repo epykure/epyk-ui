@@ -72,6 +72,29 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     """
     return JsHtml.ContentFormatters(self._report, '%s.progressbar("value")' % self._src.dom.jquery.varId)
 
+  def to(self, number, timer=10):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param number:
+    :param timer: Integer. the spped of the increase in millisecond
+    """
+    return JsUtils.jsConvertFncs([
+      self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
+      self._report.js.window.setInterval([
+        self._report.js.if_(
+          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self._report.js.objects.number(
+              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+              varName="window.%s_counter" % self.htmlCode, setVar=True),
+            self._src.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+      ], "%s_interval" % self.htmlCode, timer)
+    ], toStr=True)
+
   def position(self, val, jsFnc):
     """
     Description:
