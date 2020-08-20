@@ -664,7 +664,7 @@ class JsHtmlRich(JsHtml):
       return JsObjects.JsObjects.get("%s.innerHTML += (%s+'<br />')" % (self.htmlCode, value))
       #return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlCode, value))
 
-    return JsObjects.JsObjects.get("%s.innerHTML += %s)" % (self.htmlCode, value))
+    return JsObjects.JsObjects.get("%s.innerHTML += %s" % (self.htmlCode, value))
 
   def empty(self):
     """

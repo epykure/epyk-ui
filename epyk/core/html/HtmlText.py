@@ -375,6 +375,35 @@ class Text(Html.Html):
                     "onblur": "this.contentEditable=false;this.className=''"})
     return self
 
+  def write(self, timer=50):
+    """
+    Description:
+    ------------
+    Add a typing effect on this text
+
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_js_typewriter.asp
+
+    Attributes:
+    ----------
+    :param timer: Integer. The speed for the typing effect
+    """
+    value = self.val
+    self.val = ""
+    self._report.body.onReady([
+      self._report.js.objects.string(value, varName="%s_writer" % self.htmlCode, setVar=True),
+      self._report.js.objects.number(0, varName="%s_pos" % self.htmlCode, setVar=True),
+      self.build(""),
+      self._report.js.window.setInterval([
+        self._report.js.if_(self._report.js.objects.number.get("window.%s_pos" % self.htmlCode) < self._report.js.objects.string.get("window.%s_writer" % self.htmlCode).length, [
+            self._report.js.objects.number(self._report.js.objects.number.get("window.%s_pos" % self.htmlCode) + 1, varName="window.%s_pos" % self.htmlCode, setVar=True),
+            self.dom.append(self._report.js.objects.string.get("window.%s_writer" % self.htmlCode).charAt(self._report.js.objects.number.get("window.%s_pos" % self.htmlCode)), new_line=False)
+          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+      ], "%s_interval" % self.htmlCode, timer)
+    ])
+    return self
+
   @property
   def _js__builder__(self):
     return '''
