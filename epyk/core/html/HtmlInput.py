@@ -544,7 +544,7 @@ class Field(Html.Html):
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
-    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
+    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, position=options.get("position", 'before'),  options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input
@@ -727,6 +727,11 @@ class FieldCheckBox(Field):
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"), options=options)
     super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
+    if label is not None and options.get('position') == 'after':
+      self.label.style.css.float = None
+      self.label.style.css.width = 'auto'
+      self.input.style.css.float = 'left'
+      self.input.style.css.margin_top = 5
     self.style.css.line_height = Defaults.LINE_HEIGHT
 
 
