@@ -406,6 +406,29 @@ class Effects(object):
     self._report.body.style.css_class.keyframes(name, attrs)
     return name
 
+  def sliding(self, duration=15, timing_fnc="linear", delay=0, iteration_count="infinite", direction=None, fill_mode=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
+    :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
+    :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
+    :param iteration_count: String. The animation-iteration-count property specifies the number of times an animation should run.
+    :param direction: String. The animation-direction property specifies whether an animation should be played forwards, backwards or in alternate cycles.
+    """
+    name = "sliding"
+    if self._htmlObj is not None:
+      self._htmlObj.style.css.padding_right = "2em"
+      self._htmlObj.style.css.padding_left = "100%"
+      self._htmlObj.style.css.white_space = "nowrap"
+      self._htmlObj.style.css.animation = "%s %ss %s %ss %s %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction or "", fill_mode or "")
+    attrs = {"0%": {'transform': "translate3d(0,0,0)"}, "100%": {'transform': "translate3d(-100%,0,0)"}}
+    self._report.body.style.css_class.keyframes(name, attrs)
+    return name
+
   def animate(self, name, targ_css_attrs, orig_css_attrs=None, delay=0, duration=1, timing_fnc="ease-in-out",
               iteration_count="infinite", directions="alternate", fill_mode='forwards'):
     """
