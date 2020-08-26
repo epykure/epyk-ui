@@ -130,7 +130,7 @@ class ImgCarrousel(Html.Html):
           rec['path'] = path
         if rec.get('selected') is not None:
           selected = i
-        img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60, height[1]))
+        img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60 if height[0] is not None else None, height[1]))
         div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css(
           {"display": 'none', "text-align": "center"})
       else:

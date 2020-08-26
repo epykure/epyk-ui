@@ -955,7 +955,7 @@ class Search(Html.Html):
     self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
     self.add_icon("fas fa-search", family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
-    self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
+    self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
 
   @property
