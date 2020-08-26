@@ -1042,6 +1042,10 @@ class JsBase(object):
     :param url:
     :param options:
     """
+    options = options or {}
+    if options.get("name", '') != "_blank":
+      return self.location.href(href=url)
+
     return self.location.open_new_tab(url=url)
 
   def registerFunction(self, fncName, jsFncs, pmts=None):

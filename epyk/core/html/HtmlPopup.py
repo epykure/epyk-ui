@@ -87,7 +87,6 @@ class Popup(Html.Html):
       self.__title.options.managed = False
       self.__title.style.css.color = self._report.theme.greys[0]
       trTitle = self.__title.html()
-    print(trTitle)
     str_html = "\n".join([val.html() if hasattr(val, 'html') else str(val) for val in self.val])
     content = '''
       <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:auto">
