@@ -436,14 +436,14 @@ class Effects(object):
     ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
-    Attributes:
-    ----------
     htmlObj.style.effects.animate("pink", {"color": "blue", "width": "400px"})
 
     Related Pages:
 
       https://www.w3schools.com/cssref/css_animatable.asp
 
+    Attributes:
+    ----------
     :param name: String. The animation name
     :param targ_css_attrs: Dictionary. The different CSS attributes to animate
     :param orig_css_attrs: Dictionary. The initial state of the attributes to animate

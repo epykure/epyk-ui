@@ -39,6 +39,8 @@ class Image(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -74,8 +76,10 @@ class Image(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      if(typeof data.path === 'undefined'){data.path = '%s'};
-      htmlObj.src = data.path + "/" + data.image; 
+      if (typeof image !== 'undefined'){
+        if(typeof data.path === 'undefined'){data.path = '%s'};
+        htmlObj.src = data.path + "/" + data.image}
+      else { htmlObj.src = data }
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       ''' % Defaults.SERVER_PATH
 
@@ -163,6 +167,7 @@ class ImgCarrousel(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -411,10 +416,12 @@ class Icon(Html.Html):
 
   def set_icon(self, value):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param value:
-
-    :return:
     """
     self.attr['class'].add(value)
     return self
@@ -451,6 +458,7 @@ class Icon(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
     """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(jsFncs, profile, source_event)

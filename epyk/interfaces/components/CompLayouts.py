@@ -362,12 +362,10 @@ class Layouts(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options:
     :param profile:
-
-    :rtype: html.HtmlPopup.Popup
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"background": True, 'draggable': False, 'margin': 10}
+    dfl_options = {"background": True, 'draggable': False, 'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
     if options is not None:
       dfl_options.update(options)
     if not dfl_options["background"] and width[0] == 100:

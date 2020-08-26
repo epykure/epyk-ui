@@ -520,6 +520,30 @@ class OptionPopup(Options):
     self.set(bool)
 
   @property
+  def closure(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @closure.setter
+  def closure(self, icon):
+    self.set(icon)
+
+  @property
+  def top(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(100)
+
+  @top.setter
+  def top(self, value):
+    self.set(value)
+
+  @property
   def draggable(self):
     """
     Description:
