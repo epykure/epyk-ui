@@ -3,7 +3,8 @@
 
 A module to link Python ecosystem to the JavaScript one.
 
-**Epyk Studio is a wrapper to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://github.com/epykure/epyk-studio)**
+**Epyk Studio is a wrapper to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
+or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio)**
 
 Presentation
 ================================
