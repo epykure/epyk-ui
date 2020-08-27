@@ -99,6 +99,42 @@ class Components(object):
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
     return self
 
+  def print(self, text=None, sep="", end="\n"):
+    """
+    Description:
+    ------------
+    Mimic the print function available in Python.
+    This will create a div container with the content as a string.
+
+    This function can be also used to display Python function. Inspect module will be used in this case to get the source code.
+
+    Usage::
+
+      import pandas
+    page.ui.print('pandas: {}'.format(pandas.__version__))
+
+    Attributes:
+    ----------
+    :param text: String. The content to be displayed
+    :param sep: String. sep. not used
+    :param end: String. The end of line
+    """
+    if callable(text):
+      import inspect
+      text = inspect.getsource(text)
+
+    if text is not None:
+      if end == "\n":
+        div = self.text(text, width=(100, '%'))
+      else:
+        div = self.text(text)
+      div.style.css.padding = 5
+      div.style.css.white_space = 'pre'
+      div.style.css.font_family = 'Courier'
+    else:
+      div = self.layouts.new_line()
+    return div
+
   @property
   def codes(self):
     """
