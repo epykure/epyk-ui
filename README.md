@@ -6,6 +6,11 @@ A module to link Python ecosystem to the JavaScript one.
 **Epyk Studio is a wrapper to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
 or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio)**
 
+<i>
+FAQ
+For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)
+</i>
+
 Presentation
 ================================
 The goal of Epyk is to ensure the implementation of a coherent system using a minimum of layers.
