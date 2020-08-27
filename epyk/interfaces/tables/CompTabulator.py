@@ -28,10 +28,9 @@ class Tabulators(object):
     if options is not None:
       table_options_dflts.update(options)
 
-    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, options, profile)
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, table_options_dflts, profile)
     for c in cols + rows:
       table.add_column(c)
-      #col_def.cssClass.center() # = "dt-center, dt-test"
     return table
 
   def heatmap(self):

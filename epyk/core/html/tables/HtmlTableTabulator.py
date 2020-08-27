@@ -24,6 +24,7 @@ class Table(Html.Html):
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None
     super(Table, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__config = TableConfig(self, options)
     if records is not None:
       self.config.data = records
     self.style.css.background = None
