@@ -3,6 +3,8 @@
 
 A module to link Python ecosystem to the JavaScript one.
 
+**Epyk Studio is a wrapper to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://github.com/epykure/epyk-studio)**
+
 Presentation
 ================================
 The goal of Epyk is to ensure the implementation of a coherent system using a minimum of layers.
