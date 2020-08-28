@@ -1209,7 +1209,6 @@ Attributes:
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-
     options, js_options = options or self._jsStyles, []
     for k, v in options.items():
       if isinstance(v, dict):
@@ -1220,8 +1219,14 @@ Attributes:
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    fnc_call = "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
+    if profile:
+      if isinstance(profile, dict):
+        return "(function(){var t0 = performance.now(); %s; console.log('%s: ' + (performance.now() - t0) + ' ms' )})()" % (fnc_call, profile['name'])
 
-    return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
+      return "(function(){var t0 = performance.now(); %s; console.log(performance.now() - t0)})()" % fnc_call
+
+    return fnc_call
 
   def refresh(self):
     """
