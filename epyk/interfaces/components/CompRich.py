@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
+from epyk.core.css import Colors
 
 
 class Rich(object):
@@ -417,3 +418,28 @@ class Rich(object):
     container.style.css.background = background
     container.style.css.padding = 10
     return container
+
+  def color(self, code, width=(20, 'px'), height=(20, 'px'), options=None):
+    """
+    Description:
+    ------------
+    Color component
+
+    Attributes:
+    ----------
+    :param code: Tuple or String. The color code
+    :param width:
+    :param height:
+    :param options:
+    """
+    dflt_options = {"type": 'rgb'}
+    if options is not None:
+      dflt_options.update(options)
+    if dflt_options.get("type") == 'hex' or str(code).startswith("#"):
+      code = Colors.getHexToRgb(code)
+    d = self.context.rptObj.ui.div(width=width, height=height)
+    d.style.css.display = "inline-block"
+    d.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[0]
+    d.tooltip(code)
+    d.style.css.background = "rgb(%s, %s, %s)" % (code[0], code[1], code[2])
+    return d
