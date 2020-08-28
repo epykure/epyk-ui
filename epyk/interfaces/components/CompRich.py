@@ -419,7 +419,7 @@ class Rich(object):
     container.style.css.padding = 10
     return container
 
-  def color(self, code, width=(20, 'px'), height=(20, 'px'), options=None):
+  def color(self, code, content="data copied to clipboard", width=(20, 'px'), height=(20, 'px'), options=None):
     """
     Description:
     ------------
@@ -432,7 +432,7 @@ class Rich(object):
     :param height:
     :param options:
     """
-    dflt_options = {"type": 'rgb'}
+    dflt_options = {"type": 'rgb', 'popup_timers': 1000}
     if options is not None:
       dflt_options.update(options)
     if dflt_options.get("type") == 'hex' or str(code).startswith("#"):
@@ -440,6 +440,10 @@ class Rich(object):
     d = self.context.rptObj.ui.div(width=width, height=height)
     d.style.css.display = "inline-block"
     d.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[0]
-    d.tooltip(code)
+    d.tooltip("rgb: %s, hex: %s" % (code, Colors.getRgbToHex(code)))
+    d.style.css.cursor = "pointer"
+    d.click([
+      self.context.rptObj.js.clipboard(Colors.getRgbToHex(code)),
+      self.context.rptObj.js.print(content,  dflt_options.get('popup_timers'), dflt_options.get('popup_css'))])
     d.style.css.background = "rgb(%s, %s, %s)" % (code[0], code[1], code[2])
     return d

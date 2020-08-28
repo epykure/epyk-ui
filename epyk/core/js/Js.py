@@ -1625,6 +1625,29 @@ class JsBase(object):
       self.body.appendChild(self.objects.dom("popup_info")),
       self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 
+  def print(self, content, timer=1000, cssAttrs=None):
+    """
+    Description:
+    ------------
+    Print a temporary message
+
+    Attributes:
+    ----------
+    :param content: String. The content of the popup
+    :param timer: Number. The time the popup will be displayed
+    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    """
+    dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
+                  "top": JsObject.JsObject.get('event.clientY + "px"'), 'left': JsObject.JsObject.get('event.clientX + "px"')}
+    if cssAttrs is not None:
+      dflt_attrs.update(cssAttrs)
+    return '''
+      (function(event, content){
+        var popup = document.createElement("div"); %s
+        popup.innerHTML = content; document.body.appendChild(popup);
+        setTimeout(function(){ document.body.removeChild(popup); }, %s);
+      })(event, "%s")''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, content)
+
   def mail(self, mails, subject=None, body=None, cc=None, bcc=None):
     """
     Description:
