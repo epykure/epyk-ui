@@ -911,6 +911,8 @@ class JsWindow(object):
     if skip_data_convert:
       return JsFncs.JsFunction("%s.alert(%s)" % (windowId, jsData))
 
+    if hasattr(jsData, 'dom'):
+      jsData = jsData.dom.content
     return JsFncs.JsFunction("%s.alert(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
 
   def atob(self, jsData, jsFnc=None, windowId="window"):

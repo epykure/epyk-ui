@@ -172,6 +172,38 @@ class Buttons(object):
     html_button.style.css.padding = 2
     return html_button
 
+  def normal(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Standard button with a standard layout
+
+    Usage::
+
+      rptObj.ui.buttons.small("Small button")
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
+                                         tooltip=tooltip, profile=profile, options=options)
+    html_button.style.css.line_height = 18
+    return html_button
+
   def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:

@@ -1377,6 +1377,16 @@ class Body(Html):
     return self._dom
 
   def scroll(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._report.js.onReady(self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(jsFncs, toStr=True)))

@@ -220,6 +220,7 @@ class JsConsole(object):
     Attributes:
     ----------
     :param htmlCode: The name of the timer to end
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     return JsFncs.JsFunction("console.timeEnd('%s')" % htmlCode)
@@ -262,6 +263,23 @@ class JsConsole(object):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return JsFncs.JsFunction("try{%s} catch(err){%s}" % (";".join(jsFncs), jsFncsErrs))
+
+  def perf(self, varName, label=None):
+    """
+    Description:
+    ------------
+    Shortcut function to display performances from a variable.
+    The variable must be global. Namely the name should start with window.
+
+    Attributes:
+    ----------
+    :param varName: String. The variable var name use to compute the performance
+    :param label: String. Optional. The description
+    """
+    if label is not None:
+      return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, varName))
+
+    return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % varName)
 
 
 class JsJson(object):
@@ -1641,12 +1659,16 @@ class JsBase(object):
                   "top": JsObject.JsObject.get('event.clientY + "px"'), 'left': JsObject.JsObject.get('event.clientX + "px"')}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
+      if 'bottom' in cssAttrs:
+        del dflt_attrs["top"]
+      if 'right' in cssAttrs:
+        del dflt_attrs["left"]
     return '''
       (function(event, content){
         var popup = document.createElement("div"); %s
         popup.innerHTML = content; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
-      })(event, "%s")''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, content)
+      })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None))
 
   def mail(self, mails, subject=None, body=None, cc=None, bcc=None):
     """

@@ -2,13 +2,6 @@
 # -*- coding: utf-8 -*-
 
 
-"""
-Entry point for the different Javascript primitives
-
-"""
-
-import json
-
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsDate
 from epyk.core.js.primitives import JsObject
@@ -155,6 +148,19 @@ class JsObjects(object):
     :return: A Python generic JsObject primitive
     """
     return JsObject.JsObject.new(data, varName, isPyData, report=report)
+
+  def time(self, varName, report=None):
+    """
+    Description:
+    -----------
+    Return a time object from the Javascript function performance.now()
+
+    Attributes:
+    ----------
+    :param varName: String. The variable name
+    :param report: Report. The report object
+    """
+    return JsObject.JsObject.new("performance.now()", varName, False, report=report)
 
   @property
   def number(self):
@@ -342,6 +348,15 @@ class JsObjects(object):
     """
     return JsData.RawData.get(self._jsObj, varName)
 
+  def incr(self, incr):
+    """
+    Description:
+    -----------
+
+    :param incr:
+    """
+    return JsObject.JsObject("%s++" % incr)
+
 
 class JsPromise(object):
 
@@ -396,7 +411,7 @@ class JsPromise(object):
 class XMLHttpRequest(object):
 
   def __init__(self, report, varName, method_type, url, data=None):
-    self.data = {} if data is None else data
+    self.data = JsData.Datamap() if data is None else data
     self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send = None, None, None
@@ -651,15 +666,18 @@ class XMLHttpRequest(object):
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if jsonData:
-      jsonData.update(self.data)
-    else:
-      jsonData = self.data
+      if isinstance(jsonData, list):
+        for obj in jsonData:
+          if hasattr(obj, 'options'):
+            self.data.add(obj)
+          else:
+            self.data.attrs(obj)
     if jsonData:
       if stringify:
-        self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(jsonData, None))
+        self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
       else:
         # For data form when dealing with files
-        self.__req_send = "%s.send(%s)" % (self.varId, JsUtils.jsConvertData(jsonData, None))
+        self.__req_send = "%s.send(%s)" % (self.varId, JsUtils.jsConvertData(self.data, None))
     elif encodeURIData is not None:
       self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encodeURIData.items()])
       self.__req_send = "%s.send()" % self.varId

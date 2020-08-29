@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 class DataEvents(object):
@@ -5,8 +7,9 @@ class DataEvents(object):
   @property
   def files(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsArray.JsArray.get("Array.from(event.dataTransfer.files)")
@@ -85,8 +88,9 @@ class DataFile(object):
   @property
   def name(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("value.name")
@@ -94,8 +98,9 @@ class DataFile(object):
   @property
   def size(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("value.size")
@@ -103,8 +108,9 @@ class DataFile(object):
   @property
   def lastModifiedDate(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("value.lastModifiedDate")
@@ -112,8 +118,9 @@ class DataFile(object):
   @property
   def lastModified(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("value.lastModified")
@@ -138,8 +145,6 @@ class DataLoops(object):
     """
     Description:
     -----------
-
-    :return:
     """
     from epyk.core.js.objects import JsNodeDom
     return JsNodeDom.JsDoms.new(varName="value", setVar=False)
@@ -149,8 +154,6 @@ class DataLoops(object):
     """
     Description:
     -----------
-
-    :return:
     """
     from epyk.core.js.objects import JsNodeDom
     return JsNodeDom.JsDoms.new(varName="elt", setVar=False)
