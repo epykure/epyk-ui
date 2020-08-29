@@ -3,8 +3,6 @@
 
 import datetime
 
-from epyk.core.data import components
-
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlEditor
 from epyk.core.js.packages import JsCodeMirror
@@ -439,6 +437,8 @@ class MarkdownReader(Html.Html):
     ----------
     :param data: Dictionary. The list of word to be automatically changed
     """
+    from epyk.core.data import components
+
     if not "markdown_tooltip" in self._report.components:
       div = self._report.ui.div(htmlCode="markdown_tooltip", width=("auto", ""))
       div.style.css.display = False
