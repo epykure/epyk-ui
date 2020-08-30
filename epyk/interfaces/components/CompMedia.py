@@ -30,12 +30,12 @@ class Media(object):
     ----------
     :param value: The name of the video
     :param path: Optional. THe path to the video
-    :param align:
+    :param align: String. Optional. A string with the horizontal position of the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. A dictionary with the components properties
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -68,12 +68,12 @@ class Media(object):
     Attributes:
     ----------
     :param value: The name of the audio object
-    :param path: Optional. THe path to the audio object
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. A dictionary with the components properties
+    :param path: String. Optional. THe path to the audio object
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -101,8 +101,8 @@ class Media(object):
 
     Attributes:
     ----------
-    :param link: The youtube link
-    :param align:
+    :param link: String. The youtube link
+    :param align: String. Optional. A string with the horizontal position of the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)

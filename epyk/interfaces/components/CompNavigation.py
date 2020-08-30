@@ -10,10 +10,12 @@ class Navigation(object):
   def __init__(self, context):
     self.context = context
 
-  def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
+  def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'), height=(25, 'px'),
+         options=None, profile=False):
     """
     Description:
     ------------
+    Navigation button to go to the top of the page directly
 
     Usage::
 
@@ -21,17 +23,19 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param icon:
-    :param top:
-    :param right:
-    :param bottom:
-    :param tooltip:
-    :param width:
-    :param options:
-    :param profile:
+    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
+    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    du = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    du = self.context.rptObj.ui.icon(icon, width=width, height=height, options=options, profile=profile).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if top is not None:
       du.style.css.top = top
@@ -49,10 +53,12 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return du
 
-  def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
+  def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'), height=(25, 'px'),
+         options=None, profile=False):
     """
     Description:
     ------------
+    Navigation button to go to the bottom of the page directly
 
     Usage::
 
@@ -60,17 +66,18 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param icon:
-    :param top:
-    :param right:
-    :param bottom:
-    :param tooltip:
-    :param width:
-    :param options:
-    :param profile:
+    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
+    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
-    dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
+    dd = self.context.rptObj.ui.icon(icon, width=width, height=height, options=options, profile=profile).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
         "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if bottom is not None:
       dd.style.css.bottom = bottom
@@ -88,10 +95,12 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return dd
 
-  def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
+  def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'), height=(25, 'px'),
+         options=None, profile=False):
     """
     Description:
     ------------
+    Navigation button to go to a specific point in the page directly
 
     Usage::
 
@@ -99,19 +108,20 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param y:
-    :param x:
-    :param icon:
-    :param top:
-    :param right:
-    :param bottom:
-    :param tooltip:
-    :param width:
-    :param options:
-    :param profile:
+    :param y: Integer. The y position on the page
+    :param x: Integer. Optional. The x position on the page
+    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
+    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
-    dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
+    dd = self.context.rptObj.ui.icon(icon, width=width, height=height, options=options, profile=profile).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if bottom is not None:
       dd.style.css.bottom = bottom
@@ -129,10 +139,12 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return dd
 
-  def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
+  def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None,
+          width=(25, 'px'), height=(25, 'px'), options=None, profile=False):
     """
     Description:
     ------------
+    Shortcut to a specific position in the page
 
     Usage::
 
@@ -140,20 +152,21 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param text:
-    :param url:
-    :param icon:
-    :param top:
-    :param right:
-    :param bottom:
-    :param tooltip:
-    :param width:
-    :param options:
-    :param profile:
+    :param text: String. The shortcut name
+    :param url: String. Optional. The anchor name
+    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
+    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
-    dd = self.context.rptObj.ui.icon(icon)
-    h_url = self.context.rptObj.ui.link(text, url=url).css({"margin-left": "10px"})
+    dd = self.context.rptObj.ui.icon(icon, width=width, height=height, options=options, profile=profile)
+    h_url = self.context.rptObj.ui.link(text, url=url) # .css({"padding-left": "10px"})
     div = self.context.rptObj.ui.div([dd, h_url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                           "border-radius": '30px', "padding": '10px 15px', "right": '%spx' % right,
                           "background-color": self.context.rptObj.theme.greys[0]})
@@ -163,13 +176,13 @@ class Navigation(object):
       div.style.css.top = top
     div.attr['class'].add("CssDivOnHoverWidth")
     h_url.css({"display": 'none', "white-space": 'nowrap'})
-    div.on("mouseover", [h_url.dom.css({"display": 'inline-block'})])
-    div.on("mouseout", [h_url.dom.css({"display": 'none'})])
+    div.on("mouseover", [h_url.dom.css({"display": 'inline-block', "padding-left": "10px"})])
+    div.on("mouseout", [h_url.dom.css({"display": 'none', "padding-left": "0px"})])
     if tooltip is not None:
       div.tooltip(tooltip)
     return div
 
-  def scroll(self, position=0, height=(3, 'px'), options=None, profile=False):
+  def scroll(self, progress=0, height=(3, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -181,13 +194,13 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param position:
-    :param height:
-    :param options:
-    :param profile:
+    :param progress: Integer. Optional. The progression on the page.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
-    p = self.context.rptObj.ui.sliders.progressbar(position, height=height, options=options, profile=profile)
+    p = self.context.rptObj.ui.sliders.progressbar(progress, height=height, options=options, profile=profile)
     self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         p.build(self.context.rptObj.js.window.scrollPercentage)]))
@@ -206,10 +219,10 @@ class Navigation(object):
     ----------
     :param count:
     :param selected:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -233,10 +246,10 @@ class Navigation(object):
     ----------
     :param count:
     :param selected:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -259,11 +272,11 @@ class Navigation(object):
     ----------
     :param count:
     :param selected:
-    :param position:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param position: String. Optional. A string with the vertical position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -286,13 +299,11 @@ class Navigation(object):
     ----------
     :param records:
     :param divider:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     if divider is None:
       divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
@@ -322,10 +333,10 @@ class Navigation(object):
     ----------
     :param logo:
     :param title:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -385,13 +396,11 @@ class Navigation(object):
     :param image:
     :param text:
     :param link:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     h_image = self.context.rptObj.ui.img(image)
     h_text = self.context.rptObj.ui.text(text)
@@ -406,7 +415,7 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), profile=False):
+  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -420,13 +429,14 @@ class Navigation(object):
     Attributes:
     ----------
     :param components: list of html components
-    :param width: the width of the object
-    :param height: the height of the object
-    :param profile: get profiling info
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
+    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
     self.context.rptObj.body.style.css.padding_bottom = height[0]
     return footer
 
@@ -445,9 +455,9 @@ class Navigation(object):
     :param components:
     :param anchor:
     :param size:
-    :param position:
-    :param options:
-    :param profile:
+    :param position: String. Optional. A string with the vertical position of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     d = self.context.rptObj.ui.div(components)
     d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
@@ -494,11 +504,11 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options: Optional. A dictionary with the components properties
-    :param profile: Optional. A flag to set the component performance storage
-    :param helper:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param helper: String. Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -518,15 +528,14 @@ class Navigation(object):
     :param components:
     :param logo:
     :param size:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param htmlCode:
     """
     size = Arguments.size(size, unit="px")
     dflt_options = {"position": 'left'}
     if options is not None:
       dflt_options.update(options)
-
     if dflt_options["position"] in ['top', 'bottom']:
       width = (100, '%')
       height = size
@@ -559,13 +568,11 @@ class Banners(object):
     ----------
     :param data:
     :param background:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -591,13 +598,11 @@ class Banners(object):
     ----------
     :param data:
     :param background:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -623,14 +628,12 @@ class Banners(object):
     ----------
     :param data:
     :param background:
-    :param position:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param position: String. Optional. A string with the vertical position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="px")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -656,15 +659,13 @@ class Banners(object):
     Attributes:
     ----------
     :param data:
-    :param icon:
+    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-info-circle
     :param background:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
@@ -692,14 +693,12 @@ class Banners(object):
     :param data:
     :param size_notch:
     :param background:
-    :param width:
-    :param align:
-    :param height:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
@@ -726,14 +725,12 @@ class Banners(object):
     :param content:
     :param size_notch:
     :param background:
-    :param width:
-    :param align:
-    :param height:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     options = options or {}
     if not hasattr(title, 'options'):
@@ -766,18 +763,14 @@ class Banners(object):
     ----------
     :param content:
     :param author:
-    :param job:
     :param avatar:
     :param background:
-    :param width:
-    :param align:
-    :param height:
-    :param options:
-    :param profile:
-    :return:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(content, 'options'):
       content = self.context.rptObj.ui.div('"%s"' % content, width=("auto", ""))
@@ -808,14 +801,12 @@ class Banners(object):
     ----------
     :param copyright:
     :param links:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - 2020, Epyk studio")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     for link in links:
@@ -842,11 +833,11 @@ class Banners(object):
     Attributes:
     ----------
     :param text:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param youtube:
     :param twitter:
     :param facebook:
@@ -854,8 +845,6 @@ class Banners(object):
     :param instagram:
     :param linkedIn:
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = "10px 0"
     text = self.context.rptObj.ui.text(text)
@@ -910,14 +899,12 @@ class Banners(object):
     :param links:
     :param size_notch:
     :param background:
-    :param width:
-    :param align:
-    :param height:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     row = []
     for i, header in enumerate(headers):
@@ -946,15 +933,13 @@ class Banners(object):
     ----------
     :param title:
     :param background:
-    :param width:
-    :param align:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = 5
     div.add(self.context.rptObj.ui.title(title))
@@ -985,14 +970,12 @@ class Banners(object):
     :param title:
     :param content:
     :param background:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(title, 'options'):
       div.title = self.context.rptObj.ui.titles.title(title)

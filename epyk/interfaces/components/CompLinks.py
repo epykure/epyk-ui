@@ -36,11 +36,11 @@ class Links(object):
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param helper:
+    :param helper: String. Optional. A tooltip helper
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -65,13 +65,13 @@ class Links(object):
     Attributes:
     ----------
     :param text:
-    :param url:
-    :param icon:
-    :param helper:
-    :param height:
+    :param url: String. The destination page when clicked
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param helper: String. Optional. A tooltip helper
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -104,8 +104,8 @@ class Links(object):
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param helper:
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param helper: String. Optional. A tooltip helper
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -138,12 +138,12 @@ class Links(object):
 
     Attributes:
     ----------
-    :param text: The string value to be displayed in the component
-    :param value:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param format: Optional. The downloaded data format
-    :param profile: Optional. A flag to set the component performance storage
+    :param text: String. The string value to be displayed in the component
+    :param value: String. The value to be displayed to this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param format: String. Optional. The downloaded data format
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)

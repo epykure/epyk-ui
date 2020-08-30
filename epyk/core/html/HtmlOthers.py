@@ -21,8 +21,8 @@ from epyk.core import data
 class Hr(Html.Html):
   name = 'Line delimiter'
 
-  def __init__(self, report, background_color, width, height, align, profile):
-    super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height, 'width': width,
+  def __init__(self, report, background_color, width, height, align, options, profile):
+    super(Hr, self).__init__(report, "", options=options, profile=profile, css_attrs={"height": height, 'width': width,
                              'border-color': background_color or report.theme.greys[5],
                              'background-color': background_color or report.theme.greys[5]})
     if align == "center":
@@ -171,8 +171,8 @@ class Loading(Html.Html):
   requirements = ('font-awesome', )
   name = 'Loading'
 
-  def __init__(self, report, text, color, size, options):
-    super(Loading, self).__init__(report, text)
+  def __init__(self, report, text, color, size, options, profile):
+    super(Loading, self).__init__(report, text, profile=profile)
     self.color = self._report.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
@@ -223,6 +223,8 @@ class HtmlJson(Html.Html):
   @property
   def jsonId(self):
     """
+    Description:
+    ------------
     Return the Javascript variable of the json object
     """
     return "%s_obj" % self.htmlCode

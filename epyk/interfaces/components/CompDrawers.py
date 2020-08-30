@@ -28,7 +28,7 @@ class Drawers(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
     :param profile: Optional. A flag to set the component performance storage
-    :param helper:
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -49,9 +49,9 @@ class Drawers(object):
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options:
+    :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
-    :param helper:
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -76,7 +76,7 @@ class Drawers(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
     :param profile: Optional. A flag to set the component performance storage
-    :param helper:
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -100,11 +100,11 @@ class Drawers(object):
     Attributes:
     ----------
     :param component:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
-    :param helper:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -131,7 +131,7 @@ class Drawers(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
     :param profile: Optional. A flag to set the component performance storage
-    :param helper:
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

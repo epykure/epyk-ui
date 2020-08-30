@@ -34,10 +34,12 @@ class Network(object):
 
     Attributes:
     ----------
-    :param htmlCode:
-    :param width:
-    :param height:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param recordSet:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -61,10 +63,12 @@ class Network(object):
 
     Attributes:
     ----------
-    :param htmlCode:
-    :param width:
-    :param height:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param recordSet:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -88,10 +92,12 @@ class Network(object):
 
     Attributes:
     ----------
-    :param htmlCode:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param width:
-    :param height:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -131,11 +137,11 @@ class Network(object):
     Attributes:
     ----------
     :param value: The content of the notification
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -172,11 +178,11 @@ class Network(object):
     Attributes:
     ----------
     :param value: The content of the notification
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('danger', value, width, height, htmlCode, options, profile)
 
@@ -203,11 +209,11 @@ class Network(object):
     Attributes:
     ----------
     :param value: The content of the notification
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('info', value, width, height, htmlCode, options, profile)
 
@@ -234,11 +240,11 @@ class Network(object):
     Attributes:
     ----------
     :param value: The content of the notification
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('success', value, width, height, htmlCode, options, profile)
 
@@ -265,11 +271,11 @@ class Network(object):
     Attributes:
     ----------
     :param value: The content of the notification
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('warning', value, width, height, htmlCode, options, profile)
 
@@ -295,11 +301,11 @@ class Network(object):
     Attributes:
     ----------
     :param value:
-    :param htmlCode:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -317,10 +323,10 @@ class Network(object):
     ----------
     :param img: String. The image path on the server or locally to be used
     :param htmlCode: String. Optional. The id for this component
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -351,8 +357,9 @@ class Network(object):
     Attributes:
     ----------
     :param placeholder:
-    :param tooltip:
-    :param profile:
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     return html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)
 
@@ -363,12 +370,12 @@ class Network(object):
 
     Attributes:
     ----------
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. The id for this component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if icon is None:
       icon = "fas fa-file-upload"
@@ -380,14 +387,16 @@ class Network(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param name:
-    :param icon:
+    :param icon: String. Optional. The component icon content from font-awesome references
     :param path:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. The id for this component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     mapped_file = {"excel": 'far fa-file-excel', 'pdf': 'far fa-file-pdf', 'code': 'far fa-file-code', 'csv': 'fas fa-file-csv',
                    'word': 'fa-file-word'}

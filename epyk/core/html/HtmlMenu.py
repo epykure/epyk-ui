@@ -127,8 +127,8 @@ class HtmlNavBar(Html.Html):
 class HtmlFooter(Html.Html):
   name = 'footer'
 
-  def __init__(self, report, components, width, height, profile):
-    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, components, width, height, options, profile):
+    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, options=options, profile=profile)
     self.__col_lst = None
     if components is not None:
       if not isinstance(components, list):

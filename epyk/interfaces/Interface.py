@@ -37,6 +37,8 @@ from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
 from epyk.interfaces.components import CompPictos
 
+from epyk.interfaces import Arguments
+
 
 class Components(object):
   def __init__(self, rptObj):
@@ -100,7 +102,7 @@ class Components(object):
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
     return self
 
-  def print(self, text=None, sep="", end="\n"):
+  def print(self, text=None, sep="", end="\n", htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -119,6 +121,9 @@ class Components(object):
     :param text: String. The content to be displayed
     :param sep: String. sep. not used
     :param end: String. The end of line
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if callable(text):
       import inspect
@@ -126,9 +131,9 @@ class Components(object):
 
     if text is not None:
       if end == "\n":
-        div = self.text(text, width=(100, '%'))
+        div = self.text(text, width=(100, '%'), htmlCode=htmlCode, options=options, profile=profile)
       else:
-        div = self.text(text)
+        div = self.text(text, htmlCode=htmlCode, options=options, profile=profile)
       div.style.css.padding = 5
       div.style.css.white_space = 'pre'
       div.style.css.font_family = 'Courier'
@@ -533,13 +538,13 @@ class Components(object):
 
     Attributes:
     ----------
-    :param title:
-    :param top:
-    :param right:
-    :param left:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options:
+    :param title: String. Optional. The title for the content table
+    :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned elemen
+    :param left: Integer. Optional. The left property affects the horizontal position of a positioned element.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
     html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, options, profile)
@@ -577,7 +582,7 @@ class Components(object):
     Attributes:
     ----------
     :param vals: Optional.
-    :param title: Optional.
+    :param title: String. Optional. Teh title for teh tag component
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -586,7 +591,7 @@ class Components(object):
     """
     return html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile)
 
-  def loading(self, text="Loading", color=None, options=None):
+  def loading(self, text="Loading", color=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -598,11 +603,12 @@ class Components(object):
 
     Attributes:
     ----------
-    :param text:
-    :param color:
-    :param options:
+    :param text: String. The text in the component (during the loading)
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {})
+    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {}, profile)
     return html_loading
 
   def breadcrumb(self, values, selected=None, width=(100, '%'), height=(30, 'px'), options=None, profile=None):
@@ -626,13 +632,15 @@ class Components(object):
     Attributes:
     ----------
     :param values:
-    :param selected:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param selected: Integer. The selected item index
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     options = options or {}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options['selected'] = selected
     html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values, width, height, options, profile)
     return html_breadcrumb
@@ -669,12 +677,14 @@ class Components(object):
     Attributes:
     ----------
     :param data: Dictionary. The Json object to be display
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options: Optional. Dictionary with the component properties
-    :param profile: Boolean
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     data = data or {}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     h_json = html.HtmlOthers.HtmlJson(self.rptObj, data, width, height, options, profile)
     if height[1] != '%':
       h_json.style.css.overflow = 'auto'
@@ -695,18 +705,20 @@ class Components(object):
     Attributes:
     ----------
     :param data: String. The value to be converted to QR Code
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options: Optional. Dictionary with the component properties
-    :param profile: Boolean
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     data = data or {}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     h_qrcode = html.HtmlOthers.HtmlQRCode(self.rptObj, data, width, height, options, profile)
     if height[1] != '%':
       h_qrcode.style.css.overflow = 'auto'
     return h_qrcode
 
-  def postit(self, components=None, anchor=None):
+  def postit(self, components=None, anchor=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -719,14 +731,16 @@ class Components(object):
     ----------
     :param components: Components. Optional.
     :param anchor: Component. Optional.
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    postit = self.rptObj.ui.div()
+    postit = self.rptObj.ui.div(options=options, profile=profile)
     if anchor is None:
       anchor = self.rptObj.ui.icon("fas fa-map-marker")
       anchor.style.css.padding = "4px"
       postit += anchor
     postit.anchor = anchor
-    popup = self.rptObj.ui.div(components, width=(None, 'px'))
+    popup = self.rptObj.ui.div(components, width=(None, 'px'), options=options, profile=profile)
     popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px',
                'padding': '5px', 'background': self.rptObj.theme.greys[0]})
     postit += popup

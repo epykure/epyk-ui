@@ -227,10 +227,12 @@ class Fields(object):
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
-    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
+    options = options or {}
+    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options, helper)
     return html_dt
 
-  def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+            helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -249,16 +251,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -285,16 +287,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -321,16 +323,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -360,16 +362,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -398,16 +400,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -434,16 +436,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -470,16 +472,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -507,16 +509,16 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -548,15 +550,15 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string
+    :param label: String. Optional. The text of label to be added to the component
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -591,15 +593,15 @@ class Fields(object):
     Attributes:
     ----------
     :param value:
-    :param label:
-    :param group_name:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param label: String. Optional. The text of label to be added to the component
+    :param group_name: String. Optional. Group different radio together to only have 1 value selected
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -678,15 +680,15 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param value: Boolean. Optional. The value to be displayed to the component. Default False
+    :param label: String. Optional. The text of label to be added to the component
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

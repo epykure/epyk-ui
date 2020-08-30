@@ -36,7 +36,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -72,7 +72,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -108,7 +108,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -144,7 +144,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -180,7 +180,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -216,7 +216,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -252,7 +252,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -288,7 +288,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -325,7 +325,7 @@ class Code(object):
     :param htmlCode: String. The unique component ID
     :param options: Dictionary. The object properties
     :param helper: String. Optional. The helper message
-    :param profile: Dictionary. Profiling details
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

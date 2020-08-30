@@ -551,8 +551,8 @@ class OptionsBar(Html.Html):
   requirements = ('font-awesome', )
   name = 'Options'
 
-  def __init__(self, report, recordset, width, height, color, options):
-    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height})
+  def __init__(self, report, recordset, width, height, color, options, profile):
+    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height}, profile=profile)
     self.__options = OptSliders.OptionBar(self, options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
               'background': self._report.theme.greys[0]})

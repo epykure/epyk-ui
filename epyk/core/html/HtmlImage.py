@@ -150,6 +150,10 @@ class ImgCarrousel(Html.Html):
       self.previous = self._report.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css({"position": 'absolute',
                  "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
       self.previous.options.managed = False
+
+      if options.get("keyboard", False):
+        self._report.body.keyup.left([self.previous.dom.events.trigger("click")])
+        self._report.body.keyup.right([self.next.dom.events.trigger("click")])
     else:
       self.next, self.previous = "", ""
     self.items[selected].css({"display": 'block'})
@@ -162,12 +166,13 @@ class ImgCarrousel(Html.Html):
     """
     Description:
     ------------
+    Add click event on this component
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. optional. The reference of the component
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -475,8 +480,8 @@ class Icon(Html.Html):
 class Emoji(Html.Html):
   name = 'Emoji'
 
-  def __init__(self, report, symbole, top, profile):
-    super(Emoji, self).__init__(report, symbole, profile=profile)
+  def __init__(self, report, symbole, top, options, profile):
+    super(Emoji, self).__init__(report, symbole, options=options, profile=profile)
     self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
   @property

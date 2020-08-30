@@ -865,6 +865,7 @@ http://api.jquery.com/css/
     ----------
     :param value:
     :param location:
+    :param options:
 
     :return: The Python object self
     """

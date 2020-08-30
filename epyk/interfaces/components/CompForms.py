@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 from epyk.core import html
-from epyk.interfaces import Arguments
 
 
 class Forms(object):
@@ -21,15 +21,16 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param helper:
+    :param helper: String. Optional. A tooltip helper
     """
     form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
     return form
 
-  def date(self, htmlCode="Current", helper=None):
+  def date(self, htmlCode="Current", profile=None, options=None, helper=None):
     """
     Description:
     ------------
+    Create a datepicker object
 
     Usage::
 
@@ -43,10 +44,12 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode:
-    :param helper:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
-    date = self.context.rptObj.ui.fields.today(label=htmlCode)
+    date = self.context.rptObj.ui.fields.today(label=htmlCode, profile=profile, options=options)
     date.input.set_attrs({"name": htmlCode.upper()})
     col = self.context.rptObj.ui.col([date])
     col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
@@ -55,10 +58,11 @@ class Forms(object):
     form._has_container = True
     return form
 
-  def dates(self, htmlCode1="current", htmlCode2="Previous",  helper=None):
+  def dates(self, htmlCode, profile=None, options=None, helper=None):
     """
     Description:
     ------------
+    Create two datepicker objects for current and previous.
 
     Usage::
 
@@ -72,17 +76,15 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param action:
-    :param method:
-    :param htmlCode1:
-    :param htmlCode2:
-    :param helper:
+    :param htmlCode: String. Optional. An identifier for the prefix of the date components (on both Python and Javascript side)
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: String. Optional. A tooltip helper
     """
-    date1 = self.context.rptObj.ui.fields.today(label=htmlCode1)
-    date1.input.set_attrs({"name": htmlCode1.upper()})
-    date2 = self.context.rptObj.ui.fields.today(label=htmlCode2)
-    date2.input.set_attrs({"name": htmlCode2.upper()})
-
+    date1 = self.context.rptObj.ui.fields.today(label="%s_current" % htmlCode, profile=profile, options=options)
+    date1.input.set_attrs({"name": date1.htmlCode.upper()})
+    date2 = self.context.rptObj.ui.fields.today(label="%s_previous" % htmlCode, profile=profile, options=options)
+    date2.input.set_attrs({"name": date2.htmlCode.upper()})
     col = self.context.rptObj.ui.col([date1, date2])
     col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
              "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
@@ -90,7 +92,7 @@ class Forms(object):
     form._has_container = True
     return form
 
-  def input(self, htmlCode, helper=None):
+  def input(self, htmlCode, value="", label=None, placeholder="", icon=None, profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -102,9 +104,16 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param helper:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param value: String. Optional. The value to be displayed to this component. Default empty
+    :param label: String. Optional. The text of label to be added to the component
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: String. Optional. A tooltip helper
     """
-    inp = self.context.rptObj.ui.fields.input()
+    inp = self.context.rptObj.ui.fields.input(value=value, label=label, placeholder=placeholder, icon=icon, profile=profile, options=options)
     inp.input.set_attrs({"name": htmlCode})
     form = html.HtmlContainer.Form(self.context.rptObj, [inp], helper)
     return form
@@ -130,7 +139,7 @@ class Forms(object):
     Attributes:
     ----------
     :param records:
-    :param helper:
+    :param helper: String. Optional. A tooltip helper
     """
     html_objs = []
     for rec in records:
@@ -151,13 +160,13 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param value:
-    :param placeholder:
+    :param value: Optional. The value to be displayed to this component. Default empty
+    :param placeholder: String. Optional. The text to be displayed when the input is empty
     :param button:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     input = self.context.rptObj.ui.input(text=value, placeholder=placeholder)
     input.attr["class"].add("form-control")

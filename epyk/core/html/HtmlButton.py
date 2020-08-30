@@ -82,7 +82,8 @@ class Button(Html.Html):
     Attributes:
     ----------
     :param jsFncs: List. The Javascript Events triggered before the redirection
-    :param profile: Boolean. Optional
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param name: String. Optional.
     :param source_event: String. Optional. The event source.
     """
     jsFncs = jsFncs or []
@@ -141,7 +142,7 @@ class Button(Html.Html):
     ----------
     :param jsPressFncs:
     :param jsReleaseFncs:
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     str_fnc = ""
     if jsPressFncs is not None:
@@ -205,7 +206,19 @@ class Checkbox(Html.Html):
     self._jsStyles = {"tooltip": tooltip, "icon": icon} # fas fa-circle fas fa-check
     self.selectAll = options.get("all_selected", False)
 
-  def tooltip(self, value, location='top'):
+  def tooltip(self, value, location='top', options=None):
+    """
+    Description:
+    -----------
+    Add the Tooltip feature when the mouse is over the component.
+    This tooltip version is coming from Bootstrap
+
+    Attributes:
+    ----------
+    :param value:
+    :param location:
+    :param options: Not used
+    """
     self._jsStyles['tooltip'] = value
     return self
 

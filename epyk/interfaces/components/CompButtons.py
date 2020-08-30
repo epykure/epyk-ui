@@ -78,6 +78,7 @@ class Buttons(object):
     :param text: String. Optional. The value to be displayed to the button
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: String. Optional. A string with the value of the tooltip
@@ -112,6 +113,8 @@ class Buttons(object):
     ----------
     :param text: String. Optional. The value to be displayed to the button
     :param size_notch:
+    :param bottom: Integer. Optional. The position of the component
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
     :param top: Tuple. Optional. A tuple with the integer for the component's distance to the top of the page
     :param left: Tuple. Optional. A tuple with the integer for the component's distance to the left of the page
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -526,14 +529,15 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param records:
     :param title:
     :param color:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align:
-    :param htmlCode:
-    :param tooltip:
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
     :param dfColumn:
-    :param icon:
-    :param profile:
+    :param icon: Optional. The component icon content from font-awesome references
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -582,7 +586,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     Attributes:
     ----------
     :param flag: Optional. The value of the checkbox. Default False
-    :param tooltip: Optional. A string with the value of the tooltip
+    :param tooltip: String. Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param label: Optional. The component label content
@@ -623,13 +627,13 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     ----------
     :param record:
     :param text:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param tooltip:
-    :param profile:
-    :param options:
+    :param icon: Optional. The icon to be used in the check component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -637,7 +641,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
                                               tooltip=tooltip, profile=profile, options=options)
     return html_button
 
-  def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left"):
+  def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left", options=None, profile=None):
     """
     Description:
     -----------
@@ -659,11 +663,13 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. The text-align property within this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="rem")
     height = Arguments.size(height, unit="rem")
     split_url = os.path.split(image)
-    badge = self.context.rptObj.ui.img(split_url[1], path=split_url[0], width=width, height=height)
+    badge = self.context.rptObj.ui.img(split_url[1], path=split_url[0], width=width, height=height, options=options, profile=profile)
     badge.style.css.display = "inline-block"
     badge.goto(url)
     if align == "center":
@@ -675,15 +681,17 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     """
     Description:
     -----------
+    Live component which will trigger event every x second.
+    This will then allow other components to be refreshed in the page.
 
     Attributes:
     ----------
     :param time: Integer. Interval time in second
-    :param jsFncs:
+    :param jsFncs: String or List. The Javascript functions
     :param icon: String. The font awesome icon reference
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     """
     dflt_options = {"started": True}
