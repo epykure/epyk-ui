@@ -78,6 +78,7 @@ class Components(object):
     self.hidden = self.fields.hidden #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.number = self.numbers.number #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.euro = self.numbers.euro #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
+    self.percent = self.numbers.percent #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label

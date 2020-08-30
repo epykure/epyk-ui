@@ -501,23 +501,107 @@ class OptionLegend(DataClass):
     return self.sub_data("labels", OptionLabels)
 
   @property
+  def align(self):
+    """
+    Description:
+    ------------
+    Alignment of the legend.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/legend.html
+
+    """
+    return self._attrs.get("align", "center")
+
+  @align.setter
+  def align(self, val):
+    self._attrs["align"] = val
+
+  @property
   def display(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/title.html
+    Description:
+    ------------
+    Is the legend shown?
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs["display"]
+    return self._attrs.get("display", True)
 
   @display.setter
-  def display(self, val):
-    self._attrs["display"] = val
+  def display(self, bool):
+    self._attrs["display"] = bool
+
+  @property
+  def position(self):
+    """
+    Description:
+    ------------
+    Position of the legend
+    values are top, left, bottom, right
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/legend.html
+
+    """
+    return self._attrs["position"]
+
+  @position.setter
+  def position(self, val):
+    self._attrs["position"] = val
+
+  @property
+  def reverse(self):
+    """
+    Description:
+    ------------
+    Legend will show datasets in reverse order.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/legend.html
+
+    """
+    return self._attrs.get("reverse", False)
+
+  @reverse.setter
+  def reverse(self, bool):
+    self._attrs["align"] = bool
+
+  @property
+  def rtl(self):
+    """
+    Description:
+    ------------
+    true for rendering the legends from right to left.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/legend.html
+
+    """
+    return self._attrs.get("rtl", False)
+
+  @rtl.setter
+  def rtl(self, bool):
+    self._attrs["rtl"] = bool
 
 
 class OptionTitle(DataClass):
   @property
   def display(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/title.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/title.html
 
     """
     return self._attrs["display"]

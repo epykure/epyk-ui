@@ -96,6 +96,37 @@ class Numbers(object):
                                         dflt_options, helper, width, profile)
     return html_number
 
+  def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+             options=None, helper=None, width=(150, 'px'), profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.texts.percent(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
+
+    Attributes:
+    ----------
+    :param number: Optional. The value to be displayed to the component. Default now
+    :param title:
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param color:
+    :param tooltip:
+    :param htmlCode:
+    :param options:
+    :param helper:
+    :param profile:
+    """
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number.money("%", format="%v%s")
+    return html_number
+
   def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
