@@ -1186,7 +1186,7 @@ class JsBase(object):
 
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
     """
-    return JsNodeDom.JsDoms("document.getElementById('%s')" % idName)
+    return JsNodeDom.JsDoms("document.getElementById(%s)" % JsUtils.jsConvertData(idName, None))
 
   @staticmethod
   def getElementsByName(name):
@@ -1229,7 +1229,7 @@ class JsBase(object):
     :param tagName: Required. The tagname of the child elements you want to get
     :param i:
     """
-    return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
+    return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (JsUtils.jsConvertData(tagName, None), i), varName="%s_%s" % (tagName, i), setVar=True)
 
   @staticmethod
   def getElementsByClassName(clsName):

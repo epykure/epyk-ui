@@ -93,7 +93,7 @@ class Popup(Html.Html):
       trTitle = self.__title.html()
     str_html = "\n".join([val.html() if hasattr(val, 'html') else str(val) for val in self.val])
     content = '''
-      <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:20%% auto">
+      <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:5%% auto">
         %(title)s
         <tr>
           <td style="padding:10px;background:%(bgcolor)s">
