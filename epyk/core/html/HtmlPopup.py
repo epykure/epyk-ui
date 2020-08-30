@@ -57,7 +57,11 @@ class Popup(Html.Html):
 
   def add_title(self, text, level=None, css=None, position="before", options=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param level:
     :param css:
@@ -89,7 +93,7 @@ class Popup(Html.Html):
       trTitle = self.__title.html()
     str_html = "\n".join([val.html() if hasattr(val, 'html') else str(val) for val in self.val])
     content = '''
-      <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:auto">
+      <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:20%% auto">
         %(title)s
         <tr>
           <td style="padding:10px;background:%(bgcolor)s">
