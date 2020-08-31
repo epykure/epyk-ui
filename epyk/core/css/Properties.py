@@ -360,7 +360,7 @@ class CssMixin(object):
     val = val if val is not None else 'None'
     self.htmlObj.css({"background-image": val})
 
-  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto"):
+  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto", background_position="center"):
     """
     Description:
     ------------
@@ -375,7 +375,7 @@ class CssMixin(object):
     """
     self.htmlObj.css({"background-image": "url(%a)" % val})
     self.htmlObj.css({"background-size": size})
-    self.htmlObj.css({"background-position": "center"})
+    self.htmlObj.css({"background-position": background_position})
     #self.htmlObj.css({"background-attachment": "fixed"})
     self.htmlObj.css({"background-repeat": repeat})
     self.htmlObj.css({"position": position})
