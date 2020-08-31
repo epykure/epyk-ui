@@ -2587,7 +2587,7 @@ class CssMixin(object):
     self.css({"box-shadow": "%(size)spx %(size)spx %(size)spx %(color)s" % {'color': color, 'size': size}})
     return self
 
-  def shadow_box(self, hexa_color=None, opacity=0.2, size=2, position='right'):
+  def shadow_box(self, hexa_color=None, opacity=0.5, size=10, position=None, radius=10):
     """
     Description:
     ------------
@@ -2601,7 +2601,10 @@ class CssMixin(object):
     Attributes:
     ----------
     :param hexa_color: String. An hexadecimal color code
-    :param opacity:
+    :param opacity: Integer. Optional. The shadow opacity. Default 0.5
+    :param size: Integer. Optional. The size of the shadow effect
+    :param position: String. Optional. The position for the shadow
+    :param radius: Integer. Optional. The size for the angle rounding
 
     :return: The CSS object to allow the functions chaining
     """
@@ -2613,6 +2616,7 @@ class CssMixin(object):
       self.box_shadow = "-%(size)spx 0 5px -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
     else:
       self.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+    self.border_radius = radius
     return self
 
   def shadow_text(self):
