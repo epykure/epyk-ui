@@ -54,7 +54,7 @@ class Images(object):
     height = Arguments.size(height, unit="px")
     if height[0] not in [None, 'auto'] and width[1] == '%':
       width = ("auto", '')
-    html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
+    html_image = html.HtmlImage.Image(self.context.rptObj, self.context.rptObj.py.encode_html(image), self.context.rptObj.py.encode_html(path), align, htmlCode, width, height, profile, options or {})
     if tooltip is not None:
       html_image.tooltip(tooltip)
     if width[0] is None:
@@ -143,7 +143,7 @@ class Images(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width), options=options, profile=profile)
-    div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
     div.style.css.vertical_align = position
@@ -169,7 +169,7 @@ class Images(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width), options=options, profile=profile)
-    div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
     div.style.css.background_position = "center center"
     div.style.css.display = "block"
     div.style.css.text_align = align

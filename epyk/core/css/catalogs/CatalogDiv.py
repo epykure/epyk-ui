@@ -100,6 +100,10 @@ class CatalogDiv(Catalog.CatalogGroup):
     """ Change the background color when the mouse is on the component """
     return self._set_class(CssStylesDivEvents.CssDivOnHoverWidth)
 
+  def border_hover(self):
+    """ Change the background color when the mouse is on the component """
+    return self._set_class(CssStylesDivEvents.CssDivOnHoverBorder)
+
   def span_close(self):
     """Change the font size and location of the close button - generally used for the modal components"""
     return self._set_class(CssStylesCommon.CssCloseSpan)
