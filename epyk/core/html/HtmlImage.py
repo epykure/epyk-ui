@@ -156,6 +156,9 @@ class ImgCarrousel(Html.Html):
         self._report.body.keyup.right([self.next.dom.events.trigger("click")])
     else:
       self.next, self.previous = "", ""
+    if not options.get('arrows', True):
+      self.next.style.css.display = "none"
+      self.previous.style.css.display = "none"
     self.items[selected].css({"display": 'block'})
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
 

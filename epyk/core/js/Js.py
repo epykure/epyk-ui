@@ -1186,7 +1186,7 @@ class JsBase(object):
 
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
     """
-    return JsNodeDom.JsDoms("document.getElementById(%s)" % JsUtils.jsConvertData(idName, None))
+    return JsNodeDom.JsDoms("document.getElementById(%s)" % JsUtils.jsConvertData(idName, None).toStr().replace("'", '"'))
 
   @staticmethod
   def getElementsByName(name):
