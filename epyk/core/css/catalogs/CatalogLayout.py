@@ -100,6 +100,10 @@ class CatalogLayout(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesCommon.CssHoverZoom)
 
+  def hover_large_zoom(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssHoverLargeZoom)
+
   def hover_rotate(self):
     """  """
     return self._set_class(CssStylesCommon.CssHoverRotate)

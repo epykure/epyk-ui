@@ -358,13 +358,16 @@ class Effects(object):
     self._htmlObj.style.add_classes.layout.hover_reduce()
     return self
 
-  def zoom(self):
+  def zoom(self, large=False):
     """
     Description:
     ------------
     Zoom on the component when the mouse is hover
     """
-    self._htmlObj.style.add_classes.layout.hover_zoom()
+    if large:
+      self._htmlObj.style.add_classes.layout.hover_large_zoom()
+    else:
+      self._htmlObj.style.add_classes.layout.hover_zoom()
     return self
 
   def rotate(self):
