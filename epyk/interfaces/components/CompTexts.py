@@ -61,7 +61,7 @@ class Texts(object):
     text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
-    if align == "center":
+    if align in ["center", 'right']:
       text_comp.style.css.margin = "auto"
       text_comp.style.css.display = "block"
     return text_comp
