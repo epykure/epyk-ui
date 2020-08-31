@@ -189,7 +189,7 @@ class Vignets(object):
   def line(self):
     pass
 
-  def image(self, title, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
+  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
     """
     Description:
     ------------
@@ -207,7 +207,7 @@ class Vignets(object):
     if render == "row":
       container = self.context.rptObj.ui.row(align=align, width=width, height=height)
       container.style.css.margin = "20px auto"
-      if not hasattr(title, 'options'):
+      if title is not None and not hasattr(title, 'options'):
         title = self.context.rptObj.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
@@ -219,9 +219,15 @@ class Vignets(object):
             split_url = os.path.split(image)
             container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
             container.add(container.image)
-        container.add(self.context.rptObj.ui.col([title, content]))
+        if title is not None:
+          container.add(self.context.rptObj.ui.col([title, content]))
+        else:
+          container.add(content)
       else:
-        container.add(self.context.rptObj.ui.col([title, content]))
+        if title is not None:
+          container.add(self.context.rptObj.ui.col([title, content]))
+        else:
+          container.add(content)
         if image is not None:
           if not hasattr(image, 'options'):
             split_url = os.path.split(image)
@@ -230,7 +236,7 @@ class Vignets(object):
     else:
       container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
       container.style.css.margin = "20px auto"
-      if not hasattr(title, 'options'):
+      if title is not None and not hasattr(title, 'options'):
         title = self.context.rptObj.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
@@ -241,7 +247,10 @@ class Vignets(object):
           split_url = os.path.split(image)
           container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
           container.add(container.image)
-      container.add(self.context.rptObj.ui.col([title, content]))
+      if title is not None:
+        container.add(self.context.rptObj.ui.col([title, content]))
+      else:
+        container.add(content)
     return container
 
   def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
