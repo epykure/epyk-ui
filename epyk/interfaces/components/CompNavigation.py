@@ -415,7 +415,7 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), options=None, profile=False):
+  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), fixed=False, options=None, profile=False):
     """
     Description:
     ------------
@@ -437,7 +437,10 @@ class Navigation(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
-    self.context.rptObj.body.style.css.padding_bottom = height[0]
+    if fixed:
+      self.context.rptObj.body.style.css.padding_bottom = height[0]
+    else:
+      footer.style.css.position = None
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
@@ -809,15 +812,16 @@ class Banners(object):
     """
     copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - 2020, Epyk studio")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
-    for link in links:
-      if not isinstance(link, dict):
-        link = {"text": link}
-      url = self.context.rptObj.ui.link(text=link['text'], url=link.get("url", '#'))
-      url.style.css.color = self.context.rptObj.theme.greys[6]
-      url.style.css.margin = "0 5px"
-      div.add(url)
+    if links is not None:
+      for link in links:
+        if not isinstance(link, dict):
+          link = {"text": link}
+        url = self.context.rptObj.ui.link(text=link['text'], url=link.get("url", '#'))
+        url.style.css.color = self.context.rptObj.theme.greys[6]
+        url.style.css.margin = "0 5px"
+        div.add(url)
     text = self.context.rptObj.ui.text(copyright)
-    text.style.css.color = self.context.rptObj.theme.greys[2]
+    text.style.css.color = self.context.rptObj.theme.greys[-1]
     div.add(text)
     div.style.css.background_color = self.context.rptObj.theme.greys[4]
     div.style.css.color = self.context.rptObj.theme.greys[6]
