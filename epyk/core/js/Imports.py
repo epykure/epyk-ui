@@ -947,6 +947,15 @@ JS_IMPORTS = {
     'req': [],
     'modules': [
       {'script': 'sdk.js', 'version': '', 'path': 'en-GB/', 'cdnjs': 'https://connect.facebook.net'}]},
+
+  # Tiny slider for carousels
+  'tiny-slider': {
+    'register': {'alias': 'tns', 'npm': 'tiny-slider'},
+    'modules': [
+      {'script': 'tiny-slider.js', 'version': '2.9.3', 'path': 'tiny-slider/%(version)s/min/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://github.com/ganlanyuan/tiny-slider',
+  }
 }
 
 
@@ -1235,8 +1244,16 @@ CSS_IMPORTS = {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist/styles'},
     'modules': [
-      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]}
+      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
 
+  # Tiny slider for carousels
+  'tiny-slider': {
+    'register': {'alias': 'tns', 'npm': 'tiny-slider'},
+    'modules': [
+      {'script': 'tiny-slider.min.css', 'version': '2.9.3', 'path': 'tiny-slider/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://github.com/ganlanyuan/tiny-slider',
+  }
 }
 
 
