@@ -690,6 +690,33 @@ class Components(object):
       h_json.style.css.overflow = 'auto'
     return h_json
 
+  def slideshow(self, components=None, width=(100, "%"), height=('auto', ""), options=None, profile=None):
+    """
+    Description:
+    ------------
+    SlideShow component for pictures from the tiny-slider library.
+    More details regarding this library here: https://github.com/ganlanyuan/tiny-slider
+
+    Usage::
+
+    Related Pages:
+
+      https://github.com/ganlanyuan/tiny-slider
+      http://ganlanyuan.github.io/tiny-slider/demo/
+
+    Attributes:
+    ----------
+    :param components: List. With the different components
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width)
+    height = Arguments.size(height, "px")
+    html_i = html.HtmlImage.SlideShow(self.rptObj, components or [], width, height, options or {}, profile)
+    return html_i
+
   def qrcode(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
     """
     Description:
