@@ -727,8 +727,9 @@ class Col(Html.Html):
 
       self.__set_size = "col-lg-%s" % n
       self.attr["class"].add(self.__set_size)
-      self.attr["class"].add("col-md-%s" % min(n * 2, 12))
-      self.attr["class"].add("col-12")
+      if self.options.responsive:
+        self.attr["class"].add("col-md-%s" % min(n * 2, 12))
+        self.attr["class"].add("col-12")
     return self
 
   def __str__(self):
@@ -786,7 +787,7 @@ class Row(Html.Html):
     if not isinstance(htmlObj, Col):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position)
+      htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position, options=self.options._attrs)
     super(Row, self).__add__(htmlObj)
     return self
 
@@ -832,8 +833,9 @@ class Grid(Html.Html):
     if isinstance(row_data, Row):
       row = row_data
     else:
-      row = self._report.ui.layouts.row(position=self.position)
+      row = self._report.ui.layouts.row(position=self.position, options=self.options._attrs)
       row.style.clear(no_default=True)
+      row.style.css.margin = 'auto'
       row.attr["class"].add("row")
       for htmlObjWithDim in row_data:
         if isinstance(htmlObjWithDim, tuple):

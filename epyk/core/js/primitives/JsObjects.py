@@ -357,6 +357,17 @@ class JsObjects(object):
     """
     return JsObject.JsObject("%s++" % incr)
 
+  def function(self, args, returns, eval=False):
+    params, values = [], []
+    for i, v in enumerate(args):
+      if i > 0:
+        params.append("x%s" % i)
+      else:
+        params.append("x")
+      values.append(str(v))
+    if eval:
+      return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (", ".join(params), returns, ", ".join(values)))
+
 
 class JsPromise(object):
 

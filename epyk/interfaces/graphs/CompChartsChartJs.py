@@ -10,7 +10,7 @@ class ChartJs(object):
     self.parent = context
     self.chartFamily = "ChartJs"
 
-  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -33,7 +33,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):

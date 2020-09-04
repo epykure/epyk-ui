@@ -535,6 +535,22 @@ class JsArray(JsObject.JsObject):
 
     return JsNumber.JsNumber("%s.push(%s)" % (self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
 
+  def push_dict(self, **kwargs):
+    """
+    Description:
+    -----------
+
+    page.js.objects.array.get("myArray").push_dict(x="a", y=45)
+
+    Attributes:
+    ----------
+    :param kwargs:
+    """
+    args = []
+    for k, v in kwargs.items():
+      args.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return self.push(JsObject.JsObject.get("{%s}" % ", ".join(args)))
+
   def reverse(self):
     """
     Description:

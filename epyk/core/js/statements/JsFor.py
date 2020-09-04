@@ -65,7 +65,10 @@ class JsFor(object):
 
     :return:
     """
-    self.options['start'] = value
+    if hasattr(value, 'toStr'):
+      self.options['start'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+    else:
+      self.options['start'] = value
 
   @property
   def end(self):
@@ -85,7 +88,10 @@ class JsFor(object):
 
     :return:
     """
-    self.options['end'] = value
+    if hasattr(value, 'toStr'):
+      self.options['end'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+    else:
+      self.options['end'] = value
 
   @property
   def step(self):
@@ -103,9 +109,11 @@ class JsFor(object):
     Description:
     -----------
 
-    :return:
     """
-    self.options['step'] = value
+    if hasattr(value, 'toStr'):
+      self.options['step'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+    else:
+      self.options['step'] = value
 
   def fncs(self, jsFncs, reset=True):
     """
@@ -127,7 +135,7 @@ class JsFor(object):
 
   def toStr(self):
     self.options['expr'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
-    return "for(var %(var)s = %(start)s; %(var)s < %(end)s; %(var)s++){%(expr)s}" % self.options
+    return "for(var %(var)s = %(start)s; %(var)s < %(end)s; %(var)s += %(step)s){%(expr)s}" % self.options
 
 
 class JsIterable(object):

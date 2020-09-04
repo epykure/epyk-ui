@@ -592,7 +592,30 @@ class OptionLegend(DataClass):
     self._attrs["rtl"] = bool
 
 
+class OptionPoint(DataClass):
+
+  @property
+  def radius(self):
+    """
+    Description:
+    ------------
+    """
+    return self._attrs.get("radius", False)
+
+  @radius.setter
+  def radius(self, num):
+    self._attrs["radius"] = num
+
+
+class OptionElements(DataClass):
+
+  @property
+  def point(self):
+    return self.sub_data("point", OptionPoint)
+
+
 class OptionTitle(DataClass):
+
   @property
   def display(self):
     """
@@ -676,6 +699,10 @@ class OptionTitle(DataClass):
 
 
 class Options(DataClass):
+
+  @property
+  def elements(self):
+    return self.sub_data("elements", OptionElements)
 
   @property
   def scales(self):

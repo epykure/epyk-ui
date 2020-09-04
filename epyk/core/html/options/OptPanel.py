@@ -478,6 +478,18 @@ class OptionGrid(Options):
     self.set(bool)
 
   @property
+  def responsive(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @responsive.setter
+  def responsive(self, bool):
+    self.set(bool)
+
+  @property
   def classe(self):
     """
     Description:

@@ -546,6 +546,21 @@ class Layouts(object):
     html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
     return html_obj
 
+  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
+    rows, row = [], []
+    dflt_options = {"responsive": False}
+    if options:
+      dflt_options.update(options)
+    for i, c in enumerate(components):
+      if not i % cols and len(row):
+        rows.append(row)
+        row = []
+      row.append(c)
+    if len(row):
+      rows.append(row)
+    g = self.grid(rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile)
+    return g
+
 
 class Delimiter(object):
 

@@ -29,6 +29,7 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.statements import JsIf
 from epyk.core.js.statements import JsWhile
 from epyk.core.js.statements import JsSwitch
+from epyk.core.js.statements import JsFor
 
 
 class JsConsole(object):
@@ -783,6 +784,26 @@ class JsBase(object):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
     self.__while = JsWhile.JsWhile(jsCond, options, self._src).fncs(jsFnc)
     return self.__while
+
+  def for_(self, jsFnc, step=1, start=0, end=10, options=None):
+    """
+    Description:
+    ------------
+    Shortcut to a for loop
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param step:
+    :param start:
+    :param end:
+    :param options:
+    """
+    for_statment = JsFor.JsFor(end, options)
+    for_statment.start = start
+    for_statment.end = end
+    for_statment.step = step
+    return for_statment.fncs(jsFnc)
 
   def return_(self, jsData):
     """
