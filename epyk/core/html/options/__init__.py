@@ -16,6 +16,9 @@ class Options(DataClass):
   def __init__(self, report, attrs=None, options=None):
     super(Options, self).__init__(report, attrs, options)
     self.js_type = {}
+    # Set the default options for a component
+    for c in self.component_properies:
+      setattr(self, c, getattr(self, c))
     if attrs is not None:
       for k, v in attrs.items():
         if hasattr(self, k):

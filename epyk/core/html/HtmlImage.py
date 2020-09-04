@@ -7,11 +7,15 @@ from epyk.core.html import Html
 from epyk.core.html import HtmlContainer
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptButton
+from epyk.core.html.options import OptImg
 
 from epyk.core.css.styles import GrpClsImage
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
+from epyk.core.js.html import JsHtmlTinySlider
+from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsTinySlider
 
 from epyk.core import data
 
@@ -48,7 +52,7 @@ class Image(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlImg
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlImg(self, report=self._report)
@@ -588,3 +592,190 @@ class Figure(HtmlContainer.Div):
         rows.append(str(htmlObj))
 
     return "<figure %s>%s</figure>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
+
+
+class SlideShow(Html.Html):
+  name = 'Slide Show'
+  requirements = ('tiny-slider', )
+
+  def __init__(self, report, images, width, height, options, profile):
+    super(SlideShow, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptImg.OptionsTinySlider(self, options)
+    for i in images:
+      self.add(i)
+
+  @property
+  def jsonId(self):
+    """
+    Description:
+    ------------
+    Return the Javascript variable of the json object
+    """
+    return "%s_obj" % self.htmlCode
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    The tiny slider javascript events
+
+    Return the Javascript internal object
+
+    :return: A Javascript object
+
+    :rtype: JsTinySlider.TinySlider
+    """
+    if self._js is None:
+      self._js = JsTinySlider.TinySlider(self._report, varName=self.jsonId, setVar=False, parent=self)
+    return self._js
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlTinySlider.JsHtmlTinySlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self._report)
+    return self._dom
+
+  def _events(self, event, jsFncs, source_event, profile=False, add=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param event: String. The event type
+    :param jsFncs: List or String. The JavaScript fragments
+    :param source_event: String
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param add:
+    """
+    if add:
+      self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(jsFncs, toStr=True))])
+    else:
+      self.onReady(["%s.off('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(jsFncs, toStr=True))])
+    return self
+
+  def addIndexChanged(self, jsFncs, profile=False, source_event=None):
+    return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile)
+
+  def remIndexChanged(self, jsFncs, profile=False, source_event=None):
+    return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
+
+  def addTransitionStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile)
+
+  def remTransitionStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile, add=False)
+
+  def addTransitionEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile)
+
+  def remTransitionEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
+
+  def addNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile)
+
+  def remNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("newBreakpointEnd", jsFncs, source_event or self.jsonId, profile)
+
+  def remNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("newBreakpointEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addTouchStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchStart", jsFncs, source_event or self.jsonId, profile)
+
+  def remTouchStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchStart", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addTouchMove(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchMove", jsFncs, source_event or self.jsonId, profile)
+
+  def remTouchMove(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchMove", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addTouchEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchEnd", jsFncs, source_event or self.jsonId, profile)
+
+  def remTouchEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("touchEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addDragStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragStart", jsFncs, source_event or self.jsonId, profile)
+
+  def remDragStart(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragStart", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addDragMove(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragMove", jsFncs, source_event or self.jsonId, profile)
+
+  def remDragMove(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragMove", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def addDragEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragEnd", jsFncs, source_event or self.jsonId, profile)
+
+  def remDragEnd(self, jsFncs, profile=False, source_event=None):
+    return self._events("dragEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+
+  def refresh(self):
+    """
+    Description:
+    -----------
+    Component refresh function. Javascript function which can be called in any Javascript event
+    """
+    return self.build([], self._jsStyles)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    The tiny slider options
+
+    https://github.com/ganlanyuan/tiny-slider
+
+    :rtype: OptImg.OptionsTinySlider
+    """
+    return self.__options
+
+  def add(self, component):
+    """
+    Description:
+    ------------
+    Add a component to the slider container
+
+    Attributes:
+    ----------
+    :param component: HTML Component. A component to be added to the slider container
+    """
+    if not hasattr(component, 'options'):
+      component = self._report.ui.div(component)
+    component.options.managed = False
+    self.val.append(component)
+    self.components[component.htmlCode] = component
+    return self
+
+  @property
+  def _js__builder__(self):
+    return "window[ htmlObj.id + '_obj'] = tns(options)"
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    rows = [htmlObj.html() for htmlObj in self.val]
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))

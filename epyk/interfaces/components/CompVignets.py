@@ -13,8 +13,8 @@ class Vignets(object):
   def __init__(self, context):
     self.context = context
 
-  def bubble(self, recordSet=None, width=(50, "px"), height=(110, 'px'), color=None,
-             background_color=None, helper=None, profile=None):
+  def bubble(self, records=None, width=(50, "px"), height=(110, 'px'), color=None, background_color=None,
+             helper=None, profile=None):
     """
     Description:
     ------------
@@ -41,7 +41,7 @@ class Vignets(object):
 
     Attributes:
     ----------
-    :param recordSet:
+    :param records: Optional. The list of dictionaries
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: Optional. The font color in the component. Default inherit
@@ -53,12 +53,12 @@ class Vignets(object):
     height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height)
     bubble = self.context.rptObj.ui.div(width=width, height=(height[0]-60, height[1]))
-    div.number = self.context.rptObj.ui.text(recordSet["value"], width=width)
-    if recordSet.get("url") is not None:
-      div.title = self.context.rptObj.ui.link(recordSet["title"], url=recordSet['url'])
+    div.number = self.context.rptObj.ui.text(records["value"], width=width)
+    if records.get("url") is not None:
+      div.title = self.context.rptObj.ui.link(records["title"], url=records['url'])
       div.title.no_decoration()
     else:
-      div.title = self.context.rptObj.ui.text(recordSet["title"])
+      div.title = self.context.rptObj.ui.text(records["title"])
     div.title.style.css.bold()
     div.number.style.css.line_height = height[0]-60
     div.number.style.css.text_align = "center"
@@ -103,9 +103,10 @@ class Vignets(object):
     ----------
     :param number:
     :param label:
-    :param width:
-    :param height:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -123,7 +124,7 @@ class Vignets(object):
   def link(self):
     pass
 
-  def block(self, recordSet=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
+  def block(self, records=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
             helper=None, options=None, profile=None):
     """
     Description:
@@ -146,18 +147,19 @@ class Vignets(object):
 
     Attributes:
     ----------
-    :param recordSet:
+    :param records:
     :param color: Optional. The font color in the component. Default inherit
     :param border:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper: Optional. A tooltip helper
+    :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, border, width, height, helper, options, profile)
+    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, records, color, border, width, height, helper, options, profile)
     return html_blocktext
 
-  def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None, profile=None):
+  def text(self, records=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -173,14 +175,15 @@ class Vignets(object):
 
     Attributes:
     ----------
-    :param recordSet:
+    :param records:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align:
     :param helper: Optional. A tooltip helper
+    :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, align, helper, options, profile)
+    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, records, width, height, align, helper, options, profile)
     return html_text
 
   def bars(self):
@@ -189,7 +192,8 @@ class Vignets(object):
   def line(self):
     pass
 
-  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
+  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
+            options=None, profile=None):
     """
     Description:
     ------------
@@ -202,6 +206,9 @@ class Vignets(object):
     :param render:
     :param align:
     :param width:
+    :param height:
+    :param options:
+    :param profile:
     """
     options = options or {}
     if render == "row":
@@ -253,7 +260,8 @@ class Vignets(object):
         container.add(content)
     return container
 
-  def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
+  def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
+            options=None, profile=None):
     """
     Description:
     ------------
@@ -270,6 +278,9 @@ class Vignets(object):
     ------
 
       https://github.com/epykure/epyk-ui/issues/92
+
+    Attributes:
+    ----------
 
     """
 
@@ -317,7 +328,8 @@ class Vignets(object):
       container.add(self.context.rptObj.ui.col([title, content]))
     return container
 
-  def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center", position="middle"):
+  def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center",
+                 position="middle", options=None, profile=None):
     """
     Description:
     ------------
@@ -329,6 +341,10 @@ class Vignets(object):
     :param height:
     :param size:
     :param margin:
+    :param align:
+    :param position:
+    :param options:
+    :param profile:
     """
     div = self.context.rptObj.ui.div(height=height, width=width)
     div.style.css.background_url(url, size=size, margin=margin)
@@ -341,7 +357,7 @@ class Vignets(object):
       div.style.css.display = "block"
     return div
 
-  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None):
+  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -354,6 +370,8 @@ class Vignets(object):
     :param render:
     :param align:
     :param width:
+    :param options:
+    :param profile:
     """
     options = options or {"position": 'left'}
     if render == "col":
@@ -399,7 +417,8 @@ class Vignets(object):
       container[-1].style.css.border_left = "1px solid %s" % self.context.rptObj.theme.greys[3]
     return container
 
-  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), currency="£"):
+  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), currency="£", options=None,
+            profile=None):
     """
     Description:
     ------------
@@ -409,9 +428,12 @@ class Vignets(object):
     :param value:
     :param title:
     :param items:
+    :param url:
     :param align:
     :param width:
     :param currency:
+    :param options:
+    :param profile:
     """
     container = self.context.rptObj.ui.div(align=align, width=width)
     container.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
