@@ -25,7 +25,7 @@ class Button(Html.Html):
     if not isinstance(text, list):
       text = [text]
     for obj in text:
-      if hasattr(obj, 'inReport'):
+      if hasattr(obj, 'options'):
         obj.options.managed = False
     super(Button, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)

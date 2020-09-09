@@ -213,7 +213,7 @@ class Select(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (JsQuery.decorate_var(self.dom.varId, convert_var=False), json.dumps(self._jsStyles)))
     if self.attr.get("data-width") is not None:
       self._report.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-width")))
-    self.attr['class'].add("%s_width" % self.htmlCode)
+      self.attr['class'].add("%s_width" % self.htmlCode)
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
 

@@ -7,7 +7,7 @@ from epyk.core.css import Defaults as Defaults_css
 
 
 class CssSelectStyle(CssStyle.Style):
-  _attrs = {'padding-top': '2px'}
+  _attrs = {'padding-top': 0}
   _focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
 
   def customize(self):
@@ -19,7 +19,7 @@ class CssSelectStyle(CssStyle.Style):
 
 
 class CssSelectButton(CssStyle.Style):
-  _attrs = {'padding': '0 5px', 'outline': 'none', 'border-color': 'none', 'box-shadow': 'none'}
+  _attrs = {'padding': 0, 'outline': 'none', 'border-color': 'none', 'box-shadow': 'none'}
   _focus = {'outline': 'none', 'border-color': 'none', 'box-shadow': 'none'}
 
   _selectors = {"child": '.btn'}
@@ -56,18 +56,20 @@ class CssSelectOption(CssStyle.Style):
   classname = "dropdown-menu"
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit), 'z-index': 0}, important=True)
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
+              'background-color': self.rptObj.theme.greys[0],
+              'z-index': 0}, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):
-  _attrs = {"margin": 0, "padding": "0 5px"}
+  _attrs = {"padding": "2px 5px", 'border-radius': '5px', 'margin-top': '-2px !IMPORTANT'}
   classname = "dropdown-item"
   _focus = {'outline': 0}
 
   def customize(self):
     self.css({'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
     self.hover.css({'color': self.rptObj.theme.success[1]}, important=True)
-    self.active.css({"background-color": self.rptObj.theme.success[1]})
+    self.active.css({"background-color": self.rptObj.theme.success[1], "color": self.rptObj.theme.greys[-1]}, important=True)
 
 
 class CssSelectOptionActive(CssStyle.Style):
@@ -85,7 +87,7 @@ class CssSelectOptionSelected(CssStyle.Style):
 
 
 class CssSelectFilterOption(CssStyle.Style):
-  _attrs = {'text-align': 'center !IMPORTANT'}
+  _attrs = {'text-align': 'center !IMPORTANT', 'padding-top': 0}
   classname = "filter-option"
 
 

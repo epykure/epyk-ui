@@ -456,6 +456,8 @@ class CssMixin(object):
   @border.setter
   def border(self, val):
     val = val if val is not None else 'None'
+    if val is True:
+      val = "1px solid %s" % self.htmlObj._report.theme.greys[3]
     self.htmlObj.css({"border": val})
 
   @property

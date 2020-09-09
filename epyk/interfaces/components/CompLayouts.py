@@ -249,10 +249,10 @@ class Layouts(object):
     :param rows:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align:
-    :param position:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param position: String. Optional. A string with the vertical position of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -336,6 +336,26 @@ class Layouts(object):
     if width[0] == 'auto':
       html_div.style.css.display = "inline-block"
     return html_div
+
+  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    html_comp = self.div(htmlObjs=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
+                         profile=profile)
+    html_comp.style.css.display = "inline-block"
+    return html_comp
 
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
@@ -547,6 +567,21 @@ class Layouts(object):
     return html_obj
 
   def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param cols:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param position: String. Optional. A string with the vertical position of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
     rows, row = [], []
     dflt_options = {"responsive": False}
     if options:

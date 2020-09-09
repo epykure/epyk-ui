@@ -17,6 +17,7 @@ import os
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.core.html import Defaults_html
 from epyk.interfaces import Arguments
 
 
@@ -47,6 +48,57 @@ class Buttons(object):
     return data
 
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Standard button
+
+    Usage::
+
+      rptObj.ui.button("Test")
+
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    text = self.context.rptObj.py.encode_html(text)
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
+    html_button.style.css.margin = "0"
+    html_button.style.css.padding = "0 20px"
+    html_button.style.css.line_height = Defaults_html.LINE_HEIGHT
+    if align == "center":
+      html_button.style.css.margin = "auto"
+      html_button.style.css.display = "block"
+    return html_button
+
+  def large(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------

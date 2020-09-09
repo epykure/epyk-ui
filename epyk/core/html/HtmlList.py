@@ -160,7 +160,11 @@ class List(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i:
 
     :rtype: Li
@@ -207,6 +211,11 @@ class List(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
+    :param event:
+    :param jsFncs:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     for i in self.items:
       i.on(event, jsFncs, profile)
@@ -220,7 +229,7 @@ class List(Html.Html):
     Attributes:
     ----------
     :param jsFncs:
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
     for i, item in enumerate(self.items):
@@ -341,6 +350,16 @@ class Items(Html.Html):
     return self._dom
 
   def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
