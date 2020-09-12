@@ -363,7 +363,7 @@ class Text(Html.Html):
 
   def editable(self):
     """
-    Change the componenet properties to be editable if double clicked
+    Change the component properties to be editable if double clicked
 
     Example
     rptObj.ui.text("This is a text").editable()

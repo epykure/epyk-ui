@@ -318,9 +318,11 @@ class Items(Html.Html):
         
         if(options.delete){
           var close = document.createElement("i");
-          close.classList.add("fas"); close.classList.add("fa-times");
+          close.classList.add("fas"); close.classList.add(options.delete_icon);
           close.style.marginLeft = '10px'; close.style.cursor = 'pointer';
           close.onclick = function(event){this.parentNode.remove()};
+          for (const [key, value] of Object.entries(options.delete_position)) {
+            close.style[key] = value}
           li.lastChild.style.display = 'inline-block';
           li.appendChild(close);
         }

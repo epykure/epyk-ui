@@ -489,6 +489,58 @@ class MouseEvent(UIEvent):
     """
     return JsNumber.JsNumber("event.which", isPyData=False)
 
+  @property
+  def movementX(self):
+    """
+    Description:
+    ------------
+    Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
+    return JsNumber.JsNumber.get(varName="event.movementX")
+
+  @property
+  def movementY(self):
+    """
+    Description:
+    ------------
+    Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
+    return JsNumber.JsNumber.get(varName="event.movementY")
+
+  @property
+  def screenX(self):
+    """
+    Description:
+    ------------
+    Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
+    return JsNumber.JsNumber.get(varName="event.screenX")
+
+  @property
+  def screenY(self):
+    """
+    Description:
+    ------------
+    Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
+    return JsNumber.JsNumber.get(varName="event.screenY")
+
   def toStr(self):
     return JsObject.JsObject.get("event")
 

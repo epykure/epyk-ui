@@ -29,6 +29,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
+  component_properies = ("delete_icon", 'delete_position')
 
   @property
   def style(self):
@@ -96,6 +97,34 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def delete_icon(self):
+    """
+    Description:
+    ------------
+    Set the delete icon
+    """
+    return self._config_get("fa-trash-alt")
+
+  @delete_icon.setter
+  def delete_icon(self, attrs):
+    self._config(attrs)
+
+  @property
+  def delete_position(self):
+    """
+    Description:
+    ------------
+    Set the position and CSS attributes of the delete icon
+    """
+    return self._config_get({"float": 'right', 'marginRight': '10px', 'marginTop': '5px'})
+
+  @delete_position.setter
+  def delete_position(self, attrs):
+    if attrs == "right":
+      attrs = {"float": 'right', 'marginRight': '10px', 'marginTop': '5px'}
+    self._config(attrs)
+
+  @property
   def markdown(self):
     """
     Description:
@@ -112,6 +141,8 @@ class OptionsItems(Options):
   @markdown.setter
   @packageImport("showdown")
   def markdown(self, values):
+    if values is True:
+      values = {}
     if isinstance(values, bool):
       self._config(values)
       self._config({} if values is True else values, 'showdown')
@@ -136,6 +167,8 @@ class OptionsItems(Options):
   @showdown.setter
   @packageImport("showdown")
   def showdown(self, values):
+    if values is True:
+      values = {}
     self._config(True, 'markdown')
     self._config(values)
 

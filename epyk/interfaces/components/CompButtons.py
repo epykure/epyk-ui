@@ -781,3 +781,24 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       ]),
     ])
     return live
+
+  def text(self, text, width=('auto', ""), tooltip=None, height=(None, "px"), profile=None, options=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param tooltip:
+    :param height:
+    :param profile:
+    :param options:
+    """
+    c = self.context.rptObj.ui.text(text, tooltip=tooltip, width=width, height=height, profile=profile, options=options)
+    c.style.add_classes.div.background_hover()
+    c.style.css.border_radius = 5
+    c.style.css.font_size = Defaults_css.font(-2)
+    c.style.css.padding = '1px 2px'
+    return c
