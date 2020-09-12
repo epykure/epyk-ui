@@ -355,6 +355,8 @@ class Text(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set all the possible object for a button
 
     :rtype: OptText.OptionsText
@@ -363,6 +365,8 @@ class Text(Html.Html):
 
   def editable(self):
     """
+    Description:
+    ------------
     Change the component properties to be editable if double clicked
 
     Example
@@ -543,6 +547,8 @@ class Paragraph(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -750,6 +756,8 @@ class Numeric(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
