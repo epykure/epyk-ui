@@ -655,7 +655,7 @@ class Col(Html.Html):
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
     if align == "center":
-      self.css({'margin': 'auto', 'display': 'inline-block', 'text-align': 'center'})
+      self.css({'margin-left': 'auto', 'margin-right': 'auto', 'display': 'inline-block', 'text-align': 'center'})
     else:
       self.css({'display': 'inline-block'})
     self.attr["class"].add('col')

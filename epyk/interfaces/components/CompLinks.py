@@ -82,7 +82,7 @@ class Links(object):
     html_link.style.css.padding = "0 10px"
     return html_link
 
-  def link(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def link(self, text="", url="", icon=None, tooltip=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -104,6 +104,7 @@ class Links(object):
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param tooltip: String. Optional. The tooltip displayed when the mouse is on the component
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
@@ -115,6 +116,8 @@ class Links(object):
     if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
       url = "//%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, options, profile)
+    if tooltip is not None:
+      html_link.tooltip(tooltip)
     return html_link
 
   def data(self, text, value, width=(None, '%'), height=(None, 'px'), format='txt', profile=None):

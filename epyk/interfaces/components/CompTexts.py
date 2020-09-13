@@ -191,7 +191,7 @@ class Texts(object):
     html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
     return html_label
 
-  def highlights(self, text=None, title="", icon=None, type="danger", color=None, width=(None, "%"),
+  def highlights(self, text=None, title=None, icon=None, type="danger", color=None, width=('auto', ""),
                  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -222,6 +222,7 @@ class Texts(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
+    :param options:
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
@@ -267,6 +268,7 @@ class Texts(object):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
     if type not in ['success', 'warning', 'danger']:
@@ -333,6 +335,7 @@ class Texts(object):
     Attributes:
     ----------
     :param text:
+    :param language:
     :param color:
     :param width:
     :param height:

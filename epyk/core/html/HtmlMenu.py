@@ -226,7 +226,7 @@ class ContextMenu(Html.Html):
 
     Attributes:
     ----------
-    :param value: String. The value
+    :param value: String.
     :param icon: String. Optional. The Font awesome icon
     """
     self += {"value": value, 'icon': icon}

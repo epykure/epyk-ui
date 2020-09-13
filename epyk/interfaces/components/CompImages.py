@@ -528,6 +528,7 @@ class Images(object):
     Attributes:
     ----------
     :param icon: String. Optional. The component icon content from font-awesome references
+    :param family:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: String. Optional. The font color in the component. Default inherit

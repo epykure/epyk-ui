@@ -205,8 +205,8 @@ class Menus(object):
     col.css({"background-color": self.context.rptObj.theme.greys[0], "margin": 0})
     return col
 
-  def bar(self, data=None, align="center", color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def bar(self, data=None, align="left", position="top", color=None, width=(100, "%"), height=(None, 'px'),
+          options=None, profile=None):
     """
     Description:
     ------------
@@ -231,12 +231,9 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param position: String. Optional.
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
@@ -247,7 +244,11 @@ class Menus(object):
       else:
         records.append(k)
 
-    row = self.context.rptObj.ui.row([self.context.rptObj.ui.col(align=align, position="top") for _ in range(len(records))], color, width, height, htmlCode, helper, options or {}, profile)
+    row = self.context.rptObj.ui.row(color, width=width, height=height, options=options or {}, profile=profile, position=position)
+    for _ in range(len(records)):
+      col = self.context.rptObj.ui.col(align=align, position=position)
+      col.options.responsive = False
+      row.add(col)
     row.style.css.padding = "0 15%"
     for i, k in enumerate(records):
       title_text = k.get("value")
