@@ -564,6 +564,10 @@ class Tags(JsHtml.JsHtmlRich):
     Attributes:
     ----------
     :param text: String. The value to be added on the filter panel
+    :param category:
+    :param name:
+    :param fixed:
+    :param no_duplicte:
     """
     text = JsUtils.jsConvertData(text, None)
     fixed = JsUtils.jsConvertData(fixed, None)
