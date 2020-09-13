@@ -205,7 +205,7 @@ class Menus(object):
     col.css({"background-color": self.context.rptObj.theme.greys[0], "margin": 0})
     return col
 
-  def bar(self, data=None, align="left", position="top", color=None, width=(100, "%"), height=(None, 'px'),
+  def bar(self, data=None, align="left", position="top", color=None, width=(350, "px"), height=(None, 'px'),
           options=None, profile=None):
     """
     Description:
@@ -249,11 +249,11 @@ class Menus(object):
       col = self.context.rptObj.ui.col(align=align, position=position)
       col.options.responsive = False
       row.add(col)
-    row.style.css.padding = "0 15%"
     for i, k in enumerate(records):
       title_text = k.get("value")
       if title_text is not None:
         title_text = self.context.rptObj.ui.titles.section(title_text, align=align)
+        title_text.style.css.margin_top = 0
         row[i].add(title_text)
       if k.get("children", []):
         items = self.context.rptObj.ui.list()
