@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -19,8 +21,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
+    Add text items to the list
 
-    :param report:
+    Attributes:
+    ----------
+    :param report: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -40,11 +45,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
-    Set an list of icons
+    Add icon items to the list
 
     Attributes:
     ----------
-    :param report:
+    :param report: Page object. The internal page object
     """
     report.jsImports.add('font-awesome')
     report.cssImport.add('font-awesome')
@@ -64,10 +69,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
+    Add check components to the list
 
     Attributes:
     ----------
-    :param report:
+    :param report: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -97,10 +103,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
+    Add radio components to the list
 
     Attributes:
     ----------
-    :param report:
+    :param report: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -128,10 +135,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
+    Add text object with badges to the list
 
     Attributes:
     ----------
-    :param report:
+    :param report: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -147,10 +155,11 @@ class JsItemsDef(object):
     """
     Description:
     ------------
+    Add links items to the list
 
     Attributes:
     ----------
-    :param report:
+    :param report: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("a");  
@@ -160,8 +169,13 @@ class JsItemsDef(object):
 
   def box(self, report):
     """
+    Description:
+    ------------
     This will represent a title with a text and a list of icons
-    :param report:
+
+    Attributes:
+    ----------
+    :param report: Page object. The internal page object
     """
     report.jsImports.add('font-awesome')
     report.cssImport.add('font-awesome')
@@ -219,8 +233,11 @@ class JsItem(JsHtml.JsHtmlRich):
   def content(self):
     return JsHtml.ContentFormatters(self._report, '''
       (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
-          const valid = dom.querySelector('[name=value]').getAttribute("data-valid");
-          if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
+          const item = dom.querySelector('[name=value]');
+          if (item != null){
+            const valid = item.getAttribute("data-valid");
+            if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
+          }
       }); return values })(%s)''' % self.varName)
 
   @property
@@ -240,10 +257,49 @@ class JsItem(JsHtml.JsHtmlRich):
     Return a list with all the unselected values
     """
     return JsHtml.ContentFormatters(self._report, '''
-        (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
-            const valid = dom.querySelector('[name=value]').getAttribute("data-valid");
+        (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){   
+          const item = dom.querySelector('[name=value]');
+          if (item != null){
+            const valid = item.getAttribute("data-valid");
             if (valid === 'false'){values.push(dom.querySelector('[name=value]').innerHTML)}
+          }
         }); return values })(%s)''' % self.varName)
+
+  @property
+  def first(self):
+    """
+    Description:
+    ------------
+    Get the first value in the list
+    """
+    return JsObjects.JsVoid("%s.firstChild.querySelector('[name=value]').innerHTML" % self.varName)
+
+  @property
+  def last(self):
+    """
+    Description:
+    ------------
+    Get the last value in the list
+    """
+    return JsObjects.JsVoid("%s.lastChild.querySelector('[name=value]').innerHTML" % self.varName)
+
+  @property
+  def current(self):
+    """
+    Description:
+    ------------
+    Get the current value from a LI item event
+    """
+    return JsObjects.JsVoid("this.querySelector('[name=value]').innerHTML")
+
+  @property
+  def values(self):
+    """
+    Description:
+    ------------
+    Get all the values in the list
+    """
+    return JsObjects.JsArray.JsArray.get("")
 
   def getItemByValue(self, value):
     """
@@ -269,7 +325,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param with_input_box:
+    :param with_input_box: Boolean. If the items have a dedicated input box for the check
     """
     if self._src._jsStyles['items_type'] == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
@@ -277,9 +333,11 @@ class JsItem(JsHtml.JsHtmlRich):
     if self._src._jsStyles['items_type'] == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
-          dom.querySelector('[name=input_box]').checked = true;
-          dom.querySelector('[name=value]').setAttribute("data-valid", true);
-        })''' % self.varName)
+          const item = dom.querySelector('[name=input_box]');
+          if (item != null){ 
+            item.checked = true;
+            dom.querySelector('[name=value]').setAttribute("data-valid", true);
+        }})''' % self.varName)
 
     return JsObjects.JsVoid('''
       %s.childNodes.forEach( function(dom, k){  
@@ -294,7 +352,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param with_input_box:
+    :param with_input_box: Boolean. If the items have a dedicated input box for the check
     """
     if self._src._jsStyles['items_type'] == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
@@ -302,23 +360,28 @@ class JsItem(JsHtml.JsHtmlRich):
     if self._src._jsStyles['items_type'] == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
-          dom.querySelector('[name=input_box]').checked = false;
-          dom.querySelector('[name=value]').setAttribute("data-valid", false);
-        })''' % self.varName)
+          const item = dom.querySelector('[name=input_box]');
+          if (item != null){ 
+            dom.querySelector('[name=input_box]').checked = false;
+            dom.querySelector('[name=value]').setAttribute("data-valid", false);
+        }})''' % self.varName)
 
     return JsObjects.JsVoid('''
       %s.childNodes.forEach( function(dom, k){  
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
       })''' % self.varName)
 
-  def add(self, value):
+  def add(self, value, css_attrs=None, css_cls=None):
     """
     Description:
     ------------
+    Add items to the list
 
     Attributes:
     ----------
     :param value: String | Dictionary.
+    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component
+    :param css_cls: String. The CSS class to be added to the LI component
     """
     if isinstance(value, dict):
       js_values = []
@@ -326,10 +389,97 @@ class JsItem(JsHtml.JsHtmlRich):
         js_values.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
       value = "{%s}" % ",".join(js_values)
     else:
+      if hasattr(value, 'dom'):
+        value = value.dom.content
       value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid('''
-      var li = document.createElement("LI"); %(shape)s(li, %(value)s, %(options)s); li.style.margin = "5px 0"; %(comp)s.appendChild(li)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value, 'shape': "%s%s" % (self._src._prefix, self._src._jsStyles['items_type'])})
+      var item = %(value)s; var itemOptions = %(options)s;
+      if(itemOptions.showdown){var converter = new showdown.Converter({}); converter.setOption("display", "inline-block");
+          item = converter.makeHtml(%(value)s).replace("<p>", "<p style='display:inline-block;margin:0'>")};
+      var li = document.createElement("LI"); %(shape)s(li, item, %(options)s); li.style.margin = "5px 0"; %(comp)s.appendChild(li)
+      if(itemOptions.delete){
+        var close = document.createElement("i");
+        close.classList.add("fas"); 
+        close.classList.add(itemOptions.delete_icon);
+        close.style.cursor = 'pointer';
+        close.onclick = function(event){this.parentNode.remove()};
+        for (const [key, value] of Object.entries(itemOptions.delete_position)) {
+            close.style[key] = value}
+        li.lastChild.style.display = 'inline-block'; li.appendChild(close);
+        const cls = %(cls)s;
+        if (cls != null){li.classList.add(cls)}
+      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value,
+             'cls': JsUtils.jsConvertData(css_cls, None), 'shape': "%s%s" % (self._src._prefix, self._src._jsStyles['items_type'])})
+
+  def tags(self, values, css_attrs=None, css_cls=None):
+    """
+    Description:
+    ------------
+    Add tags to an item in the list
+
+    Attributes:
+    ----------
+    :param values: List. The tags to be added to the current item
+    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component
+    :param css_cls: String. The CSS class to be added to the LI component
+    """
+    return JsObjects.JsVoid('''
+      var enumTags = %(values)s;
+      if(enumTags != ''){
+        if(typeof enumTags === 'string'){ enumTags = [enumTags]};
+        enumTags.forEach(function(val){
+          var item = document.createElement("DIV"); item.innerHTML = val;
+          item.style.display = "inline-block";
+          item.style.padding = "1px 2px";
+          item.style.margin = "0 1px";
+          item.style.color = "black";
+          item.style.fontSize = "8px";
+          item.style.background = "white";
+          item.style.border = "1px solid white";
+          item.style.borderRadius = "5px";
+          const css = %(css)s;
+          if (css != null){
+            for (const [key, value] of Object.entries(css)) {
+              item.style[key] = value
+            }
+          }
+          const cls = %(cls)s;
+          if(cls != null){item.classList.add(cls)}
+          %(comp)s.appendChild(item)
+      })}''' % {'comp': self.varName, 'css': JsUtils.jsConvertData(css_attrs, None),
+                'cls': JsUtils.jsConvertData(css_cls, None), 'values': JsUtils.jsConvertData(values, None)})
+
+  def contextMenu(self, menu, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+    Add a context menu to an item in the list.
+
+    Attributes:
+    ----------
+    :param menu:
+    :param jsFncs: List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    if not hasattr(menu, 'source'):
+      menu = self._src._report.ui.menus.contextual(menu)
+    menu.source = self
+    new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
+          menu.dom.css(
+            {"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
+             'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
+          self._report.js.objects.mouseEvent.preventDefault()]
+    return JsObjects.JsVoid('''
+      %s.lastChild.addEventListener("contextmenu", function(event){%s});
+      ''' % (self.varName, JsUtils.jsConvertFncs(new_js_fncs, toStr=True)))
+
+  def clear(self):
+    """
+    Description:
+    ------------
+    Clear all the items in the list
+    """
+    return JsObjects.JsVoid("while(%(comp)s.firstChild){%(comp)s.removeChild(%(comp)s.firstChild)}" % {'comp': self.varName})
 
 
 class Tags(JsHtml.JsHtmlRich):

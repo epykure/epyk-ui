@@ -30,9 +30,13 @@ class FmtNumber(object):
     -----------
     The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
-    https://www.w3schools.com/jsref/jsref_tofixed.asp
+    Related Pages:
 
-    :param value: Integer.
+      https://www.w3schools.com/jsref/jsref_tofixed.asp
+
+    Attributes:
+    ----------
+    :param value: Integer. The number of digit to be displayed
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toFixed()" % (self.selector, self._val))
@@ -45,9 +49,13 @@ class FmtNumber(object):
     -----------
     The toPrecision() method formats a number to a specified length.
 
-    https://www.w3schools.com/jsref/jsref_toprecision.asp
+    Related Pages:
 
-    :param value: Integer.
+      https://www.w3schools.com/jsref/jsref_toprecision.asp
+
+    Attributes:
+    ----------
+    :param value: Integer. The number of digit to be displayed
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toPrecision()" % (self.selector, self._val))
@@ -60,7 +68,9 @@ class FmtNumber(object):
     -----------
     The toExponential() method converts a number into an exponential notation.
 
-    https://www.w3schools.com/jsref/jsref_toexponential.asp
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_toexponential.asp
     """
     return JsObjects.JsObjects.get("%s = %s.toExponential()" % (self.selector, self._val))
 
@@ -76,9 +86,11 @@ class Formatters(object):
     """
     Description:
     -----------
+    Standard conversion to number
 
-    https://www.w3schools.com/jsref/jsref_obj_number.asp
+    Related Pages:
 
+      https://www.w3schools.com/jsref/jsref_obj_number.asp
     """
     return FmtNumber(self._report, self.selector, "parseFloat(%s)" % self.selector)
 
@@ -87,11 +99,16 @@ class Formatters(object):
     """
     Description:
     -----------
+    Convert to number using the accounting Javascript module
 
-    https://openexchangerates.github.io/accounting.js/
+    Related Pages:
 
-    :param digit:
-    :param thousand_sep:
+      https://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep: String. The thousand symbol separator
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (self.selector, self.selector, digit, thousand_sep))
@@ -101,13 +118,18 @@ class Formatters(object):
     """
     Description:
     -----------
+    Convert to number with a symbol using the accounting Javascript module
 
-    https://openexchangerates.github.io/accounting.js/
+    Related Pages:
 
-    :param symbol:
-    :param digit:
-    :param thousand_sep:
-    :param decimal_sep:
+      https://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param symbol: String. The currency sympol
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep: String. The thousand symbol separator
+    :param decimal_sep: String. The decimal symbol separator
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -167,7 +189,8 @@ class ContentFormatters(object):
   def toNumber(self, digit=0, thousand_sep="."):
     """
     Description:
-    ------------
+    -----------
+    Convert to number using the accounting Javascript module-
 
     Usage::
 
@@ -177,8 +200,8 @@ class ContentFormatters(object):
 
     Attributes:
     ----------
-    :param digit:
-    :param thousand_sep:
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep:  The thousand symbol separator
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("accounting.formatNumber(%s, %s, %s)" % (self.selector, digit, thousand_sep))
@@ -188,6 +211,7 @@ class ContentFormatters(object):
     """
     Description:
     ------------
+    Convert to number with a symbol using the accounting Javascript module
 
     Related Pages:
 
@@ -195,10 +219,10 @@ class ContentFormatters(object):
 
     Attributes:
     ----------
-    :param symbol:
-    :param digit:
-    :param thousand_sep:
-    :param decimal_sep:
+    :param symbol: String. The currency sympol
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep: String. The thousand symbol separator
+    :param decimal_sep: String. The decimal symbol separator
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -215,7 +239,6 @@ class ContentFormatters(object):
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
-
     """
     return JsObjects.JsNumber.JsNumber("accounting.unformat(%s)" % self.selector)
 
@@ -224,7 +247,7 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-
+    Standard conversion to number
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
@@ -233,7 +256,7 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-
+    Standard conversion to string
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector)
 
@@ -242,7 +265,7 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-
+    Standard conversion to Date object
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
@@ -265,8 +288,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-
-    :return:
+    Return a Javascript val object
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.content.toStr()))
 
@@ -317,7 +339,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    :return:
     """
     return ContentFormatters(self._report, "%s.value" % self.varName)
 
@@ -328,6 +349,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Link to the events attached to a Javascript DOM object
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -338,6 +360,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Link to the JQuery functions
 
     :rtype: JsQuery.JQuery
     """
@@ -419,10 +442,13 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param attrs:
+    :param attrs: Dictionary. The CSS attributes
     """
     styles = []
     for k, v in attrs.items():
+      if "-" in k:
+        split_css = k.split("-")
+        k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return ";".join(styles)
 
@@ -439,8 +465,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
       Attributes:
     ----------
-    :param fncName: The function name
-    :param jsFncs: The Javascript function definition
+    :param fncName: String. The function name
+    :param jsFncs: String or List. The Javascript function definition
+    :param pmts:
 
     :return: The JsObject
     """
@@ -452,6 +479,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Hide the component
 
     Usage::
 
@@ -463,10 +491,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return self.css("display", "none")
 
-  def show(self, inline=None, duration=None):
+  def show(self, inline=None, duration=None, display_value=None):
     """
     Description:
     -----------
+    Display the component
 
     Usage::
 
@@ -480,11 +509,13 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param inline: String
     :param duration: Integer. A time in second for the component display
+    :param display_value: String. Optional. The display value. Default inline-block
     """
+    display_value = display_value or self.display_value
     if duration is not None:
-      return super(JsHtml, self).show('inline-block' if inline else self.display_value, duration)
+      return super(JsHtml, self).show('inline-block' if inline else display_value, duration)
 
-    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else self.display_value), None)
+    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
   def select(self):
     """
@@ -498,6 +529,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     ------------
+    Toggle (hide / show) the display of the component
 
     Usage::
 
@@ -510,7 +542,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param attr:
+    :param attr: String.
     :param jsVal1:
     :param jsVal2:
 
@@ -619,7 +651,7 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     -----------
-
+    Return the val object
     """
     values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
     return JsObjects.JsObjects.get(
@@ -628,6 +660,29 @@ class JsHtmlRich(JsHtml):
   @property
   def content(self):
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
+
+  def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None):
+    """
+    Description:
+    -----------
+    Toggle (change) the content of the HTML component
+
+    Attributes:
+    ----------
+    :param currentVal: String. The content of the HTML component
+    :param newVal: String. The new content of the HTML component
+    :param currentJsFncs: List. Optional. The functions to be triggered when currentVal is visible
+    :param newJsFncs2: List. Optional. The functions to be triggered when newVal is visible
+    """
+    content = JsUtils.jsConvertData(currentVal, None)
+    content2 = JsUtils.jsConvertData(newVal, None)
+    return JsObjects.JsVoid('''
+      if(%(varName)s.innerHTML == %(content)s){%(varName)s.innerHTML = %(content2)s; %(jsFncs)s}
+      else {%(varName)s.innerHTML = %(content)s; %(jsFncs2)s}
+      ''' % {'varName': self.varName, 'content2': content2, 'content': content,
+             'jsFncs': JsUtils.jsConvertFncs(currentJsFncs, toStr=True),
+             'jsFncs2': JsUtils.jsConvertFncs(newJsFncs2, toStr=True)
+             })
 
   def select(self):
     """
@@ -651,6 +706,7 @@ class JsHtmlRich(JsHtml):
     Attributes:
     ----------
     :param value:
+    :param new_line:
     :param options:
     """
     value = JsUtils.jsConvertData(value, None)
@@ -670,7 +726,7 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     ------------
-
+    Empty the content of the HTML component using the innerHTML JavaScript property
     """
     return '%s.innerHTML = ""' % self.varName
 
@@ -736,6 +792,8 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param time:
     :param color:
     """
@@ -746,6 +804,8 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param bool:
     """
     bool = JsUtils.jsConvertData(bool, None)
@@ -756,6 +816,8 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param by_name:
     """
     if by_name:
@@ -775,7 +837,9 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    :param lock:
+    Attributes:
+    ----------
+    :param not_allowed:
     """
     fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
     fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
@@ -832,7 +896,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
 
-    :return:
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
@@ -840,6 +903,24 @@ class JsHtmlList(JsHtml):
   @property
   def content(self):
     return self._src.dom.getAttribute("class")
+
+  def add(self, item):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param item:
+    """
+    if hasattr(item, 'dom'):
+      item = item.dom.content
+    item = JsUtils.jsConvertData(item, None)
+    return JsObjects.JsVoid('''
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode(%s));
+      %s.appendChild(li)
+      ''' % (item, self._src.dom.varName))
 
 
 class JsHtmlBackground(JsHtml):

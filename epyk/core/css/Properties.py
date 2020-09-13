@@ -2716,9 +2716,18 @@ class CssMixin(object):
     """
     Description:
     ------------
-    Shotcut to put the text in bold
+    Shortcut to put the text in bold
     """
     self.font_weight = "bold"
+    return self
+
+  def italic(self):
+    """
+    Description:
+    ------------
+    Shortcut to put the text in italic
+    """
+    self.font_style = "italic"
     return self
 
   def underline(self):

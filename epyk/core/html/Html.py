@@ -1162,23 +1162,22 @@ Attributes:
     str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
     self.on("paste", str_fncs, profile, source_event)
 
-  def contextMenu(self, menu, jsFncs, profile=False):
+  def contextMenu(self, menu, jsFncs=None, profile=False):
     """
     Description:
     -----------
     Attach a context menu to a component and set a function to called before the display
 
-Attributes:
+    Attributes:
     ----------
     :param menu:
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
     menu.source = self
-    # event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
-    new_js_fncs = jsFncs + [self._report.js.objects.mouseEvent.stopPropagation(),
+    new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
                    menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
                                  'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
                    self._report.js.objects.mouseEvent.preventDefault()]

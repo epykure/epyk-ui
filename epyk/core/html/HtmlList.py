@@ -152,8 +152,7 @@ class List(Html.Html):
     if not isinstance(htmlObj, Li):
       raise Exception("This can only be used for Li")
 
-    if self.items is None:
-      self.items = []
+    self.items = self.items or []
     htmlObj.options.managed = False
     self.items.append(htmlObj)
     return self
@@ -169,7 +168,7 @@ class List(Html.Html):
 
     :rtype: Li
     """
-    return self.items[i]
+    return self.items[i] if self.items is not None else None
 
   def add_item(self, d):
     """
@@ -180,8 +179,7 @@ class List(Html.Html):
     ----------
     :param d:
     """
-    if self.items is None:
-      self.items = []
+    self.items = self.items or []
     li_obj = Li(self._report, d)
     if hasattr(d, 'options'):
       d.options.managed = False
@@ -195,8 +193,7 @@ class List(Html.Html):
     ------------
 
     """
-    if self.items is None:
-      self.items = []
+    self.items = self.items or []
     for d in self.val:
       li_obj = Li(self._report, d)
       li_obj.options.managed = False

@@ -12,6 +12,9 @@ class Menus(object):
 
   def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
     Usage::
 
       l = rptObj.ui.lists.list(["A", "B"])
@@ -54,6 +57,9 @@ class Menus(object):
 
   def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
     Usage::
 
       l = rptObj.ui.lists.list(["A", "B"])
@@ -124,7 +130,13 @@ class Menus(object):
     http://astronautweb.co/snippet/font-awesome/
     """
     menu_li, menu_title, menu_items, menu_divs = [], [], [], []
+    records = []
     for k in data:
+      if not isinstance(k, dict):
+        records.append({'value': k})
+      else:
+        records.append(k)
+    for k in records:
       menu_li.append(k["value"])
       title_text = k.get("title")
       if title_text is not None:
@@ -135,26 +147,26 @@ class Menus(object):
     html_list = self.context.rptObj.ui.list(menu_li, color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
     for i, m in enumerate(menu_title):
-      if isinstance(menu_items[i][0], list):
+      if menu_items[i] and isinstance(menu_items[i][0], list):
         grid = self.context.rptObj.ui.div([])
         for item in menu_items[i]:
-          grid + self.context.rptObj.ui.col([m, *item], width=(None, "px")).css({"color": "white", "padding": "0 5px",
-                        "display": 'inline-block', "vertical-align": 'top', "margin": '2px 0'})
+          grid.add(self.context.rptObj.ui.col([m, *item], width=(None, "px")).css({"padding": "0 5px",
+                        "display": 'inline-block', "vertical-align": 'top', "margin": '2px 0'}))
         html_div = self.context.rptObj.ui.div(grid).css({"vertical-align": 'None'})
         html_div.attr["name"] = "divs_%s" % (html_list.htmlCode)
         html_div.style.display = None
       else:
-        html_div = self.context.rptObj.ui.div(
-          self.context.rptObj.ui.grid([
-            self.context.rptObj.ui.col([m, *menu_items[i]]).css({"color": "white", "padding": "0 5px"})]))
+        grid = self.context.rptObj.ui.grid([self.context.rptObj.ui.col([m, *menu_items[i]]).css({"padding": "0 5px"})])
+        html_div = self.context.rptObj.ui.div(grid)
         html_div.attr["name"] = "divs_%s" % (html_list.htmlCode)
         html_div.style.display = None
       menu_divs.append(html_div)
-    html_list.click_items(
-      [self.context.rptObj.js.getElementById(l.htmlCode).setAttribute("data-select", "false") for l in html_list]
-      + [self.context.rptObj.js.objects.dom("this").setAttribute("data-select", "true")])
+    if records is None:
+      html_list.click_items(
+        [self.context.rptObj.js.getElementById(l.htmlCode).setAttribute("data-select", "false") for l in html_list]
+        + [self.context.rptObj.js.objects.dom("this").setAttribute("data-select", "true")])
     col = self.context.rptObj.ui.col([html_list, *menu_divs])
-    col.css({"background-color": "#333", "margin": 0, "color": 'white'})
+    col.css({"background-color": self.context.rptObj.theme.greys[0], "margin": 0})
     return col
 
   def icons(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):

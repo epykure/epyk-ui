@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.fncs import JsFncs
 from epyk.core.css import Colors
@@ -15,6 +17,7 @@ from epyk.core.js import JsUtils
 
 
 class JsDomEvents(object):
+
   class __internal(object):
     htmlCode = None
 
@@ -64,8 +67,9 @@ class JsDomEvents(object):
     ------------
     The event occurs when the user clicks on an element
 
-    Example
-    select.label.dom.events.click(rptObj.js.console.log("test"))
+    Usage::
+
+      select.label.dom.events.click(rptObj.js.console.log("test"))
 
     Related Pages:
 
@@ -86,8 +90,9 @@ class JsDomEvents(object):
     ------------
     The event occurs when the content of a form element, the selection, or the checked state have changed (for <input>, <select>, and <textarea>)
 
-    Example
-    select.dom.events.change(rptObj.js.window.alert("test"))
+    Usage::
+
+      select.dom.events.change(rptObj.js.window.alert("test"))
 
     Related Pages:
 
@@ -281,8 +286,9 @@ class JsDomEvents(object):
     ------------
     The event occurs when the pointer is moved out of an element
 
-    Example
-    select.label.dom.events.mouseleave(rptObj.js.console.log("test"))
+    Usage::
+
+      select.label.dom.events.mouseleave(rptObj.js.console.log("test"))
 
     Related Pages:
 
@@ -414,6 +420,8 @@ class JsDomsTransforms(object):
 
   def initial(self):
     """
+    Description:
+    -----------
     Sets this property to its default value
 
     """
@@ -421,6 +429,8 @@ class JsDomsTransforms(object):
 
   def inherit(self):
     """
+    Description:
+    -----------
     Inherits this property from its parent element.
 
     """
@@ -801,8 +811,6 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param tag:
-
-    :return:
     """
     return JsDoms("%s.querySelector('%s')" % (self.toStr(), tag))
 
@@ -832,14 +840,18 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Shortcup function to emtpy an HTML compnent.
+    Shortcut function to emtpy an HTML component.
     This will only reuse the innerHTML property
     """
     return JsObject.JsObject('%s.innerHTML = ""' % self.varId)
 
   @property
   def effects(self):
-    """ Add CSS pre defined events from a dom object """
+    """
+    Description:
+    ------------
+    Add CSS pre defined events from a dom object
+    """
     return JsDomEffects(self._report, self._src)
 
   @property
@@ -864,7 +876,7 @@ class JsDoms(JsObject.JsObject):
     ------------
     Link to the Jquery package
 
-    THe id attribute must be defined
+    The id attribute must be defined
     """
     from epyk.core.js.packages import JsQuery
 
@@ -888,7 +900,7 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param event:
-    :param jsFncs:
+    :param jsFncs: String or List. The Javascript functions
     """
     self._js.append('addEventListener("%s", function(){%s})' % (event, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
@@ -920,7 +932,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript functions to be added to this section
+    :param jsFncs: String or List. The Javascript functions
     """
     self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
 
@@ -1116,8 +1128,6 @@ class JsDoms(JsObject.JsObject):
     :param attrs: A python dictionary with the css attributes
     :param eventAttrs: A nested python dictionary with the css attributes for each events
     :param extend: Boolean. To set if the class should replace the existing style definition
-
-    :return:
     """
     if attrs is not None or eventAttrs is not None:
       clsName = self._report.style.cssName(clsName)
@@ -1140,7 +1150,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param clsName: String. The classname
+    :param clsName: String. Required. The classname
     """
     self._js.append('%s.classList.remove("%s")' % (self.varId, clsName))
     return self
@@ -1163,6 +1173,7 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param type: A String with the type of parameter or a python dictionary
     :param jsObject: A JsObj with the value to be set
+    :param duration: Integer
 
     :return: A JsObj
     """
@@ -1217,7 +1228,7 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Toogle a transition
+    Toggle a transition
 
     Related Pages:
 
@@ -1332,6 +1343,11 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+
+    Attributes:
+    ----------
+    :param display_value:
+    :param duration:
     """
     self.css("display", display_value or self.display_value)
     if duration is not None:
@@ -1384,10 +1400,12 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
+    Toggle (change) the content of the HTML component
 
     Attributes:
     ----------
-    :param jsString:
+    :param jsString1: String. The content
+    :param jsString2: String. The new content
     """
     str1 = JsUtils.jsConvertData(jsString1, None)
     str2 = JsUtils.jsConvertData(jsString2, None)
@@ -1420,9 +1438,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param clsName: The classname to be toggle
-
-    :return:
+    :param clsName: String. Required. The classname to be toggle
+    :param propagate: Boolean. Optional
     """
     clsName = JsUtils.jsConvertData(clsName, None)
     if propagate:
@@ -1536,7 +1553,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attributename: Required. The name of the attribute you want to return
+    :param attributename: String. Required. The name of the attribute you want to return
 
     :return: An Attr object, representing the specified attribute node.
     """
@@ -1549,7 +1566,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attributename:
+    :param attributename: String. Optional.
     """
     if attributename is None:
       return JsString.JsString("getComputedStyle(%s)" % self.varId, isPyData=False)
@@ -1599,8 +1616,6 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param className:
-
-    :return:
     """
     className = JsUtils.jsConvertData(className, None)
     return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, className), isPyData=False)
@@ -1613,8 +1628,7 @@ class JsDoms(JsObject.JsObject):
 
     Shortcut in charge oa creating a text node object and adding the text.
 
-    Related Pages:
-Attributes:
+    Attributes:
     ----------
     :param jsString: The Javascript String of the text node component
 
@@ -1706,7 +1720,7 @@ Attributes:
 
     Attributes:
     ----------
-    :param className: Specifies the class name of an element. To apply multiple classes, separate them with spaces, like "test demo"
+    :param className: String. Specifies the class name of an element. To apply multiple classes, separate them with spaces, like "test demo"
 
     :return: A String, representing the class, or a space-separated list of classes, of an element
     """
@@ -1734,7 +1748,7 @@ Attributes:
 
     Attributes:
     ----------
-    :param deep: Optional. Specifies whether all descendants of the node should be cloned.
+    :param deep: Boolean. Optional. Specifies whether all descendants of the node should be cloned.
 
     :return: A Node object, representing the cloned node
     """
@@ -1831,7 +1845,7 @@ Attributes:
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: String or List. The Javascript functions
     """
     if jsFncs is None:
       return JsObject.JsObject("%s.click()" % self.varId)
@@ -1851,8 +1865,8 @@ Attributes:
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript function
-    :param autoStyle: Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
+    :param jsFncs: String or List. Required. The Javascript function
+    :param autoStyle: Boolean. Optional. Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
 
     :return: The PyDom object
     """
@@ -1868,15 +1882,17 @@ Attributes:
     Description:
     ------------
 
-    :param jsFncs:
-
-    :return:
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
     """
     self._js.append("var rect = elm.getBoundingClientRect()" % self.varId)
     return self
 
   def getContext(self, contextType, contextAttributes=None):
     """
+    Description:
+    ------------
     Function dedicated to DOM Canvas types.
 
     The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
@@ -1891,8 +1907,6 @@ Attributes:
     :param contextAttributes: Dictionary with specific context attributes (depending on the type
 
     TODO: Add a check on the tag
-
-    :return:
     """
     types = ["2d", "webgl", "experimental-webgl", "webgl2", "bitmaprenderer"]
     if contextType not in types:
@@ -1915,7 +1929,7 @@ class JsDomsList(JsArray.JsArray):
 
     Attributes:
     ----------
-    :param jsFncs: Array. List of Javascript fragments
+    :param jsFncs: String or List. List of Javascript fragments
     """
     self._js.append("%s.forEach(function(elt, index){%s})" % (self.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
