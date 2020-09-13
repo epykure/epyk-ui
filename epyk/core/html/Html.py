@@ -1196,6 +1196,17 @@ Attributes:
     raise Exception("Constructor must be defined in %s" % self.__class__.__name__)
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+    Return the JavaScript fragment to refresh the component content
+
+    Attributes:
+    ----------
+    :param data: String or object. The component expected content
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
     if not self.builder_name:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 

@@ -23,6 +23,8 @@ class Li(Html.Html):
 
   def __init__(self, report, text):
     super(Li, self).__init__(report, text)
+    if hasattr(text, 'options'):
+      text.options.managed = False
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
 
   def __add__(self, htmlObj):

@@ -217,12 +217,12 @@ class Texts(object):
     :param icon:
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
                  dark). Default danger
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param profile:
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

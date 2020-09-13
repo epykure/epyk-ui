@@ -31,6 +31,17 @@ class Menus(object):
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
+
+    Attributes:
+    ----------
+    :param data:
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -75,9 +86,22 @@ class Menus(object):
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
+
+    Attributes:
+    ----------
+    :param data:
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     menu_li, menu_title, menu_items = [], [], []
     for k in data:
+      if not isinstance(k, dict):
+        k = {"value": k}
       menu_li.append(k["value"])
       title_text = k.get("title")
       if title_text is not None:
@@ -128,6 +152,18 @@ class Menus(object):
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
+
+    Attributes:
+    ----------
+    :param data:
+    :param position: String. Optional.
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     menu_li, menu_title, menu_items, menu_divs = [], [], [], []
     records = []
@@ -169,11 +205,76 @@ class Menus(object):
     col.css({"background-color": self.context.rptObj.theme.greys[0], "margin": 0})
     return col
 
+  def bar(self, data=None, align="center", color=None, width=(100, "%"), height=(None, 'px'),
+           htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlContainer.Grid`
+      - :class:`epyk.core.html.HtmlText.Title`
+      - :class:`epyk.core.html.HtmlList.List`
+
+    Related Pages:
+
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+    http://astronautweb.co/snippet/font-awesome/
+
+    Attributes:
+    ----------
+    :param data:
+    :param position: String. Optional.
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    records = []
+    for k in data:
+      if not isinstance(k, dict):
+        records.append({'value': k})
+      else:
+        records.append(k)
+
+    row = self.context.rptObj.ui.row([self.context.rptObj.ui.col(align=align, position="top") for _ in range(len(records))], color, width, height, htmlCode, helper, options or {}, profile)
+    row.style.css.padding = "0 15%"
+    for i, k in enumerate(records):
+      title_text = k.get("value")
+      if title_text is not None:
+        title_text = self.context.rptObj.ui.titles.section(title_text, align=align)
+        row[i].add(title_text)
+      if k.get("children", []):
+        items = self.context.rptObj.ui.list()
+        for child in k.get("children", []):
+          if isinstance(child, dict):
+            link = self.context.rptObj.ui.link(**child)
+            link.options.target = '_blank'
+            li = self.context.rptObj.ui.lists.item(link)
+            items.add(li)
+          else:
+            li = self.context.rptObj.ui.lists.item(child)
+            items.add(li)
+        row[i].add(items)
+    return row
+
   def icons(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param width:
     :param height:
@@ -211,6 +312,7 @@ class Menus(object):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")

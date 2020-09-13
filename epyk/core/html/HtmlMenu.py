@@ -88,9 +88,9 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param component:
+    :param component: HTML Component. Internal component to the framework
     """
-    if not hasattr( self, '_right'):
+    if not hasattr(self, '_right'):
       self._right = self._report.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
@@ -102,16 +102,18 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
+    Add an item to the nav bar
 
     Attributes:
     ----------
-    :param text:
+    :param text: String or Component. The link to be added to the navbar
     """
-    val = self._report.ui.text(text)
-    self.__add__(val)
-    val.style.css.height = "100%"
-    val.style.css.vertical_align = 'middle'
-    return val
+    if not hasattr(text, 'options'):
+      text = self._report.ui.text(text)
+      text.style.css.height = "100%"
+      text.style.css.vertical_align = 'middle'
+    self.__add__(text)
+    return text
 
   def __str__(self):
     if self.scroll is not None:
@@ -191,6 +193,7 @@ class HtmlFooter(Html.Html):
 
 
 class ContextMenu(Html.Html):
+
   name = 'Context Menu'
   source = None # The container
 
@@ -209,6 +212,7 @@ class ContextMenu(Html.Html):
     """
     Description:
     -----------
+    Component options
 
     :rtype: OptList.OptionsLi
     """
@@ -216,19 +220,28 @@ class ContextMenu(Html.Html):
 
   def add_item(self, value, icon=None):
     """
+    Description:
+    ------------
+    Add Item to the context menu
 
-    :param value:
-    :param icon:
+    Attributes:
+    ----------
+    :param value: String. The value
+    :param icon: String. Optional. The Font awesome icon
     """
     self += {"value": value, 'icon': icon}
     return self
 
-  def add(self, htmlObj):
+  def add(self, component):
     """
+    Description:
+    ------------
 
-    :param htmlObj:
+    Attributes:
+    ----------
+    :param component: HTML Component. Internal component to the framework
     """
-    self.__add__(htmlObj)
+    self.__add__(component)
     return self.val[-1].val
 
   def __add__(self, htmlObj):
@@ -275,7 +288,7 @@ class ContextMenu(Html.Html):
 
 
 class PanelsBar(Html.Html):
-  name = 'Pabel'
+  name = 'Panel Bar'
 
   def __init__(self, report, width, height, options, helper, profile):
     super(PanelsBar, self).__init__(report, None, css_attrs={"width": width, "height": height})
@@ -309,14 +322,15 @@ class PanelsBar(Html.Html):
     """
     Description:
     ------------
+    Add a panel to the panel bar
 
     Attributes:
     ----------
-    :param text:
-    :param content:
+    :param text: String. Required. The anchor visible linked to a panel
+    :param content: HTML Component. Required. The panel
     """
     content.style.css.padding = "0 5px"
-    if not hasattr(text, 'htmlCode'):
+    if not hasattr(text, 'options'):
       text = self._report.ui.div(text)
     text.style.css.display = 'inline-block'
     text.style.css.width = 'auto'
@@ -413,11 +427,11 @@ class Shortcut(Html.Html):
 
     Attributes:
     ----------
-    :param icon:
-    :param path:
-    :param align:
-    :param width:
-    :param height:
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param path: String. Optional.
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     """
     self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
     return self

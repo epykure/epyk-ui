@@ -431,6 +431,7 @@ class Navigation(object):
     :param components: list of html components
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param fixed:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
@@ -640,6 +641,7 @@ class Banners(object):
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
+    div.style.css.z_index = 101
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"
     div.style.css.text_align = "center"

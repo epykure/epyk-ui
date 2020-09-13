@@ -47,7 +47,7 @@ class Titles(object):
     html_title.style.css.bold()
     return html_title
 
-  def headline(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def headline(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -62,6 +62,7 @@ class Titles(object):
     :param text:
     :param options:
     :param tooltip:
+    :param align:
     :param width:
     :param height:
     :param htmlCode:
@@ -74,13 +75,13 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(8)
-    html_title.style.css.text_align = 'left'
+    html_title.style.css.text_align = align
     html_title.style.css.margin_top = 5
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_style = 'italic'
     return html_title
 
-  def title(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def title(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -95,6 +96,7 @@ class Titles(object):
     :param text:
     :param options:
     :param tooltip:
+    :param align:
     :param width:
     :param height:
     :param htmlCode:
@@ -107,12 +109,12 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(12)
-    html_title.style.css.text_align = 'left'
+    html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def section(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def section(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -122,6 +124,7 @@ class Titles(object):
     :param text:
     :param options:
     :param tooltip:
+    :param align:
     :param width:
     :param height:
     :param htmlCode:
@@ -134,6 +137,7 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.text_align = align
     html_title.style.css.margin_top = 20
     html_title.style.css.margin_bottom = 10
     return html_title

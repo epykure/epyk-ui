@@ -251,6 +251,60 @@ http://openexchangerates.github.io/accounting.js/
     self._config(value)
 
 
+class OptionsLink(OptionsText):
+
+  @property
+  def url(self):
+    """
+    Description:
+    ------------
+    The href attribute specifies the URL of the page the link goes to.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_a_href.asp
+    """
+    return self._report.attr.get("href", '#')
+
+  @url.setter
+  def url(self, value):
+    self._report.attr['href'] = value
+
+  @property
+  def href(self):
+    """
+    Description:
+    ------------
+    The href attribute specifies the URL of the page the link goes to.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_a_href.asp
+    """
+    return self._report.attr.get("href", '#')
+
+  @href.setter
+  def href(self, value):
+    self._report.attr['href'] = value
+
+  @property
+  def target(self):
+    """
+    Description:
+    ------------
+    The target attribute specifies where to open the linked document.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_a_target.asp
+    """
+    return self._report.attr.get("target", '_self')
+
+  @target.setter
+  def target(self, value):
+    self._report.attr['target'] = value
+
+
 class OptionsConsole(OptionsText):
 
   @property

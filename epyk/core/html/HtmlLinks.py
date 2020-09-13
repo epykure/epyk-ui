@@ -17,12 +17,12 @@ class ExternalLink(Html.Html):
     # Add the internal components icon and helper
     self.add_icon(icon, family=options.get("icon_family"))
     self.add_helper(helper)
-    if not 'url' in self.val:
-      self.val['url'] = self.val['text']
-    if 'target' in options:
-      self.set_attrs(name="target", value=options['target'])
     self.decoration, self.__url = decoration, {}
-    self.__options = OptText.OptionsNumber(self, options)
+    self.__options = OptText.OptionsLink(self, options)
+    if not 'url' in self.val:
+      self.options.url = self.val['text']
+    else:
+      self.options.url = self.val['url']
 
   @property
   def options(self):
@@ -31,7 +31,7 @@ class ExternalLink(Html.Html):
     ------------
     Property to set all the possible object for a button
 
-    :rtype: OptText.OptionsNumber
+    :rtype: OptText.OptionsLink
     """
     return self.__options
 
@@ -48,6 +48,10 @@ class ExternalLink(Html.Html):
     Description:
     -----------
     Property to remove the list default style
+
+    Attributes:
+    ----------
+    :param color: String. Optional. The color code
     """
     self.style.css.text_decoration = None
     self.style.list_style_type = None
@@ -60,10 +64,13 @@ class ExternalLink(Html.Html):
     """
     Description:
     -----------
+    Return the JavaScript fragment to refresh the component content
 
-    :param data:
-    :param options:
-    :param profile:
+    Attributes:
+    ----------
+    :param data: String or object. The component expected content
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if not isinstance(data, dict):
       data = {"text": data}
@@ -72,13 +79,11 @@ class ExternalLink(Html.Html):
     return super(ExternalLink, self).build(data, options, profile)
 
   def __str__(self):
-    self.set_attrs(name="href", value=self.val['url'])
     return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val['text'], self.helper)
 
 
 class DataLink(Html.Html):
   name = 'Data link'
-  # _grpCls = CssGrpClsText.CssClassHref
 
   def __init__(self, report, text, value, width, height, format, profile):
     super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile,
