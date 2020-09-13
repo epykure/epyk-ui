@@ -231,6 +231,8 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param position: tring. Optional. A string with the vertical position of the component
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -269,24 +271,31 @@ class Menus(object):
         row[i].add(items)
     return row
 
-  def icons(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+  def icons(self, data, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
     """
     Description:
     ------------
+    Add a menu bar with font awesome icons
+
+    Usage::
+
 
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
-    div.style.css.background = self.context.rptObj.theme.greys[1]
-    div.style.css.margin = "2px 0 0 0"
+    dflt_options = {"margin-right": 5}
+    if options is not None:
+      dflt_options.update(options)
+    div = self.context.rptObj.ui.div(width=width, height=height, align=align, options=options, profile=profile)
     for d in data:
-      div += self.context.rptObj.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'})
+      div.add(self.context.rptObj.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'}))
+      div[-1].style.css.margin_right = dflt_options["margin-right"]
     return div
 
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -308,13 +317,13 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -391,7 +400,6 @@ class Menus(object):
     :param options:
     :param profile:
     """
-
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.item = object
     content = self.context.rptObj.ui.div(object, width=("auto", ''))
@@ -464,6 +472,10 @@ class Menus(object):
     Description:
     ------------
 
+    Usage::
+
+
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Menu`
@@ -471,13 +483,13 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param attrs:
-    :param helper:
-    :param options:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

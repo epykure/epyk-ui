@@ -122,13 +122,13 @@ class Titles(object):
     Attributes:
     ----------
     :param text:
-    :param options:
-    :param tooltip:
-    :param align:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")

@@ -1176,10 +1176,11 @@ Attributes:
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
+    self.context_menu = menu
     menu.source = self
     new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
-                   menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
-                                 'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
+                                    self.context_menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
+                                  'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
                    self._report.js.objects.mouseEvent.preventDefault()]
     self.on("contextmenu", new_js_fncs, profile)
     return self
