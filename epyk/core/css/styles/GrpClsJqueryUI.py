@@ -48,3 +48,23 @@ class ClassSlider(GrpCls.ClassHtml):
     if self._css_ui_active is None:
       self._css_ui_active = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).active()
     return self._css_ui_active
+
+
+class ClassMenu(GrpCls.ClassHtml):
+
+  def __init__(self, htmlObj):
+    super(ClassMenu, self).__init__(htmlObj)
+    self._cls_ui = None
+    self.classList['other'].add(self.cls_ui)
+
+  @property
+  def cls_ui(self):
+    """
+    Description:
+    -----------
+
+    :rtype: Classes.CatalogInput.CatalogInput
+    """
+    if self._cls_ui is None:
+      self._cls_ui = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['other']).menu()
+    return self._cls_ui

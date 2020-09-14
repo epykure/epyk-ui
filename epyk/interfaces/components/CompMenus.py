@@ -130,8 +130,7 @@ class Menus(object):
              "margin": 0, "color": 'white'})
     return col
 
-  def menu(self, data=None, position="bottom", color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -345,6 +344,8 @@ class Menus(object):
     """
     Description:
     ------------
+    Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
+    The components will be based on Links
 
     Usage::
 
@@ -354,28 +355,32 @@ class Menus(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
-      - :class:`epyk.core.html.HtmlText.Text`
+      - :class:`epyk.core.html.HtmlText.link`
 
     Attributes:
     ----------
-    :param divider:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param divider: symbols.shape or String. The symbol between the links
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if divider is None:
       divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.texts = []
     for rec in data[:-1]:
-      div.texts.append(self.context.rptObj.ui.text(rec).css({"display": 'inline-block'}))
+      if not isinstance(rec, dict):
+        rec = {"text": rec}
+      div.texts.append(self.context.rptObj.ui.link(*rec).css({"display": 'inline-block'}))
       div += div.texts[-1]
       div += self.context.rptObj.ui.text(divider).css({"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
-    div +=self.context.rptObj.ui.text(data[-1]).css({"display": 'inline-block'})
+
+    rec = {"text": data[-1]} if not isinstance(data[-1], dict) else data[-1]
+    div += self.context.rptObj.ui.link(*rec).css({"display": 'inline-block'})
     return div
 
-  def button(self, value, object, symbol=None, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+  def button(self, value, components, symbol=None, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -383,7 +388,7 @@ class Menus(object):
     Usage::
 
       mb = rptObj.ui.menus.button("Value", rptObj.ui.button("sub button"))
-      mb.item.click([rptObj.js.alert(mb.item.dom.content)])
+      mb.items[0].click([rptObj.js.alert(mb.items[0].dom.content)])
 
     Underlying HTML Objects:
 
@@ -393,7 +398,7 @@ class Menus(object):
     Attributes:
     ----------
     :param value:
-    :param object:
+    :param components:
     :param symbol:
     :param width:
     :param height:
@@ -401,22 +406,20 @@ class Menus(object):
     :param profile:
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
-    div.item = object
-    content = self.context.rptObj.ui.div(object, width=("auto", ''))
+    div.items = components if isinstance(components, list) else [components]
+    content = self.context.rptObj.ui.div(div.items, width=("auto", ''))
     content.style.css.display = None
-    content.style.css.bottom = 0
     content.style.css.padding = 5
     content.style.css.background = self.context.rptObj.theme.greys[0]
     content.style.css.z_index = 5
     content.style.css.position = 'absolute'
     if symbol is None:
       symbol = self.context.rptObj.symbols.shapes.BLACK_DOWN_POINTING_SMALL_TRIANGLE
-    but = self.context.rptObj.ui.button("%s %s" % (value, symbol),
-                                        width=width, profile=profile)
+    but = self.context.rptObj.ui.button("%s %s" % (value, symbol),width=width, profile=profile)
     div += but
     div += content
-    div.on("mouseover", [content.dom.css({"display": 'block'})])
-    div.on("mouseout", [content.dom.css({"display": 'none'})])
+    div.on("mouseover", [content.dom.css({"display": 'block'}).r])
+    div.on("mouseout", [content.dom.css({"display": 'none'}).r])
     return div
 
   def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
@@ -466,19 +469,31 @@ class Menus(object):
       div[-1].icon.style.css.float = None
     return div
 
-  def selections(self, data, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-                  helper=None, options=None, profile=None):
+  def selections(self, data, width=(150, 'px'), height=('auto', ''), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
+    Menu using Jquery UI external module.
 
     Usage::
 
+        page.ui.menus.selections(["Item 1", "Item 2"])
 
+        page.ui.menus.selections([
+          {'value': "fas fa-exclamation-triangle", 'items': [
+            {"value": 'value 1'},
+            {"value": 'value 2'},
+            {"value": 'value 3'},
+          ]},
+            "fas fa-exclamation-triangle"])
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Menu`
+
+    Related Pages:
+
+      https://jqueryui.com/menu/
 
     Attributes:
     ----------
@@ -486,14 +501,19 @@ class Menus(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param attrs:
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
+    width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper, options or {}, htmlCode, profile)
+    new_data = []
+    for d in data:
+      if not isinstance(d, dict):
+        new_data.append({"value": d})
+      else:
+        new_data.append(d)
+    html_pr = html.HtmlEvent.Menu(self.context.rptObj, new_data, width, height, helper, options or {}, htmlCode, profile)
     return html_pr
 
   def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None,

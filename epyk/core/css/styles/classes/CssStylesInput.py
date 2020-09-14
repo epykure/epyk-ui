@@ -103,3 +103,11 @@ class CssUIActive(CssStyle.Style):
     self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
     self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1],
                     'background-color': self.rptObj.theme.success[1]})
+
+
+class CssUIMenuActive(CssStyle.Style):
+  classname = "ui-state-active"
+
+  def customize(self):
+    self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]})

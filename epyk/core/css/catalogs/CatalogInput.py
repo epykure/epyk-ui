@@ -93,6 +93,14 @@ class CatalogInput(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesInput.CssInputValid)
 
+  def menu(self):
+    """
+    Description:
+    -----------
+
+    """
+    return self._set_class(CssStylesInput.CssUIMenuActive)
+
 
 class CatalogDate(Catalog.CatalogGroup):
   def datepicker_ui(self):

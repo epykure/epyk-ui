@@ -218,6 +218,18 @@ class ContextMenu(Html.Html):
     """
     return self.__options
 
+  @property
+  def _js__builder__(self):
+    return '''
+      var contextMenu = htmlObj.querySelector('ul');
+      contextMenu.innerHTML = '';
+      var li = document.createElement("li");
+      var item = document.createElement("DIV");  
+      item.innerHTML = "test";
+      li.appendChild(item);
+      contextMenu.appendChild(li)
+      '''
+
   def add_item(self, value, icon=None):
     """
     Description:
@@ -249,6 +261,8 @@ class ContextMenu(Html.Html):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param htmlObj:
     """
     if not hasattr(htmlObj, 'options'):

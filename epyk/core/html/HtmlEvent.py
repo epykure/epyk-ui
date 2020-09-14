@@ -126,11 +126,24 @@ class Menu(Html.Html):
   requirements = ('jqueryui', )
   name = 'Menu'
 
-  def __init__(self, report, records, width, height, attrs, helper, options, htmlCode, profile):
-    super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, records, width, height, helper, options, htmlCode, profile):
+    super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.__options = OptSliders.OptionsMenu(self, options)
-    self.css({"display": 'block', 'position': 'relative'})
+    self.style.css.display = 'block'
+    self.style.css.position = 'relative'
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: rpClsJqueryUI.ClassMenu
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsJqueryUI.ClassMenu(self)
+    return self._styleObj
 
   @property
   def options(self):
@@ -150,15 +163,17 @@ class Menu(Html.Html):
   def _js__builder__(self):
     return '''
           var jqHtmlObj = jQuery(htmlObj); if (options.clearDropDown) {jqHtmlObj.empty()};
+          var isRoot =  options.isRoot; if(typeof isRoot === 'undefined'){isRoot = true}
           data.forEach(function(rec){
             if (rec.items != undefined) {
-              var li = $('<li></li>'); var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'});
-              li.append(div); var ul = $('<ul aria-hidden="true"></ul>'); options.clearDropDown = false;
+              var li = $('<li></li>'); var div = $('<div>'+ rec.value +'</div>');
+              li.append(div); var ul = $('<ul aria-hidden="true"></ul>'); 
+              options.clearDropDown = false; options.isRoot = false;
               %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
             } else {
               var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'}); var li = $('<li></li>');
               li.append(div); jqHtmlObj.append(li)};
-          }); jqHtmlObj.menu(options)''' % {"pyCls": self.__class__.__name__}
+          }); if(isRoot){jqHtmlObj.menu(options)}''' % {"pyCls": self.__class__.__name__}
 
   @property
   def js(self):
