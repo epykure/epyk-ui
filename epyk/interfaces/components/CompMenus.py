@@ -10,7 +10,7 @@ class Menus(object):
   def __init__(self, context):
     self.context = context
 
-  def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def top(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -47,6 +47,8 @@ class Menus(object):
     height = Arguments.size(height, unit="px")
     menu_li, menu_title, menu_items = [], [], []
     for k in data:
+      if not isinstance(k, dict):
+        k = {"value": k}
       menu_li.append(k["value"])
       menu_title.append(k.get("title"))
       menu_items.append(k.get("children", []))
@@ -64,9 +66,14 @@ class Menus(object):
 
     col = self.context.rptObj.ui.col([html_list, html_div])
     col.css({"background-color": "#333", "position": "fixed", "margin": 0, "top": 0, "left": 0, "color": 'white'})
+    col.style.css.line_height = height[0]
+    if self.context.rptObj.body.style.css.padding_top is not None:
+      self.context.rptObj.body.style.css.padding_top = int(self.context.rptObj.body.style.css.padding_top[:-2]) + height[0] + 5
+    else:
+      self.context.rptObj.body.style.css.padding_top = height[0] + 5
     return col
 
-  def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def bottom(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -128,6 +135,12 @@ class Menus(object):
     col.css({"background-color": "#333",
              "position": "fixed", "bottom": 0, "left": 0,
              "margin": 0, "color": 'white'})
+    col.style.css.line_height = height[0]
+    if self.context.rptObj.body.style.css.padding_bottom is not None:
+      self.context.rptObj.body.style.css.padding_bottom = int(self.context.rptObj.body.style.css.padding_bottom[:-2]) + \
+                                                       height[0] + 5
+    else:
+      self.context.rptObj.body.style.css.padding_bottom = height[0] + 5
     return col
 
   def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -516,8 +529,7 @@ class Menus(object):
     html_pr = html.HtmlEvent.Menu(self.context.rptObj, new_data, width, height, helper, options or {}, htmlCode, profile)
     return html_pr
 
-  def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None,
-                 profile=None):
+  def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
     """
     Description:
     ------------

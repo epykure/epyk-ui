@@ -585,7 +585,7 @@ class Banners(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def bottom(self, data, background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def bottom(self, data, background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -602,18 +602,45 @@ class Banners(object):
     ----------
     :param data:
     :param background:
+    :param align:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
-    div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
-    div.style.css.color = "white"
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[1]
+    div.style.css.z_index = 110
+    div.style.css.text_align = align
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"
     div.style.css.bottom = 0
     return div
+
+  def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+
+    :param text:
+    :param url:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    link = self.context.rptObj.ui.link("Learn more", url=url).css({"margin-right": "10px"})
+    link.style.css.margin_right = 10
+    link.style.css.color = self.context.rptObj.theme.greys[-1]
+    button = self.context.rptObj.ui.button("Ok")
+    container = self.bottom([
+      self.context.rptObj.ui.div([text,
+        self.context.rptObj.ui.div([link, button], align="center")
+      ])
+    ], align=align, width=width, height=height, options=options, profile=profile)
+    button.click([container.dom.hide()])
+    container.button = button
+    container.link = link
+    return container
 
   def corner(self, data, background=None, position="bottom", width=(120, 'px'), height=(None, 'px'), options=None, profile=False):
     """
