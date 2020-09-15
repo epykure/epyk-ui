@@ -223,10 +223,12 @@ class ContextMenu(Html.Html):
     return '''
       var contextMenu = htmlObj.querySelector('ul');
       contextMenu.innerHTML = '';
-      var li = document.createElement("li");
-      var item = document.createElement("DIV");  
-      item.innerHTML = "test";
-      li.appendChild(item);
+      data.forEach(function(rec){
+        var li = document.createElement("li");
+        var item = document.createElement("DIV");  
+        item.innerHTML = rec;
+        li.appendChild(item);
+      })
       contextMenu.appendChild(li)
       '''
 

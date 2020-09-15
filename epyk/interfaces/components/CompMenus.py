@@ -14,10 +14,13 @@ class Menus(object):
     """
     Description:
     ------------
+    Add a menu item at the top of the page.
+    The menu will be fixed on the page, always visible
 
     Usage::
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
+      page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
 
@@ -45,42 +48,65 @@ class Menus(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    menu_li, menu_title, menu_items = [], [], []
+    dflt_options = {"tab_width": 100}
+    if options is not None:
+      dflt_options.update(options)
+    titles, panels = [], []
     for k in data:
       if not isinstance(k, dict):
         k = {"value": k}
-      menu_li.append(k["value"])
-      menu_title.append(k.get("title"))
-      menu_items.append(k.get("children", []))
-    html_list = html.HtmlList.List(self.context.rptObj, menu_li, color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+      titles.append(self.context.rptObj.ui.text(k["value"], width=(dflt_options['tab_width'], 'px'), align="center"))
+      children = k.get("children", [])
+      col = self.context.rptObj.ui.col(width=(dflt_options['tab_width'], 'px'))
+      col.style.css.display = None
+      col.style.css.padding = "0 2px"
+      col.style.css.background = self.context.rptObj.theme.greys[0]
+      col.style.css.position = "absolute"
+      if children:
+        items = []
+        for c in children:
+          if hasattr(c, 'options'):
+            items.append(c)
+          else:
+            if not isinstance(c, dict):
+              c = {"text": c}
+            link = self.context.rptObj.ui.link(**c)
+            link.style.css.display = 'block'
+            items.append(link)
+        col.add(items)
+      panels.append(col)
+    html_list = html.HtmlList.List(self.context.rptObj, [], color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-    html_div = self.context.rptObj.ui.div(
-      self.context.rptObj.ui.grid([
-        self.context.rptObj.ui.col([
-          self.context.rptObj.ui.title("test", level=1),
-          *menu_items[0]
-        ]).css({"color": "white", "padding": "0 5px"})
-      ])
-    )
 
-    col = self.context.rptObj.ui.col([html_list, html_div])
-    col.css({"background-color": "#333", "position": "fixed", "margin": 0, "top": 0, "left": 0, "color": 'white'})
-    col.style.css.line_height = height[0]
+    html_div = self.context.rptObj.ui.div()
+    html_div.style.css.background = self.context.rptObj.theme.greys[1]
+    html_div.css({"position": "fixed", "margin": 0, "left": 0})
+    html_div.style.css.margin_top = int(self.context.rptObj.body.style.css.padding_top[:-2])
+    html_div.style.css.top = 0
+    html_div.panels = panels
+    html_div.titles = titles
+    for i, t in enumerate(titles):
+      cont = self.context.rptObj.ui.div([t, panels[i]], width=("auto", ''))
+      cont.mouse([panels[i].dom.show(display_value="block").r], [panels[i].dom.hide().r])
+      html_div.add(cont)
+    html_div.style.css.line_height = height[0]
     if self.context.rptObj.body.style.css.padding_top is not None:
       self.context.rptObj.body.style.css.padding_top = int(self.context.rptObj.body.style.css.padding_top[:-2]) + height[0] + 5
     else:
       self.context.rptObj.body.style.css.padding_top = height[0] + 5
-    return col
+    return html_div
 
   def bottom(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
+    Add a menu item at the bottom of the page.
+    The menu will be fixed on the page, always visible
 
     Usage::
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
+      page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
 
@@ -105,43 +131,56 @@ class Menus(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    menu_li, menu_title, menu_items = [], [], []
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"tab_width": 100}
+    if options is not None:
+      dflt_options.update(options)
+    titles, panels = [], []
     for k in data:
       if not isinstance(k, dict):
         k = {"value": k}
-      menu_li.append(k["value"])
-      title_text = k.get("title")
-      if title_text is not None:
-        title_text = self.context.rptObj.ui.title(title_text, level=4)
-        title_text.options.managed = False
-      menu_title.append(title_text)
-      menu_items.append(k.get("children", []))
-    html_list = self.context.rptObj.ui.list(menu_li, color, width, height, htmlCode, helper, options or {}, profile)
+      titles.append(self.context.rptObj.ui.text(k["value"], width=(dflt_options['tab_width'], 'px'), align="center"))
+      children = k.get("children", [])
+      col = self.context.rptObj.ui.col(width=(dflt_options['tab_width'], 'px'))
+      col.style.css.display = None
+      col.style.css.bottom = height[0]
+      col.style.css.padding = "0 2px"
+      col.style.css.background = self.context.rptObj.theme.greys[0]
+      col.style.css.position = "absolute"
+      if children:
+        items = []
+        for c in children:
+          if hasattr(c, 'options'):
+            items.append(c)
+          else:
+            if not isinstance(c, dict):
+              c = {"text": c}
+            link = self.context.rptObj.ui.link(**c)
+            link.style.css.display = 'block'
+            items.append(link)
+        col.add(items)
+      panels.append(col)
+    html_list = html.HtmlList.List(self.context.rptObj, [], color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-    html_div = self.context.rptObj.ui.div(
-      self.context.rptObj.ui.grid([
-        self.context.rptObj.ui.col([
-          menu_title[0], *menu_items[0]]).css({"color": "white", "padding": "0 5px"})
-      ])
-    )
-    html_div.style.display = None
 
-    html_list.click_items([
-      #self.context.rptObj.js.console.log(html_list),
-      html_div.dom.toggle()
-    ])
-
-    col = self.context.rptObj.ui.col([html_div, html_list])
-    col.css({"background-color": "#333",
-             "position": "fixed", "bottom": 0, "left": 0,
-             "margin": 0, "color": 'white'})
-    col.style.css.line_height = height[0]
+    html_div = self.context.rptObj.ui.div()
+    html_div.style.css.background = self.context.rptObj.theme.greys[1]
+    html_div.css({"position": "fixed", "margin": 0, "left": 0})
+    html_div.style.css.bottom = 0
+    html_div.panels = panels
+    html_div.titles = titles
+    for i, t in enumerate(titles):
+      cont = self.context.rptObj.ui.div([panels[i], t], width=("auto", ''))
+      cont.mouse([panels[i].dom.show().r], [panels[i].dom.hide().r])
+      html_div.add(cont)
+    html_div.style.css.line_height = height[0]
     if self.context.rptObj.body.style.css.padding_bottom is not None:
       self.context.rptObj.body.style.css.padding_bottom = int(self.context.rptObj.body.style.css.padding_bottom[:-2]) + \
                                                        height[0] + 5
     else:
       self.context.rptObj.body.style.css.padding_bottom = height[0] + 5
-    return col
+    return html_div
 
   def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
@@ -347,8 +386,114 @@ class Menus(object):
     html_obj.css({"border": "1px solid %s" % html_obj._report.theme.greys[4], "padding": "2px"})
     return html_obj
 
-  def right(self):
-    pass
+  def images(self, data, path=None, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      page.ui.menus.images(["https://jupyter.org/favicon.ico", "https://codepen.io//favicon.ico"])
+
+    Attributes:
+    ----------
+    :param path:
+    :param data:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {"margin-right": 5, 'image-width': 50}
+    if options is not None:
+      dflt_options.update(options)
+    div = self.context.rptObj.ui.div(width=width, height=height, align=align, options=options, profile=profile)
+    for d in data:
+      img_attrs = {'width': (dflt_options['image-width'], 'px')}
+      if not isinstance(d, dict):
+        img_attrs['image'] = d
+      else:
+        img_attrs.update(d)
+      if path is not None:
+        img_attrs['path'] = path
+      url = None
+      if 'url' in img_attrs:
+        url = img_attrs['url']
+        del img_attrs['url']
+      img = self.context.rptObj.ui.img(**img_attrs)
+      if url is not None:
+        img.goto(url)
+      img.style.css.display = 'inline-block'
+      div.add(img)
+      div[-1].style.css.margin_right = dflt_options["margin-right"]
+    return div
+
+  def right(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"tab_width": 100}
+    if options is not None:
+      dflt_options.update(options)
+    titles, panels = [], []
+    for k in data:
+      if not isinstance(k, dict):
+        k = {"value": k}
+      titles.append(self.context.rptObj.ui.text(k["value"], width=(dflt_options['tab_width'], 'px'), align="center"))
+      children = k.get("children", [])
+      col = self.context.rptObj.ui.div(width=(dflt_options['tab_width'], 'px'))
+      col.style.css.display = None
+      col.style.css.bottom = height[0]
+      col.style.css.padding = "0 2px"
+      col.style.css.background = self.context.rptObj.theme.greys[1]
+      col.style.css.position = "absolute"
+      if children:
+        items = []
+        for c in children:
+          if hasattr(c, 'options'):
+            items.append(c)
+          else:
+            if not isinstance(c, dict):
+              c = {"value": c}
+            link = self.context.rptObj.ui.link(*c)
+            items.append(link)
+        col.add(items)
+      panels.append(col)
+    html_list = html.HtmlList.List(self.context.rptObj, [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_list.css({"list-style": 'none'})
+
+    html_div = self.context.rptObj.ui.div()
+    html_div.style.css.background = self.context.rptObj.theme.greys[0]
+    html_div.css({"position": "fixed", "margin": 0, "left": 0})
+    html_div.style.css.bottom = 0
+    html_div.panels = panels
+    html_div.titles = titles
+    for i, t in enumerate(titles):
+      cont = self.context.rptObj.ui.table([panels[i], t], width=("auto", ''))
+      cont.mouse([panels[i].dom.show().r], [panels[i].dom.hide().r])
+      html_div.add(cont)
+    html_div.style.css.line_height = height[0]
+    if self.context.rptObj.body.style.css.padding_bottom is not None:
+      self.context.rptObj.body.style.css.padding_bottom = int(self.context.rptObj.body.style.css.padding_bottom[:-2]) + \
+                                                       height[0] + 5
+    else:
+      self.context.rptObj.body.style.css.padding_bottom = height[0] + 5
+    return html_div
 
   def left(self):
     pass

@@ -619,7 +619,14 @@ class Banners(object):
 
   def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
+
+    page.ui.banners.cookies("Test", "#")
+
+    Attributes:
+    ----------
     :param text:
     :param url:
     :param align:
