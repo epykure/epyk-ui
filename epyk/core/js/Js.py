@@ -980,7 +980,7 @@ class JsBase(object):
     method_type = JsUtils.jsConvertData(method_type, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
 
-  def post(self, url, jsData=None, varName="response", is_json=True):
+  def post(self, url, jsData=None, varName="response", is_json=True, components=None):
     """
     Description:
     ------------
@@ -990,12 +990,19 @@ class JsBase(object):
     :param url: String. The url path of the HTTP request
     :param jsData:
     :param varName: String. Optional. The variable name created in the Javascript (default response)
+    :param is_json:
+    :param components: HTML component. This will add the component value to the request object
 
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData('POST', None)
     url = JsUtils.jsConvertData(url, None)
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url).send(jsData, stringify=is_json)
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    if components is not None:
+      for c in components:
+        request.data.add(c)
+    request.send(jsData, stringify=is_json)
+
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request

@@ -313,6 +313,7 @@ class Menus(object):
         for child in k.get("children", []):
           if isinstance(child, dict):
             link = self.context.rptObj.ui.link(**child)
+            link.style.css.white_space = "nowrap"
             link.options.target = '_blank'
             li = self.context.rptObj.ui.lists.item(link)
             items.add(li)

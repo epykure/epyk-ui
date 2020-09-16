@@ -104,6 +104,7 @@ class ContainerData(object):
 
 
 class RawData(object):
+
   def __init__(self, report, records=None, profile=False):
     self._report, self._data_id = report, id(records)
     if "data" not in self._report._props:

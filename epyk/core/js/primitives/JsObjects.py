@@ -440,7 +440,7 @@ class XMLHttpRequest(object):
 
     Attributes:
     ----------
-    :param varName:
+    :param varName: String. The variable name on tje JavaScript side
 
     :return: The requested Python JsObject primitive
     """
@@ -683,6 +683,10 @@ class XMLHttpRequest(object):
             self.data.add(obj)
           else:
             self.data.attrs(obj)
+
+      if isinstance(jsonData, dict):
+        self.data.update(jsonData)
+
     if jsonData:
       if stringify:
         self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
