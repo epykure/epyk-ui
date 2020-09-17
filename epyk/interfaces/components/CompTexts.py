@@ -201,6 +201,7 @@ class Texts(object):
     Usage::
 
       rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+      page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
 
     Underlying HTML Objects:
 
