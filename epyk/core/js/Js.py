@@ -14,6 +14,7 @@ from epyk.core.js import JsPerformance
 from epyk.core.js import JsUtils
 from epyk.core.js import JsWindow
 from epyk.core.js import JsWebSocket
+from epyk.core.js import JsMsgAlerts
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -1724,3 +1725,10 @@ class JsBase(object):
       else:
         mail_data.append("%s=%s" % (label, value))
     return JsObjects.JsVoid("mailto:%s&%s" % (";".join(mails), "&".join(mail_data)))
+
+  @property
+  def msg(self):
+    """
+    Shortcut to predefined temporary messages displayed to the UI.
+    """
+    return JsMsgAlerts.Msg(self._src)
