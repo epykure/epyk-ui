@@ -108,6 +108,7 @@ class Layouts(object):
     if align == 'center':
       hr_html.style.css.margin = "auto"
       hr_html.style.css.display = "block"
+    hr_html.margin = hr_html.hr.margin
     return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):

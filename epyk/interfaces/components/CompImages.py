@@ -224,8 +224,8 @@ class Images(object):
     """
     return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width), Arguments.size(height, 'px'), align, htmlCode, profile, options)
 
-  def circular(self, image=None, path=None, width=(100, "%"), height=('auto', ""), align="center", htmlCode=None,
-          profile=None, options=None):
+  def circular(self, image=None, path=None, width=(200, "px"), height=(200, "px"), align="center", htmlCode=None,
+              profile=None, options=None):
     """
     Description:
     ------------
@@ -261,15 +261,15 @@ class Images(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
-    width = Arguments.size(width)
-    height = Arguments.size(height)
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     # add the css styles
     html_image.style.css.padding = 5
     html_image.style.css.borders_light()
-    html_image.style.css.border_radius = 50
+    html_image.style.css.border_radius = width[0]
     return html_image
 
   def avatar(self, text=None, image=None, path=None, status=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
@@ -319,8 +319,8 @@ class Images(object):
 
     bgcolor, margin_top = None, -5
     if image is not None:
-      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align=align, htmlCode=htmlCode, profile=profile, options=options)
-      img.style.css.border_radius = 50
+      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align="center", htmlCode=htmlCode, profile=profile, options=options)
+      img.style.css.border_radius = width[0]
       img.style.css.margin = 2
       margin_top = -8
     else:
@@ -348,9 +348,13 @@ class Images(object):
     if bgcolor is not None:
       div.style.css.background_color = bgcolor
       div.style.css.text_stoke = "1px %s" % bgcolor
-    div.style.css.borders_light()
-    div.style.css.border_radius = 50
     div.img = img
+    div.style.css.borders_light()
+    div.style.css.border_radius = width[0]
+    div.img = img
+    if align == 'center':
+      div.style.css.margin = "auto"
+      div.style.css.display = "block"
     return div
 
   def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):

@@ -406,7 +406,7 @@ class Menus(object):
     :param options:
     :param profile:
     """
-    dflt_options = {"margin-right": 5, 'image-width': 50}
+    dflt_options = {"margin-left": 20, "margin-right": 20, 'image-width': 50}
     if options is not None:
       dflt_options.update(options)
     div = self.context.rptObj.ui.div(width=width, height=height, align=align, options=options, profile=profile)

@@ -754,6 +754,17 @@ class SlideShow(Html.Html):
     """
     return self.__options
 
+  def empty(self):
+    """
+    Description:
+    ------------
+    Empty all the values already defined on the Python side.
+    This will be called before the JavaScript Transpilation
+    """
+    self._vals = []
+    self.components = {}
+    return self
+
   def add(self, component):
     """
     Description:
@@ -771,9 +782,14 @@ class SlideShow(Html.Html):
     self.components[component.htmlCode] = component
     return self
 
+  def __len__(self):
+    return len(self.val)
+
   @property
   def _js__builder__(self):
-    return "window[ htmlObj.id + '_obj'] = tns(options)"
+    return '''
+      if(typeof window[ htmlObj.id + '_obj'] !== 'undefined') {window[ htmlObj.id + '_obj'].destroy();} 
+      window[ htmlObj.id + '_obj'] = tns(options)'''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

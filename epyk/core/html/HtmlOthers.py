@@ -28,6 +28,25 @@ class Hr(Html.Html):
     if align == "center":
       self.style.css.margin = "auto"
 
+  def margin(self, left=0, right=0, unit='%'):
+    """
+    Description:
+    ------------
+    Shortcut to set the margin let and right for this HTML component.
+
+    Attributes:
+    ----------
+    :param left: Integer. The margin left
+    :param right: Integer. The magin right
+    :param unit: String. The unit by default percentage
+    """
+    if left:
+      self.style.css.margin_left = "%s%s" % (left, unit)
+    if right:
+      self.style.css.margin_right = "%s%s" % (right, unit)
+    self.style.css.width = "calc(100%% - %s%s)" % (left+right, unit)
+    return self
+
   @property
   def style(self):
     """

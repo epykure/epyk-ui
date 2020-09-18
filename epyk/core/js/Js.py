@@ -1000,8 +1000,11 @@ class JsBase(object):
     url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
     if components is not None:
-      for c in components:
-        request.data.add(c)
+      if jsData is None:
+        jsData = components
+      else:
+        for c in components:
+          request.data.add(c)
     request.send(jsData, stringify=is_json)
 
     if is_json:

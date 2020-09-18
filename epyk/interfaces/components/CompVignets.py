@@ -203,7 +203,8 @@ class Vignets(object):
     """
     options = options or {}
     if render == "row":
-      container = self.context.rptObj.ui.row(align=align, width=width, height=height, profile=profile)
+      container = self.context.rptObj.ui.row(align=align, width=width, height=height, options=options, profile=profile)
+      container.options.responsive = False
       container.style.css.margin = "20px auto"
       if title is not None and not hasattr(title, 'options'):
         title = self.context.rptObj.ui.titles.title(title)

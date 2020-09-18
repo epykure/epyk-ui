@@ -6,7 +6,7 @@ from epyk.core.html.options import Options
 
 
 class OptionsTinySlider(Options):
-  component_properies = ('container', )
+  component_properies = ('container', 'items')
 
   @property
   def container(self):
@@ -41,6 +41,23 @@ class OptionsTinySlider(Options):
 
   @controls.setter
   def controls(self, bool):
+    self._config(bool)
+
+  @property
+  def mouseDrag(self):
+    """
+    Description:
+    ------------
+    Changing slides by dragging them.
+
+    Related Pages:
+
+      https://github.com/ganlanyuan/tiny-slider
+    """
+    return self._config_get(False)
+
+  @mouseDrag.setter
+  def mouseDrag(self, bool):
     self._config(bool)
 
   @property
@@ -149,7 +166,7 @@ class OptionsTinySlider(Options):
 
       https://github.com/ganlanyuan/tiny-slider
     """
-    return self._config_get(1)
+    return self._config_get(5)
 
   @items.setter
   def items(self, num):
