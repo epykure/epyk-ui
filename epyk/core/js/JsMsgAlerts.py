@@ -22,7 +22,7 @@ class Msg(object):
     :param timer: Number. The time the popup will be displayed
     :param cssAttrs: Dictionary. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
+    dflt_attrs = {"position": "absolute", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
@@ -31,11 +31,19 @@ class Msg(object):
       if 'left' in cssAttrs:
         del dflt_attrs["right"]
     return '''
-      (function(event, content){
-        var popup = document.createElement("div"); %s
+      (function(event, content, response){
+        var popup = document.createElement("div"); 
+        if (typeof content.background === 'undefined'){
+          if (response.status == 200){
+            popup.style.background = 'green'; popup.style.color = 'white';}
+          else {popup.style.background = 'white'}
+        }
+        if (typeof content.css !== 'undefined'){
+          for (var key in content.css) {popup.style[key] = content.css[key]}}
+        %s
         popup.innerHTML = content.status; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
-      })(event, data)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer)
+      })(event, data, response)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer)
 
   def mouse(self, content, timer=3000, cssAttrs=None):
     """

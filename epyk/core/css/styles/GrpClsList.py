@@ -1,6 +1,7 @@
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
+from epyk.core.css.styles.classes import CssStylesList
 
 
 class ClassSelect(GrpCls.ClassHtml):
@@ -172,3 +173,22 @@ class ClassDropDown(GrpCls.ClassHtml):
     if self._css_caret is None:
       self._css_caret = Classes.CatalogTree.CatalogDropDown(self.htmlObj._report, self.classList['other']).menu_caret()
     return self._css_caret
+
+
+class ClassItems(GrpCls.ClassHtml):
+
+  def hover_border(self):
+    """
+    Description:
+    ------------
+
+    """
+    self.classList['main'].add(CssStylesList.CssListItemsBorder(self.htmlObj._report))
+
+  def hover_background(self):
+    """
+    Description:
+    ------------
+
+    """
+    self.classList['main'].add(CssStylesList.CssListItemsBackground(self.htmlObj._report))

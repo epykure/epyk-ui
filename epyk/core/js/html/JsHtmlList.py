@@ -167,6 +167,32 @@ class JsItemsDef(object):
     item.innerHTML = data.text ; if(typeof data.url !== 'undefined'){item.href = data.url} else {item.href = '#'} '''
     return self._item(item_def)
 
+  def button(self, report):
+    """
+    Description:
+    ------------
+    Add button items to the list
+
+    TODO: Add event and url
+    
+    Attributes:
+    ----------
+    :param report: Page object. The internal page object
+    """
+    item_def = '''
+    var item = document.createElement("DIV"); var text = document.createElement("div");
+    item.style.clear = 'both'; 
+    text.style.display = 'inline-block';
+    text.style.padding = 0;
+    text.setAttribute('name', 'value'); text.setAttribute('data-valid', false);
+    text.innerHTML = data.text ; var button = document.createElement("button"); 
+    button.classList.add("cssbuttonbasic"); button.style.float = 'right'; button.style.padding = '0 5px';
+    button.style.display = 'inline-block'; button.style.margin = 0; button.style.lineHeight = "18px";
+    button.innerHTML = data.button; item.appendChild(text); item.appendChild(button);
+    if(typeof data.tooltip !=='undefined'){ button.setAttribute('title', data.tooltip) }
+    '''
+    return self._item(item_def)
+
   def box(self, report):
     """
     Description:

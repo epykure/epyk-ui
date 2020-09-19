@@ -200,12 +200,12 @@ class Lists(object):
     ----------
     :param data:
     :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -227,13 +227,13 @@ class Lists(object):
     Attributes:
     ----------
     :param records:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param options:
-    :param htmlCode:
-    :param profile:
-    :param helper:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param helper: String. Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -244,7 +244,6 @@ class Lists(object):
       records = sorted(list(values))
     html_item = html.HtmlList.Items(self.context.rptObj, 'text', records or [], width, height, options, htmlCode, profile, helper)
     html_item.css({"list-style-type": 'none'})
-    html_item.style.css.padding_left = '15px'
     return html_item
 
   def box(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
@@ -260,13 +259,13 @@ class Lists(object):
     Attributes:
     ----------
     :param records:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param options:
-    :param htmlCode:
-    :param profile:
-    :param helper:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param helper: String. Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -314,13 +313,13 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -338,13 +337,13 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -368,14 +367,14 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align:
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -406,13 +405,13 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -440,13 +439,13 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -454,7 +453,8 @@ class Lists(object):
     html_list.css({"list-style-type": 'square'})
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, profile=None):
+  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None,
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -478,11 +478,12 @@ class Lists(object):
     :param data:
     :param categories:
     :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -494,7 +495,7 @@ class Lists(object):
       else:
         # This object is expecting a list of lists
         data = [data]
-    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, profile)
+    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, options, profile)
     return html_obj
 
   def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -514,12 +515,12 @@ class Lists(object):
     ----------
     :param data:
     :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -550,12 +551,12 @@ class Lists(object):
     ----------
     :param recordSet:
     :param text:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -586,13 +587,13 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -635,13 +636,13 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -680,13 +681,13 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -718,13 +719,13 @@ class Lists(object):
     ----------
     :param data:
     :param group_name:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -747,10 +748,10 @@ class Lists(object):
     Attributes:
     ----------
     :param recordSet:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -784,12 +785,12 @@ class Lists(object):
     :param items: List. Selected items
     :param category: String. The group of the items.
     :param placeholder: String. The input field placeholder
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

@@ -17,6 +17,8 @@ from epyk.core.html.options import OptList
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlList
 
+from epyk.core.css.styles import GrpClsList
+
 
 class Li(Html.Html):
   name = 'Entries'
@@ -248,7 +250,7 @@ class List(Html.Html):
 class Groups(Html.Html):
   name = 'Groups'
 
-  def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, options, profile):
     super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
@@ -306,6 +308,18 @@ class Items(Html.Html):
     self._jsStyles['click'], self._jsStyles['draggable'] = None, False
 
   @property
+  def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpCls.ClassHtml
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsList.ClassItems(self)
+    return self._styleObj
+
+  @property
   def _js__builder__(self):
     return ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
@@ -326,6 +340,7 @@ class Items(Html.Html):
           li.appendChild(close);
         }
         li.style.margin = "5px 0";
+        li.style.padding = "2px 5px";
         htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 
   @property
