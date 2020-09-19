@@ -346,7 +346,7 @@ class Vignets(object):
     :param profile:
     """
     div = self.context.rptObj.ui.div(height=height, width=width, options=options, profile=profile)
-    div.style.css.background_url(url, size=size, margin=margin, profile=profile)
+    div.style.css.background_url(url, size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
     div.style.css.vertical_align = position

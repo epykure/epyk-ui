@@ -829,7 +829,7 @@ class Highlights(Html.Html):
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold'}, options={'content_table': False})
     self.add_icon(icon, {"float": "left", 'padding-top': '3px'}, family=options.get("icon_family"))
-    if self.icon is not None and self.title:
+    if self.icon is not None and self.icon != "" and self.title:
       self.icon.style.css.font_factor(10)
     # Change the style of the component
     self.css({"margin": "5px", 'padding': "5px"})

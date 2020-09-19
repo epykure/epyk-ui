@@ -8,6 +8,24 @@ from epyk.core.js.packages import packageImport
 class OptionsText(Options):
 
   @property
+  def editable(self):
+    """
+    Description:
+    ------------
+    Set the content of the component editable
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_global_contenteditable.asp
+    """
+    return self._report.attr.get("contenteditable", False)
+
+  @editable.setter
+  def editable(self, bool):
+    self._report._report.body.style.contenteditable()
+    self._report.attr["contenteditable"] = bool
+
+  @property
   def reset(self):
     """
     Description:
