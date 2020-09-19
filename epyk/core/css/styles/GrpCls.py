@@ -7,7 +7,7 @@ from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles.attributes import Attrs # for the rtype in the documentation
 from epyk.core.css.styles.attributes import Commons, Body, Empty
-from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar
+from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesPage
 from epyk.core.py import OrderedSet
 
 
@@ -15,6 +15,7 @@ class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection, self.__moz_selection = 5 * [None]
+    self.__contenteditable = None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
     self.classList['other'].add(self.scrollbar_webkit)
     self.classList['other'].add(self.scrollbar_webkit_thumb)
@@ -131,6 +132,23 @@ class ClassPage(object):
     if not self.__moz_selection:
       self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.htmlObj._report)
     return self.__moz_selection
+
+  def contenteditable(self):
+    """
+    Description:
+    ------------
+    Set the border color of the editable content according to the selected theme
+
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_css_contenteditable_border.asp
+
+    :rtype: CssStylesPage.CssPageContentDditable
+    """
+    if not self.__contenteditable:
+      self.__contenteditable = CssStylesPage.CssPageContentEditable(self.htmlObj._report)
+      self.classList['other'].add(self.__contenteditable)
+    return self.__contenteditable
 
   @property
   def defaults(self):

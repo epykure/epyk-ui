@@ -130,6 +130,7 @@ class PyOuts(object):
       for component_id in order_components:
         component = self._report.components[component_id]
         if component.name == 'Body':
+          cssParts.update(component.style.get_classes_css())
           continue
 
         if component.options.managed:

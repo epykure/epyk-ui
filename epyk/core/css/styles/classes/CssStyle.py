@@ -466,6 +466,8 @@ class Style(object):
       self.classname = " .".join(self.classnames)
     if self.classname == False:
       selector_ids["classname"], self.classname = ("%s", "")
+    elif self.classname.startswith('['):
+      selector_ids["classname"], self.classname = ("%s", self.classname)
     elif self.classname.startswith('::'):
       selector_ids["classname"], self.classname = ("%s", self.classname)
     else:
