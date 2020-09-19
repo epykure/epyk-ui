@@ -372,7 +372,8 @@ class Navigation(object):
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
     if options.get('status', False):
       html_nav.scroll = scroll
-    logo.style.css.display = "inline-block"
+    html_nav.logo = logo
+    html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
     self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 5
     return html_nav

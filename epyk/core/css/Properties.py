@@ -2,6 +2,7 @@
 from epyk.core.css import Colors
 from epyk.core.css import Defaults_css
 from epyk.core.css import FontFamily
+from epyk.interfaces import Arguments
 
 
 def autoPrefixer(prop):
@@ -2743,7 +2744,7 @@ class CssMixin(object):
     self.text_decoration = "underline"
     return self
 
-  def absolute(self, top, left, transform=True):
+  def absolute(self, top=None, left=None, bottom=None, right=None, transform=True):
     """
     Description:
     ------------
@@ -2753,8 +2754,18 @@ class CssMixin(object):
     :param top:
     :param left:
     """
-    self.top = "%s%s" % (top[0], top[1])
-    self.left = "%s%s" % (left[0], left[1])
+    if top is not None:
+      top = Arguments.size(top, unit="px")
+      self.top = "%s%s" % (top[0], top[1])
+    if bottom is not None:
+      bottom = Arguments.size(bottom, unit="px")
+      self.bottom = "%s%s" % (bottom[0], bottom[1])
+    if left is not None:
+      left = Arguments.size(left, unit="px")
+      self.left = "%s%s" % (left[0], left[1])
+    if right is not None:
+      right = Arguments.size(right, unit="px")
+      self.right = "%s%s" % (right[0], right[1])
     if transform:
       self.transform = "translate(-%s, -%s)" % (self.left, self.top)
     self.position = "absolute"

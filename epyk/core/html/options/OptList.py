@@ -97,6 +97,19 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def items_type(self):
+    """
+    Description:
+    ------------
+    Change the type of items in the dynamic list
+    """
+    return self._config_get("text")
+
+  @items_type.setter
+  def items_type(self, text):
+    self._config(text)
+
+  @property
   def delete_icon(self):
     """
     Description:

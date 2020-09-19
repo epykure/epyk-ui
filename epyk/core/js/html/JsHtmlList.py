@@ -162,9 +162,9 @@ class JsItemsDef(object):
     :param report: Page object. The internal page object
     """
     item_def = '''
-    var item = document.createElement("a");  
+    var item = document.createElement("a");
     item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
-    item.innerHTML = data ; item.href ='#' '''
+    item.innerHTML = data.text ; if(typeof data.url !== 'undefined'){item.href = data.url} else {item.href = '#'} '''
     return self._item(item_def)
 
   def box(self, report):

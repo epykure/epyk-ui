@@ -479,6 +479,7 @@ class Icons(object):
     :param text: String. Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
+    :param align: String. Optional. A string with the horizontal position of the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
@@ -1136,3 +1137,4 @@ class Icons(object):
       ]),
     ])
     return t
+

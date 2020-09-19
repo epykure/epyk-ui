@@ -291,13 +291,16 @@ class Menus(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     records = []
+    dflt_options = {"target": '_self'}
+    if options is not None:
+      dflt_options.update(options)
     for k in data:
       if not isinstance(k, dict):
         records.append({'value': k})
       else:
         records.append(k)
 
-    row = self.context.rptObj.ui.row(color, width=width, height=height, options=options or {}, profile=profile, position=position)
+    row = self.context.rptObj.ui.row(color, width=width, height=height, options=dflt_options, profile=profile, position=position)
     for _ in range(len(records)):
       col = self.context.rptObj.ui.col(align=align, position=position)
       col.options.responsive = False
@@ -312,9 +315,13 @@ class Menus(object):
         items = self.context.rptObj.ui.list()
         for child in k.get("children", []):
           if isinstance(child, dict):
+            if not 'target' in child:
+              child['options'] = {'target': dflt_options['target']}
+            else:
+              child['options'] = {'target': child['target']}
+              del child['target']
             link = self.context.rptObj.ui.link(**child)
             link.style.css.white_space = "nowrap"
-            link.options.target = '_blank'
             li = self.context.rptObj.ui.lists.item(link)
             items.add(li)
           else:
