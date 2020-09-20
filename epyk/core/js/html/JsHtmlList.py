@@ -172,9 +172,9 @@ class JsItemsDef(object):
     Description:
     ------------
     Add button items to the list
+    Data structure expected:
+      {'text': f, 'button': 'get',  'event': {'url': '/test', 'data': {'Ok': 45}}
 
-    TODO: Add event and url
-    
     Attributes:
     ----------
     :param report: Page object. The internal page object
@@ -190,6 +190,16 @@ class JsItemsDef(object):
     button.style.display = 'inline-block'; button.style.margin = 0; button.style.lineHeight = "18px";
     button.innerHTML = data.button; item.appendChild(text); item.appendChild(button);
     if(typeof data.tooltip !=='undefined'){ button.setAttribute('title', data.tooltip) }
+    if(typeof data.event !=='undefined'){
+      button.addEventListener("click", function() {
+        var xhttp = new XMLHttpRequest();
+        var event_data = {}; var event_method = 'POST';
+        if(typeof data.event.data !== 'undefined'){ event_data = data.event.data}
+        if(typeof data.event.method !== 'undefined'){ event_method = data.event.method}
+        xhttp.open(event_method, data.event.url, true);
+        xhttp.send(JSON.stringify(event_data));
+      });
+    }
     '''
     return self._item(item_def)
 
