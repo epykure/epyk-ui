@@ -1022,9 +1022,9 @@ class Tabs(Html.Html):
         show_div = []
       else:
         div = self._report.ui.div(div)
-        show_div = div.dom.show()
+        show_div = [div.dom.show()]
     else:
-      show_div = div.dom.show()
+      show_div = [div.dom.show()]
     div.css({"display": 'none'})
     div.options.managed = False
     div.set_attrs(name="name", value=self.panels_name)

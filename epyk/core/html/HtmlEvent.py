@@ -633,7 +633,6 @@ class Filters(Html.Html):
   def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
     super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.__options = OptList.OptionsTagItems(self, options)
-    self._jsStyles['delete'] = 'function(){this.parentNode.remove()}'
     self.input = self._report.ui.input()
     self.input.style.css.text_align = 'left'
     self.input.style.css.padding = '0 5px'
@@ -648,6 +647,10 @@ class Filters(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
+    Shortcut to the Chip options
+
     :rtype: OptList.OptionsTagItems
     """
     return self.__options
@@ -670,8 +673,8 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: List or String. The JavaScript events
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     self.__enter_def = True
     if not isinstance(jsFncs, list):
@@ -684,9 +687,11 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    :param jsFncs:
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
     :param preventDefault:
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     self.style.css.border = "1px dashed black"
     self.tooltip("Drag and drop values here")
@@ -697,8 +702,10 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    :param jsFncs:
-    :param profile:
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if self.__enter_def:
       raise Exception("delete on chip must be triggered before enter")
@@ -753,7 +760,7 @@ class Filters(Html.Html):
           p.innerHTML = record.name; div.appendChild(p)
         };
         div.appendChild(content);
-        if(!record.fixed){
+        if(!record.fixed && options.delete){
           var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
           icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', options.delete );
           div.appendChild(icon)}

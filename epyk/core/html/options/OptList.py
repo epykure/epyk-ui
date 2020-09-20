@@ -187,6 +187,7 @@ class OptionsItems(Options):
 
 
 class OptionsTagItems(Options):
+  component_properies = ('delete', )
 
   @property
   def visible(self):
@@ -202,6 +203,23 @@ class OptionsTagItems(Options):
 
   @visible.setter
   def visible(self, attrs):
+    self._config(attrs)
+
+  @property
+  def delete(self):
+    """
+    Description:
+    ------------
+    Display the deleted icon on the different items
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary or False. The deleted icon properties
+    """
+    return self._config_get('function(){this.parentNode.remove()}')
+
+  @delete.setter
+  def delete(self, attrs):
     self._config(attrs)
 
   @property
