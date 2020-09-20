@@ -1,5 +1,6 @@
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Inputs(object):
@@ -429,6 +430,8 @@ class Inputs(object):
     Attributes:
     ----------
     :param flag:
+    :param label:
+    :param group_name:
     :param width:
     :param height:
     :param htmlCode:
@@ -436,6 +439,8 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
     html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,

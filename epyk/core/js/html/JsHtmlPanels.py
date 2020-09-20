@@ -132,6 +132,19 @@ class JsHtmlTabs(JsHtml.JsHtml):
             else{ return selectedTab.innerHTML}
           })(%s)''' % self.varId)
 
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsHtml.ContentFormatters(self._report, '''
+          (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
+            if(selectedTab == null){ return ""; }
+            else{ return selectedTab.innerText}
+          })(%s)''' % self.varId)
+
   def deselect_tabs(self):
     """
     Description:

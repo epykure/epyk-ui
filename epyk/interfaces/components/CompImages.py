@@ -156,6 +156,8 @@ class Images(object):
     Description:
     ------------
 
+    tags: Background
+
     Attributes:
     ----------
     :param url:

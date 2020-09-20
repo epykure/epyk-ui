@@ -1001,7 +1001,7 @@ class Tabs(Html.Html):
     for tab_obj in self.__panel_objs.values():
       yield tab_obj["tab"]
 
-  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=(100, 'px')):
     """
     Description:
     ------------
@@ -1010,17 +1010,30 @@ class Tabs(Html.Html):
     ----------
     :param name:
     :param div:
+    :param icon:
     :param selected: Boolean. Flag to set the selected panel
     :param css_tab:
+    :param css_tab_clicked:
+    :param width:
     """
+    if not hasattr(div, 'options'):
+      if div is None:
+        div = self._report.ui.div()
+        show_div = []
+      else:
+        div = self._report.ui.div(div)
+        show_div = div.dom.show()
+    else:
+      show_div = div.dom.show()
     div.css({"display": 'none'})
     div.options.managed = False
     div.set_attrs(name="name", value=self.panels_name)
+
     self.__panels.append(name)
     if icon is not None:
       tab = self._report.ui.div([
         self._report.ui.icon(icon).css({"display": 'block', "width": '100%', "font-size": css_defaults.font(4)}),
-        name], width=("100", "px"))
+        name], width=width)
     else:
       tab = self._report.ui.div(name, width=("100", "px"))
     tab_style = self.options.tab_style(name, css_tab)
@@ -1028,7 +1041,7 @@ class Tabs(Html.Html):
     tab.css(tab_style).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
-    tab_container = self._report.ui.div(tab, width=("100", "px"))
+    tab_container = self._report.ui.div(tab, width=width)
     tab_container.options.managed = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
@@ -1041,7 +1054,7 @@ class Tabs(Html.Html):
         tab.dom.css(tab_style_clicked),
         self._report.js.data.all.element.hide(),
         tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
-        div.dom.show()])])
+        ] + show_div)])
     tab.options.managed = False
     self.__panel_objs[name] = {"tab": tab_container, "content": div}
     if selected:
@@ -1054,14 +1067,16 @@ class Tabs(Html.Html):
       self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
       self.__panel_objs[self.__selected]["tab"][0].attr["data-selected"] = 'true'
     content = []
+    self.tabs_container._vals = []
+    self.tabs_container.components = {}
     for p in self.__panels:
-      self.tabs_container += self.__panel_objs[p]["tab"]
+      self.tabs_container.add(self.__panel_objs[p]["tab"])
       content.append(self.__panel_objs[p]["content"].html())
     return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.tabs_container.html(), "".join(content), self.helper)
 
 
 class TabsArrowsDown(Tabs):
-  name = 'Tabs'
+  name = 'Tabs Arrow Down'
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     super(TabsArrowsDown, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
@@ -1070,7 +1085,7 @@ class TabsArrowsDown(Tabs):
 
 
 class TabsArrowsUp(Tabs):
-  name = 'Tabs'
+  name = 'Tabs Arrow Up'
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     super(TabsArrowsUp, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
