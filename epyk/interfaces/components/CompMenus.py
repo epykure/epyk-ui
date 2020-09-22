@@ -7,6 +7,7 @@ from epyk.interfaces import Arguments
 
 
 class Menus(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -710,3 +711,35 @@ class Menus(object):
     height = Arguments.size(height, unit="px")
     html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, records or [], width, height, visible, options or {}, profile)
     return html_menu
+
+  def pills(self, data, width=(100, '%'), height=(50, 'px'), htmlCode=None, helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    container = self.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, options=options, helper=helper, profile=profile)
+    for d in data:
+      pill = self.context.rptObj.ui.div(d, width=("auto", ""))
+      pill.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[4]
+      pill.style.css.border_radius = 10
+      pill.style.css.cursor = "pointer"
+      pill.style.css.padding = "2px 10px"
+      pill.style.css.margin_right = 5
+      pill.style.add_classes.div.color_hover()
+      container.add(pill)
+    container.style.css.overflow_x = "auto"
+    container.style.css.white_space = "nowrap"
+    container.style.css.display = "inline-block"
+    container.style.css.margin_top = 10
+    container.style.css.margin_bottom = 10
+    return container

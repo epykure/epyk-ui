@@ -28,6 +28,9 @@ class Buttons(object):
 
   def _recordSet(self, recordSet, column):
     """
+    Description:
+    ------------
+
     Attributes:
     ----------
     :param recordSet:
@@ -434,7 +437,7 @@ class Buttons(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Templates:
 

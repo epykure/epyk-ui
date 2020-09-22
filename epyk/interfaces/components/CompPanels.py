@@ -6,6 +6,7 @@ from epyk.interfaces import Arguments
 
 
 class Panels(object):
+
   def __init__(self, context):
     self.context = context
 

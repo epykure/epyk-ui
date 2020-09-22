@@ -96,6 +96,10 @@ class CatalogDiv(Catalog.CatalogGroup):
     """ Change the background color when the mouse is on the component """
     return self._set_class(CssStylesDivEvents.CssDivOnHoverBackgroundLight)
 
+  def color_hover(self):
+    """ Change the background color when the mouse is on the component """
+    return self._set_class(CssStylesDivEvents.CssDivOnHoverColor)
+
   def width_hover(self):
     """ Change the background color when the mouse is on the component """
     return self._set_class(CssStylesDivEvents.CssDivOnHoverWidth)

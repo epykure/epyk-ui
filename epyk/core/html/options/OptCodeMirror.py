@@ -42,7 +42,7 @@ class OptionsCode(Options):
 
   @mode.setter
   def mode(self, value):
-    Imports.extend('codemirror-%s' % value, [('%s.min.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror")
+    Imports.extend('codemirror-%s' % value, [('%s.min.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-%s' % value)
     self._config(value)
 
@@ -591,7 +591,7 @@ class OptionsCode(Options):
 
   @matchBrackets.setter
   def matchBrackets(self, value): # matchbrackets.js
-    Imports.extend('codemirror-matchbrackets', [('matchbrackets.min.js', 'codemirror/%(version)s/addon/edit/')], version="codemirror")
+    Imports.extend('codemirror-matchbrackets', [('matchbrackets.min.js', 'codemirror/%(version)s/addon/edit/')], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-matchbrackets')
     self._config(value)
 
@@ -612,6 +612,6 @@ class OptionsCode(Options):
 
   @styleActiveLine.setter
   def styleActiveLine(self, value):
-    Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror")
+    Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-active-line')
     self._config(value)

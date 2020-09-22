@@ -6,6 +6,7 @@ from epyk.interfaces import Arguments
 
 
 class Layouts(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -142,9 +143,9 @@ class Layouts(object):
     :param position:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align:
-    :param helper:
-    :param options:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
@@ -185,10 +186,10 @@ class Layouts(object):
     :param position:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align:
-    :param helper:
-    :param options:
-    :param profile:
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -217,9 +218,9 @@ class Layouts(object):
     :param htmlObjs:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper:
-    :param options:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -277,10 +278,10 @@ class Layouts(object):
     :param color:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -321,11 +322,12 @@ class Layouts(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param icon:
     :param editable:
-    :param align:
+    :param align: String. Optional. A string with the horizontal position of the component
     :param padding:
-    :param htmlCode:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param tag:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -346,12 +348,12 @@ class Layouts(object):
     Attributes:
     ----------
     :param components:
-    :param width:
-    :param height:
-    :param align:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     html_comp = self.div(htmlObjs=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
                          profile=profile)
@@ -381,8 +383,8 @@ class Layouts(object):
     :param components:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -393,7 +395,7 @@ class Layouts(object):
       width = (None, '%')
     return html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
 
-  def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
+  def iframe(self, url="", width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
     Description:
     ------------
@@ -411,8 +413,8 @@ class Layouts(object):
     :param url:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -433,8 +435,8 @@ class Layouts(object):
     :param record:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -490,7 +492,7 @@ class Layouts(object):
     Attributes:
     ----------
     :param htmlObj:
-    :param helper:
+    :param helper: String. Optional. A tooltip helper
     """
     form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, helper)
     return form
