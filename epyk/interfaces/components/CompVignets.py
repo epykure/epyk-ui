@@ -218,6 +218,8 @@ class Vignets(object):
             split_url = os.path.split(image)
             container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0], profile=profile)
             container.add(container.image)
+          else:
+            container.image = image
         if title is not None:
           container.add(self.context.rptObj.ui.col([title, content]))
         else:
