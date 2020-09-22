@@ -48,6 +48,8 @@ class Panels(object):
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
     html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
+    html_tabs.style.css.overflow_x = "auto"
+    html_tabs.style.css.white_space = "nowrap"
     return html_tabs
 
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
