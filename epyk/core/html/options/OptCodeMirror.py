@@ -66,6 +66,26 @@ class OptionsCode(Options):
     self._config(value)
 
   @property
+  def gutters(self):
+    """
+    Description:
+    ------------
+    Can be used to add extra gutters (beyond or instead of the line number gutter).
+    Should be an array of CSS class names or class name / CSS string pairs, each of which defines a width (and optionally a background), and which will be used to draw the background of the gutters.
+    May include the CodeMirror-linenumbers class, in order to explicitly set the position of the line number gutter (it will default to be to the right of all other gutters).
+    These class names are the keys passed to setGutterMarker.
+
+    Related Pages:
+
+      https://codemirror.net/doc/manual.html#config
+    """
+    return self._config_get()
+
+  @gutters.setter
+  def gutters(self, value):
+    self._config(value)
+
+  @property
   def theme(self):
     """
     Description:

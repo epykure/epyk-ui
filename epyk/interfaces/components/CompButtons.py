@@ -805,3 +805,47 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     c.style.css.font_size = Defaults_css.font(-2)
     c.style.css.padding = '1px 2px'
     return c
+
+  def thumbs_up(self, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Button with the font awesome icon far fa-thumbs-up
+
+    Attributes:
+    ----------
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    but = self.button(icon="far fa-thumbs-up", width=width, height=height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
+    but.style.css.background = self.context.rptObj.theme.success[1]
+    but.style.css.border_color = self.context.rptObj.theme.success[1]
+    but.style.css.padding = "0 10px"
+    but.icon.style.css.color = "white"
+    return but
+
+  def thumbs_down(self, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Button with the font awesome icon far fa-thumbs-down
+
+    Attributes:
+    ----------
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    but = self.button(icon="far fa-thumbs-down", width=width, height=height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
+    but.style.css.background = self.context.rptObj.theme.danger[1]
+    but.style.css.border_color = self.context.rptObj.theme.danger[1]
+    but.style.css.padding = "0 10px"
+    but.icon.style.css.color = "white"
+    return but

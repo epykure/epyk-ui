@@ -291,13 +291,17 @@ class Breadcrumb(Html.Html):
     super(Breadcrumb, self).__init__(report, [], profile=profile, css_attrs={"height": height, "width": width})
     self.style.css.line_height = height[0]
     self.style.css.vertical_align = 'middle'
+    self.style.css.padding_left = 5
+    self.delimiter = options['delimiter']
     if data is not None:
       for rec in data:
         if not hasattr(rec, 'options'):
           if isinstance(rec, dict):
             data = report.ui.div(rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else report.ui.link(rec['text'], rec['url'])
+            data.style.css.vertical_align = 'middle'
           else:
             data = report.ui.div(rec, width=("auto", '')) if options['selected'] == rec else report.ui.link(rec)
+            data.style.css.vertical_align = 'middle'
           data.style.css.display = 'inline-block'
         self.add(data)
     self.style.background = report.theme.greys[1]
@@ -311,7 +315,7 @@ class Breadcrumb(Html.Html):
 
   def __str__(self):
     rows = [htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for htmlObj in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), " / ".join(rows))
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.delimiter.join(rows))
 
 
 class Legend(Html.Html):

@@ -638,11 +638,13 @@ class Components(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    options = options or {}
+    dflt_options = {"delimiter": ' / '}
+    if options is not None:
+      dflt_options.update(options)
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    options['selected'] = selected
-    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values, width, height, options, profile)
+    dflt_options['selected'] = selected
+    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values, width, height, dflt_options, profile)
     return html_breadcrumb
 
   def form(self, action=None, method=None, helper=None):

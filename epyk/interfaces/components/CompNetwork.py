@@ -296,7 +296,7 @@ class Network(object):
 
     Temapltes:
 
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/news.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/st_news.py
 
     Attributes:
     ----------

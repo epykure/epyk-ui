@@ -964,3 +964,16 @@ class JsHtmlNumeric(JsHtmlRich):
           ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ], toStr=True)
+
+  def add(self, item):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param item:
+    """
+    return JsObjects.JsVoid('''
+      %(component)s.innerText = parseFloat(%(component)s.innerText) + %(value)s
+      ''' % {'value': item, 'component': self._src.dom.varName})
