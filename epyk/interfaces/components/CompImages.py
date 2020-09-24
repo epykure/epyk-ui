@@ -514,7 +514,7 @@ class Images(object):
     html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, options, profile)
     return html_emoji
 
-  def icon(self, icon=None, family=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, options=None, profile=None):
+  def icon(self, icon=None, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
     """
     Description:
     ------------
@@ -535,10 +535,12 @@ class Images(object):
     ----------
     :param icon: String. Optional. The component icon content from font-awesome references
     :param family:
+    :param htmlCode:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: String. Optional. The font color in the component. Default inherit
     :param tooltip: String. Optional. A string with the value of the tooltip
+    :param align: String. Optional.
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
@@ -547,7 +549,10 @@ class Images(object):
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
-                                    options=options, profile=profile)
+                                    options=options, htmlCode=htmlCode, profile=profile)
+    if align == "center":
+      html_icon.style.css.margin = "auto"
+      html_icon.style.css.display = "block"
     return html_icon
 
   def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,

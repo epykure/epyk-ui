@@ -10,7 +10,7 @@ class Links(object):
   def __init__(self, context):
     self.context = context
 
-  def external(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def external(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -36,6 +36,7 @@ class Links(object):
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param align: Optional.
     :param helper: String. Optional. A tooltip helper
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param decoration:
@@ -47,6 +48,11 @@ class Links(object):
     if options is not None:
       dft_options.update(options)
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    if align == "center":
+      self.context.rptObj.ui.div(html_link, align=align)
+      html_link.style.css.width = "auto"
+      html_link.style.css.margin = "0 auto"
+      html_link.style.css.display = "inline-block"
     return html_link
 
   def button(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
@@ -82,7 +88,7 @@ class Links(object):
     html_link.style.css.padding = "0 10px"
     return html_link
 
-  def link(self, text="", url="", icon=None, tooltip=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -118,6 +124,11 @@ class Links(object):
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, options, profile)
     if tooltip is not None:
       html_link.tooltip(tooltip)
+    if align == "center":
+      self.context.rptObj.ui.div(html_link, align=align)
+      html_link.style.css.width = "auto"
+      html_link.style.css.margin = "0 auto"
+      html_link.style.css.display = "inline-block"
     return html_link
 
   def data(self, text, value, width=(None, '%'), height=(None, 'px'), format='txt', profile=None):

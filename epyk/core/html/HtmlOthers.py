@@ -291,7 +291,6 @@ class Breadcrumb(Html.Html):
     super(Breadcrumb, self).__init__(report, [], profile=profile, css_attrs={"height": height, "width": width})
     self.style.css.line_height = height[0]
     self.style.css.vertical_align = 'middle'
-    self.style.css.padding_left = 5
     self.delimiter = options['delimiter']
     if data is not None:
       for rec in data:

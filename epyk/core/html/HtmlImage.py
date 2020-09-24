@@ -245,9 +245,9 @@ class ImgCarrousel(Html.Html):
 class Icon(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report, value, width, height, color, tooltip, options, profile):
+  def __init__(self, report, value, width, height, color, tooltip, options, htmlCode, profile):
     self.requirements = (options['icon_family'], )
-    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, profile=profile)
+    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     if options['icon_family'] == 'office-ui-fabric-core':
       self.attr['class'].add("ms-Icon")
       if not value.startswith("ms-Icon--"):
@@ -260,7 +260,7 @@ class Icon(Html.Html):
       self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'
     if tooltip is not None:
-      self.set_attrs(name="title", value=tooltip)
+      self.tooltip(tooltip)
 
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
     """
