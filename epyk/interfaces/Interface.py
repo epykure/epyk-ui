@@ -555,6 +555,9 @@ class Components(object):
       html_contents.style.css.right = right
     # Attach the table content to the main report object
     self.rptObj._content_table = html_contents
+    html_contents.style.css.z_index = 110
+    if self.rptObj.body.style.css.padding_top is not None:
+      html_contents.style.css.top = self.rptObj.body.style.css.padding_top
     return html_contents
 
   def bespoke(self, htmlCls, *args, **kwargs):

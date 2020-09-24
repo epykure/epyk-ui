@@ -215,7 +215,7 @@ class Texts(object):
     ----------
     :param text: Optional. The string value to be displayed in the component
     :param title:
-    :param icon:
+    :param icon: String. Optional. The component icon content from font-awesome references
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
                  dark). Default danger
     :param color: String. Optional. The font color in the component. Default inherit
@@ -223,7 +223,7 @@ class Texts(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")

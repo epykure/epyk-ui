@@ -827,12 +827,12 @@ class Highlights(Html.Html):
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
-    self.add_title(title, css={"width": "none", "font-weight": 'bold'}, options={'content_table': False})
+    self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0}, options={'content_table': False})
     self.add_icon(icon, {"float": "left", 'padding-top': '3px'}, family=options.get("icon_family"))
     if self.icon is not None and self.icon != "" and self.title:
       self.icon.style.css.font_factor(10)
     # Change the style of the component
-    self.css({"margin": "5px", 'padding': "5px"})
+    self.css({"margin": "5px 0", 'padding': "5px"})
     self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
     self.dom.display_value = "block"

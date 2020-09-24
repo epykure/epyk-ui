@@ -386,6 +386,7 @@ class ContentsTable(Html.Html):
     self.title[0].style.css.font_size = Defaults_css.font(6)
     self.title[0].style.css.font_weight = "bold"
     self.title.options.managed = False
+    self.menu = self._report.ui.div(htmlCode="content_page")
 
   @property
   def style(self):
@@ -443,12 +444,12 @@ class ContentsTable(Html.Html):
     self.style.css.margin = 5
 
   def __str__(self):
-    div_link = self._report.ui.div(self.val)
-    div_link.attr["name"] = "menu"
-    div_link.options.managed = False
-    self.title[-1].click([div_link.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
+    self.menu._vals = self.val
+    self.menu.attr["name"] = "menu"
+    self.menu.options.managed = False
+    self.title[-1].click([self.menu.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
     return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
-                                                            'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': div_link.html()}
+                                                            'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': self.menu.html()}
 
 
 class SearchResult(Html.Html):
