@@ -353,7 +353,8 @@ class Navigation(object):
       if not hasattr(logo, 'options'):
         logo_url = logo
         logo = self.context.rptObj.ui.div(height=options['logo_height'], width=options['logo_width'])
-        logo.style.css.background_url(logo_url, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
+        if logo_url:
+          logo.style.css.background_url(logo_url, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
     components[-1].style.css.margin_right = 20
     if title is not None:
@@ -1050,3 +1051,86 @@ class Banners(object):
     div.style.css.color = self.context.rptObj.theme.greys[-1]
     div.style.css.top = 0
     return div
+
+
+class NavBars(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  def fixed(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logo:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
+    return bar
+
+  def top(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logo:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
+    bar.style.css.position = False
+    return bar
+
+  def transparent(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logo:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
+    bar.style.css.position = "absolute"
+    bar.style.css.top = 0
+    bar.no_background()
+    return bar
+
+  def dark(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logo:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
+    bar.style.css.position = "absolute"
+    bar.style.css.top = 0
+    bar.no_background()
+    bar.style.css.opacity = 0.5
+    bar.style.css.background = 'black'
+    return bar

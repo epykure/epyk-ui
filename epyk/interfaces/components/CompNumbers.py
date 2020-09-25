@@ -296,3 +296,34 @@ class Numbers(object):
     ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
     ind.add_trace({'value': value}, mode="number+delta")
     return ind
+
+  def move(self, current, previous, color=None, label=None, options=None, helper=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.Delta`
+
+    Attributes:
+    ----------
+    :param current:
+    :param previous:
+    :param color:
+    :param label:
+    :param options:
+    :param helper:
+    :param profile:
+    """
+    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
+                    'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
+                    'orange': self.context.rptObj.theme.warning[1]}
+    if options is not None:
+      dflt_options.update(options)
+    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, {"value": current, 'previous': previous}, color, label, dflt_options, helper, profile)
+    return html_up_down

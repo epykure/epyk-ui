@@ -81,6 +81,7 @@ class Components(object):
     self.number = self.numbers.number #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.euro = self.numbers.euro #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.percent = self.numbers.percent #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
+    self.banner = self.banners.text #: shortcut for banners
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -224,6 +225,15 @@ class Components(object):
     Group all the UI components dedicated to produce navigation components such as navigation bar, footer, banner...
     """
     return CompNavigation.Navigation(self)
+
+  @property
+  def bars(self):
+    """
+    Description:
+    ------------
+    Group all the UI components dedicated to produce Navigation bar components such as navigation bar, footer, banner...
+    """
+    return CompNavigation.NavBars(self)
 
   @property
   def banners(self):

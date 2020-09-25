@@ -25,6 +25,7 @@ class HtmlNavBar(Html.Html):
         components = [components]
       for c in components:
         self.__add__(c)
+    self.buttons = []
 
   @property
   def style(self):
@@ -49,18 +50,24 @@ class HtmlNavBar(Html.Html):
     self.style.css.position = None
     self._report.body.style.css.padding_top = 0
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to the footer """
-    if not hasattr(htmlObj, 'options'):
-      htmlObj = self._report.ui.div(htmlObj)
-      htmlObj.style.css.cursor = "pointer"
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    htmlObj.style.css.display = 'inline'
-    if htmlObj.css('height') is None:
-      htmlObj.style.css.vertical_align = 'middle'
-    if htmlObj.css('width') == '100%':
-      htmlObj.style.css.width = None
-    self.val.append(htmlObj)
+    if not hasattr(component, 'options'):
+      component = self._report.ui.div(component)
+      component.style.add_classes.div.color_hover()
+      component.style.css.user_select = "none"
+      component.style.css.margin_left = 5
+      component.style.css.margin_right = 5
+      component.style.css.cursor = "pointer"
+    component.options.managed = False # Has to be defined here otherwise it is set to late
+    component.style.css.display = 'inline'
+    if component.css('height') is None:
+      component.style.css.vertical_align = 'middle'
+    if component.css('width') == '100%':
+      component.style.css.width = None
+    self.val.append(component)
+    if hasattr(self, 'buttons'):
+      self.buttons.append(component)
     return self
 
   def no_background(self, to_top=True):
@@ -80,7 +87,7 @@ class HtmlNavBar(Html.Html):
       self._report.body.style.css.padding_top = 0
     return self
 
-  def add_right(self, component):
+  def add_right(self, component, css=None):
     """
     Description:
     -----------
@@ -89,13 +96,26 @@ class HtmlNavBar(Html.Html):
     Attributes:
     ----------
     :param component: HTML Component. Internal component to the framework
+    param css: Dictionary
     """
+    if not hasattr(component, 'options'):
+      component = self._report.ui.text(component, width=("auto", ''))
+      component.style.add_classes.div.color_hover()
+      component.style.css.margin_left = 5
+      component.style.css.user_select = "none"
+      component.style.css.margin_right = 5
+      component.style.css.cursor = "pointer"
+      component.options.managed = False # Has to be defined here otherwise it is set to late
+      if css is not None:
+        component.css(css)
     if not hasattr(self, '_right'):
       self._right = self._report.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
-      self.add(self._right)
+      self._right.options.managed = False
+      self._vals.append(self._right)
     self._right.add(component)
+    self.buttons.append(component)
     return self
 
   def add_text(self, text):

@@ -384,6 +384,17 @@ class ClassHtml(Properties.CssMixin):
     """
     self.selector("hover", attrs)
 
+  def standard(self, percent=10):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param percent:
+    """
+    self.css.margins(left=(percent, '%'), right=(percent, '%'))
+
   def selector(self, suffix, attrs):
     """
     Description:
