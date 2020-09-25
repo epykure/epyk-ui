@@ -74,7 +74,7 @@ class Panel(Html.Html):
 
 
 class PanelSplit(Html.Html):
-  requirements = ('jqueryui', )
+  #requirements = ('jqueryui', )
   name = 'Panel Split'
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
@@ -136,15 +136,21 @@ class PanelSlide(Panel):
   requirements = ('font-awesome', )
   name = 'Slide Panel'
 
-  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
-    super(PanelSlide, self).__init__(report, htmlObj, None, color, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, components, title, color, width, height, htmlCode, helper, options, profile):
+    super(PanelSlide, self).__init__(report, components, None, color, width, height, htmlCode, helper, options, profile)
     self.add_helper(helper)
-    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px',
+    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 5px',
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
-    self.text = self._report.ui.title(title).css({"display": 'inline-block', 'margin': 0})
+    self.text = self._report.ui.text(title).css({"display": 'inline-block', 'margin': 0})
+    self.text.style.css.bold()
+    self.text.style.css.font_factor(8)
     self.title = self._report.ui.div([self.icon, self.text])
     self.title.options.managed = False
-    self.title.css({"cursor": 'pointer', "padding": "5px"})
+    self.title.style.css.cursor = "pointer"
+    self.title.style.css.white_space = "nowrap"
+    self.title.style.css.padding = "5px"
+    self.panel = self._report.ui.div()
+    self.panel.options.managed = False
     self._vals, self.__clicks = [self.title] + self._vals, []
     self.__options = OptPanel.OptionPanelSliding(self, options)
 
@@ -169,15 +175,16 @@ class PanelSlide(Panel):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__clicks = jsFncs
     return self
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    self.val[1] += htmlObj
+    self.val[1] += component
     return self
 
   def __str__(self):

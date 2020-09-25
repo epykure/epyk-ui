@@ -231,7 +231,13 @@ class Panels(object):
     height = Arguments.size(height, unit="px")
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, width, height,
+    components = []
+    for component in htmlObjs:
+      if not hasattr(component, 'options'):
+        components.append(self.context.rptObj.ui.texts.paragraph(component, options={"markdown": True}))
+      else:
+        components.append(component)
+    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, components, title, color, width, height,
                                                htmlCode, helper, options or {}, profile)
     if align == "center":
       html_slide.style.css.margin = "auto"
@@ -401,3 +407,30 @@ class Slidings(object):
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
     return sliding
+
+  def plus(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+    Same component than sliding with a different style.
+
+    Attributes:
+    ----------
+    :param components:
+    :param title:
+    :param color:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    html_slide = self.context.rptObj.ui.panels.sliding(components, title, color, align, width, height, htmlCode, helper, options, profile)
+    html_slide.title.style.css.padding = 0
+    html_slide.title[1].style.css.margin_left = 15
+    html_slide.options.icon_closed = "fas fa-plus"
+    html_slide.options.icon_expanded = "fas fa-minus"
+    html_slide.val[1].style.padding_left = 40
+    return html_slide
