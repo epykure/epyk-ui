@@ -1138,3 +1138,32 @@ class Icons(object):
     ])
     return t
 
+  def large(self, icon=None, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param icon:
+    :param family:
+    :param width:
+    :param htmlCode:
+    :param height:
+    :param color:
+    :param tooltip:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    icon = self.context.rptObj.ui.icon(icon, family, width, htmlCode, height, color, tooltip, align, options, profile)
+    icon.style.css.font_factor(30)
+    icon.style.css.border_radius = 40
+    icon.style.css.padding = 20
+    icon.style.css.color = self.context.rptObj.theme.greys[0]
+    icon.style.css.background = self.context.rptObj.theme.colors[2]
+    if align == "center":
+      icon.style.css.margin = "auto"
+      icon.style.css.display = "inline-block"
+      self.context.rptObj.ui.div(icon, align="center")
+    return icon
