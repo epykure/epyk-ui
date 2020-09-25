@@ -1112,6 +1112,68 @@ class IFrame(Html.Html):
   def _js__builder__(self):
     return 'htmlObj.src = data'
 
+  def scrolling(self):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      https://www.w3schools.com/tags/tag_iframe.ASP
+
+    """
+    self.style.css.overflow_y = "visible"
+    self.attr["scrolling"] = "yes"
+    return self
+
+  def sandbox(self, text):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      https://www.w3schools.com/tags/att_iframe_sandbox.asp
+
+    Attributes:
+    ----------
+    :param text: String. Mandatory. Enables an extra set of restrictions for the content in an <iframe>
+    """
+    self.attr["sandbox"] = text
+    return self
+
+  def allowfullscreen(self, bool=True):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      https://www.w3schools.com/tags/tag_iframe.ASP
+
+    Attributes:
+    ----------
+    :param bool: Boolean. optional. Set to true if the <iframe> can activate fullscreen mode by calling the requestFullscreen() method
+    """
+    self.attr["allowfullscreen"] = 'true' if bool else 'false'
+    return self
+
+  def referrerpolicy(self, text):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      https://www.w3schools.com/tags/att_iframe_referrerpolicy.asp
+
+    Attributes:
+    ----------
+    :param text:
+    """
+    self.attr["referrerpolicy"] = text
+    return self
+
   def __str__(self):
     return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>%s" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 

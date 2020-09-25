@@ -6,6 +6,7 @@ epyk.exe
 
 import sys
 import os
+import importlib
 import argparse
 
 from epyk.core.cli import utils
@@ -347,6 +348,7 @@ def transpile_all(args):
     if report.endswith(".py") and report != "__init__.py":
       view_name = report[:-3]
       mod = __import__(view_name, fromlist=['object'])
+      importlib.reload(mod)
       try:
         page = utils.get_page(mod)
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
