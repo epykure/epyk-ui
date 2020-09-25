@@ -38,8 +38,12 @@ class Media(Html.Html):
 
   def autoplay(self, flag=True):
     """
+    Description:
+    ------------
     Set the autoplay flag
 
+    Attributes:
+    ----------
     :param flag: Boolean. Default value is true
     """
     if flag:
@@ -66,8 +70,12 @@ class Audio(Html.Html):
 
   def autoplay(self, flag=True):
     """
+    Description:
+    ------------
     Set the autoplay flag
 
+    Attributes:
+    ----------
     :param flag: Boolean. Default value is true
     """
     if flag:
@@ -108,7 +116,6 @@ class Youtube(Html.Html):
   @staticmethod
   def get_embed_link(youtube_link):
     """
-
     Description:
     -------------
     simple function to convert a youtube link to the embedded version
@@ -118,8 +125,8 @@ class Youtube(Html.Html):
 
       html.HtmlMedia.Youtube.get_embed_link('https://www.youtube.com/watch?v=iPGgnzc34tY')
 
+    Attributes:
+    ----------
     :param youtube_link:
-    :return:
     """
-
     return 'http://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]

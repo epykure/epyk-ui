@@ -30,6 +30,8 @@ class Radio(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param text:
     """
     for v in self.val:
@@ -39,9 +41,12 @@ class Radio(Html.Html):
 
   def set_checked(self, text):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
-    :return:
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -81,6 +86,8 @@ class Tick(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     HTML Dom object
 
     :rtype: JsHtmlSelect.Tick
@@ -130,6 +137,8 @@ class Switch(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     HTML Dom object
 
     :rtype: JsHtmlSelect.JsHtmlSwitch

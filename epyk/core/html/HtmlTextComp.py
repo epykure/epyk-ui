@@ -328,8 +328,8 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     self.action = self._report.ui.icon("fas fa-wrench")
     self.action.options.managed = False
@@ -348,8 +348,8 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event:
     """
     success = Colors.getHexToRgb(self._report.theme.success[1])
@@ -687,6 +687,8 @@ class Status(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     :rtype: ptText.OptionsStatus
     """
