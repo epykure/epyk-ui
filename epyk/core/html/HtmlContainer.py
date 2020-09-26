@@ -1042,7 +1042,7 @@ class Tabs(Html.Html):
         self._report.ui.icon(icon).css({"display": 'block', "width": '100%', "font-size": css_defaults.font(4)}),
         name], width=width)
     else:
-      tab = self._report.ui.div(name, width=("100", "px"))
+      tab = self._report.ui.div(name, width=width)
     tab_style = self.options.tab_style(name, css_tab)
     tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
     tab.css(tab_style).css({"padding": '5px 0'})

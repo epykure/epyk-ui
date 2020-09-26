@@ -765,7 +765,7 @@ class Lists(object):
 
     Usage::
 
-      chips = rptObj.ui.panels.chips()
+      chips = rptObj.ui.chips([])
 
     Underlying HTML Objects:
 

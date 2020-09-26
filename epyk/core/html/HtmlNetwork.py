@@ -207,6 +207,7 @@ class Assistant(Html.Html):
     self.name = report.ui.text(title, align="center")
     self.name.style.css.bold()
     self.mail = report.ui.icon("fas fa-at")
+    self.mail.options.managed = False
     self.mail.style.css.margin_left = 6
     self.mail.style.add_classes.div.color_hover()
     self.mail.style.css.margin_right = 2
@@ -215,6 +216,7 @@ class Assistant(Html.Html):
     self.mail.style.css.border_radius = 20
     self.mail.style.css.margin_top = -20
     self.chat = report.ui.icon("far fa-comments")
+    self.chat.options.managed = False
     self.chat.style.add_classes.div.color_hover()
     self.chat.style.css.margin_left = 2
     self.chat.style.css.background = 'white'

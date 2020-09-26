@@ -98,7 +98,6 @@ class JsHtmlTabs(JsHtml.JsHtml):
     tab.dom.tab(3).firstChild.css({"color": 'red'})
 
     :param i: Integer. Starting from 0 as we keep the Python indexing as reference
-    :return:
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.firstChild.querySelector('div:nth-child(%s)')" % (self.varId, i+1))
 
@@ -142,7 +141,11 @@ class JsHtmlTabs(JsHtml.JsHtml):
     return JsHtml.ContentFormatters(self._report, '''
           (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
             if(selectedTab == null){ return ""; }
-            else{ return selectedTab.innerText}
+            else{ var attrVal = null;
+              if(typeof selectedTab.firstChild.getAttribute !== 'undefined'){ 
+                  attrVal = selectedTab.firstChild.getAttribute("data-value");} 
+              if(attrVal != null){ return attrVal}
+              else{return selectedTab.innerText}}
           })(%s)''' % self.varId)
 
   def deselect_tabs(self):
