@@ -1719,15 +1719,28 @@ class JsBase(object):
     :param body:
     :param bcc:
     """
-    if isinstance(mails, list):
+    if not isinstance(mails, list):
       mails = [mails]
     mail_data = []
     for label, value in [("cc", cc), ('bcc', bcc), ("subject", subject), ("body", body)]:
-      if isinstance(value, list):
-        mail_data.append("%s=%s" % (label, ",".join(value)))
+      if not isinstance(value, list):
+        value = [value]
+      content, html_content = [], False
+      for v in value:
+        if hasattr(v, 'options'):
+          content.append(v.html())
+          html_content = True
+        else:
+          content.append(str(v))
+      if label == 'body':
+        if html_content:
+          # TODO: Check how to send HTML page
+          mail_data.append("%s=%s" % (label, ",".join(content)))
+        else:
+          mail_data.append("%s=%s" % (label, ",".join(content)))
       else:
-        mail_data.append("%s=%s" % (label, value))
-    return JsObjects.JsVoid("mailto:%s&%s" % (";".join(mails), "&".join(mail_data)))
+        mail_data.append("%s=%s" % (label, ",".join(content)))
+    return JsUtils.jsConvertData("mailto:%s?%s" % (";".join(mails), "&".join(mail_data)), None)
 
   @property
   def msg(self):

@@ -196,6 +196,37 @@ class Bot(Html.Html):
     ''' % {'attr': self.get_attrs(), "name": 'Test'}
 
 
+class Assistant(Html.Html):
+  """
+  """
+  name = 'Assistant'
+
+  def __init__(self, component, title, report, htmlCode, options, profile):
+    super(Assistant, self).__init__(report, component, htmlCode=htmlCode, profile=profile)
+    self.css({'margin': '0 10px', "padding": "0 5px", 'text-align': 'center'})
+    self.name = report.ui.text(title, align="center")
+    self.name.style.css.bold()
+    self.mail = report.ui.icon("fas fa-at")
+    self.mail.style.css.margin_left = 6
+    self.mail.style.add_classes.div.color_hover()
+    self.mail.style.css.margin_right = 2
+    self.mail.style.css.background = 'white'
+    self.mail.style.css.padding = "2px 2px"
+    self.mail.style.css.border_radius = 20
+    self.mail.style.css.margin_top = -20
+    self.chat = report.ui.icon("far fa-comments")
+    self.chat.style.add_classes.div.color_hover()
+    self.chat.style.css.margin_left = 2
+    self.chat.style.css.background = 'white'
+    self.chat.style.css.padding = "2px 2px"
+    self.chat.style.css.border_radius = 20
+    self.chat.style.css.margin_top = -20
+
+  def __str__(self):
+    return '''<div %(attr)s>%(name)s%(avatar)s%(mail)s%(chat)s</div>''' % {'attr': self.get_attrs(),
+               'avatar': self.val.html(), 'mail': self.mail.html(), 'chat': self.chat.html(), 'name': self.name.html()}
+
+
 class Chat(Html.Html):
   name = 'Chat'
 

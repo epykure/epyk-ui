@@ -379,7 +379,7 @@ class Network(object):
     """
     if icon is None:
       icon = "fas fa-file-upload"
-    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, options=options, profile=profile)
     return file
 
   def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
@@ -405,7 +405,7 @@ class Network(object):
       icon = mapped_file[extension]
     if icon is None:
       icon = "fas fa-file-upload"
-    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, options=options, profile=profile)
     file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})
     if path is not None:
       file.click(['''
@@ -418,3 +418,27 @@ class Network(object):
         document.body.removeChild(link);
         ''' % {"path": os.path.join(path, name), "name": name}])
     return file
+
+  def assistant(self, image, name="", path=None, htmlCode=None, size=(60, 'px'), profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param size: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    """
+    dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
+    if options is not None:
+      dflt_options.update(options)
+    image = self.context.rptObj.ui.images.avatar(image, path=path, width=size, height=size, align='left')
+    image.options.managed = False
+    container = html.HtmlNetwork.Assistant(image, name, self.context.rptObj, htmlCode, dflt_options, profile)
+    container.style.css.position = 'fixed'
+    container.style.css.bottom = 0
+    container.style.css.right = 0
+    container.style.css.z_index = 200
+    return container
