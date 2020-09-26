@@ -96,7 +96,7 @@ class HtmlNavBar(Html.Html):
     Attributes:
     ----------
     :param component: HTML Component. Internal component to the framework
-    param css: Dictionary
+    :param css: Dictionary. Optional. The CSS attributes
     """
     if not hasattr(component, 'options'):
       component = self._report.ui.text(component, width=("auto", ''))
