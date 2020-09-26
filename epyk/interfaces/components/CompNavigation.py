@@ -374,6 +374,7 @@ class Navigation(object):
     if options.get('status', False):
       html_nav.scroll = scroll
     html_nav.logo = logo
+    html_nav.title = title
     html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
     self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 5
@@ -472,7 +473,7 @@ class Navigation(object):
       d.css({'left': 0, 'margin-left': "-%spx" % size, 'border-right': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
     else:
       d.css({'right': 0, 'margin-right': "-%spx" % size, 'border-left': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
-    self.context.rptObj.body.style.css.overflow_x = 'hidden'
+    self.context.rptObj.body.style.custom_class({"overflow-x": 'hidden', "position": 'relative', 'min-height': '100%'}, "html, body", is_class=False)
     if anchor is None:
       if position == 'left':
         i = self.context.rptObj.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])

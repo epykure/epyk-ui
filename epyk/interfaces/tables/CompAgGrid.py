@@ -22,7 +22,8 @@ class AgGrid(object):
     cols = cols or []
     rows = rows or []
     if not cols and not rows:
-      cols = list(records[0].keys())
+      if records is not None:
+        cols = list(records[0].keys())
 
     table_options_dflts = {'headerHeight': 30, 'rowHeight': '50'}
     if options is not None:

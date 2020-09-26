@@ -211,7 +211,7 @@ class ClassPage(object):
           css_frgs[c.get_ref()] = str(c)
     return css_frgs
 
-  def custom_class(self, css_attrs, classname=None, selector=None):
+  def custom_class(self, css_attrs, classname=None, selector=None, is_class=True):
     """
     Description:
     -----------
@@ -229,14 +229,19 @@ class ClassPage(object):
     :param css_attrs: Nested dictionary with the different attributes
     :param classname: Optional. String. The classname in the CSS definition
     :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition)
+    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a .
     """
     if classname is None:
       cls_def = {"classname": False, '_selector': selector}
     else:
       cls_def = {"classname": classname}
+    if not '_attrs' in css_attrs and not '_hover' in css_attrs:
+      css_attrs = {"_attrs": css_attrs}
+    css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    self.classList['other'].add(v_cls(self.htmlObj._report))
+    cls_obj = v_cls(self.htmlObj._report)
+    self.classList['other'].add(cls_obj)
     return cls_def
 
 

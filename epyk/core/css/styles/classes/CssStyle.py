@@ -453,7 +453,7 @@ class Selector(object):
 
 
 class Style(object):
-  classname, classnames = None, None
+  classname, classnames, is_class = None, None, True
 
   def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
     self.rptObj, self.html_id, self.cls_ref, self.__has_changed = rptObj, html_id, None, False
@@ -464,14 +464,17 @@ class Style(object):
       self.classname = self.__class__.__name__.lower()
     if self.classnames is not None:
       self.classname = " .".join(self.classnames)
-    if self.classname == False:
-      selector_ids["classname"], self.classname = ("%s", "")
-    elif self.classname.startswith('['):
-      selector_ids["classname"], self.classname = ("%s", self.classname)
-    elif self.classname.startswith('::'):
+    if not self.is_class:
       selector_ids["classname"], self.classname = ("%s", self.classname)
     else:
-      selector_ids["classname"], self.classname = (".%s", self.classname)
+      if self.classname == False:
+        selector_ids["classname"], self.classname = ("%s", "")
+      elif self.classname.startswith('['):
+        selector_ids["classname"], self.classname = ("%s", self.classname)
+      elif self.classname.startswith('::'):
+        selector_ids["classname"], self.classname = ("%s", self.classname)
+      else:
+        selector_ids["classname"], self.classname = (".%s", self.classname)
     if getattr(self, '_selector', None) is not None:
       self.classname = self._selector
     if selector_ovrs is not None:
