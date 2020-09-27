@@ -429,6 +429,7 @@ class ContentsTable(Html.Html):
     :param anchor:
     """
     href = self._report.ui.link(text, url=anchor)
+    href.options.managed = False
     href.style.css.font_size = Defaults_css.font(2)
     href.style.add_classes.link.no_decoration()
     self.val.append(href)
