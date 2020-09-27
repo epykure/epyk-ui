@@ -109,7 +109,7 @@ class Stars(Html.Html):
       self._dom = JsHtmlStars.Stars(self, report=self._report)
     return self._dom
 
-  def click(self, js_fncs=None, profile=False, source_event=None):
+  def click(self, js_fncs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -123,8 +123,10 @@ class Stars(Html.Html):
 
     Attributes:
     ----------
-    :param js_fncs: An array of Js functions or string. Or a string with the Js
-    :param profile: Boolean.
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: self to allow the chains
     """
@@ -138,7 +140,7 @@ class Stars(Html.Html):
                self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_fncs
     str_fncs = JsUtils.jsConvertFncs(js_fncs)
     for span in self._spans:
-      span.click(str_fncs, profile, source_event=source_event)
+      span.click(str_fncs, profile, source_event=source_event, onReady=onReady)
     return self
 
   @property

@@ -344,7 +344,7 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, report=self._report)
     return self._js
 
-  def change(self, jsFnc, profile=None):
+  def change(self, jsFnc, profile=None, onReady=False):
     """
     Description:
     -----------
@@ -357,6 +357,8 @@ class Slider(Html.Html):
     Attributes:
     ----------
     :param jsFnc:
+    :param profile:
+    :param onReady:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]

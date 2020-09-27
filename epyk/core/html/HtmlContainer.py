@@ -164,7 +164,7 @@ class PanelSlide(Panel):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -173,9 +173,10 @@ class PanelSlide(Panel):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -1131,7 +1132,7 @@ class IFrame(Html.Html):
   def _js__builder__(self):
     return 'htmlObj.src = data'
 
-  def scrolling(self):
+  def scrolling(self, bool=True):
     """
     Description:
     ------------
@@ -1141,8 +1142,11 @@ class IFrame(Html.Html):
       https://www.w3schools.com/tags/tag_iframe.ASP
 
     """
-    self.style.css.overflow_y = "visible"
-    self.attr["scrolling"] = "yes"
+    if bool:
+      self.style.css.overflow_y = "visible"
+      self.attr["scrolling"] = "yes"
+    else:
+      self.attr["scrolling"] = "no"
     return self
 
   def sandbox(self, text):
@@ -1514,7 +1518,7 @@ class Points(Html.Html):
     """
     return self.__options
 
-  def on(self, event, jsFncs, profile=False, source_event=None):
+  def on(self, event, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -1522,8 +1526,11 @@ class Points(Html.Html):
 
     Attributes:
     ----------
+    :param event:
     :param jsFncs: Array. The Javascript functions
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -1553,7 +1560,7 @@ class Points(Html.Html):
     return self[i].on(event, [
       'var data = {position: this.getAttribute("data-position")}'] + jsFncs, profile)
 
-  def click_item(self, i, jsFncs, profile=False):
+  def click_item(self, i, jsFncs, profile=False, onReady=False):
     """
     Description:
     ------------
@@ -1563,14 +1570,15 @@ class Points(Html.Html):
     ----------
     :param i: Integer. The item index
     :param jsFncs: Array. The Javascript functions
-    :param profile:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return self[i].on("click", [
       'var data = {position: this.getAttribute("data-position")}',
       self[i].dom.by_name.css({"background-color": ""}).r,
-      self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile)
+      self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile, onReady=onReady)
 
   def __getitem__(self, i):
     return self.items[i]

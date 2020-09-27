@@ -279,7 +279,7 @@ class Calendar(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -289,6 +289,7 @@ class Calendar(Html.Html):
     :param jsFncs: List. Javascript functions
     :param profile:
     :param source_event:
+    :param onReady:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]

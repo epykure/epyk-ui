@@ -81,15 +81,17 @@ class Tree(Html.Html):
     self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = []
@@ -165,7 +167,7 @@ class DropDown(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)

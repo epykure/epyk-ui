@@ -78,7 +78,7 @@ class Input(Html.Html):
       else { htmlObj.value = data; }
       '''
 
-  def focus(self, jsFncs=None, profile=False, options=None):
+  def focus(self, jsFncs=None, profile=False, options=None, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -89,6 +89,8 @@ class Input(Html.Html):
     :param jsFncs: List or String with the Javascript events
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.__focus = True
     if jsFncs is None:
@@ -104,7 +106,7 @@ class Input(Html.Html):
       jsFncs.append(self.dom.empty())
     if self.options.select:
       jsFncs.append(self.dom.select())
-    return self.on("focus", jsFncs, profile)
+    return self.on("focus", jsFncs, profile, source_event, onReady)
 
   def validation(self, pattern, required=True):
     """
@@ -543,6 +545,7 @@ class Field(Html.Html):
 
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self._vals = ""
     # Add the component predefined elements
     self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, position=options.get("position", 'before'),  options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -579,7 +582,7 @@ class FieldInput(Field):
   name = 'Field Input'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.input(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -587,7 +590,7 @@ class FieldAutocomplete(Field):
   name = 'Field Autocomplete'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.autocomplete(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
   def change(self, jsFnc, profile=None):
@@ -717,7 +720,7 @@ class FieldRange(Field):
   name = 'Field Range'
 
   def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.d_range(report.inputs.get(htmlCode, value), min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -725,7 +728,7 @@ class FieldCheckBox(Field):
   name = 'Field Checkbox'
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.checkbox(value, width=(None, "%"), options=options)
+    input = report.ui.inputs.checkbox(report.inputs.get(htmlCode, value), width=(None, "%"), options=options)
     super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
     if label is not None and options.get('position') == 'after':
       self.label.style.css.float = None
@@ -739,7 +742,7 @@ class FieldInteger(Field):
   name = 'Field Integer'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.d_int(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -747,7 +750,7 @@ class FieldFile(Field):
   name = 'Field Integer'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.file(value, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.file(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -755,7 +758,7 @@ class FieldPassword(Field):
   name = 'Field Password'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.password(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -763,7 +766,7 @@ class FieldTextArea(Field):
   name = 'Field Textarea'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder, options=options)
+    input = report.ui.inputs.textarea(report.inputs.get(htmlCode, value), width=(100, "%"), placeholder=placeholder, options=options)
     super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -771,7 +774,7 @@ class FieldSelect(Field):
   name = 'Field Select'
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.select(value, width=(100, "%"), options=options)
+    input = report.ui.select(report.inputs.get(htmlCode, value), width=(100, "%"), options=options)
     super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
 
 
@@ -972,18 +975,21 @@ class Search(Html.Html):
   def _js__builder__(self):
     return '''htmlObj.find('input').val(data)'''
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    return self.icon.click(jsFncs, profile, source_event)
+    return self.icon.click(jsFncs, profile, source_event, onReady=onReady)
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -994,14 +1000,18 @@ class Search(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself
     """
     self.click(jsFncs)
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}], profile=profile)
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}],
+                   profile=profile, source_event=source_event, onReady=onReady)
 
   def __str__(self):
     return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}

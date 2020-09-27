@@ -71,15 +71,17 @@ class Comments(Html.Html):
         htmlObj.querySelector("div").prepend(dateNews);
         '''
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -90,7 +92,7 @@ class Comments(Html.Html):
       jsFncs = [jsFncs]
     self.input.enter(jsFncs + [
       self.js.add(self.input.dom.content),
-      self.input.dom.empty()])
+      self.input.dom.empty()], profile, source_event, onReady)
     return self
 
   def send(self, socket, channel=None, jsFncs=None, profile=False):
@@ -290,21 +292,23 @@ class Chat(Html.Html):
       htmlObj.querySelector("div").prepend(dateNews);
       '''
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.input.enter(jsFncs + [
       self.js.add(self.input.dom.content),
-      self.input.dom.empty()])
+      self.input.dom.empty()], profile, source_event, onReady)
     return self
 
   def send(self, socket, channel=None, jsFncs=None, profile=False):

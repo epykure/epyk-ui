@@ -1041,7 +1041,7 @@ Attributes:
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  def on(self, event, jsFncs, profile=False, source_event=None):
+  def on(self, event, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1060,6 +1060,7 @@ Attributes:
     :param jsFncs: A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
     :param source_event: A String.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: self to allow the chains
     """
@@ -1073,6 +1074,8 @@ Attributes:
       self._browser_data['mouse'][event] = {}
     self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
     self._browser_data['mouse'][event][source_event]['profile'] = profile
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger(event)])
     return self
 
   def drop(self, jsFncs, preventDefault=True, profile=False):
@@ -1109,7 +1112,9 @@ Attributes:
   def hover(self, jsFncs, profile=False, source_event=None):
     return self.on("mouseover", jsFncs, profile, source_event)
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", jsFncs, profile, source_event)
 
   def scroll(self, jsFncs, profile=False, source_event=None):

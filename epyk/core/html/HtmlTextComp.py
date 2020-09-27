@@ -341,7 +341,7 @@ class TrafficLight(Html.Html):
     self.action.click(jsFncs, profile)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -350,13 +350,14 @@ class TrafficLight(Html.Html):
     ----------
     :param jsFncs: String or List. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event:
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     success = Colors.getHexToRgb(self._report.theme.success[1])
     self.style.css.cursor = "pointer"
     jsFncs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
                                                    self._report.theme.danger[1])] + jsFncs
-    return super(TrafficLight, self).click(jsFncs, profile, source_event)
+    return super(TrafficLight, self).click(jsFncs, profile, source_event, onReady)
 
   @property
   def _js__builder__(self):

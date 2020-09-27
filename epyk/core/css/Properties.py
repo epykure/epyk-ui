@@ -2794,7 +2794,8 @@ class CssMixin(object):
       right = Arguments.size(right, unit="px")
       self.right = "%s%s" % (right[0], right[1])
     if transform:
-      self.transform = "translate(-%s, -%s)" % (self.left, self.top)
+      if top is None and left is None:
+        self.transform = "translate(-%s, -%s)" % (self.left, self.top)
     self.position = "fixed"
     return self
 

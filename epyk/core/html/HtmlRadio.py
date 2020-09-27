@@ -170,7 +170,7 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
-  def click(self, onFncs=None, offFncs=None, source_event=None):
+  def click(self, onFncs=None, offFncs=None, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -185,8 +185,10 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param onFncs: List. The list of JavaScript functions
-    :param offFncs: List. The list of JavaScript functions
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if onFncs is not None:
       if not isinstance(onFncs, list):

@@ -58,8 +58,10 @@ class Label(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
+    Description:
+    ------------
     Add a click event for a component
 
     The event will be automatically added to the onload section to be activated once the component
@@ -73,13 +75,17 @@ class Label(Html.Html):
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
-    :param jsFncs: An array of Js functions or string. Or a string with the Js
-    :param profile:
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs, profile, source_event=source_event)
+    self.on("click", jsFncs, profile, source_event=source_event, onReady=onReady)
     return self
 
   def selectable(self, flag=False):
@@ -184,7 +190,7 @@ class Span(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -204,13 +210,15 @@ class Span(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: An array of Js functions or string. Or a string with the Js
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs, profile, source_event)
+    self.on("click", jsFncs, profile, source_event, onReady)
     return self
 
   @property
@@ -304,7 +312,7 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -313,13 +321,15 @@ class Text(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = 'pointer'
-    return super(Text, self).click(jsFncs, profile, source_event)
+    return super(Text, self).click(jsFncs, profile, source_event, onReady)
 
-  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -331,12 +341,13 @@ class Text(Html.Html):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param name: String. Optional.
     :param source_event: String. Optional. The event source.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     jsFncs = jsFncs or []
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     jsFncs.append(self.js.location.open_new_tab(url, name))
-    return self.click(jsFncs, profile, source_event)
+    return self.click(jsFncs, profile, source_event, onReady)
 
   @property
   def val(self):

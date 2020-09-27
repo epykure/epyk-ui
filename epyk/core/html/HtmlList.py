@@ -104,11 +104,11 @@ class Li(Html.Html):
       self.innerPyHTML = htmlObj
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     if self.innerPyHTML is not None:
       return self.innerPyHTML.click(jsFncs, profile)
 
-    return super(Li, self).click(jsFncs, profile, source_event)
+    return super(Li, self).click(jsFncs, profile, source_event, onReady=onReady)
 
   def __str__(self):
     return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
@@ -365,7 +365,7 @@ class Items(Html.Html):
       self._dom = JsHtmlList.JsItem(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------

@@ -129,7 +129,7 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False):
+  def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False, onReady=False):
     """
     Description:
     -----------
@@ -159,7 +159,7 @@ class Button(Html.Html):
         jsReleaseFncs = [jsReleaseFncs]
       jsReleaseFncs.append(self.dom.release())
       str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(jsReleaseFncs, toStr=True))
-    return self.on("click", str_fnc, profile)
+    return self.on("click", str_fnc, profile, onReady=onReady)
 
   def color(self, color):
     """
@@ -428,7 +428,7 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, jsFncsTrue, jsFncFalse=None, withColors=True, profile=False):
+  def click(self, jsFncsTrue, jsFncFalse=None, withColors=True, profile=False, onReady=False):
     """
     Description:
     ------------
@@ -443,6 +443,9 @@ class CheckButton(Html.Html):
     ----------
     :param jsFncsTrue: Js function or a list of JsFunction to be triggered when checked
     :param jsFncFalse: Optional. Js function or a list of JsFunction to be triggered when unchecked
+    :param withColors:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObl to allow the chaining
     """
@@ -462,7 +465,7 @@ class CheckButton(Html.Html):
       self.input.dom.switchClass("fa-check", "fa-times"),
       JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(
         jsFncFalse)]
-    return super(CheckButton, self).click(jsFncs, profile)
+    return super(CheckButton, self).click(jsFncs, profile, onReady=onReady)
 
   def __str__(self):
     return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html())
@@ -554,19 +557,20 @@ class IconEdit(Html.Html):
     self.icon.pull(position)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event:
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.icon.style.add_classes.icon.basic()
-    return super(IconEdit, self).click(jsFncs, profile, source_event)
+    return super(IconEdit, self).click(jsFncs, profile, source_event, onReady=onReady)
 
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
     """
@@ -628,7 +632,7 @@ class ButtonMenuItem(object):
       self._js = JsComponents.Menu(self._src, varName=self._selector, report=self._report)
     return self._js
 
-  def on(self, event, jsFncs, profile=False):
+  def on(self, event, jsFncs, profile=False, onReady=False):
     """
     Description:
     -----------
@@ -637,8 +641,9 @@ class ButtonMenuItem(object):
     Attributes:
     ----------
     :param event: String. The JavaScript event
-    :param jsFncs: List: The Javascript fragments
-    :param profile: Boolean.
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean. Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param onReady: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self._events.append("%s.addEventListener('%s', function (event) { %s })" % (self._selector, event, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._src

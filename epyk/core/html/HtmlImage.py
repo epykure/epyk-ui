@@ -169,7 +169,7 @@ class ImgCarrousel(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -180,6 +180,7 @@ class ImgCarrousel(Html.Html):
     :param jsFncs: String or List. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. optional. The reference of the component
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -480,19 +481,20 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
-    return super(Icon, self).click(jsFncs, profile, source_event)
+    return super(Icon, self).click(jsFncs, profile, source_event, onReady=onReady)
 
   @property
   def _js__builder__(self):
@@ -579,19 +581,20 @@ class Badge(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.icon.style.add_classes.icon.standard()
-    return super(Badge, self).click(jsFncs, profile, source_event)
+    return super(Badge, self).click(jsFncs, profile, source_event, onReady=onReady)
 
   def __str__(self):
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
