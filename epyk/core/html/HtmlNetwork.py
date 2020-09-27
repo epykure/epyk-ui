@@ -205,6 +205,7 @@ class Assistant(Html.Html):
     super(Assistant, self).__init__(report, component, htmlCode=htmlCode, profile=profile)
     self.css({'margin': '0 10px', "padding": "0 5px", 'text-align': 'center'})
     self.name = report.ui.text(title, align="center")
+    self.name.options.managed = False
     self.name.style.css.bold()
     self.mail = report.ui.icon("fas fa-at")
     self.mail.options.managed = False

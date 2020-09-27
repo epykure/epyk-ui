@@ -319,6 +319,25 @@ class Text(Html.Html):
     self.style.css.cursor = 'pointer'
     return super(Text, self).click(jsFncs, profile, source_event)
 
+  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+    """
+    Description:
+    -----------
+    Click event which redirect to another page.
+
+    Attributes:
+    ----------
+    :param jsFncs: List. The Javascript Events triggered before the redirection
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param name: String. Optional.
+    :param source_event: String. Optional. The event source.
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append(self.js.location.open_new_tab(url, name))
+    return self.click(jsFncs, profile, source_event)
+
   @property
   def val(self):
     """
