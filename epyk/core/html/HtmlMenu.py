@@ -19,7 +19,7 @@ class HtmlNavBar(Html.Html):
 
   def __init__(self, report, components, width, height, options, profile):
     super(HtmlNavBar, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.scroll = None
+    self.scroll, self.background = None, True
     if components is not None:
       if not isinstance(components, list):
         components = [components]
@@ -108,6 +108,15 @@ class HtmlNavBar(Html.Html):
       component.options.managed = False # Has to be defined here otherwise it is set to late
       if css is not None:
         component.css(css)
+
+    if self.background and component.htmlCode == 'theme':
+      # hack for the theme compoent
+      # TODO move this component to the core
+      self.style.css.background_color = self._report.theme.colors[0]
+      self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
+      for c in self.buttons:
+        c.style.css.background_color = self._report.theme.colors[0]
+
     if not hasattr(self, '_right'):
       self._right = self._report.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'

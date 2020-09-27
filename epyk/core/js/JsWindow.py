@@ -475,8 +475,8 @@ class JsHistory(object):
     self.__jsObj.registerFunction("updateUrl", [
       self.__jsObj.objects.new([], varName="newPmts"),
       self.__jsObj.location.search.substr(1).split("&").forEach([
-        self.__jsObj.if_(self.__jsObj.data.loop.val.toString(explicit=False).includes("=", jsObj=self.__jsObj), [
-          self.__jsObj.objects.array.new(self.__jsObj.data.loop.val.toString().split("="), varName="urlPmts"),
+        self.__jsObj.if_(self.__jsObj.data.loop().val.toString(explicit=False).includes("=", jsObj=self.__jsObj), [
+          self.__jsObj.objects.array.new(self.__jsObj.data.loop().val.toString().split("="), varName="urlPmts"),
           self.__jsObj.objects.array.get("urlPmts")[0].toString(),
           self.__jsObj.objects.get("newPmts").addItem(self.__jsObj.objects.array.get("urlPmts")[0], self.__jsObj.objects.array.get("urlPmts")[1])
         ])
@@ -486,7 +486,7 @@ class JsHistory(object):
       # Then we concatenate the URL
       self.__jsObj.objects.array.new([], varName="pmts"),
       self.__jsObj.objects.get("newPmts").entries().forEach([
-        self.__jsObj.objects.array.get("pmts").push(self.__jsObj.data.loop.val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop.val[1]))
+        self.__jsObj.objects.array.get("pmts").push(self.__jsObj.data.loop().val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop().val[1]))
       ]),
       self.__jsObj.return_(self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get("pmts").join("&"))
       ], ["urlKey", "urlValue"])

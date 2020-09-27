@@ -11,7 +11,7 @@ class CssSelectStyle(CssStyle.Style):
   _focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
 
   def customize(self):
-    self.css({"background": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[-1],
+    self.css({"background": 'inherit', "color": self.rptObj.theme.greys[-1],
               'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
               'font-size': '%spx' % Defaults_css.Font.size, #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
               })
@@ -25,7 +25,7 @@ class CssSelectButton(CssStyle.Style):
   _selectors = {"child": '.btn'}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.colors[0], "border": 'none', 'color': self.rptObj.theme.colors[-1]})
+    self.css({"background-color": 'inherit', "border": 'none', 'color': self.rptObj.theme.colors[-1]})
 
 
 class CssSelectSearchBoxInput(CssStyle.Style):
@@ -43,7 +43,7 @@ class CssSelectSearchBoxInput(CssStyle.Style):
 class CssSelectToggle(CssStyle.Style):
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.colors[0], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+    self.css({"background-color": 'inherit', 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
 
 
 class CssSelectToggleNoBg(CssStyle.Style):
@@ -57,7 +57,7 @@ class CssSelectOption(CssStyle.Style):
 
   def customize(self):
     self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
-              'background-color': self.rptObj.theme.greys[0],
+              'background-color': 'inherit',
               'z-index': 0}, important=True)
 
 
