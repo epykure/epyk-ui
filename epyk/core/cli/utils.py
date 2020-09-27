@@ -31,7 +31,7 @@ def get_report_path(project_path, raise_error=True):
   return reports_path
 
 
-def get_page(mod):
+def get_page(mod, template=False):
   """
   Description:
   ------------
@@ -40,9 +40,17 @@ def get_page(mod):
   Attributes:
   ----------
   :param mod: Module. The Python imported module used to build the page
+  :param template: Boolean
   """
   if hasattr(mod, 'get_page'):
-    page = Report()
+    try:
+      from epyk_studio.core.Page import Report
+
+      page = Report()
+    except:
+      page = Report()
+    if template and hasattr(mod, 'INPUTS'):
+      page.inputs = {i: "%%(%s)s" % i for i in mod.INPUTS}
     mod.get_page(page)
     return page
 

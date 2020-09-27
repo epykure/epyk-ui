@@ -350,7 +350,7 @@ def transpile_all(args):
       mod = __import__(view_name, fromlist=['object'])
       importlib.reload(mod)
       try:
-        page = utils.get_page(mod)
+        page = utils.get_page(mod, template=True)
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
         if not os.path.exists(settings.VIEWS_FOLDER):
           # If it is not an aboslute path
