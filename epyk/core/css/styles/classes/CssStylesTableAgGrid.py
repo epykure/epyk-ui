@@ -7,7 +7,7 @@ class CssAgHead(CssStyle.Style):
   classname = "ag-header-cell-label"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'padding': '0 0 0 5px', 'background-color': self.rptObj.theme.greys[-1]})
+    self.css({'color': self.rptObj.theme.greys[-1], 'font-weight': 'bold', 'padding': '0 0 0 5px', 'background-color': self.rptObj.theme.greys[2]})
 
 
 class CssAgOddRow(CssStyle.Style):
@@ -21,7 +21,7 @@ class CssAgEvenRow(CssStyle.Style):
   classname = 'ag-row-even'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1]}, important=True)
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[0]}, important=True)
 
 
 class CssAgCellFocus(CssStyle.Style):
