@@ -246,7 +246,6 @@ class ChartLine(Chart):
       data.borderColor = self._report.theme.charts[id]
       data.backgroundColor = self._report.theme.charts[id]
     data.borderWidth = 1
-    data.pointRadius = 3
     if opacity is not None:
       data.fillOpacity = opacity
     return data
@@ -286,7 +285,8 @@ class ChartLine(Chart):
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
-          for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+          if (typeof options.attrs[series] !== 'undefined'){
+            for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
           }); result.datasets.push(dataSet)})
@@ -358,22 +358,30 @@ class ChartBar(ChartLine):
     return self._options
 
   def new_dataset(self, id, data, label, colors=None, opacity=0.8, type=None):
-    if type is not None:
-      data = JsChartJs.DataSetBar(self._report, attrs={"data": data, 'type': self._attrs['type']})
+    series_attrs = {"data": data, 'type': type or self._attrs['type']}
+    if series_attrs['type'] == 'line':
+      data = JsChartJs.DataSetScatterLine(self._report, attrs=series_attrs)
     else:
-      data = JsChartJs.DataSetBar(self._report, attrs={"data": data})
+      data = JsChartJs.DataSetBar(self._report, attrs=series_attrs)
     data.label = label
     if colors is None:
       data.backgroundColor = self._report.theme.charts[id]
       data.fillOpacity = opacity
+      if series_attrs['type'] == 'line':
+        data.borderWidth = 1
+        data.borderColor = data.backgroundColor
     return data
 
-  def add_dataset(self, data, label, type=None, colors=None, opacity=0.8):
+  def add_dataset(self, data, label, type=None, colors=None, opacity=0.8, alias=None):
     """
 
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, type=type)
     self._datasets.append(data)
+    alias = alias or label
+    if not alias in self.options['y_columns']:
+      self.options['y_columns'].append(alias)
+      self.options['attrs'][alias] = {"type": type or self._attrs['type'], 'fill': False}
     return data
 
 

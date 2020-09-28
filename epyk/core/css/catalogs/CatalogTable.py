@@ -218,6 +218,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTableAgGrid.CssAgEvenRow)
 
+  def ag_row(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgRow)
+
   def ag_cell_focus(self):
     """  """
     return self._set_class(CssStylesTableAgGrid.CssAgCellFocus)

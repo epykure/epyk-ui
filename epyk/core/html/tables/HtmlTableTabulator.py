@@ -117,7 +117,7 @@ class Table(Html.Html):
 
 
 class EnumLayout(DataEnum):
-
+  js_conversion = True
   def fitDataStretch(self):
     """
     Description:
@@ -1628,7 +1628,7 @@ http://tabulator.info/docs/4.2/options
     self._attrs["groupBy"] = val
 
   @property
-  def groupToggleElement(self, val):
+  def groupToggleElement(self):
     """
     Description:
     -----------
@@ -1639,7 +1639,7 @@ http://tabulator.info/docs/4.0/group
 
     :param val:
     """
-    self._attrs["groupToggleElement"] = val
+    return self._attrs["groupToggleElement"]
 
   @groupToggleElement.setter
   def groupToggleElement(self, val):

@@ -224,7 +224,7 @@ JS_IMPORTS = {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'ag-grid-community.min.js', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid-community.min.js', 'version': '24.0.0', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # module for tabulator
   'tabulator': {
@@ -1244,7 +1244,7 @@ CSS_IMPORTS = {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist/styles'},
     'modules': [
-      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid.min.css', 'version': '24.0.0', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
 
   # Tiny slider for carousels
   'tiny-slider': {

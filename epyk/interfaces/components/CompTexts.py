@@ -636,3 +636,19 @@ class Texts(object):
     html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
                                            options=options, profile=profile)
     return html_fieldset
+
+  def col(self, text, label, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
+    div.label.style.css.display = 'block'
+    div.label.style.css.margin_bottom = 10
+    div.label.style.css.color = self.context.rptObj.theme.greys[6]
+    div.text = self.context.rptObj.ui.text(text, options=options, htmlCode=htmlCode if htmlCode is None else "%s_text" % htmlCode, profile=profile)
+    div.text.style.css.bold()
+    div.text.style.css.margin_bottom = 10
+    div.text.style.css.display = 'block'
+    div.text.style.css.font_factor(5)
+    div.style.css.margin = 4
+    div.add(div.label)
+    div.add(div.text)
+    return div

@@ -377,7 +377,7 @@ class Navigation(object):
     html_nav.title = title
     html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
-    self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 5
+    self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 15
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):

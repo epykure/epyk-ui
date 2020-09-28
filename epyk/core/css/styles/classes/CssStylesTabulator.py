@@ -23,14 +23,14 @@ class CssTabulatorHeader(CssStyle.Style):
   classname = "tabulator-header"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none', 'background': 'none'}, important=True)
+    self.css({'border': 'none', 'background': 'none'}, important=True)
 
 
 class CssTabulatorHeaders(CssStyle.Style):
   classname = 'tabulator-headers'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none', 'background': 'none'}, important=True)
+    self.css({'border': 'none', 'background': 'none'}, important=True)
 
 
 class CssTabulatorSelected(CssStyle.Style):
@@ -45,8 +45,8 @@ class CssTabulatorCol(CssStyle.Style):
   classname = 'tabulator-col'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'border': '1px solid %s' % self.rptObj.theme.greys[-1],
-              'background': self.rptObj.theme.greys[-1], 'padding': '4px 0', "text-align": 'center'}, important=True)
+    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[2],
+              'background': self.rptObj.theme.greys[2], 'padding': '4px 0', "text-align": 'center'}, important=True)
 
 
 class CssTabulatorColContent(CssStyle.Style):
@@ -74,7 +74,7 @@ class CssTabulatorEvenRow(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.colors[1],
-              'background-color': self.rptObj.theme.colors[1]}, important=True)
+              'background-color': self.rptObj.theme.colors[0]}, important=True)
 
 
 class CssTabulatorOddRow(CssStyle.Style):

@@ -441,11 +441,13 @@ class Aggrid(GrpCls.ClassHtml):
 
   def __init__(self, htmlObj):
     super(Aggrid, self).__init__(htmlObj)
-    self._css_head, self._css_row_even, self._css_row_odd = 3 * [None]
+    self.classList['main'].clear()
+    self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
     self._css_cell_focus, self._css_cell = 2 * [None]
     self.classList['other'].add(self.cls_head)
     self.classList['other'].add(self.cls_row_even)
     self.classList['other'].add(self.cls_row_odd)
+    self.classList['other'].add(self.cls_row)
     self.classList['other'].add(self.cls_cell_focus)
     self.classList['other'].add(self.cls_cell)
 
@@ -468,6 +470,16 @@ class Aggrid(GrpCls.ClassHtml):
     if self._css_row_even is None:
       self._css_row_even = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_row_even()
     return self._css_row_even
+
+  @property
+  def cls_row(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_row is None:
+      self._css_row = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_row()
+    return self._css_row
 
   @property
   def cls_row_odd(self):

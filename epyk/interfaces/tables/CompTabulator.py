@@ -23,12 +23,13 @@ class Tabulators(object):
     if records is not None and not cols and not rows:
       cols = list(records[0].keys())
 
-    table_options_dflts = {'selectable': False, 'index': '_row', 'layout': 'fitColumns', 'pagination': 'local',
+    table_options_dflts = {'selectable': False, 'index': '_row', 'pagination': 'local',
                            'paginationSize': 25, 'resizableRows': False, 'movableColumns': True}
     if options is not None:
       table_options_dflts.update(options)
 
     table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, table_options_dflts, profile)
+    table.config.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
     return table
