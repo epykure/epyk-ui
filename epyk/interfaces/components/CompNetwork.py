@@ -419,7 +419,7 @@ class Network(object):
         ''' % {"path": os.path.join(path, name), "name": name}])
     return file
 
-  def assistant(self, image, name="", path=None, htmlCode=None, size=(60, 'px'), profile=None, options=None):
+  def assistant(self, image, name="", path=None, htmlCode=None, size=(50, 'px'), profile=None, options=None):
     """
     Description:
     ------------

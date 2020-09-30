@@ -228,7 +228,6 @@ class Assistant(Html.Html):
     self.name.style.css.bold()
     self.mail = report.ui.icon("fas fa-at")
     self.mail.options.managed = False
-    self.mail.style.css.margin_left = 6
     self.mail.style.add_classes.div.color_hover()
     self.mail.style.css.margin_right = 2
     self.mail.style.css.background = 'white'
