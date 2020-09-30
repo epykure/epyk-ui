@@ -43,7 +43,7 @@ class Panels(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
-                                'color': self.context.rptObj.theme.greys[-1], "background": self.context.rptObj.theme.greys[0]}}
+                                'color': self.context.rptObj.theme.greys[-1]}}
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)

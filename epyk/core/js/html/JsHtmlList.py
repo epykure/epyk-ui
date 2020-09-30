@@ -591,7 +591,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return self.querySelector("div[name=panel]").toggle()
 
-  def add(self, text, category=None, name=None, fixed=False, no_duplicte=True):
+  def add(self, text, category=None, name=None, fixed=False, no_duplicate=True):
     """
     Description:
     ------------
@@ -603,7 +603,7 @@ class Tags(JsHtml.JsHtmlRich):
     :param category:
     :param name:
     :param fixed:
-    :param no_duplicte:
+    :param no_duplicate:
     """
     text = JsUtils.jsConvertData(text, None)
     fixed = JsUtils.jsConvertData(fixed, None)
@@ -625,7 +625,7 @@ class Tags(JsHtml.JsHtmlRich):
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
 
-    if no_duplicte:
+    if no_duplicate:
       return JsObjects.JsObjects.get(''' 
       if ((%(duplicated)s == -1) && (%(text)s != '')){ chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})  }
       ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
