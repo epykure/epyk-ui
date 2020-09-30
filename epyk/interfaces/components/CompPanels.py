@@ -47,7 +47,7 @@ class Panels(object):
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
-    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
+    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.colors[-1]}
     html_tabs.style.css.overflow_x = "auto"
     html_tabs.style.css.white_space = "nowrap"
     return html_tabs
@@ -127,7 +127,7 @@ class Panels(object):
       t.style.add_classes.layout.panel_arrow_up()
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.options.css_tab["height"] = "30px"
-    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
+    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.colors[-1], "color": "white"}
     return html_tabs
 
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -166,7 +166,7 @@ class Panels(object):
       t.style.add_classes.layout.panel_arrow_down()
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.options.css_tab["height"] = "30px"
-    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
+    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.colors[-1], "color": "white"}
     return html_tabs
 
   def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -202,8 +202,8 @@ class Panels(object):
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.options.css_tab["background"] = html_tabs._report.theme.greys[0]
-    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
-    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.success[1]})
+    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.colors[-1]}
+    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.colors[-1]})
     return html_tabs
 
   def sliding(self, htmlObjs, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
