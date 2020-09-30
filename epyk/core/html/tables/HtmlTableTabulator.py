@@ -95,6 +95,8 @@ class Table(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param by_title:
 
     :rtype: Column
@@ -104,6 +106,19 @@ class Table(Html.Html):
         return c
 
     return None
+
+  def headers(self, colsDef):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param colsDef:
+    """
+    for c in self.config._attrs.get('columns', []):
+      if c._attrs['field'] in colsDef:
+        c._attrs.update(colsDef[c._attrs['field']])
 
   def build(self, data=None, options=None, profile=False):
     if data:

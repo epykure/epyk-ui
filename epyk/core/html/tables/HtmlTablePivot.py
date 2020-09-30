@@ -30,6 +30,7 @@ class PivotTable(Html.Html):
     # to add all the columns in the table if nothing defined
     self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
     self.style.css.display = 'block'
+    self.style.css.overflow = 'auto'
 
   @property
   def style(self):
