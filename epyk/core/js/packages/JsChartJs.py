@@ -384,23 +384,6 @@ class ChartJs(JsPackage):
     jsEvent = JsUtils.jsConvertData(jsEvent, None)
     return JsObjects.JsObject.JsObject("%s.getElementAtEvent(%s)" % (self.toStr(), jsEvent))
 
-  def getElementsAtEvent(self, jsEvent):
-    """
-    Description:
-    ------------
-    Looks for the element under the event point, then returns all elements at the same data index.
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/latest/developers/api.html
-
-    Attributes:
-    ----------
-    :param jsEvent:
-    """
-    jsEvent = JsUtils.jsConvertData(jsEvent, None)
-    return JsObjects.JsObject.JsObject("%s.getElementsAtEvent(%s)" % (self.toStr(), jsEvent))
-
   def getDatasetAtEvent(self, jsEvent):
     """
     Description:

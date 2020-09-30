@@ -118,6 +118,7 @@ class Table(Html.Html):
 
 class EnumLayout(DataEnum):
   js_conversion = True
+
   def fitDataStretch(self):
     """
     Description:
@@ -149,6 +150,9 @@ http://tabulator.info/docs/4.5/layout
     Related Pages:
 http://tabulator.info/docs/4.5/layout
     """
+    self._report.style.css.width = "auto"
+    self._report.style.css.border = "none !IMPORTANT"
+    self._report.style.css.display = "inline-block"
     return self.set()
 
 

@@ -11,13 +11,13 @@ from epyk.core.data.DataClass import DataClass
 
 
 class Options(DataClass):
-  component_properies = ()
+  component_properties = ()
 
   def __init__(self, report, attrs=None, options=None):
     super(Options, self).__init__(report, attrs, options)
     self.js_type = {}
     # Set the default options for a component
-    for c in self.component_properies:
+    for c in self.component_properties:
       setattr(self, c, getattr(self, c))
     if attrs is not None:
       for k, v in attrs.items():
@@ -114,7 +114,7 @@ class Options(DataClass):
     Retrieve the defined properties details
     """
     prop_details = []
-    for prop_name in self.component_properies:
+    for prop_name in self.component_properties:
       prop = getattr(self, prop_name)
       prop_details.append({"name": prop_name, 'value': prop, 'doc':  getattr(self.__class__, prop_name).__doc__})
     return prop_details

@@ -1005,7 +1005,7 @@ class Tabulator(JsPackage):
     http://tabulator.info/docs/4.5/columns#getColumns
 
     """
-    columns = ColumnComponents(self.src, selector="getColumns()", setVar=False, parent=self)
+    columns = ColumnComponents(self.src, selector="%s.getColumns()" % self.varId, setVar=False, parent=self)
     self.fnc(columns)
     return columns
 
@@ -1028,6 +1028,18 @@ class Tabulator(JsPackage):
     before = JsUtils.jsConvertData(before, None)
     position = JsUtils.jsConvertData(position, None)
     return JsObjects.JsPromise("%s.addColumn(%s, %s, %s)" % (self.varId, jsData, position, before))
+
+  def addColumns(self, jsData, before=False, position=""):
+    """
+
+    :param jsData:
+    :param before:
+    :param position:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    before = JsUtils.jsConvertData(before, None)
+    position = JsUtils.jsConvertData(position, None)
+    return JsObjects.JsPromise("%s.forEach(function(row){ %s.addColumn(row, %s, %s)})" % (jsData, self.varId, position, before))
 
   def deleteColumn(self, jsData):
     """

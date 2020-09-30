@@ -1,10 +1,11 @@
-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.options import Options
 
 
 class OptionsSparkLine(Options):
-  component_properies = ("width", )
+  component_properties = ("width", )
 
   @property
   def animate(self):

@@ -29,7 +29,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properies = ("delete_icon", 'delete_position')
+  component_properties = ("delete_icon", 'delete_position')
 
   @property
   def style(self):
@@ -187,7 +187,7 @@ class OptionsItems(Options):
 
 
 class OptionsTagItems(Options):
-  component_properies = ('delete', )
+  component_properties = ('delete', )
 
   @property
   def visible(self):

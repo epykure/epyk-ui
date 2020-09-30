@@ -57,21 +57,37 @@ class Comments(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-        var feed = document.createElement("p");
-        feed.style.margin = "0 0 5px 0";
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
-        feed.innerHTML = data; htmlObj.querySelector("div").prepend(feed);
-
-        var now = new Date();
-        var dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm:ss');
-        var dateNews = document.createElement("p");
-        dateNews.style.margin = 0;
-        dateNews.style.fontWeight = 'bold';
-        dateNews.innerHTML = dateStringWithTime;
-        htmlObj.querySelector("div").prepend(dateNews);
+        var comments;
+        if(!Array.isArray(data)){ var now = new Date();
+          comments = [{text: data, time: moment(now).format('YYYY-MM-DD HH:mm:ss')}]; 
+        } else {comments = data}
+        comments.forEach(function(comment){
+          var feed = document.createElement("p"); feed.style.margin = "0 0 5px 0";
+          if(options.showdown){var converter = new showdown.Converter(options.showdown); comment.text = converter.makeHtml(comment.text.trim())};
+          feed.innerHTML = comment.text; htmlObj.querySelector("div").prepend(feed);
+  
+          var dateNews = document.createElement("p");
+          dateNews.style.margin = 0;
+          dateNews.style.fontWeight = 'bold';
+          dateNews.innerHTML = comment.time;
+          htmlObj.querySelector("div").prepend(dateNews);
+        })
         '''
 
-  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def add(self, text, time):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param time:
+    """
+    self.val.append({"text": text, "time": time})
+    return self
+
+  def enter(self, jsFncs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -89,7 +105,7 @@ class Comments(Html.Html):
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
     if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+      jsFncs = [jsFncs] if jsFncs is not None else []
     self.input.enter(jsFncs + [
       self.js.add(self.input.dom.content),
       self.input.dom.empty()], profile, source_event, onReady)
@@ -144,6 +160,7 @@ class Comments(Html.Html):
     return self
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <div %(attr)s>
         <span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>

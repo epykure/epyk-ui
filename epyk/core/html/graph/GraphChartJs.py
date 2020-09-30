@@ -242,6 +242,7 @@ class ChartLine(Chart):
     data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
     data.fill = False
     data.label = label
+    self.options['attrs'][label] = {"fill": False}
     if colors is None:
       data.borderColor = self._report.theme.charts[id]
       data.backgroundColor = self._report.theme.charts[id]
@@ -275,6 +276,7 @@ class ChartLine(Chart):
             result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors[i], borderColor: options.colors[i]} )
           })}
       else{
+        console.log(options);
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 

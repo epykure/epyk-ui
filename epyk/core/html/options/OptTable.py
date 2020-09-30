@@ -7,8 +7,8 @@ from epyk.core.html.options import Options
 
 
 class OptionsPivot(Options):
-  component_properies = ('aggregator', 'aggregatorName', 'showUI', 'rowOrder', 'colOrder', 'derivedAttributes',
-                         'dataClass', 'filter', 'sorters', 'rendererOptions')
+  component_properties = ('aggregator', 'aggregatorName', 'showUI',
+                          'dataClass')
 
   @property
   def aggregator(self):
@@ -142,7 +142,7 @@ class OptionsPivot(Options):
 
       https://github.com/nicolaskruchten/pivottable/wiki/Parameters
     """
-    return self._config_get()
+    return self._config_get('false')
 
   @filter.setter
   def filter(self, attrs):
@@ -187,8 +187,8 @@ class OptionsPivot(Options):
 
 
 class OptionsPivotUI(OptionsPivot):
-  component_properies = ('aggregator', 'aggregatorName', 'showUI', 'rowOrder', 'colOrder', 'derivedAttributes',
-    'dataClass', 'filter', 'sorters', 'rendererOptions',
+  component_properties = ('aggregator', 'aggregatorName', 'showUI', 'rowOrder', 'colOrder', 'derivedAttributes',
+    'dataClass', 'sorters', 'rendererOptions',
     'inclusions', 'exclusions', 'hiddenAttributes', 'hiddenFromAggregators', 'hiddenFromDragDrop',
     'onRefresh', 'menuLimit', 'autoSortUnusedAttrs', 'unusedAttrsVertical', 'rendererOptions')
 

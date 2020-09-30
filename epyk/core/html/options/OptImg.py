@@ -6,7 +6,7 @@ from epyk.core.html.options import Options
 
 
 class OptionsTinySlider(Options):
-  component_properies = ('container', 'items')
+  component_properties = ('container', 'items')
 
   @property
   def container(self):

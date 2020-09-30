@@ -129,7 +129,7 @@ class Input(Html.Html):
     self.style.add_classes.input.is_valid()
     return self
 
-  def enter(self, jsFncs, profile=False, source_event=None):
+  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -144,6 +144,7 @@ class Input(Html.Html):
     :param jsFncs:
     :param profile:
     :param source_event:
+    :param onReady:
 
     :return: The python object itself
     """
