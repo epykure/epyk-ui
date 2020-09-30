@@ -130,6 +130,14 @@ class Chart(Html.Html):
 
     return self._datasets[i]
 
+  @property
+  def colors(self):
+    return self._options_init['colors']
+
+  @colors.setter
+  def colors(self, hex_values):
+    self._options_init['colors'] = hex_values
+
   def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
@@ -244,8 +252,8 @@ class ChartLine(Chart):
     data.label = label
     self.options['attrs'][label] = {"fill": False}
     if colors is None:
-      data.borderColor = self._report.theme.charts[id]
-      data.backgroundColor = self._report.theme.charts[id]
+      data.borderColor = self.colors[id]
+      data.backgroundColor = self.colors[id]
     data.borderWidth = 1
     if opacity is not None:
       data.fillOpacity = opacity
@@ -306,8 +314,8 @@ class ChartBubble(Chart):
     data.fill = False
     data.label = label
     if colors is None:
-      data.borderColor = self._report.theme.charts[id]
-      data.backgroundColor = self._report.theme.charts[id]
+      data.borderColor = self.colors[id]
+      data.backgroundColor = self.colors[id]
       data.fillOpacity = opacity
     return data
 
@@ -367,7 +375,7 @@ class ChartBar(ChartLine):
       data = JsChartJs.DataSetBar(self._report, attrs=series_attrs)
     data.label = label
     if colors is None:
-      data.backgroundColor = self._report.theme.charts[id]
+      data.backgroundColor = self.colors[id]
       data.fillOpacity = opacity
       if series_attrs['type'] == 'line':
         data.borderWidth = 1
@@ -409,7 +417,7 @@ class ChartPolar(Chart):
     else:
       data = JsChartJs.DataSetPolar(self._report, attrs={"data": data})
     data.label = label
-    data.backgroundColor = self._report.theme.charts
+    data.backgroundColor = self.colors
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=0.4, type=None):
@@ -475,7 +483,7 @@ class ChartPie(Chart):
   def new_dataset(self, id, data, label="", colors=None, opacity=0.8, type=None):
     data = JsChartJs.DataSetPie(self._report, attrs={"data": data})
     if colors is None:
-      data.backgroundColor = self._report.theme.charts
+      data.backgroundColor = self.colors
       data.fillOpacity = opacity
     return data
 
@@ -524,8 +532,8 @@ class ChartRadar(Chart):
     data = JsChartJs.DataSetRadar(self._report, attrs={"data": data})
     data.label = label
     if colors is None:
-      data.backgroundColor = self._report.theme.charts[id]
-      data.borderColor = self._report.theme.charts[id]
+      data.backgroundColor = self.colors[id]
+      data.borderColor = self.colors[id]
       data.borderWidth = 0.2
       data.fillOpacity = opacity
     return data
@@ -577,8 +585,8 @@ class ChartScatter(Chart):
     data.fill = False
     data.label = label
     if colors is None:
-      data.backgroundColor = self._report.theme.charts[id]
-      data.borderColor = self._report.theme.charts[id]
+      data.backgroundColor = self.colors[id]
+      data.borderColor = self.colors[id]
     return data
 
   def add_dataset(self, data, label, colors=None):
