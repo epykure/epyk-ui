@@ -72,8 +72,9 @@ class PivotTable(Html.Html):
 
   def sub_total(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     self._report.jsImports.add('pivot-sub-total')
     self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
