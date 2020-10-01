@@ -164,6 +164,56 @@ class ChartJs(JsPackage):
             if (%(seriesNames)s.includes(dataset.label)){
               dataset.data[index] = null}})} ''' % {'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
 
+  def data(self, datasets):
+    """
+    Description:
+    -----------
+    Update all the data in the chart.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param datasets: Dictionary of dictionary. Teh full datasets object expected by ChartJs
+    """
+    if not hasattr(datasets, 'toStr'):
+      for i, dataset in enumerate(datasets['datasets']):
+        if dataset.get("type") in ['line', 'scatter', 'bubble']:
+          if not 'backgroundColor' in dataset:
+            dataset['backgroundColor'] = self.src.colors[i]
+          if not 'borderColor' in dataset:
+            dataset['borderColor'] = self.src.colors[i]
+          if not 'fillOpacity' in dataset:
+            dataset['fillOpacity'] = 0.8
+          if dataset["type"] == 'line':
+            if not 'fill' in dataset:
+              dataset['fill'] = False
+            if not 'pointRadius' in dataset:
+              dataset['pointRadius'] = 1
+        elif dataset.get("type") in ['bar', 'horizontalBar']:
+          if not 'backgroundColor' in dataset:
+            dataset['backgroundColor'] = self.src.colors[i]
+          if not 'fillOpacity' in dataset:
+            dataset['fillOpacity'] = 0.8
+        elif dataset.get("type") in ['polarArea', 'pie']:
+          if not 'backgroundColor' in dataset:
+            dataset['backgroundColor'] = self.src.colors
+    datasets = JsUtils.jsConvertData(datasets, None)
+    return JsObjects.JsVoid('''
+      var chartData = %(data)s; var chartColors = %(colors)s;
+      chartData.datasets.forEach(function(dataset, i){
+        if (typeof dataset.type !== 'undefined'){
+          if (['line', 'scatter', 'bubble'].includes(dataset.type)){
+            dataset.backgroundColor = chartColors[i]; dataset.borderColor = chartColors[i];
+            if (dataset.type == 'line'){dataset.fill = false; dataset.pointRadius = 1}}
+          else if (['bar', 'horizontalBar'].includes(dataset.type)){
+            dataset.backgroundColor = chartColors[i]; dataset.fillOpacity = 0.8}
+          else if (['polarArea', 'pie'].includes(dataset.type)){dataset.backgroundColor = chartColors}
+      }})
+      %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName, 'colors': self.src.colors})
+
   def load(self, name, points, options=None):
     """
     Description:
@@ -188,7 +238,7 @@ class ChartJs(JsPackage):
       var values = []; var index= -1;
       %(varName)s.data.datasets.forEach(function(d, i){ if(d.label == %(name)s){ index = i}});
       if (index == -1){
-        %(varName)s.data.labels.forEach(function(v){ values.push(%(points)s.v) });
+        %(varName)s.data.labels.forEach(function(v){values.push(%(points)s)});
         %(varName)s.data.datasets.push({label: %(name)s, data: %(points)s})
       }''' % {'varName': self.varName, 'name': name, 'points': points})
 
