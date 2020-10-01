@@ -12,7 +12,7 @@ class CssDivOnHover(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.success[1]}, important=True)
+    self.hover.css({"color": self.rptObj.theme.colors[-1]}, important=True)
 
 
 class CssDivOnHoverBackgroundLight(CssStyle.Style):
@@ -53,5 +53,5 @@ class CssDivOnHoverWidth(CssStyle.Style):
 
 class CssDivOnHoverBorder(CssStyle.Style):
   def customize(self):
-    self.css({"border": "2px solid %s" % self.rptObj.theme.success[0]})
-    self.hover.css({'border': "2px solid %s" % self.rptObj.theme.success[-1]})
+    self.css({"border": "2px solid %s" % self.rptObj.theme.colors[0]})
+    self.hover.css({'border': "2px solid %s" % self.rptObj.theme.colors[-1]})
