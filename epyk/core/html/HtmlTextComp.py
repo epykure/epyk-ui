@@ -501,11 +501,11 @@ class SearchResult(Html.Html):
         for (var i = 0; i < reste; i++){
           var indexPage = i + 1;
           if (options.currPage == i) { 
-            var href = $('<a href="#" style="background-color:'+ options.greyColor +';color:'+ options.whiteColor +'">'+ indexPage +'</a>');
+            var href = $('<a href="#" style="background-color:'+ options.greyColor +';padding:5px;color:'+ options.whiteColor +'">'+ indexPage +'</a>');
             href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}
           else{
-            var href = $('<a href="#">'+ indexPage +'</a>') ;
+            var href = $('<a href="#" style="padding:5px;">'+ indexPage +'</a>') ;
             href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}}
         if(currIndex < reste){

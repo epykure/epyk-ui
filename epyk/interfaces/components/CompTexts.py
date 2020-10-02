@@ -517,7 +517,7 @@ class Texts(object):
     html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, color, label, dflt_options, helper, profile)
     return html_up_down
 
-  def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+  def number(self, number=0, title=None, label=None, icon=None, color=None, align="left", tooltip='', htmlCode=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
     Description:
@@ -554,6 +554,9 @@ class Texts(object):
       dflt_options.update(options)
     html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
                                         dflt_options, helper, width, profile)
+    if align == "center":
+      html_number.style.css.margin = "auto"
+      html_number.style.css.display = "block"
     return html_number
 
   def title(self, text=None, level=None, name=None, contents=None, color=None, picture=None, icon=None,

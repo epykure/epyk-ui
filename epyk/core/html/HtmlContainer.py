@@ -1059,7 +1059,7 @@ class Tabs(Html.Html):
     self.__panels.append(name)
     if icon is not None:
       tab = self._report.ui.div([
-        self._report.ui.icon(icon).css({"display": 'block', "width": '100%', "font-size": css_defaults.font(4)}),
+        self._report.ui.icon(icon).css({"display": 'block', 'color': 'inherit', "width": '100%', "font-size": css_defaults.font(4)}),
         name], width=width)
     else:
       tab = self._report.ui.div(name, width=width)

@@ -90,6 +90,9 @@ class Fields(object):
       https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
+    :categories: Inputs,Texts
+    :tags: Dates
+
     Attributes:
     ----------
     :param label: Optional. The text of label to be added to the component
