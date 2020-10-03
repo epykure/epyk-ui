@@ -345,6 +345,7 @@ def transpile_all(args):
   sys.path.append(reports_path)
   sys.path.append(os.path.join(reports_path, '..'))
   settings = __import__("ui_settings", fromlist=['object'])
+  results = {"completed": [], "failed": []}
   for report in os.listdir(reports_path):
     if report.endswith(".py") and report != "__init__.py":
       view_name = report[:-3]
@@ -357,10 +358,13 @@ def transpile_all(args):
           # If it is not an aboslute path
           settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
         output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=args.split, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+        results["completed"].append(view_name)
         print(output)
       except Exception as err:
+        results["failed"].append(view_name)
         print("Error with view: %s" % view_name)
         print(err)
+  return results
 
 
 def main():
