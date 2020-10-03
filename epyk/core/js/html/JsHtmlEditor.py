@@ -190,3 +190,22 @@ class CodeMirror(JsHtml.JsHtmlRich):
     :return:
     """
     return JsObjects.JsObjects.get('%s.setValue("")' % self._src.editorId)
+
+  def appendText(self, text, from_selection=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text: String. Mandatory.
+    :param from_selection: Boolean. Optional
+    """
+    text = JsUtils.jsConvertData(text, None)
+    from_selection = JsUtils.jsConvertData(from_selection, None)
+    return JsObjects.JsVoid(r'''
+      var editContent = %(editor)s.getDoc();
+      var editCursor = editContent.getCursor();
+      if (%(toEnd)s){editContent.replaceRange("\n" + %(text)s, {line: editContent.size})}
+      else {editContent.replaceRange("\n" + %(text)s, {line: editCursor.line})}
+      ''' % {"editor": self._src.editorId, "text": text, "toEnd": from_selection})

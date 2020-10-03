@@ -187,7 +187,7 @@ class Code(object):
     dflt_options = {"lineNumbers": True, 'mode': 'python', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': False}
     if options is not None:
       dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
+    html_code = html.HtmlTextEditor.Code(self.context.rptObj, text.strip(), color, width, height, htmlCode, dflt_options, helper, profile)
     return html_code
 
   def javascript(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
