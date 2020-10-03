@@ -713,7 +713,7 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    he html formater displays un-sanitized html.
+    The html formater displays un-sanitized html.
 
     Related Pages:
 http://tabulator.info/docs/4.1/format

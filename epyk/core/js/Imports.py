@@ -1028,6 +1028,7 @@ CSS_IMPORTS = {
   # Tabulator definition
   'tabulator': {
     'website': 'http://tabulator.info',
+    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
       {'script': 'tabulator.min.css', 'version': '4.8.2', 'path': 'tabulator-tables@%(version)s/dist/css/', 'cdnjs': "https://unpkg.com"}
       #{'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}

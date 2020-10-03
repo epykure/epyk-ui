@@ -10,7 +10,7 @@ class Panels(object):
   def __init__(self, context):
     self.context = context
 
-  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
+  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -49,6 +49,7 @@ class Panels(object):
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
     html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.colors[-1]}
     html_tabs.style.css.overflow_x = "auto"
+    html_tabs.tabs_container.style.css.text_align = align
     html_tabs.style.css.white_space = "nowrap"
     return html_tabs
 

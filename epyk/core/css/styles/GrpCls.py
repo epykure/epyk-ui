@@ -389,16 +389,21 @@ class ClassHtml(Properties.CssMixin):
     """
     self.selector("hover", attrs)
 
-  def standard(self, percent=10):
+  def standard(self, percent=10, width_adj=True):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param percent:
+    :param percent: Integer. Optional. The percentage of space on the left and right
+    :param width_adj: Boolean. Optional. Adjust the width of the component considering this space
     """
-    self.css.margins(left=(percent, '%'), right=(percent, '%'))
+    if width_adj:
+      self.css.margins(left=(percent, '%'), right=(percent, '%'))
+    else:
+      self.css.margin_left = "%s%%" % percent
+      self.css.margin_right = "%s%%" % percent
 
   def selector(self, suffix, attrs):
     """
