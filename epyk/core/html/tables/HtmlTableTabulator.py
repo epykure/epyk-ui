@@ -81,28 +81,37 @@ class Table(Html.Html):
     """
     Description:
     ------------
+    Add new column to the underlying Tabulator object
 
-    :param field:
-    :param title:
+    Attributes:
+    ----------
+    :param field: String. Mandatory. The key in the row
+    :param title: String. Optional. The title for the column. Default to the field
     """
     col_def = self.config.columns
     col_def.field = field
     col_def.title = field if title is None else title
     return col_def
 
-  def get_column(self, by_title):
+  def get_column(self, by_field=None, by_title=None):
     """
     Description:
     ------------
+    Get the column from the underlying Tabulator object by field or by title.
+    Pointing by field is recommended as the title might change quite easily.
 
     Attributes:
     ----------
-    :param by_title:
+    :param by_field: String. Optional. The field reference for the column
+    :param by_title: String. Optional. The title reference for the column
 
     :rtype: Column
     """
     for c in self.config._attrs.get('columns', []):
-      if c.title == by_title:
+      if by_field is not None and c.field == by_field:
+        return c
+
+      if by_title is not None and c.title == by_title:
         return c
 
     return None

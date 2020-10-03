@@ -777,7 +777,6 @@ JS_IMPORTS = {
   'Chart.js': {
     'website': 'https://www.chartjs.org/',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
-    'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'script': 'Chart.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
