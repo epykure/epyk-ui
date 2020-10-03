@@ -12,17 +12,27 @@ from epyk.core.js.objects import JsComponents
 class Radio(Html.Html):
   name = 'Radio Buttons'
 
-  def __init__(self, report, vals, htmlCode, label, width, height, radioVisible, event,
-               withRemoveButton, align, filters, tooltip, radioType, helper, options, profile):
+  def __init__(self, report, vals, htmlCode, group_name, width, height, options, profile):
     super(Radio, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.group_name = group_name or self.htmlCode
     for v in vals:
-      r = report.ui.inputs.radio(v.get('checked', False), v['value'])
-      r.set_attrs(name="name", value="radio_%s" % self.htmlCode)
-      self.__add__(r)
+      self.add(v['value'], v.get('checked', False))
 
-  def __add__(self, val):
-    r = self._report.ui.inputs.radio(False, val, group_name="radio_%s" % self.htmlCode)
-    super(Radio, self).__add__(r)
+  def add(self, val, checked=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param val:
+    :param checked:
+    """
+    if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
+      val = self._report.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
+    val.set_attrs(name="name", value="radio_%s" % self.htmlCode)
+    val.options.managed = False
+    super(Radio, self).__add__(val)
     return self
 
   def set_disable(self, text):
@@ -53,10 +63,24 @@ class Radio(Html.Html):
         v.val["value"] = True
     return self
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    HTML Dom object
+
+    :rtype: JsHtmlSelect.Tick
+    """
+    if self._dom is None:
+      self._dom = JsHtmlSelect.Radio(self, report=self._report)
+    return self._dom
+
   def __str__(self):
     row = self._report.ui.layouts.div(self.val)
-    row.css({"width": 'none'})
     row.options.managed = False
+    row.style.css.text_align = "inherit"
+    #row.css({"width": 'none'})
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
 
 

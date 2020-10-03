@@ -1,7 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
+from epyk.core.js.objects import JsNodeDom
 
 
 class JsHtmlSwitch(JsHtml.JsHtmlRich):
@@ -110,3 +113,40 @@ class DomSelect(JsHtml.JsHtmlRich):
 
     """
     return JsObjects.JsObjects.get("%s.text()" % self.jquery.varId)
+
+
+class Radio(JsHtml.JsHtmlRich):
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+    Get the selected content from the Select component
+    """
+    # the option variable is coming from the Tick class to get the icon details
+    return JsHtml.ContentFormatters(self._report, "%s.querySelector('input:checked').getAttribute('data-content')" % self._src.dom.varName)
+
+  @property
+  def checked(self):
+    """
+    Description:
+    ------------
+    returns the checked DOM object
+    """
+    return JsNodeDom.JsDoms.get("%s.querySelector('input:checked').parentNode" % self._src.dom.varName, report=self._report)
+
+  def select(self, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    """
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsVoid('''
+      %s.querySelectorAll('input').forEach(function(dom){
+        if(dom.getAttribute('data-content') == %s){dom.checked = true}
+      })''' % (self._src.dom.varName, value))

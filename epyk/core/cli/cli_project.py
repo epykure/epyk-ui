@@ -325,6 +325,7 @@ def transpile_all_parser(subparser):
   """
   subparser.set_defaults(func=transpile_all)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-s', '--split', required=False, default=False, help='''The path where the new environment will be created: -p /foo/bar''')
 
 
 def transpile_all(args):
@@ -355,7 +356,7 @@ def transpile_all(args):
         if not os.path.exists(settings.VIEWS_FOLDER):
           # If it is not an aboslute path
           settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
-        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=settings.SPLIT_FILES, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=args.split, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
         print(output)
       except Exception as err:
         print("Error with view: %s" % view_name)

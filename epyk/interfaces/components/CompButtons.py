@@ -459,9 +459,8 @@ class Buttons(object):
                                       tooltip=tooltip, profile=profile, options=options)
     return html_but
 
-  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
-            event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
-            radioType="row", helper=None, options=None, profile=None):
+  def radio(self, recordSet=None, checked=None, htmlCode=None, group_name=None, width=(100, '%'), height=(None, "px"),
+            column=None, align='left', options=None, profile=None):
     """
     Description:
     ------------
@@ -489,18 +488,10 @@ class Buttons(object):
     :param recordSet:
     :param checked:
     :param htmlCode:
-    :param label:
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
-    :param radioVisible:
-    :param event:
-    :param withRemoveButton:
     :param column:
     :param align:
-    :param filters:
-    :param tooltip:
-    :param allSelected:
-    :param radioType:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -510,11 +501,16 @@ class Buttons(object):
     if column is not None:
       recordSet = self._recordSet(recordSet, column)
     if isinstance(recordSet, list) and recordSet and not isinstance(recordSet[0], dict):
-      tmpVals = [{'value': str(v)} for v in recordSet]
-      tmpVals[0]['checked'] = True
+      tmpVals = [{'value': str(v), 'checked': True if v == checked else False} for v in recordSet]
+      if checked is None:
+        tmpVals[0]['checked'] = True
       recordSet = tmpVals
-    html_radio = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width,
-                      height, radioVisible, event, withRemoveButton, align, filters, tooltip, radioType, helper, options or {}, profile)
+    html_radio = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, group_name, width, height, options or {}, profile)
+    for c in html_radio:
+      c.style.css.display = "inline-block"
+      c.style.css.margin = "0 2px"
+      c.style.css.padding = "0 2px"
+    html_radio.style.css.text_align = align
     return html_radio
 
   def toggle(self, recordSet=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, profile=None):

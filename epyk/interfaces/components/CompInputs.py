@@ -454,7 +454,7 @@ class Inputs(object):
 
     Usage::
 
-      rptObj.ui.inputs.radio(False, label="radio")
+      page.ui.radio(['Single', 'Multiple'], htmlCode="type", checked="Multiple")
 
     Underlying HTML Objects:
 
