@@ -14,6 +14,8 @@ from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import packageImport
 
 from epyk.core.css.styles import GrpCls
+from epyk.core.css import Defaults as Defaults_css
+
 from epyk.core.html import Aria
 from epyk.core.html import Component
 from epyk.core.html import KeyCodes
@@ -1360,6 +1362,13 @@ Attributes:
 
 class Body(Html):
   name = "Body"
+
+  def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
+    super(Body, self).__init__(report, vals, htmlCode, options, profile, css_attrs)
+    if Defaults_css.BODY_STYLE is not None:
+      for attrs in Defaults_css.BODY_STYLE.split(";"):
+        k, v = attrs.split(":")
+        self.css(key=k, value=v)
 
   @property
   def style(self):

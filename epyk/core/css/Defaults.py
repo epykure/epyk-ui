@@ -111,6 +111,7 @@ DEFAULT_STYLE = "no_border"
 
 # Default CSS Styles
 BODY_CONTAINER = None # The body CSS dictionary
+BODY_STYLE = None
 BACKGROUND = ('greys', 0)
 MEDIA = 600
 
