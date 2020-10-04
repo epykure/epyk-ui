@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.options import Options
 
@@ -97,7 +99,8 @@ class OptionPanelTabs(Options):
     The default CSS style for the tabs.
     This must be changed before adding components
     """
-    dflt = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0', "border-bottom": "1px solid white"}
+    dflt = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
+            "border-bottom": "2px solid %s" % self._report._report.theme.greys[0]}
     return self.get(dflt)
 
   @css_tab.setter
@@ -112,7 +115,7 @@ class OptionPanelTabs(Options):
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
-    return self.get({"border-bottom": "1px solid %s" % self._report._report.theme.success[1]})
+    return self.get({"border-bottom": "2px solid %s" % self._report._report.theme.colors[-1]})
 
   @css_tab_clicked.setter
   def css_tab_clicked(self, attrs):
