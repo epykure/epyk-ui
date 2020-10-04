@@ -138,7 +138,7 @@ class Chart(Html.Html):
   def colors(self, hex_values):
     self._options_init['colors'] = hex_values
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -147,6 +147,8 @@ class Chart(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
+    :param onReady:
     """
     if self._attrs.get('type') in ['pie']:
       tmpJsFncs = ["var activePoints = %s.getSegmentsAtEvent(event)" % self.chartId]

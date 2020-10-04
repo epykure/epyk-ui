@@ -1,6 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.data.DataClass import DataClass
 from epyk.core.js.packages import packageImport
+from epyk.core.js.primitives import JsObjects
 
 
 class OptionAxesTicks(DataClass):
@@ -92,6 +96,14 @@ class OptionAxesTicks(DataClass):
   @stepSize.setter
   def stepSize(self, val):
     self._attrs["stepSize"] = val
+
+  def scale(self, factor=1000, alias="k", digits=0):
+    """
+
+    :param factor:
+    :param alias:
+    """
+    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {var pointVal = label/%s; return pointVal.toFixed(%s) + '%s';}" % (factor, digits, alias))
 
 
 class OptionLabels(DataClass):
@@ -374,6 +386,17 @@ class OptionAxes(DataClass):
   @position.setter
   def position(self, val):
     self._attrs["position"] = val
+
+  @property
+  def stepSize(self):
+    """
+    https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs["stepSize"]
+
+  @stepSize.setter
+  def stepSize(self, val):
+    self._attrs["stepSize"] = val
 
   @property
   def ticks(self):
