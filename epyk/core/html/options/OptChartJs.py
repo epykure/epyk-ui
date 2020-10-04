@@ -5,6 +5,7 @@
 from epyk.core.data.DataClass import DataClass
 from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObjects
+from epyk.core.js import JsUtils
 
 
 class OptionAxesTicks(DataClass):
@@ -99,11 +100,55 @@ class OptionAxesTicks(DataClass):
 
   def scale(self, factor=1000, alias="k", digits=0):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param factor:
     :param alias:
+    :param digits:
     """
     self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {var pointVal = label/%s; return pointVal.toFixed(%s) + '%s';}" % (factor, digits, alias))
+
+  @packageImport("accounting")
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s)}" % (symbol, digit, thousand_sep, decimal_sep))
+
+  @packageImport("accounting")
+  def toNumber(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+    Convert to number using the accounting Javascript module-
+
+    Usage::
+
+      Related Pages:
+
+      https://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep:  The thousand symbol separator
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (digit, thousand_sep))
 
 
 class OptionLabels(DataClass):
