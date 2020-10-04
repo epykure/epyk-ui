@@ -2,6 +2,7 @@
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.fncs import JsFncs
+from epyk.core.js import JsUtils
 
 
 class JsHtmlPanel(JsHtml.JsHtml):
@@ -163,3 +164,14 @@ class JsHtmlTabs(JsHtml.JsHtml):
           self._report.js.data.all.element.css(self._src.options.tab_not_clicked_style())])
       ])
     ])
+
+
+class JsHtmlIFrame(JsHtml.JsHtml):
+
+  def src(self, src):
+    src = JsUtils.jsConvertData(src, None)
+    return self.setAttribute("src", src)
+
+  def srcdoc(self, content):
+    content = JsUtils.jsConvertData(content, None)
+    return self.setAttribute("srcdoc", content)

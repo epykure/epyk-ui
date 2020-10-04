@@ -1132,6 +1132,20 @@ class IFrame(Html.Html):
   def _js__builder__(self):
     return 'htmlObj.src = data'
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlIFrame
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlIFrame(self, report=self._report)
+    return self._dom
+
   def scrolling(self, bool=True):
     """
     Description:

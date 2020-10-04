@@ -146,3 +146,21 @@ class CM(JsPackage):
     :return: The Javascript string fragment
     """
     return self.fnc_closure("focus()")
+
+  def undo(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return self.fnc_closure("undo()")
+
+  def redo(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return self.fnc_closure("redo()")
