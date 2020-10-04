@@ -992,6 +992,17 @@ class Tabulator(JsPackage):
     columna = JsUtils.jsConvertData(columna, None)
     return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columna, self.varId))
 
+  def columns(self, jsData):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(jsData).toStr()))
+
   @property
   def getColumns(self):
     """
@@ -1043,11 +1054,15 @@ class Tabulator(JsPackage):
 
   def deleteColumn(self, jsData):
     """
+    Description:
+    -----------
     To permanently remove a column from the table deleteColumn function. This function takes any of the standard column component look up options as its first parameter.
 
     Documentation
     http://tabulator.info/docs/4.5/columns#delete
 
+    Attributes:
+    ----------
     :param jsData:
     """
     return JsObjects.JsPromise("%s.deleteColumn(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
