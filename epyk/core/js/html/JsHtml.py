@@ -904,7 +904,7 @@ class JsHtmlList(JsHtml):
   def content(self):
     return self._src.dom.getAttribute("class")
 
-  def add(self, item):
+  def add(self, item, unique=True):
     """
     Description:
     ------------
@@ -912,15 +912,24 @@ class JsHtmlList(JsHtml):
     Attributes:
     ----------
     :param item:
+    :param unique:
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
     item = JsUtils.jsConvertData(item, None)
+    unique = JsUtils.jsConvertData(unique, None)
     return JsObjects.JsVoid('''
       var li = document.createElement("li");
-      li.appendChild(document.createTextNode(%s));
-      %s.appendChild(li)
-      ''' % (item, self._src.dom.varName))
+      if(%(unique)s){
+        var hasItems = false;
+        %(component)s.querySelectorAll("li").forEach(function(dom){
+          if (dom.innerText == %(item)s){hasItems = true}})
+        if(!hasItems){
+          li.appendChild(document.createTextNode(%(item)s)); %(component)s.appendChild(li)}
+      }else{
+        li.appendChild(document.createTextNode(%(item)s));
+        %(component)s.appendChild(li)
+      }''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
 
 
 class JsHtmlBackground(JsHtml):

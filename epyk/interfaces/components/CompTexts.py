@@ -66,6 +66,50 @@ class Texts(object):
       text_comp.style.css.display = "block"
     return text_comp
 
+  def block(self, text="", color=None, align='left', width=(100, "%"), height=(None, "px"),
+           htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
+    """
+    Description:
+    ------------
+    Add the HTML text component to the page
+
+    Usage::
+
+      rptObj.ui.text("this is a test")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Text`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_font.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
+
+    Attributes:
+    ----------
+    :param text: The string value to be displayed in the component
+    :param color: Optional. The color of the text
+    :param align: Optional. The position of the icon in the line (left, right, center)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. The component options
+    :param helper:
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    text_comp = self.text(text, color, align, width, height, htmlCode, tooltip, options, helper, profile)
+    text_comp.style.display = "inline-block"
+    return text_comp
+
   def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""),
                height=(None, "px"), htmlCode=None, options=None, profile=None):
     """
