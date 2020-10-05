@@ -241,7 +241,7 @@ JS_IMPORTS = {
   'tabulator-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-inputs.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'formatters-inputs.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -249,7 +249,7 @@ JS_IMPORTS = {
   'tabulator-drop': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-drop.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': r'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'formatters-drop.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -257,7 +257,7 @@ JS_IMPORTS = {
   'tabulator-mutators-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'mutators-inputs.js', 'version': 'NA', 'path': 'mutators/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'mutators-inputs.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -265,14 +265,14 @@ JS_IMPORTS = {
   'editors-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-inputs.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'}],
+      {'script': 'editors-inputs.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
     'website': 'http://tabulator.info/'
   },
 
   'editors-dates': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-dates.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'editors-dates.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -280,7 +280,7 @@ JS_IMPORTS = {
   'editors-selects': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-selects.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'editors-selects.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -289,7 +289,7 @@ JS_IMPORTS = {
     'req': [{'alias': 'tabulator'}],
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'formatters-icons.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      {'script': 'formatters-icons.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -298,7 +298,7 @@ JS_IMPORTS = {
       'req': [{'alias': 'tabulator'}],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'editors-bespoke.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+        {'script': 'editors-bespoke.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },
@@ -311,7 +311,7 @@ JS_IMPORTS = {
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+        {'script': 'formatters-numbers.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },
