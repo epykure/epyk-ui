@@ -107,7 +107,8 @@ class Texts(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     text_comp = self.text(text, color, align, width, height, htmlCode, tooltip, options, helper, profile)
-    text_comp.style.display = "inline-block"
+    text_comp.style.css.display = "inline-block"
+    text_comp.style.css.text_align = "left"
     return text_comp
 
   def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""),

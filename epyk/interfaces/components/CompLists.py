@@ -213,6 +213,29 @@ class Lists(object):
     html_list.css({"list-style": 'none'})
     return html_list
 
+  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
+           options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    list = self.list(data, color, width, height, htmlCode, helper, options, profile)
+    list.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
+             'border': "1px dashed %s" % self.context.rptObj.theme.colors[-1]})
+    list.style.css.padding = 5
+    return list
+
   def items(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
     """
     Description:

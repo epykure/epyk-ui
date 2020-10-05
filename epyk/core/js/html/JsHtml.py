@@ -517,6 +517,20 @@ class JsHtml(JsNodeDom.JsDoms):
 
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
+  def visible(self, data, inline=None, display_value=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data: Boolean.
+    :param inline: String.
+    :param display_value: String.
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsVoid("if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
+
   def select(self):
     """
     Description:
@@ -895,24 +909,46 @@ class JsHtmlList(JsHtml):
     """
     Description:
     ------------
-
+    Return the standard value object with the fields (value, timestamp, offset).
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
 
   @property
   def content(self):
+    """
+    Description:
+    ------------
+    Return the values of the items in the list.
+    """
+    return JsObjects.JsVoid('''
+      (function(){
+         var values = [];
+         %(component)s.querySelectorAll("li").forEach(function(dom){
+            values.push(dom.innerText)})
+         return values
+      })()
+      ''' % {"component": self._src.dom.varName})
+
+  @property
+  def classList(self):
+    """
+    Description:
+    ------------
+    Return the class name of the list item.
+    """
     return self._src.dom.getAttribute("class")
 
   def add(self, item, unique=True):
     """
     Description:
     ------------
+    Add a new item to the list.
 
     Attributes:
     ----------
-    :param item:
-    :param unique:
+    :param item: String. The Item to be added to the list.
+    :param unique: Boolean. optional. Only add the item if it is not already in the list.
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
@@ -925,11 +961,21 @@ class JsHtmlList(JsHtml):
         %(component)s.querySelectorAll("li").forEach(function(dom){
           if (dom.innerText == %(item)s){hasItems = true}})
         if(!hasItems){
-          li.appendChild(document.createTextNode(%(item)s)); %(component)s.appendChild(li)}
+          li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer";
+          li.addEventListener("dblclick", function(){this.remove()});
+          %(component)s.appendChild(li)}
       }else{
-        li.appendChild(document.createTextNode(%(item)s));
-        %(component)s.appendChild(li)
+        li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer";
+        li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
       }''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
+
+  def clear(self):
+    """
+    Description:
+    ------------
+    Clear all the items in the list.
+    """
+    return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
 
 
 class JsHtmlBackground(JsHtml):
