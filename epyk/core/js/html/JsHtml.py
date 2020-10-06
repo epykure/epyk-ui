@@ -961,11 +961,11 @@ class JsHtmlList(JsHtml):
         %(component)s.querySelectorAll("li").forEach(function(dom){
           if (dom.innerText == %(item)s){hasItems = true}})
         if(!hasItems){
-          li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer";
+          li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
           li.addEventListener("dblclick", function(){this.remove()});
           %(component)s.appendChild(li)}
       }else{
-        li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer";
+        li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
         li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
       }''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
 
