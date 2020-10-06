@@ -592,6 +592,33 @@ class DropFile(Html.Html):
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
 
+  def load(self, jsFncs, jsData=None, preventDefault=True, profile=False):
+    """
+    Description:
+    -----------
+    Load the content of the file.
+
+    This function will first use as underlying the drop method to get the file dropped.
+
+    Attributes:
+    ----------
+    :param jsFncs: List. The Javascript series of functions
+    :param jsData: A datamap objection of a dictionary
+    :param preventDefault: Boolean. Prevent default on the JavaScript event
+    :param profile: Boolean. Profiling
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self.drop(['''
+      var reader = new FileReader(); var f = data[data.length - 1];
+       reader.onload = (function(theFile) {
+          return function(e) {
+            data = atob(e.target.result.replace(/^data:.+;base64,/, ''));
+            %s};})(f);
+       reader.readAsDataURL(f);
+      ''' % JsUtils.jsConvertFncs(jsFncs, toStr=True)], jsData=jsData, preventDefault=preventDefault, profile=profile)
+
+
   def __str__(self):
     return '''
       <div %(strAttr)s>

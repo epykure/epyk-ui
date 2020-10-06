@@ -795,6 +795,22 @@ class JsObject(object):
 
     return JsObject("(function(){ %s; return _.pick(%s, ..%s) }()" % (self.toStr(), self.varName, keys), isPyData=False)
 
+  def jsonParse(self):
+    """
+    Description:
+    -----------
+    A common use of JSON is to exchange data to/from a web server.
+
+    When receiving data from a web server, the data is always a string.
+
+    Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_json_parse.asp
+    """
+    return JsObject("JSON.parse(%s)" % self.varName)
+
   def __str__(self):
     """
     Description:
