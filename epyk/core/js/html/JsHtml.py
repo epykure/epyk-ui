@@ -955,19 +955,23 @@ class JsHtmlList(JsHtml):
     item = JsUtils.jsConvertData(item, None)
     unique = JsUtils.jsConvertData(unique, None)
     return JsObjects.JsVoid('''
-      var li = document.createElement("li");
-      if(%(unique)s){
-        var hasItems = false;
-        %(component)s.querySelectorAll("li").forEach(function(dom){
-          if (dom.innerText == %(item)s){hasItems = true}})
-        if(!hasItems){
-          li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
-          li.addEventListener("dblclick", function(){this.remove()});
-          %(component)s.appendChild(li)}
-      }else{
-        li.appendChild(document.createTextNode(%(item)s)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
-        li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
-      }''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
+      var listItems = %(item)s; 
+      if(!Array.isArray(listItems)){listItems = [listItems]};
+      listItems.forEach(function(item){
+        var li = document.createElement("li");
+        if(%(unique)s){
+          var hasItems = false;
+          %(component)s.querySelectorAll("li").forEach(function(dom){
+            if (dom.innerText == item){hasItems = true}})
+          if(!hasItems){
+            li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
+            li.addEventListener("dblclick", function(){this.remove()});
+            %(component)s.appendChild(li)}
+        }else{
+          li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
+          li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
+        }
+      })''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
 
   def clear(self):
     """

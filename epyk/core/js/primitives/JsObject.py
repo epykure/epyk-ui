@@ -811,6 +811,20 @@ class JsObject(object):
     """
     return JsObject("JSON.parse(%s)" % self.varName)
 
+  def fileParse(self, delimiter):
+    """
+    Description:
+    -----------
+    Parse a file based on the delimiter and return an Array of Arrays on the Javascript side.
+
+    Attributes:
+    ----------
+    :param delimiter: String. Mandatory. The line delimiter in the file
+    """
+    delimiter = JsUtils.jsConvertData(delimiter, None)
+    return JsObject('''(function(){var results = []; 
+      %s.split('\\n').forEach(function(rec){ results.push(rec.split(%s)); }); return results})()''' % (self.varName, delimiter))
+
   def __str__(self):
     """
     Description:

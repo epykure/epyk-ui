@@ -618,7 +618,6 @@ class DropFile(Html.Html):
        reader.readAsDataURL(f);
       ''' % JsUtils.jsConvertFncs(jsFncs, toStr=True)], jsData=jsData, preventDefault=preventDefault, profile=profile)
 
-
   def __str__(self):
     return '''
       <div %(strAttr)s>

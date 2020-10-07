@@ -106,20 +106,25 @@ def comment(value):
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
-def var(name, value=None):
+def var(name, value=None, global_scope=False):
   """
   Description:
   ------------
-
   Hoisting is JavaScript's default behavior of moving declarations to the top.
 
   Attributes:
   ----------
-  :param name:
-  :param value:
+  :param name: String. The variable name
+  :param value: Object. Optional. The object
+  :param global_scope: Boolean. Optional. The variable scope
   """
+  if global_scope:
+    name = "window['%s']" % name
   if value is None:
     return JsObjects.JsObject.JsObject.get(name)
+
+  if global_scope:
+    return JsObjects.JsVoid("%s = %s" % (name, JsUtils.jsConvertData(value, None)))
 
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None)))
 
