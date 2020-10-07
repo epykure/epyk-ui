@@ -939,7 +939,7 @@ class JsHtmlList(JsHtml):
     """
     return self._src.dom.getAttribute("class")
 
-  def add(self, item, unique=True):
+  def add(self, item, unique=True, draggable=False):
     """
     Description:
     ------------
@@ -949,16 +949,22 @@ class JsHtmlList(JsHtml):
     ----------
     :param item: String. The Item to be added to the list.
     :param unique: Boolean. optional. Only add the item if it is not already in the list.
+    :param draggable: Boolean. Optional. Set the new entry as draggable
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
     item = JsUtils.jsConvertData(item, None)
     unique = JsUtils.jsConvertData(unique, None)
+    draggable = JsUtils.jsConvertData(draggable, None)
     return JsObjects.JsVoid('''
       var listItems = %(item)s; 
       if(!Array.isArray(listItems)){listItems = [listItems]};
       listItems.forEach(function(item){
         var li = document.createElement("li");
+        if (%(draggable)s){
+          li.setAttribute('draggable', true);
+          li.addEventListener('dragstart', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
+        }
         if(%(unique)s){
           var hasItems = false;
           %(component)s.querySelectorAll("li").forEach(function(dom){
@@ -971,7 +977,7 @@ class JsHtmlList(JsHtml):
           li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
           li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
         }
-      })''' % {"item": item, "component": self._src.dom.varName, 'unique': unique})
+      })''' % {"item": item, "component": self._src.dom.varName, 'unique': unique, 'draggable': draggable})
 
   def clear(self):
     """
