@@ -13,6 +13,7 @@ from epyk.core.js import JsUtils
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 
@@ -286,6 +287,23 @@ class JsLocation(object):
     specs = JsUtils.jsConvertData(specs, None)
     replace = JsUtils.jsConvertData(replace, None)
     return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (windowId, url, name, specs, replace))
+
+  def download(self, url, name='download'):
+    """
+    Description:
+    ------------
+    Download data from the url
+
+    Attributes:
+    ----------
+    :param url: String. The url of the image
+    :param name: String. The name of the file
+    """
+    url = JsUtils.jsConvertData(url, None)
+    name = JsUtils.jsConvertData(name, None)
+    return JsObjects.JsVoid('''
+      var link = document.createElement('a'); document.body.appendChild(link);
+      link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % {'name': name, 'url': url})
 
   def mail(self, mails, subject, body):
     """

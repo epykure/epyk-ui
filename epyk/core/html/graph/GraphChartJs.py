@@ -5,6 +5,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptChartJs
 
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObject
 
@@ -59,6 +60,23 @@ class Chart(Html.Html):
     if self._js is None:
       self._js = JsChartJs.ChartJs(selector="window['%s']" % self.chartId, src=self)
     return self._js
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtmlCharts.ChartJs
+    """
+    if self._dom is None:
+      self._dom = JsHtmlCharts.ChartJs(self, report=self._report)
+    return self._dom
 
   @property
   def options(self):
@@ -196,8 +214,9 @@ class Chart(Html.Html):
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or self._options_init, []
+    options, js_options, js_keys = options or self._options_init, [], set()
     for k, v in options.items():
+      js_keys.add(k)
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
@@ -206,6 +225,10 @@ class Chart(Html.Html):
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    if not 'colors' in js_keys:
+      js_options.append("colors: %s" % JsUtils.jsConvertData(self._options_init['colors'], None))
+    if not 'attrs' in js_keys:
+      js_options.append('attrs: %s' % JsUtils.jsConvertData(self._options_init['attrs'], None))
     return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
 
   def build(self, data=None, options=None, profile=False):
@@ -286,22 +309,23 @@ class ChartLine(Chart):
             result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors[i], borderColor: options.colors[i]} )
           })}
       else{
-        console.log(options);
-        var temp = {}; var labels = []; var uniqLabels = {};
+        var temp = {}; var labels = []; var uniqLabels = {}; 
         options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
+              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
+              temp[name][rec[name]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
           if (typeof options.attrs[series] !== 'undefined'){
             for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]};}
+          else if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)})
+          }); console.log(dataSet); result.datasets.push(dataSet)})
       }'''
 
 
@@ -447,9 +471,9 @@ class ChartPolar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
-        result = {datasets: [], labels: labels};
+              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
+              temp[name][rec[name]] = rec[name]}})});
+        result = {datasets: [], labels: labels}; 
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors};
           for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
@@ -511,8 +535,8 @@ class ChartPie(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
+              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
+              temp[name][rec[name]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series){
           dataSet = {label: series, data: [], backgroundColor: []};
@@ -564,8 +588,8 @@ class ChartRadar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
+              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
+              temp[name][rec[name]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors[i]};
@@ -614,8 +638,8 @@ class ChartScatter(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              labels.push(rec[options.x_column]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
-              temp[name].push({y: rec[name], x: rec[options.x_column], r: r})}})});
+              labels.push(rec[name]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+              temp[name].push({y: rec[name], x: rec[name], r: r})}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors[i]};

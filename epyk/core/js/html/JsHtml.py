@@ -921,14 +921,11 @@ class JsHtmlList(JsHtml):
     ------------
     Return the values of the items in the list.
     """
-    return JsObjects.JsVoid('''
+    return JsObjects.JsArray.JsArray.get('''
       (function(){
-         var values = [];
-         %(component)s.querySelectorAll("li").forEach(function(dom){
-            values.push(dom.innerText)})
+         var values = []; %(component)s.querySelectorAll("li").forEach(function(dom){values.push(dom.innerText)});
          return values
-      })()
-      ''' % {"component": self._src.dom.varName})
+      })()''' % {"component": self._src.dom.varName})
 
   @property
   def classList(self):
@@ -963,6 +960,7 @@ class JsHtmlList(JsHtml):
         var li = document.createElement("li");
         if (%(draggable)s){
           li.setAttribute('draggable', true);
+          li.addEventListener('touchmove', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
           li.addEventListener('dragstart', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
         }
         if(%(unique)s){

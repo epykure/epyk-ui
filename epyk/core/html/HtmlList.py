@@ -151,6 +151,23 @@ class List(Html.Html):
       self._dom = JsHtml.JsHtmlList(self, report=self._report)
     return self._dom
 
+  def drop(self, jsFncs=None, preventDefault=True, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param preventDefault:
+    :param profile:
+    """
+    if jsFncs is None:
+      from epyk.core.data import events
+
+      jsFncs = [self.dom.add(events.data)]
+    return super(List, self).drop(jsFncs, preventDefault, profile)
+
   def __add__(self, htmlObj):
     """ Add items to a container """
     if not isinstance(htmlObj, Li):

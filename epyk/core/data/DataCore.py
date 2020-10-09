@@ -100,7 +100,7 @@ class DataAggregators(object):
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
         ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
 
-  def sumBy(self, columns, key, dstKey=None):
+  def sumBy(self, columns, keys, dstKey=None, cast_vals=False):
     """
     Description:
     -----------
@@ -108,20 +108,25 @@ class DataAggregators(object):
     Attributes:
     ----------
     :param columns:
-    :param key:
+    :param keys:
     :param dstKey:
+    :param cast_vals:
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    key = JsUtils.jsConvertData(key, None)
+    keys = JsUtils.jsConvertData(keys, None)
     dstKey = JsUtils.jsConvertData(dstKey, None)
+    columns = JsUtils.jsConvertData(columns, None)
     name = "AggSumBy"
     constructors[name] = '''
-      function %s(rs, cs, sk, dk){var result = []; var tmpResults = {}; if(sk == ''){return rs}; var rdk = dk === null ? sk :  dk;
+      function %s(rs, cs, sks, dk){var result = []; var tmpResults = {}; if(sks == ''){return rs}; var rdk = dk === null ? sks :  dk;
+        if (!Array.isArray(sks)) {sks = [sks]}
         rs.forEach(function(r){
-          if (!(r[sk] in tmpResults)){tmpResults[r[sk]] = {}; tmpResults[r[sk]][rdk] = r[sk]; cs.forEach(function(c){tmpResults[r[sk]][c] = 0})}
-          cs.forEach(function(c){tmpResults[r[sk]][c] += r[c]})
-        }); for(const v in tmpResults){result.push(tmpResults[v])}; return result}''' % name
-    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, json.dumps(columns), key, dstKey), report=self._report)
+          var sk = []; sks.forEach(function(s){sk.push(r[s])}); var skKey = sk.join('#');
+          if (!(skKey in tmpResults)){tmpResults[skKey] = {}; sks.forEach(function(s){tmpResults[skKey][s] = r[s]})
+             cs.forEach(function(c){tmpResults[skKey][c] = 0})}
+          cs.forEach(function(c){tmpResults[skKey][c] += %s})
+        }); for(const v in tmpResults){result.push(tmpResults[v])}; return result}''' % (name, "parseFloat(r[c])" if cast_vals else 'r[c]')
+    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, columns, keys, dstKey), report=self._report)
 
   def pluck(self, column):
     """

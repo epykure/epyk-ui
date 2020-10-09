@@ -1050,7 +1050,7 @@ class Tabulator(JsPackage):
     jsData = JsUtils.jsConvertData(jsData, None)
     before = JsUtils.jsConvertData(before, None)
     position = JsUtils.jsConvertData(position, None)
-    return JsObjects.JsPromise("%s.forEach(function(row){ %s.addColumn(row, %s, %s)})" % (jsData, self.varId, position, before))
+    return JsObjects.JsPromise("%s.forEach(function(row){if(typeof row === 'string'){row = {field: row, title: row}}; %s.addColumn(row, %s, %s)})" % (jsData, self.varId, position, before))
 
   def deleteColumn(self, jsData):
     """
@@ -1067,7 +1067,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsPromise("%s.deleteColumn(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
-  def redraw(self, jsData):
+  def redraw(self, jsData=False):
     """
     This can be done by calling the redraw method. For example, to trigger a redraw whenever the viewport width is changed:
 
