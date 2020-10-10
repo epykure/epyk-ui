@@ -759,6 +759,8 @@ class Canvas(JsNodeDom.JsDoms):
   @property
   def width(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -818,10 +820,52 @@ class Canvas(JsNodeDom.JsDoms):
   @property
   def jquery_ui(self):
     """
+    Description:
+    ------------
 
-    :return:
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
     return self._jquery_ui
+
+  def toDataURL(self, format='image/jpeg'):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/ref_canvas.asp
+
+    Attributes:
+    ----------
+    :param format:
+    """
+    format = JsUtils.jsConvertData(format, None)
+    return JsObjects.JsObjects.get("%s.toDataURL(%s)" % (self.varName, format))
+
+  def save(self):
+    """
+    Description:
+    ------------
+    Saves the state of the current context
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/ref_canvas.asp
+    """
+    return JsObjects.JsObjects.get("%s.save()" % self.varName)
+
+  def restore(self):
+    """
+    Description:
+    ------------
+    Returns previously saved path state and attributes
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/ref_canvas.asp
+    """
+    return JsObjects.JsObjects.get("%s.restore()" % self.varName)
+

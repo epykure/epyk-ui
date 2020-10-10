@@ -167,8 +167,9 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.border_left = '3px solid %s' % self.context.rptObj.theme.colors[-1]
-    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.border_left = '3px solid %s' % self.context.rptObj.theme.colors[2]
+    html_title.style.css.padding_left = 5
+    html_title.style.css.font_size = Defaults_css.font(4)
     return html_title
 
   def caption(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):

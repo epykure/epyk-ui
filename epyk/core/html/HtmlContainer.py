@@ -701,7 +701,7 @@ class Col(Html.Html):
     """
     return self.__options
 
-  def __add__(self, htmlObj):
+  def add(self, htmlObj):
     """
     Description:
     ------------
@@ -809,12 +809,15 @@ class Row(Html.Html):
   def __len__(self):
     return len(self.val)
 
-  def __add__(self, htmlObj):
+  def add(self, htmlObj):
     """ Add items to a container """
     if not isinstance(htmlObj, Col):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
+      for h in htmlObj:
+        h.options.managed = False
       htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position, options=self.options._attrs)
+      htmlObj.options.managed = False
     super(Row, self).__add__(htmlObj)
     return self
 

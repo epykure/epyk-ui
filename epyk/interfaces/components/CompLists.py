@@ -231,6 +231,7 @@ class Lists(object):
     :param profile:
     """
     list = self.list(data, color, width, height, htmlCode, helper, options, profile)
+    list.style.css.min_height = 40
     list.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
               'border': "1px dashed %s" % self.context.rptObj.theme.colors[-1]})
     list.style.css.padding = 5

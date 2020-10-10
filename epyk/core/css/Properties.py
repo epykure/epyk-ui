@@ -2827,16 +2827,20 @@ class CssMixin(object):
     width = self.width or '100%'
     overall_margin, overal_margin_unit = 0, None
     if right is not None:
+      right = Arguments.size(right, 'px')
       self.margin_right = "%s%s" % (right[0], right[1])
       overall_margin += right[0]
       overal_margin_unit = right[1]
     if left is not None:
+      left = Arguments.size(left, 'px')
       self.margin_left = "%s%s" % (left[0], left[1])
       overall_margin += left[0]
       overal_margin_unit = left[1]
     if top is not None:
+      top = Arguments.size(top, 'px')
       self.margin_top = "%s%s" % (top[0], top[1])
     if bottom is not None:
+      bottom = Arguments.size(bottom, 'px')
       self.margin_bottom = "%s%s" % (bottom[0], bottom[1])
     if overall_margin > 0:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
