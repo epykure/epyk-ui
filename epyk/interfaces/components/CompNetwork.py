@@ -335,7 +335,7 @@ class Network(object):
       dflt_options.update(options)
     return html.HtmlNetwork.Room(self.context.rptObj, img, width, height, htmlCode, dflt_options, profile)
 
-  def dropfile(self, placeholder='Drop your files here', tooltip='Drop your files here', options=None, profile=None):
+  def dropfile(self, placeholder='', width=(100, '%'), height=('auto', ''), tooltip=None, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -357,11 +357,16 @@ class Network(object):
     Attributes:
     ----------
     :param placeholder:
+    :param width:
+    :param height:
     :param tooltip: String. Optional. A string with the value of the tooltip
+    :param htmlCode:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    return html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)
+    component = html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, width, height, htmlCode, options, profile)
+    component.style.css.margins(left=5, right=5)
+    return component
 
   def upload(self, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
     """

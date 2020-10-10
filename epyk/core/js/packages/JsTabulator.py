@@ -708,12 +708,35 @@ class RowComponent(JsPackage):
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator", 'css': "tabulator"}
 
+  def copyToClipboard(self, rowRangeLookup=None):
+    """
+    Description:
+    -----------
+    If the table has focus, the copyToClipboard keybinding which is by default set to the ctrl + c key combination,
+    will trigger a copy of table to the clipboard, which data is copied depends on the state of the table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.6/clipboard
+
+    Attributes:
+    ----------
+    :param rowRangeLookup:
+    """
+    self._parent.config.clipboard = True
+    if rowRangeLookup is None:
+      rowRangeLookup = 'all'
+    rowRangeLookup = JsUtils.jsConvertData(rowRangeLookup, None)
+    return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, rowRangeLookup))
+
   def previousPage(self):
     """
     Description:
     -----------
 
-    http://tabulator.info/docs/4.1/page
+    Related Pages:
+
+      http://tabulator.info/docs/4.1/page
     """
     return JsObjects.JsPromise("%s.previousPage()" % self.varId)
 

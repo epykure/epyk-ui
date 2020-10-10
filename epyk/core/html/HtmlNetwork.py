@@ -6,6 +6,7 @@ from epyk.core.html.options import OptNet
 
 from epyk.core.js.objects import JsComponents
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlNetwork
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsNetwork
@@ -528,12 +529,24 @@ class DropFile(Html.Html):
   requirements = ('font-awesome',)
   name, inputType = 'Drop File Area', "file"
 
-  def __init__(self, report, vals, tooltip, options, profile):
-    super(DropFile, self).__init__(report, vals, profile=profile)
+  def __init__(self, report, vals, tooltip, width, height, htmlCode, options, profile):
+    super(DropFile, self).__init__(report, vals, profile=profile, htmlCode=htmlCode, css_attrs={"width": width, "height": height})
     self.__options = OptNet.OptionFiles(self, options)
     self.tooltip(tooltip, location='bottom')
-    self.css({"display": "inline-block", "width": '100%', 'text-align': 'center',
+    self.css({"display": "inline-block", 'text-align': 'center',
               "color": self._report.theme.success[0], "margin-top": '5px', 'border': "1px dashed %s" % report.theme.colors[-1]})
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+
+    :rtype: JsHtmlNetwork.JsHtmlDropFiles
+    """
+    if self._dom is None:
+      self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, report=self._report)
+    return self._dom
 
   @property
   def options(self):
