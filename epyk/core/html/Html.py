@@ -1167,7 +1167,7 @@ Attributes:
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
-    self.on("paste", str_fncs, profile, source_event)
+    return self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, jsFncs=None, profile=False):
     """
@@ -1451,6 +1451,42 @@ class Body(Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def fromConfig(self, jsFncs=None, components=None, lang="eng", end_point="/static/configs"):
+    """
+    Description:
+    -----------
+    Load teh configuration file in order to fill the templates with static data.
+    This will allow to externalise the configuration and design rich web templates.
+
+    Do not forget to use CTRL+F5 in order to refresh the browser cache to get the uupdates
+
+    Attributes:
+    ----------
+    :param jsFncs: List. Optional. The various transformations to be triggered from the configuration data
+    :param components: List. Optional. The various HTML Components to be updated fro the configuration file
+    :param lang: String. Optional. The default lang for the configuration
+    :param end_point: String. Optional. The url for the configuration files
+    """
+    import inspect
+
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    frame_records = inspect.stack()[1]
+    calling_module = inspect.getmodulename(frame_records[1])
+    return '''
+      var rawFile = new XMLHttpRequest();
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      var lang = urlParams.get('lang') || '%s';
+      rawFile.overrideMimeType("application/json");
+      rawFile.open("GET", "%s/"+ lang +"/%s.json", true);
+      rawFile.onreadystatechange = function() {
+          if (rawFile.readyState === 4 && rawFile.status == "200") {
+             var data = JSON.parse(rawFile.responseText); %s}}
+      rawFile.send(null)''' % (lang, end_point, calling_module,
+          JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True))
 
   def set_content(self, report, page_content):
     """

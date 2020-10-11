@@ -346,6 +346,8 @@ class Inputs(object):
     options = options or {}
     attrs = attrs or {}
     html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+    html_input.style.css.text_align = "left"
+    html_input.style.css.padding_left = 5
     return html_input
 
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):

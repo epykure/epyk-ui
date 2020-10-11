@@ -824,7 +824,7 @@ class Lists(object):
                     'value_css': {'font-size': Defaults.font(3), 'font-weight': 'bold', 'vertical-align': 'bottom'},
                     'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top', 'font-size': Defaults.font(-3)},
                     'icon_css': {'color': self.context.rptObj.theme.success[1], 'margin-left': '5px', 'cursor': 'pointer'}}
-    if category == 'group':
+    if not hasattr(category, 'toStr') and category == 'group':
       dflt_options['visible'] = False
     if options is not None:
       dflt_options.update(options)

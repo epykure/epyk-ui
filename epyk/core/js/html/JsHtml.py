@@ -960,7 +960,6 @@ class JsHtmlList(JsHtml):
         var li = document.createElement("li");
         if (%(draggable)s){
           li.setAttribute('draggable', true);
-          li.addEventListener('touchmove', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
           li.addEventListener('dragstart', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
         }
         if(%(unique)s){

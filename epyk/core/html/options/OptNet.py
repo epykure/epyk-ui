@@ -191,3 +191,29 @@ class OptionFiles(Options):
   @extensions.setter
   def extensions(self, values):
     self._config(values)
+
+  @property
+  def delimiter(self):
+    """
+    Description:
+    ------------
+    The file Delimiter for columns
+    """
+    return self._config_get(None)
+
+  @delimiter.setter
+  def delimiter(self, values):
+    self._config(values)
+
+  @property
+  def format(self):
+    """
+    Description:
+    ------------
+    The file Delimiter for columns
+    """
+    return self._config_get("text")
+
+  @format.setter
+  def format(self, values):
+    self._config(values)

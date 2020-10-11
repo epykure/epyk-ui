@@ -826,9 +826,9 @@ class Row(Html.Html):
     if self.options.noGutters:
       self.attr["class"].add('no-gutters')
     for i, htmlObj in enumerate(self.val):
-      if self.options.autoSize:
+      if hasattr(htmlObj, 'set_size') and self.options.autoSize:
         htmlObj.set_size(12//len(self.val))
-      cols.append(htmlObj.html())
+      cols.append(htmlObj.html() if hasattr(htmlObj, 'htmlObj') else str(htmlObj))
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
 

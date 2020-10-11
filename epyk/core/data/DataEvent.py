@@ -15,6 +15,15 @@ class DataEvents(object):
     return JsObjects.JsArray.JsArray.get("Array.from(event.dataTransfer.files)")
 
   @property
+  def file(self):
+    """
+    Description:
+    ------------
+
+    """
+    return DataFile("value")
+
+  @property
   def data(self):
     """
     Description:
@@ -85,6 +94,9 @@ class DataEvents(object):
 
 class DataFile(object):
 
+  def __init__(self, varName="value"):
+    self.varName = varName
+
   @property
   def name(self):
     """
@@ -93,7 +105,7 @@ class DataFile(object):
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("value.name")
+    return JsObjects.JsString.JsString.get("%s.name" % self.varName)
 
   @property
   def size(self):
@@ -103,7 +115,7 @@ class DataFile(object):
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("value.size")
+    return JsObjects.JsString.JsString.get("%s.size" % self.varName)
 
   @property
   def lastModifiedDate(self):
@@ -113,7 +125,7 @@ class DataFile(object):
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("value.lastModifiedDate")
+    return JsObjects.JsDate.JsDate("%s.lastModifiedDate" % self.varName)
 
   @property
   def lastModified(self):
@@ -123,8 +135,27 @@ class DataFile(object):
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("value.lastModified")
+    return JsObjects.JsDate.JsDate("%s.lastModified" % self.varName)
 
+  @property
+  def toISOString(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get("(function(){var dt = new Date(%s.lastModified); return dt.toISOString() }())" % self.varName)
+
+  @property
+  def description(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {'varName': self.varName, 'dt': self.toISOString})
 
 class DataLoops(object):
 

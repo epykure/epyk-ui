@@ -4,6 +4,8 @@
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
 
+from epyk.core.data import events
+
 from epyk.core.js.objects import JsComponents
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlNetwork
@@ -529,12 +531,39 @@ class DropFile(Html.Html):
   requirements = ('font-awesome',)
   name, inputType = 'Drop File Area', "file"
 
-  def __init__(self, report, vals, tooltip, width, height, htmlCode, options, profile):
+  def __init__(self, report, vals, delimiter, tooltip, width, height, htmlCode, options, profile):
     super(DropFile, self).__init__(report, vals, profile=profile, htmlCode=htmlCode, css_attrs={"width": width, "height": height})
     self.__options = OptNet.OptionFiles(self, options)
     self.tooltip(tooltip, location='bottom')
-    self.css({"display": "inline-block", 'text-align': 'center',
-              "color": self._report.theme.success[0], "margin-top": '5px', 'border': "1px dashed %s" % report.theme.colors[-1]})
+    self.container = self._report.ui.div()
+    self.container.css({"display": "inline-block", 'text-align': 'center', "color": self._report.theme.success[0],
+                        'border': "1px dashed %s" % report.theme.colors[-1]})
+    self.container.style.css.bold()
+    self.container.add(self._report.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
+    self.container.options.managed = False
+    self.text = self._report.ui.text()
+    self.text.style.css.italic()
+    self.text.style.css.font_factor(-2)
+    self.text.style.css.color = self._report.theme.greys[5]
+    self.text.options.managed = False
+    self.text.style.css.margin_bottom = 5
+    self.delimiter = self._report.ui.text(delimiter, width=(25, 'px'), htmlCode="%s_delimiter" % self.htmlCode, options={"editable": True})
+    self.delimiter.options.managed = False
+    self.delimiter.style.css.bold()
+    self.delimiter.style.css.display = 'inline-block'
+    self.delimiter.style.css.text_align = 'center'
+    self.delimiter.style.css.border = "1px solid %s" % report.theme.colors[3]
+    self.delimiter.style.css.font_factor(2)
+    self.delimiter.style.css.margin_top = 5
+    self.delimiter.style.css.margin_left = 5
+    self.delimiter.style.css.margin_right = 5
+    self.delimiter.style.css.cursor = 'pointer'
+    self.options.delimiter = self.delimiter.dom.content
+    if self.options.format != 'json':
+      self.icon = self._report.ui.icon("fas fa-paste")
+      self.icon.options.managed = False
+      self.icon.style.css.margin_left = 5
+      self.icon.click(self.dom.events.trigger("paste"))
 
   @property
   def dom(self):
@@ -605,6 +634,17 @@ class DropFile(Html.Html):
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
 
+  def loading(self, label="Processing data"):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param label:
+    """
+    return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
+
   def load(self, jsFncs, jsData=None, preventDefault=True, profile=False):
     """
     Description:
@@ -624,17 +664,37 @@ class DropFile(Html.Html):
       jsFncs = [jsFncs]
     return self.drop(['''
       var reader = new FileReader(); var f = data[data.length - 1];
-       reader.onload = (function(theFile) {
-          return function(e) {
-            data = atob(e.target.result.replace(/^data:.+;base64,/, ''));
-            %s};})(f);
+       reader.onloadstart = function() {%s};
+       reader.onload = (function(value) {
+          return function(e){data = atob(e.target.result.replace(/^data:.+;base64,/, '')); %s}})(f);
        reader.readAsDataURL(f);
-      ''' % JsUtils.jsConvertFncs(jsFncs, toStr=True)], jsData=jsData, preventDefault=preventDefault, profile=profile)
+      ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(jsFncs + [self.text.build(events.file.description)], toStr=True),
+             )], jsData=jsData, preventDefault=preventDefault, profile=profile)
+
+  def paste(self, jsFncs, profile=False, source_event=None):
+
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return super(DropFile, self).paste([self.loading()]+jsFncs+[self.text.build("Bespoke data Loaded")], profile, source_event)
 
   def __str__(self):
+    if self.options.format == 'json':
+      return '''
+        <div %(strAttr)s>
+          %(container)s
+          %(text)s
+          <input id="%(htmlCode)s_report" style="display:none;"/>
+        </div>
+        ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
+               'container': self.container.html(), 'text': self.text.html()}
+
     return '''
       <div %(strAttr)s>
-        <b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;</b>
+        <div style='display:inline-block'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s</div>
+        %(container)s
+        %(text)s
+        <input id="%(htmlCode)s_report" style="display:none;"/>
       </div>
-      <input id="%(htmlCode)s_report" style="display:none;"/>
-      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
+             'paste': self.icon.html(),
+             'container': self.container.html(), 'text': self.text.html(), 'delimiter': self.delimiter.html()}

@@ -604,7 +604,7 @@ class Texts(object):
       html_number.style.css.display = "block"
     return html_number
 
-  def title(self, text=None, level=None, name=None, contents=None, color=None, picture=None, icon=None,
+  def title(self, text="", level=None, name=None, contents=None, color=None, picture=None, icon=None,
             marginTop=5, htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:

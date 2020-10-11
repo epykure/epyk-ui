@@ -591,6 +591,20 @@ class JsClipboardData(object):
   def __init__(self, varName):
     self.varId = varName
 
+  def src(self, name):
+    """
+    Description:
+    ------------
+    Set the event source.
+    By default the event is event but this can be changed according to the trigger event.
+    
+    Attributes:
+    ----------
+    :param name: String. Change the event source
+    """
+    self.varId = "%s.clipboardData" % name
+    return self
+
   @property
   def text(self):
     """
