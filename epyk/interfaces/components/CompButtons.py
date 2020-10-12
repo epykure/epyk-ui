@@ -145,6 +145,7 @@ class Buttons(object):
     component.style.css.border = "1px solid %s" % self.context.rptObj.theme.colors[-1]
     component.style.css.color = self.context.rptObj.theme.colors[0]
     component.style.css.margin_top = 5
+    component.style.css.margin_bottom = 5
     return component
 
   def large(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):

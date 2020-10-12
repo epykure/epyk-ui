@@ -311,7 +311,7 @@ JS_IMPORTS = {
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': '0.0.6', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-numbers.js', 'version': '0.0.7', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },

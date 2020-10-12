@@ -80,7 +80,7 @@ class Image(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      if (typeof image !== 'undefined'){
+      if (typeof data !== 'string'){
         if(typeof data.path === 'undefined'){data.path = '%s'};
         htmlObj.src = data.path + "/" + data.image}
       else { htmlObj.src = data }
