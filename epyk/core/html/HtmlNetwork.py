@@ -27,7 +27,7 @@ class Comments(Html.Html):
     self.counter.attr["name"] = "count"
     self.counter.css({"display": "inline-block", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
-      self.input = report.ui.input()
+      self.input = report.ui.input(htmlCode="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
 
@@ -105,7 +105,7 @@ class Comments(Html.Html):
     """
     if self.options.readonly:
       self.options.readonly = False
-      self.input = self._report.ui.input()
+      self.input = self._report.ui.input(htmlCode="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
     if not isinstance(jsFncs, list):
@@ -558,6 +558,8 @@ class DropFile(Html.Html):
     self.delimiter.style.css.margin_left = 5
     self.delimiter.style.css.margin_right = 5
     self.delimiter.style.css.cursor = 'pointer'
+    self.delimiter.click(["document.execCommand('selectAll',false,null)"])
+    self.delimiter.keypress.enter(["event.preventDefault(); event.target.blur(); return"])
     self.options.delimiter = self.delimiter.dom.content
     if self.options.format != 'json':
       self.icon = self._report.ui.icon("fas fa-paste")

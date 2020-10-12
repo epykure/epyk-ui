@@ -2744,7 +2744,7 @@ class CssMixin(object):
     self.text_decoration = "underline"
     return self
 
-  def absolute(self, top=None, left=None, bottom=None, right=None, transform=True):
+  def absolute(self, top=None, left=None, bottom=None, right=None, transform=True, center=False):
     """
     Description:
     ------------
@@ -2766,7 +2766,12 @@ class CssMixin(object):
     if right is not None:
       right = Arguments.size(right, unit="px")
       self.right = "%s%s" % (right[0], right[1])
-    if transform:
+    if center:
+      self.margin = "0 auto"
+      self.left = 0
+      self.right = 0
+      self.text_align = "center"
+    elif transform:
       self.transform = "translate(-%s, -%s)" % (self.left, self.top)
     self.position = "absolute"
     return self

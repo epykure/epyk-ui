@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 
 
+class DataConfig(object):
+
+  def __getitem__(self, key):
+    """
+
+    :param key:
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
+
+
 class DataEvents(object):
 
   @property

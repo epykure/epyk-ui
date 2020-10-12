@@ -319,7 +319,7 @@ class Items(Html.Html):
   name = 'List'
 
   def __init__(self, report, type, records, width, height, options, htmlCode, profile, helper):
-    super(Items, self).__init__(report, records, css_attrs={"width": width, 'height': height})
+    super(Items, self).__init__(report, records, htmlCode=htmlCode,  css_attrs={"width": width, 'height': height})
     self.__options = OptList.OptionsItems(self, options)
     self._prefix, self._jsStyles['items_type'] = "ListDyn_", type
     self._jsStyles['click'], self._jsStyles['draggable'] = None, False

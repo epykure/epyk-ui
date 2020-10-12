@@ -124,7 +124,7 @@ class Images(object):
       container.style.css.margin = "0 auto"
     return container
 
-  def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center",
+  def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center", htmlCode=None,
                  position="middle", profile=None, options=None):
     """
     Description:
@@ -142,7 +142,7 @@ class Images(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
-    div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width), options=options, profile=profile)
+    div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width), htmlCode=htmlCode, options=options, profile=profile)
     div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
@@ -150,7 +150,7 @@ class Images(object):
     div.style.css.padding = "auto"
     return div
 
-  def wallpaper(self, url, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center",
+  def wallpaper(self, url, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center", htmlCode=None,
                 position="middle", profile=None, options=None):
     """
     Description:
@@ -170,7 +170,7 @@ class Images(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
-    div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width), options=options, profile=profile)
+    div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width), htmlCode=htmlCode, options=options, profile=profile)
     div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
     div.style.css.background_position = "center center"
     div.style.css.display = "block"

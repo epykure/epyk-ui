@@ -2035,6 +2035,22 @@ http://tabulator.info/docs/4.2/options
   def selectable(self, val):
     self._attrs["selectable"] = val
 
+  @property
+  def tooltips(self):
+    """
+    Description:
+    -----------
+    You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
+
+    Related Pages:
+      http://tabulator.info/docs/4.0/format#tooltips
+    """
+    return self._attrs["tooltips"]
+
+  @tooltips.setter
+  def tooltips(self, val):
+    self._attrs["tooltips"] = val
+
 
 class TableTreeConfig(TableConfig):
 

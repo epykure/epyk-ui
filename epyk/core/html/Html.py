@@ -1484,7 +1484,7 @@ class Body(Html):
       rawFile.open("GET", "%s/"+ lang +"/%s.json", true);
       rawFile.onreadystatechange = function() {
           if (rawFile.readyState === 4 && rawFile.status == "200") {
-             var data = JSON.parse(rawFile.responseText); %s}}
+             var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %s}}
       rawFile.send(null)''' % (lang, end_point, calling_module,
           JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True))
 

@@ -307,11 +307,11 @@ JS_IMPORTS = {
       'req': [
         {'alias': 'tabulator'},
         {'alias': 'accounting'},
-        #{'alias': 'd3-packages'},
+        {'alias': 'd3-scale'},
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': '0.0.2', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-numbers.js', 'version': '0.0.6', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },

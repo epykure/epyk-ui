@@ -774,7 +774,7 @@ class Row(Html.Html):
     self.__options = OptPanel.OptionGrid(self, options)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
-        self.__add__(htmlObj)
+        self.add(htmlObj)
     self.attr["class"].add('row')
     self.style.css.justify_content = self.position
     if align == 'center':
@@ -814,8 +814,6 @@ class Row(Html.Html):
     if not isinstance(htmlObj, Col):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      for h in htmlObj:
-        h.options.managed = False
       htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position, options=self.options._attrs)
       htmlObj.options.managed = False
     super(Row, self).__add__(htmlObj)

@@ -32,6 +32,8 @@ datatable = DataPy.Datatable()
 
 events = DataEvent.DataEvents()
 
+configs = DataEvent.DataConfig()
+
 loops = DataEvent.DataLoops()
 
 primitives = DataEvent.DataPrimitives()

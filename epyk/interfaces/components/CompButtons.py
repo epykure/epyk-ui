@@ -101,6 +101,52 @@ class Buttons(object):
       html_button.style.css.display = "block"
     return html_button
 
+  def colored(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Standard button
+
+    Usage::
+
+      rptObj.ui.button("Test")
+
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    """
+    component = self.button(text, icon, width, height, align, htmlCode, tooltip, profile, options)
+    component.style.css.background = self.context.rptObj.theme.colors[-1]
+    component.style.css.border = "1px solid %s" % self.context.rptObj.theme.colors[-1]
+    component.style.css.color = self.context.rptObj.theme.colors[0]
+    component.style.css.margin_top = 5
+    return component
+
   def large(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:

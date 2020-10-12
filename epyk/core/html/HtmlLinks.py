@@ -72,10 +72,11 @@ class ExternalLink(Html.Html):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    if not isinstance(data, dict):
-      data = {"text": data}
-    if "url" not in data:
-      data["url"] = self.val["url"]
+    if not hasattr(data, 'toStr'):
+      if not isinstance(data, dict):
+        data = {"text": data}
+      if "url" not in data:
+        data["url"] = self.val["url"]
     return super(ExternalLink, self).build(data, options, profile)
 
   def __str__(self):
