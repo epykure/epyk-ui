@@ -218,6 +218,12 @@ class Select(Html.Html):
     if self.attr.get("data-width") is not None:
       self._report.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-width")))
       self.attr['class'].add("%s_width" % self.htmlCode)
+    if self.attr.get("data-background") is not None:
+      if self.attr.get("data-color") is not None:
+        self._report.css.customText('.%s_background {background: %s !IMPORTANT; color: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-background"), self.attr.get("data-color")))
+      else:
+        self._report.css.customText('.%s_background {background: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-background")))
+      self.attr['class'].add("%s_background" % self.htmlCode)
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
 
