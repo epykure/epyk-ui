@@ -116,14 +116,16 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     """
     delimiter = delimiter or self._src.options.delimiter
     format = format or self._src.options.format
-    print(format)
     if format.endswith("json"):
       value = events.data.jsonParse()
     else:
       value = events.data.fileToDict(delimiter)
     return JsObjects.JsVoid("window['%s_data'] = %s" % (self._src.htmlCode, JsUtils.jsConvertData(value, None)))
 
+  def load(self, jsData):
+    return JsObjects.JsVoid("window['%s_data'] = %s" % (self._src.htmlCode, JsUtils.jsConvertData(jsData, None)))
+
   @property
-  def data(self,):
+  def data(self):
     return JsFileData("window['%s_data']" % self._src.htmlCode)
 

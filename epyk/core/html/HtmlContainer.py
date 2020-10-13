@@ -141,7 +141,7 @@ class PanelSlide(Panel):
     self.add_helper(helper)
     self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 5px',
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
-    self.text = self._report.ui.text(title).css({"display": 'inline-block', 'margin': 0})
+    self.text = self._report.ui.text(title, htmlCode="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
     self.text.style.css.bold()
     self.text.style.css.font_factor(8)
     self.title = self._report.ui.div([self.icon, self.text])

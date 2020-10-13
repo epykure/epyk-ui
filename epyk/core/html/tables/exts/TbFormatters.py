@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.packages import packageImport
 from epyk.core.data.DataClass import DataGroup

@@ -1015,16 +1015,29 @@ class Tabulator(JsPackage):
     columna = JsUtils.jsConvertData(columna, None)
     return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columna, self.varId))
 
-  def columns(self, jsData):
+  def columns(self, headers=None, rows=None, values=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param headers:
+    :param rows:
+    :param values:
     """
-    return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(jsData).toStr()))
+    if headers is None and rows is None and values is None:
+      raise Exception("Header, rows or values must be defined")
+
+    if headers is not None:
+      # If this variable is used it means the definition should be fully supplied and the default style will not be applied
+      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(headers).toStr()))
+
+    if rows is not None or values is not None:
+      rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
+      values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
+      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(),
+          "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
 
   @property
   def getColumns(self):
@@ -1045,6 +1058,8 @@ class Tabulator(JsPackage):
 
   def addColumn(self, jsData, before=False, position=""):
     """
+    Description:
+    -----------
     If you wish to add a single column to the table, you can do this using the addColumn function
 
     Example
@@ -1053,6 +1068,8 @@ class Tabulator(JsPackage):
     Documentation
     http://tabulator.info/docs/4.5/columns#addColumn
 
+    Attributes:
+    ----------
     :param jsData: The column definition object for the column you want to add
     :param before: Determines how to position the new column.
                    A value of true will insert the column to the left of existing columns, a value of false will insert it to the right
@@ -1065,7 +1082,11 @@ class Tabulator(JsPackage):
 
   def addColumns(self, jsData, before=False, position=""):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsData:
     :param before:
     :param position:

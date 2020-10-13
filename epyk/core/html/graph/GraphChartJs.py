@@ -302,30 +302,31 @@ class ChartLine(Chart):
 
   @property
   def _js__convertor__(self):
-    return ''' 
+    return '''
       if(data.python){
-          result = {datasets: [], labels: data.series};
-          data.datasets.forEach(function(rec, i){
-            result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors[i], borderColor: options.colors[i]} )
-          })}
+        result = {datasets: [], labels: data.series};
+        data.datasets.forEach(function(rec, i){
+        result.datasets.push({label: data.series[i], data: rec, backgroundColor: options.colors[i], borderColor: options.colors[i]} )
+        })}
       else{
-        var temp = {}; var labels = []; var uniqLabels = {}; 
-        options.y_columns.forEach(function(series){temp[series] = {}});
-        data.forEach(function(rec){ 
-          options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
-              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
-              temp[name][rec[name]] = rec[name]}})});
-        result = {datasets: [], labels: labels};
-        options.y_columns.forEach(function(series, i){
-          dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
-          if (typeof options.attrs[series] !== 'undefined'){
-            for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]};}
-          else if(typeof options.commons !== 'undefined'){
-            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
-          labels.forEach(function(x){
-            if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); console.log(dataSet); result.datasets.push(dataSet)})
+      var temp = {}; var labels = []; var uniqLabels = {}; 
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+        if(rec[name] !== undefined){
+          if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true}; 
+          temp[name][rec[options.x_axis]] = rec[name]}})
+      });
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
+        if (typeof options.attrs[series] !== 'undefined'){
+        for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]};}
+        else if(typeof options.commons !== 'undefined'){
+        for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
+        labels.forEach(function(x){
+        if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+        }); result.datasets.push(dataSet)})
       }'''
 
 
@@ -366,12 +367,14 @@ class ChartBubble(Chart):
         options.y_columns.forEach(function(series){temp[series] = []});
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
-              labels.push(rec[options.x_column]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
-              temp[name].push({y: rec[name], x: rec[options.x_column], r: r})}})});
+            if(rec[options.x_axis] !== undefined){
+              labels.push(rec[options.x_axis]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+              temp[name].push({y: rec[name], x: rec[options.x_axis], r: r})}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors[i]};
+          if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]}); 
         result.datasets.push(dataSet)})
       }'''
@@ -471,12 +474,14 @@ class ChartPolar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
-              temp[name][rec[name]] = rec[name]}})});
+              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels}; 
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors};
           for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+          if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
           }); result.datasets.push(dataSet)})
@@ -535,13 +540,15 @@ class ChartPie(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[name] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
-              temp[name][rec[name]] = rec[name]}})});
+              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series){
           dataSet = {label: series, data: [], backgroundColor: []};
+          if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){
-            dataSet.backgroundColor.push(options.colors[i]);
+            dataSet.backgroundColor.push(options.colors);
             if(temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
           }); result.datasets.push(dataSet)})
       }
@@ -588,12 +595,14 @@ class ChartRadar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[name]); uniqLabels[rec[name]] = true};
-              temp[name][rec[name]] = rec[name]}})});
+              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true}; 
+              temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors[i]};
           for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+          if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
           }); result.datasets.push(dataSet)})
@@ -637,12 +646,14 @@ class ChartScatter(Chart):
         options.y_columns.forEach(function(series){temp[series] = []});
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
-              labels.push(rec[name]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
-              temp[name].push({y: rec[name], x: rec[name], r: r})}})});
+            if(rec[options.x_axis] !== undefined){
+              labels.push(rec[options.x_axis]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+              temp[name].push({y: rec[name], x: rec[options.x_axis], r: r})}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.colors[i]};
+          if(typeof options.commons !== 'undefined'){
+            for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]}); 
         result.datasets.push(dataSet)})
       

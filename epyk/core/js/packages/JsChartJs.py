@@ -211,7 +211,9 @@ class ChartJs(JsPackage):
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
             dataset.backgroundColor = chartColors[i]; dataset.fillOpacity = 0.8}
           else if (['polarArea', 'pie'].includes(dataset.type)){dataset.backgroundColor = chartColors}
-      }})
+      } else {dataset.backgroundColor = chartColors; dataset.borderColor = chartColors;}
+      
+      })
       %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName, 'colors': self.src.colors})
 
   def load(self, name, points, options=None):
@@ -384,8 +386,7 @@ class ChartJs(JsPackage):
 
     :return: 'this' for chainability
     """
-    self._js.append("%s.clear()" % self.toStr())
-    return self
+    return JsObjects.JsVoid("%s.clear()" % self.toStr())
 
   def toBase64Image(self):
     """

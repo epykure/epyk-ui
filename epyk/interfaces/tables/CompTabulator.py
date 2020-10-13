@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import tables as html_tables
 
@@ -67,4 +69,191 @@ class Tabulators(object):
     table.config.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
+    return table
+
+  def multi(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+    Generic Tabulator configuration to get the package plus all the addons for formatters and editors.
+    In the basic Tabulator entry point only the ones used on the Python will be added to the JavaScript page.
+
+    This configuration will load all the external JavaScript features to allow the full customisation
+
+    Related Pages:
+
+      https://www.npmjs.com/package/tabulator-extensions
+
+    Attributes:
+    ----------
+    :param records:
+    :param cols:
+    :param rows:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-icons')
+    self.parent.context.rptObj.jsImports.add('tabulator-editors')
+    cols = cols or []
+    rows = rows or []
+    if records is not None and not cols and not rows:
+      cols = list(records[0].keys())
+
+    table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False, 'movableColumns': False}
+    if options is not None:
+      table_options_dflts.update(options)
+
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
+                                                 table_options_dflts, profile)
+    for c in rows + cols:
+      table.add_column(c)
+    return table
+
+  def trafficlights(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
+                 options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.npmjs.com/package/tabulator-extensions
+
+    Attributes:
+    ----------
+    :param records:
+    :param cols:
+    :param rows:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    cols = cols or []
+    rows = rows or []
+    if records is not None and not cols and not rows:
+      cols = list(records[0].keys())
+
+    table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
+                           'movableColumns': False}
+    if options is not None:
+      table_options_dflts.update(options)
+
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
+                                                 table_options_dflts, profile)
+    for c in rows:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.style(css={"background": self.parent.context.rptObj.theme.colors[0]})
+      table.get_column(c).headerFilter = True
+    for c in cols:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.trafficlight(css={"background": "white"})
+      table.get_column(c).headerSort = False
+      table.get_column(c).headerVertical = 'flip'
+    table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {"css": {"background": self.parent.context.rptObj.theme.colors[0]}}})
+    table.options.attr("columns_def", {"headerSort": False, "headerVertical": 'flip', "formatter": "trafficLight", 'formatterParams':
+      {'css': {"background": "white"}, 'tooltip': None, 'green': self.parent.context.rptObj.theme.success[1],
+       'red': self.parent.context.rptObj.theme.danger[1], 'orange': self.parent.context.rptObj.theme.warning[1]}})
+    return table
+
+  def figures(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
+                 options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.npmjs.com/package/tabulator-extensions
+
+    Attributes:
+    ----------
+    :param records:
+    :param cols:
+    :param rows:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    cols = cols or []
+    rows = rows or []
+    if records is not None and not cols and not rows:
+      cols = list(records[0].keys())
+
+    table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
+                           'movableColumns': False}
+    if options is not None:
+      table_options_dflts.update(options)
+
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
+                                                 table_options_dflts, profile)
+    for c in rows:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.style(css={"background": self.parent.context.rptObj.theme.colors[0]})
+      table.get_column(c).headerFilter = True
+    for c in cols:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.number_format(css={"background": "white"})
+    table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams':
+      {"css": {"background": self.parent.context.rptObj.theme.colors[0]}}})
+    table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams':
+      {'css': {"background": "white"}, "symbol": "", "format": "%v"}})
+    return table
+
+  def intensity(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
+                 options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.npmjs.com/package/tabulator-extensions
+
+    Attributes:
+    ----------
+    :param records:
+    :param cols:
+    :param rows:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    cols = cols or []
+    rows = rows or []
+    if records is not None and not cols and not rows:
+      cols = list(records[0].keys())
+
+    table_options_dflts = {"steps": 100, 'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False, 'movableColumns': False}
+    if options is not None:
+      table_options_dflts.update(options)
+
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
+                                                 table_options_dflts, profile)
+    for c in rows:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.style(css={"background": self.parent.context.rptObj.theme.colors[0]})
+      table.get_column(c).headerFilter = True
+    for c in cols:
+      table.add_column(c)
+      table.get_column(c).exts.formatters.intensity(steps=table_options_dflts["steps"], colors=["white", self.parent.context.rptObj.theme.danger[1]])
+    table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {"css": {"background": self.parent.context.rptObj.theme.colors[0]}}})
+    table.options.attr("columns_def", {"formatter": "numbersIntensity", 'formatterParams':
+      {"is_number": True, "symbol": "", "format": "%v", "steps": table_options_dflts["steps"], 'colors': ["white", self.parent.context.rptObj.theme.danger[1]]}
+      })
     return table

@@ -1283,6 +1283,22 @@ http://tabulator.info/docs/4.5/columns
     self._attrs["frozen"] = val
 
   @property
+  def headerFilter(self):
+    """
+    Description:
+    -----------
+    User can sort by clicking on the header (see Sorting Data for more detail
+
+    Related Pages:
+http://tabulator.info/docs/4.1/columns
+    """
+    return self._attrs["headerFilter"]
+
+  @headerFilter.setter
+  def headerFilter(self, bool):
+    self._attrs["headerFilter"] = bool
+
+  @property
   def headerVertical(self):
     """
     Description:
@@ -1439,6 +1455,22 @@ http://tabulator.info/docs/4.5/columns
   @title.setter
   def title(self, val):
     self._attrs["title"] = val
+
+  @property
+  def tooltip(self):
+    """
+    Description:
+    -----------
+    Required This is the title that will be displayed in the header for this column
+
+    Related Pages:
+http://tabulator.info/docs/4.5/columns
+    """
+    return self._attrs["tooltip"]
+
+  @tooltip.setter
+  def tooltip(self, bool):
+    self._attrs["tooltip"] = bool
 
   @property
   def titleFormatter(self):
