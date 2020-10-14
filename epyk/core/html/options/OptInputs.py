@@ -649,6 +649,30 @@ class OptionAutoComplete(Options):
     return self
 
   @property
+  def reset(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @reset.setter
+  def reset(self, bool):
+    self.set(bool)
+
+  @property
+  def select(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @select.setter
+  def select(self, bool):
+    self.set(bool)
+
+  @property
   def source(self):
     """
     Description:

@@ -546,6 +546,7 @@ class DropFile(Html.Html):
     self.text.style.css.font_factor(-2)
     self.text.style.css.color = self._report.theme.greys[5]
     self.text.options.managed = False
+    self.text.tooltip("File details")
     self.text.style.css.margin_bottom = 5
     self.delimiter = self._report.ui.text(delimiter, width=(25, 'px'), htmlCode="%s_delimiter" % self.htmlCode, options={"editable": True})
     self.delimiter.options.managed = False
@@ -670,14 +671,18 @@ class DropFile(Html.Html):
        reader.onload = (function(value) {
           return function(e){data = atob(e.target.result.replace(/^data:.+;base64,/, '')); %s}})(f);
        reader.readAsDataURL(f);
-      ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(jsFncs + [self.text.build(events.file.description)], toStr=True),
+      ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(jsFncs + [
+            self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows")),
+            self.text.build(events.file.description)], toStr=True),
              )], jsData=jsData, preventDefault=preventDefault, profile=profile)
 
   def paste(self, jsFncs, profile=False, source_event=None):
 
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return super(DropFile, self).paste([self.loading()]+jsFncs+[self.text.build("Bespoke data Loaded")], profile, source_event)
+    return super(DropFile, self).paste([self.loading()]+jsFncs+[
+      self.text.build("Bespoke data Loaded"),
+      self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows"))], profile, source_event)
 
   def __str__(self):
     if self.options.format == 'json':

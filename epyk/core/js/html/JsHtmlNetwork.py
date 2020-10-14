@@ -56,7 +56,7 @@ class JsFileData(object):
       })(%s, %s)
       ''' % (self.varName, name))
 
-  def values(self, name):
+  def values(self, name, with_count=False):
     """
     Description:
     ------------
@@ -66,14 +66,16 @@ class JsFileData(object):
     :param name:
     """
     name = JsUtils.jsConvertData(name, None)
+    with_count = JsUtils.jsConvertData(with_count, None)
     return JsObjects.JsObjects.get('''
       (function(records, col){
         var vector = {}; records.forEach(function(rec){
           if(vector[rec[col]] == undefined){vector[rec[col]] = 0};
           vector[rec[col]]++});
-        return vector
+        if(%s){return vector}
+        else{return Object.keys(vector)}
       })(%s, %s)
-      ''' % (self.varName, name))
+      ''' % (with_count, self.varName, name))
 
   def series(self, names):
     """

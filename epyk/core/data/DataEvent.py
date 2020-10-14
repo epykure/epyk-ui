@@ -169,6 +169,7 @@ class DataFile(object):
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {'varName': self.varName, 'dt': self.toISOString})
 
+
 class DataLoops(object):
 
   @property
