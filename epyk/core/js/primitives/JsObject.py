@@ -823,7 +823,7 @@ class JsObject(object):
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     return JsObject('''(function(){var results = []; 
-      %s.split('\\n').forEach(function(rec){ results.push(rec.split(%s)); }); return results})()''' % (self.varName, delimiter))
+      %s.split('\\n').forEach(function(rec){ results.push(String(rec).replace(/^\s+|\s+$/g, '').split(%s)); }); return results})()''' % (self.varName, delimiter))
 
   def fileToDict(self, delimiter, columns=None):
     """
@@ -833,9 +833,9 @@ class JsObject(object):
     columns = JsUtils.jsConvertData(columns, None)
     return JsObject('''(function(){var results = []; 
           var delimiter = %(delimiter)s; if (delimiter == 'TAB'){delimiter = '\\t'};
-          var rows = %(varName)s.split('\\n'); var results = []; var header = rows[0].split(delimiter);
+          var rows = %(varName)s.split('\\n'); var results = []; var header = String(rows[0]).replace(/^\s+|\s+$/g, '').split(delimiter);
           for(var i = 1; i < rows.length; i++){
-            var row = {}; rows[i].split(delimiter).forEach(function(rec, j){row[header[j]] = rec}); results.push(row);
+            var row = {}; String(rows[i]).replace(/^\s+|\s+$/g, '').split(delimiter).forEach(function(rec, j){row[header[j]] = rec}); results.push(row);
           }; return results})()''' % {"varName": self.varName, "delimiter": delimiter})
 
   def __str__(self):

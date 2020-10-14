@@ -211,7 +211,7 @@ class ChartJs(JsPackage):
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
             dataset.backgroundColor = chartColors[i]; dataset.fillOpacity = 0.8}
           else if (['polarArea', 'pie'].includes(dataset.type)){dataset.backgroundColor = chartColors}
-      } else {dataset.backgroundColor = chartColors; dataset.borderColor = chartColors;}
+      } else {dataset.backgroundColor = chartColors[i]; dataset.borderColor = chartColors[i];}
       
       })
       %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName, 'colors': self.src.colors})

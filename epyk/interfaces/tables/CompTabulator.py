@@ -208,7 +208,8 @@ class Tabulators(object):
     table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams':
       {"css": {"background": self.parent.context.rptObj.theme.colors[0]}}})
     table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams':
-      {'css': {"background": "white"}, "symbol": "", "format": "%v"}})
+      {'colors': [self.parent.context.rptObj.theme.danger[1], self.parent.context.rptObj.theme.greys[-1]],
+        'css': {"background": "white"}, "symbol": "", "format": "%v"}})
     return table
 
   def intensity(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
