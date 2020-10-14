@@ -125,7 +125,6 @@ def add(args):
 
   The project structure is as below:
   /ui
-    /links
       ui end points definition and data structures communication with the backend
     /reports
       Folder with all the Python scripts
@@ -141,7 +140,7 @@ def add(args):
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
-  for folder in ['reports', 'templates', 'links']:
+  for folder in ['reports', 'templates']:
     ui_path = os.path.join(project_path, 'ui', folder)
     if not os.path.exists(ui_path):
       os.makedirs(ui_path)
