@@ -356,7 +356,14 @@ def transpile_all(args):
         if not os.path.exists(settings.VIEWS_FOLDER):
           # If it is not an aboslute path
           settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
-        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=args.split, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+        options = {"css_route": '/css', "js_route": '/js'}
+        if args.split:
+          options = {"css_route": '/%s/css' % settings.PACKAGE_PATH, "js_route": '/%s/js' % settings.PACKAGE_PATH}
+          if not os.path.exists(settings.PACKAGE_PATH):
+            options["static_path"] = os.path.join(reports_path, '..', '..', settings.PACKAGE_PATH)
+          else:
+            options["static_path"] = settings.PACKAGE_PATH
+        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=args.split, install_modules=settings.INSTALL_MODULES, options=options)
         results["completed"].append(view_name)
         print(output)
       except Exception as err:

@@ -397,14 +397,17 @@ class PyOuts(object):
     if split_files:
       results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), name)
       body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), name)
-      if not os.path.exists(os.path.join(path, 'css')):
-        os.makedirs(os.path.join(path, 'css'))
-      with open(os.path.join(path, 'css', "%s.css" % name), "w") as f:
+      static_path = path
+      if options.get("static_path") is not None:
+        static_path = os.path.join(path, options.get("static_path"))
+      if not os.path.exists(os.path.join(static_path, 'css')):
+        os.makedirs(os.path.join(static_path, 'css'))
+      with open(os.path.join(static_path, 'css', "%s.css" % name), "w") as f:
         f.write(results['cssStyle'])
 
-      if not os.path.exists(os.path.join(path, 'js')):
-        os.makedirs(os.path.join(path, 'js'))
-      with open(os.path.join(path, 'js', "%s.js" % name), "w") as f:
+      if not os.path.exists(os.path.join(static_path, 'js')):
+        os.makedirs(os.path.join(static_path, 'js'))
+      with open(os.path.join(static_path, 'js', "%s.js" % name), "w") as f:
         f.write(";".join(results['jsFrgsCommon'].values()))
 
     # Add the worker sections when no server available
