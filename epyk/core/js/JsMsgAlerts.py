@@ -161,7 +161,7 @@ class Msg(object):
     :param content: String. The content of the popup
     :param cssAttrs: Dictionary. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
+    dflt_attrs = {"position": "fixed", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)

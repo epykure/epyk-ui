@@ -419,13 +419,85 @@ class JsPromise(object):
     return self.toStr()
 
 
+class XMLHttpRequestErrors(object):
+
+  def __init__(self, onerrors, report, http_request):
+    self.__onerrors = onerrors
+    self._src = report
+    self._http = http_request
+
+  def e404(self, jsFncs=None, default=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param default:
+    """
+    jsFncs = list(jsFncs) or []
+    if default:
+      jsFncs.append(self._src.js.msg.fixed("Service [%s] not found" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+    self.__onerrors.append("if(%s == 404){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self._http
+
+  def e405(self, jsFncs=None, default=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param default:
+    """
+    jsFncs = list(jsFncs) or []
+    if default:
+      jsFncs.append(self._src.js.msg.fixed("Service [%s] failed to return response" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+    self.__onerrors.append("if(%s == 405){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self._http
+
+  def e200(self, jsFncs=None, default=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param default:
+    """
+    jsFncs = list(jsFncs) or []
+    if default:
+      jsFncs.append(self._src.js.msg.fixed("Service [%s] completed successfully" % self._http.url, cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
+    self.__onerrors.append("if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self._http
+
+  def commons(self, jsFncs=None, default=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param default:
+    """
+    self.e405(jsFncs, default)
+    self.e404(jsFncs, default)
+    self.e200(jsFncs, default)
+    return self._http
+
+
 class XMLHttpRequest(object):
 
   def __init__(self, report, varName, method_type, url, data=None):
     self.data = JsData.Datamap() if data is None else data
     self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
-    self.__req_success, self.__req_fail, self.__req_send = None, None, None
+    self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
+    self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
     self.varId = varName
     if url is not None:
@@ -446,6 +518,7 @@ class XMLHttpRequest(object):
     """
     return XMLHttpRequest(None, varName, None, None)
 
+  @property
   def readyState(self):
     """
     Description:
@@ -458,6 +531,7 @@ class XMLHttpRequest(object):
     """
     return JsNumber.JsNumber("%s.readyState" % self.varId)
 
+  @property
   def status(self):
     """
     Description:
@@ -470,6 +544,7 @@ class XMLHttpRequest(object):
     """
     return JsNumber.JsNumber("%s.status" % self.varId)
 
+  @property
   def responseType(self, value=None):
     """
     Description:
@@ -529,19 +604,23 @@ class XMLHttpRequest(object):
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
-  def addEventListener(self, event, jsFncs):
+  def addEventListener(self, event, jsFncs, options=None):
     """
     Description:
     ------------
+    The EventTarget method addEventListener() sets up a function that will be called whenever the specified event is delivered to the target.
+    Common targets are Element, Document, and Window, but the target may be any object that supports events (such as XMLHttpRequest).
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
+      https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 
     Attributes:
     ----------
-    :param event:
+    :param event: String. A case-sensitive string representing the event type to listen for.
     :param jsFncs:
+    :param options:
     """
 
   def open(self, method_type, url, _async=True, user=None, password=None):
@@ -604,20 +683,52 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
+    The XMLHttpRequestEventTarget.onload is the function called when an XMLHttpRequest transaction completes successfully.
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: callback is the function to be executed when the request completes successfully.
+                   It receives a ProgressEvent object as its first argument.
+                   The value of this (i.e. the context) is the same XMLHttpRequest this callback is related to.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__req_success = jsFncs
     return self
 
+  def onerror(self, jsFncs):
+    """
+    Description:
+    ------------
+    The XMLHttpRequestEventTarget.onerror is the function called when an XMLHttpRequest transaction fails due to an error.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
+
+    Attributes:
+    ----------
+    :param jsFncs: callback is the function to be executed when the request fails.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if self.__on.get("onerror") is None:
+      self.__on["onerror"] = jsFncs
+    else:
+      self.__on["onerror"] = jsFncs
+    return self
+
+  @property
+  def errors(self):
+    if self.__on.get("onloadend") is None:
+      self.__on["onloadend"] = []
+    return XMLHttpRequestErrors(self.__on["onloadend"], self._src, self)
+
   def ontimeout(self, jsFncs):
     """
     Description:
     ------------
+    The timeout event is fired when progression is terminated due to preset time expiring.
 
     Related Pages:
 
@@ -625,21 +736,41 @@ class XMLHttpRequest(object):
 
     Attributes:
     ----------
-    :param jsFncs:
-    """
-
-  def onFail(self, jsFncs):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param jsFncs:
+    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.__req_fail = jsFncs
+    self.__on["ontimeout"] = jsFncs
+    return self
+
+  def onloadend(self, jsFncs):
+    """
+    Description:
+    ------------
+    Fired when a request has completed, whether successfully (after load) or unsuccessfully
+
+    Attributes:
+    ----------
+    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__on["onloadend"] = jsFncs
+    return self
+
+  def onloadstart(self, jsFncs):
+    """
+    Description:
+    ------------
+    The XMLHttpRequestEventTarget.onloadstart is the function called when an XMLHttpRequest transaction starts transferring data.
+
+    Attributes:
+    ----------
+    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__on["onloadstart"] = jsFncs
     return self
 
   def withCredentials(self, flag):
@@ -654,7 +785,7 @@ class XMLHttpRequest(object):
 
     Attributes:
     ----------
-    :param flag:
+    :param flag: Boolean. Use credentials
     """
 
   def send(self, jsonData=None, encodeURIData=None, stringify=True):
@@ -714,8 +845,11 @@ class XMLHttpRequest(object):
         request.append("%s.onload = function(){}" % self.varId)
       else:
         request.append("%(varId)s.onload = function(){var data = %(varId)s.response; %(jsFncs)s}" % {'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True)})
+    if self.__req_end is not None:
+      request.append("%(varId)s.onloadend = function(){%(jsFncs)s}" % {'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_end, toStr=True)})
+    for k, fncs in self.__on.items():
+      request.append("%(varId)s.%(name)s = function(){%(jsFncs)s}" % {'name': k, 'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(fncs, toStr=True)})
     if self.__req_send is None:
       raise Exception("The send method must be called")
-
     request.append(self.__req_send)
     return ";".join(request)

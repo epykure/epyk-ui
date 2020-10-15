@@ -231,6 +231,38 @@ class Titles(object):
     html_title.style.css.border_bottom = '2px solid %s' % self.context.rptObj.theme.colors[-1]
     return html_title
 
+  def bold(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Templates:
+
+        https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+        http://192.168.0.34:8081/script/home
+
+    Attributes:
+    ----------
+    :param text:
+    :param options:
+    :param tooltip:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {'markdown': False}
+    if options is not None:
+      dflt_options.update(options)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
+    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.font_weight = "bold"
+    html_title.style.css.color = self.context.rptObj.theme.colors[-1]
+    return html_title
+
   def subtitle(self, text=None, name=None, contents=None, color=None, picture=None, icon=None, marginTop=5, htmlCode=None,
                width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
