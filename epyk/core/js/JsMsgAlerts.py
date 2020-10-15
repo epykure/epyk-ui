@@ -72,7 +72,7 @@ class Msg(object):
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
       })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None))
 
-  def text(self, content, timer=3000, cssAttrs=None):
+  def text(self, content, timer=3000, fixed=True, cssAttrs=None):
     """
     Description:
     ------------
@@ -82,9 +82,10 @@ class Msg(object):
     ----------
     :param content: String. The content of the popup
     :param timer: Number. The time the popup will be displayed
+    :param fixed:
     :param cssAttrs: Dictionary. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
+    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
@@ -150,7 +151,7 @@ class Msg(object):
       }
       })(event, %s, %s)''' % (JsNodeDom.JsDoms.get("window['globalPoopup']").css(dflt_attrs).r, value, JsUtils.jsConvertData(content, None))
 
-  def fixed(self, content, cssAttrs=None):
+  def fixed(self, content, fixed=True, cssAttrs=None):
     """
     Description:
     ------------
@@ -161,7 +162,7 @@ class Msg(object):
     :param content: String. The content of the popup
     :param cssAttrs: Dictionary. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "fixed", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
+    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)

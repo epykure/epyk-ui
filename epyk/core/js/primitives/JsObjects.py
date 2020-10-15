@@ -438,7 +438,7 @@ class XMLHttpRequestErrors(object):
     """
     jsFncs = list(jsFncs) or []
     if default:
-      jsFncs.append(self._src.js.msg.fixed("Service [%s] not found" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+      jsFncs.append(self._src.js.msg.text("Service [%s] not found" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 404){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._http
 
@@ -454,7 +454,7 @@ class XMLHttpRequestErrors(object):
     """
     jsFncs = list(jsFncs) or []
     if default:
-      jsFncs.append(self._src.js.msg.fixed("Service [%s] failed to return response" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+      jsFncs.append(self._src.js.msg.text("Service [%s] failed to return response" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 405){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._http
 
@@ -470,7 +470,7 @@ class XMLHttpRequestErrors(object):
     """
     jsFncs = list(jsFncs) or []
     if default:
-      jsFncs.append(self._src.js.msg.fixed("Service [%s] completed successfully" % self._http.url, cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
+      jsFncs.append(self._src.js.msg.text("Service [%s] completed successfully" % self._http.url, cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._http
 
