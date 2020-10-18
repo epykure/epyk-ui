@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
+
 
 class DataConfig(object):
 
@@ -12,6 +14,34 @@ class DataConfig(object):
     from epyk.core.js.primitives import JsObjects
 
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
+
+  def fromConfig(self, k, default=None, page=None, end_point="/static/configs"):
+    if page.json_config_file is None:
+      raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
+
+    # TODO add a check on the configuration file location
+    #if not os.path.exists():
+    #  raise Exception("Configuration file missing: %s%s" % (end_point, page.json_config_file))
+
+    return '''
+      (function(){
+        if (typeof window['page_config'] === 'undefined'){
+          var rawFile = new XMLHttpRequest();
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
+          var lang = urlParams.get('lang') || 'eng';
+          rawFile.overrideMimeType("application/json");
+          rawFile.open("GET", "%(static)s/"+ lang +"/%(script)s.json", false);
+          rawFile.onreadystatechange = function() {
+              if (rawFile.readyState === 4 && rawFile.status == "200") {
+                 var data = JSON.parse(rawFile.responseText); window['page_config'] = data}}
+          rawFile.send(null);
+          var results = window['page_config']['%(key)s'];
+          if(typeof window['page_config']['%(key)s'] === 'undefined'){return %(dflt)s}
+          else {return results}
+        } else {return window['page_config']}
+      })(%(key)s)
+      ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
 
 class DataEvents(object):

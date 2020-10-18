@@ -22,7 +22,7 @@ class Table(Html.Html):
   name = 'Tabulator Table'
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
-    data, columns, self.__config = [], [], None
+    data, columns, self.__config, self._json_config = [], [], None, {}
     super(Table, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__config = TableConfig(self, options)
     if records is not None:
@@ -133,7 +133,7 @@ class Table(Html.Html):
     if data:
       return self.js.setData(data)
 
-    return 'var %s =  new Tabulator("#%s", %s)' % (self.tableId, self.htmlCode, self.config)
+    return 'var %s =  new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

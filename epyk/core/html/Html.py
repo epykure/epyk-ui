@@ -1468,25 +1468,24 @@ class Body(Html):
     :param lang: String. Optional. The default lang for the configuration
     :param end_point: String. Optional. The url for the configuration files
     """
-    import inspect
+    if self._report.json_config_file is None:
+      raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
     jsFncs = jsFncs or []
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    frame_records = inspect.stack()[1]
-    calling_module = inspect.getmodulename(frame_records[1])
+
     return '''
-      var rawFile = new XMLHttpRequest();
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      var lang = urlParams.get('lang') || '%s';
-      rawFile.overrideMimeType("application/json");
-      rawFile.open("GET", "%s/"+ lang +"/%s.json", true);
-      rawFile.onreadystatechange = function() {
-          if (rawFile.readyState === 4 && rawFile.status == "200") {
-             var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %s}}
-      rawFile.send(null)''' % (lang, end_point, calling_module,
-          JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True))
+      if (typeof window['page_config'] === 'undefined'){
+        var rawFile = new XMLHttpRequest(); const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString); var lang = urlParams.get('lang') || '%(lang)s'; 
+        rawFile.overrideMimeType("application/json"); rawFile.open("GET", "%(url)s/"+ lang +"/%(json)s.json", true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+               var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %(fncs)s}}
+        rawFile.send(null)} 
+      else {var data = window['page_config']; %(fncs)s}''' % {"lang": lang, 'url': end_point, 'json': self._report.json_config_file,
+          'fncs': JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
 
   def set_content(self, report, page_content):
     """

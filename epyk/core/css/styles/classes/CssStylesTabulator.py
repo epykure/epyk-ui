@@ -9,7 +9,7 @@ class CssTabulator(CssStyle.Style):
   def customize(self):
     self.css({'border': '1px solid %s !IMPORTANT' % self.rptObj.theme.greys[3],
               'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
-              'background-color': self.rptObj.theme.greys[2], 'font-family': Defaults_css.Font.family})
+              'background-color': self.rptObj.theme.greys[0], 'font-family': Defaults_css.Font.family})
 
 
 class CssTabulatorFooter(CssStyle.Style):
@@ -53,7 +53,7 @@ class CssTabulatorColContent(CssStyle.Style):
   classname = 'tabulator-col-content'
 
   def customize(self):
-    self.css({'color': "#DEDEDE", 'border': '1px solid #212121', 'background': "#212121"})
+    self.css({'color': "black", 'border': '1px solid %s' % self.rptObj.theme.greys[2], 'background': self.rptObj.theme.greys[2]})
 
 
 class CssTabulatorFooterPagination(CssStyle.Style):
@@ -70,11 +70,21 @@ class CssTabulatorGroups(CssStyle.Style):
 
 
 class CssTabulatorEvenRow(CssStyle.Style):
-  classname = 'tabulator-row-even'
+  _selectors = {'child': '.tabulator-row-even'}
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.colors[1],
               'background-color': self.rptObj.theme.colors[0]}, important=True)
+
+
+class CssTabulatorEvenRowNoStrip(CssStyle.Style):
+  _selectors = {'child': '.tabulator-row-even'}
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.greys[0],
+              'background-color': self.rptObj.theme.greys[0]}, important=True)
+    self.hover.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.success[1],
+                    'background-color': self.rptObj.theme.colors[3]}, important=True)
 
 
 class CssTabulatorOddRow(CssStyle.Style):
@@ -89,6 +99,7 @@ class CssTabulatorRow(CssStyle.Style):
   classname = 'tabulator-row'
 
   def customize(self):
+    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[0]})
     self.hover.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.success[1],
                     'background-color': self.rptObj.theme.colors[3]}, important=True)
 

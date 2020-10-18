@@ -182,6 +182,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorEvenRow)
 
+  def tabulator_even_rows_no_strop(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorEvenRowNoStrip)
+
   def tabulator_odd_rows(self):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorOddRow)

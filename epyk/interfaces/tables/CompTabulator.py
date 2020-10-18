@@ -97,7 +97,12 @@ class Tabulators(object):
     """
     self.parent.context.rptObj.jsImports.add('tabulator-numbers')
     self.parent.context.rptObj.jsImports.add('tabulator-icons')
-    self.parent.context.rptObj.jsImports.add('tabulator-editors')
+    self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    self.parent.context.rptObj.jsImports.add('tabulator-drop')
+    self.parent.context.rptObj.jsImports.add('tabulator-mutators-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-dates')
+    self.parent.context.rptObj.jsImports.add('editors-selects')
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:
@@ -106,11 +111,17 @@ class Tabulators(object):
     table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False, 'movableColumns': False}
     if options is not None:
       table_options_dflts.update(options)
-
+    json = {}
+    if 'json' in table_options_dflts:
+      json = table_options_dflts["json"].fromConfig(htmlCode, {}, page=self.parent.context.rptObj)
+      del table_options_dflts["json"]
     table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
                                                  table_options_dflts, profile)
+    table._json_config = json
     for c in rows + cols:
       table.add_column(c)
+    if rows:
+      table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
     return table
 
   def trafficlights(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,

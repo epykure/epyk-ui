@@ -2,6 +2,7 @@
 import json
 import collections
 import time
+import inspect
 
 try:
   basestring
@@ -61,6 +62,11 @@ class Report(object):
     self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
 
     self.jsImports, self.jsLocalImports, self.cssImport, self.cssLocalImports = set(), set(), set(), set()
+
+    # Section dedicated to load the static json configuration files
+    frame_records = inspect.stack()[1]
+    calling_module = inspect.getmodulename(frame_records[1])
+    self.json_config_file = calling_module
 
   @property
   def body(self):

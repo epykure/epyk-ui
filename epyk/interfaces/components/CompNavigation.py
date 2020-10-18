@@ -377,8 +377,7 @@ class Navigation(object):
     html_nav.title = title
     html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
-    # must use BODY_STYLE to keep the style colors
-    Defaults_css.BODY_STYLE = "padding-top:%spx" % (height[0] + scroll_height + 15)
+    self.context.rptObj.body.style.custom_class({"padding-top": '%spx' % (height[0] + scroll_height + 15)}, "body", is_class=False)
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):

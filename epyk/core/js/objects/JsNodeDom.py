@@ -1488,6 +1488,18 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms("%s.firstChild" % self.varId)
 
+  def child(self, i):
+    """
+    Description:
+    ------------
+    Returns the requested child DOM object on the JavaScript side.
+
+    Attributes:
+    ----------
+    :param i: Integer. The position of the child
+    """
+    return JsDoms("%s.childNodes[%s]" % (self.varId, i))
+
   @property
   def nextSibling(self):
     """
