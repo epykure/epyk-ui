@@ -252,6 +252,7 @@ class Div(Html.Html):
     :param name: String. Optional.
     :param source_event: String. Optional. The event source.
     """
+    self.style.css.cursor = "pointer"
     jsFncs = jsFncs or []
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -814,7 +815,8 @@ class Row(Html.Html):
     if not isinstance(htmlObj, Col):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position, options=self.options._attrs)
+      # hack to propagate the height of the row to the underlying columns
+      htmlObj = self._report.ui.layouts.col(htmlObj, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
       htmlObj.options.managed = False
     super(Row, self).__add__(htmlObj)
     return self
