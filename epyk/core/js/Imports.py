@@ -13,7 +13,7 @@ import json
 import importlib
 import collections
 import subprocess
-
+import logging
 
 try:
     from urllib.parse import urlparse, urlencode
@@ -292,7 +292,6 @@ JS_IMPORTS = {
     'modules': [
       # core only needed for Jupyter for some reasons
       {'script': 'formatters-icons.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
-      #{'script': 'formatters-icons.js', 'version': '0.0.7', 'path': '', 'cdnjs': '/static'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -2091,6 +2090,31 @@ class ImportManager(object):
         #print(GOOGLE_EXTENSIONS[p])
     self._report._with_google_imports = True
     # add the launchers
+
+  def locals(self, aliases, end_points="/static"):
+    """
+    Description:
+    ------------
+    Short circuit the import mechanism and retrive the selected ones from a local static path.
+    This could help on the debugging and the improvement of the packages before submitting them for review.
+
+    Attributes:
+    ----------
+    :param aliases: List. Mandatory. The list of aliases
+    :param end_points: String. The end point on the server
+    """
+    global JS_IMPORTS
+    global CSS_IMPORTS
+
+    logging.warning("Routing packages %s locally this should not be put on a server !" % aliases)
+    for alias in aliases:
+      if alias in JS_IMPORTS:
+        for m in JS_IMPORTS[alias]['modules']:
+          m.update({'path': '', 'cdnjs': end_points})
+    for alias in aliases:
+      if alias in CSS_IMPORTS:
+        for m in CSS_IMPORTS[alias]['modules']:
+          m.update({'path': '', 'cdnjs': end_points})
 
 
 def npm(packages, path="", is_node_server=False, update=False):
