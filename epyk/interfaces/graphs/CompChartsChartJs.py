@@ -463,6 +463,7 @@ class ChartJs(object):
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(data['labels'])
+    radar_chart.options.scales.y_axis().display = False
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(d, data['series'][i])
     return radar_chart
