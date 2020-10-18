@@ -567,10 +567,12 @@ class Paragraph(Html.Html):
     return '''
       if (typeof options.reset === 'undefined' || options.reset){htmlObj.innerHTML = ''};
       if (typeof data === 'string' || data instanceof String){data = data.split('\\n')}; 
+      if(typeof data !== 'undefined'){
       data.forEach(function(line, i){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); line = converter.makeHtml(line)} 
         var p = document.createElement('p'); p.innerHTML = line;
-        htmlObj.appendChild(p)});
+        htmlObj.appendChild(p)})
+      }
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       '''
 
