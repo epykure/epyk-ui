@@ -1485,7 +1485,7 @@ class Body(Html):
                var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %(fncs)s}}
         rawFile.send(null)} 
       else {var data = window['page_config']; %(fncs)s}''' % {"lang": lang, 'url': end_point, 'json': self._report.json_config_file,
-          'fncs': JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
+            'fncs': JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
 
   def set_content(self, report, page_content):
     """

@@ -817,3 +817,20 @@ class SlideShow(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     rows = [htmlObj.html() for htmlObj in self.val]
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
+
+
+class Background(HtmlContainer.Div):
+
+  def build(self, data=None, options=None, profile=False):
+    if isinstance(data, dict):
+      js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()])
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or {}, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["%s: %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("%s: {%s}" % (k, ", ".join(row)))
+      else:
+        js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return '''%s.style.backgroundImage = "url('" + %s +"')"''' % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))

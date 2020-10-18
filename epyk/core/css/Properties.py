@@ -374,7 +374,8 @@ class CssMixin(object):
     :param size: String. The background size property
     :param repeat: String. The repeat property
     """
-    self.htmlObj.css({"background-image": "url(%a)" % val})
+    if val is not None:
+      self.htmlObj.css({"background-image": "url(%a)" % val})
     self.htmlObj.css({"background-size": size})
     self.htmlObj.css({"background-position": background_position})
     #self.htmlObj.css({"background-attachment": "fixed"})

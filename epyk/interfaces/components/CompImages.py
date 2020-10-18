@@ -150,7 +150,7 @@ class Images(object):
     div.style.css.padding = "auto"
     return div
 
-  def wallpaper(self, url, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center", htmlCode=None,
+  def wallpaper(self, url=None, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center", htmlCode=None,
                 position="middle", profile=None, options=None):
     """
     Description:
@@ -170,8 +170,13 @@ class Images(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
-    div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width), htmlCode=htmlCode, options=options, profile=profile)
-    div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
+    # report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
+    #                helper, options, profile
+    options = options or {}
+    div = html.HtmlImage.Background(self.context.rptObj, [], label=None, color=None, width=Arguments.size(width), icon=None,
+                                    height=Arguments.size(height), editable=False, align='left', padding=None, htmlCode=htmlCode,
+                                    tag='div', helper=None, options=options, profile=profile)
+    div.style.css.background_url(self.context.rptObj.py.encode_html(url) if url is not None else None, size=size, margin=margin)
     div.style.css.background_position = "center center"
     div.style.css.display = "block"
     div.style.css.text_align = align
