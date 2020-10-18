@@ -41,7 +41,9 @@ class ExternalLink(Html.Html):
       var text = data.text;
       if (options.type_number == 'money'){ text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
       else if (options.type_number == 'number'){text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
-      htmlObj.innerHTML = text; htmlObj.href = data.url'''
+      if(typeof data.icon !== 'undefined'){htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
+      else {htmlObj.innerHTML = text}
+      htmlObj.href = data.url'''
 
   def no_decoration(self, color=None):
     """

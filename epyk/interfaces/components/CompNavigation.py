@@ -725,7 +725,7 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def text(self, data, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+  def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -743,7 +743,7 @@ class Banners(object):
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
-      data = self.context.rptObj.ui.div(data, width=("auto", ""))
+      data = self.context.rptObj.ui.div(data, htmlCode=htmlCode, width=("auto", ""))
       data.style.css.display = "inline-block"
       data.style.css.text_align = align
       data.style.css.font_size = Defaults_css.font(size_notch)

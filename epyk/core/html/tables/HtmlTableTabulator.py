@@ -5,6 +5,7 @@ import hashlib
 
 from epyk.core.html import Html
 
+from epyk.core.js.html import JsHtmlTabulator
 from epyk.core.js.packages import JsTabulator
 from epyk.core.js.primitives import JsObjects
 
@@ -40,6 +41,19 @@ class Table(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Tabulator(self)
     return self._styleObj
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    HTML Dom object
+
+    :rtype: JsHtml.JsHtmlButton
+    """
+    if self._dom is None:
+      self._dom = JsHtmlTabulator.JsHtmlTabulator(self, report=self._report)
+    return self._dom
 
   @property
   def tableId(self):

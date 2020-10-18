@@ -1,21 +1,28 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-from epyk.core.js.objects import JsNodeDom
-from epyk.core.js.packages import JsTabulator
+from epyk.core.js.html import JsHtml
+from epyk.core.js.primitives import JsObjects
 
 
-class JsHtmlTabulator(JsNodeDom.JsDoms):
-
-  def __init__(self, htmlObj):
-    super(JsHtmlTabulator, self).__init__(htmlObj)
-    self._tabulator = None
+class JsHtmlTabulator(JsHtml.JsHtml):
 
   @property
-  def tabulator(self):
+  def val(self):
     """
+    Description:
+    -----------
+    Return a Javascript val object
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+      self.htmlCode, self.content.toStr()))
 
-    :return:
-    :rtype: JsTabulator.Tabulator
+  @property
+  def content(self):
     """
-    if self._tabulator is None:
-      self._tabulator = JsTabulator.Tabulator(self._src)
-    return self._tabulator
+    Description:
+    -----------
+
+    """
+    return JsHtml.ContentFormatters(self._report, "%s.getData()" % self._src.tableId)
