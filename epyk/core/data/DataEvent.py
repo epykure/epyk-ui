@@ -39,7 +39,7 @@ class DataConfig(object):
           var results = window['page_config']['%(key)s'];
           if(typeof window['page_config']['%(key)s'] === 'undefined'){return %(dflt)s}
           else {return results}
-        } else {return window['page_config']}
+        } else {return window['page_config']['%(key)s']}
       })(%(key)s)
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
