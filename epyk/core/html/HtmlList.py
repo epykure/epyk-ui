@@ -356,8 +356,7 @@ class Items(Html.Html):
           li.lastChild.style.display = 'inline-block';
           li.appendChild(close);
         }
-        li.style.margin = "5px 0";
-        li.style.padding = "2px 5px";
+        if(options.items_type != 'link'){li.style.margin = "5px 0"; li.style.padding = "2px 5px"}
         htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 
   @property

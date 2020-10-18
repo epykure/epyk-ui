@@ -24,7 +24,7 @@ class Image(Html.Html):
   name = 'Picture'
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
-    if path is None:
+    if path is None and image is not None:
       if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
@@ -88,7 +88,8 @@ class Image(Html.Html):
       ''' % Defaults.SERVER_PATH
 
   def __str__(self):
-    self.attr["src"] = "%(path)s/%(image)s" % self.val
+    if self.val["image"] is not None:
+      self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s />%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 

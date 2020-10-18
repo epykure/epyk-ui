@@ -753,10 +753,13 @@ class Col(Html.Html):
         self.__set_size = False
         return self
 
-      self.__set_size = "col-lg-%s" % n
+      if n.is_integer():
+        self.__set_size = "col-lg-%s" % int(n)
+      else:
+        self.__set_size = "col-lg"
       self.attr["class"].add(self.__set_size)
       if self.options.responsive:
-        self.attr["class"].add("col-md-%s" % min(n * 2, 12))
+        self.attr["class"].add("col-md-%s" % min(int(n) * 2, 12))
         self.attr["class"].add("col-12")
     return self
 
@@ -817,6 +820,8 @@ class Row(Html.Html):
         htmlObj = [htmlObj]
       # hack to propagate the height of the row to the underlying columns
       htmlObj = self._report.ui.layouts.col(htmlObj, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
+      htmlObj.style.css.margin_left = "auto"
+      htmlObj.style.css.margin_right = "auto"
       htmlObj.options.managed = False
     super(Row, self).__add__(htmlObj)
     return self
@@ -827,7 +832,7 @@ class Row(Html.Html):
       self.attr["class"].add('no-gutters')
     for i, htmlObj in enumerate(self.val):
       if hasattr(htmlObj, 'set_size') and self.options.autoSize:
-        htmlObj.set_size(12//len(self.val))
+        htmlObj.set_size(12.0 / len(self.val))
       cols.append(htmlObj.html() if hasattr(htmlObj, 'htmlObj') else str(htmlObj))
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
