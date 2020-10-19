@@ -17,7 +17,7 @@ class NavBar(Attrs):
     self.background_color = htmlObj._report.theme.greys[0]
     self.border_bottom = "1px solid %s" % htmlObj._report.theme.greys[4]
     self.top = 0
-    self.z_index = 10
+    self.z_index = 310
 
 
 class Footer(Attrs):

@@ -388,14 +388,21 @@ class ChartJs(object):
           if rec[y] is None:
             agg_data.setdefault(y, {})[rec[x_axis]] = rec[y]
           else:
-            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+            if hasattr(rec[y], "toStr"):
+              agg_data.setdefault(y, {})[rec[x_axis]] = rec[y]
+            else:
+              agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
     labels, data = OrderedSet(), []
     for c in y_columns:
       for x, y in agg_data.get(c, {}).items():
         labels.add(x)
     is_data["labels"] = labels
     for i, y in enumerate(y_columns):
-      is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
+      series = []
+      for x in labels:
+        value = agg_data.get(y, {}).get(x)
+        series.append(value)
+      is_data["datasets"].append(series)
       is_data["series"].append(y)
     return is_data
 

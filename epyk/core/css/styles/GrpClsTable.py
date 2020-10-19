@@ -181,6 +181,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tabulator_col, self._css_tabulator_col_content, self._css_tabulator_selected = None, None, None
     self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer = None, None, None
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp = None, None, None
+    self._css_tabulator_even_row_no_strip = None
     self.__strip = False
     self.classList['main'].add(self.cls_tabulator)
     self.classList['other'].add(self.cls_tabulator_row)
@@ -280,9 +281,9 @@ class Tabulator(GrpCls.ClassHtml):
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
-    if self._css_tabulator_even_row is None:
-      self._css_tabulator_even_row = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main']).tabulator_even_rows_no_strop()
-    return self._css_tabulator_even_row
+    if self._css_tabulator_even_row_no_strip is None:
+      self._css_tabulator_even_row_no_strip = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main']).tabulator_even_rows_no_strop()
+    return self._css_tabulator_even_row_no_strip
 
   @property
   def cls_tb_even_row(self):
@@ -366,10 +367,14 @@ class Tabulator(GrpCls.ClassHtml):
       self._css_tabulator_headers = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_headers()
     return self._css_tabulator_headers
 
-  def get_classes(self):
+  def get_classes_css(self):
+    """
+
+    :return:
+    """
     if not self.__strip:
       self.classList['main'].add(self.cls_tabulator_even_row_no_strip)
-    return super(Tabulator, self).get_classes()
+    return super(Tabulator, self).get_classes_css()
 
 
 class Pivot(GrpCls.ClassHtml):

@@ -210,7 +210,8 @@ class ChartJs(JsPackage):
             if (dataset.type == 'line'){dataset.fill = false; dataset.pointRadius = 1}}
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
             dataset.backgroundColor = chartColors[i]; dataset.fillOpacity = 0.8}
-          else if (['polarArea', 'pie'].includes(dataset.type)){dataset.backgroundColor = chartColors}
+          else if (['polarArea', 'pie'].includes(dataset.type)){
+            dataset.backgroundColor = chartColors}
       } else {dataset.backgroundColor = chartColors[i]; dataset.borderColor = chartColors[i];}
       
       })

@@ -1015,7 +1015,7 @@ class Tabulator(JsPackage):
     columna = JsUtils.jsConvertData(columna, None)
     return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columna, self.varId))
 
-  def columns(self, headers=None, rows=None, values=None):
+  def columns(self, headers=None, rows=None, values=None, options=None):
     """
     Description:
     -----------
@@ -1031,13 +1031,29 @@ class Tabulator(JsPackage):
 
     if headers is not None:
       # If this variable is used it means the definition should be fully supplied and the default style will not be applied
-      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(headers).toStr()))
+      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(headers, options=options).toStr()))
 
     if rows is not None or values is not None:
       rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
       values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
-      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(),
-          "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
+      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
+
+  def values(self, jsData, columns=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param columns:
+    """
+    if columns is None:
+      # Just replce the data in the table
+      return self._parent.build(jsData)
+
+    # Change the columns and replace them with the new ones
+    return self._parent.build(jsData)
 
   @property
   def getColumns(self):
@@ -1080,7 +1096,7 @@ class Tabulator(JsPackage):
     position = JsUtils.jsConvertData(position, None)
     return JsObjects.JsPromise("%s.addColumn(%s, %s, %s)" % (self.varId, jsData, position, before))
 
-  def addColumns(self, jsData, before=False, position=""):
+  def addColumns(self, jsData, before=False, position="", options=None):
     """
     Description:
     -----------
@@ -1094,7 +1110,8 @@ class Tabulator(JsPackage):
     jsData = JsUtils.jsConvertData(jsData, None)
     before = JsUtils.jsConvertData(before, None)
     position = JsUtils.jsConvertData(position, None)
-    return JsObjects.JsPromise("%s.forEach(function(row){if(typeof row === 'string'){row = {field: row, title: row}}; %s.addColumn(row, %s, %s)})" % (jsData, self.varId, position, before))
+    options = options or {}
+    return JsObjects.JsPromise("%s.forEach(function(row){if(typeof row === 'string'){row = Object.assign(%s, {field: row, title: row})}; %s.addColumn(row, %s, %s)})" % (jsData, options, self.varId, position, before))
 
   def deleteColumn(self, jsData):
     """
@@ -1254,4 +1271,4 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.getData()" % self.varId)
+    return JsObjects.JsArray.JsArray("%s.getData()" % self.varId)

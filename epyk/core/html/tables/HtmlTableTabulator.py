@@ -5,6 +5,7 @@ import hashlib
 
 from epyk.core.html import Html
 
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlTabulator
 from epyk.core.js.packages import JsTabulator
 from epyk.core.js.primitives import JsObjects
@@ -29,6 +30,16 @@ class Table(Html.Html):
     if records is not None:
       self.config.data = records
     self.style.css.background = None
+
+  @property
+  def cell(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    return JsHtmlTabulator.JsHtmlTabulatorCell(self.tableId, self._report)
 
   @property
   def style(self):
@@ -1612,6 +1623,106 @@ http://tabulator.info/docs/4.2/options
   def clipboard(self, val):
     self._attrs["clipboard"] = val
 
+  def cellClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellClick"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def cellDblClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis using the option in the columns definition object
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellDblClick"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def cellContext(self, jsFncs):
+    """
+    Description:
+    -----------
+    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellContext"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def cellEditCancelled(self, jsFncs):
+    """
+    Description:
+    -----------
+    The cellEdited callback is triggered when data in an editable cell is changed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellEditCancelled"] = JsObjects.JsVoid("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def cellEdited(self, jsFncs):
+    """
+    Description:
+    -----------
+    The cellEdited callback is triggered when data in an editable cell is changed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellEdited"] = JsObjects.JsVoid("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
   @property
   def clipboardPasteAction(self):
     """
@@ -1684,6 +1795,21 @@ http://tabulator.info/docs/4.2/options
   @data.setter
   def data(self, val):
     self._attrs["data"] = val
+
+  @property
+  def fitColumns(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+      http://tabulator.info/examples/3.2
+    """
+    return self._attrs["fitColumns"]
+
+  @fitColumns.setter
+  def fitColumns(self, val):
+    self._attrs["fitColumns"] = val
 
   @property
   def groupBy(self):
@@ -1862,7 +1988,19 @@ http://tabulator.info/docs/4.2/options
 
   @movableRowsConnectedTables.setter
   def movableRowsConnectedTables(self, val):
-    self._attrs["movableRowsConnectedTables"] = val
+    if hasattr(val, 'htmlCode'):
+      self._attrs["movableRowsConnectedTables"] = "#%s" % val.htmlCode
+    else:
+      if isinstance(val, list):
+        vals = []
+        for v in val:
+          if hasattr(v, 'htmlCode'):
+            vals.append("#%s" % v.htmlCode)
+          else:
+            vals.append(v)
+        self._attrs["movableRowsConnectedTables"] = vals
+      else:
+        self._attrs["movableRowsConnectedTables"] = val
 
   @property
   def movableRowsReceiver(self):

@@ -539,6 +539,7 @@ class DropFile(Html.Html):
     self.container.css({"display": "inline-block", 'text-align': 'center', "color": self._report.theme.success[0],
                         'border': "1px dashed %s" % report.theme.colors[-1]})
     self.container.style.css.bold()
+    self.container.style.css.background = report.theme.greys[0]
     self.container.add(self._report.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
     self.container.options.managed = False
     self.text = self._report.ui.text()

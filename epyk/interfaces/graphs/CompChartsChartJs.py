@@ -1,6 +1,7 @@
 
 import os
 
+from epyk.core.css import Colors
 from epyk.core.html import graph
 
 
@@ -429,10 +430,13 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2]) for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, 'x_column': x_axis, "bgColors": bgColors,
+                    'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     polar_chart = graph.GraphChartJs.ChartPolar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     polar_chart.labels(data['labels'])
+    polar_chart.options.scales.y_axis().display = False
     for i, d in enumerate(data['datasets']):
       polar_chart.add_dataset(d, data['series'][i])
     return polar_chart

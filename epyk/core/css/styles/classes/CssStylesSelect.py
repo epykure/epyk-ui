@@ -58,7 +58,7 @@ class CssSelectOption(CssStyle.Style):
   def customize(self):
     self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
               'background-color': self.rptObj.theme.greys[0],
-              'z-index': 200}, important=True)
+              'z-index': 110}, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):

@@ -13,6 +13,47 @@ from epyk.core.js.packages import JsChartJs
 from epyk.core.js.packages import JsD3
 
 
+class ChartJsActivePoints(object):
+
+  def __init__(self, chartId, i, page):
+    self.chartId = chartId
+    self.num = i
+    self._report = page
+
+  @property
+  def label(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("%s.data.labels[activePoints[%s]._index]" % (self.chartId, self.num))
+
+  @property
+  def dataset(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("activePoints[%s]['_model'].label" % self.num)
+
+  @property
+  def value(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("%s.data.datasets[activePoints[%s]._datasetIndex].data[activePoints[%s]._index]" % (self.chartId, self.num, self.num))
+
+
 class Chart(Html.Html):
   name = 'ChartJs Chart'
   requirements = ('Chart.js', )
@@ -23,6 +64,17 @@ class Chart(Html.Html):
     self._d3, self._chart, self._datasets, self._options, self._data_attrs, self._attrs = None, None, [], None, {}, {}
     self._options_init = options
     self.style.css.margin_top = 10
+
+  def activePoints(self, i=0):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param i:
+    """
+    return ChartJsActivePoints(self.chartId, i, self._report)
 
   @property
   def chartId(self):
@@ -72,6 +124,7 @@ class Chart(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlCharts.ChartJs
     """
     if self._dom is None:
@@ -210,7 +263,27 @@ class Chart(Html.Html):
       mod_name, self.builder_name, self._js__convertor__)
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      tmp_data = []
+      for k, v in data.items():
+        if isinstance(v, list):
+          row = []
+          for i in v:
+            if isinstance(i, list):
+              sub_row = []
+              for j in i:
+                if hasattr(j, "toStr"):
+                  sub_row.append(j.toStr())
+                else:
+                  sub_row.append(JsUtils.jsConvertData(j, None).toStr())
+              row.append("[%s]" % ", ".join(sub_row))
+            else:
+              if hasattr(i, "toStr"):
+                row.append(i.toStr())
+              else:
+                row.append(JsUtils.jsConvertData(i, None).toStr())
+          tmp_data.append("%s: [%s]" % (JsUtils.jsConvertData(k, None), ", ".join(row)))
+        else:
+          tmp_data.append("%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
@@ -227,6 +300,8 @@ class Chart(Html.Html):
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
     if not 'colors' in js_keys:
       js_options.append("colors: %s" % JsUtils.jsConvertData(self._options_init['colors'], None))
+    if not 'bgColors' in js_keys and 'bgColors' in self._options_init:
+      js_options.append("bgColors: %s" % JsUtils.jsConvertData(self._options_init['bgColors'], None))
     if not 'attrs' in js_keys:
       js_options.append('attrs: %s' % JsUtils.jsConvertData(self._options_init['attrs'], None))
     return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
@@ -304,7 +379,7 @@ class ChartLine(Chart):
   def _js__convertor__(self):
     return '''
       if(data.python){
-        result = {datasets: [], labels: data.series};
+        result = {datasets: [], labels: data.labels};
         data.datasets.forEach(function(rec, i){
         result.datasets.push({label: data.series[i], data: rec, backgroundColor: options.colors[i], borderColor: options.colors[i]} )
         })}
@@ -476,9 +551,9 @@ class ChartPolar(Chart):
             if(rec[name] !== undefined){
               if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
               temp[name][rec[options.x_axis]] = rec[name]}})});
-        result = {datasets: [], labels: labels}; 
+        result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
-          dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors};
+          dataSet = {label: series, data: [], backgroundColor: options.bgColors, borderColor: options.colors};
           for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
