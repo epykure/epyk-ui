@@ -753,7 +753,7 @@ class Col(Html.Html):
         self.__set_size = False
         return self
 
-      if n.is_integer():
+      if isinstance(n, int) or n.is_integer():
         self.__set_size = "col-lg-%s" % int(n)
       else:
         self.__set_size = "col-lg"

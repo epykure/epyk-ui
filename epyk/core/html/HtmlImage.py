@@ -205,16 +205,17 @@ class ImgCarrousel(Html.Html):
   def __str__(self):
     self.container._vals = self.items
     self.attr['data-last_picture'] = len(self.items)-1
-    points = self._report.ui.navigation.points(len(self.items), htmlCode="%s_points" % self.htmlCode)
-    points.options.managed = False
-    points.style.css.cursor = "pointer"
-    if not self.__point_display:
-      points.style.css.display = 'none'
-    points.click([
-      self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
-      self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
-    ] + self.__click_items)
-
+    if not "%s_points" % self.htmlCode in self._report.components:
+      points = self._report.ui.navigation.points(len(self.items), htmlCode="%s_points" % self.htmlCode, options={"managed": False})
+      points.style.css.cursor = "pointer"
+      if not self.__point_display:
+        points.style.css.display = 'none'
+      points.click([
+        self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
+        self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
+      ] + self.__click_items)
+    else:
+      points = self._report.components["%s_points" % self.htmlCode]
     if hasattr(self.next, 'html'):
       self.next.click([
         data.primitives.float(self.dom.attr("data-current_picture").toString().parseFloat().add(1), 'picture_index'),

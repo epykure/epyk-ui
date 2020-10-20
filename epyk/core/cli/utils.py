@@ -47,8 +47,10 @@ def get_page(mod, template=False):
       from epyk_studio.core.Page import Report
 
       page = Report()
+      page.json_config_file = mod.__name__
     except:
       page = Report()
+      page.json_config_file = mod.__name__
     if template and hasattr(mod, 'INPUTS'):
       page.inputs = {i: "%%(%s)s" % i for i in mod.INPUTS}
     mod.get_page(page)
