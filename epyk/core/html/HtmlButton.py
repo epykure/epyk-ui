@@ -30,6 +30,8 @@ class Button(Html.Html):
     self.add_icon(icon)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
+    if icon is not None:
+      self.icon.style.css.color = "inherit"
     self.__options = OptButton.OptionsButton(self, options or {})
     self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)

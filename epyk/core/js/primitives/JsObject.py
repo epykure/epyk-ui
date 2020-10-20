@@ -835,7 +835,9 @@ class JsObject(object):
           var delimiter = %(delimiter)s; if (delimiter == 'TAB'){delimiter = '\\t'};
           var rows = %(varName)s.split('\\n'); var results = []; var header = String(rows[0]).replace(/^\s+|\s+$/g, '').split(delimiter);
           for(var i = 1; i < rows.length; i++){
-            var row = {}; String(rows[i]).replace(/^\s+|\s+$/g, '').split(delimiter).forEach(function(rec, j){row[header[j]] = rec}); results.push(row);
+            var row = {}; var line = String(rows[i]).replace(/^\s+|\s+$/g, '');
+            if(line != ""){
+              line.split(delimiter).forEach(function(rec, j){row[header[j]] = rec}); results.push(row)}
           }; return results})()''' % {"varName": self.varName, "delimiter": delimiter})
 
   def __str__(self):
