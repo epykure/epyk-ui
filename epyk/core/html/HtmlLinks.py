@@ -38,6 +38,7 @@ class ExternalLink(Html.Html):
   @property
   def _js__builder__(self):
     return '''
+      if(typeof data === 'undefined'){ data = {text: ''}}
       var text = data.text;
       if (options.type_number == 'money'){ text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
       else if (options.type_number == 'number'){text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}

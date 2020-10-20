@@ -101,7 +101,7 @@ class Buttons(object):
       html_button.style.css.display = "block"
     return html_button
 
-  def colored(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
+  def colored(self, text="", icon=None, color=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------
@@ -141,8 +141,8 @@ class Buttons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     component = self.button(text, icon, width, height, align, htmlCode, tooltip, profile, options)
-    component.style.css.background = self.context.rptObj.theme.colors[-1]
-    component.style.css.border = "1px solid %s" % self.context.rptObj.theme.colors[-1]
+    component.style.css.background = color or self.context.rptObj.theme.colors[-1]
+    component.style.css.border = "1px solid %s" % (color or self.context.rptObj.theme.colors[-1])
     component.style.css.color = self.context.rptObj.theme.colors[0]
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5

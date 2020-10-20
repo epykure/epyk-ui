@@ -448,7 +448,7 @@ class MarkdownReader(Html.Html):
       div.style.css.border_radius = 5
       div.style.css.border = "1px solid %s" % self._report.theme.greys[5]
       self.onReady('''
-        function showTooltip(source, content){ console.log('test');
+        function showTooltip(source, content){
             source.style.cursor = 'help'; document.querySelector('#markdown_tooltip').innerHTML = content;  
             document.querySelector('#markdown_tooltip').style.left = event.pageX + 15 + 'px'; 
             document.querySelector('#markdown_tooltip').style.top = event.pageY + 5 + 'px';

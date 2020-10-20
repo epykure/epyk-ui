@@ -107,6 +107,21 @@ class KeyCode(object):
     """
     self.custom("(event.shiftKey) && (event.which == %s)" % ord(key), jsFnc, profile, source_event)
 
+  def save(self, jsFnc, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    :param source_event: String. Optional. The source component for the event
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self.custom("(event.ctrlKey) && (event.which == 83)", ["event.preventDefault()"] + jsFnc + ["return false"], profile, source_event)
+
   def shift(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:

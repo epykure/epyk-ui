@@ -1452,7 +1452,7 @@ class Body(Html):
       jsFncs = [jsFncs]
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
-  def fromConfig(self, jsFncs=None, components=None, lang="eng", end_point="/static/configs"):
+  def fromConfig(self, jsFncs=None, components=None, lang="eng", end_point="/static/configs", sync=True):
     """
     Description:
     -----------
@@ -1479,12 +1479,12 @@ class Body(Html):
       if (typeof window['page_config'] === 'undefined'){
         var rawFile = new XMLHttpRequest(); const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString); var lang = urlParams.get('lang') || '%(lang)s'; 
-        rawFile.overrideMimeType("application/json"); rawFile.open("GET", "%(url)s/"+ lang +"/%(json)s.json", true);
+        rawFile.overrideMimeType("application/json"); rawFile.open("GET", "%(url)s/"+ lang +"/%(json)s.json", %(sync)s);
         rawFile.onreadystatechange = function() {
             if (rawFile.readyState === 4 && rawFile.status == "200") {
                var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %(fncs)s}}
         rawFile.send(null)} 
-      else {var data = window['page_config']; %(fncs)s}''' % {"lang": lang, 'url': end_point, 'json': self._report.json_config_file,
+      else {var data = window['page_config']; %(fncs)s}''' % {"sync": JsUtils.jsConvertData(not sync, None), "lang": lang, 'url': end_point, 'json': self._report.json_config_file,
             'fncs': JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
 
   def set_content(self, report, page_content):
