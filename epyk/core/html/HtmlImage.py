@@ -80,11 +80,12 @@ class Image(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      if (typeof data !== 'string'){
-        if(typeof data.path === 'undefined'){data.path = '%s'};
+      if ((typeof data !== 'string') && (typeof data !== 'undefined')){
+        if(typeof data.path === 'undefined'){data.path = '%s'}
         htmlObj.src = data.path + "/" + data.image}
-      else { htmlObj.src = data }
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+      else {htmlObj.src = data}
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}} 
+      htmlObj.setAttribute("onerror", "this.parentElement.innerHTML = ''");
       ''' % Defaults.SERVER_PATH
 
   def __str__(self):

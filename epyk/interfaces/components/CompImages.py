@@ -279,7 +279,7 @@ class Images(object):
     html_image.style.css.border_radius = width[0]
     return html_image
 
-  def avatar(self, text=None, image=None, path=None, status=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
+  def avatar(self, text="", image="", path=None, status=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
                profile=None, options=None):
     """
     Description:

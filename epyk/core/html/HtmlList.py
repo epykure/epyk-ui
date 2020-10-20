@@ -345,7 +345,6 @@ class Items(Html.Html):
         var li = document.createElement("li");
         if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
         else{window['%(alias)s' + item.type](li, item, options)};
-        
         if(options.delete){
           var close = document.createElement("i");
           close.classList.add("fas"); close.classList.add(options.delete_icon);

@@ -41,6 +41,64 @@ class JsItemsDef(object):
     if(typeof data === 'object'){ item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
+  def tweet(self, report):
+    """
+    Description:
+    ------------
+    Add text items to the list
+
+    Attributes:
+    ----------
+    :param report: Page object. The internal page object
+    """
+    item_def = '''
+    if (typeof data.time === 'undefined'){
+      const d = new Date();
+      data.time = d.getFullYear() + '-' +('0' + (d.getMonth()+1)).slice(-2)+ '-' +  ('0' + d.getDate()).slice(-2) + ' '+d.getHours()+ ':'+('0' + (d.getMinutes())).slice(-2)+ ':'+d.getSeconds()
+    }
+    
+    function hashCode(str) { // java String#hashCode
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {hash = str.charCodeAt(i) + ((hash << 5) - hash);}
+        return hash;
+    }
+
+    function intToRGB(i){
+        var c = (i & 0x00FFFFFF).toString(16).toUpperCase();return "00000".substring(0, 6 - c.length) + c;
+    }
+    
+    var item = document.createElement("DIV");  
+    var title = document.createElement("DIV");  
+    var titleValue = document.createElement("DIV");  
+    titleValue.innerHTML = data.title;  titleValue.style.fontWeight = "bold"
+    titleValue.style.fontSize = "25px"; titleValue.style.display = "inline-block";
+    item.style.verticalAlign = "top";
+    
+    var dtime = document.createElement("DIV"); dtime.style.display = "inline-block"; dtime.style.fontSize = "18px";
+    dtime.innerHTML = "@"+ data.time; title.appendChild(titleValue); title.appendChild(dtime);
+    dtime.style.fontStyle = 'italic'; dtime.style.marginLeft = '5px';
+    
+    var msg = document.createElement("DIV");  msg.style.display = "inline-block"; msg.style.width = "calc(100% - 80px)";
+    msg.style.padding = "2px";
+    
+    var avatar = document.createElement("DIV"); avatar.style.color = "white";
+    avatar.style.background = "#"+ intToRGB(hashCode(data.author[data.author.length-1])); avatar.innerHTML = data.author;
+    avatar.style.width = "60px"; avatar.style.height = "60px"; avatar.style.borderRadius = "60px";
+    avatar.style.display = "inline-block"; avatar.style.margin = "5px"; avatar.style.fontWeight = "bold";
+    avatar.style.fontSize = "40px"; avatar.style.textAlign = "center"; avatar.style.verticalAlign = "top";
+    
+    title.setAttribute('name', 'value'); item.setAttribute('data-valid', true);
+    
+    var content = document.createElement("DIV"); content.innerHTML = data.content;
+    
+    msg.appendChild(title);
+    msg.appendChild(content);
+    
+    item.appendChild(avatar);
+    item.appendChild(msg);
+    '''
+    return self._item(item_def)
+
   def icon(self, report):
     """
     Description:
