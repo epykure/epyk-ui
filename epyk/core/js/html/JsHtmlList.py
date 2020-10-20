@@ -96,6 +96,9 @@ class JsItemsDef(object):
     
     item.appendChild(avatar);
     item.appendChild(msg);
+    item.style.margin = "10px 5px";
+    item.style.padding = "5px";
+    item.style.border = "1px solid #e9e9e9";
     '''
     return self._item(item_def)
 
