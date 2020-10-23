@@ -160,6 +160,32 @@ class Table(Html.Html):
 
     return 'var %s =  new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
 
+  def loading(self, status=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param status:
+    """
+    if status:
+      return ''' 
+        if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+          var divLoading = document.createElement("div"); 
+          window['popup_loading_%(htmlId)s'] = divLoading; 
+          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
+          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; divLoading.style.zIndex = 200;
+          divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; divLoading.style.paddingTop = '50vh';
+          divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+          document.getElementById('%(htmlId)s').appendChild(divLoading)
+        } ''' % {"htmlId": self.htmlCode, 'color': self._report.theme.success[1], 'background': self._report.theme.greys[0]}
+
+    return '''
+      if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
+        document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
+        window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
+
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

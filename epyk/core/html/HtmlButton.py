@@ -62,7 +62,26 @@ class Button(Html.Html):
 
   @property
   def _js__builder__(self):
-    return "htmlObj.innerHTML = data"
+    return "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
+
+  def loading(self, status=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param status:
+    """
+    if status:
+      self.dom.setAttribute("data-content", self.dom.content)
+      self.dom.innerHTML("<i class='fas fa-cog fa-spin' style='margin-right:5px'></i>Processing...")
+      self.dom.setAttribute("data-processing", True)
+      return self.dom.r
+
+    self.dom.innerHTML(self.dom.getAttribute("data-content"))
+    self.dom.setAttribute("data-processing", False)
+    return self.dom.r
 
   def no_background(self):
     """

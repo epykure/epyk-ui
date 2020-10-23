@@ -547,7 +547,6 @@ class DropFile(Html.Html):
     self.text.style.css.font_factor(-2)
     self.text.style.css.color = self._report.theme.greys[5]
     self.text.options.managed = False
-    self.text.tooltip("File details")
     self.text.style.css.margin_bottom = 5
     self.delimiter = self._report.ui.text(delimiter, width=(25, 'px'), htmlCode="%s_delimiter" % self.htmlCode, options={"editable": True})
     self.delimiter.options.managed = False

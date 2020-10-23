@@ -176,7 +176,7 @@ class DataFilters(object):
     data = JsUtils.jsConvertData(data, None)
     name = "filterMatch"
     constructors[name] = '''
-       function %s(r, v){if(v.length == 0){return r}; var n=[];r.forEach(function(e){var isValid = true;
+       function %s(r, v){if(typeof r === 'undefined'){ return []}; if(v.length == 0){return r}; var n=[];r.forEach(function(e){var isValid = true;
            for(const a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n.push(e)}}); return n}''' % name
     self.__filters.add("%s(%%s, %s)" % (name, data))
     return self
