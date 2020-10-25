@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-
 
 class DataConfig(object):
 
@@ -44,7 +42,44 @@ class DataConfig(object):
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
 
+class TabulatorEvents(object):
+
+  @property
+  def row(self):
+    """
+
+    :return:
+    """
+    from epyk.core.js.packages import JsTabulator
+
+    return JsTabulator.RowComponent(setVar=False, varName=None)
+
+  @property
+  def cell(self):
+    """
+
+    :return:
+    """
+    from epyk.core.js.packages import JsTabulator
+
+    return JsTabulator.CellComponent(setVar=False, varName=None)
+
+  @property
+  def column(self):
+    """
+
+    :return:
+    """
+    from epyk.core.js.packages import JsTabulator
+
+    return JsTabulator.ColumnComponent(setVar=False, varName=None)
+
+
 class DataEvents(object):
+
+  @property
+  def tabulator(self):
+    return  TabulatorEvents()
 
   @property
   def files(self):

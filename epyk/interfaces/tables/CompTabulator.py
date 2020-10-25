@@ -38,6 +38,8 @@ class Tabulators(object):
     table.config.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
+    if rows:
+      table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
     return table
 
   def hierarchy(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):

@@ -1000,7 +1000,7 @@ class Tabulator(JsPackage):
     column = JsUtils.jsConvertData(column, None)
     return JsObjects.JsPromise("%s.hideColumn(%s)" % (self.varId, column))
 
-  def hideColumns(self, columna):
+  def hideColumns(self, columns):
     """
     You can hide a visible column at any point using the hideColumn function. Pass the field name of the column you wish to hide as the first parameter of the function.
 
@@ -1010,10 +1010,10 @@ class Tabulator(JsPackage):
     Documentation
     http://tabulator.info/docs/4.5/columns#addColumn
 
-    :param column:
+    :param columns:
     """
-    columna = JsUtils.jsConvertData(columna, None)
-    return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columna, self.varId))
+    columns = JsUtils.jsConvertData(columns, None)
+    return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columns, self.varId))
 
   def columns(self, headers=None, rows=None, values=None, options=None):
     """
@@ -1025,6 +1025,7 @@ class Tabulator(JsPackage):
     :param headers:
     :param rows:
     :param values:
+    :param options:
     """
     if headers is None and rows is None and values is None:
       raise Exception("Header, rows or values must be defined")
@@ -1034,11 +1035,21 @@ class Tabulator(JsPackage):
       return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), self.addColumns(headers, options=options).toStr()))
 
     if rows is not None or values is not None:
-      rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
-      values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
-      return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
+      rows_fields = self._parent.options.get({}, "rows_def").get("fields", [])
+      if rows is None and rows_fields:
+        print(rows_fields)
+        values = JsObjects.JsObjects.get(
+          "(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (
+          JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
+        return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach(
+          "if(!(%s.includes(rec.getField()))){rec.delete()}" % rows_fields
+        ).toStr(), self.addColumns(values).toStr()))
+      else:
+        rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
+        values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
+        return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
 
-  def values(self, jsData, columns=None):
+  def values(self, jsData, columns=None, options=None):
     """
     Description:
     -----------
@@ -1047,13 +1058,14 @@ class Tabulator(JsPackage):
     ----------
     :param jsData:
     :param columns:
+    :param options:
     """
     if columns is None:
-      # Just replce the data in the table
+      # Just replace the data in the table
       return self._parent.build(jsData)
 
     # Change the columns and replace them with the new ones
-    return self._parent.build(jsData)
+    return JsUtils.jsConvertFncs([self.columns(values=columns, options=options), self._parent.build(jsData)], toStr=True)
 
   @property
   def getColumns(self):

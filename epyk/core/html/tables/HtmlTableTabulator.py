@@ -154,6 +154,26 @@ class Table(Html.Html):
       if c._attrs['field'] in colsDef:
         c._attrs.update(colsDef[c._attrs['field']])
 
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    Use a rowClick event as underlying click event.
+
+    Use the function row.getData() to make the data available
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.config.rowClick(["var data = row.getData()"] + jsFncs)
+    return self
+
   def build(self, data=None, options=None, profile=False):
     if data:
       return self.js.setData(data)
@@ -1903,6 +1923,106 @@ http://tabulator.info/docs/4.2/options
   def groupValues(self, val):
     self._attrs["groupValues"] = val
 
+  def headerClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerClick"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def headerDblClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerDblClick"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def headerContext(self, jsFncs):
+    """
+    Description:
+    -----------
+    The headerContext callback is triggered when a user right clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerContext"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def headerTap(self, jsFncs):
+    """
+    Description:
+    -----------
+    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerTap"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def headerDblTap(self, jsFncs):
+    """
+    Description:
+    -----------
+    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under 300ms, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerDblTap"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
   @property
   def height(self):
     """
@@ -2228,6 +2348,168 @@ http://tabulator.info/docs/4.2/options
   @resizableColumns.setter
   def resizableColumns(self, val):
     self._attrs["resizableColumns"] = val
+
+  def rowAdded(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowAdded callback is triggered when a row is added to the table by the addRow and updateOrAddRow functions.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowAdded"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowClick callback is triggered when a user clicks on a row.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowDblClick(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowDblClick callback is triggered when a user double clicks on a row.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowDblClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowDelete(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowDeleted callback is triggered when a row is deleted from the table by the deleteRow function.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowDelete"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowContext(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowContext callback is triggered when a user right clicks on a row.
+
+    If you want to prevent the browsers context menu being triggered in this event you will need to include the preventDefault() function in your callback.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowContext"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowMove(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowMoved callback will be triggered when a row has been successfuly moved.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowMove"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowTap(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowTap callback is triggered when a user taps on a row on a touch display.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowTap"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowUpdated(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or updateOrAddData, functions.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowUpdated"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
   @property
   def selectable(self):
