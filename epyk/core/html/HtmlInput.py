@@ -775,7 +775,8 @@ class FieldSelect(Field):
   name = 'Field Select'
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.select(report.inputs.get(htmlCode, value), width=(100, "%"), options=options)
+    input = report.ui.select(report.inputs.get(htmlCode, value), "%s_input" % htmlCode if htmlCode is not None else htmlCode,
+                             width=(100, "%"), options=options)
     super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
 
 

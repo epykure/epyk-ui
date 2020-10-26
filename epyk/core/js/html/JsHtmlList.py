@@ -610,12 +610,11 @@ class Tags(JsHtml.JsHtmlRich):
     :param text: String. The item text
     :param category: String. The item category
     """
-    text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObjects.get(''' 
-      (function(dom){var index = -1; var children = dom.childNodes; var count = 0;
-        for(child in children){if((typeof children[child] === 'object') && children[child].querySelector('span[name=chip_value]').textContent == %s){
-            if(children[child].getAttribute('data-category') == %s){ index = count; break; }
-        }; count++; }; return index})(%s)''' % (text, category, self.querySelector("div[name=panel]")))
+      (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
+        for(child in children){if((typeof children[child] === 'object') && children[child].querySelector('span[name=chip_value]').textContent == %(tezt)s){
+            if(children[child].getAttribute('data-category') == %(category)s){ index = count; break; }
+        }; count++; }; return index})(%(panel)s)''' % {"tezt": text, "category": category, "panel": self.querySelector("div[name=panel]")})
 
   def values(self, category=None):
     if category is None:
@@ -726,5 +725,6 @@ class Tags(JsHtml.JsHtmlRich):
     if category is None:
       category = self._src._jsStyles['category']
     category = JsUtils.jsConvertData(category, None)
+    text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObjects.get('''var itemPos = %(duplicated)s; if (itemPos >= 0){ %(panel)s.childNodes[itemPos].remove()}
       ''' % {'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]")})

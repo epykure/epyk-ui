@@ -45,7 +45,8 @@ class Lists(object):
       data = [result[k] for k in sorted(result.keys())]
     return data
 
-  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"), column=None, filter=None, profile=None, multiple=False, options=None):
+  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+             column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
     ------------
