@@ -200,7 +200,7 @@ class AutoComplete(Input):
 
   @property
   def _js__builder__(self):
-    return "jQuery(htmlObj).autocomplete(options)"
+    return "if(typeof data === 'object'){jQuery(htmlObj).autocomplete(Object.assign(data, options))} else{jQuery(htmlObj).autocomplete(options)}"
 
   @property
   def options(self):

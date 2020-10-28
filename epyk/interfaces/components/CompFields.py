@@ -14,12 +14,75 @@ except:
 
 
 from epyk.core import html
+from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 
 
 class Fields(object):
   def __init__(self, context):
     self.context = context
+
+  def text(self, text="", color=None, align='left', width=(None, "px"), height=(None, "px"),
+           htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
+    """
+    Description:
+    ------------
+    Add the HTML text component to the page
+
+    Usage::
+
+      rptObj.ui.text("this is a test")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Text`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_font.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
+
+    Attributes:
+    ----------
+    :param text: The string value to be displayed in the component
+    :param color: Optional. The color of the text
+    :param align: Optional. The position of the icon in the line (left, right, center)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. The component options
+    :param helper:
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width, unit="px")
+    if width[0] is None:
+      width = (Defaults.TEXTS_SPAN_WIDTH, width[1])
+    height = Arguments.size(height, unit="px")
+    dfl_options = {"reset": False, "markdown": False, "maxlength": None}
+    if options is not None:
+      dfl_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
+
+    if width[0] == 'auto':
+      text_comp.style.css.display = "inline-block"
+    if align in ["center", 'right']:
+      text_comp.style.css.margin = "auto"
+      text_comp.style.css.display = "block"
+    text_comp.style.css.display = "inline-block"
+    text_comp.style.css.text_align = "left"
+    text_comp.style.css.vertical_align = "top"
+    text_comp.style.css.margin = "0 5px"
+    text_comp.style.css.line_height = Defaults.LINE_HEIGHT
+    return text_comp
 
   def date(self, value, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"), htmlCode=None,
             profile=None, options=None, helper=None):

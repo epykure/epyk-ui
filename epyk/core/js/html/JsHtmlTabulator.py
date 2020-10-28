@@ -76,3 +76,13 @@ class JsHtmlTabulator(JsHtml.JsHtml):
 
     """
     return JsHtml.ContentFormatters(self._report, "%s.getData()" % self._src.tableId)
+
+  @property
+  def headers(self):
+    """
+    Description:
+    -----------
+
+
+    """
+    return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self._src.tableId)

@@ -39,6 +39,7 @@ class ChartJs(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
+    line_chart.options.scales.y_axis().ticks.beginAtZero = True
     return line_chart
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -217,6 +218,7 @@ class ChartJs(object):
     for i, d in enumerate(data['datasets']):
       bar_chart.add_dataset(d, data['series'][i])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
+    bar_chart.options.scales.x_axes().offset = True
     return bar_chart
 
   def custom(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
