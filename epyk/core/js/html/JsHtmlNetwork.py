@@ -105,9 +105,9 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     ------------
     Return the values of the items in the list.
     """
-    return JsObjects.JsArray.JsArray.get("window['%s_data']" % self._src.htmlCode)
+    return JsObjects.JsArray.JsArray.get("(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {"htmlCode": self._src.htmlCode})
 
-  def store(self, delimiter=None, format=None):
+  def store(self, delimiter=None, format=None, varName=None):
     """
     Description:
     ------------
@@ -118,14 +118,28 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     """
     delimiter = delimiter or self._src.options.delimiter
     format = format or self._src.options.format
+    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
     if format.endswith("json"):
       value = events.data.jsonParse()
     else:
       value = events.data.fileToDict(delimiter)
-    return JsObjects.JsVoid("window['%s_data'] = %s" % (self._src.htmlCode, JsUtils.jsConvertData(value, None)))
+    return JsObjects.JsVoid("window[%s] = %s" % (varName, JsUtils.jsConvertData(value, None)))
 
-  def load(self, jsData):
-    return JsObjects.JsVoid("window['%s_data'] = %s" % (self._src.htmlCode, JsUtils.jsConvertData(jsData, None)))
+  def load(self, jsData, varName=None):
+    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
+    return JsObjects.JsVoid("window[%s] = %s" % (varName, JsUtils.jsConvertData(jsData, None)))
+
+  def get_data(self, varName=None):
+    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
+    return JsObjects.JsObjects.get("window[%s]" % varName)
+
+  @property
+  def code(self):
+    """
+    The default data reference
+    :return:
+    """
+    return "%s_data" % self._src.htmlCode
 
   @property
   def data(self):

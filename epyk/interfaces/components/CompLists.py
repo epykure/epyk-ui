@@ -117,7 +117,8 @@ class Lists(object):
     html_select = html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
     return html_select
 
-  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"), column=None, filter=None, profile=None, multiple=False, options=None):
+  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+             column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
     ------------
@@ -234,7 +235,7 @@ class Lists(object):
     list = self.list(data, color, width, height, htmlCode, helper, options, profile)
     list.style.css.min_height = 40
     list.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
-              'border': "1px dashed %s" % self.context.rptObj.theme.colors[-1]})
+              'border': "1px dashed %s" % self.context.rptObj.theme.greys[4]})
     list.style.css.padding = 5
     return list
 

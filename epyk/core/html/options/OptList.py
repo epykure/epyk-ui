@@ -8,6 +8,26 @@ from epyk.core.js.packages import packageImport
 class OptionsLi(Options):
 
   @property
+  def max(self):
+    """
+    """
+    return self.get(None)
+
+  @max.setter
+  def max(self, value):
+    self.set(value)
+
+  @property
+  def source(self):
+    """
+    """
+    return self.get(None)
+
+  @source.setter
+  def source(self, value):
+    self.set(value)
+
+  @property
   def li_css(self):
     """
     """
@@ -216,7 +236,7 @@ class OptionsTagItems(Options):
     ----------
     :param attrs: Dictionary or False. The deleted icon properties
     """
-    return self._config_get('function(){this.parentNode.remove()}')
+    return self._config_get('this.parentNode.remove()}')
 
   @delete.setter
   def delete(self, attrs):

@@ -35,3 +35,7 @@ class CatalogIcon(Catalog.CatalogGroup):
   def big(self):
     """  """
     return self._set_class(CssStylesIcon.CssBigIcon)
+
+  def selected(self):
+    """  """
+    return self._set_class(CssStylesIcon.CssIconSelected)

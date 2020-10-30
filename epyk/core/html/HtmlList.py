@@ -164,8 +164,10 @@ class List(Html.Html):
     """
     if jsFncs is None:
       from epyk.core.data import events
-
-      jsFncs = [self.dom.add(events.data)]
+      from epyk.core.js.primitives import JsObjects
+      # events.data
+      jsFncs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
+        self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))]
     return super(List, self).drop(jsFncs, preventDefault, profile)
 
   def __add__(self, htmlObj):

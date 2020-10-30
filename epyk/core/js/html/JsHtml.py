@@ -953,28 +953,33 @@ class JsHtmlList(JsHtml):
     item = JsUtils.jsConvertData(item, None)
     unique = JsUtils.jsConvertData(unique, None)
     draggable = JsUtils.jsConvertData(draggable, None)
+    options = JsUtils.jsConvertData(self._src.options, None)
     return JsObjects.JsVoid('''
       var listItems = %(item)s; 
+      var listItemOptions = %(options)s; 
+      var lenCurrentItems = %(component)s.querySelectorAll("li").length;
       if(!Array.isArray(listItems)){listItems = [listItems]};
-      listItems.forEach(function(item){
-        var li = document.createElement("li");
-        if (%(draggable)s){
-          li.setAttribute('draggable', true);
-          li.addEventListener('dragstart', function(event){event.dataTransfer.setData("text", event.target.innerHTML)} )
-        }
-        if(%(unique)s){
-          var hasItems = false;
-          %(component)s.querySelectorAll("li").forEach(function(dom){
-            if (dom.innerText == item){hasItems = true}})
-          if(!hasItems){
+      if ((typeof listItemOptions.max === 'undefined') || (listItemOptions.max === null) || (lenCurrentItems < listItemOptions.max)){
+        listItems.forEach(function(item){
+          var li = document.createElement("li");
+          if(typeof listItemOptions.li_css !== 'undefined'){
+            Object.keys(listItemOptions.li_css).forEach(function(key){li.style[key] = listItemOptions.li_css[key]})}
+          if (%(draggable)s){
+            li.setAttribute('draggable', true);
+            li.addEventListener('dragstart', function(event){event.dataTransfer.setData("text", event.target.innerHTML)})
+          }
+          if(%(unique)s){
+            var hasItems = false;
+            %(component)s.querySelectorAll("li").forEach(function(dom){if (dom.innerText == item){hasItems = true}})
+            if(!hasItems){
+              li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
+              li.addEventListener("dblclick", function(){this.remove()});
+              %(component)s.appendChild(li)}
+          }else{
             li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
-            li.addEventListener("dblclick", function(){this.remove()});
-            %(component)s.appendChild(li)}
-        }else{
-          li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
-          li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
-        }
-      })''' % {"item": item, "component": self._src.dom.varName, 'unique': unique, 'draggable': draggable})
+            li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
+          }
+      })}''' % {"item": item, "component": self._src.dom.varName, 'unique': unique, 'draggable': draggable, "options": options})
 
   def clear(self):
     """

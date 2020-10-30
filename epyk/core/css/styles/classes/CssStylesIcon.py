@@ -63,3 +63,11 @@ class CssBigIcon(CssStyle.Style):
     self.css({"color": self.rptObj.theme.danger[1],
               'font-size': '%s%s' % (Defaults_css.Icon.big, Defaults_css.Icon.unit)})
     self.hover.css({"color": self.rptObj.theme.danger[1]})
+
+
+class CssIconSelected(CssStyle.Style):
+  _attrs = {'cursor': 'pointer'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.greys[-1]})
+    self.active.css({"color": self.rptObj.theme.danger[1]})

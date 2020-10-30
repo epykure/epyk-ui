@@ -539,6 +539,8 @@ class DropFile(Html.Html):
     self.container.css({"display": "inline-block", 'text-align': 'center', "color": self._report.theme.success[0],
                         'border': "1px dashed %s" % report.theme.colors[-1]})
     self.container.style.css.bold()
+    self.container.style.css.margin = "0 5px"
+    self.container.style.css.width = "calc(100% - 10px)"
     self.container.style.css.background = report.theme.greys[0]
     self.container.add(self._report.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
     self.container.options.managed = False
@@ -565,8 +567,16 @@ class DropFile(Html.Html):
     if self.options.format != 'json':
       self.icon = self._report.ui.icon("fas fa-paste")
       self.icon.options.managed = False
+      del self.icon.attr['css']["color"]
+      self.icon.style.add_classes.icon.selected()
       self.icon.style.css.margin_left = 5
       self.icon.click(self.dom.events.trigger("paste"))
+
+    self.sync = None
+    if options is not None and options.get("sync"):
+      self.sync = self._report.ui.icon("fas fa-sync-alt")
+      self.sync.options.managed = False
+      self.sync.style.css.margin_left = 5
 
   @property
   def dom(self):
@@ -697,11 +707,11 @@ class DropFile(Html.Html):
 
     return '''
       <div %(strAttr)s>
-        <div style='display:inline-block'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s</div>
+        <div style='display:inline-block'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s %(sync)s</div>
         %(container)s
         %(text)s
         <input id="%(htmlCode)s_report" style="display:none;"/>
       </div>
       ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
-             'paste': self.icon.html(),
+             'paste': self.icon.html(), 'sync': self.sync.html() if self.sync is not None else "",
              'container': self.container.html(), 'text': self.text.html(), 'delimiter': self.delimiter.html()}

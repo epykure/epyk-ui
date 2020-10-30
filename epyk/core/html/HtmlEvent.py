@@ -662,10 +662,10 @@ class Filters(Html.Html):
     return '''
       var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
       data.forEach(function(val){
-        if(typeof val === 'string'){ val = {name: options.category, category: options.category, value: val, disabled: false, fixed: false} }
+        if(typeof val === 'string'){val = {name: options.category, category: options.category, value: val, disabled: false, fixed: false} }
         else{
           if(val.category === undefined){ if(val.name === undefined) {val.category = options.category} else {val.category = val.name}}
-          if(val.name === undefined){ val.name = val.category }};
+          if(val.name === undefined){ val.name = val.category}};
         chipAdd(panel, val, options)})'''
 
   def enter(self, jsFncs, profile=False):
@@ -735,6 +735,25 @@ class Filters(Html.Html):
     rec['name'] = name or rec['category']
     self._vals.append(rec)
 
+  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param options:
+    :param profile:
+    :param source_event:
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append('event.dataTransfer.setData("text", value)')
+    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
+
   @property
   def dom(self):
     """
@@ -759,13 +778,17 @@ class Filters(Html.Html):
         content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
         if(options.visible){
           var p = document.createElement("p"); for (var key in options.category_css){ p.style[key] = options.category_css[key]};
-          p.innerHTML = record.name; div.appendChild(p)
-        };
+          p.innerHTML = record.name; div.appendChild(p)}
         div.appendChild(content);
         if(!record.fixed && options.delete){
           var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
           icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', options.delete );
           div.appendChild(icon)}
+        if(typeof options.draggable !== 'undefined'){
+          div.setAttribute('draggable', true);
+          div.style.cursor = 'grab';
+          div.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
+        }
         panel.appendChild(div);
     }'''
     if not self.options.visible:
