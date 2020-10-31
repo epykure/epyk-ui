@@ -506,7 +506,7 @@ Attributes:
     """
     self.label = ""
     if text is not None:
-      self.label = self._report.ui.texts.label(text, options=options, htmlCode="%s_label" % htmlCode)
+      self.label = self._report.ui.texts.label(text, options=options, htmlCode="%s_label" % htmlCode if htmlCode is not None else htmlCode)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_
