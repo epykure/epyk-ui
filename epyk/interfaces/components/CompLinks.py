@@ -3,6 +3,7 @@
 
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.html import Defaults_html
 
 
 class Links(object):
@@ -47,6 +48,7 @@ class Links(object):
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
     if align == "center":
       self.context.rptObj.ui.div(html_link, align=align)
@@ -162,3 +164,72 @@ class Links(object):
     height = Arguments.size(height, unit="px")
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
     return html_data
+
+  def colored(self, text, url, icon=None, helper=None, color=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Display a link with the same layout than a buttons.colored HTML component
+
+    Attributes:
+    ----------
+    :param text: The string value to be displayed in the component
+    :param url: The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param helper: String. Optional. A tooltip helper
+    :param color:
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param decoration:
+    :param htmlCode:
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    height = Arguments.size(height, unit="px")
+    dft_options = {"target": '_blank'}
+    if options is not None:
+      dft_options.update(options)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link.style.add_classes.button.basic()
+    html_link.style.css.padding = "0 10px"
+    html_link.style.css.background = color or self.context.rptObj.theme.colors[-1]
+    html_link.style.css.border = "1px solid %s" % (color or self.context.rptObj.theme.colors[-1])
+    html_link.icon.style.css.color = self.context.rptObj.theme.colors[0]
+    html_link.style.css.color = self.context.rptObj.theme.colors[0]
+    html_link.style.css.margin_top = 5
+    html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
+    html_link.style.css.margin_bottom = 5
+    return html_link
+
+  def upload(self, url, text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    HTML component to upload files.
+
+    Attributes:
+    ----------
+    :param text: The string value to be displayed in the component
+    :param url: The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param helper: String. Optional. A tooltip helper
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param decoration:
+    :param htmlCode:
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    height = Arguments.size(height, unit="px")
+    dft_options = {"target": '_self'}
+    if options is not None:
+      dft_options.update(options)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link.style.add_classes.button.basic()
+    html_link.style.css.padding = "0 10px"
+    html_link.style.css.remove("border", set_none=True)
+    if not text:
+      html_link.icon.style.css.remove("margin-right")
+    html_link.style.css.border_radius = 20
+    html_link.style.css.margin_top = 5
+    html_link.style.css.line_height = False
+    html_link.style.css.margin_bottom = 5
+    return html_link

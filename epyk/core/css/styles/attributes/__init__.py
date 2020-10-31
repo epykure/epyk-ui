@@ -48,7 +48,8 @@ class Attrs(Properties.CssMixin):
     else:
       if key in self.attrs:
         del self.attrs[key]
-        del self.orign_htmlObj.attr['css'][key]
+        if key in self.orign_htmlObj.attr['css']:
+          del self.orign_htmlObj.attr['css'][key]
       else:
         self.attrs[key] = "unset"
         self.orign_htmlObj.attr['css'][key] = "auto"

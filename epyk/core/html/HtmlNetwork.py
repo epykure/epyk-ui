@@ -683,7 +683,7 @@ class DropFile(Html.Html):
        reader.readAsDataURL(f);
       ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(jsFncs + [
             self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows")),
-            self.text.build(events.file.description)], toStr=True),
+            self.text.build(events.file.description) if self.options.text else self.text.build("File Loaded")], toStr=True),
              )], jsData=jsData, preventDefault=preventDefault, profile=profile)
 
   def paste(self, jsFncs, profile=False, source_event=None):
