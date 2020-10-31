@@ -1512,10 +1512,13 @@ class CssMixin(object):
 
   @line_height.setter
   def line_height(self, val):
-    if isinstance(val, int):
-      val = "%spx" % val
-    val = val if val is not None else 'None'
-    self.htmlObj.css({"line-height": val})
+    if val == False:
+      self.remove()
+    else:
+      if isinstance(val, int):
+        val = "%spx" % val
+      val = val if val is not None else 'None'
+      self.htmlObj.css({"line-height": val})
 
   @property
   def list_style(self): return self.htmlObj.css("list-style")

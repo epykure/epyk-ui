@@ -180,6 +180,20 @@ class OptionsChat(Options):
 class OptionFiles(Options):
 
   @property
+  def text(self):
+    """
+    Description:
+    ------------
+    Display comment for the loaded files.
+    THis should be activated only when one file can be loaded.
+    """
+    return self._config_get(True)
+
+  @text.setter
+  def text(self, bool):
+    self._config(bool)
+
+  @property
   def extensions(self):
     """
     Description:

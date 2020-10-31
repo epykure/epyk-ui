@@ -1159,3 +1159,17 @@ class JsWindow(object):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._context.setdefault('beforeunload', []).extend(jsFncs)
+
+  def location(self, url, windowId="window"):
+    """
+    Description:
+    ------------
+    Change the window and open the page specify by the url
+
+    Attributes:
+    ----------
+    :param url: String. The new page url
+    :param windowId: String. Optional. The JavaScript window object
+    """
+    url = JsUtils.jsConvertData(url, None)
+    return JsFncs.JsFunction("%s.location = %s" % (windowId, url))

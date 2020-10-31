@@ -1,4 +1,6 @@
 
+import sys
+
 from epyk.core.css import Properties
 from epyk.core.css import Defaults_css
 
@@ -11,15 +13,45 @@ class Attrs(Properties.CssMixin):
 
   def css(self, attrs):
     """
+    Description:
+    ------------
+    Set multiple CSS attributes to the HTML component
 
-    :param attrs:
-    :return:
+    Attributes:
+    ----------
+    :param attrs: Dictionary. optional. The attributes to be added
     """
     if not isinstance(attrs, dict):
       return self.attrs.get(attrs)
 
     for k, v in attrs.items():
       self.attrs[k] = v
+
+  def remove(self, attr=None, set_none=False):
+    """
+    Description:
+    ------------
+    Remove a CSS attribute to the HTML component.
+
+    This function will either remove it if it is part of the existing CSS attribute or set it to auto in case it is
+    coming from a CSS class.
+
+    Attributes:
+    ----------
+    :param attr: String. Optional. The attribute to be removed
+    :param set_none:Boolean. Optinal. Set the CSS attribute value to None on the CSS
+    """
+    key = attr or sys._getframe().f_back.f_code.co_name.replace("_", "-")
+    if set_none:
+      self.attrs[key] = "none"
+      self.orign_htmlObj.attr['css'][key] = "none"
+    else:
+      if key in self.attrs:
+        del self.attrs[key]
+        del self.orign_htmlObj.attr['css'][key]
+      else:
+        self.attrs[key] = "unset"
+        self.orign_htmlObj.attr['css'][key] = "auto"
 
   def __str__(self):
     """
