@@ -31,7 +31,7 @@ class DatePicker(Html.Html):
       self.icon = None
     if self.icon is not None:
       self.icon.click([self.input.dom.events.trigger("click").toStr()])
-    self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
+    self.add_label(label, htmlCode=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 

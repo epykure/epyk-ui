@@ -484,7 +484,7 @@ Attributes:
         self.icon.css(css)
     return self
 
-  def add_label(self, text, css=None, position="before", for_=None, options=None):
+  def add_label(self, text, css=None, position="before", for_=None, htmlCode=None, options=None):
     """
     Description:
     -----------
@@ -501,11 +501,12 @@ Attributes:
     :param text: The label content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
+    :param htmlCode:
     :param for_: Specifies which form element a label is bound to
     """
     self.label = ""
     if text is not None:
-      self.label = self._report.ui.texts.label(text, options=options)
+      self.label = self._report.ui.texts.label(text, options=options, htmlCode="%s_label" % htmlCode)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_
