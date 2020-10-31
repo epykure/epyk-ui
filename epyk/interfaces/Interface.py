@@ -624,7 +624,7 @@ class Components(object):
     html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {}, profile)
     return html_loading
 
-  def breadcrumb(self, values, selected=None, width=(100, '%'), height=(30, 'px'), options=None, profile=None):
+  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -649,6 +649,7 @@ class Components(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"delimiter": ' / '}
@@ -657,7 +658,8 @@ class Components(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options['selected'] = selected
-    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values, width, height, dflt_options, profile)
+    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values or [], width, height, htmlCode, dflt_options, profile)
+    html_breadcrumb.style.css.margin_top = 5
     return html_breadcrumb
 
   def form(self, action=None, method=None, helper=None):

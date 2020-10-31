@@ -681,7 +681,7 @@ class Col(Html.Html):
     self.css({"width": width, "height": height})
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
-        self.__add__(htmlObj)
+        self.add(htmlObj)
     if align == "center":
       self.css({'margin-left': 'auto', 'margin-right': 'auto', 'display': 'inline-block', 'text-align': 'center'})
     else:
@@ -877,7 +877,7 @@ class Grid(Html.Html):
           htmlObj, dim = htmlObjWithDim
         else:
           htmlObj, dim = htmlObjWithDim, None
-        row += htmlObj
+        row.add(htmlObj)
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
     super(Grid, self).__add__(row)

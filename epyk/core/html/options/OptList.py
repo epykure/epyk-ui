@@ -236,7 +236,7 @@ class OptionsTagItems(Options):
     ----------
     :param attrs: Dictionary or False. The deleted icon properties
     """
-    return self._config_get('this.parentNode.remove()}')
+    return self._config_get('this.parentNode.remove()')
 
   @delete.setter
   def delete(self, attrs):

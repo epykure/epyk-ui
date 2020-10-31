@@ -289,11 +289,13 @@ class HtmlJson(Html.Html):
 class Breadcrumb(Html.Html):
   name = 'Breadcrumb'
 
-  def __init__(self, report, data, width, height, options, profile):
-    super(Breadcrumb, self).__init__(report, [], profile=profile, css_attrs={"height": height, "width": width})
+  def __init__(self, report, data, width, height, htmlCode, options, profile):
+    super(Breadcrumb, self).__init__(report, [], profile=profile, htmlCode=htmlCode, css_attrs={"height": height, "width": width})
     self.style.css.line_height = height[0]
     self.style.css.vertical_align = 'middle'
     self.delimiter = options['delimiter']
+    self._jsStyles['delimiter'] = options['delimiter']
+    self._jsStyles['height'] = height[0]
     if data is not None:
       for rec in data:
         if not hasattr(rec, 'options'):
@@ -306,6 +308,22 @@ class Breadcrumb(Html.Html):
           data.style.css.display = 'inline-block'
         self.add(data)
     self.style.background = report.theme.greys[1]
+
+  @property
+  def _js__builder__(self):
+    return '''
+      htmlObj.innerHTML = "";
+      if(data.length == 0){htmlObj.style["height"] = 0}
+      else{ 
+        htmlObj.style["height"] = options.height + "px";
+        var text = document.createTextNode(options.delimiter); htmlObj.appendChild(text)
+        data.forEach(function(rec, i){
+          if (rec.selected){var aHref = document.createTextNode(rec.text)}
+          else{
+            var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
+          htmlObj.appendChild(aHref); var text = document.createTextNode(options.delimiter);
+          if (i < data.length-1){htmlObj.appendChild(text)}
+      })}'''
 
   def __add__(self, component):
     """ Add items to a container """

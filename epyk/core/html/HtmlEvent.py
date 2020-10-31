@@ -772,6 +772,7 @@ class Filters(Html.Html):
     #
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors['ChipAdd'] = '''function chipAdd(panel, record, options){
+        if(typeof(record.category !== "undefined")){options.category = record.category}
         var div = document.createElement("div"); for (var key in options.item_css){ div.style[key] = options.item_css[key]};
         div.setAttribute('data-category', record.category);
         var content = document.createElement("span"); for (var key in options.value_css){ content.style[key] = options.value_css[key]};
@@ -782,7 +783,7 @@ class Filters(Html.Html):
         div.appendChild(content);
         if(!record.fixed && options.delete){
           var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
-          icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', options.delete );
+          icon.classList.add('fas'); icon.classList.add('fa-times'); icon.addEventListener('click', function(){eval(options.delete)});
           div.appendChild(icon)}
         if(typeof options.draggable !== 'undefined'){
           div.setAttribute('draggable', true);

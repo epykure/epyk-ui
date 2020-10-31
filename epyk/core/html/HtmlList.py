@@ -162,12 +162,17 @@ class List(Html.Html):
     :param preventDefault:
     :param profile:
     """
+    from epyk.core.js.primitives import JsObjects
+
     if jsFncs is None:
-      from epyk.core.data import events
-      from epyk.core.js.primitives import JsObjects
       # events.data
       jsFncs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
         self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))]
+    else:
+      if not isinstance(jsFncs, list):
+        jsFncs = [jsFncs]
+      jsFncs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
+        self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))] + jsFncs
     return super(List, self).drop(jsFncs, preventDefault, profile)
 
   def __add__(self, htmlObj):

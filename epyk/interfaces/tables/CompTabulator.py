@@ -198,7 +198,13 @@ class Tabulators(object):
     :param profile:
     """
     self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-icons')
     self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    self.parent.context.rptObj.jsImports.add('tabulator-drop')
+    self.parent.context.rptObj.jsImports.add('tabulator-mutators-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-dates')
+    self.parent.context.rptObj.jsImports.add('editors-selects')
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:

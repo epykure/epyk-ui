@@ -21,6 +21,39 @@ class ChartJsActivePoints(object):
     self._report = page
 
   @property
+  def labels(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("%s.data.labels[activePoints[%s]]" % (self.chartId, self.num))
+
+  @property
+  def model(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("activePoints[%s]['_model']" % self.num)
+
+  @property
+  def datasetLabel(self):
+    """
+    Description:
+    -----------
+
+
+    :return:
+    """
+    return JsObject.JsObject.get("activePoints[%s]['_model'].datasetLabel" % self.num)
+
+  @property
   def label(self):
     """
     Description:

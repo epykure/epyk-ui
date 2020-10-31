@@ -84,8 +84,7 @@ class Image(Html.Html):
         if(typeof data.path === 'undefined'){data.path = '%s'}
         htmlObj.src = data.path + "/" + data.image}
       else {htmlObj.src = data}
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}} 
-      htmlObj.setAttribute("onerror", "this.parentElement.innerHTML = ''");
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}    
       ''' % Defaults.SERVER_PATH
 
   def __str__(self):
