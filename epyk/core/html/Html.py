@@ -454,7 +454,7 @@ class Html(object):
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
-  def add_icon(self, text, css=None, position="before", family=None):
+  def add_icon(self, text, css=None, position="before", family=None, htmlCode=None):
     """
     Description:
     ------------
@@ -475,7 +475,8 @@ Attributes:
     """
     self.icon = ""
     if text is not None:
-      self.icon = self._report.ui.images.icon(text, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
+      self.icon = self._report.ui.images.icon(text, htmlCode="%s_icon" % htmlCode if htmlCode is not None else htmlCode,
+                                              family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
       if position == "before":
         self.prepend_child(self.icon)
       else:
@@ -520,7 +521,7 @@ Attributes:
         self.label.css(css)
     return self
 
-  def add_span(self, text, css=None, position="before", i=None):
+  def add_span(self, text, css=None, position="before", htmlCode=None, i=None):
     """
     Description:
     -----------
@@ -545,7 +546,7 @@ Attributes:
       key_attr = 'span'
     setattr(self, key_attr, '')
     if text is not None:
-      setattr(self, key_attr, self._report.ui.texts.span(text))
+      setattr(self, key_attr, self._report.ui.texts.span(text, htmlCode="%s_span" % htmlCode if htmlCode is not None else htmlCode))
       span = getattr(self, key_attr)
       if position == "before":
         self.prepend_child(span)

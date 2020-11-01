@@ -548,12 +548,12 @@ class Badge(Html.Html):
 
   def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):
     super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
-    self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
+    self.add_label(label, htmlCode=self.htmlCode, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
-      self.add_icon(icon, css={"float": 'None', 'margin-left': "5px"}, position="after", family=options.get("icon_family"))
+      self.add_icon(icon, htmlCode=self.htmlCode, css={"float": 'None', 'margin-left': "5px"}, position="after", family=options.get("icon_family"))
     else:
-      self.add_icon(icon, css={"float": 'left', 'margin-left': "5px"}, family=options.get("icon_family"))
+      self.add_icon(icon, htmlCode=self.htmlCode, css={"float": 'left', 'margin-left': "5px"}, family=options.get("icon_family"))
     if hasattr(self.icon, 'css') and width[0] is not None:
       self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None

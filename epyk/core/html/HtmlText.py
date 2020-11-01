@@ -640,7 +640,7 @@ class Title(Html.Html):
     super(Title, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptText.OptionsTitle(self, options)
     self._name, self.level, self.picture = name, level, picture
-    self.add_icon(icon, family=options.get("icon_family"))
+    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
     if level is not None and level < 5:
@@ -730,8 +730,8 @@ class Numeric(Html.Html):
   def __init__(self, report, number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile):
     super(Numeric, self).__init__(report, number, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
     # Add the components label and icon
-    self.add_label(label, css={"float": None, "width": 'none'})
-    self.add_icon(icon, family=options.get("icon_family"))
+    self.add_label(label, css={"float": None, "width": 'none'}, htmlCode=self.htmlCode)
+    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper, css={"line-height": '20px'})
     self.add_title(title, level=4, css={"margin-bottom": 0}, options={'content_table': False})
 
@@ -860,7 +860,7 @@ class Highlights(Html.Html):
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0}, options={'content_table': False})
-    self.add_icon(icon, {"float": "left", 'padding-top': '3px'}, family=options.get("icon_family"))
+    self.add_icon(icon, {"float": "left", 'padding-top': '3px'}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     if self.icon is not None and self.icon != "" and self.title:
       self.icon.style.css.font_factor(10)
     # Change the style of the component

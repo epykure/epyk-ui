@@ -27,7 +27,7 @@ class Button(Html.Html):
       if hasattr(obj, 'options'):
         obj.options.managed = False
     super(Button, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
-    self.add_icon(icon)
+    self.add_icon(icon, htmlCode=self.htmlCode)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
     if icon is not None:
@@ -386,8 +386,8 @@ class CheckButton(Html.Html):
     self.input.style.middle()
     self.input.options.managed = False
     self.isDisable = options.get("disable", False) if options is not None else False
-    self.add_label(label, {"width": "none", "float": "none"}, position="after")
-    self.add_icon(icon, {"float": 'none'}, position="after", family=options.get("icon_family"))
+    self.add_label(label, {"width": "none", "float": "none"}, htmlCode=self.htmlCode, position="after")
+    self.add_icon(icon, {"float": 'none'}, htmlCode=self.htmlCode, position="after", family=options.get("icon_family"))
     self.css({'display': 'inline-block', 'margin-right': '10px'})
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -503,9 +503,9 @@ class IconEdit(Html.Html):
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])}, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
 
   def spin(self):

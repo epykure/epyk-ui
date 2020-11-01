@@ -90,7 +90,7 @@ class Stars(Html.Html):
       self._spans.append(self._sub_htmls[-1])
     self.set_attrs(name='data-level', value=val)
     self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
-                           'float': 'None'}, position="after")
+                           'float': 'None'}, htmlCode=self.htmlCode, position="after")
     self.add_helper(helper)
     if self.helper:
       self.helper.css({"margin": '1px 4px'})
@@ -197,7 +197,7 @@ class Loading(Html.Html):
     self.color = self._report.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
-    self.add_icon("fas fa-spinner fa-spin", css={"font-size": "%spx" % (self.size+8)}, family=options.get("icon_family"))
+    self.add_icon("fas fa-spinner fa-spin", htmlCode=self.htmlCode, css={"font-size": "%spx" % (self.size+8)}, family=options.get("icon_family"))
     if options.get('fixed', False):
       self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
       self.css({"position": 'fixed', 'bottom': '0px', 'right': '5px'})

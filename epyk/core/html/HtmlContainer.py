@@ -228,8 +228,8 @@ class Div(Html.Html):
         self.val.append(obj)
     self.tag = tag
     # Add the component predefined elements
-    self.add_icon(icon, family=options.get("icon_family"))
-    self.add_label(label)
+    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_label(label, htmlCode=self.htmlCode)
     self.add_helper(helper)
 
     self.css({'text-align': align})

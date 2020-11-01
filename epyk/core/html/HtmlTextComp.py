@@ -182,7 +182,7 @@ class Number(Html.Html):
       self.span = self.link
     self.link.style.css.font_factor(10)
     self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "100%", "margin": 0},
-                   position=options.get('label', 'before'))
+                   position=options.get('label', 'before'), htmlCode=self.htmlCode)
     self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
 
   def __str__(self):
@@ -270,7 +270,7 @@ class TrafficLight(Html.Html):
     super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height}, profile=profile)
     self.add_helper(helper, css={"margin-top": "-17px"})
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
-                               "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'})
+                               "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'}, htmlCode=self.htmlCode)
     self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)

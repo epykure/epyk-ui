@@ -96,7 +96,8 @@ class Tick(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()}, family=options.get("icon_family"))
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()},
+                  htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
     self.style.css.float = position
@@ -133,7 +134,7 @@ class Switch(Html.Html):
     self.width, self.jsChange = width[0], ''
     super(Switch, self).__init__(report, records, htmlCode=htmlCode, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
-    self.add_label(label) # add for
+    self.add_label(label, htmlCode=self.htmlCode) # add for
     # self.label.style.add_classes.radio.switch_label()
     self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': []}

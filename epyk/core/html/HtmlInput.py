@@ -548,12 +548,13 @@ class Field(Html.Html):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._vals = ""
     # Add the component predefined elements
-    self.add_label(label, htmlCode=htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, position=options.get("position", 'before'),  options=options)
+    self.add_label(label, htmlCode=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, position=options.get("position", 'before'),  options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input
     self.append_child(self.input)
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]}, family=options.get("icon_family"))
+    self.add_icon(icon, htmlCode=self.htmlCode, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]},
+                  family=options.get("icon_family"))
     self.css({"margin-top": '2px'})
 
   @property
@@ -826,7 +827,7 @@ class Radio(Html.Html):
     super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
                                          css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
-    self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
+    self.add_label(label, htmlCode=self.htmlCode, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
     self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
@@ -839,7 +840,8 @@ class Radio(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]}, family=options.get("icon_family"))
+    self.add_icon(icon, htmlCode=self.htmlCode, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]},
+                  family=options.get("icon_family"))
 
   @property
   def dom(self):
@@ -959,7 +961,7 @@ class Search(Html.Html):
       self.style.add_classes.layout.search_extension()
     self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-    self.add_icon("fas fa-search", family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+    self.add_icon("fas fa-search", htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
 

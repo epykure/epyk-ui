@@ -15,7 +15,7 @@ class ExternalLink(Html.Html):
   def __init__(self, report, text, url, icon, helper, height, decoration, htmlCode, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, htmlCode=htmlCode, css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
-    self.add_icon(icon, family=options.get("icon_family"))
+    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
     self.decoration, self.__url = decoration, {}
     self.__options = OptText.OptionsLink(self, options)
