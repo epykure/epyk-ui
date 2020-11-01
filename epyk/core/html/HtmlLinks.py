@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptText
 
 # The list of CSS classes
@@ -25,6 +26,22 @@ class ExternalLink(Html.Html):
       self.options.url = self.val['url']
 
   @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlLink
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlLink(self, report=self._report)
+    return self._dom
+
+  @property
   def options(self):
     """
     Description:
@@ -39,7 +56,8 @@ class ExternalLink(Html.Html):
   def _js__builder__(self):
     return '''
       if(typeof data === 'undefined'){ data = {text: ''}}
-      var text = data.text;
+      var text = "";
+      if((typeof data.text !== 'undefined') && (data.text)){text = data.text}
       if (options.type_number == 'money'){ text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
       else if (options.type_number == 'number'){text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
       if(typeof data.icon !== 'undefined'){htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}

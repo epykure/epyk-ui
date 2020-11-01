@@ -955,7 +955,7 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
     return self
 
-  def request_http(self, method_type, url, varName="response"):
+  def request_http(self, method_type, url, varName="response", is_json=True, components=None):
     """
     Description:
     ------------
@@ -980,6 +980,36 @@ class JsBase(object):
     """
     method_type = JsUtils.jsConvertData(method_type, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+
+  def get(self, url, jsData=None, varName="response", is_json=True, components=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the HTTP request
+    :param jsData:
+    :param varName: String. Optional. The variable name created in the Javascript (default response)
+    :param is_json:
+    :param components: HTML component. This will add the component value to the request object
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    method_type = JsUtils.jsConvertData('GET', None)
+    url = JsUtils.jsConvertData(url, None)
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    if components is not None:
+      if jsData is None:
+        jsData = components
+      else:
+        for c in components:
+          request.data.add(c)
+    request.send(jsData, stringify=is_json)
+
+    if is_json:
+      request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    return request
 
   def post(self, url, jsData=None, varName="response", is_json=True, components=None):
     """

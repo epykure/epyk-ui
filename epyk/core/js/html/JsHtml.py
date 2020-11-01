@@ -1044,3 +1044,51 @@ class JsHtmlNumeric(JsHtmlRich):
     return JsObjects.JsVoid('''
       %(component)s.innerText = parseFloat(%(component)s.innerText) + %(value)s
       ''' % {'value': item, 'component': self._src.dom.varName})
+
+
+class JsHtmlLink(JsHtml):
+
+  def url(self, url):
+    """
+    Description:
+    -----------
+    The href attribute specifies the URL of the page the link goes to.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_a_href.asp
+
+    :param url:
+    """
+    url = JsUtils.jsConvertData(url, None)
+    return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
+
+  def href(self, url):
+    """
+    Description:
+    -----------
+    The href attribute specifies the URL of the page the link goes to.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_a_href.asp
+
+    :param url:
+    """
+    url = JsUtils.jsConvertData(url, None)
+    return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
+
+  def target(self, name):
+    """
+    Description:
+    -----------
+    The target attribute specifies where to open the linked document.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_a_target.asp
+
+    :param url:
+    """
+    name = JsUtils.jsConvertData(name, None)
+    return JsFncs.JsFunctions("%s.target = %s" % (self.varName, name))

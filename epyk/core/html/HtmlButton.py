@@ -501,7 +501,7 @@ class IconEdit(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
-    self.add_span(text, css={"float": 'right'})
+    self.add_span(text) #, css={"float": 'right'})
     if width[0] is not None and width[1] == 'px':
       self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     else:

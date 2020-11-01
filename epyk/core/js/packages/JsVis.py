@@ -882,6 +882,25 @@ class VisTimeline(JsPackage):
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
+  def setData(self, data):
+    """
+    Description:
+    -----------
+    Set both groups and items at once. Both properties are optional.
+    This is a convenience method for individually calling both setItems(items) and setGroups(groups).
+    Both items and groups can be an Array with Objects, a DataSet (offering 2 way data binding), or a DataView (offering 1 way data binding).
+    For each of the groups, the items of the timeline are filtered on the property group, which must correspond with the id of the group.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/timeline/
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+
   def fit(self):
     """
     Description:

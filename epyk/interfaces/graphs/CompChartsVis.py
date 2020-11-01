@@ -16,7 +16,7 @@ class Vis2D(object):
 
     Graph2d uses HTML DOM and SVG for rendering. This allows for flexible customization using css styling.
 
-    elated Pages:
+    Related Pages:
     --------------
     http://www.chartjs.org/
     https://visjs.github.io/vis-timeline/examples/graph2d/16_bothAxisTitles.html
