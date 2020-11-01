@@ -318,10 +318,15 @@ class Breadcrumb(Html.Html):
         htmlObj.style["height"] = options.height + "px";
         var text = document.createTextNode(options.delimiter); htmlObj.appendChild(text)
         data.forEach(function(rec, i){
-          if (rec.selected){var aHref = document.createTextNode(rec.text)}
+          if(typeof rec.type !== 'undefined'){
+            if(rec.type == "dots"){var text = document.createTextNode("... "); htmlObj.appendChild(text)}}
           else{
-            var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
-          htmlObj.appendChild(aHref); var text = document.createTextNode(options.delimiter);
+            if (rec.selected){var aHref = document.createTextNode(rec.text)}
+            else{
+              var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
+            htmlObj.appendChild(aHref)
+          }
+          var text = document.createTextNode(options.delimiter);
           if (i < data.length-1){htmlObj.appendChild(text)}
       })}'''
 

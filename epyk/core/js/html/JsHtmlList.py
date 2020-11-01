@@ -223,9 +223,15 @@ class JsItemsDef(object):
     :param report: Page object. The internal page object
     """
     item_def = '''
-    var item = document.createElement("a");
-    item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
-    item.innerHTML = data.text ; if(typeof data.url !== 'undefined'){item.href = data.url} else {item.href = '#'} '''
+    var item = document.createElement("div");
+    var link = document.createElement("a");
+    link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
+    link.innerHTML = data.text ; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
+    item.appendChild(link);
+    if(typeof data.dsc !== "undefined"){
+      var dsc = document.createElement("div");
+      dsc.style.display = "inline-block"; dsc.style.marginLeft = "5px";
+      dsc.innerHTML = data.dsc; item.appendChild(dsc)}'''
     return self._item(item_def)
 
   def button(self, report):

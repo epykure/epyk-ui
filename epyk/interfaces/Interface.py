@@ -535,7 +535,8 @@ class Components(object):
     """
     return CompLayouts.Delimiter(self)
 
-  def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
+  def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"),
+               htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -554,10 +555,11 @@ class Components(object):
     :param left: Integer. Optional. The left property affects the horizontal position of a positioned element.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, options, profile)
+    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, htmlCode, options, profile)
     html_contents.style.css.top = top
     if left is not None:
       html_contents.style.css.left = left

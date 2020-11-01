@@ -377,9 +377,9 @@ class TrafficLight(Html.Html):
 class ContentsTable(Html.Html):
   name = 'Contents Table'
 
-  def __init__(self, report, title, width, height, options, profile):
+  def __init__(self, report, title, width, height, htmlCode, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    super(ContentsTable, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})

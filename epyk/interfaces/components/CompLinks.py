@@ -200,7 +200,7 @@ class Links(object):
     html_link.style.css.margin_bottom = 5
     return html_link
 
-  def upload(self, url, text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def upload(self, url="#", text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False, align="left", htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -232,4 +232,9 @@ class Links(object):
     html_link.style.css.margin_top = 5
     html_link.style.css.line_height = False
     html_link.style.css.margin_bottom = 5
+    if align == "center":
+      html_link.style.css.margin = "auto"
+      html_link.style.css.display = "block"
+    elif align == "right":
+      html_link.style.css.float = align
     return html_link

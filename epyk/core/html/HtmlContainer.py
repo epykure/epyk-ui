@@ -1229,7 +1229,7 @@ class Dialog(Html.Html):
 
   def __init__(self, report, recordSet, width, height, helper, profile):
     super(Dialog, self).__init__(report, recordSet, css_attrs={"width": width, 'height': helper}, profile=profile)
-    self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "absolute",
+    self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "relative",
               "background": self._report.theme.greys[0]})
     # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
 

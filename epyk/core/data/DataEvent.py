@@ -112,6 +112,17 @@ class DataEvents(object):
     return JsObjects.JsObjects.get("data")
 
   @property
+  def value(self):
+    """
+    Description:
+    ------------
+    Interface to a standard value object available in any Event.
+    This is the default variable name in all the JavaScript embedded methods
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsObjects.get("value")
+
+  @property
   def event(self):
     """
     Description:
