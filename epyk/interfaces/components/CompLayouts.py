@@ -421,7 +421,7 @@ class Layouts(object):
     html_frame = html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile)
     return html_frame
 
-  def dialogs(self, record=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
+  def dialogs(self, record=None, width=(100, "%"), height=(500, "px"), helper=None, profile=None):
     """
     Description:
     ------------

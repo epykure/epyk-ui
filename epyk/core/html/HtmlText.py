@@ -563,6 +563,17 @@ class Paragraph(Html.Html):
     self.css({'text-align': 'justify', 'margin-top': '3px', "text-justify": 'distribute'})
 
   @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a button
+
+    :rtype: Options
+    """
+    return self.__options
+
+  @property
   def _js__builder__(self):
     return '''
       if (typeof options.reset === 'undefined' || options.reset){htmlObj.innerHTML = ''};
@@ -860,21 +871,28 @@ class Highlights(Html.Html):
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0}, options={'content_table': False})
-    self.add_icon(icon, {"float": "left", 'padding-top': '3px'}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_icon(icon, {"float": "left", 'padding-top': '3px', "color": 'inherit'}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     if self.icon is not None and self.icon != "" and self.title:
       self.icon.style.css.font_factor(10)
     # Change the style of the component
     self.css({"margin": "5px 0", 'padding': "5px"})
+    self.style.css.font_factor(5)
     self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
     self.dom.display_value = "block"
 
   @property
   def _js__builder__(self):
-    return ''' htmlObj.querySelector('div[name=content]').innerHTML = data '''
+    return '''
+      if(typeof data === 'undefined'){htmlObj.remove()}
+      else {htmlObj.querySelector('div[name=content]').innerHTML = data} '''
 
   def __str__(self):
-    return "<div %s><div name='content'>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    return '''
+      <div %s>
+        <span aria-hidden='true' style='float:right;font-size:25px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
+        <div name='content'>%s</div></div>%s
+    ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
 class Fieldset(Html.Html):

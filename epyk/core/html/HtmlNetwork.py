@@ -550,6 +550,7 @@ class DropFile(Html.Html):
     self.text.style.css.color = self._report.theme.greys[5]
     self.text.options.managed = False
     self.text.style.css.margin_bottom = 5
+    self.text.style.css.padding_left = 5
     self.delimiter = self._report.ui.text(delimiter, width=(25, 'px'), htmlCode="%s_delimiter" % self.htmlCode, options={"editable": True})
     self.delimiter.options.managed = False
     self.delimiter.style.css.bold()
@@ -564,6 +565,7 @@ class DropFile(Html.Html):
     self.delimiter.click(["document.execCommand('selectAll',false,null)"])
     self.delimiter.keypress.enter(["event.preventDefault(); event.target.blur(); return"])
     self.options.delimiter = self.delimiter.dom.content
+    self.style.css.border = "1px solid %s" % report.theme.colors[-1]
     if self.options.format != 'json':
       self.icon = self._report.ui.icon("fas fa-paste")
       self.icon.options.managed = False
@@ -691,7 +693,7 @@ class DropFile(Html.Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return super(DropFile, self).paste([self.loading()]+jsFncs+[
-      self.text.build("Bespoke data Loaded"),
+      self.text.build(self._report.js.objects.get("'Bespoke data Loaded, '+ (new Date).toISOString()")),
       self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows"))], profile, source_event)
 
   def __str__(self):
@@ -707,7 +709,7 @@ class DropFile(Html.Html):
 
     return '''
       <div %(strAttr)s>
-        <div style='display:inline-block'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s %(sync)s</div>
+        <div style='display:inline-block;padding-left:5px'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s %(sync)s</div>
         %(container)s
         %(text)s
         <input id="%(htmlCode)s_report" style="display:none;"/>

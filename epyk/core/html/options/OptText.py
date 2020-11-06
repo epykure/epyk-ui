@@ -24,6 +24,26 @@ class OptionsText(Options):
   def editable(self, bool):
     self._report._report.body.style.contenteditable()
     self._report.attr["contenteditable"] = bool
+    if bool:
+      self.spellcheck = False
+
+  @property
+  def spellcheck(self):
+    """
+    Description:
+    ------------
+    The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_global_spellcheck.asp
+    """
+    return self._report.attr.get("spellcheck", False)
+
+  @spellcheck.setter
+  def spellcheck(self, bool):
+    self._report._report.body.style.contenteditable()
+    self._report.attr["spellcheck"] = bool
 
   @property
   def reset(self):

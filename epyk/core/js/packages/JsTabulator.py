@@ -605,12 +605,14 @@ class RowComponent(JsPackage):
     """
     The delete function deletes the row, removing its data from the table
 
+    TODO: Fix the fnc_closure_in_promise implementation
+
     Documentation
     http://www.tabulator.info/docs/4.0/update
 
     :return:
     """
-    return self.fnc_closure_in_promise("delete()")
+    return self.fnc_closure("delete()")
 
   def scrollTo(self):
     """
@@ -707,6 +709,28 @@ class RowComponent(JsPackage):
 
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator", 'css': "tabulator"}
+
+  def download(self, format, filename, options=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/download
+
+    Attributes:
+    ----------
+    :param format:
+    :param filename:
+    """
+    format = JsUtils.jsConvertData(format, None)
+    filename = JsUtils.jsConvertData(filename, None)
+    if options is None:
+      return JsObjects.JsVoid("%s.download(%s, %s)" % (self.varId, format, filename))
+
+    options = JsUtils.jsConvertData(options, None)
+    return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
 
   def copyToClipboard(self, rowRangeLookup=None):
     """
@@ -1284,3 +1308,64 @@ class Tabulator(JsPackage):
     :return:
     """
     return JsObjects.JsArray.JsArray("%s.getData()" % self.varId)
+
+
+class _Export(object):
+
+  @property
+  def cell(self):
+    """
+    Cell component for the edited cell
+
+    :return:
+    """
+    return CellComponent(selector="cell", setVar=False)
+
+  @property
+  def row(self):
+    return RowComponent(selector="row", setVar=False)
+
+  @property
+  def value(self):
+    """
+    The data being changed
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("value")
+
+  @property
+  def data(self):
+    """
+    The data being changed
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("data")
+
+  @property
+  def rowData(self):
+    """
+    The row data from the paste parser
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("row")
+
+  @property
+  def rows(self):
+    """
+    The row components from the paste action (this will be empty if the "replace" action is used)
+
+    :return:
+    """
+    return JsObjects.JsArray.JsArray("rows")
+
+  @property
+  def clipboard(self):
+    """
+    The clipboard string
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("clipboard")

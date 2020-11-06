@@ -844,6 +844,22 @@ class Dialog(JQueryUI):
     """
     return JsObjects.JsObjects.get('%s.dialog("open")' % self._src.dom.jquery.varId)
 
+  def add(self):
+    """
+    Description:
+    ------------
+    Opens the dialog.
+
+    Related Pages:
+
+      https://api.jqueryui.com/dialog/#method-open
+    """
+    return JsObjects.JsVoid('''
+      var div = $(document.createElement("div"));
+      div.innerHTML = "wegegre";
+      div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
+      %s.append(div)''' % self._src.dom.jquery.varId)
+
   def option(self, jsData=None, jsValue=None):
     """
     Description:

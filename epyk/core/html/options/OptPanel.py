@@ -92,6 +92,20 @@ class OptionPanelSliding(Options):
 class OptionPanelTabs(Options):
 
   @property
+  def width(self):
+    """
+    Description:
+    ------------
+    Set the with in pixel for the tabs.
+    This will be applied to all the tabs in the container. It is possible to override the values for each tab.
+    """
+    return self.get(dflt=100)
+
+  @width.setter
+  def width(self, value):
+    return self.set(value)
+
+  @property
   def css_tab(self):
     """
     Description:

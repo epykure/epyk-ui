@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
+from epyk.core.html.options import OptText
+
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
 
@@ -10,11 +13,23 @@ class HtmlGeneric(Html.Html):
 
   def __init__(self, report, tag, text, width, height, htmlCode, tooltip, options, profile):
     self.tag = tag
-    super(HtmlGeneric, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(HtmlGeneric, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, options=options, profile=profile)
+    self.__options = OptText.OptionsText(self, options)
     if tooltip:
       self.tooltip(tooltip)
     if options is not None and not options.get('managed', True):
       self.options.managed = False
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   def __getitem__(self, i):
     if not isinstance(self.val, list):

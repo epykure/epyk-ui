@@ -1,12 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.interfaces import Arguments
+
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
 
@@ -289,6 +293,17 @@ class Div(Html.Html):
       self._vals = [self.val]
     self.val.append(htmlObj)
     self.components[htmlObj.htmlCode] = htmlObj
+    return self
+
+  def extend(self, components):
+    """
+
+    :param components:
+
+    :return:
+    """
+    for component in components:
+      self.add(component)
     return self
 
   @property
@@ -1036,7 +1051,7 @@ class Tabs(Html.Html):
     for tab_obj in self.__panel_objs.values():
       yield tab_obj["tab"]
 
-  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=(100, 'px')):
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None):
     """
     Description:
     ------------
@@ -1051,6 +1066,7 @@ class Tabs(Html.Html):
     :param css_tab_clicked:
     :param width:
     """
+    width = Arguments.size(width or self.options.width, unit="px")
     if not hasattr(div, 'options'):
       if div is None:
         div = self._report.ui.div()
@@ -1070,7 +1086,10 @@ class Tabs(Html.Html):
         self._report.ui.icon(icon).css({"display": 'block', 'color': 'inherit', "width": '100%', "font-size": css_defaults.font(4)}),
         name], width=width)
     else:
-      tab = self._report.ui.div(name, width=width)
+      if hasattr(name, "html"):
+        tab = self._report.ui.div(name, width=width)
+      else:
+        tab = self._report.ui.div(name, width=width, htmlCode="%s_%s" % (self.htmlCode, JsUtils.getJsValid(name, False)))
     tab_style = self.options.tab_style(name, css_tab)
     tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
     tab.css(tab_style).css({"padding": '5px 0'})
@@ -1228,17 +1247,42 @@ class Dialog(Html.Html):
   requirements = ('jqueryui', )
 
   def __init__(self, report, recordSet, width, height, helper, profile):
-    super(Dialog, self).__init__(report, recordSet, css_attrs={"width": width, 'height': helper}, profile=profile)
+    super(Dialog, self).__init__(report, recordSet, css_attrs={"width": width, 'height': height}, profile=profile)
     self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "relative",
               "background": self._report.theme.greys[0]})
-    # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
+    #self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
 
   @property
   def _js__builder__(self):
     return '''
-      var div = jQuery("<div>")
-      jQuery(htmlObj).append(div);
-      div.dialog({modal: false, title: "rrrr"})'''
+      var div = %(jqId)s;
+      div.dialog({title: "rrrr", autoOpen: false});
+      %(jqHtmlObj)s.append(div);
+      ''' % {"jqId": JsQuery.decorate_var("'<div>'", convert_var=False), "jqHtmlObj": JsQuery.decorate_var("htmlObj", convert_var=False)}
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    Related Pages:
+
+      https://api.jqueryui.com/progressbar
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.ProgressBar
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Dialog(self, report=self._report)
+    return self._js
 
   # def jsAdd(self, title='data.event_val', isPyData=False):
   #   if isPyData:

@@ -700,3 +700,54 @@ class Texts(object):
     div.add(div.label)
     div.add(div.text)
     return div
+
+  def alert(self, text=None, title=None, icon=None, type=None, color=None, width=('400', "px"),
+                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+
+    Usage::
+
+      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+      page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Highlights`
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/4.3/components/alerts/
+
+    Attributes:
+    ----------
+    :param text: Optional. The string value to be displayed in the component
+    :param title:
+    :param icon: String. Optional. The component icon content from font-awesome references
+    :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
+                 dark). Default danger
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    text = self.context.rptObj.py.encode_html(text)
+    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type or "info", color, width,
+                                          height, htmlCode, helper, options or {}, profile)
+    html_light.style.css.position = "fixed"
+    html_light.style.css.bottom = 10
+    html_light.style.css.padding = "15px 20px"
+    html_light.style.css.border_radius = 10
+    if type is None:
+      html_light.style.css.color = self.context.rptObj.theme.greys[0]
+      html_light.style.css.background_color = self.context.rptObj.theme.colors[-1]
+    html_light.style.css.right = 10
+    html_light.style.css.z_index = 1500
+    return html_light

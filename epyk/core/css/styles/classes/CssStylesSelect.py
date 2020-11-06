@@ -58,7 +58,7 @@ class CssSelectOption(CssStyle.Style):
   def customize(self):
     self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
               'background-color': self.rptObj.theme.greys[0],
-              'z-index': 110}, important=True)
+              }, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):
@@ -67,7 +67,7 @@ class CssSelectOptionItems(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
+    self.css({"z-index": 210, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
     self.hover.css({'color': self.rptObj.theme.success[1]}, important=True)
     self.active.css({"background-color": self.rptObj.theme.success[1], "color": self.rptObj.theme.greys[-1]}, important=True)
 

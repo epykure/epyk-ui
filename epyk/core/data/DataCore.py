@@ -125,7 +125,7 @@ class DataAggregators(object):
           if (!(skKey in tmpResults)){tmpResults[skKey] = {}; sks.forEach(function(s){tmpResults[skKey][s] = r[s]})
              cs.forEach(function(c){tmpResults[skKey][c] = 0})}
           cs.forEach(function(c){tmpResults[skKey][c] += %s})
-        }); for(const v in tmpResults){result.push(tmpResults[v])}; return result}''' % (name, "parseFloat(r[c])" if cast_vals else 'r[c]')
+        }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (name, "parseFloat(r[c])" if cast_vals else 'r[c]')
     return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, columns, keys, dstKey), report=self._report)
 
   def pluck(self, column):
@@ -177,7 +177,7 @@ class DataFilters(object):
     name = "filterMatch"
     constructors[name] = '''
        function %s(r, v){if(typeof r === 'undefined'){ return []}; if(v.length == 0){return r}; var n=[];r.forEach(function(e){var isValid = true;
-           for(const a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n.push(e)}}); return n}''' % name
+           for(var a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n.push(e)}}); return n}''' % name
     self.__filters.add("%s(%%s, %s)" % (name, data))
     return self
 
