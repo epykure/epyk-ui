@@ -633,7 +633,7 @@ class Filters(Html.Html):
   requirements = ('font-awesome', )
 
   def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
-    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
+    super(Filters, self).__init__(report, items, css_attrs={"width": width, "min-height": height}, htmlCode=htmlCode, profile=profile)
     self.__options = OptList.OptionsTagItems(self, options)
     self.input = self._report.ui.input()
     self.input.style.css.text_align = 'left'
@@ -642,7 +642,7 @@ class Filters(Html.Html):
     self.selections = self._report.ui.div()
     self.selections.options.managed = False
     self.selections.attr["name"] = "panel"
-    self.selections.css({'height': '30px', 'padding': '5px 2px'})
+    self.selections.css({'min-height': '30px', 'padding': '5px 2px'})
     self.add_helper(helper)
     self.__enter_def = False
 

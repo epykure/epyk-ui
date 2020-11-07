@@ -821,7 +821,7 @@ class Lists(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px', 'margin': '2px',
-                                 "width": 'auto', 'display': 'inline', 'background': 'inherit'},
+                                 "width": 'auto', 'display': 'inline-block', 'background': 'inherit', 'white-space': 'nowrap'},
                     'category': category, 'visible': True,
                     'value_css': {'font-size': Defaults.font(3), 'font-weight': 'bold', 'vertical-align': 'bottom'},
                     'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top', 'font-size': Defaults.font(-3)},
