@@ -1714,6 +1714,34 @@ class Keybindings(DataClass):
     return self
 
 
+class RowContextMenu(DataClass):
+
+  def duplicate(self, label="Duplicate"):
+    """
+    Add a duplicate entry to the context menu
+    """
+    self._attrs[label] = "row.getTable().addRow(row.getData(), false, row.getPosition())"
+    return self
+
+  def delete(self, label="Delete"):
+    """
+    Add a delete entry to the context menu
+    """
+    self._attrs[label] = "row.delete()"
+    return self
+
+  def custom(self, label, strFnc):
+    """
+    Add a delete entry to the context menu
+    """
+    self._attrs[label] = strFnc
+    return self
+
+  def __str__(self):
+    result = ["{label: '%s', action: function(e, row){%s}}" % (k, v) for k, v in self._attrs.items()]
+    return ", ".join(result)
+
+
 class TableConfig(DataClass):
 
   @property
@@ -2522,6 +2550,19 @@ http://tabulator.info/docs/4.2/options
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._attrs["rowAdded"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  @property
+  def rowContextMenu(self):
+    """
+    Description:
+    -----------
+    Shortcut property to the row context menu.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.6/menu#cell-context
+    """
+    return self.sub_data_enum("rowContextMenu", RowContextMenu)
 
   def rowClick(self, jsFncs):
     """
