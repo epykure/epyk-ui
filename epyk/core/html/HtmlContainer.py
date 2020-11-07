@@ -168,6 +168,24 @@ class PanelSlide(Panel):
     """
     return self.__options
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlSlidingPanel
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self._report)
+    return self._dom
+
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:

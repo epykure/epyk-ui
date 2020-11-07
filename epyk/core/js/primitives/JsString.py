@@ -119,6 +119,7 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
+    searchvalue = JsUtils.jsConvertData(searchvalue, None)
     return JsNumber.JsNumber("%s.indexOf(%s, %s)" % (self.varId, searchvalue, start), isPyData=False)
 
   def lastIndexOf(self, searchvalue, start=0):

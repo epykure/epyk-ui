@@ -2536,7 +2536,7 @@ class CssMixin(object):
     self.text_align = "center"
     return self
 
-  def sticky(self, top=0, bottom=None, left=None, right=None):
+  def sticky(self, top=0, bottom=None, left=None, right=None, z_index=400):
     """
     Description:
     ------------
@@ -2556,6 +2556,7 @@ class CssMixin(object):
     :param bottom:
     :param left:
     :param right:
+    :param z_index:
 
     :return: The CSS object to allow the chaining
     """
@@ -2568,6 +2569,7 @@ class CssMixin(object):
     elif right is not None:
       self.right = right
     self.position = "sticky"
+    self.z_index = z_index
     return self
 
   def shadow(self, color=None, size=5):
@@ -2855,20 +2857,3 @@ class CssMixin(object):
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
 
-  def sticky(self, top=0, z_index=400):
-    """
-    Description:
-    ------------
-    Sticky element on CSS
-
-    Related Pages:
-
-      https://www.w3schools.com/howto/howto_css_sticky_element.asp
-
-    Attributes:
-    ----------
-    :param top: Integer. Optional. The space from the top of the page to activate the stickiness
-    """
-    self.position = "sticky"
-    self.top = top
-    self.z_index = z_index

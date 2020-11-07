@@ -102,6 +102,9 @@ class Table(Html.Html):
       self._js = JsTabulator.Tabulator(self._report, selector=self.tableId, setVar=False, parent=self)
     return self._js
 
+  def data(self, data):
+    self.config.data = data
+
   def add_column(self, field, title=None):
     """
     Description:
@@ -179,6 +182,28 @@ class Table(Html.Html):
       return self.js.setData(data)
 
     return 'var %s =  new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
+
+  def extendModule(self, category, type, fncName, fncDef):
+    """
+    Description:
+    ------------
+    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a series of modules that provide all of its wonderfull features.
+
+    All of the available modules are installed by default to ensure that you can provide your users with the richest experience possible with minimal setup.
+
+    Related Pages:
+      http://tabulator.info/docs/4.0/modules
+      http://tabulator.info/docs/4.2/modules#module-keybindings
+
+    Attributes:
+    ----------
+    :param category: String. The name of the module. e.g format
+    :param type: String. The name of the property you want to extend. e.g. formatters
+    :param fncName: String. The alias of teh function to be added to the registery
+    :param fncDef: String. The function definition to be attached to this fncName
+    """
+    self._report._props["js"]['builders'].add('Tabulator.prototype.extendModule("%s", "%s", {"%s": %s});' % (category, type, fncName, fncDef))
+    return self
 
   def loading(self, status=True):
     """
@@ -1262,6 +1287,22 @@ http://tabulator.info/docs/4.5/columns
     """
     return self.sub_data("bottomCalcParams", BottomCalcParams)
 
+  def add_column(self, field, title=None):
+    """
+    Description:
+    ------------
+    Add new column to the underlying Tabulator object
+
+    Attributes:
+    ----------
+    :param field: String. Mandatory. The key in the row
+    :param title: String. Optional. The title for the column. Default to the field
+    """
+    col_def = self.sub_data_enum("columns", Column)
+    col_def.field = field
+    col_def.title = field if title is None else title
+    return col_def
+
   @property
   def cssClass(self):
     """
@@ -1560,6 +1601,21 @@ http://tabulator.info/docs/4.5/columns
     self._attrs["titleFormatter"] = val
 
   @property
+  def titleFormatterParams(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+      http://tabulator.info/docs/4.0/format
+    """
+    return self._attrs["titleFormatterParams"]
+
+  @titleFormatterParams.setter
+  def titleFormatterParams(self, val):
+    self._attrs["titleFormatterParams"] = val
+
+  @property
   def topCalc(self):
     """
     Description:
@@ -1587,6 +1643,75 @@ http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"] = []
     return Validators(self, self._attrs)
+
+
+class Keybindings(DataClass):
+
+  def addRow(self, keys):
+    """
+    Description:
+    -----------
+    Add a keyboard shortcut event on the table to
+
+    Keycodes can be found using the function ord()
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.4/keybindings
+
+    Attributes:
+    ----------
+    :param keys: String. The keys to trigger the event
+    """
+    self._report.extendModule("keybindings", "actions", "addRow", "function(event){event.preventDefault(); this.table.addRow()}")
+    self._attrs["addRow"] = keys
+    return self
+
+  def deleteSelectedRows(self, keys):
+    """
+    Description:
+    -----------
+    Add a keyboard shortcut event on the table to delete the selected row.
+
+    Keycodes can be found using the function ord()
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.4/keybindings
+
+    Attributes:
+    ----------
+    :param keys: String. The keys to trigger the event
+    """
+    self._report.extendModule("keybindings", "actions", "addRow", "function(){var rows = this.table.getSelectedRows(); rows.forEach(function(row){row.delete()})}")
+    self._attrs["deleteSelectedRows"] = keys
+    return self
+
+  def custom(self, keys, fncName, fncDef, prevent_default=True):
+    """
+    Description:
+    -----------
+    Add a keyboard shortcut custom event on the table
+
+    Keycodes can be found using the function ord()
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.4/keybindings
+
+    Attributes:
+    ----------
+    :param keys: String. The keys to trigger the event
+    :param fncName: String. The function name / alias for this event
+    :param fncDef: String. The function definition of this event.
+    :param prevent_default: Boolean. Stop the event and do not change the cell in editable.
+    """
+    if prevent_default:
+      self._report.extendModule("keybindings", "actions", fncName, "function(event){event.preventDefault(); %s}" % fncDef)
+    else:
+      self._report.extendModule("keybindings", "actions", fncName, "function(){%s}" % fncDef)
+    self._attrs[fncName] = keys
+    return self
 
 
 class TableConfig(DataClass):
@@ -1688,6 +1813,24 @@ http://tabulator.info/docs/4.2/options
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._attrs["cellClick"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def clipboardPasted(self, jsFncs):
+    """
+    Description:
+    -----------
+    The clipboardPasted event is triggered whenever data is successfuly pasted into the table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks#cell
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["clipboardPasted"] = JsObjects.JsVoid("function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
   def cellDblClick(self, jsFncs):
     """
@@ -2057,6 +2200,17 @@ http://tabulator.info/docs/4.2/options
   @history.setter
   def history(self, val):
     self._attrs["history"] = val
+
+  @property
+  def keybindings(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+      http://tabulator.info/docs/4.2/modules#module-keybindings
+    """
+    return self.sub_data("keybindings", Keybindings)
 
   @property
   def lang(self):
@@ -2450,6 +2604,21 @@ http://tabulator.info/docs/4.2/options
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._attrs["rowContext"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def rowFormatter(self, jsFncs):
+    """
+    Tabulator also allows you to define a row level formatter using the rowFormatter option.
+    this lets you alter each row of the table based on the data it contains.
+
+    http://tabulator.info/docs/4.0/format
+
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowFormatter"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
   def rowMove(self, jsFncs):
     """

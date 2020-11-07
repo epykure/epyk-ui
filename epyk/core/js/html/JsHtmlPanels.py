@@ -9,6 +9,35 @@ class JsHtmlPanel(JsHtml.JsHtml):
   pass
 
 
+class JsHtmlSlidingPanel(JsHtml.JsHtml):
+
+  def close(self):
+    """
+    Description:
+    ------------
+    Close the sliding panel
+    """
+    return JsFncs.JsFunctions([
+      self._report.js.if_(self._src.icon.dom.content.toString().indexOf(self._src.options.icon_expanded.split(" ")[-1]) >= 0, [
+        self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
+        self._src.icon.dom.switchClass(self._src.options.icon_expanded, self._src.options.icon_closed)
+      ])
+    ])
+
+  def open(self):
+    """
+    Description:
+    ------------
+    Open the sliding panel
+    """
+    return JsFncs.JsFunctions([
+      self._report.js.if_(self._src.icon.dom.content.toString().indexOf(self._src.options.icon_closed.split(" ")[-1]) >= 0, [
+        self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
+        self._src.icon.dom.switchClass(self._src.options.icon_closed, self._src.options.icon_expanded)
+      ])
+    ])
+
+
 class JsHtmlTr(JsHtml.JsHtml):
   display_value = "table-row"
 
