@@ -72,6 +72,20 @@ class Panel(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self._report)
     return self._dom
 
+  def extend(self, components):
+    """
+    Description:
+    ------------
+    Add multiple HTML components to the container.
+
+    Attributes:
+    ----------
+    :param components: List. The list of components
+    """
+    for component in components:
+      self.add(component)
+    return self
+
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
@@ -333,10 +347,13 @@ class Div(Html.Html):
 
   def extend(self, components):
     """
+    Description:
+    ------------
+    Add multiple HTML components to the container.
 
-    :param components:
-
-    :return:
+    Attributes:
+    ----------
+    :param components: List. The list of components
     """
     for component in components:
       self.add(component)

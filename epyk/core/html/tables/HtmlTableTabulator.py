@@ -775,6 +775,27 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
+  def custom(self, fncName, fncDef=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.8/modules
+
+    Attributes:
+    ----------
+    :param fncName:
+    :param fncDef:
+    """
+    if fncDef is None:
+      self._attrs["editor"] = JsObjects.JsObjects.get(fncName)
+    else:
+      self._report.extendModule("edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParam){%s}" % fncDef)
+      self._attrs["editor"] = fncName
+    return self
+
 
 class Formattors(DataGroup):
 
@@ -1021,19 +1042,43 @@ http://tabulator.info/docs/4.1/format
       self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def custom(self, value):
+  def custom(self, fncName, fncDef=None, formatterParams=None):
     """
+    Description:
+    -----------
 
-    :param value:
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/modules
+
+    Attributes:
+    ----------
+    :param fncName:
+    :param fncDef:
+    :param formatterParams:
     """
-    self._attrs["formatter"] = JsObjects.JsObjects.get(value)
+    if fncDef is None:
+      self._attrs["formatter"] = JsObjects.JsObjects.get(fncName)
+      self._attrs["formatterParams"] = formatterParams or {}
+    else:
+      self._report.extendModule("format", "formatters", fncName, "function(cell, formatterParam){%s}" % fncDef)
+      self._attrs["formatter"] = fncName
+      self._attrs["formatterParams"] = formatterParams or {}
     return self
 
   def wrapper(self, formatter, css_attrs, formatterParams=None):
     """
+    Description:
+    -----------
 
     .formatters.wrapper("progress", {"height": '6px'}, {'color': ['orange', 'green']})
-    
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/modules
+
+    Attributes:
+    ----------
     :param formatter:
     :param css_attrs:
     :param formatterParams:
@@ -1047,6 +1092,65 @@ http://tabulator.info/docs/4.1/format
         return frag; }''' % formatter)
     self._attrs['formatterParams'] = formatterParams or {}
     self._attrs['formatterParams']['css'] = css_attrs
+    return self
+
+
+class Mutators(DataGroup):
+
+  def custom(self, fncName, fncDef=None):
+    """
+    Description:
+    -----------
+    he mutator module allows for manipulation of data as it is entered into Tabulator.
+
+    More information on these functions can be found in the Mutators Documentation.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.8/mutators
+
+    Attributes:
+    ----------
+    :param fncName: String.
+    :param fncDef: String.
+    """
+    if fncDef is None:
+      self._attrs["mutator"] = JsObjects.JsObjects.get(fncName)
+    else:
+      self._report.extendModule("mutator", "mutators", fncName, "function(value, data, type, params, component){%s}" % fncDef)
+      self._attrs["mutator"] = fncName
+    return self
+
+
+class Accessors(DataGroup):
+
+  def custom(self, fncName, fncDef=None, accessorParams=None):
+    """
+    Description:
+    -----------
+    Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
+
+    You can set accessors on a per column basis using the accessor option in the column definition object.
+
+    You can pass an optional additional parameter with accessor, accessorParams that should contain an object with additional information for configuring the accessor.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.8/mutators#accessors
+
+    Attributes:
+    ----------
+    :param fncName: String.
+    :param fncDef: String.
+    :param accessorParams: String.
+    """
+    if fncDef is None:
+      self._attrs["accessor"] = JsObjects.JsObjects.get(fncName)
+      self._attrs["accessorParams"] = accessorParams or {}
+    else:
+      self._report.extendModule("accessor", "accessors", fncName, "function(value, data, type, params, column, row){%s}" % fncDef)
+      self._attrs["accessor"] = fncName
+      self._attrs["accessorParams"] = accessorParams or {}
     return self
 
 
@@ -1258,6 +1362,21 @@ http://tabulator.info/docs/4.5/columns
     self._attrs["align"] = val
 
   @property
+  def accessors(self):
+    """
+    Description:
+    -----------
+    Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
+
+    You can set accessors on a per column basis using the accessor option in the column definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.8/mutators#accessors
+    """
+    return Accessors(self, self._attrs)
+
+  @property
   def bottomCalc(self):
     """
     Description:
@@ -1346,7 +1465,9 @@ http://tabulator.info/docs/4.0/modules
     -----------
     Tabulator comes with a number of built-in editors including:
 
-    http://tabulator.info/docs/4.5/edit#edit-builtin
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
     """
     return Editor(self, self._attrs)
 
@@ -1374,7 +1495,8 @@ http://tabulator.info/docs/4.5/columns
     You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
     Related Pages:
-http://tabulator.info/docs/4.5
+
+      http://tabulator.info/docs/4.5
     """
     return Formattors(self, self._attrs)
 
@@ -1386,7 +1508,8 @@ http://tabulator.info/docs/4.5
     freezes the column in place when scrolling (see Frozen Columns for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["frozen"]
 
@@ -1503,6 +1626,21 @@ http://tabulator.info/docs/4.1/columns
   @minwidth.setter
   def minwidth(self, val):
     self._attrs["minwidth"] = val
+
+  @property
+  def mutators(self):
+    """
+    Description:
+    -----------
+    Mutators are used to alter data as it is parsed into Tabulator.
+
+    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used to build the table
+
+    Related Pages:
+
+        http://tabulator.info/docs/4.8/mutators
+    """
+    return Mutators(self, self._attrs)
 
   @property
   def widthGrow(self):
