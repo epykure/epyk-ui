@@ -155,7 +155,7 @@ class PanelSlide(Panel):
     self.title.style.css.padding = "5px"
     self.panel = self._report.ui.div()
     self.panel.options.managed = False
-    self._vals, self.__clicks = [self.title] + self._vals, []
+    self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
     self.__options = OptPanel.OptionPanelSliding(self, options)
 
   @property
@@ -205,6 +205,24 @@ class PanelSlide(Panel):
     self.__clicks = jsFncs
     return self
 
+  def open(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    Event triggered when the sliding panel is open.
+
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__clicks_open = [self._report.js.if_(self.icon.dom.content.toString().indexOf(self.options.icon_expanded.split(" ")[-1]) >= 0, jsFncs).toStr()]
+    return self
+
   def __add__(self, component):
     """ Add items to a container """
     self.val[1] += component
@@ -224,7 +242,7 @@ class PanelSlide(Panel):
       self.icon.style.css.float = "right"
     self.title.click(self.__clicks + [
       self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
-      self.icon.dom.switchClass(icon_current, icon_change)])
+      self.icon.dom.switchClass(icon_current, icon_change)] + self.__clicks_open)
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
