@@ -403,6 +403,38 @@ class Icons(object):
     """
     return self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
 
+  def clear(self, text=None, align='left', position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/fas fa-eraser>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.clear()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param align:
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, htmlCode, profile)
+    component.style.add_classes.div.danger_hover()
+    component.style.css.white_space = "nowrap"
+    component.style.css.margin = align
+    return component
+
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """

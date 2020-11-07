@@ -569,7 +569,8 @@ class DropFile(Html.Html):
     if self.options.format != 'json':
       self.icon = self._report.ui.icon("fas fa-paste")
       self.icon.options.managed = False
-      del self.icon.attr['css']["color"]
+      if "color" in self.icon.attr['css']:
+        del self.icon.attr['css']["color"]
       self.icon.style.add_classes.icon.selected()
       self.icon.style.css.margin_left = 5
       self.icon.click(self.dom.events.trigger("paste"))

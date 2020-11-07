@@ -724,6 +724,8 @@ class Tabulator(JsPackage):
     :param format:
     :param filename:
     """
+    if format == "pdf":
+      self._parent.jsImports.add("jspdf")
     format = JsUtils.jsConvertData(format, None)
     filename = JsUtils.jsConvertData(filename, None)
     if options is None:
@@ -732,7 +734,27 @@ class Tabulator(JsPackage):
     options = JsUtils.jsConvertData(options, None)
     return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
 
-  def copyToClipboard(self, rowRangeLookup=None):
+  def downloadToTab(self, format):
+    """
+    Description:
+    -----------
+    If you want to open the generated file in a new browser tab rather than downloading it straight away, you can use the downloadToTab function.
+    This is particularly useful with the PDF downloader, as it allows you to preview the resulting PDF in a new browser tab
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.8/download
+
+    Attributes:
+    ----------
+    :param format: String. The output format
+    """
+    if format == "pdf":
+      self._parent.jsImports.add("jspdf")
+    format = JsUtils.jsConvertData(format, None)
+    return JsObjects.JsVoid("%s.downloadToTab(%s)" % (self.varId, format))
+
+  def copyToClipboard(self, clipboardCopySelector=None, with_header=True):
     """
     Description:
     -----------
@@ -745,13 +767,17 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param rowRangeLookup:
+    :param clipboardCopySelector: String. can be table, active, selected, visible, all
+    :param with_header: Boolean. Optional. defined if the header are included in the copy
     """
     self._parent.config.clipboard = True
-    if rowRangeLookup is None:
-      rowRangeLookup = 'all'
-    rowRangeLookup = JsUtils.jsConvertData(rowRangeLookup, None)
-    return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, rowRangeLookup))
+    if clipboardCopySelector is None:
+      clipboardCopySelector = 'all'
+      clipboardCopySelector = JsUtils.jsConvertData(clipboardCopySelector, None)
+    if not with_header:
+      return JsObjects.JsVoid("%s.copyToClipboard(%s, %s)" % (self.varId, clipboardCopySelector, JsUtils.jsConvertData(with_header, None)))
+
+    return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, clipboardCopySelector))
 
   def previousPage(self):
     """

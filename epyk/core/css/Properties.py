@@ -2854,3 +2854,21 @@ class CssMixin(object):
     if overall_margin > 0:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
+
+  def sticky(self, top=0, z_index=400):
+    """
+    Description:
+    ------------
+    Sticky element on CSS
+
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_css_sticky_element.asp
+
+    Attributes:
+    ----------
+    :param top: Integer. Optional. The space from the top of the page to activate the stickiness
+    """
+    self.position = "sticky"
+    self.top = top
+    self.z_index = z_index

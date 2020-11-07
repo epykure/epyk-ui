@@ -554,7 +554,7 @@ class Images(object):
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height,
-         color=color or self.context.rptObj.theme.greys[-1], tooltip=tooltip, options=options, htmlCode=htmlCode, profile=profile)
+         color=color, tooltip=tooltip, options=options, htmlCode=htmlCode, profile=profile)
     return html_icon
 
   def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,
