@@ -726,7 +726,7 @@ class Fields(object):
                                            height, htmlCode, helper, options or {}, profile)
     return html_input
 
-  def select(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+  def select(self, value=False, label=None, icon=None, selected=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -763,6 +763,8 @@ class Fields(object):
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
+    if selected is not None:
+      html_input.input.options.selected = selected
     return html_input
 
   def months(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,

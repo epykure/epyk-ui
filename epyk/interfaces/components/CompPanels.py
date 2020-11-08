@@ -10,6 +10,35 @@ class Panels(object):
   def __init__(self, context):
     self.context = context
 
+  def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+            helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Panel`
+
+    Attributes:
+    ----------
+    :param htmlObjs:
+    :param title:
+    :param color:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs or [], title, color, width, height, htmlCode, helper, options, profile)
+    return html_panel
+
   def pills(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:

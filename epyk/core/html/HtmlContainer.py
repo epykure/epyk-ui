@@ -29,7 +29,7 @@ class Panel(Html.Html):
           obj.options.managed = False
     elif htmlObj is not None and hasattr(htmlObj, 'options'):
       htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    component = []
+    component, self.menu = [], None
     if title is not None:
       self.title = report.ui.title(title)
       self.title.options.managed = False
@@ -86,9 +86,44 @@ class Panel(Html.Html):
       self.add(component)
     return self
 
+  def add_menu(self, close=True, mini=True):
+    self.style.css.position = "relative"
+    self.style.css.min_height = 25
+    self.style.css.min_width = 25
+    if self.menu is None:
+      self.menu = self._report.ui.div()
+      self.menu.options.managed = False
+      self.menu.style.css.position = "absolute"
+      self.menu.style.css.text_align = "right"
+      self.menu.style.css.top = 2
+      self.menu.style.css.right = 5
+      self.menu.style.css.margin = 0
+    margin_right = 5
+    if mini:
+      remove = self._report.ui.icon("far fa-minus-square")
+      remove.style.css.margin_right = 5
+      remove.click([
+        self.dom.querySelector("div[name=panel]").toggle()])
+      remove.style.css.color = self._report.theme.greys[6]
+      self.menu.add(remove)
+    if close:
+      remove = self._report.ui.icon("fas fa-times")
+      remove.style.css.margin_right = 5
+      remove.click([self.dom.remove()])
+      remove.style.css.color = self._report.theme.greys[6]
+      self.menu.add(remove)
+    return self.menu
+
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    if self.menu is None:
+      return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+
+    menu_width = "100%"
+    if self.style.css.width.endswith('px'):
+      menu_width = self.style.css.width
+      self.style.css.width = None
+    return "<div %s>%s<div style='width:%s' name='panel'>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.menu.html(), menu_width, str_div, self.helper)
 
 
 class PanelSplit(Html.Html):
