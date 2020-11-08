@@ -39,7 +39,7 @@ class Titles(object):
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     # html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
-    html_title.style.css.font_size = Defaults_css.font(15)
+    html_title.style.css.font_size = Defaults_css.font(10)
     html_title.style.css.text_transform = 'uppercase'
     html_title.style.css.text_align = align
     html_title.style.css.margin_left = 2
@@ -74,7 +74,7 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.font_size = Defaults_css.font(6)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 5
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
@@ -108,7 +108,7 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(12)
+    html_title.style.css.font_size = Defaults_css.font(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
@@ -136,7 +136,7 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 20
     html_title.style.css.margin_bottom = 10
@@ -169,7 +169,7 @@ class Titles(object):
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.border_left = '3px solid %s' % self.context.rptObj.theme.colors[2]
     html_title.style.css.padding_left = 5
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = Defaults_css.font(2)
     return html_title
 
   def caption(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
@@ -197,7 +197,7 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = Defaults_css.font(2)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
@@ -227,7 +227,7 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
                                            dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.border_bottom = '2px solid %s' % self.context.rptObj.theme.colors[-1]
     return html_title
 
@@ -258,7 +258,7 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
                                            dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.font_weight = "bold"
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
@@ -289,7 +289,7 @@ class Titles(object):
     height = Arguments.size(height, unit="px")
     title = self.context.rptObj.ui.title(text=text, name=name, contents=contents, color=color, picture=picture, icon=icon,
             marginTop=marginTop, htmlCode=htmlCode, width=width, height=height, align=align, options=options, profile=profile)
-    title.style.css.font_size = Defaults_css.font(3)
+    title.style.css.font_size = Defaults_css.font(2)
     title.style.css.bold()
     return title
 
@@ -320,7 +320,7 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(12)
+    html_title.style.css.font_size = Defaults_css.font(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.padding_bottom = 5

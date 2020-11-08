@@ -45,7 +45,7 @@ class CssTabulatorCol(CssStyle.Style):
   classname = 'tabulator-col'
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[2],
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': '1px solid %s' % self.rptObj.theme.greys[2],
               'background': self.rptObj.theme.greys[2], 'padding': '4px 0', "text-align": 'center'}, important=True)
 
 
@@ -61,9 +61,16 @@ class CssTabulatorMenu(CssStyle.Style):
   classname = 'tabulator-menu'
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.greys[2], 'color': self.rptObj.theme.colors[-1],
+    self.hover.css({'color': self.rptObj.theme.colors[-1]}, important=True)
+
+
+class CssTabulatorMenuItem(CssStyle.Style):
+  classname = 'tabulator-menu-item'
+
+  def customize(self):
+    self.css({'background': self.rptObj.theme.greys[2], 'color': self.rptObj.theme.greys[-1], 'padding': '2px 10px',
               'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit)}, important=True)
-    self.hover.css({'color': self.rptObj.theme.colors[0]}, important=True)
+    self.hover.css({'color': self.rptObj.theme.colors[-1]}, important=True)
 
 
 class CssTabulatorFooterPagination(CssStyle.Style):

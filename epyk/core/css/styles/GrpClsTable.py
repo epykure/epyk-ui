@@ -179,7 +179,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tabulator, self._css_tabulator_row, self._css_tabulator_header = None, None, None
     self._css_tabulator_even_row, self._css_tabulator_cell, self._css_tabulator_headers = None, None, None
     self._css_tabulator_col, self._css_tabulator_col_content, self._css_tabulator_selected = None, None, None
-    self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer = None, None, None
+    self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer, self._css_tabulator_menu_item = 4 * [None]
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp, self._css_tabulator_menu = 4 * [None]
     self._css_tabulator_even_row_no_strip = None
     self.__strip = False
@@ -198,6 +198,7 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_tb_tree)
     self.classList['other'].add(self.cls_tb_tree_exp)
     self.classList['other'].add(self.cls_tabulator_menu)
+    self.classList['other'].add(self.cls_tabulator_menu_item)
 
   def strip(self):
     self.__strip = True
@@ -264,6 +265,17 @@ class Tabulator(GrpCls.ClassHtml):
     if self._css_tabulator_menu is None:
       self._css_tabulator_menu = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_menu()
     return self._css_tabulator_menu
+
+  @property
+  def cls_tabulator_menu_item(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_menu_item is None:
+      self._css_tabulator_menu_item = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                   self.classList['other']).tabulator_menu_item()
+    return self._css_tabulator_menu_item
 
   @property
   def cls_tabulator_selected(self):

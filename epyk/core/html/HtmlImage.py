@@ -507,6 +507,51 @@ class Icon(Html.Html):
     return '<i %s>%s</i>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
+class IconToggle(Icon):
+
+  def add_components(self, components):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    """
+    self._linked_components = components
+    return self
+
+  def click(self, jsOnOffFncs=None, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsOnOffFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    """
+    self.style.css.cursor = "pointer"
+    if jsOnOffFncs is None:
+      jsOnOffFncs = {}
+    jsFncs_on = jsOnOffFncs.get("on", [])
+    jsFncs_off = jsOnOffFncs.get("off", [])
+    if getattr(self, "_linked_components", None) is not None:
+      for c in self._linked_components:
+        jsFncs_on.append(c.dom.hide().r)
+    jsFncs_on.append(self.build(self.icon_off))
+    if not isinstance(jsFncs_off, list):
+      jsFncs_off = [jsFncs_off]
+    if getattr(self, "_linked_components", None) is not None:
+      for c in self._linked_components:
+        jsFncs_off.append(c.dom.show().r)
+    jsFncs_off.append(self.build(self.icon_on))
+    return super(Icon, self).click(self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, jsFncs_on).else_(jsFncs_off),
+                                   profile, source_event, onReady=onReady)
+
+
 class Emoji(Html.Html):
   name = 'Emoji'
 

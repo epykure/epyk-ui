@@ -174,6 +174,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorMenu)
 
+  def tabulator_menu_item(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorMenuItem)
+
   def tabulator_col(self):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorCol)

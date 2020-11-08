@@ -192,16 +192,16 @@ class PanelSlide(Panel):
   def __init__(self, report, components, title, color, width, height, htmlCode, helper, options, profile):
     super(PanelSlide, self).__init__(report, components, None, color, width, height, htmlCode, helper, options, profile)
     self.add_helper(helper)
-    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 5px',
+    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 0',
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
     self.text = self._report.ui.text(title, htmlCode="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
     self.text.style.css.bold()
-    self.text.style.css.font_factor(8)
+    self.text.style.css.font_factor(2)
     self.title = self._report.ui.div([self.icon, self.text])
     self.title.options.managed = False
     self.title.style.css.cursor = "pointer"
     self.title.style.css.white_space = "nowrap"
-    self.title.style.css.padding = "5px"
+    self.title.style.css.padding = "5px 5px 0 0"
     self.panel = self._report.ui.div()
     self.panel.options.managed = False
     self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []

@@ -1867,21 +1867,21 @@ class Keybindings(DataClass):
 
 class RowContextMenu(DataClass):
 
-  def duplicate(self, label="Duplicate"):
+  def duplicate(self, label="Duplicate", icon=None, disabled=False):
     """
     Add a duplicate entry to the context menu
     """
     self._attrs[label] = "row.getTable().addRow(row.getData(), false, row.getPosition())"
     return self
 
-  def delete(self, label="Delete"):
+  def delete(self, label="Delete", icon=None, disabled=False):
     """
     Add a delete entry to the context menu
     """
     self._attrs[label] = "row.delete()"
     return self
 
-  def custom(self, label, strFnc):
+  def custom(self, label, strFnc, icon=None, disabled=False):
     """
     Add a delete entry to the context menu
     """
@@ -1895,22 +1895,37 @@ class RowContextMenu(DataClass):
 
 class HeaderMenu(DataClass):
 
-  def hide(self, label="Hide Column"):
+  def hide(self, label="Hide Column", icon="fas fa-eye-slash", disabled=False):
     """
     Hide the selected column
     """
-    self._attrs[label] = "column.hide()"
+    if icon is not None:
+      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = "column.hide()"
+    else:
+      self._attrs[label] = "column.hide()"
     return self
 
-  def custom(self, label, strFnc):
+  def separator(self):
+    self._attrs["separator_%s" % len(self._attrs)] = None
+    return self
+
+  def custom(self, label, strFnc, icon=None, disabled=False):
     """
     Add a delete entry to the context menu
     """
-    self._attrs[label] = strFnc
+    if icon is not None:
+      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = strFnc
+    else:
+      self._attrs[label] = strFnc
     return self
 
   def __str__(self):
-    result = ["{label: '%s', action: function(e, column){%s}}" % (k, v) for k, v in self._attrs.items()]
+    result = []
+    for k, v in self._attrs.items():
+      if v is None and k.startswith("separator_"):
+        result.append("{'separator': true}")
+      else:
+        result.append("{label: '%s', action: function(e, column){%s}}" % (k, v))
     return ", ".join(result)
 
 
