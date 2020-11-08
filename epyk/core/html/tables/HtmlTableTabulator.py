@@ -1518,6 +1518,19 @@ http://tabulator.info/docs/4.5/columns
     self._attrs["frozen"] = val
 
   @property
+  def headerMenu(self):
+    """
+    Description:
+    -----------
+    Shortcut prperty to the headermenu items.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.6/menu
+    """
+    return self.sub_data_enum("headerMenu", HeaderMenu)
+
+  @property
   def headerFilter(self):
     """
     Description:
@@ -1877,6 +1890,27 @@ class RowContextMenu(DataClass):
 
   def __str__(self):
     result = ["{label: '%s', action: function(e, row){%s}}" % (k, v) for k, v in self._attrs.items()]
+    return ", ".join(result)
+
+
+class HeaderMenu(DataClass):
+
+  def hide(self, label="Hide Column"):
+    """
+    Hide the selected column
+    """
+    self._attrs[label] = "column.hide()"
+    return self
+
+  def custom(self, label, strFnc):
+    """
+    Add a delete entry to the context menu
+    """
+    self._attrs[label] = strFnc
+    return self
+
+  def __str__(self):
+    result = ["{label: '%s', action: function(e, column){%s}}" % (k, v) for k, v in self._attrs.items()]
     return ", ".join(result)
 
 
