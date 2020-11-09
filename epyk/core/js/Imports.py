@@ -190,6 +190,15 @@ JS_IMPORTS = {
     ],
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
 
+  # Plolyfill for urlSearchParam for very old version of IE
+  'url-search-params': {
+    'modules': [
+      # Better to use the bundle version to avoid the import issue with popper.js
+      {'script': 'url-search-params.js', 'version': '1.1.0', 'path': 'url-search-params/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://github.com/taylorhakes/promise-polyfill'},
+
+
   # Common module for browser versions compatibilities
   'babel-polyfill': {
     'website': 'https://babeljs.io/',
@@ -233,7 +242,7 @@ JS_IMPORTS = {
     'modules': [
       # core only needed for Jupyter for some reasons
       #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'version': '4.8.2', 'path': 'tabulator-tables@%(version)s/dist/js/', 'cdnjs': "https://unpkg.com"}
+      {'script': 'tabulator.min.js', 'version': '4.8.4', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -243,7 +252,7 @@ JS_IMPORTS = {
   'tabulator-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-inputs.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-inputs.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -251,7 +260,7 @@ JS_IMPORTS = {
   'tabulator-drop': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-drop.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-drop.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -259,7 +268,7 @@ JS_IMPORTS = {
   'tabulator-mutators-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'mutators-inputs.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'mutators-inputs.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -267,14 +276,14 @@ JS_IMPORTS = {
   'editors-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-inputs.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
+      {'script': 'editors-inputs.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
     'website': 'http://tabulator.info/'
   },
 
   'editors-dates': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-dates.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'editors-dates.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -282,7 +291,7 @@ JS_IMPORTS = {
   'editors-selects': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-selects.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'editors-selects.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -291,7 +300,7 @@ JS_IMPORTS = {
     'req': [{'alias': 'tabulator'}],
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'formatters-icons.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-icons.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -304,7 +313,8 @@ JS_IMPORTS = {
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': '0.0.8', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-numbers.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-titles.js', 'version': '0.0.9', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },
@@ -1022,8 +1032,7 @@ CSS_IMPORTS = {
     'website': 'http://tabulator.info',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
-      {'script': 'tabulator.min.css', 'version': '4.8.2', 'path': 'tabulator-tables@%(version)s/dist/css/', 'cdnjs': "https://unpkg.com"}
-      #{'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'version': '4.8.4', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
