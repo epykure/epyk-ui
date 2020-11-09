@@ -151,6 +151,23 @@ class List(Html.Html):
       self._dom = JsHtml.JsHtmlList(self, report=self._report)
     return self._dom
 
+  def items_style(self, style):
+    """
+    Description:
+    ------------
+    Function to load a predefined style for the items of the components
+
+    Attributes:
+    ----------
+    :param style. String. Mandatory. The alias of the style to apply
+    """
+    if style == "bullets":
+      bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',  'background': self._report.theme.greys[2],
+                             'border': '1px solid %s' % self._report.theme.greys[2], 'border-radius': '10px'}
+      self.options.li_css = bullter_style
+      self.set_items()
+    return self
+
   def drop(self, jsFncs=None, preventDefault=True, profile=False):
     """
     Description:

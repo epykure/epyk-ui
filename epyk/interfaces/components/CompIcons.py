@@ -151,6 +151,64 @@ class Icons(object):
     """
     return self.awesome('fas fa-clock', text, tooltip, position, width, height, htmlCode, profile)
 
+  def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    components = self.awesome('fas fa-caret-right', text, tooltip, position, width, height, htmlCode, profile)
+    components.icon.style.css.font_factor(10)
+    return components
+
+  def previous(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, htmlCode, profile)
+    components.icon.style.css.font_factor(10)
+    return components
+
+  def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    return self.awesome("fas fa-save", text, tooltip, position, width, height, htmlCode, profile)
+
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
