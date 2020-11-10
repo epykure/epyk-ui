@@ -272,6 +272,10 @@ class ContentFormatters(object):
   def toStr(self):
     return self.selector
 
+  @property
+  def dict(self):
+    return JsObjects.JsObject.JsObject.get("%s" % self.selector)
+
 
 class JsHtml(JsNodeDom.JsDoms):
   display_value = "inline-block"
@@ -1047,6 +1051,10 @@ class JsHtmlNumeric(JsHtmlRich):
 
 
 class JsHtmlLink(JsHtml):
+
+  @property
+  def content(self):
+    return ContentFormatters(self._report, "%s.innerText" % self.varName)
 
   def url(self, url):
     """

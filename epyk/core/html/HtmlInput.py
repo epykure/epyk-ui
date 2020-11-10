@@ -196,7 +196,7 @@ class AutoComplete(Input):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options = OptInputs.OptionAutoComplete(self, options)
+    self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
 
   @property
   def _js__builder__(self):
@@ -217,6 +217,36 @@ class AutoComplete(Input):
     """
     return self.__options
 
+  def focus(self, jsFncs=None, profile=False, options=None, source_event=None, onReady=False):
+    """
+    Description:
+    -----------
+    Action on focus
+
+    Attributes:
+    ----------
+    :param jsFncs: List or String with the Javascript events
+    :param profile: Boolean to add the Javascript fragment to profile
+    :param options: Python dictionary with special options (shortcuts) for the component
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    """
+    self.__focus = True
+    if jsFncs is None:
+      jsFncs = []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if options is not None:
+      if options.get("reset", False):
+        jsFncs.append(self.dom.empty())
+      if options.get("select", False):
+        jsFncs.append(self.dom.select())
+    if self.options.reset:
+      jsFncs.append(self.dom.empty())
+    if self.options.select:
+      jsFncs.append(self.dom.select())
+    return self.on("focus", jsFncs, profile, source_event, onReady)
+
   @property
   def js(self):
     """
@@ -234,6 +264,9 @@ class AutoComplete(Input):
     return self._js
 
   def __str__(self):
+    print(self.options.select)
+    if not self.__focus and (self.options.reset or self.options.select):
+      self.focus()
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 

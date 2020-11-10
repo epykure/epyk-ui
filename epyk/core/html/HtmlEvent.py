@@ -714,8 +714,8 @@ class Filters(Html.Html):
 
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._jsStyles['delete'] = 'function(){ this.parentNode.remove(); %s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True)
-    return self # function(event){ this.parentNode.remove()}
+    self._jsStyles['delete'] = JsUtils.jsConvertFncs(["this.parentNode.remove()"] + jsFncs, toStr=True)
+    return self
 
   def append(self, value, category=None, name=None, disabled=False, fixed=False):
     """

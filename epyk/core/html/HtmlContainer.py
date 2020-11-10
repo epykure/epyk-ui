@@ -86,7 +86,7 @@ class Panel(Html.Html):
       self.add(component)
     return self
 
-  def add_menu(self, close=True, mini=True):
+  def add_menu(self, close=True, mini=True, info=None):
     self.style.css.position = "relative"
     self.style.css.min_height = 25
     self.style.css.min_width = 25
@@ -99,6 +99,15 @@ class Panel(Html.Html):
       self.menu.style.css.right = 5
       self.menu.style.css.margin = 0
     margin_right = 5
+    if info is not None:
+      info_comp = self._report.ui.icon("fas fa-question")
+      info_comp.style.css.margin_right = 5
+      info_comp.style.css.font_factor(-5)
+      info_comp.tooltip(info)
+      info_comp.click([
+        self.dom.querySelector("div[name=panel]").toggle()])
+      info_comp.style.css.color = self._report.theme.greys[6]
+      self.menu.add(info_comp)
     if mini:
       remove = self._report.ui.icon("far fa-minus-square")
       remove.style.css.margin_right = 5

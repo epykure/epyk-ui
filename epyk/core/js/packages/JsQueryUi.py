@@ -997,6 +997,16 @@ class Autocomplete(JQueryUI):
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.autocomplete("search", %s)' % (self._src.dom.jquery.varId, jsData))
 
+  def source(self, jsData):
+    """
+    Description:
+    ------------
+
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("option", "source", %s)' % (self._src.dom.jquery.varId, jsData))
+
 
 class Datepicker(JQueryUI):
   # TODO add dialog

@@ -624,7 +624,7 @@ class Tags(JsHtml.JsHtmlRich):
 
   def values(self, category=None):
     if category is None:
-      return JsObjects.JsObjects.get("(function(dom){var content = []; dom.childNodes.forEach(function(rec){content.push(rec.querySelector('span[name=chip_value]').textContent)}); return content})(%s)" % self.querySelector("div[name=panel]"))
+      return JsObjects.JsArray.JsArray.get("(function(dom){var content = []; dom.childNodes.forEach(function(rec){content.push(rec.querySelector('span[name=chip_value]').textContent)}); return content})(%s)" % self.querySelector("div[name=panel]"))
 
     category = JsUtils.jsConvertData(category, None)
     return JsObjects.JsObjects.get(''' 
@@ -734,3 +734,20 @@ class Tags(JsHtml.JsHtmlRich):
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObjects.get('''var itemPos = %(duplicated)s; if (itemPos >= 0){ %(panel)s.childNodes[itemPos].remove()}
       ''' % {'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]")})
+
+  def count(self):
+    """
+    Description:
+    ------------
+    Return a count of number of values defined in the filters accross all the categories.
+    """
+    return self.values().length
+
+  def categoryes(self):
+    """
+    Description:
+    ------------
+    Return a count of categories currently used to filter the data
+    """
+    return self.content.dict.keys()
+

@@ -350,7 +350,7 @@ class Icons(object):
     """
     return self.awesome('fas fa-download', text, tooltip, position, width, height, htmlCode, profile)
 
-  def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
+  def delete(self, text=None, position=None, align='left', tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), htmlCode=None, profile=None):
     """
     Description:
@@ -376,7 +376,11 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
+    component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
+    component.style.add_classes.div.danger_hover()
+    component.style.css.white_space = "nowrap"
+    component.style.css.margin = align
+    return component
 
   def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """

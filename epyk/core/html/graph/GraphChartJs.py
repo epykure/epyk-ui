@@ -254,12 +254,12 @@ class Chart(Html.Html):
     :param source_event:
     :param onReady:
     """
-    if self._attrs.get('type') in ['pie']:
-      tmpJsFncs = ["var activePoints = %s.getSegmentsAtEvent(event)" % self.chartId]
-      tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
-    else:
-      tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
-      tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    #if self._attrs.get('type') in ['pie']:
+    #  tmpJsFncs = ["var activePoints = %s.getSegmentsAtEvent(event)" % self.chartId]
+    #  tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    #else:
+    tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
+    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
     return super(Chart, self).click(tmpJsFncs, profile)
 
   def hover(self, jsFncs, profile=False, source_event=None):
@@ -678,7 +678,7 @@ class ChartPie(Chart):
               temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series){
-          dataSet = {label: series, data: [], backgroundColor: []};
+          dataSet = {label: series, data: [], backgroundColor: options.bgColors, borderColor: options.colors};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){
