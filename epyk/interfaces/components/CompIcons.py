@@ -377,7 +377,7 @@ class Icons(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
-    component.style.add_classes.div.danger_hover()
+    component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
     return component
@@ -463,7 +463,10 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
+    component = self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
+    component.hover_color = 'danger'
+    component.style.css.white_space = "nowrap"
+    return component
 
   def clear(self, text=None, align='left', position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
@@ -492,7 +495,7 @@ class Icons(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, htmlCode, profile)
-    component.style.add_classes.div.danger_hover()
+    component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
     return component

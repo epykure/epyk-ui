@@ -507,6 +507,7 @@ class IconEdit(Html.Html):
     else:
       self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
+    self.hover_color = True
 
   def spin(self):
     """
@@ -590,7 +591,11 @@ class IconEdit(Html.Html):
     :param source_event:
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    self.icon.style.add_classes.icon.basic()
+    if self.hover_color:
+      if self.hover_color == 'danger':
+        self.icon.style.add_classes.div.danger_hover()
+      else:
+        self.icon.style.add_classes.icon.basic()
     return super(IconEdit, self).click(jsFncs, profile, source_event, onReady=onReady)
 
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
