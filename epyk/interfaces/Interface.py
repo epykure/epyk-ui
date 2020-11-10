@@ -815,3 +815,25 @@ class Components(object):
     if alias is None:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
+
+  def asterix(self, tooltip, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, align="left", options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param tooltip:
+    :param family:
+    :param width:
+    :param htmlCode:
+    :param height:
+    :param color:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    component = self.icon("fas fa-asterisk", family, width, htmlCode, height, color, tooltip, align, options, profile)
+    component.style.css.vertical_align = "top"
+    component.style.css.color = self.rptObj.theme.greys[5]
+    return component
