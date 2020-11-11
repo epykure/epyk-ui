@@ -453,9 +453,9 @@ class ChartLine(Chart):
       });
       result = {datasets: [], labels: labels};
       options.y_columns.forEach(function(series, i){
-        dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
+        dataSet = {label: series, data: [], backgroundColor: options.bgColors[i], borderColor: options.colors[i]};
         if (typeof options.attrs[series] !== 'undefined'){
-        for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]};}
+        for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]}}
         else if(typeof options.commons !== 'undefined'){
         for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
         labels.forEach(function(x){

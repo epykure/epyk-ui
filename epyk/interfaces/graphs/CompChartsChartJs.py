@@ -33,7 +33,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -153,7 +155,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"opacity": 0.2}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"opacity": 0.2}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -184,7 +188,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"fill": None}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"fill": None}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -215,7 +221,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -283,7 +291,9 @@ class ChartJs(object):
 
     self.parent.context.rptObj.ext_packages.update(chartjs_defined_package)
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartExts(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -314,7 +324,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -344,7 +356,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -376,7 +390,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.xyz(record, y_columns, x_axis, None)
     line_chart = graph.GraphChartJs.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -406,7 +422,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_columns': r_values, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'z_columns': r_values, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.xyz(record, y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -469,7 +487,9 @@ class ChartJs(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    bgColors = ["rgba(%s, %s, %s, 0.6)" % (Colors.getHexToRgb(c)[0], Colors.getHexToRgb(c)[1], Colors.getHexToRgb(c)[2])
+                for c in self.parent.context.rptObj.theme.charts]
+    options.update({'y_columns': y_columns, "bgColors": bgColors, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(data['labels'])
