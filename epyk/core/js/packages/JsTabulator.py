@@ -519,6 +519,14 @@ class ColumnComponents(JsPackage):
     self._parent._js.append([])
     return self._parent
 
+  @property
+  def fields(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsArray.JsArray.get("(function(){var columns = []; %s.forEach(function(rec){columns.push(rec.getField())}); return columns})()" % self._selector)
+
 
 class RowComponent(JsPackage):
   lib_selector = "row"
@@ -1240,6 +1248,9 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsVoid("%s.setSort(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
+  def setColumns(self, jsData):
+    return JsObjects.JsVoid("%s.setColumns(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
+
   def getGroups(self, jsData=None):
     """
     You can use the getGroups function to retrieve an array of all the first level Group Components in the table.
@@ -1309,18 +1320,42 @@ class Tabulator(JsPackage):
 
   def setData(self, data):
     """
+    Description:
+    ------------
 
-    :return:
+    Attributes:
+    ----------
     """
     return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
+  def setDataFromArray(self, jsData):
+    """
+    Description:
+    ------------
+    Load a table from an array using the first row as header.
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return '''
+      var dataContemt = %(data)s;
+      dataContemt[0].forEach(function(c){var h = {title: c, field: c}; %(varId)s.addColumn(h)})
+      dataContemt.slice(1).forEach(function(v){var row = {}; dataContemt[0].forEach(function(c, i){row[c] = v[i]})
+         %(varId)s.addRow(row)})''' % {"varId": self.varId, "data": jsData}
+
   def replaceData(self, jsData=None):
     """
+    Description:
+    ------------
     The replaceData function lets you silently replace all data in the table without updating scroll position, sort or filtering, and without triggering the ajax loading popup
 
-    table.replaceData() //trigger reload of ajax data from ajaxURL property
+    table.replaceData() //trigger reload of ajax data from ajaxURL property.
 
-    :return:
+    Attributes:
+    ----------
+    :param jsData:
     """
     if jsData is None:
       return JsObjects.JsObject.JsObject("%s.replaceData()" % self.varId)
@@ -1329,9 +1364,9 @@ class Tabulator(JsPackage):
 
   def getData(self):
     """
+    Description:
+    ------------
     You can retrieve the data stored in the table using the getData function.
-
-    :return:
     """
     return JsObjects.JsArray.JsArray("%s.getData()" % self.varId)
 
