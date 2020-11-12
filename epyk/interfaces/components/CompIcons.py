@@ -1320,3 +1320,46 @@ class Toggles(object):
     html_icon.icon_on = icon_on
     html_icon.icon_off = icon_off
     return html_icon
+
+  def lock(self, icon_on="fas fa-lock-open", icon_off="fas fa-lock", family=None, width=(None, 'px'), htmlCode=None,
+               height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add a lock toggle button.
+
+    Usage::
+
+      rptObj.ui.icons.toggles.lock()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlImage.Icon`
+
+    Related Pages:
+
+      https://fontawesome.com/icons?m=free
+
+    Attributes:
+    ----------
+    :param icon_on: String. Optional. The component icon content from font-awesome references
+    :param icon_off: String. Optional. The component icon content from font-awesome references
+    :param family:
+    :param htmlCode:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param align: String. Optional.
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+    options = options or {}
+    options['icon_family'] = family or 'font-awesome'
+    html_icon = html.HtmlImage.IconToggle(self.context.rptObj, icon_on, width=width, height=height,
+         color=color, tooltip=tooltip, options=options, htmlCode=htmlCode, profile=profile)
+    html_icon.icon_on = icon_on
+    html_icon.icon_off = icon_off
+    return html_icon
