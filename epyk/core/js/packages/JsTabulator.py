@@ -1328,7 +1328,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
-  def setDataFromArray(self, jsData):
+  def setDataFromArray(self, jsData, header=None, formatters=None):
     """
     Description:
     ------------
@@ -1338,12 +1338,25 @@ class Tabulator(JsPackage):
     ----------
     :param jsData:
     """
+    formatters = JsUtils.jsConvertData(formatters, None)
     jsData = JsUtils.jsConvertData(jsData, None)
-    return '''
-      var dataContemt = %(data)s;
+    if header is not None:
+      header = JsUtils.jsConvertData(header, None)
+      return '''var dataContemt = %(data)s; var resultContent = []; var header = %(header)s; var headerIndices = []; var formatters = %(formatters)s;
+            if (formatters != null){
+              for (var key in formatters){ if (formatters.hasOwnProperty(key)) {formatters[key] = eval(formatters[key])}}}
+            dataContemt[0].forEach(function(c, i){ if(header.includes(c)){ headerIndices.push(i); var h = {title: c, field: c}; %(varId)s.deleteColumn(c); %(varId)s.addColumn(h)}})
+            dataContemt.slice(1).forEach(function(v){var row = {}; header.forEach(function(c, i){row[c] = v[headerIndices[i]]})
+            if (formatters != null){for (var key in formatters){ row[key] = formatters[key](row)}}
+            resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {"header": header, "varId": self.varId, "formatters": formatters, "data": jsData}
+
+    return '''var dataContemt = %(data)s; var resultContent = []; var formatters = %(formatters)s;
+      if (formatters != null){
+         for (var key in formatters){ if (formatters.hasOwnProperty(key)) {formatters[key] = eval(formatters[key])}}}
       dataContemt[0].forEach(function(c){var h = {title: c, field: c}; %(varId)s.addColumn(h)})
       dataContemt.slice(1).forEach(function(v){var row = {}; dataContemt[0].forEach(function(c, i){row[c] = v[i]})
-         %(varId)s.addRow(row)})''' % {"varId": self.varId, "data": jsData}
+         if (formatters != null){for (var key in formatters){ row[key] = formatters[key](row)}}
+         resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {"varId": self.varId, "formatters": formatters, "data": jsData}
 
   def replaceData(self, jsData=None):
     """

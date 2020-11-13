@@ -370,6 +370,24 @@ class OptionAxesScaleLabel(DataClass):
     self._attrs["labelString"] = val
 
 
+class OptionDisplayFormats(DataClass):
+
+  @property
+  def quarter(self):
+    return self._attrs["quarter"]
+
+  @quarter.setter
+  def quarter(self, val):
+    self._attrs["quarter"] = val
+
+
+class OptionAxesTime(DataClass):
+
+  @property
+  def displayFormats(self):
+    return self.sub_data("displayFormats", OptionDisplayFormats)
+
+
 class OptionAxes(DataClass):
 
   @property
@@ -381,11 +399,25 @@ class OptionAxes(DataClass):
     self._attrs["display"] = val
 
   @property
+  def distribution(self):
+    return self._attrs["distribution"]
+
+  @distribution.setter
+  def distribution(self, val):
+    self._attrs["distribution"] = val
+
+  @property
   def type(self):
     return self._attrs["type"]
 
   @type.setter
   def type(self, val):
+    if val == "time":
+      from epyk.core.js import Imports
+
+      Imports.JS_IMPORTS["Chart.js"]["req"] = [{'alias': 'moment'}]
+      # Add the package moment.js is time is used
+      #self._report.jsImports.add("moment")
     self._attrs["type"] = val
 
   @property
@@ -450,6 +482,14 @@ class OptionAxes(DataClass):
     :return:
     """
     return self.sub_data("ticks", OptionAxesTicks)
+
+  @property
+  def time(self):
+    """
+
+    :return:
+    """
+    return self.sub_data("time", OptionAxesTime)
 
   @property
   def gridLines(self):

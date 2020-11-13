@@ -689,6 +689,24 @@ class JsObject(object):
 
     return self.varData if self.varName is None else self.varName
 
+  def fromArrayToRecord(self, header=None):
+    """
+    Description:
+    ------------
+
+    row["Date"] = row["Date"].toISOString().slice(0, 10);
+
+    Attributes:
+    ----------
+    :param header:
+    """
+    from epyk.core.js.primitives import JsArray
+
+    if header is None:
+      return JsArray.JsArray.get('''(function(data){var results = []; var header = data[0]; 
+        data.slice(1).forEach(function(rec){var row = []; rec.forEach(function(r, i){row[header[i]] = r}); 
+        results.push(row)}); return results})(%s)''' % self.varName)
+
   def toRecord(self, header, varName):
     """
     Description:
@@ -748,7 +766,7 @@ class JsObject(object):
     if self.varName is None:
       return JsObject("_.clone(%s)" % self.varName, isPyData=False)
 
-    return JsObject("(function(){ %s; return _.clone(%s) }()" % (self.toStr(), self.varName), isPyData=False)
+    return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), isPyData=False)
 
   def defaults(self, attrs, report=None):
     """
