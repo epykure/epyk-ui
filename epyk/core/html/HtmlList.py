@@ -163,9 +163,11 @@ class List(Html.Html):
     """
     if style == "bullets":
       bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',  'background': self._report.theme.greys[2],
-                             'border': '1px solid %s' % self._report.theme.greys[2], 'border-radius': '10px'}
+                       'border': '1px solid %s' % self._report.theme.greys[2], 'border-radius': '10px'}
       self.options.li_css = bullter_style
       self.set_items()
+      for item in self.items:
+        item.css(self.options.li_css)
     return self
 
   def drop(self, jsFncs=None, preventDefault=True, profile=False):
