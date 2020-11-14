@@ -1045,9 +1045,7 @@ class Search(Html.Html):
     :return: The python object itself
     """
     self.click(jsFncs)
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}],
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {"jsFnc": self.icon.dom.events.trigger("click")}],
                    profile=profile, source_event=source_event, onReady=onReady)
 
   def __str__(self):

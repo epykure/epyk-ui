@@ -178,7 +178,7 @@ class ChartJs(JsPackage):
     ----------
     :param datasets: Dictionary of dictionary. Teh full datasets object expected by ChartJs
     """
-    if not hasattr(datasets, 'toStr'):
+    if not hasattr(datasets, 'toStr') and isinstance(datasets, dict):
       for i, dataset in enumerate(datasets['datasets']):
         if dataset.get("type") in ['line', 'scatter', 'bubble']:
           if not 'backgroundColor' in dataset:
