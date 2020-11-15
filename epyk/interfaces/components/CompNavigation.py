@@ -660,7 +660,7 @@ class Banners(object):
     container.link = link
     return container
 
-  def corner(self, data, background=None, position="bottom", width=(120, 'px'), height=(None, 'px'), options=None, profile=False):
+  def corner(self, data, background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -686,7 +686,7 @@ class Banners(object):
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
-    div.style.css.z_index = 101
+    div.style.css.z_index = 401
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"
     div.style.css.text_align = "center"
@@ -698,7 +698,7 @@ class Banners(object):
     else:
       div.style.css.top = 0
       div.style.css.transform = "rotate(40deg)"
-      div.style.css.margin = "15px -30px 0 0"
+      div.style.css.margin = "20px -45px 0 0"
     return div
 
   def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
