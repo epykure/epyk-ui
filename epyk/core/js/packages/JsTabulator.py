@@ -1095,7 +1095,6 @@ class Tabulator(JsPackage):
     if rows is not None or values is not None:
       rows_fields = self._parent.options.get({}, "rows_def").get("fields", [])
       if rows is None and rows_fields:
-        print(rows_fields)
         values = JsObjects.JsObjects.get(
           "(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (
           JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
@@ -1103,8 +1102,8 @@ class Tabulator(JsPackage):
           "if(!(%s.includes(rec.getField()))){rec.delete()}" % rows_fields
         ).toStr(), self.addColumns(values).toStr()))
       else:
-        rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
-        values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(rec, %s))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
+        rows = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(%s, rec))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "rows_def"), None), rows or []))
+        values = JsObjects.JsObjects.get("(function(d){var results = []; d.forEach(function(rec){if(typeof rec === 'string'){rec = {'field': rec, 'title': rec}}; results.push( Object.assign(%s, rec))}); return results})(%s)" % (JsUtils.jsConvertData(self._parent.options.get({}, "columns_def"), None), values or []))
         return JsObjects.JsVoid("%s;%s" % (self.getColumns.forEach("rec.delete()").toStr(), "%s + %s" % (self.addColumns(rows).toStr(), self.addColumns(values).toStr())))
 
   def values(self, jsData, columns=None, options=None):

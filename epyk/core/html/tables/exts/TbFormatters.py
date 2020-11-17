@@ -8,7 +8,82 @@ from epyk.core.data.DataClass import DataGroup
 class ExtsFormattors(DataGroup):
 
   @packageImport('tabulator-icons')
-  def icon(self, css=None, tags=None, **kwargs):
+  def icon(self, css=None, tags=None, events=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param tags: Dictionary. The DOM attributes to be added to the icon holder (Optional)
+    :param events: Dictionary. Optional. The DOM events to be added to the internal component
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'icon'
+    self._attrs["formatterParams"] = {}
+    if events is not None:
+      self._attrs["formatterParams"]["events"] = events
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    if tags is not None:
+      self._attrs["formatterParams"]["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
+  @packageImport('tabulator-icons')
+  def button(self, css=None, tags=None, events=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param tags: Dictionary. The DOM attributes to be added to the icon holder (Optional)
+    :param events: Dictionary. Optional. The DOM events to be added to the internal component
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'button'
+    self._attrs["formatterParams"] = {}
+    if events is not None:
+      self._attrs["formatterParams"]["events"] = events
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    if tags is not None:
+      self._attrs["formatterParams"]["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
+  @packageImport('tabulator-icons')
+  def avatar(self, css=None, tags=None, events=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param tags: Dictionary. The DOM attributes to be added to the icon holder (Optional)
+    :param events: Dictionary. Optional. The DOM events to be added to the internal component
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'avatar'
+    self._attrs["formatterParams"] = {}
+    if events is not None:
+      self._attrs["formatterParams"]["events"] = events
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    if tags is not None:
+      self._attrs["formatterParams"]["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
+  @packageImport('tabulator-icons')
+  def remove(self, css=None, tags=None, events=None, **kwargs):
     """
     Description:
     -----------
@@ -17,14 +92,66 @@ class ExtsFormattors(DataGroup):
     ----------
     :param css:
     :param tags:
+    :param events:
     :param kwargs:
     """
-    self._attrs["formatter"] = 'icon'
+    self._attrs["formatter"] = 'remove'
+    self._attrs["formatterParams"] = {}
+    self._attrs["width"] = 25
+    if events is not None:
+      self._attrs["formatterParams"]["events"] = events
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    if tags is not None:
+      self._attrs["formatterParams"]["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
+  @packageImport('tabulator-icons')
+  def runnable(self, css=None, tags=None, post=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css:
+    :param tags:
+    :param post:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'runnable'
+    self._attrs["formatterParams"] = {}
+    self._attrs["width"] = 25
+    if post is not None:
+      self._attrs["formatterParams"]["post"] = post
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    if tags is not None:
+      self._attrs["formatterParams"]["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
+  @packageImport('tabulator-icons')
+  def task(self, css=None, colors=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css:
+    :param colors:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'task'
     self._attrs["formatterParams"] = {}
     if css is not None:
-      self._attrs["css"] = css
-    if tags is not None:
-      self._attrs["tags"] = tags
+      self._attrs["formatterParams"]["css"] = css
+    if colors is not None:
+      self._attrs["formatterParams"]["color"] = colors
     for k, v in kwargs.items():
       self._attrs["formatterParams"][k] = v
     return self
@@ -68,11 +195,11 @@ class ExtsFormattors(DataGroup):
     :param kwargs:
     """
     self._attrs["formatter"] = 'password'
-    formatParams = {}
+    self._attrs["formatterParams"] = {}
     if css is not None:
-      formatParams['css'] = css
+      self._attrs["formatterParams"]['css'] = css
     for k, v in kwargs.items():
-      formatParams[k] = v
+      self._attrs["formatterParams"][k] = v
     return self
 
   @packageImport('tabulator-numbers')
@@ -90,9 +217,9 @@ class ExtsFormattors(DataGroup):
     :param kwargs:
     """  #
     self._attrs["formatter"] = 'labelThresholds'
-    formatParams = {'thresholds': thresholds, 'labels': labels}
+    self._attrs["formatterParams"] = {'thresholds': thresholds, 'labels': labels}
     if css is not None:
-      formatParams['css'] = css
+      self._attrs["formatterParams"]['css'] = css
     if kwargs:
       self._attrs["formatterParams"].update(kwargs)
     return self
@@ -113,9 +240,9 @@ class ExtsFormattors(DataGroup):
     :param kwargs:
     """  #
     self._attrs["formatter"] = 'flagThresholdsPivot'
-    formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
+    self._attrs["formatterParams"] = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
     if css is not None:
-      formatParams['css'] = css
+      self._attrs["formatterParams"]['css'] = css
     if kwargs:
       self._attrs["formatterParams"].update(kwargs)
     return self
@@ -123,7 +250,11 @@ class ExtsFormattors(DataGroup):
   @packageImport('tabulator-numbers')
   def previous(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param decimal: String. decimal point separator default "."
     :param thousand: String. thousands separator default ","
     :param precision: Integer. decimal places default 0
@@ -140,7 +271,11 @@ class ExtsFormattors(DataGroup):
   @packageImport('tabulator-numbers')
   def number(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param decimal: String. decimal point separator default "."
     :param thousand: String. thousands separator default ","
     :param precision: Integer. decimal places default 0
@@ -152,6 +287,95 @@ class ExtsFormattors(DataGroup):
     self._attrs["formatter"] = 'numbers'
     self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def trend(self, css=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'trend'
+    self._attrs["formatterParams"] = {}
+    if css is not None:
+      self._attrs["formatterParams"]["css"] = css
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def detailed(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    The data in the cell must be a dictionary with the following attributes:
+      - value
+      - flag
+      - move
+
+    :param decimal:
+    :param thousand:
+    :param precision:
+    :param symbol:
+    :param format:
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    attr = self.number(decimal, thousand, precision, symbol, format, css, **kwargs)
+    attr["formatter"] = "detailed"
+    return self
+
+  @packageImport('tabulator-numbers')
+  def small(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param decimal:
+    :param thousand:
+    :param precision:
+    :param symbol:
+    :param format:
+    :param css:
+    :param kwargs:
+    """
+    attr = self.number(decimal, thousand, precision, symbol, format, css, **kwargs)
+    attr["formatter"] = "small"
+    return self
+
+  @packageImport('tabulator-numbers')
+  def scale(self, css=None, colors=None, steps=None, decimal=".", thousand=",", precision=0, symbol="", format="%v", **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param css:
+    :param colors:
+    :param steps:
+    :param decimal:
+    :param thousand:
+    :param precision:
+    :param symbol:
+    :param format:
+    :param kwargs:
+    """
+    attr = self.number(decimal, thousand, precision, symbol, format, css, **kwargs)
+    attr["formatter"] = "scale"
+    if colors is not None:
+      attr["formatterParams"]["colors"] = colors
+    if steps is not None:
+      attr["formatterParams"]["steps"] = steps
     return self
 
   @packageImport('tabulator-numbers')
@@ -367,12 +591,11 @@ class ExtsFormattors(DataGroup):
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     """
     self._attrs["formatter"] = 'lookupPivot'
-    formatParams = {'lookups': lookups, "pivot": pivot}
+    self._attrs["formatterParams"] = {'lookups': lookups, "pivot": pivot}
     if css is not None:
-      formatParams['css'] = css
+      self._attrs["formatterParams"]['css'] = css
     for k, v in kwargs.items():
-      formatParams[k] = v
-    self._attrs['formatterParams'] = formatParams
+      self._attrs["formatterParams"][k] = v
     return self
 
   def buttonTick(self, **kwargs):

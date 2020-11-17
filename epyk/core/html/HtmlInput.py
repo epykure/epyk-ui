@@ -387,6 +387,11 @@ class InputDate(Input):
   def __init__(self, report, records, placeholder, width, height, htmlCode, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsDatePicker(self, options)
+    if options.get("date_if_null", None) is None:
+      self._jsStyles["date_if_null"] = "new Date()"
+    elif options["date_if_null"] == "COB":
+      self._jsStyles["date_if_null"] = ''' (function(){var cob = new Date(); var days = cob.getDay(); 
+          if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()'''
 
   @property
   def options(self):
@@ -489,7 +494,9 @@ class InputDate(Input):
       jQuery(htmlObj).datepicker(data.options).datepicker('setDate', data.value)
     :return:
     '''
-    return '''%(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    return '''
+      if(data == null){data = eval(options.date_if_null)}
+      %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     # Javascript builder is mandatory for this object

@@ -969,13 +969,16 @@ class Fields(object):
     div.add(div.text)
     return div
 
-  def column_date(self, label, value=None, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+  def column_date(self, label, value="T", align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
     div.label.style.css.display = 'block'
     div.label.style.css.margin_bottom = 10
     div.label.style.css.color = self.context.rptObj.theme.greys[6]
-    div.text = self.today(value, options=options, htmlCode=htmlCode, profile=profile)
+    if value is None:
+      div.text = self.date(value, options=options, htmlCode=htmlCode, profile=profile)
+    else:
+      div.text = self.today(options=options, htmlCode=htmlCode, profile=profile)
     div.text.style.css.bold()
     div.text.style.css.margin_bottom = 10
     div.text.style.css.display = 'block'
