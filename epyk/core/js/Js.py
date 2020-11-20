@@ -1034,7 +1034,10 @@ class JsBase(object):
         jsData = components
       else:
         for c in components:
-          request.data.add(c)
+          if isinstance(c, tuple):
+            jsData[c[1]] = c[0].dom.content
+          else:
+            request.data.add(c)
     request.send(jsData, stringify=is_json)
 
     if is_json:

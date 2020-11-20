@@ -727,7 +727,7 @@ class Fields(object):
     return html_input
 
   def select(self, value=False, label=None, icon=None, selected=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
-             helper=None, options=None, profile=None):
+             helper=None, options=None, multiple=False, profile=None):
     """
     Description:
     ------------
@@ -762,6 +762,8 @@ class Fields(object):
     if options is not None and 'align' in options:
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options or {}, profile)
+    if multiple:
+      html_input.input.attr['multiple'] = None
     html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
     if selected is not None:
       html_input.input.options.selected = selected

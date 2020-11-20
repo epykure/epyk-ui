@@ -667,7 +667,8 @@ class Filters(Html.Html):
         else{
           if(val.category === undefined){ if(val.name === undefined) {val.category = options.category} else {val.category = val.name}}
           if(val.name === undefined){ val.name = val.category}};
-        chipAdd(panel, val, options)})}'''
+        chipAdd(panel, val, options)})}
+        '''
 
   def enter(self, jsFncs, profile=False):
     """

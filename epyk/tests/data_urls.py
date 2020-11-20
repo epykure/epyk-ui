@@ -73,3 +73,8 @@ DATATABLE_OBJECT_ARRAY_URL = 'https://datatables.net/examples/ajax/data/objects_
 COVID_ECDC_URL = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-21.xlsx'
 COVID_TIME_SERIES = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series'
 COVID_DAILY_DATA = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports'
+
+
+HEART_FAILURE_RECORDS = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/heart_failure_clinical_records_dataset.csv"
+COUNTRY_WISE_COVID = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/country_wise_covid.csv"
+NETFLIX_TITLE = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/netflix_titles.csv"

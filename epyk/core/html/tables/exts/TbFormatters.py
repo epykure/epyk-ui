@@ -693,14 +693,15 @@ http://tabulator.info/docs/4.1/format
       self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def custom(self, formatter, formatterParams, moduleAlias):
+  def custom(self, formatter, formatterParams, moduleAlias=None):
     """
 
     :param formatter:
     :param formatterParams:
     :param moduleAlias:
     """
-    self._report.jsImports.add(moduleAlias)
+    if moduleAlias is not None:
+      self._report.jsImports.add(moduleAlias)
     self._attrs["formatter"] = formatter
     self._attrs['formatterParams'] = formatterParams
     return self

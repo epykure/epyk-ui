@@ -108,11 +108,13 @@ class Label(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data).replace(/<\/?p[^>]*>/ig, '')}  else {var content = data}
-      if(options._children > 0){htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
-      else{htmlObj.innerHTML = content};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
+    return ''' 
+      if (typeof data !== "undefined"){
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); 
+        var content = converter.makeHtml(data).replace(/<\/?p[^>]*>/ig, '')}  else {var content = data}
+        if(options._children > 0){htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
+        else{htmlObj.innerHTML = content};
+        if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
     
   def __str__(self):
     res = []

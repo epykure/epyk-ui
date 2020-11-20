@@ -202,20 +202,21 @@ class ChartJs(JsPackage):
             dataset['backgroundColor'] = self.src.colors
     datasets = JsUtils.jsConvertData(datasets, None)
     return JsObjects.JsVoid('''
-      var chartData = %(data)s; var chartColors = %(colors)s;
+      var chartData = %(data)s; var chartColors = %(colors)s; var chartBgColors = %(bgcolors)s;
       chartData.datasets.forEach(function(dataset, i){
         if (typeof dataset.type !== 'undefined'){
           if (['line', 'scatter', 'bubble'].includes(dataset.type)){
-            dataset.backgroundColor = chartColors[i]; dataset.borderColor = chartColors[i];
+            dataset.backgroundColor = chartBgColors[i]; dataset.borderColor = chartColors[i];
             if (dataset.type == 'line'){dataset.fill = false; dataset.pointRadius = 1}}
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
-            dataset.backgroundColor = chartColors[i]; dataset.fillOpacity = 0.8}
-          else if (['polarArea', 'pie'].includes(dataset.type)){
-            dataset.backgroundColor = chartColors}
-      } else {dataset.backgroundColor = chartColors[i]; dataset.borderColor = chartColors[i];}
-      
+            dataset.backgroundColor = chartBgColors[i]; dataset.fillOpacity = 0.8}}
+        else if (['polarArea', 'pie', 'donut'].includes(chartData.type)){
+          if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors}
+        }
+        else {dataset.backgroundColor = chartBgColors[i]; dataset.borderColor = chartColors[i];}
       })
-      %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName, 'colors': self.src.colors})
+      %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName,
+                                                                      'colors': self.src.colors, 'bgcolors': self.src._options_init['bgColors']})
 
   def load(self, name, points, options=None):
     """

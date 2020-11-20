@@ -221,7 +221,10 @@ class Datamap(object):
     self._data = []
     if components is not None:
       for c in components:
-        self.add(c)
+        if isinstance(c, tuple):
+          self.attr(c[1], c[0].dom.content)
+        else:
+          self.add(c)
     if attrs is not None:
       for k, v in attrs.items():
         self.attr(k, v)

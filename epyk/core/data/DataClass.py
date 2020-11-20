@@ -118,6 +118,21 @@ class DataClass(object):
     self._attrs[name] = clsObj(self._report)
     return self._attrs[name]
 
+  def add(self, name, value):
+    """
+    Description:
+    ------------
+    Add the key and value to the final result object.
+
+    Attributes:
+    ----------
+    :param name: String. The key in the final data dictionary.
+    :param value: Object. The value in the final data dictionary.
+    """
+    self.__sub_levels.add(name)
+    self._attrs[name] = JsUtils.jsConvertData(value, None)
+    return self
+
   def sub_data_enum(self, name, clsObj):
     """
     Description:

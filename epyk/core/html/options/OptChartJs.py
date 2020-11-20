@@ -809,6 +809,22 @@ class OptionTitle(DataClass):
 class Options(DataClass):
 
   @property
+  def responsive(self):
+    return self._attrs["responsive"]
+
+  @responsive.setter
+  def responsive(self, bool):
+    self.add("responsive", bool)
+
+  @property
+  def maintainAspectRatio(self):
+    return self._attrs["maintainAspectRatio"]
+
+  @maintainAspectRatio.setter
+  def maintainAspectRatio(self, bool):
+    self.add("maintainAspectRatio", bool)
+
+  @property
   def elements(self):
     return self.sub_data("elements", OptionElements)
 

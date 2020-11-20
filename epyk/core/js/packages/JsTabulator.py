@@ -912,7 +912,7 @@ class Tabulator(JsPackage):
     """
     data = JsUtils.jsConvertData(data, None)
     flag = JsUtils.jsConvertData(flag, None)
-    return self.fnc_closure("addRow(%s, %s)" % (data, flag))
+    return JsObjects.JsVoid("%s.addRow(%s, %s)" % (self.varId, data, flag))
 
   def updateRow(self, rowId, data):
     """
