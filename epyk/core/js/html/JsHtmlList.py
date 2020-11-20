@@ -662,6 +662,7 @@ class Tags(JsHtml.JsHtmlRich):
     Description:
     ------------
     Add item on the filters panel
+    When no_duplicate is set to False it is possible to pass a list.
 
     Attributes:
     ----------
@@ -692,13 +693,29 @@ class Tags(JsHtml.JsHtmlRich):
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
 
     if no_duplicate:
-      return JsObjects.JsObjects.get(''' 
-      if ((%(duplicated)s == -1) && (%(text)s != '')){ chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})  }
+      return JsObjects.JsObjects.get('''if ((%(duplicated)s == -1) && (%(text)s != '')){ 
+        chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})  }
       ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
 
-    return JsObjects.JsObjects.get(''' 
-      chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})
-      ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
+    return JsObjects.JsObjects.get('''var itemLabel = %(text)s;
+        if(Array.isArray(itemLabel)){
+          itemLabel.forEach(function(item){
+            chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: item, disabled: false, fixed: %(fixed)s}, {%(options)s})})}
+        else {chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: itemLabel, disabled: false, fixed: %(fixed)s}, {%(options)s})}
+        
+        const maxHeight = %(maxHeight)s;
+        if(maxHeight > 0){
+          %(panel)s.style.maxHeight = ""+ maxHeight + "px";
+          %(panel)s.style.overflow = "hidden"; %(panel)s.style.position = "relative";
+          var div = document.createElement("div"); div.style.color = "#3366BB";
+          div.innerHTML = "Show all"; div.style.position = "absolute"; div.style.bottom = 0; div.style.cursor = "pointer";
+          div.addEventListener("click", function(event){ 
+            var targetElement = event.target || event.srcElement;
+            if (targetElement.innerHTML != "reduce"){%(panel)s.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
+            else {%(panel)s.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}})
+          div.style.right = "5px"; %(panel)s.appendChild(div)
+        } ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
+             'options': ",".join(js_options), "maxHeight": self._src._jsStyles["max_height"]})
 
   @property
   def input(self):

@@ -207,7 +207,7 @@ class OptionsItems(Options):
 
 
 class OptionsTagItems(Options):
-  component_properties = ('delete', )
+  component_properties = ('delete', 'max_height')
 
   @property
   def visible(self):
@@ -321,3 +321,21 @@ class OptionsTagItems(Options):
   @icon_css.setter
   def icon_css(self, attrs):
     self._config(attrs)
+
+  @property
+  def max_height(self):
+    """
+    Description:
+    ------------
+    Max height property for the filter tags container.
+    This will then display a show all and reduce button if the size if above this value.
+    
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get(0)
+
+  @max_height.setter
+  def max_height(self, num):
+    self._config(num)
