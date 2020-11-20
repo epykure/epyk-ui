@@ -329,7 +329,7 @@ class OptionsTagItems(Options):
     ------------
     Max height property for the filter tags container.
     This will then display a show all and reduce button if the size if above this value.
-    
+
     Attributes:
     ----------
     :param css: Dictionary. All the CSS attributes to add the any items

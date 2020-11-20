@@ -702,19 +702,7 @@ class Tags(JsHtml.JsHtmlRich):
           itemLabel.forEach(function(item){
             chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: item, disabled: false, fixed: %(fixed)s}, {%(options)s})})}
         else {chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: itemLabel, disabled: false, fixed: %(fixed)s}, {%(options)s})}
-        
-        const maxHeight = %(maxHeight)s;
-        if(maxHeight > 0){
-          %(panel)s.style.maxHeight = ""+ maxHeight + "px";
-          %(panel)s.style.overflow = "hidden"; %(panel)s.style.position = "relative";
-          var div = document.createElement("div"); div.style.color = "#3366BB";
-          div.innerHTML = "Show all"; div.style.position = "absolute"; div.style.bottom = 0; div.style.cursor = "pointer";
-          div.addEventListener("click", function(event){ 
-            var targetElement = event.target || event.srcElement;
-            if (targetElement.innerHTML != "reduce"){%(panel)s.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
-            else {%(panel)s.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}})
-          div.style.right = "5px"; %(panel)s.appendChild(div)
-        } ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
+        ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
              'options': ",".join(js_options), "maxHeight": self._src._jsStyles["max_height"]})
 
   @property

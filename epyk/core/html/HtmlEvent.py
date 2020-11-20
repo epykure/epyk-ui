@@ -771,7 +771,6 @@ class Filters(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    #
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors['ChipAdd'] = '''function chipAdd(panel, record, options){
         if(typeof(record.category !== "undefined")){options.category = record.category}
@@ -793,6 +792,19 @@ class Filters(Html.Html):
           div.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
         }
         panel.appendChild(div);
+        
+        const maxHeight = options.max_height;
+        if(maxHeight > 0){
+          panel.style.maxHeight = ""+ maxHeight + "px";
+          panel.style.overflow = "hidden"; panel.style.position = "relative";
+          var div = document.createElement("div"); div.style.color = "#3366BB";
+          div.innerHTML = "Show all"; div.style.position = "absolute"; div.style.bottom = 0; div.style.cursor = "pointer";
+          div.addEventListener("click", function(event){ 
+            var targetElement = event.target || event.srcElement;
+            if (targetElement.innerHTML != "reduce"){panel.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
+            else {panel.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}})
+          div.style.right = "5px"; panel.appendChild(div)
+        }
     }'''
     if not self.options.visible:
       self.input.style.css.display = False
