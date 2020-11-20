@@ -751,3 +751,62 @@ class Texts(object):
     html_light.style.css.right = 10
     html_light.style.css.z_index = 1500
     return html_light
+
+  @property
+  def references(self):
+    """
+    Description:
+    ------------
+    More custom toggles icons
+    """
+    return TextReferences(self.context)
+
+
+class TextReferences(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  def book(self, text, author=None, name=None, edition=None, year=None, page=None):
+    """
+    Description:
+    ------------
+    Shortcut to quote an extra from a book.
+
+    Related Pages:
+
+
+    Attributes:
+    ----------
+    :param text: String. The text of the quote
+    :param author: String. The author.
+    :param name:
+    :param edition:
+    :param year:
+    :param page:
+    """
+    text = self.context.rptObj.ui.text("« %s » <sup style='cursor:pointer;color:blue;text-decoration:underline' title='%s. %s, %s. %s, p. %s'>&#x2a;</sup>" % (text, author, name, edition, year, page))
+    text.style.css.color = self.context.rptObj.theme.colors[4]
+    return text
+
+  def website(self, author=None, name=None, site=None, url=None):
+    """
+    Description:
+    ------------
+    Shortcut to data reference from another website.
+
+    Related Pages:
+
+      https://en.wikipedia.org/wiki/Wikipedia:Citing_sources
+      https://apastyle.apa.org/style-grammar-guidelines/references/examples/webpage-website-references
+
+    Attributes:
+    ----------
+    :param author: String. The author.
+    :param name: String. The name of the page
+    :param site: String. The website name
+    :param url: String. The url link to the data.
+    """
+    text = self.context.rptObj.ui.text("%s, %s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (author, name, site.upper(), url, url), align="right")
+    text.style.css.color = self.context.rptObj.theme.colors[4]
+    return text
