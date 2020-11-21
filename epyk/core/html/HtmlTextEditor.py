@@ -424,7 +424,7 @@ class MarkdownReader(Html.Html):
   requirements = ('highlight.js', 'showdown')
 
   def __init__(self, report, vals, width, height, htmlCode, dflt_options, profile):
-    super(MarkdownReader, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
+    super(MarkdownReader, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
     self.actions = []
 
   def tooltips(self, data):

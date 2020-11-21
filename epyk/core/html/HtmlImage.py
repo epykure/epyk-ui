@@ -500,8 +500,10 @@ class Icon(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''htmlObj.classList = []; data.split(' ').forEach(function(cls){htmlObj.classList.add(cls)});
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
+    return '''
+      if (typeof data !== 'undefined'){
+      htmlObj.classList = []; data.split(' ').forEach(function(cls){htmlObj.classList.add(cls)});
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
 
   def __str__(self):
     return '<i %s>%s</i>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)

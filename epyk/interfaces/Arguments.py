@@ -17,6 +17,9 @@ def size(value, unit="%"):
   if isinstance(value, tuple):
     return value
 
+  elif value == "auto":
+    return (value, '')
+
   return (value, unit)
 
 

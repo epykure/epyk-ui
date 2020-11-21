@@ -57,7 +57,7 @@ class Links(object):
       html_link.style.css.display = "inline-block"
     return html_link
 
-  def button(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -127,7 +127,7 @@ class Links(object):
     if tooltip is not None:
       html_link.tooltip(tooltip)
     if align == "center":
-      self.context.rptObj.ui.div(html_link, align=align)
+      self.context.rptObj.ui.div(html_link)
       html_link.style.css.width = "auto"
       html_link.style.css.margin = "0 auto"
       html_link.style.css.display = "inline-block"
@@ -165,7 +165,7 @@ class Links(object):
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
     return html_data
 
-  def colored(self, text, url, icon=None, helper=None, color=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -201,6 +201,45 @@ class Links(object):
     return html_link
 
   def upload(self, url="#", text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False, align="left", htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    HTML component to upload files.
+
+    Attributes:
+    ----------
+    :param text: The string value to be displayed in the component
+    :param url: The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param helper: String. Optional. A tooltip helper
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param decoration:
+    :param htmlCode:
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    height = Arguments.size(height, unit="px")
+    dft_options = {"target": '_self'}
+    if options is not None:
+      dft_options.update(options)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link.style.add_classes.button.basic()
+    html_link.style.css.padding = "0 10px"
+    html_link.style.css.remove("border", set_none=True)
+    if not text:
+      html_link.icon.style.css.remove("margin-right")
+    html_link.style.css.border_radius = 20
+    html_link.style.css.margin_top = 5
+    html_link.style.css.line_height = False
+    html_link.style.css.margin_bottom = 5
+    if align == "center":
+      html_link.style.css.margin = "auto"
+      html_link.style.css.display = "block"
+    elif align == "right":
+      html_link.style.css.float = align
+    return html_link
+
+  def download(self, url="#", text="", icon="fas fa-file-download", helper=None, height=(None, 'px'), decoration=False, align="left", htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
