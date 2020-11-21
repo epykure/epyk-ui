@@ -367,21 +367,23 @@ class Items(Html.Html):
     return ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
-          var item = converter.makeHtml(item).replace("<p>", "<p style='display:inline-block;margin:0'>")};
+          var content = item; if(typeof item.content !== 'undefined'){content = item.content};
+          var content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
         var li = document.createElement("li");
         if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
         else{window['%(alias)s' + item.type](li, item, options)};
         if(options.delete){
           var close = document.createElement("i");
-          close.classList.add("fas"); close.classList.add(options.delete_icon);
-          close.style.marginLeft = '10px'; close.style.cursor = 'pointer';
+          close.classList.add("fas"); close.classList.add(options.delete_icon); close.style.position = 'absolute';
+          close.style.top = "10px"; close.style.right = "0"; close.style.cursor = 'pointer';
           close.onclick = function(event){this.parentNode.remove()};
+          li.style.position = "relative";
           for (const [key, value] of Object.entries(options.delete_position)) {
             close.style[key] = value}
           li.lastChild.style.display = 'inline-block';
           li.appendChild(close);
         }
-        if((options.items_type != 'link') && (options.items_type != 'text')){li.style.margin = "5px 0"; li.style.padding = "2px 5px"}
+        if(((options.items_type != 'link') && (options.items_type != 'badge')) && (options.items_type != 'text')){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
         htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 
   @property

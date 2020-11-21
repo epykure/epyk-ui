@@ -30,6 +30,8 @@ class Comments(Html.Html):
       self.input = report.ui.input(htmlCode="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
+      if "background" in options:
+        self.input.style.css.background = options["background"]
 
   @property
   def options(self):

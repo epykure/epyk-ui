@@ -71,10 +71,10 @@ class JsItemsDef(object):
     var title = document.createElement("DIV");  
     var titleValue = document.createElement("DIV");  
     titleValue.innerHTML = data.title;  titleValue.style.fontWeight = "bold"
-    titleValue.style.fontSize = "25px"; titleValue.style.display = "inline-block";
+    titleValue.style.fontSize = "15px"; titleValue.style.display = "inline-block";
     item.style.verticalAlign = "top";
     
-    var dtime = document.createElement("DIV"); dtime.style.display = "inline-block"; dtime.style.fontSize = "18px";
+    var dtime = document.createElement("DIV"); dtime.style.display = "inline-block"; dtime.style.fontSize = "12px";
     dtime.innerHTML = "@"+ data.time; title.appendChild(titleValue); title.appendChild(dtime);
     dtime.style.fontStyle = 'italic'; dtime.style.marginLeft = '5px';
     
@@ -83,22 +83,17 @@ class JsItemsDef(object):
     
     var avatar = document.createElement("DIV"); avatar.style.color = "white";
     avatar.style.background = "#"+ intToRGB(hashCode(data.author[data.author.length-1])); avatar.innerHTML = data.author;
-    avatar.style.width = "60px"; avatar.style.height = "60px"; avatar.style.borderRadius = "60px";
+    avatar.style.width = "30px"; avatar.style.height = "30px"; avatar.style.borderRadius = "30px";
     avatar.style.display = "inline-block"; avatar.style.margin = "5px"; avatar.style.fontWeight = "bold";
-    avatar.style.fontSize = "40px"; avatar.style.textAlign = "center"; avatar.style.verticalAlign = "top";
+    avatar.style.fontSize = "20px"; avatar.style.textAlign = "center"; avatar.style.verticalAlign = "top";
     
     title.setAttribute('name', 'value'); item.setAttribute('data-valid', true);
     
     var content = document.createElement("DIV"); content.innerHTML = data.content;
+    msg.appendChild(title); msg.appendChild(content);
     
-    msg.appendChild(title);
-    msg.appendChild(content);
-    
-    item.appendChild(avatar);
-    item.appendChild(msg);
-    item.style.margin = "10px 5px";
-    item.style.padding = "5px";
-    item.style.border = "1px solid #e9e9e9";
+    item.appendChild(avatar); item.appendChild(msg); item.style.margin = "10px 5px"; 
+    item.style.width = "calc(100% - 10px)"; item.style.padding = "5px"; item.style.border = "1px solid #e9e9e9";
     '''
     return self._item(item_def)
 
@@ -204,12 +199,14 @@ class JsItemsDef(object):
     """
     item_def = '''
     var item = document.createElement("DIV");  
-    var span = document.createElement("span"); span.setAttribute('name', 'value'); span.innerHTML = data.text;  
-    var badge = document.createElement("span"); badge.innerHTML = data.value;
-    badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; badge.style.padding = '0 3px';
-    badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
-    for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
-    item.appendChild(span); item.appendChild(badge)''' % Defaults.font(-2)
+    var span = document.createElement("span"); span.setAttribute('name', 'value'); span.innerHTML = data.text; 
+    item.appendChild(span);
+    if(typeof data.value !== 'undefined'){ 
+      var badge = document.createElement("span"); badge.innerHTML = data.value;
+      badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; badge.style.padding = '0 3px';
+      badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
+      for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
+      item.appendChild(badge)}''' % Defaults.font(-2)
     return self._item(item_def)
 
   def link(self, report):
@@ -229,9 +226,11 @@ class JsItemsDef(object):
     link.innerHTML = data.text ; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
     item.appendChild(link);
     if(typeof data.dsc !== "undefined"){
-      var dsc = document.createElement("div");
-      dsc.style.display = "inline-block"; dsc.style.marginLeft = "5px";
-      dsc.innerHTML = data.dsc; item.appendChild(dsc)}'''
+      var dsc = document.createElement("div"); dsc.style.display = "inline-block"; dsc.style.marginLeft = "5px";
+      dsc.innerHTML = data.dsc; item.appendChild(dsc)}
+    if(typeof data.image !== "undefined"){
+      var img = document.createElement("img"); img.setAttribute('width', "10px"); img.setAttribute('height', "10px");
+      img.style.marginRight = "5px"; img.setAttribute('src', data.image); link.prepend(img)}'''
     return self._item(item_def)
 
   def button(self, report):
@@ -474,7 +473,7 @@ class JsItem(JsHtml.JsHtmlRich):
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
       })''' % self.varName)
 
-  def add(self, value, css_attrs=None, css_cls=None):
+  def add(self, value, css_attrs=None, css_cls=None, before=False):
     """
     Description:
     ------------
@@ -498,20 +497,23 @@ class JsItem(JsHtml.JsHtmlRich):
     return JsObjects.JsVoid('''
       var item = %(value)s; var itemOptions = %(options)s;
       if(itemOptions.showdown){var converter = new showdown.Converter({}); converter.setOption("display", "inline-block");
-          item = converter.makeHtml(%(value)s).replace("<p>", "<p style='display:inline-block;margin:0'>")};
-      var li = document.createElement("LI"); %(shape)s(li, item, %(options)s); li.style.margin = "5px 0"; %(comp)s.appendChild(li)
+          var content = item; if(typeof item.content !== 'undefined'){content = item.content};
+          content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>");
+          item.content = content
+      };
+      var li = document.createElement("LI"); %(shape)s(li, item, %(options)s); li.style.margin = "5px 0"; %(comp)s.%(event)s(li)
       if(itemOptions.delete){
         var close = document.createElement("i");
-        close.classList.add("fas"); 
-        close.classList.add(itemOptions.delete_icon);
-        close.style.cursor = 'pointer';
+        close.classList.add("fas"); close.classList.add(itemOptions.delete_icon);
+        close.style.cursor = 'pointer'; close.style.position = 'absolute';
+        close.style.top = "10px"; close.style.right = "0";
+        li.style.position = "relative";
         close.onclick = function(event){this.parentNode.remove()};
-        for (const [key, value] of Object.entries(itemOptions.delete_position)) {
-            close.style[key] = value}
+        for (const [key, value] of Object.entries(itemOptions.delete_position)){close.style[key] = value}
         li.lastChild.style.display = 'inline-block'; li.appendChild(close);
         const cls = %(cls)s;
         if (cls != null){li.classList.add(cls)}
-      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value,
+      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value, 'event': "prepend" if before else 'appendChild',
              'cls': JsUtils.jsConvertData(css_cls, None), 'shape': "%s%s" % (self._src._prefix, self._src._jsStyles['items_type'])})
 
   def tags(self, values, css_attrs=None, css_cls=None):
@@ -599,9 +601,9 @@ class Tags(JsHtml.JsHtmlRich):
       (function(dom){var content = {}; 
         dom.childNodes.forEach(function(rec){
           var label = rec.getAttribute('data-category');
-          if(!(label in content)){ content[label] = [] }; 
-          content[label].push(rec.querySelector('span[name=chip_value]').textContent);
-        }); 
+          if(!(label in content) && (label != null)){ content[label] = [] }; 
+          var listItem = rec.querySelector('span[name=chip_value]');
+          if (listItem != null && (label != null)){content[label].push(listItem.textContent)}}); 
         return content})(%s)
       ''' % self.querySelector("div[name=panel]"))
 
@@ -618,7 +620,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get(''' 
       (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
-        for(child in children){if((typeof children[child] === 'object') && children[child].querySelector('span[name=chip_value]').textContent == %(tezt)s){
+        for(child in children){if((typeof children[child] === 'object') && (children[child].querySelector('span[name=chip_value]') != null) && children[child].querySelector('span[name=chip_value]').textContent == %(tezt)s){
             if(children[child].getAttribute('data-category') == %(category)s){ index = count; break; }
         }; count++; }; return index})(%(panel)s)''' % {"tezt": text, "category": category, "panel": self.querySelector("div[name=panel]")})
 
@@ -630,7 +632,9 @@ class Tags(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get(''' 
           (function(dom){var children = dom.childNodes; var values = [];
             for(child in children){if(typeof children[child] === 'object'){
-                if(children[child].getAttribute('data-category') == %s){ values.push(children[child].querySelector('span[name=chip_value]').textContent); }
+                if(children[child].getAttribute('data-category') == %s){ 
+                    var listItem = children[child].querySelector('span[name=chip_value]');
+                    if (listItem != null){values.push(listItem.textContent)}}
             }}; return values})(%s)''' % (category, self.querySelector("div[name=panel]")))
 
   def hide(self):

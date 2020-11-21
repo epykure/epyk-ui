@@ -447,3 +447,22 @@ class Rich(object):
       self.context.rptObj.js.print(content,  dflt_options.get('popup_timers'), dflt_options.get('popup_css'))])
     d.style.css.background = "rgb(%s, %s, %s)" % (code[0], code[1], code[2])
     return d
+
+  def elapsed(self, day=None, month=None, year=None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
+              htmlCode=None, helper=None, options=None, profile=None):
+    """
+
+    :param day:
+    :param month:
+    :param year:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    md = html.HtmlDates.Elapsed(self.context.rptObj, day, month, year, label, icon, width, height, htmlCode, helper, options or {}, profile)
+    return md

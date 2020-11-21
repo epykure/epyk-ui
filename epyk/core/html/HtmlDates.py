@@ -472,3 +472,30 @@ class Timer(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+
+
+class Elapsed(Html.Html):
+  name = 'elapsed'
+
+  def __init__(self, report, day, month, year, label, icon, width, height, htmlCode, helper, options, profile):
+    super(Elapsed, self).__init__(report, {'day': day, 'month': month, 'year': year},
+      htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    # Add the underlying components
+    self.add_label(label, htmlCode=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_helper(helper)
+
+  @property
+  def _js__builder__(self):
+    return '''
+      var startDate = new Date(data.year, data.month-1, data.day);
+      var now = new Date().getTime(); var distance = now - startDate.getTime();
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24)); var years = 0;
+      if (days > 365){years = Math.floor(days / 365); days = days - years * 365}
+      if (years > 0){htmlObj.querySelector("span[name=clock]").innerHTML = "<b>" + years + "y, " + days +"d </b>"}
+      else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}
+      '''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s><span name="clock"></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)

@@ -891,7 +891,7 @@ class Row(Html.Html):
   requirements = ('bootstrap', )
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
-    self.position = position
+    self.position, self.align = position, align
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionGrid(self, options)
     if htmlObjs is not None:
@@ -937,7 +937,7 @@ class Row(Html.Html):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
       # hack to propagate the height of the row to the underlying columns
-      htmlObj = self._report.ui.layouts.col(htmlObj, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
+      htmlObj = self._report.ui.layouts.col(htmlObj, align=self.align, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
       htmlObj.style.css.margin_left = "auto"
       htmlObj.style.css.margin_right = "auto"
       htmlObj.options.managed = False
