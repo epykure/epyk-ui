@@ -70,7 +70,7 @@ class Layouts(object):
     """
     return self.br(count, profile)
 
-  def hr(self, count=1, background_color=None, width=(100, '%'), height=(None, 'px'), align=None, options=None, profile=None):
+  def hr(self, count=1, background_color=None, margins=0, width=(100, '%'), height=(None, 'px'), align=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -94,6 +94,7 @@ class Layouts(object):
     ----------
     :param count: The number of HR tag to be added
     :param background_color: Optional. The component background color
+    :param margins: Optional. Integer. Optional. The margin top and bottom in pixels.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
@@ -110,6 +111,9 @@ class Layouts(object):
       hr_html.style.css.margin = "auto"
       hr_html.style.css.display = "block"
     hr_html.margin = hr_html.hr.margin
+    if margins > 0:
+      hr_html.style.css.margin_top = margins
+      hr_html.style.css.margin_bottom = margins
     return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):

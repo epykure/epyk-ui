@@ -220,10 +220,12 @@ class JsItemsDef(object):
     :param report: Page object. The internal page object
     """
     item_def = '''
-    var item = document.createElement("div");
-    var link = document.createElement("a");
+    var item = document.createElement("div"); var link = document.createElement("a");
     link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
-    link.innerHTML = data.text ; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
+    link.innerHTML = data.text; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
+    if(typeof data.icon !== 'undefined'){ 
+      var iconItem = document.createElement("i"); iconItem.setAttribute("class", data.icon);
+      iconItem.style.marginRight = "5px"; iconItem.style.color = "#0056B3"; item.appendChild(iconItem)}
     item.appendChild(link);
     if(typeof data.dsc !== "undefined"){
       var dsc = document.createElement("div"); dsc.style.display = "inline-block"; dsc.style.marginLeft = "5px";

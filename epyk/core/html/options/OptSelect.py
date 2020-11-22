@@ -6,6 +6,242 @@ from epyk.core.html.options import Options
 class OptionsSelect(Options):
 
   @property
+  def disabled(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("disabled", False)
+
+  @disabled.setter
+  def disabled(self, bool):
+    self._report.attr["disabled"] = bool
+
+  @property
+  def drop_up(self):
+    """
+    Description:
+    ------------
+    dropupAuto is set to true by default, which automatically determines whether or not the menu should display above or below the select box.
+    If dropupAuto is set to false, manually make the select a dropup menu by adding the .dropup class to the select.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-dropup-auto", False)
+
+  @drop_up.setter
+  def drop_up(self, bool):
+    self._report.attr["data-dropup-auto"] = bool
+
+  @property
+  def header(self):
+    """
+    Description:
+    ------------
+    Add a header to the dropdown menu, e.g. header: 'Select a condiment' or data-header="Select a condiment"
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-header")
+
+  @header.setter
+  def header(self, num):
+    self._report.attr["data-header"] = num
+
+  @property
+  def live_search(self):
+    """
+    Description:
+    ------------
+    You can add a search input by passing data-live-search="true" attribute.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-live-search", False)
+
+  @live_search.setter
+  def live_search(self, bool):
+    self._report.attr["data-live-search"] = bool
+
+  @property
+  def max_options(self):
+    """
+    Description:
+    ------------
+    Limit the number of options that can be selected via the data-max-options attribute.
+    It also works for option groups. Customize the message displayed when the limit is reached with maxOptionsText.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-max-options", 1)
+
+  @max_options.setter
+  def max_options(self, num):
+    self._report.attr["data-max-options"] = num
+
+  @property
+  def placeholder(self):
+    """
+    Description:
+    ------------
+    Using the title attribute will set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("title", "")
+
+  @placeholder.setter
+  def placeholder(self, value):
+    self._report.attr["title"] = value
+
+  @property
+  def selected(self):
+    """
+    Description:
+    ------------
+    The selected items
+    """
+    return self.get(None)
+
+  @selected.setter
+  def selected(self, value):
+    self.set(value)
+
+  @property
+  def select_all(self):
+    """
+    Description:
+    ------------
+    Adds two buttons to the top of the menu - Select All & Deselect All with data-actions-box="true".
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-actions-box", False)
+
+  @select_all.setter
+  def select_all(self, bool):
+    self._report.attr["data-actions-box"] = bool
+
+  @property
+  def selected_text_format(self):
+    """
+    Description:
+    ------------
+    Specify how the selection is displayed with the data-selected-text-format attribute on a multiple select.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("ata-selected-text-format", "")
+
+  @selected_text_format.setter
+  def selected_text_format(self, value):
+    self._report.attr["ata-selected-text-format"] = value
+
+  @property
+  def show_tick(self):
+    """
+    Description:
+    ------------
+    You can also show the checkmark icon on standard select boxes with the show-tick class:
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("show-tick", True)
+
+  @show_tick.setter
+  def show_tick(self, bool):
+    self._report.attr["show-tick"] = bool
+
+  @property
+  def size(self):
+    """
+    Description:
+    ------------
+    Specify a number for data-size to choose the maximum number of items to show in the menu.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-size")
+
+  @size.setter
+  def size(self, num):
+    self._report.attr["data-size"] = num
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("style", "")
+
+  @style.setter
+  def style(self, value):
+    self._report.attr["style"] = value
+
+  @property
+  def title(self):
+    """
+    Description:
+    ------------
+    Using the title attribute will set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("title", "")
+
+  @title.setter
+  def title(self, value):
+    self._report.attr["title"] = value
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("data-width")
+
+  @width.setter
+  def width(self, value):
+    self._report.attr["data-width"] = value
+
+
+class OptionsSelectJs(Options):
+
+  @property
   def actionsBox(self):
     """
     Description:
@@ -176,6 +412,7 @@ class OptionsSelect(Options):
 
   @liveSearchPlaceholder.setter
   def liveSearchPlaceholder(self, value):
+    #self._report.attr["data-actions-box"] = value
     self._config(value)
 
   @property

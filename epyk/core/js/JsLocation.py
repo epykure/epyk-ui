@@ -23,7 +23,7 @@ class URLSearchParams(object):
   def __init__(self, queryString):
     self.queryString = queryString
 
-  def get(self, key):
+  def get(self, key, default=None):
     """
     Description:
     ------------
@@ -36,9 +36,11 @@ class URLSearchParams(object):
     Attributes:
     ----------
     :param key: String. The url parameter.
+    :param default: String. Optional. The default value.
     """
     key = JsUtils.jsConvertData(key, None)
-    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().get(%s)" % (self.queryString, key))
+    default = JsUtils.jsConvertData(default, None)
+    return JsString.JsString.get("(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else {return pmt }})()" % (self.queryString, key, default))
 
   def getAll(self, key):
     """

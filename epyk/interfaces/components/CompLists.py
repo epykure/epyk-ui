@@ -86,6 +86,8 @@ class Lists(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
     records = records or []
+    if not isinstance(records, list):
+      records = [{'name': v, 'value': v, "selected": True} for v in records.split(",")]
     options = {} if options is None else options
     options['selected'] = selected
     all_selected = options.get("allSelected", False)
