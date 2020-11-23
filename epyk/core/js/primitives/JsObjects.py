@@ -812,6 +812,8 @@ class XMLHttpRequest(object):
         for obj in jsonData:
           if hasattr(obj, 'options'):
             self.data.add(obj)
+          elif isinstance(obj, tuple):
+            self.data.add(obj[0], obj[1])
           else:
             self.data.attrs(obj)
 

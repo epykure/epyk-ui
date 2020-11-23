@@ -209,7 +209,9 @@ class ChartJs(JsPackage):
             dataset.backgroundColor = chartBgColors[i]; dataset.borderColor = chartColors[i];
             if (dataset.type == 'line'){dataset.fill = false; dataset.pointRadius = 1}}
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
-            dataset.backgroundColor = chartBgColors[i]; dataset.fillOpacity = 0.8}}
+            dataset.backgroundColor = chartBgColors[i]; dataset.fillOpacity = 0.8}
+          else if (['polarArea', 'pie', 'donut'].includes(dataset.type)){
+            dataset.backgroundColor = chartBgColors; dataset.fillOpacity = 0.8}}
         else if (['polarArea', 'pie', 'donut'].includes(chartData.type)){
           if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors}
         }

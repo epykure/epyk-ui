@@ -67,7 +67,12 @@ class Tabulators(object):
     if options is not None:
       table_options_dflts.update(options)
 
+    json = {}
+    if 'json' in table_options_dflts:
+      json = table_options_dflts["json"].fromConfig(htmlCode, {}, page=self.parent.context.rptObj)
+      del table_options_dflts["json"]
     table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, table_options_dflts, profile)
+    table._json_config = json
     table.config.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
