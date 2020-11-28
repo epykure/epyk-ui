@@ -10,7 +10,7 @@ class CssDatePickerUI(CssStyle.Style):
   classname = "ui-datepicker"
 
   def customize(self):
-    self.css({"background": self.rptObj.theme.colors[0], "font-size": Defaults_css.font(), 'width': 'auto'})
+    self.css({"background": self.rptObj.theme.colors[0], "font-size": Defaults_css.font(), 'z-index': "220 !IMPORTANT", 'width': 'auto'})
 
 
 class CssDatePicker(CssStyle.Style):

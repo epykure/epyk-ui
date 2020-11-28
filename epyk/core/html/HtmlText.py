@@ -329,6 +329,9 @@ class Text(Html.Html):
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = 'pointer'
+    if "data-group" in self.attr:
+      return super(Text, self).click(jsFncs + ["document.querySelectorAll('[data-group=%s]').forEach(function(dom){dom.classList.remove('%s')})" % (self.attr["data-group"], self.dom.classList.style_select), self.dom.classList.select()], profile, source_event, onReady)
+
     return super(Text, self).click(jsFncs, profile, source_event, onReady)
 
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None, onReady=False):

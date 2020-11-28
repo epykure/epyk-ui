@@ -313,3 +313,29 @@ class Calendar(object):
     link.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
     link.style.css.border_radius = 20
     return link
+
+  def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
+                                      profile=profile, options=options)
+    but.style.css.background = self.context.rptObj.theme.greys[3]
+    but.options.style_select = "pill_selected"
+    but.style.css.border_radius = 20
+    but.style.css.padding = "0 5px"
+    but.style.css.margin_right = 5
+    date = datetime.date.today()
+    if value is None and text.endswith("M"):
+      for i in range(int(text[:-1])):
+        date = date - datetime.timedelta(days=date.day)
+      value = date.isoformat()
+    if value is None and text.endswith("Y"):
+      date = datetime.date(date.year - int(text[:-1]), date.month, date.day)
+      value = date.isoformat()
+    but.attr["data-value"] = value or text
+    but.style.add_classes.div.color_background_hover()
+    if group is not None:
+      self.context.rptObj.body.style.custom_class({
+        "background": "%s !IMPORTANT" % self.context.rptObj.theme.colors[6],
+        "color": "%s !IMPORTANT" % self.context.rptObj.theme.greys[0],
+      }, classname="pill_selected")
+      but.attr["data-group"] = group
+    return but

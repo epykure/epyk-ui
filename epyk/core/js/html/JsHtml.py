@@ -677,7 +677,7 @@ class JsHtmlRich(JsHtml):
 
   @property
   def content(self):
-    return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
+    return ContentFormatters(self._report, "(function(domObl){if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} else {return domObl.innerHTML}})(%(varName)s)" % {"varName": self.varName})
 
   def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None):
     """

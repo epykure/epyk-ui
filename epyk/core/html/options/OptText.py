@@ -187,6 +187,19 @@ class OptionsText(Options):
     self._report.style.css.padding_left = 5
     self._config(value)
 
+  @property
+  def style_select(self):
+    """
+    Description:
+    ------------
+    Internal CSS class name to be used when the component is selected.
+"""
+    return self._config_get(None)
+
+  @style_select.setter
+  def style_select(self, value):
+    self._config(value)
+
 
 class OptionsTitle(OptionsText):
 

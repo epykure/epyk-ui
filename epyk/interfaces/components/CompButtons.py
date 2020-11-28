@@ -940,3 +940,20 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     but.style.css.padding = "0 10px"
     but.icon.style.css.color = "white"
     return but
+
+  def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
+                                      profile=profile, options=options)
+    but.style.css.background = self.context.rptObj.theme.greys[3]
+    but.options.style_select = "pill_selected"
+    but.style.css.border_radius = 20
+    but.style.css.padding = "0 5px"
+    but.attr["data-value"] = value or text
+    but.style.add_classes.div.color_background_hover()
+    if group is not None:
+      self.context.rptObj.body.style.custom_class({
+        "background": "%s !IMPORTANT" % self.context.rptObj.theme.colors[6],
+        "color": "%s !IMPORTANT" % self.context.rptObj.theme.greys[0],
+      }, classname="pill_selected")
+      but.attr["data-group"] = group
+    return but

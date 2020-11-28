@@ -763,6 +763,169 @@ class JsDomEffects(object):
     return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
 
 
+class JsClassList(object):
+
+  def __init__(self, varId, component=None):
+    self.varId = varId
+    self.component = component
+
+  @property
+  def length(self):
+    """
+    Description:
+    ------------
+    Returns the number of classes in the list.
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+    """
+    return JsNumber.JsNumber.get("%s.length" % self.varId)
+
+  @property
+  def style_select(self):
+    """
+    Get the style_select from the component options.
+    """
+    if self.component is None:
+      raise Exception("Cannot use select if select_style not defined for the component")
+
+    return self.component.options.style_select
+
+  def add(self, cls_names):
+    """
+    Description:
+    ------------
+    Adds one or more class names to an element.
+
+    If the specified class already exist, the class will not be added.
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+    Attributes:
+    ----------
+    :param cls_names: List or String. The class names.
+    """
+    if not hasattr(cls_names, 'toStr'):
+      if not isinstance(cls_names, list):
+        cls_names = [cls_names]
+      cls_names = ", ".join([str(JsUtils.jsConvertData(c, None)) for c in cls_names])
+    return JsObject.JsObject.get("%s.add(%s)" % (self.varId, cls_names))
+
+  def contains(self, cls_name):
+    """
+    Description:
+    ------------
+    Returns a Boolean value, indicating whether an element has the specified class name.
+
+    Possible values:
+
+    true - the element contains the specified class name
+    false - the element does not contain the specified class name
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+    Attributes:
+    ----------
+    :param cls_name: String. The CSS classname.
+    """
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    return JsBoolean.JsBoolean.get("%s.contains(%s)" % (self.varId, cls_name))
+
+  def item(self, index):
+    """
+    Description:
+    ------------
+    Returns the class name with a specified index number from an element. Index starts at 0.
+
+    Returns null if the index is out of range
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+    Attributes:
+    ----------
+    :param index: Integer. The index of the class.
+    """
+    return JsNumber.JsNumber.get("%s.item(%s)" % (self.varId, index))
+
+  def remove(self, cls_names):
+    """
+    Description:
+    ------------
+    Removes one or more class names from an element.
+
+    Note: Removing a class that does not exist, does NOT throw an error
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+    Attributes:
+    ----------
+    :param cls_names: List or String. The class names.
+    """
+    if not hasattr(cls_names, 'toStr'):
+      if not isinstance(cls_names, list):
+        cls_names = [cls_names]
+      cls_names = ", ".join([str(JsUtils.jsConvertData(c, None)) for c in cls_names])
+    return JsObject.JsObject.get("%s.remove(%s)" % (self.varId, cls_names))
+
+  def toggle(self, cls_name, flag=None):
+    """
+    Description:
+    ------------
+    Toggles between a class name for an element.
+
+    The first parameter removes the specified class from an element, and returns false.
+    If the class does not exist, it is added to the element, and the return value is true.
+
+    The optional second parameter is a Boolean value that forces the class to be added or removed, regardless of whether or not it already existed. For example:
+
+    Remove a class: element.classList.toggle("classToRemove", false);
+    Add a class: element.classList.toggle("classToAdd", true);
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_element_classlist.asp
+
+    Attributes:
+    ----------
+    :param cls_name: String. The CSS classname.
+    :param flag: Boolean. forces the class to be added or removed, regardless of whether or not it already existed.
+    """
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    if flag is None:
+      return JsObject.JsObject.get("%s.toggle(%s)" % (self.varId, cls_name))
+
+    flag = JsUtils.jsConvertData(flag, None)
+    return JsObject.JsObject.get("%s.toggle(%s, %s)" % (self.varId, cls_name, flag))
+
+  def select(self, flag=True):
+    """
+    Description:
+    ------------
+    Shortcut to add the predefined selected class for the component.
+    This will add the internal predefined classname.
+
+    Attributes:
+    ----------
+    :param flag: Boolean. To specific if the select style need to be added or removed from the ClassList.
+    """
+    if self.component is None:
+      raise Exception("Cannot use select if select_style not defined for the component")
+
+    if flag:
+      return self.add(self.component.options.style_select)
+
+    return self.remove(self.component.options.style_select)
+
+
 class JsDoms(JsObject.JsObject):
   _id = None
   display_value = 'block'
@@ -1154,6 +1317,19 @@ class JsDoms(JsObject.JsObject):
     """
     self._js.append('%s.classList.remove("%s")' % (self.varId, clsName))
     return self
+
+  @property
+  def classList(self):
+    """
+    Description:
+    -----------
+    The classList property returns the class name(s) of an element, as a DOMTokenList object.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_element_classlist.asp
+    """
+    return JsClassList("%s.classList" % self.varId, self._src)
 
   def css(self, type, jsObject=None, duration=None):
     """
