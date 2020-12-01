@@ -746,10 +746,10 @@ class Numeric(Html.Html):
   def __init__(self, report, number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile):
     super(Numeric, self).__init__(report, number, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
     # Add the components label and icon
-    self.add_label(label, css={"float": None, "width": 'none'}, htmlCode=self.htmlCode)
+    self.add_label(label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, htmlCode=self.htmlCode)
     self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper, css={"line-height": '20px'})
-    self.add_title(title, level=4, css={"margin-bottom": 0}, options={'content_table': False})
+    self.add_title(title, level=4, css={"margin-bottom": 0, "margin-right": 0, "padding": 0}, options={'content_table': False})
 
     # Update the CSS Style of the component
     self.css({'text-align': 'center', 'display': 'inline-block'})
@@ -842,6 +842,22 @@ class Numeric(Html.Html):
       ], "%s_interval" % self.htmlCode, timer)
     ])
     return self
+
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
+    self.style.css.cursor = "pointer"
+    self.style.add_classes.div.border_hover()
+    return super(Numeric, self).click(jsFncs, profile, source_event, onReady)
 
   @property
   def options(self):

@@ -323,11 +323,17 @@ class Calendar(object):
     but.style.css.padding = "0 5px"
     but.style.css.margin_right = 5
     date = datetime.date.today()
-    if value is None and text.endswith("M"):
+    if value is None and text.endswith("D"):
+      date = date - datetime.timedelta(days=int(text[:-1]))
+      value = date.isoformat()
+    elif value is None and text.endswith("W"):
+      date = date - datetime.timedelta(days=7 * int(text[:-1]))
+      value = date.isoformat()
+    elif value is None and text.endswith("M"):
       for i in range(int(text[:-1])):
         date = date - datetime.timedelta(days=date.day)
       value = date.isoformat()
-    if value is None and text.endswith("Y"):
+    elif value is None and text.endswith("Y"):
       date = datetime.date(date.year - int(text[:-1]), date.month, date.day)
       value = date.isoformat()
     but.attr["data-value"] = value or text

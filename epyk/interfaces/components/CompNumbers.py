@@ -63,7 +63,7 @@ class Numbers(object):
     return html_label
 
   def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -87,6 +87,8 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
@@ -94,10 +96,12 @@ class Numbers(object):
       dflt_options.update(options)
     html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
                                         dflt_options, helper, width, profile)
+    html_number.style.css.text_align = align
+    html_number.style.css.font_factor(5)
     return html_number
 
   def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -121,14 +125,16 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
     html_number.money("%", format="%v%s")
     return html_number
 
   def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -152,14 +158,16 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
     html_number.money("£")
     return html_number
 
   def euro(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -183,14 +191,16 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
     html_number.money("€", format="%v %s")
     return html_number
 
   def dollar(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -214,14 +224,16 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
     html_number.money("$", format="%v %s")
     return html_number
 
   def money(self, symbol, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(150, 'px'), profile=None):
+             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -245,9 +257,11 @@ class Numbers(object):
     :param htmlCode:
     :param options:
     :param helper:
+    :param width:
+    :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
     html_number.money(symbol, format="%v %s")
     return html_number
 

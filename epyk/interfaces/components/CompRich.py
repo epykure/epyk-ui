@@ -12,7 +12,7 @@ class Rich(object):
   def __init__(self, context):
     self.context = context
 
-  def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), options=None, helper=None, profile=None):
+  def delta(self, rec=None, width=('auto', ''), height=('auto', ''), options=None, helper=None, profile=None):
     """
     Description:
     ------------

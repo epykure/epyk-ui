@@ -609,8 +609,10 @@ Attributes:
       Attributes:
     ----------
     :param text: The title content
+    :param level:
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
+    :param options:
     """
     self.title = ""
     if text is not None:

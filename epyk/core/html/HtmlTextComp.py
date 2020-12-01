@@ -29,10 +29,13 @@ class UpDown(Html.Html):
     self.add_helper(helper)
     self.val['color'] = self._report.theme.colors[9] if color is None else color
     self.__options = OptText.OptionsNumber(self, options)
+    self._jsStyles["label"] = rec.get('label', '')
 
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set all the possible object for a button
 
     :rtype: OptText.OptionsNumber
@@ -42,10 +45,13 @@ class UpDown(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      var delta = data.value - data.previous; 
+      var delta = data.value - data.previous; htmlObj.innerHTML = "";
       if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
-      if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:"+ options.font_size+"'>"+ data.label +"</span>")};
+      if(data.label != undefined){var span = document.createElement("span");
+        span.style.fontSize = options.font_size; span.innerHTML = data.label; htmlObj.appendChild(span)}
+      else {var span = document.createElement("span");
+        span.style.fontSize = options.font_size; span.innerHTML = options.label; htmlObj.appendChild(span)}
       var valueElt = document.createElement('span'); valueElt.setAttribute('style', 'padding:5px'); 
       valueElt.innerHTML = accounting.formatNumber(data.value, options.digits, options.thousand_sep, options.decimal_sep); 
       htmlObj.appendChild(valueElt); var deltaElt = document.createElement('span');
@@ -55,17 +61,31 @@ class UpDown(Html.Html):
         deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
         relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.red +';font-size:'+ options.font_size)
         relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
-        icon.className = 'fas fa-arrow-down';
-        icon.setAttribute('style', 'color:'+ options.red +';font-size:'+ options.font_size)}
+        icon.className = 'fas fa-arrow-down'; icon.setAttribute('style', 'color:'+ options.red +';font-size:'+ options.font_size)}
       else{  
         deltaElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size);
         deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
         relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size)
         relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
-        icon.className = 'fas fa-arrow-up';
-        icon.setAttribute('style', 'color:'+ options.green +';font-size:'+ options.font_size)};
+        icon.className = 'fas fa-arrow-up'; icon.setAttribute('style', 'color:'+ options.green +';font-size:'+ options.font_size)};
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
       '''
+
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
+    self.style.css.cursor = "pointer"
+    self.style.add_classes.div.color_light_background_hover()
+    return super(UpDown, self).click(jsFncs, profile, source_event, onReady)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -204,6 +224,9 @@ class Delta(Html.Html):
       self.val['thresold2'] = 50
     self.css({"color": self.val['color']})
     self.__options = OptText.OptionsNumber(self, options)
+    self._jsStyles["label"] = records.get('label', '')
+    if 'url' in records:
+      self._jsStyles["url"] = records['url']
 
   @property
   def options(self):
@@ -221,14 +244,16 @@ class Delta(Html.Html):
        var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
        var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
        if(variation > data.thresold1){warning = '<i style="color:'+ options.red +';" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
-       if(data.url != null){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
-       if(data.label != undefined){currVal = data.label +" "+ currVal};
+       if(typeof data.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
+       else if(typeof options.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + options.url+ '">'+ currVal +'</a>'}
+       if(typeof data.label !== 'undefined'){currVal = data.label +" "+ currVal} else {currVal = options.label +" "+ currVal}
        var progressElt = jHtmlObj.find('#progress');
        progressElt.progressbar({value: variation});
        if(variation > data.thresold1){progressElt.children().css({'background': options.red})} 
        else if(variation > data.thresold2){progressElt.children().css({'background': options.orange})} 
        else{progressElt.children().css({'background': options.green})}
        jHtmlObj.find('div').first().html(warning + currVal);
+       jHtmlObj.find('div').first().css({"white-space": "nowrap"});
        jHtmlObj.find('div').last().html('Previous number: '+ accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
       '''
 
@@ -239,7 +264,7 @@ class Delta(Html.Html):
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(12),
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(6),
                    'htmlCode': self.htmlCode, "color": self.val['color'],
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 

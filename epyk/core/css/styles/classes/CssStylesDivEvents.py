@@ -49,6 +49,17 @@ class CssDivOnHoverColor(CssStyle.Style):
     self.hover.css('color', self.rptObj.theme.colors[0], important=True)
 
 
+class CssDivOnHoverLightColor(CssStyle.Style):
+  """
+  Change the background color when the mouse is on the component
+  """
+  _attrs = {"background-color": "inherit"}
+  _hover = {"cursor": 'pointer'}
+
+  def customize(self):
+    self.hover.css({"background-color": self.rptObj.theme.colors[1]}, important=True)
+
+
 class CssDivOnHoverWidth(CssStyle.Style):
   """
   Change the background color when the mouse is on the component
