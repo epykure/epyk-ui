@@ -784,7 +784,7 @@ JS_IMPORTS = {
     'website': 'https://www.chartjs.org/',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'Chart.bundle.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      #{'script': 'Chart.bundle.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'script': 'Chart.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs Crosshair plugin modules width CDN links
@@ -828,7 +828,8 @@ JS_IMPORTS = {
       'website': 'https://github.com/sgratzl/chartjs-chart-geo',
       'req': [{'alias': 'Chart.js'}],
       'modules': [
-        {'script': 'Chart.Geo.min.js', 'version': '1.1.4', 'path': 'chartjs-chart-geo@1.1.4/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+        {'script': 'Chart.Geo.min.js', 'version': '2.1.0', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+      ]},
 
   # Cannot add properly the dependency in this one as my algorithm does not work for shared dependencies ....
   # 'meter': {'req': ['d3'], 'modules': ['d3.meter.js'], 'website': '', 'version': '', "status": 'deprecated'},

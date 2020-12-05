@@ -1235,3 +1235,18 @@ class JsRecordSet(JsArray):
     colName = JsUtils.jsConvertData(colName, None)
     return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (colName, self.toStr()))
 
+  def to_dict(self, colName, valueName):
+    """
+    Description:
+    -----------
+    Return a dictionary from the records. This function will sum the values to aggregate the data per colName.
+
+    Attributes:
+    ----------
+    :param colName: String. The column in the dictionary.
+    :param valueName: String. The column in the dictionary.
+    """
+    colName = JsUtils.jsConvertData(colName, None)
+    valueName = JsUtils.jsConvertData(valueName, None)
+    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){if (!(rec[%(col)s] in result)){result[rec[%(col)s]] = 0}; result[rec[%(col)s]] += parseFloat(rec[%(val)s])}); return result })(%(record)s)" % {"col": colName, "val": valueName, "record": self.toStr()})
+

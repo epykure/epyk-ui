@@ -687,6 +687,17 @@ class OptionScales(DataClass):
     return self._attrs["xAxes"][i]
 
 
+class OptionScaleGeo(DataClass):
+
+  @property
+  def projection(self):
+    return self._attrs["projection"]
+
+  @projection.setter
+  def projection(self, val):
+    self._attrs["projection"] = val
+
+
 class OptionPadding(DataClass):
 
   @property
@@ -1384,3 +1395,66 @@ class OptionChartJsPlugins(DataClass):
     return self.sub_data("annotation", ChartJsAnnotation.Annotation)
 
 
+class OptionGeoColorScale(DataClass):
+
+  @property
+  def display(self):
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
+  @property
+  def quantize(self):
+    return self._attrs["quantize"]
+
+  @quantize.setter
+  def quantize(self, val):
+    self._attrs["quantize"] = val
+
+  @property
+  def position(self):
+    return self._attrs["position"]
+
+  @position.setter
+  def position(self, val):
+    self._attrs["position"] = val
+
+  @property
+  def legend(self):
+    return self.sub_data("legend", OptionLegend)
+
+
+class OptionGeo(DataClass):
+
+  @property
+  def colorScale(self):
+    return self.sub_data("colorScale", OptionGeoColorScale)
+
+
+class OptionsGeo(Options):
+
+  @property
+  def showOutline(self):
+    return self._attrs["showOutline"]
+
+  @showOutline.setter
+  def showOutline(self, val):
+    self._attrs["showOutline"] = val
+
+  @property
+  def showGraticule(self):
+    return self._attrs["showGraticule"]
+
+  @showGraticule.setter
+  def showGraticule(self, val):
+    self._attrs["showGraticule"] = val
+
+  @property
+  def scale(self):
+    return self.sub_data("scale", OptionScaleGeo)
+
+  @property
+  def geo(self):
+    return self.sub_data("geo", OptionGeo)

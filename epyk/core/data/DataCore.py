@@ -126,7 +126,7 @@ class DataAggregators(object):
              cs.forEach(function(c){tmpResults[skKey][c] = 0})}
           cs.forEach(function(c){tmpResults[skKey][c] += %s})
         }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (name, "parseFloat(r[c])" if cast_vals else 'r[c]')
-    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, columns, keys, dstKey), report=self._report)
+    return JsObjects.JsArray.JsRecordSet('%s(%s, %s, %s, %s)' % (name, self.varName, columns, keys, dstKey), report=self._report)
 
   def pluck(self, column):
     """
