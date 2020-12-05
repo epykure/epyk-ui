@@ -928,6 +928,27 @@ class Row(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlRow(self, report=self._report)
     return self._dom
 
+  def set_size_cols(self, *args):
+    """
+    Description:
+    ------------
+    Set the dimension of the columns in the row container.
+    The sum of the various columns should not exceed 12, the max layout in Bootstrap.
+
+    Attributes:
+    ----------
+    :param args: Integer the size of the different columns.
+    """
+    vals = list(args)
+    if len(vals) != len(self.val):
+      space_left = 12 - sum(vals)
+      cols = len(self.val) - len(vals)
+      for i in range(cols):
+        vals.append(space_left // cols)
+    for i, col in enumerate(self):
+      col.set_size(vals[i])
+    return self
+
   def __len__(self):
     return len(self.val)
 
