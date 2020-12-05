@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# TODO: Align this module with the Js one
 
 from epyk.core.data.DataClass import DataClass
 from epyk.core.js.packages import packageImport
@@ -98,7 +99,8 @@ class OptionAxesTicks(DataClass):
   def stepSize(self, val):
     self._attrs["stepSize"] = val
 
-  def scale(self, factor=1000, alias="k", digits=0):
+  @packageImport("accounting")
+  def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
     """
     Description:
     -----------
@@ -108,8 +110,11 @@ class OptionAxesTicks(DataClass):
     :param factor:
     :param alias:
     :param digits:
+    :param thousand_sep:
     """
-    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {var pointVal = label/%s; return pointVal.toFixed(%s) + '%s';}" % (factor, digits, alias))
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
+    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s';}" % (factor, digits, thousand_sep, alias))
 
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -138,7 +143,7 @@ class OptionAxesTicks(DataClass):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
@@ -156,6 +161,8 @@ class OptionLabels(DataClass):
   @property
   def fontColor(self):
     """
+    Description:
+    -----------
     """
     return self._attrs["fontColor"]
 
@@ -169,7 +176,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def display(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If false, do not display grid lines for this axis.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["display"]
 
@@ -180,7 +193,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def circular(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If true, gridlines are circular (on radar chart only).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["circular"]
 
@@ -191,7 +210,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def color(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second to the second grid line and so on.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["color"]
 
@@ -202,7 +227,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def borderDash(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Length and spacing of dashes on grid lines.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["borderDash"]
 
@@ -213,7 +244,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def borderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Offset for line dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["borderDashOffset"]
 
@@ -224,7 +261,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def lineWidth(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Stroke width of grid lines.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["lineWidth"]
 
@@ -235,7 +278,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def drawBorder(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If true, draw border at the edge between the axis and the chart area.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["drawBorder"]
 
@@ -246,7 +295,14 @@ class OptionAxesGridLine(DataClass):
   @property
   def drawOnChartArea(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If true, draw lines on the chart area inside the axis lines.
+    This is useful when there are multiple axes and you need to control which grid lines are drawn.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["drawOnChartArea"]
 
@@ -257,7 +313,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def drawTicks(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If true, draw lines beside the ticks in the axis area beside the chart.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["drawTicks"]
 
@@ -268,7 +330,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def tickMarkLength(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Length in pixels that the grid lines will draw into the axis area.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["tickMarkLength"]
 
@@ -279,7 +347,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def zeroLineWidth(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Stroke width of the grid line for the first index (index 0).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["zeroLineWidth"]
 
@@ -290,7 +364,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def zeroLineColor(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Stroke color of the grid line for the first index (index 0).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["zeroLineColor"]
 
@@ -301,7 +381,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def zeroLineBorderDash(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Length and spacing of dashes of the grid line for the first index (index 0).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["zeroLineBorderDash"]
 
@@ -312,7 +398,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def zeroLineBorderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    Offset for line dashes of the grid line for the first index (index 0).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["zeroLineBorderDashOffset"]
 
@@ -323,7 +415,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def offsetGridLines(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    If true, grid lines will be shifted to be between labels. This is set to true for a bar chart by default.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["offsetGridLines"]
 
@@ -334,7 +432,13 @@ class OptionAxesGridLine(DataClass):
   @property
   def z(self):
     """
-    https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    Description:
+    -----------
+    z-index of gridline layer. Values <= 0 are drawn under datasets, > 0 on top.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
     return self._attrs["z"]
 
@@ -423,7 +527,12 @@ class OptionAxes(DataClass):
   @property
   def stacked(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["stacked"]
 
@@ -434,7 +543,12 @@ class OptionAxes(DataClass):
   @property
   def id(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["id"]
 
@@ -445,7 +559,12 @@ class OptionAxes(DataClass):
   @property
   def offset(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["offset"]
 
@@ -456,7 +575,12 @@ class OptionAxes(DataClass):
   @property
   def position(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["position"]
 
@@ -467,7 +591,15 @@ class OptionAxes(DataClass):
   @property
   def stepSize(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["stepSize"]
 
@@ -478,6 +610,8 @@ class OptionAxes(DataClass):
   @property
   def ticks(self):
     """
+    Description:
+    ------------
 
     :return:
     """
@@ -486,8 +620,9 @@ class OptionAxes(DataClass):
   @property
   def time(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return self.sub_data("time", OptionAxesTime)
 
@@ -508,9 +643,10 @@ class OptionAxes(DataClass):
 
   def category(self, vals):
     """
+    Description:
+    ------------
 
     :param vals:
-    :return:
     """
     self._attrs["type"] = "category"
     self._attrs["labels"] = vals
@@ -523,8 +659,11 @@ class OptionScales(DataClass):
 
   def y_axis(self, i=None):
     """
+    Description:
+    ------------
 
     :param i:
+
     :rtype: OptionAxes
     """
     if "yAxes" not in self._attrs:
@@ -553,7 +692,12 @@ class OptionPadding(DataClass):
   @property
   def left(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["left"]
 
@@ -564,7 +708,12 @@ class OptionPadding(DataClass):
   @property
   def right(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["right"]
 
@@ -575,7 +724,12 @@ class OptionPadding(DataClass):
   @property
   def top(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["top"]
 
@@ -586,7 +740,12 @@ class OptionPadding(DataClass):
   @property
   def bottom(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["bottom"]
 
@@ -848,9 +1007,17 @@ class Options(DataClass):
   def plugins(self):
     return self.sub_data("plugins", OptionChartJsPlugins)
 
+  @property
+  def tooltips(self):
+    return self.sub_data("tooltips", OptionChartJsTooltips)
+
   def add_title(self, text, color=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     """
@@ -877,7 +1044,12 @@ class OptionPieAnimation(DataClass):
   @property
   def animateRotate(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["animateRotate"]
 
@@ -888,7 +1060,12 @@ class OptionPieAnimation(DataClass):
   @property
   def animateScale(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["animateScale"]
 
@@ -898,15 +1075,42 @@ class OptionPieAnimation(DataClass):
 
 
 class OptionsBar(Options):
-  pass
+
+  @property
+  def stacked(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/bar/stacked.html
+    """
+    x_stacked = self.scales.x_axes().stacked
+    y_stacked = self.scales.y_axis().stacked
+    return (x_stacked, y_stacked)
+
+  @stacked.setter
+  def stacked(self, val):
+    self.scales.x_axes().stacked = val
+    self.scales.y_axis().stacked = val
 
 
 class OptionsPie(Options):
 
   @property
+  def tooltips(self):
+    return self.sub_data("tooltips", OptionChartJsPieTooltips)
+
+  @property
   def cutoutPercentage(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["cutoutPercentage"]
 
@@ -917,7 +1121,12 @@ class OptionsPie(Options):
   @property
   def rotation(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["rotation"]
 
@@ -928,7 +1137,12 @@ class OptionsPie(Options):
   @property
   def circumference(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["circumference"]
 
@@ -942,10 +1156,16 @@ class OptionsPie(Options):
 
 
 class OptionsLine(Options):
+
   @property
   def showLines(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["showLines"]
 
@@ -956,7 +1176,12 @@ class OptionsLine(Options):
   @property
   def spanGaps(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["spanGaps"]
 
@@ -970,7 +1195,12 @@ class OptionsPolar(Options):
   @property
   def startAngle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["startAngle"]
 
@@ -981,6 +1211,125 @@ class OptionsPolar(Options):
   @property
   def animation(self):
     return self.sub_data("animation", OptionPieAnimation)
+
+
+class OptionChartJsTooltipsCallbacks(DataClass):
+
+  @property
+  def label(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
+    """
+    return self._attrs["label"]
+
+  @label.setter
+  def label(self, val):
+    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) { return '%s' }" % val)
+
+  @packageImport("accounting")
+  def labelNumber(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    """
+    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return accounting.formatNumber(tooltipItem.yLabel, %s, '%s') }" % (digit, thousand_sep))
+
+  @packageImport("accounting")
+  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param symbol: String. Optional. Default currency symbol is ''
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    :param decimal_sep: String. Optional. Decimal point separator
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self._attrs["label"] = JsObjects.JsVoid(
+      "function(tooltipItem, data) { return accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
+
+  @property
+  def value(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
+    """
+    return self._attrs["value"]
+
+  @value.setter
+  def value(self, val):
+    self._attrs["value"] = val
+
+
+class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
+
+  @packageImport("accounting")
+  def labelNumber(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    """
+    self._attrs["label"] = JsObjects.JsVoid(
+      "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
+      digit, thousand_sep))
+
+  @packageImport("accounting")
+  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param symbol: String. Optional. Default currency symbol is ''
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    :param decimal_sep: String. Optional. Decimal point separator
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self._attrs["label"] = JsObjects.JsVoid(
+      "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
+      symbol, digit, thousand_sep, decimal_sep))
+
+
+class OptionChartJsTooltips(DataClass):
+
+  @property
+  def callbacks(self):
+    return self.sub_data("callbacks", OptionChartJsTooltipsCallbacks)
+
+
+class OptionChartJsPieTooltips(DataClass):
+
+  @property
+  def callbacks(self):
+    return self.sub_data("callbacks", OptionChartJsTooltipsPieCallbacks)
 
 
 class OptionChartJsPlugins(DataClass):

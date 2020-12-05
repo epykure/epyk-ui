@@ -1217,3 +1217,21 @@ class JaArrayRejector(object):
       return JsArray("_.%s(%s, function(num){ %s; })" % (self.fncName, self.data, js_expr), report=self._report)
 
     return JsArray("(function(){%s; return _.%s(%s, function(num){ %s; })})()" % (self.data, self.fncName, self.varName, js_expr), report=self._report)
+
+
+class JsRecordSet(JsArray):
+
+  def distinct(self, colName):
+    """
+    Description:
+    -----------
+    Return a sorted list based on a column in the recordset.
+    This can be used to feed a selection box or a list component
+
+    Attributes:
+    ----------
+    :param colName: String. The column in the dictionary.
+    """
+    colName = JsUtils.jsConvertData(colName, None)
+    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (colName, self.toStr()))
+

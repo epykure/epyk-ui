@@ -54,7 +54,7 @@ class DatePicker(Html.Html):
     Description:
     -----------
     Event trigger when the datepicker component changes.
-    
+
     Attributes:
     ----------
     :param jsFncs: String of Js Events. The Javascript events when the datepicker selection changes.
