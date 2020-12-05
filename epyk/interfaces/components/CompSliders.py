@@ -62,7 +62,7 @@ class Sliders(object):
                                         options or {}, htmlCode, profile)
     return html_slider
 
-  def date(self, value, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def date(self, value=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
 
@@ -84,11 +84,13 @@ class Sliders(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
+    if value is None:
+      value = min
     html_slider = html.HtmlEvent.SliderDate(self.context.rptObj, value, min, max, width, height, attrs or {}, helper,
                                             options or {}, htmlCode, profile)
     return html_slider
 
-  def date_range(self, value1, value2, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def date_range(self, value1=None, value2=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                  helper=None, options=None, profile=None):
     """
 
@@ -112,6 +114,10 @@ class Sliders(object):
     height = Arguments.size(height, unit="px")
     options = options or {}
     options['range'] = True
+    if value1 is None:
+      value1 = min
+    if value2 is None:
+      value2 = max
     html_slider = html.HtmlEvent.SliderDates(self.context.rptObj, [value1, value2], min, max, width, height, attrs or {}, helper,
                                              options or {}, htmlCode, profile)
     return html_slider
