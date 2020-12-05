@@ -124,6 +124,8 @@ class Fields(object):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
+    if value is not None and (value.startswith("T-") or value.startswith("W-") or value.startswith("M-") or value.startswith("Y-")):
+      value = self.context.rptObj.py.dates.date_from_alias(value)
     if options is not None:
       dftl_options.update(options)
     html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
