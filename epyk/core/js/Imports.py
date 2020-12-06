@@ -607,9 +607,9 @@ JS_IMPORTS = {
   'd3': {
     'website': 'https://d3js.org/',
     'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
-    'req': [{'alias': 'jquery'}],
+    #'req': [{'alias': 'jquery'}],
     'modules': [
-      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '5.16.0', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '6.3.0', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # D3 Tips Package

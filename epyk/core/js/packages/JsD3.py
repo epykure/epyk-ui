@@ -3,7 +3,6 @@
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.packages import JsPackage
 
@@ -592,11 +591,15 @@ class D3File(object):
 
   def __init__(self, src, filename, selector):
     self._f, self.src, self._selector = filename, src, selector
-    self._js_frg, self._js_ids = [], set()
+    self._js_frg, self._js_ids, self._js_then = [], set(), None
 
   def records(self, jsId):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsId:
     """
     self._js_frg.append("%s.push(row)" % jsId)
@@ -604,7 +607,11 @@ class D3File(object):
 
   def unpack(self, jsId, column=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsId:
     :param column:
     """
@@ -616,9 +623,13 @@ class D3File(object):
 
   def filter(self, rules):
     """
+    Description:
+    -----------
 
     csv.filter("row['direction'] != 'Decreasing'")
 
+    Attributes:
+    ----------
     :param rules:
     """
     if not isinstance(rules, list):
@@ -628,9 +639,14 @@ class D3File(object):
 
   def filterCol(self, column, value, type="=="):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
+    :param column:
     :param value:
-    :return:
+    :param type:
     """
     column = JsUtils.jsConvertData(column, None)
     value = JsUtils.jsConvertData(value, None)
@@ -639,15 +655,70 @@ class D3File(object):
 
   def callback(self, jsFnc):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     self._js_frg.append(jsFnc)
     return self
 
+  def then(self, jsFncs):
+    """
+    Description:
+    -----------
+    As the file loading wiht D3 is a promise, it is possible to put events when the response is received.
+    This could allow the loading of components.
+
+    Attributes:
+    ----------
+    :param jsFncs: A list or String. Javascript events.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._js_then = ".then(function(data) {%s})" % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
+
+  def row(self, jsFncs):
+    """
+
+    :param jsFncs:
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._js_frg.append("function(data) {data.foreach(function(row){ %s } )" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self
+
+  def get(self, jsFncs):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://github.com/d3/d3-request
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    return self.then(jsFncs)
+
   def toStr(self):
     file = JsUtils.jsConvertData(self._f, None)
-    return "%s; %s(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg))
+    if self._js_ids:
+      if self._js_then is not None:
+        return "%s; %s(%s, function(row, err){%s})%s" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg), self._js_then)
+
+      return "%s; %s(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg))
+
+    if self._js_then is not None:
+      return "%s(%s, function(row, err){%s})%s" % (self._selector, file, ";".join(self._js_frg), self._js_then)
+
+    return "%s(%s, function(row, err){%s})" % (self._selector, file, ";".join(self._js_frg))
 
 
 class D3Svg(object):
@@ -675,6 +746,99 @@ class D3Svg(object):
     return ".".join(content)
 
 
+class D3Request(JsPackage):
+
+  def header(self, key, value):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param key:
+    :param value:
+    """
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(value, None)
+    return self.fnc('header(%s, %s)' % (key, value))
+
+  def timeout(self, value):
+    """
+    Description:
+    -----------
+    If timeout is specified, sets the timeout attribute of the request to the specified number of milliseconds and returns this request instance. If timeout is not specified, returns the current response timeout, which defaults to 0.
+
+    Related Pages:
+
+      https://github.com/d3/d3-request
+
+    Attributes:
+    ----------
+    :param value:
+    """
+    value = JsUtils.jsConvertData(value, None)
+    return self.fnc('timeout(%s)' % value)
+
+  def mimeType(self, mine_type):
+    """
+    Description:
+    -----------
+    If type is specified, sets the request mime type to the specified value and returns this request instance.
+    If type is null, clears the current mime type (if any) instead.
+    If type is not specified, returns the current mime type, which defaults to null.
+    The mime type is used to both set the "Accept" request header and for overrideMimeType, where supported.
+
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
+      https://github.com/d3/d3-request
+
+    Attributes:
+    ----------
+    :param mine_type:
+    """
+    mine_type = JsUtils.jsConvertData(mine_type, None)
+    return self.fnc('mimeType(%s)' % mine_type)
+
+  def response(self, jsFncs):
+    """
+    Description:
+    -----------
+
+    The response text object is in the variable data.
+
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self.fnc('response(function(xhr) {var data = xhr.responseTex; %s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def get(self, jsFncs):
+    """
+    Description:
+    -----------
+
+    The function parameters is defined with tee variable data
+
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+
 class JsD3(JsPackage):
 
   lib_alias = {"js": 'd3'}
@@ -686,7 +850,17 @@ class JsD3(JsPackage):
 
   def csv(self, url):
     """
+    Description:
+    -----------
+    Sends http request to the specified url to load .csv file or data and executes callback function with parsed csv data objects.
 
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.csv
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
     """
     #url = JsUtils.jsConvertData(url, None)
     #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
@@ -694,7 +868,36 @@ class JsD3(JsPackage):
 
   def tsv(self, url):
     """
+    Description:
+    -----------
+    Sends http request to the specified url to load a .tsv file or data and executes callback function with parsed tsv data objects.
 
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
+    """
+    #url = JsUtils.jsConvertData(url, None)
+    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
+    return D3File(self.src, url, selector="%s.tsv" % self._selector)
+
+  def xml(self, url):
+    """
+    Description:
+    -----------
+    Sends http request to the specified url to load an .xml file or data and executes callback function with parsed xml data objects.
+
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.xml
+      https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
     """
     #url = JsUtils.jsConvertData(url, None)
     #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
@@ -702,15 +905,104 @@ class JsD3(JsPackage):
 
   def json(self, url):
     """
+    Description:
+    -----------
+    Sends http request to the specified url to load .json file or data and executes callback function with parsed json data objects.
 
+    Related Pages:
+
+      https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.json
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
     """
     #url = JsUtils.jsConvertData(url, None)
     #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.json" % self._selector)
 
-  def dsv(self, url, delimiter):
+  def text(self, url):
     """
+    Description:
+    -----------
+    Returns a new request to get the text file at the specified url with the default mime type text/plain.
+    If no callback is specified, this is equivalent to:
 
+    Related Pages:
+
+        https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
+    """
+    return D3File(self.src, url, selector="%s.text" % self._selector)
+
+  def blob(self, url):
+    """
+    Description:
+    -----------
+    Fetches the binary file at the specified input URL as a Blob.
+    If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
+
+    Related Pages:
+
+        https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
+    """
+    return D3File(self.src, url, selector="%s.blob" % self._selector)
+
+  def html(self, url):
+    """
+    Description:
+    -----------
+    Fetches the file at the specified input URL as text and then parses it as HTML.
+    f init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
+
+    Related Pages:
+
+        https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
+    """
+    return D3File(self.src, url, selector="%s.html" % self._selector)
+
+  def image(self, url):
+    """
+    Description:
+    -----------
+    Fetches the image at the specified input URL.
+    If init is specified, sets any additional properties on the image before loading.
+
+    Related Pages:
+
+        https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
+    """
+    return D3File(self.src, url, selector="%s.image" % self._selector)
+
+  def dsv(self, url):
+    """
+    Description:
+    -----------
+    Fetches the DSV file at the specified input URL.
+    If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields. An optional row conversion function may be specified to map and filter row objects to a more-specific representation; see dsv.parse for details.
+
+    Related Pages:
+
+        https://github.com/d3/d3-fetch
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the file.
     """
     #url = JsUtils.jsConvertData(url, None)
     #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
@@ -736,13 +1028,16 @@ class JsD3(JsPackage):
 
   def scaleBand(self, range=None):
     """
+    Description:
+    -----------
     Constructs a new band scale with the specified domain and range, no padding, no rounding and center alignment.
     If domain is not specified, it defaults to the empty domain. If range is not specified, it defaults to the unit range [0, 1].
 
+    Attributes:
+    ----------
     :param range:
 
     :rtype: D3Band
-    :return:
     """
     if range is None:
       self._js.append("scaleBand()")
