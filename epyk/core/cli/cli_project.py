@@ -348,9 +348,9 @@ def transpile_all(args):
   for report in os.listdir(reports_path):
     if report.endswith(".py") and report != "__init__.py":
       view_name = report[:-3]
-      mod = __import__(view_name, fromlist=['object'])
-      importlib.reload(mod)
       try:
+        mod = __import__(view_name, fromlist=['object'])
+        importlib.reload(mod)
         page = utils.get_page(mod, template=True)
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
         if not os.path.exists(settings.VIEWS_FOLDER):
