@@ -801,6 +801,20 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'chartjs-plugin-annotation.min.js', 'version': '0.5.7', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # ChartJs datalabels plugin modules width CDN links
+  'chartjs-plugin-datalabels': {
+    'website': 'https://chartjs-plugin-datalabels.netlify.app/',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-datalabels.min.js', 'version': '0.7.0', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+
+  # ChartJs Labels plugin modules width CDN links
+  'chartjs-plugin-labels': {
+    'website': 'https://github.com/emn178/chartjs-plugin-labels',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-labels.js', 'version': '1.1.0', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}]},
+
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-crosshair': {
     'website': 'https://www.chartjs.org/',
@@ -814,14 +828,6 @@ JS_IMPORTS = {
     'req': [{'alias': 'Chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-zoom.min.js', 'version': '0.7.7', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
-
-  # ChartJs addon to add label width CDN links
-  'chartjs-pie-labels': {
-      'website': 'https://chartjs-plugin-datalabels.netlify.com/',
-      'register': {'alias': 'ChartDataLabel', 'module': 'chartjs-plugin-datalabels.min'},
-      'req': [{'alias': 'Chart.js'}],
-      'modules': [
-        {'script': 'chartjs-plugin-datalabels.min.js', 'version': '0.5.0', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
   # ChartJs addon to add some Geo charts
   'chartjs-chart-geo': {

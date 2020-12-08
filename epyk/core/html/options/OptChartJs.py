@@ -1346,6 +1346,36 @@ class OptionChartJsPieTooltips(DataClass):
 class OptionChartJsPlugins(DataClass):
 
   @property
+  @packageImport('chartjs-plugin-labels')
+  def labels(self):
+    """
+    Description:
+    -----------
+    Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
+
+    Related Pages:
+
+      https://github.com/emn178/chartjs-plugin-labels
+    """
+    from epyk.core.html.graph.exts import ChartJsLabels
+    return self.sub_data("labels", ChartJsLabels.Labels)
+
+  @property
+  @packageImport('chartjs-plugin-datalabels')
+  def datalabels(self):
+    """
+    Description:
+    -----------
+    Display labels on data for any type of charts.
+
+    Related Pages:
+
+      https://chartjs-plugin-datalabels.netlify.app/
+    """
+    from epyk.core.html.graph.exts import ChartJsDataLabels
+    return self.sub_data("datalabels", ChartJsDataLabels.Datalabels)
+
+  @property
   @packageImport('chartjs-plugin-zoom')
   def zoom(self):
     """
@@ -1426,11 +1456,34 @@ class OptionGeoColorScale(DataClass):
     return self.sub_data("legend", OptionLegend)
 
 
+class OptionGeoRadiusScale(DataClass):
+
+  @property
+  def display(self):
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
+  @property
+  def size(self):
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, val):
+    self._attrs["size"] = val
+
+
 class OptionGeo(DataClass):
 
   @property
   def colorScale(self):
     return self.sub_data("colorScale", OptionGeoColorScale)
+
+  @property
+  def radiusScale(self):
+    return self.sub_data("radiusScale", OptionGeoRadiusScale)
 
 
 class OptionsGeo(Options):

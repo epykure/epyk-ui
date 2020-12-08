@@ -183,7 +183,7 @@ class DataEnum(object):
     if value is None:
       value = sys._getframe().f_back.f_code.co_name
     if self.js_conversion:
-      value = JsUtils.jsConvertData(value, None).toStr()
+      value = value.toStr() if hasattr(value, "toStr") else JsUtils.jsConvertData(value, None).toStr()
     self.__value = value
 
   def custom(self, value):

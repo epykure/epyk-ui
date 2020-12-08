@@ -52,23 +52,21 @@ class JsItemsDef(object):
     :param report: Page object. The internal page object
     """
     item_def = '''
+    if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
+      data.content = converter.makeHtml(data.content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
+      
     if (typeof data.time === 'undefined'){
       const d = new Date();
       data.time = d.getFullYear() + '-' +('0' + (d.getMonth()+1)).slice(-2)+ '-' +  ('0' + d.getDate()).slice(-2) + ' '+d.getHours()+ ':'+('0' + (d.getMinutes())).slice(-2)+ ':'+d.getSeconds()
     }
     
     function hashCode(str) { // java String#hashCode
-        var hash = 0;
-        for (var i = 0; i < str.length; i++) {hash = str.charCodeAt(i) + ((hash << 5) - hash);}
-        return hash;
-    }
+      var hash = 0; for (var i = 0; i < str.length; i++) {hash = str.charCodeAt(i) + ((hash << 5) - hash)} return hash}
 
     function intToRGB(i){
-        var c = (i & 0x00FFFFFF).toString(16).toUpperCase();return "00000".substring(0, 6 - c.length) + c;
-    }
+      var c = (i & 0x00FFFFFF).toString(16).toUpperCase(); return "00000".substring(0, 6 - c.length) + c}
     
-    var item = document.createElement("DIV");  
-    var title = document.createElement("DIV");  
+    var item = document.createElement("DIV"); var title = document.createElement("DIV");  
     var titleValue = document.createElement("DIV");  
     titleValue.innerHTML = data.title;  titleValue.style.fontWeight = "bold"
     titleValue.style.fontSize = "15px"; titleValue.style.display = "inline-block";
@@ -78,7 +76,7 @@ class JsItemsDef(object):
     dtime.innerHTML = "@"+ data.time; title.appendChild(titleValue); title.appendChild(dtime);
     dtime.style.fontStyle = 'italic'; dtime.style.marginLeft = '5px';
     
-    var msg = document.createElement("DIV");  msg.style.display = "inline-block"; msg.style.width = "calc(100% - 80px)";
+    var msg = document.createElement("DIV"); msg.style.display = "inline-block"; msg.style.width = "calc(100% - 80px)";
     msg.style.padding = "2px";
     
     var avatar = document.createElement("DIV"); avatar.style.color = "white";
