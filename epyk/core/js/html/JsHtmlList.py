@@ -392,7 +392,10 @@ class JsItem(JsHtml.JsHtmlRich):
     ------------
     Get the current value from a LI item event
     """
-    return JsObjects.JsVoid("this.querySelector('[name=value]').innerHTML")
+    return JsObjects.JsVoid('''(function(){
+      var source = this; if (typeof this.querySelector === 'undefined'){source = event.target || event.srcElement}
+      if(source.getAttribute("name")){return source.innerHTML} else {return source.querySelector('[name=value]').innerHTML} 
+      })(event, this)''')
 
   @property
   def values(self):

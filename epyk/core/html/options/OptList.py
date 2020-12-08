@@ -49,7 +49,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position')
+  component_properties = ("delete_icon", 'delete_position', 'li_style')
 
   @property
   def style(self):
@@ -62,6 +62,19 @@ class OptionsItems(Options):
 
   @style.setter
   def style(self, attrs):
+    self._config(attrs)
+
+  @property
+  def li_style(self):
+    """
+    Description:
+    ------------
+    List Item CSS Style
+    """
+    return self._config_get({})
+
+  @li_style.setter
+  def li_style(self, attrs):
     self._config(attrs)
 
   @property

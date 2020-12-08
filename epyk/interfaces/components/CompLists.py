@@ -274,6 +274,25 @@ class Lists(object):
     html_item.css({"list-style-type": 'none'})
     return html_item
 
+  def pills(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None,
+            profile=None, helper=None):
+    """
+
+    :param records:
+    :param width:
+    :param height:
+    :param column:
+    :param options:
+    :param htmlCode:
+    :param profile:
+    :param helper:
+    """
+    html_item = self.items(records, width, height, column, options, htmlCode, profile, helper)
+    html_item.options.li_style = {"display": "inline-block", "margin": "0 2px",
+                                  "padding": "1px 4px", "border-radius": "10px",
+                                  "background": self.context.rptObj.theme.greys[2]}
+    return html_item
+
   def box(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
     """
     Description:
