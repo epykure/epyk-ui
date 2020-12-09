@@ -122,7 +122,7 @@ class CellComponent(JsPackage):
 
     :return:
     """
-    return ColumnComponent("%s.getColumn()" % self.toStr())
+    return ColumnComponent(selector="%s.getColumn()" % self.toStr(), setVar=False)
 
   def getRow(self):
     """
@@ -133,7 +133,7 @@ class CellComponent(JsPackage):
 
     :return:
     """
-    return RowComponent("%s.getRow()" % self.toStr())
+    return RowComponent(selector="%s.getRow()" % self.toStr(), setVar=False)
 
   def getData(self):
     """
@@ -514,6 +514,8 @@ class ColumnComponents(JsPackage):
   @property
   def table(self):
     """
+    Description:
+    ------------
     Return to the parent table
     """
     self._parent._js.append([])
@@ -522,10 +524,30 @@ class ColumnComponents(JsPackage):
   @property
   def fields(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsArray.JsArray.get("(function(){var columns = []; %s.forEach(function(rec){columns.push(rec.getField())}); return columns})()" % self._selector)
+
+  def rename(self, field=None, title=None, columns=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param field: String.
+    :param title:
+    :param columns:
+    """
+    if columns is not None:
+      columns = JsUtils.jsConvertData(columns, None)
+      return JsObjects.JsVoid("var colMaps = %s; %s.forEach(function(rec){if(colMaps[rec.getField()]){rec._column.contentElement.innerText = colMaps[rec.getField()]}})" % (columns, self._selector))
+
+    title = JsUtils.jsConvertData(title, None)
+    field = JsUtils.jsConvertData(field, None)
+    return JsObjects.JsVoid("%s.forEach(function(rec){if(rec.getField() == %s){rec._column.contentElement.innerText = %s}})" % (self._selector, field, title))
 
 
 class RowComponent(JsPackage):

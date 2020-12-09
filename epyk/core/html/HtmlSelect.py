@@ -64,7 +64,7 @@ class Select(Html.Html):
       self.attr["data-width"] = "%spx" % width[0]
     if multiple:
       self.attr['multiple'] = None
-    self.__options = OptSelect.OptionsSelect(self, options)
+    self.__options = OptSelect.OptionsSelectJs(self, options)
     if options.get('button-bg', True):
       self.style.add_classes.select.toggle()
 
@@ -73,7 +73,7 @@ class Select(Html.Html):
     """
     Property to set all the possible object for a button
 
-    :rtype: OptSelect.OptionsSelect
+    :rtype: OptSelect.OptionsSelectJs
     """
     return self.__options
 
@@ -137,18 +137,18 @@ class Select(Html.Html):
   def _js__builder__(self):
     return '''
       var selectObj = %s; selectObj.empty();
-      const attrs = ['icon', 'content'];
-      for (var idx in data) {
-          var item = data[idx];
-          if(typeof data[idx] === 'string'){item = {value: item}};
-          var opt = document.createElement("OPTION");
-          opt.value = item.value;
-          opt.text = (typeof item.name !== 'undefined')? item.name : item.value;
-          for(var a in attrs){
-            var attrVal = item[attrs[a]];
-            if (typeof attrVal !== 'undefined'){opt.setAttribute("data-"+ attrs[a], attrVal) }}
-          selectObj.append(opt)}
-      selectObj.selectpicker(options).selectpicker('refresh');''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+      const attrs = ['icon', 'content']; var selections = [];
+      if(data.length == 1){if(typeof data[0] === 'string'){selections.push(data)}}
+      for (var idx in data){var item = data[idx];
+        if(typeof data[idx] === 'string'){item = {value: item}};
+        var opt = document.createElement("OPTION"); opt.value = item.value;
+        opt.text = (typeof item.name !== 'undefined')? item.name : item.value;
+        if(opt.selected){selections.push(item.value)}
+        for(var a in attrs){var attrVal = item[attrs[a]];
+          if (typeof attrVal !== 'undefined'){opt.setAttribute("data-"+ attrs[a], attrVal)}}
+        selectObj.append(opt)}
+      selectObj.selectpicker(options).selectpicker('refresh');
+      selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, emtpyFncs=None, profile=False, source_event=None, onReady=False):
     """

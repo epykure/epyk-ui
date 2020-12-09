@@ -341,7 +341,7 @@ class Rich(object):
     html_help = html.HtmlTextComp.Status(self.context.rptObj, status, width=width, height=height, htmlCode=htmlCode, profile=profile, options=dflt_options)
     return html_help
 
-  def markdown(self, text="", width=(90, '%'), height=(100, '%'), htmlCode=None, options=None, profile=None):
+  def markdown(self, text="", width=("cacl(100% - 10px)", ''), height=("auto", ''), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -373,6 +373,9 @@ class Rich(object):
     if options is not None:
       dflt_options.update(options)
     md = html.HtmlTextEditor.MarkdownReader(self.context.rptObj, text, width, height, htmlCode, dflt_options, profile)
+    md.style.css.margin_left = 5
+    md.style.css.margin_right = 5
+    md.style.css.padding = 5
     return md
 
   def adv_text(self, section, title, content, background=""):

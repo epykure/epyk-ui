@@ -239,7 +239,7 @@ class OptionsSelect(Options):
     self._report.attr["data-width"] = value
 
 
-class OptionsSelectJs(Options):
+class OptionsSelectJs(OptionsSelect):
 
   @property
   def actionsBox(self):

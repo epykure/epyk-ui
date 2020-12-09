@@ -1752,10 +1752,11 @@ class JsBase(object):
     :param body:
     :param bcc:
     """
-    if not isinstance(mails, list):
-      mails = [mails]
     mail_data = []
     for label, value in [("cc", cc), ('bcc', bcc), ("subject", subject), ("body", body)]:
+      if value is None:
+        continue
+
       if not isinstance(value, list):
         value = [value]
       content, html_content = [], False
@@ -1773,6 +1774,13 @@ class JsBase(object):
           mail_data.append("%s=%s" % (label, ",".join(content)))
       else:
         mail_data.append("%s=%s" % (label, ",".join(content)))
+
+    if hasattr(mails, 'toStr'):
+      return JsObjects.JsVoid("(function(url){return 'mailto:'+ url +'?%s'})(%s)" % ("&".join(mail_data), mails))
+
+    if not isinstance(mails, list):
+      mails = [mails]
+
     return JsUtils.jsConvertData("mailto:%s?%s" % (";".join(mails), "&".join(mail_data)), None)
 
   @property

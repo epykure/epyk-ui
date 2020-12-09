@@ -158,6 +158,10 @@ NOTEBOOK_MAPPING = {
 
 }
 
+
+TABULATOR_EXTENSIONS = '0.0.18'
+
+
 JS_IMPORTS = {
   # numbers formatting
   'accounting': {
@@ -252,7 +256,7 @@ JS_IMPORTS = {
   'tabulator-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-inputs.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -260,7 +264,7 @@ JS_IMPORTS = {
   'tabulator-drop': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-drop.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-drop.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -268,7 +272,7 @@ JS_IMPORTS = {
   'tabulator-mutators-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'mutators-inputs.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'mutators-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -276,14 +280,14 @@ JS_IMPORTS = {
   'editors-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-inputs.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
+      {'script': 'editors-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
     'website': 'http://tabulator.info/'
   },
 
   'editors-dates': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-dates.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'editors-dates.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -292,7 +296,7 @@ JS_IMPORTS = {
     'req': [
       {'alias': 'tabulator'}],
     'modules': [
-      {'script': 'editors-selects.js', 'version': '0.0.17',
+      {'script': 'editors-selects.js', 'version': TABULATOR_EXTENSIONS,
        'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'
        },
     ],
@@ -303,7 +307,7 @@ JS_IMPORTS = {
     'req': [{'alias': 'tabulator'}],
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'formatters-icons.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-icons.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -316,8 +320,8 @@ JS_IMPORTS = {
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
-        {'script': 'formatters-titles.js', 'version': '0.0.17', 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-numbers.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-titles.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },
@@ -856,7 +860,7 @@ JS_IMPORTS = {
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.9', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.14', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ]},
 
   'ajax-bootstrap-select': {

@@ -181,7 +181,7 @@ class Table(Html.Html):
     if data:
       return self.js.setData(data)
 
-    return 'var %s =  new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
+    return 'var %s = new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
 
   def extendModule(self, category, type, fncName, fncDef):
     """
@@ -2027,7 +2027,7 @@ http://tabulator.info/docs/4.2/options
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["cellClick"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["cellClick"] = JsObjects.JsVoid("function(event, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
   def clipboardPasted(self, jsFncs):
     """
