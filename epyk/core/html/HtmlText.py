@@ -729,6 +729,35 @@ class Title(Html.Html):
       if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    Add a click event for a component
+
+    The event will be automatically added to the onload section to be activated once the component
+    has been build
+
+    Example
+    select.label.click(str(rptObj.js.console.log("test")))
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+    https://www.w3schools.com/jsref/event_onload.asp
+
+    Attributes:
+    ----------
+    :param jsFncs: String or List. The Javascript functions
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+
+    :return: The htmlObj
+    """
+    self.css({"cursor": "pointer"})
+    return super(Title, self).click(jsFncs, profile, source_event, onReady)
+
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
     val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val

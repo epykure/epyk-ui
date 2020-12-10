@@ -37,6 +37,7 @@ class Input(Html.Html):
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
+    self.style.css.padding = 0
     self.__options, self.__focus = OptInputs.OptionsInput(self, options), False
     if width[0] is None:
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
@@ -264,7 +265,6 @@ class AutoComplete(Input):
     return self._js
 
   def __str__(self):
-    print(self.options.select)
     if not self.__focus and (self.options.reset or self.options.select):
       self.focus()
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -467,6 +467,8 @@ class InputDate(Input):
 
   def included_dates(self, dts=None, jsFncs=None):
     """
+    Description:
+    ------------
 
     Attributes:
     ----------
@@ -478,22 +480,30 @@ class InputDate(Input):
         %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
       }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(jsFncs, toStr=True)}
 
+  def format_dates(self, class_name, dts=None, css=None, tooltip=""):
+    """
+    Description:
+    ------------
+    Change the CSS style for some selected dates in the datepicker.
+    This function can be also used on the Javascript side from the js property.
+
+    Attributes:
+    ----------
+    :param class_name: String. The name of the CSS added to the page with the CSS attributes.
+    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param css: Dictionary. The CSS Attributes for the CSS class.
+    :param tooltip: String. The tooltip when the mouse is hover
+    """
+    dts = dts or []
+    if css is not None:
+      self._report.body.style.custom_class(css, classname="%s a" % class_name)
+    self._jsStyles['beforeShowDay'] = '''function (date) {
+        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+        if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
+      }''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name}
+
   @property
   def _js__builder__(self):
-    '''
-    if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
-        var selectedDt = {};
-        data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
-        if (data.options.excludeDts === true){
-          function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}};
-          data.options.beforeShowDay = renderCalendarCallbackExc;
-        } else{
-          function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
-          data.options.beforeShowDay = renderCalendarCallback;};
-        delete data.options.selectedDts};
-      jQuery(htmlObj).datepicker(data.options).datepicker('setDate', data.value)
-    :return:
-    '''
     return '''
       if(data == null){data = eval(options.date_if_null)}
       %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}

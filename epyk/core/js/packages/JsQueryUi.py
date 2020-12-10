@@ -69,6 +69,8 @@ class JQueryUI(JsPackage):
 
   def draggable(self, options=None):
     """
+    Description:
+    ------------
     Enable draggable functionality on any DOM element.
     Move the draggable object by clicking on it with the mouse and dragging it anywhere within the viewport.
 
@@ -78,6 +80,8 @@ class JQueryUI(JsPackage):
 
       https://jqueryui.com/draggable/
 
+    Attributes:
+    ----------
     :param options:
     """
     if options is not None:
@@ -1103,6 +1107,28 @@ class Datepicker(JQueryUI):
 
     jsValue = JsUtils.jsConvertData(jsValue, None)
     return JsObjects.JsObjects.get('%s.datepicker("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+  def format_dates(self, class_name, dts=None, css=None, tooltip=""):
+    """
+    Description:
+    ------------
+    Change the CSS style for some selected dates in the datepicker.
+    This function can be also used on the Javascript side from the js property.
+
+    Attributes:
+    ----------
+    :param class_name: String. The name of the CSS added to the page with the CSS attributes.
+    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param css: Dictionary. The CSS Attributes for the CSS class.
+    :param tooltip: String. The tooltip when the mouse is hover
+    """
+    dts = dts or []
+    if css is not None:
+      self._src._report.body.style.custom_class(css, classname="%s a" % class_name)
+    return JsObjects.JsObjects.get('''%(varId)s.datepicker("option", "beforeShowDay", function (date) {
+        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+        if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
+      })''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name, "varId": self._src.dom.jquery.varId})
 
   def refresh(self):
     """
