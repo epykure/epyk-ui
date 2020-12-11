@@ -218,6 +218,19 @@ class OptionsItems(Options):
     self._config(True, 'markdown')
     self._config(values)
 
+  @property
+  def style_select(self):
+    """
+    Description:
+    ------------
+    Internal CSS class name to be used when the component is selected.
+"""
+    return self._config_get(None)
+
+  @style_select.setter
+  def style_select(self, value):
+    self._config(value)
+    
 
 class OptionsTagItems(Options):
   component_properties = ('delete', 'max_height')

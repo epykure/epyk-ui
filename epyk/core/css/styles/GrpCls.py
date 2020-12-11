@@ -420,26 +420,38 @@ class ClassHtml(Properties.CssMixin):
       self.__css_virtual[key_selector] = {}
     self.__css_virtual[key_selector].update(attrs)
 
-  def add_custom_class(self, classname, css_attrs):
+  def add_custom_class(self, css_attrs, classname=None, selector=None, is_class=True):
     """
     Description:
     -----------
-    This will create dynamic CSS class which will then be added to the component
+    This will create dynamic CSS class which will not be added to any component.
+    The class definition can then be reused in mutiple components.
+
+    The CSS style of the body can only be done using predefined classes or inline CSS
 
     Usage::
 
-      text = rptObj.ui.text("toto")
-    text.style.add_custom_class("css_class", {"_attrs": {"color": 'red'}})
+      rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
     Attributes:
     ----------
-    :param classname: String. The classname
     :param css_attrs: Nested dictionary with the different attributes
+    :param classname: Optional. String. The classname in the CSS definition
+    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition)
+    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a .
     """
-    cls_def = {"classname": classname}
+    if classname is None:
+      cls_def = {"classname": False, '_selector': selector}
+    else:
+      cls_def = {"classname": classname}
+    if not '_attrs' in css_attrs and not '_hover' in css_attrs:
+      css_attrs = {"_attrs": css_attrs}
+    css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    self.classList['main'].add(v_cls(self.htmlObj._report))
+    cls_obj = v_cls(self.htmlObj._report)
+    self.classList['other'].add(cls_obj)
+    print(self.classList['other'])
     return cls_def
 
   def no_class(self):

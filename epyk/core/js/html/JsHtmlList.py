@@ -13,6 +13,9 @@ from epyk.core.js.primitives import JsObjects
 
 class JsItemsDef(object):
 
+  def __init__(self, component):
+    self._src = component
+
   def _item(self, item_def):
     return '''%(item_def)s; htmlObj.appendChild(item)
       ''' % {'item_def': item_def}
@@ -29,14 +32,22 @@ class JsItemsDef(object):
     """
     item_def = '''
     var item = document.createElement("DIV");  
-    item.setAttribute('name', 'value'); item.setAttribute('data-valid', true);
     if(options.click != null){ 
       item.style.cursor = 'pointer';
-      item.onclick = function(event){ var value = this.innerHTML; options.click(event, value) }  };
+      item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
+      item.onclick = function(event){
+         var dataValue = item.getAttribute('data-valid');
+         if(dataValue == 'true'){
+           item.classList.remove('list_text_selected');
+           item.setAttribute('data-valid', false)}
+         else{item.classList.add('list_text_selected'); item.setAttribute('data-valid', true) }
+         var value = this.innerHTML; options.click(event, value)}
+    } else {
+      item.setAttribute('name', 'value'); item.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
       item.setAttribute('draggable', true);
       item.style.cursor = 'grab';
-      item.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
+      item.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
     };
     if(typeof data === 'object'){ item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
