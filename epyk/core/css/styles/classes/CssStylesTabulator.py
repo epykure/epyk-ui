@@ -46,7 +46,7 @@ class CssTabulatorCol(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'border': '1px solid %s' % self.rptObj.theme.greys[2],
-              'background': self.rptObj.theme.greys[2], 'padding': '4px 0', "text-align": 'center'}, important=True)
+              'background': self.rptObj.theme.greys[2], 'padding': '1px 0', "text-align": 'center'}, important=True)
 
 
 class CssTabulatorColContent(CssStyle.Style):
@@ -98,11 +98,11 @@ class CssTabulatorEvenRowNoStrip(CssStyle.Style):
   _selectors = {'child': '.tabulator-row-even'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], #'border': "1px solid %s" % self.rptObj.theme.greys[0],
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.greys[0],
               'background-color': self.rptObj.theme.greys[0]
               },
              important=True)
-    self.hover.css({'color': self.rptObj.theme.greys[-1],#'border': "1px solid %s" % self.rptObj.theme.success[1],
+    self.hover.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.success[1],
                     'background-color': self.rptObj.theme.colors[3]})
 
 
@@ -110,7 +110,7 @@ class CssTabulatorOddRow(CssStyle.Style):
   classname = 'tabulator-row-odd'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], #'border': "1px solid %s" % self.rptObj.theme.greys[0],
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.greys[0],
               'background-color': self.rptObj.theme.greys[0]})
 
 
@@ -118,8 +118,7 @@ class CssTabulatorRow(CssStyle.Style):
   classname = 'tabulator-row'
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[0]})
-    self.hover.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.success[1],
+    self.hover.css({'color': self.rptObj.theme.greys[-1], "padding": 0, "margin": 0,
                     'background-color': self.rptObj.theme.colors[3]}, important=True)
 
 
@@ -127,7 +126,7 @@ class CssTabulatorCell(CssStyle.Style):
   classname = 'tabulator-cell'
 
   def customize(self):
-    self.css({'border-right': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
+    self.css({"margin": 0, "padding": "0 4px", 'border-right': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
 
 
 class CssTabulatorTreeControl(CssStyle.Style):
