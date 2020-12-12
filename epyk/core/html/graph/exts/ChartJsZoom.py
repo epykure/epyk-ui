@@ -197,6 +197,25 @@ class ZoomZoom(ZoomAttrs):
 
 class Zoom(DataClass):
 
+  def set_default(self, mode="xy"):
+    """
+    Description:
+    ------------
+    Set zoom default attributes.
+
+    Related Pages:
+
+      https://github.com/chartjs/chartjs-plugin-zoom
+
+    Attributes:
+    ----------
+    :param mode: String. Optional. Zooming directions.
+    """
+    self.pan.mode = mode
+    self.pan.enabled = True
+    self.zoom.enabled = True
+    self.zoom.mode = mode
+
   @property
   def pan(self):
     return self.sub_data("pan", ZoomPan)

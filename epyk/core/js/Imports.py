@@ -829,7 +829,7 @@ JS_IMPORTS = {
   # ChartJs Zoom plugin modules width CDN links
   'chartjs-plugin-zoom': {
     'website': 'https://www.chartjs.org/',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'Chart.js'}, {"alias": 'hammer'}],
     'modules': [
       {'script': 'chartjs-plugin-zoom.min.js', 'version': '0.7.7', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -840,6 +840,14 @@ JS_IMPORTS = {
       'modules': [
         {'script': 'Chart.Geo.min.js', 'version': '2.1.0', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
       ]},
+
+  # For ChartJs Zoom to get the gesture details.
+  'hammer': {
+      'website': 'http://hammerjs.github.io/',
+      'modules': [
+        {'script': 'hammer.min.js', 'version': '2.0.8', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
+      ],
+  },
 
   # Cannot add properly the dependency in this one as my algorithm does not work for shared dependencies ....
   # 'meter': {'req': ['d3'], 'modules': ['d3.meter.js'], 'website': '', 'version': '', "status": 'deprecated'},
