@@ -241,7 +241,7 @@ class Lists(object):
     list.style.css.padding = 5
     return list
 
-  def items(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
+  def items(self, records=None, width=(100, "%"), height=("auto", ""), column=None, options=None, htmlCode=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -264,7 +264,7 @@ class Lists(object):
     :param helper: String. Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="%")
+    height = Arguments.size(height, unit="px")
     if column is not None:
       values = set()
       for rec in records:

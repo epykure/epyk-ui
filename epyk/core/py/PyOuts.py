@@ -532,6 +532,7 @@ class PyOuts(object):
     results['jsFrgs_in_req'] = require_js['jsFrgs']
     htmlParts = []
     cssParts = dict(self._report.body.style.get_classes_css())
+    results["cssStyle"] += "\n".join(list(cssParts.values()))
     order_components = list(self._report.components.keys())
     for component_id in order_components:
       component = self._report.components[component_id]
