@@ -2,6 +2,57 @@
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
 from epyk.core.css.styles.classes import CssStylesList
+from epyk.core.css.styles.attributes import Attrs
+
+
+class AttrSelect(Attrs):
+
+  def __init__(self, htmlObj):
+    super(AttrSelect, self).__init__(htmlObj)
+    self.font_size = 'inherit'
+    self.font_family = 'inherit'
+    self.box_sizing = 'border-box'
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    The width property sets the width of an element.
+
+    The width of an element does not include padding, borders, or margins!
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_dim_width.asp
+    """
+    return self.htmlObj.attr.get("data-width")
+
+  @width.setter
+  def width(self, val):
+    val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
+    self.orign_htmlObj.attr["data-width"] = val
+    self.htmlObj.css({"width": val})
+
+  @property
+  def background(self):
+    return self.htmlObj.attr.get("data-background")
+
+  @background.setter
+  def background(self, val):
+    self.orign_htmlObj.attr["data-background"] = val
+    self.htmlObj.css({"background": val})
+
+  @property
+  def color(self):
+    return self.htmlObj.attr.get("data-color")
+
+  @color.setter
+  def color(self, val):
+    self.orign_htmlObj.attr["data-color"] = val
+    self.htmlObj.css({"color": val})
 
 
 class ClassSelect(GrpCls.ClassHtml):
@@ -18,6 +69,19 @@ class ClassSelect(GrpCls.ClassHtml):
     self.classList['main'].add(self.cls_item_option)
     self.classList['main'].add(self.cls_item_options)
     self.classList['other'].add(self.cls_item_selected)
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    Property to the underlying CSS definition to be added to the style HTML tag of a component
+
+    :rtype: AttrSelect
+    """
+    if self._css_struct is None:
+      self._css_struct = AttrSelect(self.htmlObj)
+    return self._css_struct
 
   @property
   def cls_item_selected(self):
@@ -175,7 +239,33 @@ class ClassDropDown(GrpCls.ClassHtml):
     return self._css_caret
 
 
+class DefinedStyleItems:
+
+  def __init__(self, report):
+    self._report = report
+
+  def selected_text_background_color(self, background=None, color=None):
+    """
+    Description:
+    ------------
+
+    :param background:
+    :param color:
+    """
+    return {"background": "%s !IMPORTANT" % (background or self._report.theme.colors[0]),
+            "color": "%s !IMPORTANT" % (color or self._report.theme.greys[-1])}
+
+
 class ClassItems(GrpCls.ClassHtml):
+
+  @property
+  def defined(self):
+    """
+    Description:
+    ------------
+    Shortcut property to pre defined CSS configurations for list of items
+    """
+    return DefinedStyleItems(self.htmlObj._report)
 
   def hover_border(self):
     """

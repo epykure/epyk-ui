@@ -48,7 +48,9 @@ class JsItemsDef(object):
       item.setAttribute('draggable', true);
       item.style.cursor = 'grab';
       item.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
-    };
+    }
+    if(typeof options.style !== 'undefined'){
+      Object.keys(options.style).forEach(function(key){item.style[key] = options.style[key] })}
     if(typeof data === 'object'){ item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 

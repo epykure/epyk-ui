@@ -448,11 +448,14 @@ class Items(Html.Html):
     """
     Description:
     ------------
+    Add a bespoke item type with it is specific style and components.
+
+    TODO: Create a tutorial to explain how to extend list types.
 
     Attributes:
     ----------
-    :param type: String.
-    :param item_def: String.
+    :param type: String. The reference of this type in the framework.
+    :param item_def: String. The definition of the items (examples in JsHtmlList.py)
     :param dependencies: List. Optional. The external module dependencies
     """
     if dependencies is not None:
@@ -466,15 +469,40 @@ class Items(Html.Html):
     self._jsStyles['items_type'] = type
     item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, JsHtmlList.JsItemsDef().custom(item_def))
+    constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def))
     return self
+
+  def select_type(self, type=None, style=None, selected_style=None):
+    """
+    Description:
+    ------------
+    Set the CSS Style of the items in the list.
+    It is possible to use predefined style or to pass bespoke ones.
+
+    Style will be set at list type level so all the list in the page will be using it.
+
+    Attributes:
+    ----------
+    :param type: String. Optional. The list category to be used.
+    :param style: Dictionary. Optional. The CSS style to be applied to the item.
+    :param selected_style: Dictionary. Optional. The css style to be applied when selected.
+    """
+    li_attrs = self.options.style
+    if style is None:
+      li_attrs["padding"] = "2px 5px"
+    else:
+      li_attrs.update(style)
+    self.options.style = li_attrs
+    self.style.add_custom_class(selected_style or self.style.defined.selected_text_background_color(),
+      classname="list_%s_selected" % (type or self._jsStyles['items_type']))
 
   def __str__(self):
     item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    self.options.style_select = "list_%s_selected" % self._jsStyles['items_type']
     if not item_type_name in constructors:
       # add all the shape definitions
-      shapes = JsHtmlList.JsItemsDef()
+      shapes = JsHtmlList.JsItemsDef(self)
       constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, getattr(shapes, self._jsStyles['items_type'])(self._report))
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
