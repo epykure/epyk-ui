@@ -1052,6 +1052,7 @@ class Options(DataClass):
 
 
 class OptionPieAnimation(DataClass):
+
   @property
   def animateRotate(self):
     """

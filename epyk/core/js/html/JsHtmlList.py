@@ -458,9 +458,10 @@ class JsItem(JsHtml.JsHtmlRich):
         }})''' % self.varName)
 
     return JsObjects.JsVoid('''
-      %s.childNodes.forEach( function(dom, k){  
+      %s.childNodes.forEach( function(dom, k){ 
+        dom.querySelector('[name=value]').classList.add('list_%s_selected'); 
         dom.querySelector('[name=value]').setAttribute("data-valid", true);
-      })''' % self.varName)
+      })''' % (self.varName, self._src._jsStyles['items_type']))
 
   def unSelectAll(self, with_input_box=False):
     """
@@ -477,7 +478,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
     if self._src._jsStyles['items_type'] == "check" or with_input_box:
       return JsObjects.JsVoid('''
-        %s.childNodes.forEach( function(dom, k){  
+        %s.childNodes.forEach(function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
           if (item != null){ 
             dom.querySelector('[name=input_box]').checked = false;
@@ -486,8 +487,9 @@ class JsItem(JsHtml.JsHtmlRich):
 
     return JsObjects.JsVoid('''
       %s.childNodes.forEach( function(dom, k){  
+        dom.querySelector('[name=value]').classList.remove('list_%s_selected');
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
-      })''' % self.varName)
+      })''' % (self.varName, self._src._jsStyles['items_type']))
 
   def add(self, value, css_attrs=None, css_cls=None, before=False):
     """
