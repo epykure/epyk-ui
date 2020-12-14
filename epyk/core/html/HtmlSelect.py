@@ -160,9 +160,9 @@ class Select(Html.Html):
     ----------
     :param jsFncs: List. Set of Javascript function to trigger on this event
     :param emtpyFncs: ist. Set of Js function to trigger if the value is empty
-    :param profile: Boolean. To set the profiling
+    :param profile: Boolean. To set the profiling.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
