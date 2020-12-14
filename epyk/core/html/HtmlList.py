@@ -379,11 +379,9 @@ class Items(Html.Html):
           close.style.top = "10px"; close.style.right = "0"; close.style.cursor = 'pointer';
           close.onclick = function(event){this.parentNode.remove()};
           li.style.position = "relative";
-          for (const [key, value] of Object.entries(options.delete_position)) {
+          for (const [key, value] of Object.entries(options.delete_position)){
             close.style[key] = value}
-          li.lastChild.style.display = 'inline-block';
-          li.appendChild(close);
-        }
+          li.lastChild.style.display = 'inline-block'; li.appendChild(close)}
         if(((options.items_type != 'link') && (options.items_type != 'badge')) && (options.items_type != 'text')){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
         htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 

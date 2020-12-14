@@ -71,6 +71,8 @@ class Select(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
     Property to set all the possible object for a button
 
     :rtype: OptSelect.OptionsSelectJs
@@ -82,6 +84,8 @@ class Select(Html.Html):
     """
     Description:
     -----------
+    A property to the CSS style of the DOM component.
+    Each component will have default CSS style but they can be overridden.
 
     :rtype: GrpClsList.ClassSelect
     """
@@ -94,8 +98,6 @@ class Select(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -114,8 +116,6 @@ class Select(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -154,7 +154,7 @@ class Select(Html.Html):
     """
     Description:
     -----------
-    Javascript event triggered when the value has changed
+    Javascript event triggered when the value has changed.
 
     Attributes:
     ----------
@@ -176,6 +176,7 @@ class Select(Html.Html):
     """
     Description:
     -----------
+    Create a AJAX request.
 
     Related Pages:
 
@@ -183,11 +184,11 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param url:
-    :param jsData:
-    :param is_json:
-    :param method:
-    :param options:
+    :param url: String. The request URL for the ajax call.
+    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param is_json: Boolean. Optional. A flag to specific if the data are json (default True).
+    :param method: String. Optional. The HTTP request method. Default Post
+    :param options: Dictionary. Optional. The specific properties for the ajax request.
     """
     self.options.liveSearch = True
     options = options or {}

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -8,7 +10,7 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
 
 
-class JsSelectItem():
+class JsSelectItem:
 
   def __init__(self, selector):
     self._selector = selector
@@ -17,9 +19,15 @@ class JsSelectItem():
     """
     Description:
     ------------
+    Set CSS properties to the option item.
 
     Related Pages:
-:param attrs:
+
+      https://www.w3schools.com/tags/tag_option.asp
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. The CSS attributes.
     """
     return JsObjects.JsObjects.get("%s.css(%s)" % (self._selector, attrs))
 
@@ -27,11 +35,12 @@ class JsSelectItem():
     """
     Description:
     ------------
+    Set a specific property / option to the selection Picker object.
 
     Attributes:
     ----------
-    :param name:
-    :param jsData:
+    :param name: String. optional. The option name of the new DOM component. Default the value.
+    :param jsData: String or Js Object. The value of the item to be removed from the list.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._selector, name, jsData))
@@ -52,6 +61,7 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    You can set the selected value by calling the val method on the element.
 
     Related Pages:
 
@@ -59,7 +69,7 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param jsData:
+    :param jsData: String or Js Object. The value of the item to be removed from the list.
     """
     if jsData is None:
       return JsObjects.JsObjects.get("%s.val()" % self._src.dom.jquery.varId)
@@ -71,11 +81,12 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    Set a specific property / option to the selection Picker object.
 
     Attributes:
     ----------
-    :param name:
-    :param jsData:
+    :param name: String. optional. The option name of the new DOM component. Default the value.
+    :param jsData: String or Js Object. The value of the item to be removed from the list.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._src.dom.jquery.varId, name, jsData))
@@ -84,6 +95,8 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    Empty the selection component.
+    Using this method will force the refresh of the component to update it on the page.
 
     Related Pages:
 
@@ -98,11 +111,16 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    Remove an item from the list based on its value (and not necessarly its visible name).
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
     ----------
-    :param jsData:
-    :param refresh:
+    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param refresh: Boolean. Optional. Refresh the list after the item removal. (default true).
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     if refresh:
@@ -110,15 +128,57 @@ class JSelect(JsPackage):
 
     return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove()' % (self._src.dom.jquery.varId, jsData))
 
-  def item(self, value):
+  def mobile(self):
     """
+    Description:
+    ------------
+    Enable mobile scrolling by calling $('.selectpicker').selectpicker('mobile').
+    This enables the device's native menu for select menus.
 
     Related Pages:
-:param value:
 
-    :return:
+      https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsSelectItem('%s.find("option[value=Chicago]")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('mobile')" % (self._src.dom.jquery.varId))
+
+  def add(self, value, name=None, refresh=True, selected=False):
+    """
+    Description:
+    ------------
+    Add an item to the list.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/
+
+    Attributes:
+    ----------
+    :param value: String. The option value of the new DOM component.
+    :param name: String. optional. The option name of the new DOM component. Default the value.
+    :param refresh: Boolean. Optional. Refresh the list after the item removal. (default true).
+    :param selected: Boolean. Optional. Specify if the option needs to be selected.
+    """
+    name = name or value
+    name = JsUtils.jsConvertData(name, None)
+    value = JsUtils.jsConvertData(value, None)
+    selected_tab = "selected" if selected else ""
+    if refresh:
+      return JsObjects.JsObjects.get("%s.append('<option value=' + %s + ' %s>'+ %s +'</option>'); %s" % (self._src.dom.jquery.varId, value, selected_tab, name, self.refresh()))
+
+    return JsObjects.JsObjects.get("%s.append('<option value=' + %s + ' %s>'+ %s +'</option>')" % (self._src.dom.jquery.varId, value, selected_tab, name))
+
+  def item(self, value):
+    """
+    Description:
+    ------------
+    Search an item from the select box.
+
+    Attributes:
+    ----------
+    :param value: String. The value of the options.
+    """
+    value = JsUtils.jsConvertData(value, None)
+    return JsSelectItem("%s.find('option[value='+ %s +']')" % (self._src.dom.jquery.varId, value))
 
   def deselectAll(self):
     """
@@ -149,7 +209,7 @@ class JSelect(JsPackage):
     Description:
     ------------
     You can force a re-render of the bootstrap-select ui with the render method.
-    This is useful if you programatically change any underlying values that affect the layout of the element.
+    This is useful if you programmatically change any underlying values that affect the layout of the element.
 
     Related Pages:
 
@@ -161,6 +221,7 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    Force the refresh of the select Picker object.
 
     Related Pages:
 
@@ -168,7 +229,7 @@ class JSelect(JsPackage):
     """
     return JsObjects.JsObjects.get("%s.selectpicker('refresh')" % self._src.dom.jquery.varId)
 
-  def toogle(self):
+  def toggle(self):
     """
     Description:
     ------------
@@ -216,8 +277,8 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param class_name:
-    :param event:
+    :param class_name: String.
+    :param event: List. Set of Javascript function to trigger on this event
     """
     if event is None:
       return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s')" % (self._src.dom.jquery.varId, class_name))
@@ -228,6 +289,7 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
+    Disable the selection component.
 
     Related Pages:
 
@@ -235,7 +297,7 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param flag:
+    :param flag: Boolean. A flag to specify the statuc of the component.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsObjects.get("%s.prop('disabled', %s)" % (self._src.dom.jquery.varId, flag))

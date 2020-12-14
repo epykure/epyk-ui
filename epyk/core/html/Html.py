@@ -1063,10 +1063,10 @@ Attributes:
     Attributes:
     ----------
     :param event: A string with the Javascript event type from the dom_obj_event.asp
-    :param jsFncs: A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
-    :param source_event: A String.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param jsFncs: A Javascript Python function.
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: self to allow the chains
     """
@@ -1097,9 +1097,9 @@ Attributes:
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List of Js Functions. A Javascript Python function
     :param preventDefault: Boolean.
-    :param profile:
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
 
     :return: Return self to allow the chaining
     """
@@ -1119,9 +1119,46 @@ Attributes:
     return self.on("mouseover", jsFncs, profile, source_event)
 
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    -----------
+    The onclick event occurs when the user clicks on an element.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_onclick.asp
+
+    Attributes:
+    ----------
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
     if onReady:
       self._report.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", jsFncs, profile, source_event)
+
+  def dblclick(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    -----------
+    The ondblclick event occurs when the user double-clicks on an element.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_ondblclick.asp
+
+    Attributes:
+    ----------
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger("dblclick")])
+    return self.on("dblclick", jsFncs, profile, source_event)
 
   def scroll(self, jsFncs, profile=False, source_event=None):
     return self.on("scroll", jsFncs, profile, source_event)
@@ -1379,7 +1416,8 @@ class Body(Html):
     """
     Description:
     -----------
-
+    A property to the CSS style of the DOM component.
+    Each component will have default CSS style but they can be overridden.
 
     :rtype: GrpCls.ClassPage
     """

@@ -22,7 +22,7 @@ class Fields(object):
   def __init__(self, context):
     self.context = context
 
-  def text(self, text="", color=None, align='left', width=(None, "px"), height=(None, "px"),
+  def text(self, text="", label=None, color=None, align='left', width=(None, "px"), height=(None, "px"),
            htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Description:
@@ -52,6 +52,7 @@ class Fields(object):
     Attributes:
     ----------
     :param text: The string value to be displayed in the component
+    :param label: Optional. The text of label to be added to the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -70,7 +71,18 @@ class Fields(object):
     if options is not None:
       dfl_options.update(options)
     text = self.context.rptObj.py.encode_html(text)
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
+    if label is not None:
+      text_comp = self.context.rptObj.ui.div()
+      text_comp.label = self.context.rptObj.ui.texts.label(label, options=options,
+                  htmlCode="%s_label" % htmlCode if htmlCode is not None else htmlCode)
+      text_comp.label.style.css.display = "inline-block"
+      text_comp.label.css({'height': 'auto', 'margin-top': '1px',  'margin-bottom': '1px'})
+      text_comp.input = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
+      text_comp.input.style.css.display = "inline-block"
+      text_comp.extend([text_comp.label, text_comp.input])
+    else:
+      text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
+                                     dfl_options, helper, profile)
 
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
@@ -767,6 +779,8 @@ class Fields(object):
     if multiple:
       html_input.input.attr['multiple'] = None
     html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
+    if width[0] == "auto":
+      html_input.style.css.display = "inline-block"
     if selected is not None:
       html_input.input.options.selected = selected
     return html_input

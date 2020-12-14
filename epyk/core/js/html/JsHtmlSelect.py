@@ -68,7 +68,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-
+    Get the select Picker selected values.
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, text: %s, options_text: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -80,7 +80,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component
-
     """
     return JsHtml.ContentFormatters(self._report, "%s.val()" % self.jquery.varId)
 
