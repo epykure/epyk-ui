@@ -605,6 +605,23 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsVoid("while(%(comp)s.firstChild){%(comp)s.removeChild(%(comp)s.firstChild)}" % {'comp': self.varName})
 
+  def select_item(self, value):
+    """
+    Description:
+    ------------
+    Force the selection of an item in the list.
+
+    Attributes:
+    ----------
+    :param value: String or Js Data. The valeu of the item to be selected.
+    """
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsVoid('''
+      %(varName)s.childNodes.forEach( function(dom, k){ 
+        var value = dom.querySelector('[name=value]').innerHTML;
+        if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
+      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self._src._jsStyles['items_type']})
+
 
 class Tags(JsHtml.JsHtmlRich):
 

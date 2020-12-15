@@ -138,7 +138,8 @@ class Select(Html.Html):
     return '''
       var selectObj = %s; selectObj.empty();
       const attrs = ['icon', 'content']; var selections = [];
-      if(data.length == 1){if(typeof data[0] === 'string'){selections.push(data)}}
+      if(typeof options.auto_select !== 'undefined'){
+         if(typeof data[options.auto_select] === 'string'){selections.push(data[options.auto_select])}}
       for (var idx in data){var item = data[idx];
         if(typeof data[idx] === 'string'){item = {value: item}};
         var opt = document.createElement("OPTION"); opt.value = item.value;

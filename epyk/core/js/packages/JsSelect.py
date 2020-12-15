@@ -151,6 +151,8 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
+    TODO: Manage correctly the spaces in the value.
+
     Attributes:
     ----------
     :param value: String. The option value of the new DOM component.
@@ -161,11 +163,11 @@ class JSelect(JsPackage):
     name = name or value
     name = JsUtils.jsConvertData(name, None)
     value = JsUtils.jsConvertData(value, None)
-    selected_tab = "selected" if selected else ""
+    selection = self.val(value) if selected else ""
     if refresh:
-      return JsObjects.JsObjects.get("%s.append('<option value=' + %s + ' %s>'+ %s +'</option>'); %s" % (self._src.dom.jquery.varId, value, selected_tab, name, self.refresh()))
+      return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s; %s" % (self._src.dom.jquery.varId, value, name, self.refresh(), selection))
 
-    return JsObjects.JsObjects.get("%s.append('<option value=' + %s + ' %s>'+ %s +'</option>')" % (self._src.dom.jquery.varId, value, selected_tab, name))
+    return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s" % (self._src.dom.jquery.varId, value, name, selection))
 
   def item(self, value):
     """

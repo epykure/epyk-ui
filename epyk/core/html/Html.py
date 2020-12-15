@@ -1242,7 +1242,7 @@ Attributes:
 
   @property
   def _js__builder__(self):
-    raise Exception("Constructor must be defined in %s" % self.__class__.__name__)
+    raise Exception("Builder must be defined in %s" % self.__class__.__name__)
 
   def build(self, data=None, options=None, profile=False):
     """

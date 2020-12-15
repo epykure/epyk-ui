@@ -240,6 +240,7 @@ class OptionsSelect(Options):
 
 
 class OptionsSelectJs(OptionsSelect):
+  component_properties = ("auto_select",)
 
   @property
   def actionsBox(self):
@@ -257,6 +258,20 @@ class OptionsSelectJs(OptionsSelect):
   @actionsBox.setter
   def actionsBox(self, bool):
     self._config(bool)
+
+  @property
+  def auto_select(self):
+    """
+    Description:
+    ------------
+    Auto select the item at the defined index in the list.
+    Default will select the first item in the list.
+    """
+    return self._config_get(0)
+
+  @auto_select.setter
+  def auto_select(self, index):
+    self._config(index)
 
   @property
   def container(self):
