@@ -341,7 +341,12 @@ class Panels(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    chip = self.context.rptObj.ui.chips(items, category, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
+    dflt_options = {"item_css": {'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px',
+                                 "margin-left": "5px", "width": 'auto', 'display': 'inline-block',
+                                 'background': 'inherit', 'white-space': 'nowrap'}}
+    if options:
+      dflt_options.update(options)
+    chip = self.context.rptObj.ui.chips(items, category, width=width, height=height, htmlCode=htmlCode, helper=helper, options=dflt_options, profile=profile)
     chip.input.style.css.display = False
     return chip
 
