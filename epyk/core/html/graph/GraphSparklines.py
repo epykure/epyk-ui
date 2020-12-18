@@ -28,6 +28,8 @@ class Sparklines(Html.Html):
     """
     Description:
     ------------
+    Property to the sparkline style properties.
+    This will group all the default CSS classes which are defined by default to a sparkline component.
 
     :rtype: GrpChart.ClassBSpartlines
     """
@@ -49,6 +51,8 @@ class Sparklines(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -62,7 +66,7 @@ class Sparklines(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSparkline(self, report=self._report)
     return self._dom
 
-  def click(self, jsFnc, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -76,13 +80,15 @@ class Sparklines(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
 
-  def hover(self, jsFnc, profile=False, source_event=None):
+  def hover(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -95,10 +101,11 @@ class Sparklines(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
     """
-    self.onReady("%s.bind('sparklineRegionChange', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.bind('sparklineRegionChange', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
 
   @property

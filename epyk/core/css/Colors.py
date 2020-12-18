@@ -170,7 +170,9 @@ def getHexToRgb(hexColor):
       ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
 
-  https://www.w3schools.com/cssref/css_colors_legal.asp
+  Related Pages:
+
+      https://www.w3schools.com/cssref/css_colors_legal.asp
 
   Attributes:
   ----------
@@ -189,19 +191,24 @@ def getHexToRgb(hexColor):
 
 def rgba(red, green, blue, alpha):
   """
+  Description:
+  -----------
   RGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity of the object.
 
   An RGBA color is specified with the rgba() function, which has the following syntax:
   rgba(red, green, blue, alpha)
   The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
 
-  https://www.w3schools.com/cssref/css_colors_legal.asp
+  Related Pages:
 
+      https://www.w3schools.com/cssref/css_colors_legal.asp
+
+  Attributes:
+  ----------
   :param red:
   :param green:
   :param blue:
   :param alpha:
-  :return:
   """
   return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
@@ -210,7 +217,7 @@ def getRgbToHex(rgbColor):
   """
   Description:
   ------------
-  Convert a RGB color to a hexadecimal code
+  Convert a RGB color to a hexadecimal code.
 
   Usage::
 
@@ -237,7 +244,7 @@ def randColor(seedNo=None):
   """
   Description:
   ------------
-  Generate a random hexadecimal color code
+  Generate a random hexadecimal color code.
 
   Usage::
 
@@ -265,7 +272,7 @@ def gradient(start, end, factor):
   """
   Description:
   ------------
-  Deduce the color from a factor in a range of colors
+  Deduce the color from a factor in a range of colors.
 
   Usage::
 

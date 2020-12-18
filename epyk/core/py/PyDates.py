@@ -1,11 +1,14 @@
 """
+Description:
+------------
 Common module for managing dates.
 
 This module is a light wrapper on top of datetime in order to perform basic operations on dates.
 This will also standardise the date format to YYYY-MM-DD in the Python layer to simplify the
 conversion to the Javascript
 
-All the tests in this module are using doctest
+All the tests in this module are using doctest.
+
 Related Pages:
 
 		https://docs.python.org/2/library/doctest.html
@@ -67,10 +70,12 @@ class PyDates(object):
     """
     Description:
     ------------
+    Return a predefined format for date in a file path.
+    Using this method will ensure a consistency in the naming convention of the various files in the project.
 
     Attributes:
     ----------
-    :param time:
+    :param with_time: Boolean. Optional. Specify if the time should be added to the path.
     """
     if with_time:
       return datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
@@ -227,7 +232,7 @@ class PyDates(object):
 
     Attributes:
     ----------
-    :param xlDate:
+    :param xlDate: Integer. An date in the excel format.
 
     :return: The date as a String in the common format YYYY-MM-DD in AReS
     """
@@ -248,7 +253,7 @@ class PyDates(object):
     ----------
     :param from_dt: The start date in format YYYY-MM-DD
     :param to_dt: The end date in format YYYY-MM-DD
-    :param weekdays: remove the weekends from the potential dates (take the day before). Default True
+    :param weekdays: Boolean. Optional. remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
     """
@@ -365,7 +370,7 @@ class PyDates(object):
     ----------
     :param timestamp: The server timestamp
     :param offset: The client offset time to be applied before storage
-    :param reference: The reference time used on the server side
+    :param reference: Integer. Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
     """
@@ -378,7 +383,8 @@ class PyDates(object):
     """
     Description:
     ------------
-    Get the time between two dates
+    Get the time between two dates.
+    This function will only format the result of a delta time object.
 
     Attributes:
     ----------

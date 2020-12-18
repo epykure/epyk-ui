@@ -22,7 +22,7 @@ class SVG(Html.Html):
   def __getitem__(self, i):
     return self.html_objs[i]
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -30,9 +30,10 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List of String. The Javascript events
-    :param profile:
-    :param source_event:
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.css({"cursor": 'pointer'})
     return self.on("click", jsFncs, profile, source_event)
@@ -52,10 +53,6 @@ class SVG(Html.Html):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
-
-    Attributes:
-    ----------
-    :rtype: Defs
     """
     self.html_objs.append(Defs(self._report))
     return self.html_objs[-1]
@@ -78,6 +75,7 @@ class SVG(Html.Html):
     :param text: String. The text to be added to the container
     :param x: Float. The x coordinate of the starting point of the text baseline.
     :param y: Float. The y coordinate of the starting point of the text baseline.
+    :param fill:
 
     :rtype: Text
     """
@@ -132,6 +130,8 @@ class SVG(Html.Html):
     :param y1: Float. The y1 attribute defines the start of the line on the y-axis
     :param x2: Float. The x2 attribute defines the end of the line on the x-axis
     :param y2: Float. The y2 attribute defines the end of the line on the y-axis
+    :param stroke:
+    :param stroke_width:
 
     :rtype: Line
     """
@@ -159,6 +159,9 @@ class SVG(Html.Html):
     :param x: Float. The x coordinate of the circle
     :param y: Float. The y coordinate of the circle
     :param r: Float. The r attribute defines the radius of the circle
+    :param fill:
+    :param stroke:
+    :param stroke_width:
 
     :rtype: Circle
     """
@@ -209,6 +212,7 @@ class SVG(Html.Html):
     Attributes:
     ----------
     :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon
+    :param fill:
 
     :rtype: Polygone
     """
@@ -231,6 +235,7 @@ class SVG(Html.Html):
     Attributes:
     ----------
     :param points:
+    :param fill:
 
     :rtype: Polyline
     """
@@ -254,6 +259,7 @@ class SVG(Html.Html):
     Attributes:
     ----------
     :param points:
+    :param fill:
     :param options:
 
     :rtpye: Polyline
@@ -301,6 +307,10 @@ class SVG(Html.Html):
     ----------
     :param x:
     :param y:
+    :param fill:
+    :param from_origin:
+    :param bespoke_path:
+    :param stroke:
 
     :rtype: Path
     """
@@ -350,9 +360,21 @@ class LinearGradient(Html.Html):
 
   @property
   def url(self):
+    """
+    Description:
+    -----------
+
+    """
     return "url(#%s)" % self.htmlCode
 
   def stop(self, offset, styles):
+    """
+    Description:
+    -----------
+
+    :param offset:
+    :param styles:
+    """
     self.items.append('<stop offset="%s" style="%s" />' % (offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
     return self
 
@@ -367,9 +389,21 @@ class RadialGradient(Html.Html):
 
   @property
   def url(self):
+    """
+    Description:
+    -----------
+
+    """
     return "url(#%s)" % self.htmlCode
 
   def stop(self, offset, styles):
+    """
+    Description:
+    -----------
+
+    :param offset:
+    :param styles:
+    """
     self.items.append('<stop offset="%s" style="%s" />' % (offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
     return self
 
@@ -378,6 +412,7 @@ class RadialGradient(Html.Html):
 
 
 class Marker(SVG):
+
   def __init__(self, report, htmlCode, viewBox, refX, refY):
     super(Marker, self).__init__(report, None, None, htmlCode=htmlCode)
     self.set_attrs({'id': htmlCode, "viewBox": viewBox, "refX": refX, "refY": refY})
@@ -386,48 +421,51 @@ class Marker(SVG):
   @property
   def url(self):
     """
+    Description:
+    -----------
 
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
-
-    :return:
     """
     return "url(#%s)" % self.htmlCode
 
   def orient(self, orientation):
     """
+    Description:
+    -----------
 
     :param orientation:
-
-    :return:
     """
     self.set_attrs(name="orient", value=orientation)
     return self
 
   def markerWidth(self, value):
     """
+    Description:
+    -----------
 
     :param value:
-    :return:
     """
     self.set_attrs(name="markerWidth", value=value)
     return self
 
   def markerHeight(self, value):
     """
+    Description:
+    -----------
 
     :param value:
-
-    :return:
     """
     self.set_attrs(name="markerHeight", value=value)
     return self
 
   def arrow(self, size=None):
     """
+    Description:
+    -----------
 
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
 
-    :return:
+    :para, size:
     """
     self.html_objs.append("<path d='M 0 0 L 10 5 L 0 10 z' />")
     if size is not None:
@@ -491,6 +529,8 @@ class Defs(Html.Html):
 
   def marker(self, htmlCode, viewBox, refX, refY):
     """
+    Description:
+    -----------
     The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
 
     Related Pages:
@@ -522,6 +562,8 @@ class ForeignObject(SVG):
 
   def add(self, htmlObj):
     """
+    Description:
+    -----------
 
     :param htmlObj:
     """
@@ -552,24 +594,29 @@ class SVGItem(Html.Html):
 
   def fill(self, color):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param color:
-    :return:
     """
     self.set_attrs(name="fill", value=color)
     return self
 
   def transform(self, attributeName, type, from_pos, to_pos, duration=4, repeatCount="indefinite"):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param attributeName:
     :param type:
     :param from_pos:
     :param to_pos:
     :param duration:
     :param repeatCount:
-
-    :return:
     """
     self.html_objs.append(AnimateTransform(self._report, attributeName, type, from_pos, to_pos, duration, repeatCount))
     return self
@@ -614,7 +661,11 @@ class Line(SVGItem):
 
   def markers(self, marker_code):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -623,12 +674,36 @@ class Line(SVGItem):
     return self
 
   def marker_start(self, marker_code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-start", value=marker_code)
 
   def marker_mid(self, marker_code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-mid", value=marker_code)
 
   def marker_end(self, marker_code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-end", value=marker_code)
 
   def __str__(self):
@@ -650,7 +725,11 @@ class Polyline(SVGItem):
 
   def markers(self, marker_code):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -659,12 +738,34 @@ class Polyline(SVGItem):
     return self
 
   def marker_start(self, marker_code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-start", value=marker_code)
 
   def marker_mid(self, marker_code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-mid", value=marker_code)
 
   def marker_end(self, marker_code):
+    """
+
+    Attributes:
+    ----------
+    :param marker_code:
+    """
     self.set_attrs(name="marker-end", value=marker_code)
 
   def __str__(self):
@@ -769,6 +870,8 @@ class Path(SVGItem):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -777,6 +880,15 @@ class Path(SVGItem):
     return self
 
   def line_to(self, x, y):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param x:
+    :param y:
+    """
     if self.origin is not None:
       x = self.origin[0] + x
       y = self.origin[1] - y
@@ -784,18 +896,43 @@ class Path(SVGItem):
     return self
 
   def horizontal_line_to(self, x):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param x:
+    """
     if self.origin is not None:
       x = self.origin[0] + x
     self.__path.append("H%s" % x)
     return self
 
   def vertical_line_to(self, y):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param y:
+    """
     if self.origin is not None:
       y = self.origin[1] - y
     self.__path.append("V%s" % y)
     return self
 
   def move_to(self, x, y):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param x:
+    :param y:
+    """
     if self.origin is not None:
       x = self.origin[0] + x
       y = self.origin[1] - y
@@ -807,8 +944,12 @@ class Path(SVGItem):
     Description:
     ------------
 
-    https://www.w3.org/TR/svg-paths/
+    Related Pages:
 
+      https://www.w3.org/TR/svg-paths/
+
+    Attributes:
+    ----------
     :param x1:
     :param y1:
     :param x2:
@@ -827,8 +968,12 @@ class Path(SVGItem):
     Description:
     ------------
 
-    https://www.w3.org/TR/svg-paths/
+    Related Pages:
 
+      https://www.w3.org/TR/svg-paths/
+
+    Attributes:
+    ----------
     :param x1:
     :param y1:
     :param x2:
@@ -847,8 +992,12 @@ class Path(SVGItem):
     Description:
     ------------
 
-    https://www.w3.org/TR/svg-paths/
+    Related Pages:
 
+      https://www.w3.org/TR/svg-paths/
+
+    Attributes:
+    ----------
     :param x1:
     :param y1:
     :param x2:
@@ -867,8 +1016,12 @@ class Path(SVGItem):
     Description:
     ------------
 
-    https://www.w3.org/TR/svg-paths/
+    Related Pages:
 
+      https://www.w3.org/TR/svg-paths/
+
+    Attributes:
+    ----------
     :param x:
     :param y:
     :param absolute:
@@ -880,6 +1033,11 @@ class Path(SVGItem):
     return self
 
   def close_path(self):
+    """
+    Description:
+    -----------
+
+    """
     self.__path.append("Z")
     return self
 

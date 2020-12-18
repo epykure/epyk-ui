@@ -19,8 +19,8 @@ class Msg(object):
 
     Attributes:
     ----------
-    :param timer: Number. The time the popup will be displayed
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "absolute", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
@@ -54,8 +54,8 @@ class Msg(object):
     Attributes:
     ----------
     :param content: String. The content of the popup
-    :param timer: Number. The time the popup will be displayed
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "top": JsObject.JsObject.get('event.clientY + "px"'), 'left': JsObject.JsObject.get('event.clientX + "px"')}
@@ -81,9 +81,9 @@ class Msg(object):
     Attributes:
     ----------
     :param content: String. The content of the popup
-    :param timer: Number. The time the popup will be displayed
-    :param fixed:
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed
+    :param fixed: Boolean. Optional.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
@@ -109,8 +109,8 @@ class Msg(object):
     Attributes:
     ----------
     :param value: Integer
-    :param content: String. The content of the popup
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param content: String. Optional. The content of the popup
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "40px", 'right': "10px"}
@@ -159,8 +159,9 @@ class Msg(object):
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param content: String. The content of the popup.
+    :param fixed: Boolean. Optional.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
@@ -195,8 +196,8 @@ class Msg(object):
     Attributes:
     ----------
     :param content: String. The content of the popup
-    :param timer: Number. The time the popup will be displayed
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
                   "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
@@ -235,8 +236,8 @@ class Msg(object):
     Attributes:
     ----------
     :param content: String. The content of the popup
-    :param timer: Number. The time the popup will be displayed
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
     dflt_attrs = {"position": "absolute", "padding": "10px", "bottom": "0", "width": '100%', 'background': 'pink'}
     if cssAttrs is not None:

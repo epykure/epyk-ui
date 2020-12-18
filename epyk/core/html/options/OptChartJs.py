@@ -519,7 +519,7 @@ class OptionAxes(DataClass):
     if val == "time":
       from epyk.core.js import Imports
 
-      Imports.JS_IMPORTS["Chart.js"]["req"] = [{'alias': 'moment'}]
+      Imports.JS_IMPORTS["chart.js"]["req"] = [{'alias': 'moment'}]
       # Add the package moment.js is time is used
       #self._report.jsImports.add("moment")
     self._attrs["type"] = val

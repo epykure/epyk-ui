@@ -21,6 +21,8 @@ class PyCrypto(object):
 
   def encrypt(self, data, token=None, salt=None):
     """
+    Description:
+    ------------
     This function will use the cryptography to ensure a secured encryption of the different credential and private data.
     This can be also used to protect data from the report.
     In order to ensure the right privacy please do not store the token and the salt in the framework.
@@ -29,9 +31,11 @@ class PyCrypto(object):
 
     Documentation
 
+    Attributes:
+    ----------
     :param data: The data to be encrypted
-    :param token: Optional. The token used to encrypt the data
-    :param salt: Optional. The salt id
+    :param token: String. Optional. The token used to encrypt the data
+    :param salt: String. Optional. The salt id
 
     :return: The encrypted data with the salt used
     """
@@ -54,6 +58,8 @@ class PyCrypto(object):
 
   def decrypt(self, encrypted, token=None, salt=None, label=''):
     """
+    Description:
+    ------------
     This function will use the two keys in order to decrypt the data.
     In case of failure this function will raise an exception.
 
@@ -62,10 +68,12 @@ class PyCrypto(object):
 
     Documentation
 
+    Attributes:
+    ----------
     :param encrypted: The encrypted data
-    :param token: Optional. The token used to encrypt the data
-    :param salt: Optional. The salt id
-    :param label: Optional. A label used to store the reference in the log file
+    :param token: String. Optional. The token used to encrypt the data
+    :param salt: String. Optional. The salt id
+    :param label: String. Optional. A label used to store the reference in the log file
 
     :return: A string with the decrypted data
     """
@@ -91,6 +99,8 @@ class PyCrypto(object):
   @property
   def getId(self):
     """
+    Description:
+    ------------
     Return a unique token
 
     Example
@@ -107,7 +117,9 @@ class PyCrypto(object):
   @property
   def key(self):
     """
-    Return a Fernet key
+    Description:
+    ------------
+    Return a Fernet key.
 
     Example
     PyCrypto().key
@@ -122,6 +134,8 @@ class PyCrypto(object):
   @classmethod
   def b64encode(cls, text, salt=None):
     """
+    Description:
+    ------------
 
     Example
     PyCrypto.b64encode("Test")
@@ -130,10 +144,10 @@ class PyCrypto(object):
 
       https://cryptography.io/en/latest/hazmat/primitives/key-derivation-functions/
 
-    :param text: The text to be encrypted
-    :param salt: Optional. The salt used for the encryption (default None)
-
-    :return:
+    Attributes:
+    ----------
+    :param text: String. The text to be encrypted
+    :param salt: String. Optional. The salt used for the encryption (default None)
     """
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives import hashes
@@ -146,15 +160,18 @@ class PyCrypto(object):
   @classmethod
   def cryptKeyPairs(cls, msg, key1, key2):
     """
+    Description:
+    ------------
 
     Example
 
     Documentation
 
+    Attributes:
+    ----------
     :param msg:
     :param key1:
     :param key2:
-    :return:
     """
     from cryptography.fernet import Fernet, MultiFernet
     f = MultiFernet([Fernet(key1), Fernet(key2)])
@@ -163,15 +180,18 @@ class PyCrypto(object):
   @classmethod
   def decryptKeyPairs(cls, encrypted, key1, key2):
     """
+    Description:
+    ------------
 
     Example
 
     Documentation
 
+    Attributes:
+    ----------
     :param encrypted: The encrypted data
     :param key1:
     :param key2:
-    :return:
     """
     from cryptography.fernet import Fernet, MultiFernet
     f = MultiFernet([Fernet(key1), Fernet(key2)])

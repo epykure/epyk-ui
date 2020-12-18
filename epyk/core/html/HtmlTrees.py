@@ -94,8 +94,7 @@ class Tree(Html.Html):
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
-      jsFncs = []
-
+      jsFncs = [jsFncs]
     self._jsStyles['click_leaf'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
@@ -108,7 +107,11 @@ class TreeInput(Tree):
 
   def set(self, ul, data):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param ul:
     :param data:
     """
@@ -168,6 +171,17 @@ class DropDown(Html.Html):
     return self.__options
 
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)

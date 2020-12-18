@@ -89,6 +89,7 @@ class URLSearchParams(object):
     Attributes:
     ----------
     :param key: The url parameter.
+    :param value:
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -248,6 +249,7 @@ class JsLocation(object):
     Attributes:
     ----------
     :param href: Set the href property
+    :param secured:
 
     :return: A String, representing the entire URL of the page, including the protocol (like http://)
     """
@@ -279,8 +281,7 @@ class JsLocation(object):
     :param specs: Optional. A comma-separated list of items, no whitespaces.
     :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
     :param windowId: The JavaScript window object
-
-    :return:
+    :param secured:
     """
     if not hasattr(url, 'toStr') and url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
@@ -298,8 +299,8 @@ class JsLocation(object):
 
     Attributes:
     ----------
-    :param url: String. The url of the image
-    :param name: String. The name of the file
+    :param url: String. The url of the image.
+    :param name: String. Optional. The name of the file.
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
@@ -368,7 +369,7 @@ class JsLocation(object):
 
     Attributes:
     ----------
-    :param url: Required. Specifies the URL of the page to navigate to
+    :param url: Required. Specifies the URL of the page to navigate to.
 
     :return: Void
     """
@@ -389,8 +390,8 @@ class JsLocation(object):
 
     Attributes:
     ----------
-    :param url: Required. Specifies the URL of the page to navigate to
-    :param secured: Optional. If the http is missing. This will be used to fix the url
+    :param url: String. Required. Specifies the URL of the page to navigate to.
+    :param secured: Boolean. Optional. If the http is missing. This will be used to fix the url.
 
     :return: Void
     """
@@ -403,7 +404,7 @@ class JsLocation(object):
     """
     Description:
     ------------
-    This method will create a internal form and submit the response exactly like a post of a form to another page
+    This method will create a internal form and submit the response exactly like a post of a form to another page.
 
     Related Pages:
 
@@ -411,9 +412,10 @@ class JsLocation(object):
 
     Attributes:
     ----------
-    :param url: The target url
+    :param url: String. The target url.
     :param data: A python dictionary
-    :param method: Optional. The method used to send the data. Default POST
+    :param method: String. Optional. The method used to send the data. Default POST
+    :param target: String. Optional.
     """
     inputs = []
     for k, v in data.items():

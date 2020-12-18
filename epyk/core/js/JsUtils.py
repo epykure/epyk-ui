@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 import re
@@ -16,6 +18,8 @@ def incompatibleBrowser(browsers):
   Description:
   ------------
 
+  Attributes:
+  ----------
   :param browsers: List. Incompatible browsers
   """
   def decorator(func):
@@ -39,6 +43,8 @@ def fromVersion(data):
   Example
   .fromVersion({'jqueryui': '1.12.0'})
 
+  Attributes:
+  ----------
   :param data: Set the minimum version of a package for a specific function
 
   :return: The decorated function
@@ -73,6 +79,8 @@ def untilVersion(data, newFeature):
 
       .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
+  Attributes:
+  ----------
   :param data: String. The maximum version number of a package to use this function
   :param newFeature: String. The new function name
 
@@ -105,10 +113,10 @@ def jsConvertData(jsData, jsFnc):
   Any pure Python object will be converted using the json function to be then written as a string
   to the resulting page
 
+  Attributes:
+  ----------
   :param jsData: The Python Javascript data
   :param jsFnc: Optional. The conversion function
-
-  :return:
   """
   if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
     if hasattr(jsData, 'toStr'):
@@ -134,6 +142,8 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   Description:
   ------------
 
+  Attributes:
+  ----------
   :param jsData:
   :param jsDataKey:
   :param isPyData:
@@ -161,6 +171,8 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
 
 def getJsValid(value, fail=True):
   """
+  Description:
+  ------------
   Return an error if the variable name is not valid following the Javascript naming conventions.
   Even if the function will fail it will propose a valid name to replace the one passed in input
 
@@ -180,6 +192,8 @@ def getJsValid(value, fail=True):
 
       https://www.w3schools.com/js/js_conventions.asp
 
+  Attributes:
+  ----------
   :param value: The Javascript variable name
   :param fail: Boolean to raise an exception if the name is not valid on the Javascript side
 
@@ -202,12 +216,12 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
   ------------
   Generic conversion function for all the PyJs functions
 
+  Attributes:
+  ----------
   :param jsFncs: Array. The PyJs functions
   :param isPyData: Boolean. A flag to force the Python conversion using json
   :param jsFncVal:
   :param toStr: Boolean. A flag to specify if the result should be aggregated
-
-  :return:
   """
   if not isinstance(jsFncs, list):
     jsFncs = [jsFncs]
@@ -247,6 +261,8 @@ def cleanFncs(fnc):
 
   Thus pre stored function code can be written to be easier to read.
 
+  Attributes:
+  ----------
   :param fnc: The Javascript String
 
   :return: Return a cleaned an minify Javascript String
@@ -263,13 +279,17 @@ def isNotDefined(varName):
   Example
   JsUtils.isNotDefined(varId)
 
+  Attributes:
+  ----------
   :param varName: String. The varName
+
   :return: A string in Python and a Boolean in Javascript
   """
   return "typeof %s === 'undefined'" % varName
 
 
 class JsFile(object):
+
   def __init__(self, scriptName=None, path=None):
     self.scriptName, self.path = scriptName, path
     self.file_path = os.path.join(path, "js") # all the files will be put in a common directory
@@ -279,6 +299,8 @@ class JsFile(object):
 
   def writeJs(self, jsFncs):
     """
+    Description:
+    ------------
     Write the Javascript piece of code to the file
 
     Example
@@ -287,6 +309,8 @@ class JsFile(object):
       Js.JsConsole().log(dt.getDay()),
       Js.JsConsole().log(dt.getFullYear())])
 
+    Attributes:
+    ----------
     :param jsFncs: The Javascript fragments
 
     :return: The File object
@@ -296,12 +320,14 @@ class JsFile(object):
 
   def writeReport(self, rptObj):
     """
+    Description:
+    ------------
     Write the Javascript content of a report to a structure .js file.
     This could help on the investigation and can be directly used in Codepen for testing
 
+    Attributes:
+    ----------
     :param rptObj: The report object
-
-    :return:
     """
     props = rptObj._src._props if hasattr(rptObj, '_src') else rptObj._props
     for data_id, data in props.get("data", {}).get('sources', {}).items():
@@ -329,12 +355,16 @@ class JsFile(object):
 
   def codepen(self, rptObj, cssObj=None, target='_self'):
     """
+    Description:
+    ------------
     Send the piece of Javascript to Codepen for testing
 
     Related Pages:
 
       https://codepen.io/
 
+    Attributes:
+    ----------
     :param rptObj: The report object
     :param cssObj: The internal CSS object from the page
     :param target: A string flag to specify the target page in the browser
@@ -360,8 +390,12 @@ class JsFile(object):
 
   def close(self, jsObj=None):
     """
+    Description:
+    ------------
     Write the file and close the buffer
 
+    Attributes:
+    ----------
     :param jsObj: The internal JsObject
     """
     src_obj = jsObj._src if hasattr(jsObj, '_src') else jsObj

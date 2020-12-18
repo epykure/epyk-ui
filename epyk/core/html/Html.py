@@ -1571,6 +1571,14 @@ class Body(Html):
     self.style.css.background_color = self._report.theme.colors[2]
 
   def loading(self, status=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param status: Boolean. Optional.
+    """
     if status:
       return ''' 
         if (typeof window['popup_loading_body'] === 'undefined'){

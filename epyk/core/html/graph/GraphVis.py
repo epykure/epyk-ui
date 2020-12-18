@@ -61,10 +61,20 @@ class Chart(Html.Html):
     return self._js
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return JsUtils.jsConvertFncs([self.js.setItems(data[0]), self.js.redraw()], toStr=True)
 
-    return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
+    return '%s; var %s = %s' % (self.groups.toStr(), self.chartId, self.getCtx())
 
   def getCtx(self):
     raise Exception("Cannot create an object from the Vis base class directly")
@@ -116,6 +126,8 @@ class ChartLine(Chart):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param x:
     :param y:
     :param group:
@@ -126,6 +138,14 @@ class ChartLine(Chart):
     return self
 
   def add_items(self, records):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param records:
+    """
     for rec in records:
       self.add_item(rec['x'], rec['y'], rec.get('group', 0))
     return self
@@ -215,6 +235,14 @@ class Chart3D(Chart):
     return self._js
 
   def add_items(self, records):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param records:
+    """
     for rec in records:
       self.add_item(rec['x'], rec['y'], rec['z'], rec.get('group', 0))
     return self
@@ -224,15 +252,28 @@ class Chart3D(Chart):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param x:
     :param y:
     :param z:
+    :param group:
     :param style:
     """
     self.items.append({"x": x, "y": y, "z": z, 'group': group})
     return self
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {'chartId': self.chartId, 'data': data[0]}
 
@@ -319,6 +360,8 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param label:
     :param id:
     :param group:
@@ -331,6 +374,8 @@ class ChartNetwork(Chart):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param fromId:
     :param toId:
     :param title:
@@ -359,6 +404,7 @@ class ChartTimeline(Chart):
     ----------
     :param id:
     :param css:
+    :param css_hover:
     """
     from epyk.core.css.styles.classes import CssStyle
 

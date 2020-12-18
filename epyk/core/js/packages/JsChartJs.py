@@ -76,7 +76,7 @@ class Config(DataAttrs):
 
 
 class ChartJs(JsPackage):
-  lib_alias = {'js': 'Chart.js'}
+  lib_alias = {'js': 'chart.js'}
 
   class __internal(object):
     jqId, htmlCode, jsImports, cssImport = 'chart', '', set([]), set([])
@@ -91,24 +91,28 @@ class ChartJs(JsPackage):
     self.src.jsImports.add(self.lib_alias['js'])
     self._js = []
 
-  def getElementsAtEvent(self, jsEvent):
+  def getElementsAtEvent(self, jsFncs):
     """
     Description:
     -----------
+    Calling getElementsAtEvent(event) on your Chart instance passing an argument of an event,
+    or jQuery event, will return the point elements that are at that the same position of that event.
 
     Attributes:
     ----------
-    :param jsEvent:
+    :param jsFncs: A Javascript Python function.
     """
-    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (self.varName, jsEvent), isPyData=False)
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)), isPyData=False)
 
   def add(self, point, values):
     """
     Description:
     -----------
-    Add point to an exiting chart on existing series
+    Add point to an exiting chart on existing series.
 
-    Note: Do not forget to trigger an update on the chart once all your transformations are done
+    Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
     Related Pages:
 
@@ -116,8 +120,8 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param point: Object. The point to add on the x-axis
-    :param values: dictionary. The value per series name
+    :param point: Object. The point to add on the x-axis.
+    :param values: dictionary. The value per series name.
     """
     point = JsUtils.jsConvertData(point, None)
     values = JsUtils.jsConvertData(values, None)
@@ -129,9 +133,9 @@ class ChartJs(JsPackage):
     """
     Description:
     -----------
-    Remove point to existing series
+    Remove point to existing series.
 
-    Note: Do not forget to trigger an update on the chart once all your transformations are done
+    Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
     Related Pages:
 
@@ -139,8 +143,8 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param point: Object. Optional. The point to be removed on the series. If none the last one will be removed
-    :param seriesNames: List. Optional. The series name
+    :param point: Object. Optional. The point to be removed on the series. If none the last one will be removed.
+    :param seriesNames: List. Optional. The series name.
     """
     point = JsUtils.jsConvertData(point, None)
     if seriesNames is None:
@@ -163,6 +167,15 @@ class ChartJs(JsPackage):
           %(varName)s.data.datasets.forEach(function(dataset){
             if (%(seriesNames)s.includes(dataset.label)){
               dataset.data[index] = null}})} ''' % {'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
+
+  def empty(self):
+    """
+    Description:
+    -----------
+    Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
+    This will also update the chart to trigger the animation.
+    """
+    return JsObjects.JsVoid("%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
   def data(self, datasets):
     """
@@ -205,10 +218,10 @@ class ChartJs(JsPackage):
       var chartData = %(data)s; var chartColors = %(colors)s; var chartBgColors = %(bgcolors)s;
       chartData.datasets.forEach(function(dataset, i){
         if (typeof dataset.type !== 'undefined'){
-          if (['line', 'scatter', 'bubble'].includes(dataset.type)){
+          if (['line', 'scatter', 'bubble', null].includes(dataset.type)){
             if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
             if (typeof dataset.borderColor === 'undefined'){dataset.borderColor = chartColors[i]}
-            if (dataset.type == 'line'){dataset.fill = false}}
+            if (dataset.type == 'line'){if (typeof dataset.borderColor === 'undefined'){dataset.fill = false}}}
           else if (['bar', 'horizontalBar'].includes(dataset.type)){
             if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
             if (typeof dataset.fillOpacity === 'undefined'){dataset.fillOpacity = 0.8}}
@@ -221,16 +234,16 @@ class ChartJs(JsPackage):
           if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
           if (typeof dataset.borderColor === 'undefined'){dataset.borderColor = chartColors[i]}}})
       %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName,
-                                                                      'colors': self.src.colors, 'bgcolors': self.src._options_init['bgColors']})
+              'colors': self.src.colors, 'bgcolors': self.src.bgColors})
 
   def load(self, name, points, options=None):
     """
     Description:
     -----------
     Loads new series on an existing chart.
-    existing x axis will not be changed and they will be used to add the points
+    existing x axis will not be changed and they will be used to add the points.
 
-    Note: Do not forget to trigger an update on the chart once all your transformations are done
+    Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
     Related Pages:
 
@@ -238,8 +251,8 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param name: String. The series name
-    :param points: List of dictionaries. The list of points ({x: , y: }) to be added to the chart
+    :param name: String. The series name.
+    :param points: List of dictionaries. The list of points ({x: , y: }) to be added to the chart.
     """
     name = JsUtils.jsConvertData(name, None)
     points = JsUtils.jsConvertData(points, None)
@@ -265,7 +278,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param names: List. Optional. The series names to be removed from the chart. If none all series will be removed
+    :param names: List. Optional. The series names to be removed from the chart. If none all series will be removed.
     """
     if names is None:
       return JsObjects.JsVoid('%(varName)s.data.labels = []; %(varName)s.data.datasets = []' % {'varName': self.varName})
@@ -282,7 +295,7 @@ class ChartJs(JsPackage):
     """
     Description:
     -----------
-
+    Return the series label.
     """
     return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, isPyData=False)
 
@@ -860,6 +873,8 @@ class ChartJsOptPadding(DataAttrs):
 class OptionsLegend(DataAttrs):
   def display(self, flag=True):
     """
+    Description:
+    ------------
     Is the legend shown?
 
     Related Pages:
@@ -867,63 +882,68 @@ class OptionsLegend(DataAttrs):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     :param flag:
-    :return:
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def position(self, location="top"):
     """
+    Description:
+    ------------
     Position of the legend
 
     :param location:
-    :return:
     """
     self._attrs["position"] = JsUtils.jsConvertData(location, None)
     return self
 
   def fullWidth(self, flag=True):
     """
+    Description:
+    ------------
 
     :param flag:
-    :return:
     """
 
   def onClick(self, callback):
     """
+    Description:
+    ------------
     A callback that is called when a click event is registered on a label item.
 
     :param callback:
-    :return:
     """
     self._attrs["onClick"] = JsUtils.jsConvertFncs(callback)
     return self
 
   def onHover(self, callback):
     """
+    Description:
+    ------------
     A callback that is called when a 'mousemove' event is registered on top of a label item.
 
     :param callback:
-    :return:
     """
     self._attrs["onHover"] = JsUtils.jsConvertFncs(callback)
     return self
 
   def onLeave(self, callback):
     """
+    Description:
+    ------------
 
     :param callback:
-    :return:
     """
     self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback)
     return self
 
   def reverse(self, flag=False):
     """
+    Description:
+    ------------
     Legend will show datasets in reverse order.
 
     :param flag:
-    :return:
     """
     self._attrs["reverse"] = JsUtils.jsConvertFncs(flag)
     return self
@@ -931,9 +951,10 @@ class OptionsLegend(DataAttrs):
   @property
   def labels(self):
     """
+    Description:
+    ------------
 
     :rtype: ChartJsOptLabels
-    :return:
     """
     if not 'labels' in self._attrs:
       self._attrs["labels"] = ChartJsOptLabels(self._report)
@@ -944,8 +965,12 @@ class OptionsTitle(DataAttrs):
   @property
   def display(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/title.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/title.html
     """
     return self._attrs["display"]
 
@@ -955,6 +980,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def text(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["text"]
 
   @text.setter
@@ -963,6 +992,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def position(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["position"]
 
   @position.setter
@@ -971,6 +1004,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def fontSize(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["fontSize"]
 
   @fontSize.setter
@@ -979,6 +1016,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def fontFamily(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["fontFamily"]
 
   @fontFamily.setter
@@ -987,6 +1028,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def fontColor(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["fontColor"]
 
   @fontColor.setter
@@ -995,6 +1040,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def fontStyle(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["fontStyle"]
 
   @fontStyle.setter
@@ -1003,6 +1052,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def padding(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["padding"]
 
   @padding.setter
@@ -1011,6 +1064,10 @@ class OptionsTitle(DataAttrs):
 
   @property
   def lineHeight(self):
+    """
+    Description:
+    ------------
+    """
     return self._attrs["lineHeight"]
 
   @lineHeight.setter
@@ -1024,19 +1081,29 @@ class Options(DataAttrs):
     super(Options, self).__init__(report, attrs, oprions)
 
   def title(self):
+    """
+    Description:
+    ------------
+
+    """
     if self._attrs.get("title") is None:
       self._attrs['title'] = OptionsTitle(self._report)
     return self._attrs['title']
 
 
-class DataSetPie(DataAttrs):
+class DataSet(DataAttrs):
 
   @property
   def backgroundColor(self):
     """
+    Description:
+    ------------
     Arc background color.
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["backgroundColor"]
 
@@ -1045,22 +1112,15 @@ class DataSetPie(DataAttrs):
     self._attrs["backgroundColor"] = val
 
   @property
-  def borderAlign(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["borderAlign"]
-
-  @borderAlign.setter
-  def borderAlign(self, val):
-    self._attrs["borderAlign"] = val
-
-  @property
   def borderColor(self):
     """
+    Description:
+    ------------
     Arc border color.
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["borderColor"]
 
@@ -1071,9 +1131,13 @@ class DataSetPie(DataAttrs):
   @property
   def borderWidth(self):
     """
+    Description:
+    ------------
     Arc border width (in pixels).
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["borderWidth"]
 
@@ -1082,22 +1146,15 @@ class DataSetPie(DataAttrs):
     self._attrs["borderWidth"] = val
 
   @property
-  def data(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["data"]
-
-  @data.setter
-  def data(self, val):
-    self._attrs["data"] = val
-
-  @property
   def fillOpacity(self):
     """
+    Description:
+    ------------
     Convert the hexadecimal color to the corresponding RGB one with the opacity
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["backgroundColor"]
 
@@ -1111,15 +1168,81 @@ class DataSetPie(DataAttrs):
         opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
       self._attrs["backgroundColor"] = opColors
     else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+      if bgColors.startswith("rgba"):
+        split_colors = bgColors.split(",")
+        split_colors[3] = " %s)" % val
+        self._attrs["backgroundColor"] = ",".join(split_colors)
+      else:
+        color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+        self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  def set_style(self, backgroundColor=None, fillOpacity=None, borderWidth=None, borderColor=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param backgroundColor:
+    :param fillOpacity:
+    :param borderWidth:
+    :param borderColor:
+    """
+    if backgroundColor is not None:
+      self.backgroundColor = backgroundColor
+    if fillOpacity is not None:
+      self.fillOpacity = fillOpacity
+    if borderWidth is not None:
+      self.borderWidth = borderWidth
+    if borderColor is not None:
+      self.borderColor = borderColor
+    return self
+
+
+class DataSetPie(DataSet):
+
+  @property
+  def borderAlign(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["borderAlign"]
+
+  @borderAlign.setter
+  def borderAlign(self, val):
+    self._attrs["borderAlign"] = val
+
+  @property
+  def data(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["data"]
+
+  @data.setter
+  def data(self, val):
+    self._attrs["data"] = val
 
   @property
   def hoverBackgroundColor(self):
     """
+    Description:
+    ------------
     Arc background color when hovered.
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -1130,9 +1253,13 @@ class DataSetPie(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
+    Description:
+    ------------
     Arc border color when hovered.
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -1143,9 +1270,13 @@ class DataSetPie(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
+    Description:
+    ------------
     Arc border width when hovered (in pixels).
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -1156,9 +1287,13 @@ class DataSetPie(DataAttrs):
   @property
   def weight(self):
     """
+    Description:
+    ------------
     The relative thickness of the dataset. Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the sum of all the dataset weight values.
 
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["weight"]
 
@@ -1166,23 +1301,39 @@ class DataSetPie(DataAttrs):
   def weight(self, val):
     self._attrs["weight"] = val
 
-
-class DataSetScatterLine(DataAttrs):
-  @property
-  def backgroundColor(self):
+  def set_style(self, backgroundColors=None, fillOpacity=None, borderWidth=None, borderColors=None):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param backgroundColors:
+    :param fillOpacity:
+    :param borderWidth:
+    :param borderColors:
     """
-    return self._attrs["backgroundColor"]
+    if backgroundColors is not None:
+      self.backgroundColor = backgroundColors
+    if fillOpacity is not None:
+      self.fillOpacity = fillOpacity
+    if borderWidth is not None:
+      self.borderWidth = borderWidth
+    if borderColors is not None:
+      self.borderColor = borderColors
+    return self
 
-  @backgroundColor.setter
-  def backgroundColor(self, val):
-    self._attrs["backgroundColor"] = val
 
+class DataSetScatterLine(DataSet):
   @property
   def borderCapStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["borderCapStyle"]
 
@@ -1191,20 +1342,14 @@ class DataSetScatterLine(DataAttrs):
     self._attrs["borderCapStyle"] = val
 
   @property
-  def borderColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/line.html
-    """
-    return self._attrs["borderColor"]
-
-  @borderColor.setter
-  def borderColor(self, val):
-    self._attrs["borderColor"] = val
-
-  @property
   def borderDash(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["borderDash"]
 
@@ -1215,7 +1360,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def borderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["borderDashOffset"]
 
@@ -1226,7 +1376,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def borderJoinStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["borderJoinStyle"]
 
@@ -1235,20 +1390,14 @@ class DataSetScatterLine(DataAttrs):
     self._attrs["borderJoinStyle"] = val
 
   @property
-  def borderWidth(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/line.html
-    """
-    return self._attrs["borderWidth"]
-
-  @borderWidth.setter
-  def borderWidth(self, val):
-    self._attrs["borderWidth"] = val
-
-  @property
   def cubicInterpolationMode(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["cubicInterpolationMode"]
 
@@ -1259,7 +1408,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def clip(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["clip"]
 
@@ -1270,7 +1424,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def fill(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["fill"]
 
@@ -1279,31 +1438,14 @@ class DataSetScatterLine(DataAttrs):
     self._attrs["fill"] = val
 
   @property
-  def fillOpacity(self):
-    """
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
-
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @fillOpacity.setter
-  def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
-        color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
-    else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
-
-  @property
   def hoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -1314,7 +1456,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderCapStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderCapStyle"]
 
@@ -1325,7 +1472,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -1336,7 +1488,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderDash(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderDash"]
 
@@ -1347,7 +1504,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderDashOffset"]
 
@@ -1358,7 +1520,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderJoinStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderJoinStyle"]
 
@@ -1369,7 +1536,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -1380,7 +1552,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def label(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["label"]
 
@@ -1391,7 +1568,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def lineTension(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["lineTension"]
 
@@ -1402,7 +1584,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def order(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["order"]
 
@@ -1413,7 +1600,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointBackgroundColor"]
 
@@ -1424,7 +1616,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointBorderColor"]
 
@@ -1435,7 +1632,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointBorderWidth"]
 
@@ -1446,7 +1648,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointHitRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointHitRadius"]
 
@@ -1457,7 +1664,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointHoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointHoverBackgroundColor"]
 
@@ -1468,7 +1680,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointHoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointHoverBorderColor"]
 
@@ -1479,7 +1696,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointHoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointHoverBorderWidth"]
 
@@ -1490,7 +1712,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointHoverRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointHoverRadius"]
 
@@ -1501,7 +1728,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointRadius"]
 
@@ -1512,7 +1744,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointRotation(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointRotation"]
 
@@ -1523,7 +1760,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def pointStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["pointStyle"]
 
@@ -1534,7 +1776,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def showLine(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["showLine"]
 
@@ -1545,7 +1792,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def spanGaps(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["spanGaps"]
 
@@ -1556,7 +1808,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def steppedLine(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["steppedLine"]
 
@@ -1567,7 +1824,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def xAxisID(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["xAxisID"]
 
@@ -1578,7 +1840,12 @@ class DataSetScatterLine(DataAttrs):
   @property
   def yAxisID(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
     return self._attrs["yAxisID"]
 
@@ -1586,23 +1853,40 @@ class DataSetScatterLine(DataAttrs):
   def yAxisID(self, val):
     self._attrs["yAxisID"] = val
 
-
-class DataSetBar(DataAttrs):
-  @property
-  def backgroundColor(self):
+  def set_style(self, backgroundColor=None, fillOpacity=None, borderWidth=None, borderColor=None):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
-    """
-    return self._attrs["backgroundColor"]
+    Description:
+    ------------
 
-  @backgroundColor.setter
-  def backgroundColor(self, val):
-    self._attrs["backgroundColor"] = val
+    Attributes:
+    ----------
+    :param backgroundColor:
+    :param fillOpacity:
+    :param borderWidth:
+    :param borderColor:
+    """
+    if backgroundColor is not None:
+      self.backgroundColor = backgroundColor
+    if fillOpacity is not None:
+      self.fillOpacity = fillOpacity
+    if borderWidth is not None:
+      self.borderWidth = borderWidth
+    if borderColor is not None:
+      self.borderColor = borderColor
+    return self
+
+
+class DataSetBar(DataSet):
 
   @property
   def barPercentage(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["barPercentage"]
 
@@ -1613,7 +1897,12 @@ class DataSetBar(DataAttrs):
   @property
   def barThickness(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["barThickness"]
 
@@ -1622,31 +1911,14 @@ class DataSetBar(DataAttrs):
     self._attrs["barThickness"] = val
 
   @property
-  def fillOpacity(self):
-    """
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
-
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @fillOpacity.setter
-  def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
-        color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
-    else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
-
-  @property
   def maxBarThickness(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["maxBarThickness"]
 
@@ -1657,7 +1929,12 @@ class DataSetBar(DataAttrs):
   @property
   def minBarLength(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["minBarLength"]
 
@@ -1666,20 +1943,14 @@ class DataSetBar(DataAttrs):
     self._attrs["minBarLength"] = val
 
   @property
-  def borderColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/bar.html
-    """
-    return self._attrs["borderColor"]
-
-  @borderColor.setter
-  def borderColor(self, val):
-    self._attrs["borderColor"] = val
-
-  @property
   def borderSkipped(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["borderSkipped"]
 
@@ -1688,20 +1959,14 @@ class DataSetBar(DataAttrs):
     self._attrs["borderSkipped"] = val
 
   @property
-  def borderWidth(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/bar.html
-    """
-    return self._attrs["borderWidth"]
-
-  @borderWidth.setter
-  def borderWidth(self, val):
-    self._attrs["borderWidth"] = val
-
-  @property
   def data(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["data"]
 
@@ -1712,7 +1977,12 @@ class DataSetBar(DataAttrs):
   @property
   def hoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -1723,7 +1993,12 @@ class DataSetBar(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -1734,7 +2009,12 @@ class DataSetBar(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -1745,7 +2025,12 @@ class DataSetBar(DataAttrs):
   @property
   def label(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["label"]
 
@@ -1756,7 +2041,12 @@ class DataSetBar(DataAttrs):
   @property
   def order(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["order"]
 
@@ -1767,7 +2057,12 @@ class DataSetBar(DataAttrs):
   @property
   def xAxisID(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["xAxisID"]
 
@@ -1778,7 +2073,12 @@ class DataSetBar(DataAttrs):
   @property
   def yAxisID(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bar.html
     """
     return self._attrs["yAxisID"]
 
@@ -1787,22 +2087,17 @@ class DataSetBar(DataAttrs):
     self._attrs["yAxisID"] = val
 
 
-class DataSetPolar(DataAttrs):
-  @property
-  def backgroundColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @backgroundColor.setter
-  def backgroundColor(self, val):
-    self._attrs["backgroundColor"] = val
+class DataSetPolar(DataSet):
 
   @property
   def borderAlign(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["borderAlign"]
 
@@ -1811,31 +2106,14 @@ class DataSetPolar(DataAttrs):
     self._attrs["borderAlign"] = val
 
   @property
-  def borderColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._attrs["borderColor"]
-
-  @borderColor.setter
-  def borderColor(self, val):
-    self._attrs["borderColor"] = val
-
-  @property
-  def borderWidth(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._attrs["borderWidth"]
-
-  @borderWidth.setter
-  def borderWidth(self, val):
-    self._attrs["borderWidth"] = val
-
-  @property
   def data(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["data"]
 
@@ -1844,31 +2122,14 @@ class DataSetPolar(DataAttrs):
     self._attrs["data"] = val
 
   @property
-  def fillOpacity(self):
-    """
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
-
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @fillOpacity.setter
-  def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
-        color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
-    else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
-
-  @property
   def hoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -1879,7 +2140,12 @@ class DataSetPolar(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -1890,7 +2156,12 @@ class DataSetPolar(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/polar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -1899,22 +2170,17 @@ class DataSetPolar(DataAttrs):
     self._attrs["hoverBorderWidth"] = val
 
 
-class DataSetRadar(DataAttrs):
-  @property
-  def backgroundColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/radar.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @backgroundColor.setter
-  def backgroundColor(self, val):
-    self._attrs["backgroundColor"] = val
+class DataSetRadar(DataSet):
 
   @property
   def borderCapStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["borderCapStyle"]
 
@@ -1923,20 +2189,14 @@ class DataSetRadar(DataAttrs):
     self._attrs["borderCapStyle"] = val
 
   @property
-  def borderColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/radar.html
-    """
-    return self._attrs["borderColor"]
-
-  @borderColor.setter
-  def borderColor(self, val):
-    self._attrs["borderColor"] = val
-
-  @property
   def borderDash(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["borderDash"]
 
@@ -1947,7 +2207,12 @@ class DataSetRadar(DataAttrs):
   @property
   def borderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["borderDashOffset"]
 
@@ -1958,7 +2223,12 @@ class DataSetRadar(DataAttrs):
   @property
   def borderJoinStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["borderJoinStyle"]
 
@@ -1967,20 +2237,14 @@ class DataSetRadar(DataAttrs):
     self._attrs["borderJoinStyle"] = val
 
   @property
-  def borderWidth(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/radar.html
-    """
-    return self._attrs["borderWidth"]
-
-  @borderWidth.setter
-  def borderWidth(self, val):
-    self._attrs["borderWidth"] = val
-
-  @property
   def hoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -1991,7 +2255,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderCapStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderCapStyle"]
 
@@ -2002,7 +2271,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -2013,7 +2287,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderDash(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderDash"]
 
@@ -2024,7 +2303,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderDashOffset(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderDashOffset"]
 
@@ -2035,7 +2319,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderJoinStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderJoinStyle"]
 
@@ -2046,7 +2335,12 @@ class DataSetRadar(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -2057,7 +2351,12 @@ class DataSetRadar(DataAttrs):
   @property
   def fill(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["fill"]
 
@@ -2066,31 +2365,14 @@ class DataSetRadar(DataAttrs):
     self._attrs["fill"] = val
 
   @property
-  def fillOpacity(self):
-    """
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
-
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @fillOpacity.setter
-  def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
-        color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
-    else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
-
-  @property
   def label(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["label"]
 
@@ -2101,7 +2383,12 @@ class DataSetRadar(DataAttrs):
   @property
   def order(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["order"]
 
@@ -2112,7 +2399,12 @@ class DataSetRadar(DataAttrs):
   @property
   def lineTension(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["lineTension"]
 
@@ -2123,7 +2415,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointBackgroundColor"]
 
@@ -2134,7 +2431,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointBorderColor"]
 
@@ -2145,7 +2447,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointBorderWidth"]
 
@@ -2156,7 +2463,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointHitRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointHitRadius"]
 
@@ -2167,7 +2479,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointHoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointHoverBackgroundColor"]
 
@@ -2178,7 +2495,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointHoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointHoverBorderColor"]
 
@@ -2189,7 +2511,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointHoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointHoverBorderWidth"]
 
@@ -2200,7 +2527,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointHoverRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointHoverRadius"]
 
@@ -2211,7 +2543,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointRadius"]
 
@@ -2222,7 +2559,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointRotation(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointRotation"]
 
@@ -2233,7 +2575,12 @@ class DataSetRadar(DataAttrs):
   @property
   def pointStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["pointStyle"]
 
@@ -2244,7 +2591,12 @@ class DataSetRadar(DataAttrs):
   @property
   def spanGaps(self):
     """
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/radar.html
     """
     return self._attrs["spanGaps"]
 
@@ -2253,44 +2605,17 @@ class DataSetRadar(DataAttrs):
     self._attrs["spanGaps"] = val
 
 
-class DataSetBubble(DataAttrs):
-  @property
-  def backgroundColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @backgroundColor.setter
-  def backgroundColor(self, val):
-    self._attrs["backgroundColor"] = val
-
-  @property
-  def borderColor(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
-    """
-    return self._attrs["borderColor"]
-
-  @borderColor.setter
-  def borderColor(self, val):
-    self._attrs["borderColor"] = val
-
-  @property
-  def borderWidth(self):
-    """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
-    """
-    return self._attrs["borderWidth"]
-
-  @borderWidth.setter
-  def borderWidth(self, val):
-    self._attrs["borderWidth"] = val
+class DataSetBubble(DataSet):
 
   @property
   def data(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["data"]
 
@@ -2299,31 +2624,14 @@ class DataSetBubble(DataAttrs):
     self._attrs["data"] = val
 
   @property
-  def fillOpacity(self):
-    """
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
-
-    https://www.chartjs.org/docs/latest/charts/doughnut.html
-    """
-    return self._attrs["backgroundColor"]
-
-  @fillOpacity.setter
-  def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
-        color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
-    else:
-      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
-      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
-
-  @property
   def hoverBackgroundColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["hoverBackgroundColor"]
 
@@ -2334,7 +2642,12 @@ class DataSetBubble(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["hoverBorderColor"]
 
@@ -2345,7 +2658,12 @@ class DataSetBubble(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["hoverBorderWidth"]
 
@@ -2356,7 +2674,12 @@ class DataSetBubble(DataAttrs):
   @property
   def hoverRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["hoverRadius"]
 
@@ -2367,7 +2690,12 @@ class DataSetBubble(DataAttrs):
   @property
   def hitRadius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["hitRadius"]
 
@@ -2378,7 +2706,12 @@ class DataSetBubble(DataAttrs):
   @property
   def label(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["label"]
 
@@ -2389,7 +2722,12 @@ class DataSetBubble(DataAttrs):
   @property
   def order(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["order"]
 
@@ -2400,7 +2738,12 @@ class DataSetBubble(DataAttrs):
   @property
   def pointStyle(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["pointStyle"]
 
@@ -2411,7 +2754,12 @@ class DataSetBubble(DataAttrs):
   @property
   def rotation(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["rotation"]
 
@@ -2422,7 +2770,12 @@ class DataSetBubble(DataAttrs):
   @property
   def radius(self):
     """
-    https://www.chartjs.org/docs/latest/charts/bubble.html
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/bubble.html
     """
     return self._attrs["radius"]
 

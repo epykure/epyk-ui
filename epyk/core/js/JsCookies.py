@@ -1,6 +1,6 @@
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-"""
 
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
@@ -15,12 +15,20 @@ class JsCookies(object):
 
   def set(self, jsKey, jsData, jsDataKey=None, isPyData=True, jsFnc=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
       https//www.w3schools.com/js/js_cookies.asp
 
-    :return:
+    Attributes:
+    ----------
+    :param jsKey:
+    :param jsData:
+    :param jsDataKey:
+    :param isPyData:
+    :param jsFnc:
     """
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     if self.src._context.get('cookies') is None:
@@ -31,8 +39,15 @@ class JsCookies(object):
 
   def get(self, jsData=None, jsDataKey=None, isPyData=True, jsFnc=None):
     """
+    Description:
+    ------------
 
-    :return:
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsDataKey:
+    :param isPyData:
+    :param jsFnc:
     """
     if jsData is None:
       return Js.JsJson().parse("decodeURIComponent(document.cookies)", isPyData=False)

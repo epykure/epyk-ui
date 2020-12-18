@@ -52,7 +52,7 @@ class Chart(Html.Html):
       self._js = JsC3.C3(self, varName=self.chartId, report=self._report)
     return self._js
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -64,9 +64,10 @@ class Chart(Html.Html):
 
 		Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event: Not
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.data.onclick(jsFncs, profile)
     return self

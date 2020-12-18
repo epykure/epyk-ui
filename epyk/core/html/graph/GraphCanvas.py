@@ -15,6 +15,10 @@ class Canvas(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
+    Property to the DOM object.
+    This will return the Canvas properties.
 
     :rtype: JsCanvas.Canvas
     """
@@ -25,6 +29,9 @@ class Canvas(Html.Html):
   @property
   def ctx(self):
     """
+    Description:
+    -----------
+    Return the 2D context options of the Canvas DOM component.
 
     :rtype: JsCanvas.Canvas
     """

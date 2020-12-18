@@ -17,6 +17,8 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "chart_%s" % self.htmlCode
@@ -90,6 +92,9 @@ class ChartRow(Chart):
   @property
   def dom(self):
     """
+    Description:
+    -----------
+
     :rtype: JsDc.Row
     """
     if self._dom is None:
@@ -166,6 +171,9 @@ class ChartSunburst(Chart):
   @property
   def dom(self):
     """
+    Description:
+    -----------
+
     :rtype: JsDc.Sunburst
     """
     if self._dom is None:

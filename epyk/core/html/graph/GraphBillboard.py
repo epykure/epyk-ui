@@ -1,36 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
-Module used as a wrapper to the Javascript C3 libraries
-
-Related Pages:
-
-		https://c3js.org/gettingstarted.html
-  http://c3js.org/
-This module is defined by a main class ** Chart **.
-
-The constructor ::__init__
-::onDocumentLoadVar
-::onDocumentReady
-
-
-Python / Javascript Events
-::click
-::mouseover
-::mouseout
-
-
-Pure Javascript Wrapper
-Those function will be only used in **Javascript called** and they will return a piece of string which will be added in the
-report to get the data later on in the Javascript layer. Python is just used here to put all the pieces together
-
-The method to destroy the C3 chart ::jsDestroy
-The method to group the different charts ::jsGroups
-
-'''
-
-
 from epyk.core.data.DataClass import DataClass
 
 from epyk.core.html import Html
@@ -44,7 +14,7 @@ from epyk.core.js.packages import JsD3
 
 class Chart(Html.Html):
   name = 'Billboard Chart'
-  requirements = ('billboard', )
+  requirements = ('billboard.js', )
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]
@@ -80,14 +50,17 @@ class Chart(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def click(self, jsFncs, profile=False, source_event=None):
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
-    :param jsFncs:
-    :param profile:
-    :param source_event: Not used
+    Attributes:
+    ----------
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.data.onclick(jsFncs, profile)
     return self
@@ -178,11 +151,15 @@ class BBSelection(DataClass):
   @property
   def enabled(self):
     """
+    Description:
+    -----------
     Set data selection enabled.
 
     If this option is set true, we can select the data points and get/set its state of selection by API (e.g. select, unselect, selected).
 
-    https://c3js.org/reference.html#data-selection-enabled
+    Related Pages:
+
+      https://c3js.org/reference.html#data-selection-enabled
     """
     return self._attrs["enabled"]
 
@@ -193,6 +170,8 @@ class BBSelection(DataClass):
   @property
   def grouped(self):
     """
+    Description:
+    -----------
     """
     return self._attrs["grouped"]
 
@@ -290,7 +269,9 @@ class JsData(DataClass):
     This setting overwrites data.type setting:
     line, spline, step, area...
 
-    https://c3js.org/reference.html#data-types
+    Related Pages:
+
+      https://c3js.org/reference.html#data-types
     """
     return self._attrs["types"]
 
@@ -357,7 +338,9 @@ class JsScales(DataClass):
     Description:
     -----------
 
-    https://c3js.org/reference.html#axis-y2-show
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y2-show
 
     :rtype: BBAxis
     """
@@ -381,7 +364,9 @@ class JsScales(DataClass):
     Description:
     -----------
 
-    https://c3js.org/reference.html#axis-y2-show
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y2-show
 
     :rtype: BBAxis
     """
@@ -389,6 +374,7 @@ class JsScales(DataClass):
 
 
 class BBGridLine(DataClass):
+
   @property
   def value(self):
     return self._attrs["value"]
@@ -706,6 +692,15 @@ class ChartPie(ChartLine):
       }'''
 
   def labels(self, labels, series_id='x'):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param labels:
+    :param series_id:
+    """
     self._labels = labels
 
   def add_dataset(self, name, values, type=None):
@@ -731,6 +726,16 @@ class ChartGauge(ChartPie):
     return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
 
   def add_dataset(self, name, value, type=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param name:
+    :param value:
+    :param type:
+    """
     self.data.columns.append(["data", value])
     self.data.colors["data"] = self._report.theme.colors[len(self.data.colors)]
     if type is None:

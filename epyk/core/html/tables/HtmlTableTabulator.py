@@ -20,7 +20,7 @@ from epyk.core.css.styles import GrpClsTable
 
 
 class Table(Html.Html):
-  requirements = ('tabulator', )
+  requirements = ('tabulator-tables', )
   name = 'Tabulator Table'
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
@@ -246,7 +246,8 @@ class EnumLayout(DataEnum):
     The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
 
     Related Pages:
-http://tabulator.info/docs/4.5/layout
+
+      http://tabulator.info/docs/4.5/layout
     """
     return self.set()
 
@@ -257,7 +258,8 @@ http://tabulator.info/docs/4.5/layout
     As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize columns so they fit perfectly in the available table width.
 
     Related Pages:
-http://tabulator.info/docs/4.5/layout
+
+      http://tabulator.info/docs/4.5/layout
     """
     return self.set()
 
@@ -268,7 +270,8 @@ http://tabulator.info/docs/4.5/layout
     The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at least the full width of the table.
 
     Related Pages:
-http://tabulator.info/docs/4.5/layout
+
+      http://tabulator.info/docs/4.5/layout
     """
     self._report.style.css.width = "auto"
     self._report.style.css.border = "none !IMPORTANT"
@@ -285,7 +288,8 @@ class EnumSorter(DataEnum):
     Sorts column as strings of characters
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
     """
     return self.set("string")
 

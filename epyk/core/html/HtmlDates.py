@@ -76,7 +76,7 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param dts:
-    :param jsFncs:
+    :param jsFncs: List. Javascript functions
     """
     return self.input.excluded_dates(dts, jsFncs)
 
@@ -88,7 +88,7 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param dts:
-    :param jsFncs:
+    :param jsFncs: List. Javascript functions
     """
     return self.input.included_dates(dts, jsFncs)
 
@@ -143,7 +143,7 @@ class TimePicker(Html.Html):
     """
     Description:
     ------------
-    The Javascript Dom proxy to the input object
+    The Javascript Dom proxy to the input object.
 
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
@@ -151,11 +151,11 @@ class TimePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def change(self, jsFnc):
+  def change(self, jsFncs):
     """
     Description:
     -----------
-    Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+    Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side
 
     Usage::
@@ -171,9 +171,9 @@ class TimePicker(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFncs: List. Javascript functions
     """
-    self.input.change(jsFnc)
+    self.input.change(jsFncs)
     return self
 
   def __str__(self):
@@ -290,10 +290,10 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions
-    :param profile:
-    :param source_event:
-    :param onReady:
+    :param jsFncs: List of Js Functions. A Javascript Python function.
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -311,6 +311,7 @@ class Calendar(Html.Html):
     :param start:
     :param capacity: Float. A figure in percentage
     :param end:
+    :param weekend:
     :param options:
     """
     if self.options.unit != 100 and options is None:
@@ -383,6 +384,7 @@ class Calendar(Html.Html):
     :param capacity:
     :param frequency:
     :param weekend:
+    :param options:
     """
     dt = datetime.date(*map(lambda x: int(x), start.split("-")))
     c = []
@@ -427,7 +429,6 @@ class Calendar(Html.Html):
       for i in range(7 - len(row)):
         row.append("<td style='padding:0'></td>")
       body.append("<tr>%s</tr>" % "".join(row))
-
     self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
 
@@ -453,7 +454,7 @@ class Timer(Html.Html):
         if (tmp >= 0){
           var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
-        tmp != 0 || (tmp=0)}, 1000);
+        tmp != 0 || (tmp=0)}, 1000)
       '''
 
   def end(self, jsFncs):
@@ -494,7 +495,7 @@ class Elapsed(Html.Html):
       var now = new Date().getTime(); var distance = now - startDate.getTime();
       var days = Math.floor(distance / (1000 * 60 * 60 * 24)); var years = 0;
       if (days > 365){years = Math.floor(days / 365); days = days - years * 365}
-      if (years > 0){htmlObj.querySelector("span[name=clock]").innerHTML = "<b>" + years + "y, " + days +"d </b>"}
+      if (years > 0){htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ years +"y, "+ days +"d </b>"}
       else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}
       '''
 

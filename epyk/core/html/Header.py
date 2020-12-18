@@ -112,7 +112,7 @@ class Meta(object):
     :param value: String. The report description
     """
     self._metas["description"] = '<meta name="description" content="%s">' % value
-    if not "description" in self.__cols:
+    if "description" not in self.__cols:
       self.__cols.append("description")
     return self
 
@@ -137,7 +137,7 @@ class Meta(object):
     if isinstance(content, list):
       content = ",".join(content)
     self._metas["keywords"] = '<meta name="keywords" content="%s">' % content
-    if not "keywords" in self.__cols:
+    if "keywords" not in self.__cols:
       self.__cols.append("keywords")
     return self
 
@@ -157,7 +157,7 @@ class Meta(object):
     :param content: String.
     """
     self._metas[name] = '<meta name="%s" content="%s">' % (name, content)
-    if not name in self.__cols:
+    if name not in self.__cols:
       self.__cols.append(name)
     return self
 
@@ -175,11 +175,9 @@ class Meta(object):
     ----------
     :param name: String.
     :param content: String
-
-    :return:
     """
     self._metas[name] = '<meta http-equiv="%s" content="%s">' % (name, content)
-    if not name in self.__cols:
+    if name not in self.__cols:
       self.__cols.append(name)
     return self
 
@@ -247,7 +245,7 @@ class Header(object):
 
     Related Pages:
 
-	  https://www.w3schools.com/tags/tag_meta.asp
+	    https://www.w3schools.com/tags/tag_meta.asp
 
     :rtype: Meta
     """
@@ -257,10 +255,13 @@ class Header(object):
 
   def addScripts(self, src, attrs=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param src:
     :param attrs:
-    :return:
     """
     attr_list = []
     if attrs is not None:
@@ -303,8 +304,6 @@ class Header(object):
     Attributes:
     ----------
     :param url:
-
-    :return:
     """
     self._base = url
     return self
@@ -354,4 +353,3 @@ class Header(object):
       result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s'/ >" % link)
     result.extend(self._scripts)
     return "\n".join(result)
-

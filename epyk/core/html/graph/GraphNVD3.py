@@ -28,24 +28,49 @@ class Chart(Html.Html):
 
   @property
   def data(self):
+    """
+    Description:
+    -----------
+    Property to the last dataset added to the NVD3 chart.
+    Use the function traces to get a specific series from the chart object
+    """
     return self._datasets[-1]
 
   def traces(self, i=None):
     """
     Description:
     ------------
-
-    :rtype: JsChartJs.DataSetPie
+    Get a specific series from the datasets attributes in the NVD3 chart.
     """
     if i is None:
       return self._datasets[-1]
 
     return self._datasets[i]
 
-  def click(self, jsFnc, profile=False, source_event=None):
+  def click(self, jsFnc, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
     raise Exception("Not implemented for this chart !")
 
   def add_trace(self, data, name=""):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name:
+    """
     dataset = {"values": data, 'key': name}
     next_index = len(self._datasets)
     if len(self._report.theme.colors) > next_index:
@@ -66,6 +91,16 @@ class Chart(Html.Html):
     return self._d3
 
   def convert(self, data, options, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     mod_name = __name__.split(".")[-1]
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
@@ -155,8 +190,17 @@ class ChartScatter(ChartLine):
       self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, jsFnc, profile=False, source_event=None):
-    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+
+    Attributes:
+    ----------
+    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: A String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
 
 
@@ -204,7 +248,14 @@ class ChartBar(Chart):
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, jsFnc, profile=False, source_event=None):
+  def click(self, jsFnc, profile=False, source_event=None, onReady=False):
+    """
+
+    :param jsFnc:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
     self.onReady("%s.selectAll('.nv-bar').on('click', function(event){ %s })" % (self.d3.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
@@ -300,8 +351,19 @@ class ChartPie(Chart):
           result.push(values)}
       }'''
 
-  def click(self, jsFnc, profile=False, source_event=None):
-    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    """
+    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
 
   def add_trace(self, data, name=""):
@@ -309,6 +371,8 @@ class ChartPie(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param name:
     """
@@ -366,6 +430,8 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param dimensions:
     """
     self.__dimensions = dimensions
@@ -377,6 +443,8 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param name:
     """
@@ -403,6 +471,8 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param color:
     :param data:
     """
@@ -416,6 +486,8 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param name:
     """
@@ -466,6 +538,8 @@ class ChartBoxPlot(Chart):
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
+    Attributes:
+    ----------
     :param q1:
     :param q3:
     :param outliers:
@@ -494,6 +568,8 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param name:
     """
@@ -550,6 +626,8 @@ class ChartForceDirected(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param name:
     """

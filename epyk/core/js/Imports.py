@@ -166,6 +166,7 @@ JS_IMPORTS = {
   # numbers formatting
   'accounting': {
     'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting', 'npm_path': ''},
+    "repository": "https://github.com/openexchangerates/accounting.js",
     'modules': [
       {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -176,13 +177,14 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'qrcode.min.js', 'version': '1.0.0', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
+    'repository': 'https://github.com/llyys/qrcodejs',
     'website': 'https://davidshimjs.github.io/qrcodejs/'},
 
   # data transformation
   'underscore': {
     'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore', 'npm_path': ''},
     'modules': [
-      {'script': 'underscore-min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'underscore-min.js', 'version': '1.12.0', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -227,7 +229,7 @@ JS_IMPORTS = {
     'dsc': 'Module used by Tabulator for datetime objects',
     #'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
     'modules': [
-      {'script': 'moment.min.js', 'version': '2.24.0', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'moment.min.js', 'version': '2.29.1', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://momentjs.com/',
   },
@@ -240,7 +242,7 @@ JS_IMPORTS = {
       {'script': 'ag-grid-community.min.js', 'version': '24.0.0', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # module for tabulator
-  'tabulator': {
+  'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
@@ -254,7 +256,7 @@ JS_IMPORTS = {
   # Tabulator configurations
   # Different modules part of the npm project to load specific configurations
   'tabulator-inputs': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'formatters-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
@@ -262,7 +264,7 @@ JS_IMPORTS = {
   },
 
   'tabulator-drop': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'formatters-drop.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
@@ -270,7 +272,7 @@ JS_IMPORTS = {
   },
 
   'tabulator-mutators-inputs': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'mutators-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
@@ -278,14 +280,14 @@ JS_IMPORTS = {
   },
 
   'editors-inputs': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'editors-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
     'website': 'http://tabulator.info/'
   },
 
   'editors-dates': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'editors-dates.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
@@ -294,7 +296,7 @@ JS_IMPORTS = {
 
   'editors-selects': {
     'req': [
-      {'alias': 'tabulator'}],
+      {'alias': 'tabulator-tables'}],
     'modules': [
       {'script': 'editors-selects.js', 'version': TABULATOR_EXTENSIONS,
        'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'
@@ -304,7 +306,7 @@ JS_IMPORTS = {
   },
 
   'tabulator-icons': {
-    'req': [{'alias': 'tabulator'}],
+    'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       # core only needed for Jupyter for some reasons
       {'script': 'formatters-icons.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
@@ -314,7 +316,7 @@ JS_IMPORTS = {
 
   'tabulator-numbers': {
       'req': [
-        {'alias': 'tabulator'},
+        {'alias': 'tabulator-tables'},
         {'alias': 'accounting'},
         {'alias': 'd3-scale'},
       ],
@@ -517,9 +519,10 @@ JS_IMPORTS = {
   # Jquery package width CDN links
   'jquery': {
     'website': 'http://jquery.com/',
+    'repository': "https://github.com/jquery/jquery",
     'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'jquery.min.js', 'version': '3.4.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.min.js', 'version': '3.5.0', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # QUnit package width CDN links
   'qunit': {
@@ -756,7 +759,7 @@ JS_IMPORTS = {
     'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'script': 'c3.min.js', 'version': '0.7.15', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3.min.js', 'version': '0.7.20', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   'crossfilter': {
     'website': 'http://square.github.io/crossfilter/',
@@ -773,18 +776,18 @@ JS_IMPORTS = {
     'req': [{'alias': 'd3'}, {'alias': 'crossfilter'},
     ],
     'modules': [
-      {'script': 'dc.min.js', 'version': '3.2.1', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.js', 'version': '4.2.0', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
-  'billboard': {
+  'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
     'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'billboard.js', 'var': 'bb', 'init_fnc': 'var bb = billboard.bb'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'script': 'billboard.min.js', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'billboard.min.js', 'version': '2.1.4', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs modules width CDN links
-  'Chart.js': {
+  'chart.js': {
     'website': 'https://www.chartjs.org/',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
@@ -794,49 +797,49 @@ JS_IMPORTS = {
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-dragdata': {
     'website': 'https://www.chartjs.org/',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-dragdata.min.js', 'version': 'latest', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-annotation': {
     'website': 'https://www.chartjs.org/',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-annotation.min.js', 'version': '0.5.7', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs datalabels plugin modules width CDN links
   'chartjs-plugin-datalabels': {
     'website': 'https://chartjs-plugin-datalabels.netlify.app/',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-datalabels.min.js', 'version': '0.7.0', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
   # ChartJs Labels plugin modules width CDN links
   'chartjs-plugin-labels': {
     'website': 'https://github.com/emn178/chartjs-plugin-labels',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-labels.js', 'version': '1.1.0', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-crosshair': {
     'website': 'https://www.chartjs.org/',
-    'req': [{'alias': 'Chart.js'}],
+    'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-crosshair.js', 'version': '1.1.6', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
 
   # ChartJs Zoom plugin modules width CDN links
   'chartjs-plugin-zoom': {
     'website': 'https://www.chartjs.org/',
-    'req': [{'alias': 'Chart.js'}, {"alias": 'hammer'}],
+    'req': [{'alias': 'chart.js'}, {"alias": 'hammer'}],
     'modules': [
       {'script': 'chartjs-plugin-zoom.min.js', 'version': '0.7.7', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs addon to add some Geo charts
   'chartjs-chart-geo': {
       'website': 'https://github.com/sgratzl/chartjs-chart-geo',
-      'req': [{'alias': 'Chart.js'}],
+      'req': [{'alias': 'chart.js'}],
       'modules': [
         {'script': 'Chart.Geo.min.js', 'version': '2.1.0', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
       ]},
@@ -1050,7 +1053,7 @@ CSS_IMPORTS = {
       {'script': 'jquery.mCustomScrollbar.min.css', 'version': '3.1.5', 'path': 'malihu-custom-scrollbar-plugin/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Tabulator definition
-  'tabulator': {
+  'tabulator-tables': {
     'website': 'http://tabulator.info',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
@@ -1180,18 +1183,18 @@ CSS_IMPORTS = {
   'c3': {
     'website': 'https://c3js.org/',
     'modules': [
-      {'script': 'c3.min.css', 'version': '0.7.15', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3.min.css', 'version': '0.7.20', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # DC modules width CDN links
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
     'modules': [
-      {'script': 'dc.min.css', 'version': '3.2.1', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.css', 'version': '4.2.0', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
-  'billboard': {
+  'billboard.js': {
     'modules': [
-      {'script': 'billboard.min.css', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'billboard.min.css', 'version': '2.1.4', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/'},
 
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},

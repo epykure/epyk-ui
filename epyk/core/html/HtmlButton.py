@@ -41,7 +41,7 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     :rtype: OptButton.OptionsButton
     """
@@ -52,7 +52,7 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    HTML Dom object
+    HTML Dom object.
 
     :rtype: JsHtml.JsHtmlButton
     """
@@ -68,10 +68,11 @@ class Button(Html.Html):
     """
     Description:
     -----------
+    Show / Hide the loading event predefined for this component.
 
     Attributes:
     ----------
-    :param status:
+    :param status: Boolean. Optional. A flag to specify the status of the loading event.
     """
     if status:
       self.dom.setAttribute("data-content", self.dom.content)
@@ -103,7 +104,7 @@ class Button(Html.Html):
     ----------
     :param jsFncs: List. The Javascript Events triggered before the redirection
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param name: String. Optional.
+    :param name: String. Optional. The type of link to the next page.
     :param source_event: String. Optional. The event source.
     """
     jsFncs = jsFncs or []
@@ -136,8 +137,8 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param background_color: String.
-    :param color: String.
+    :param background_color: String. Optional. An hexadecimal color code.
+    :param color: String. Optional. An hexadecimal color code.
 
     :return: The htmlObj to allow the chaining
     """
@@ -163,6 +164,7 @@ class Button(Html.Html):
     :param jsPressFncs:
     :param jsReleaseFncs:
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param onReady: Boolean. Optional.
     """
     str_fnc = ""
     if jsPressFncs is not None:

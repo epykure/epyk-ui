@@ -26,6 +26,8 @@ class JsPerformance(object):
 
   def add_profiling(self, jsFnc):
     """
+    Description:
+    ------------
     Wrap the Javascript functions with function to asset on the execution time.
 
     Example
@@ -35,6 +37,8 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
+    Attributes:
+    ----------
     :param jsFnc: The Javascript functions
 
     :return: The profile variable name
@@ -49,6 +53,8 @@ class JsPerformance(object):
 
   def clearMarks(self, name=None):
     """
+    Description:
+    ------------
     The clearMarks() method removes the named mark from the browser's performance entry buffer.
     If the method is called with no arguments, all performance entries with an entry type of "mark" will be removed from the performance entry buffer.
 
@@ -58,6 +64,10 @@ class JsPerformance(object):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMarks
+
+    Attributes:
+    ----------
+    :param name: String. Optional.
 
     :return: Void, the String for the Javascript side
     """
@@ -71,6 +81,8 @@ class JsPerformance(object):
 
   def clearMeasures(self, name=None):
     """
+    Description:
+    ------------
     The clearMeasures() method removes the named measure from the browser's performance entry buffer.
     If the method is called with no arguments, all performance entries with an entry type of "measure" will be removed from the performance entry buffer.
 
@@ -81,6 +93,8 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMeasures
 
+    Attributes:
+    ----------
     :param name: Optional, The name of the mark to be cleared
 
     :return: Void, the String for the Javascript side
@@ -93,6 +107,8 @@ class JsPerformance(object):
 
   def clearResourceTimings(self):
     """
+    Description:
+    ------------
     The clearResourceTimings() method removes all performance entries with an entryType of "resource" from the browser's performance data buffer and sets the size of the performance data buffer to zero.
     To set the size of the browser's performance data buffer, use the Performance.setResourceTimingBufferSize() method.
 
@@ -109,6 +125,8 @@ class JsPerformance(object):
 
   def getEntries(self):
     """
+    Description:
+    ------------
     The getEntries() method returns a list of all PerformanceEntry objects for the page.
     The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
     If you are only interested in performance entries of certain types or that have certain names, see getEntriesByType() and getEntriesByName().
@@ -123,6 +141,8 @@ class JsPerformance(object):
 
   def getEntriesByName(self, name, type=None):
     """
+    Description:
+    ------------
     The getEntriesByName() method returns a list of PerformanceEntry objects for the given name and type.
     The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
 
@@ -133,12 +153,14 @@ class JsPerformance(object):
 
       https//developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByName
 
+    Attributes:
+    ----------
     :param name: The name of the entry to retrieve.
     :param type: Optional, The type of entry to retrieve such as "mark"
 
     :return: A list of PerformanceEntry objects that have the specified name and type
     """
-    if not name in self.__marks:
+    if name not in self.__marks:
       raise Exception("Mark %s not defined in the performances" % name)
 
     name = JsUtils.jsConvertData(name, None)
@@ -149,6 +171,8 @@ class JsPerformance(object):
 
   def getEntriesByType(self, type):
     """
+    Description:
+    ------------
     The getEntriesByType() method returns a list of PerformanceEntry objects for a given type.
     The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
 
@@ -159,6 +183,8 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType
 
+    Attributes:
+    ----------
     :param type: The type of entry to retrieve such as "mark"
 
     :return: A list of PerformanceEntry objects that have the specified type
@@ -167,6 +193,8 @@ class JsPerformance(object):
 
   def mark(self, name):
     """
+    Description:
+    ------------
     The mark() method creates a timestamp in the browser's performance entry buffer with the given name.
     The application defined timestamp can be retrieved by one of the Performance interface's getEntries*() methods (getEntries(), getEntriesByName() or getEntriesByType()).
 
@@ -177,6 +205,8 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
 
+    Attributes:
+    ----------
     :param name: A DOMString representing the name of the mark.
 
     :return: VOid, The String for the Javascript side
@@ -187,6 +217,8 @@ class JsPerformance(object):
 
   def measure(self, name, startMark=None, endMark=None):
     """
+    Description:
+    ------------
     The measure() method creates a named timestamp in the browser's performance entry buffer between marks, the navigation start time, or the current time.
     When measuring between two marks, there is a start mark and end mark, respectively.
     The named timestamp is referred to as a measure.
@@ -195,6 +227,8 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
 
+    Attributes:
+    ----------
     :param name: A DOMString representing the name of the measure
     :param startMark: Optional, A DOMString representing the name of the measure's starting mark
     :param endMark: Optional, A DOMString representing the name of the measure's ending mark
@@ -219,6 +253,8 @@ class JsPerformance(object):
   @property
   def now(self):
     """
+    Description:
+    ------------
     The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
 
     Example
@@ -234,6 +270,8 @@ class JsPerformance(object):
 
   def setResourceTimingBufferSize(self, maxSize):
     """
+    Description:
+    ------------
     The setResourceTimingBufferSize() method sets the browser's resource timing buffer size to the specified number of "resource" performance entry type objects.
 
     Example
@@ -243,12 +281,18 @@ class JsPerformance(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Performance/setResourceTimingBufferSize
 
+    Attributes:
+    ----------
+    :param maxSize:
+
     :return: Void, the String for the Javascript side
     """
     return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % maxSize)
 
   def toJSON(self):
     """
+    Description:
+    ------------
     The toJSON() method of the Performance interface is a standard serializer: it returns a JSON representation of the performance object's properties.
 
     Example

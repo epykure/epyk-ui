@@ -16,6 +16,8 @@ class JsMaths(object):
   @property
   def E(self):
     """
+    Description:
+    ------------
     The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
     Example
@@ -32,6 +34,8 @@ class JsMaths(object):
   @property
   def LN2(self):
     """
+    Description:
+    ------------
     The LN2 property returns the natural logarithm of 2, approximately 0.693.
 
     Example
@@ -48,6 +52,8 @@ class JsMaths(object):
   @property
   def LN10(self):
     """
+    Description:
+    ------------
     The LN10 property returns the natural logarithm of 10, approximately 2.302.
 
     Example
@@ -64,6 +70,8 @@ class JsMaths(object):
   @property
   def LOG2E(self):
     """
+    Description:
+    ------------
     The LOG2E property returns the base-2 logarithm of E, approximately 1.442
 
     Example
@@ -80,6 +88,8 @@ class JsMaths(object):
   @property
   def SQRT1_2(self):
     """
+    Description:
+    ------------
     The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
 
     Example
@@ -96,6 +106,8 @@ class JsMaths(object):
   @property
   def SQRT2(self):
     """
+    Description:
+    ------------
     The SQRT2 property returns the square root of 2, approximately 1.414.
 
     Example
@@ -115,14 +127,20 @@ class JsMaths(object):
   @property
   def PI(self):
     """
+    Description:
+    ------------
     The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14
 
-    https://www.w3schools.com/jsref/jsref_pi.asp
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_pi.asp
     """
     return JsNumber.JsNumber("Math.PI", isPyData=False)
 
   def random(self, min=0, max=1):
     """
+    Description:
+    ------------
     Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
 
     Example
@@ -144,6 +162,8 @@ class JsMaths(object):
 
   def min(self, *args):
     """
+    Description:
+    ------------
     The min() method returns the number with the lowest value.
 
     Example
@@ -153,6 +173,8 @@ class JsMaths(object):
 
       https://www.w3schools.com/jsref/jsref_min.asp
 
+    Attributes:
+    ----------
     :param args: Optional. One or more numbers to compare
 
     :return: A Number, representing the lowest number of the arguments, or Infinity if no arguments are given, or NaN if one or more arguments are not numbers
@@ -162,6 +184,8 @@ class JsMaths(object):
 
   def max(self, *args):
     """
+    Description:
+    ------------
     The max() method returns the number with the highest value.
 
     Example
@@ -172,6 +196,8 @@ class JsMaths(object):
       https://www.w3schools.com/jsref/jsref_max.asp
     https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
+    Attributes:
+    ----------
     :param args: Optional. One or more numbers to compare
 
     :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN if one or more arguments are not numbers
@@ -184,6 +210,8 @@ class JsMaths(object):
 
   def floor(self, number):
     """
+    Description:
+    ------------
     The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
 
     Example
@@ -193,6 +221,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_floor.asp
 
+    Attributes:
+    ----------
     :param number: Required. The number you want to round
 
     :return: A Number, representing the nearest integer when rounding downwards
@@ -202,6 +232,8 @@ class JsMaths(object):
 
   def trunc(self, number):
     """
+    Description:
+    ------------
     The trunc() method returns the integer part of a number.
 
     Example
@@ -211,6 +243,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_trunc.asp
 
+    Attributes:
+    ----------
     :param number: Required. A number
 
     :return: Returns the integer part of a number (x)
@@ -220,12 +254,16 @@ class JsMaths(object):
 
   def abs(self, number):
     """
+    Description:
+    ------------
     The abs() method returns the absolute value of a number.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_abs.asp
 
+    Attributes:
+    ----------
     :param number: Required. A number
 
     :return: Returns the absolute value of x
@@ -235,12 +273,16 @@ class JsMaths(object):
 
   def cos(self, number):
     """
+    Description:
+    ------------
     The acos() method returns the cosinus of a number as a value value between 0 and PI radians.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_cos.asp
 
+    Attributes:
+    ----------
     :param number: Returns the cosine of x (x is in radians)
 
     :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty
@@ -250,12 +292,16 @@ class JsMaths(object):
 
   def sin(self, number):
     """
+    Description:
+    ------------
     The sin() method returns the sinus of a number as a value value between 0 and PI radians.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_sin.asp
 
+    Attributes:
+    ----------
     :param number: Returns the sinus of x (x is in radians)
 
     :return: A Number, from -1 to 1, representing the sine of an angle, or NaN if the value is empty
@@ -265,12 +311,16 @@ class JsMaths(object):
 
   def log(self, number):
     """
+    Description:
+    ------------
     The log() method returns the natural logarithm (base E) of a number.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_log.asp
 
+    Attributes:
+    ----------
     :param number: Required. A number
 
     :return: Returns the natural logarithm (base E) of x
@@ -280,12 +330,16 @@ class JsMaths(object):
 
   def exp(self, number):
     """
+    Description:
+    ------------
     The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the number passed to it.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_exp.asp
 
+    Attributes:
+    ----------
     :param number: Required. A number
 
     :return: Returns the value of exponential of x
@@ -295,6 +349,8 @@ class JsMaths(object):
 
   def round(self, number):
     """
+    Description:
+    ------------
     The round() method rounds a number to the nearest integer.
 
     Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
@@ -307,6 +363,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_round.asp
 
+    Attributes:
+    ----------
     :param number: Required. The number to be rounded
 
     :return: Rounds x to the nearest integer
@@ -316,6 +374,8 @@ class JsMaths(object):
 
   def sqrt(self, number):
     """
+    Description:
+    ------------
     The sqrt() method returns the square root of a number.
 
     Example
@@ -326,6 +386,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_sqrt.asp
 
+    Attributes:
+    ----------
     :param number: Required. A number
 
     :return: A Number. If x is a negative number, NaN is returned
@@ -335,6 +397,8 @@ class JsMaths(object):
 
   def ceil(self, number):
     """
+    Description:
+    ------------
     The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
 
     Example
@@ -344,6 +408,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_ceil.asp
 
+    Attributes:
+    ----------
     :param number: Required. The number you want to round
 
     :return: Returns x, rounded upwards to the nearest integer
@@ -354,6 +420,8 @@ class JsMaths(object):
   @staticmethod
   def pow(number, power):
     """
+    Description:
+    ------------
     The pow() method returns the value of x to the power of y (xy).
 
     Example
@@ -364,6 +432,8 @@ class JsMaths(object):
 
       https//www.w3schools.com/jsref/jsref_pow.asp
 
+    Attributes:
+    ----------
     :param number: Required. The base
     :param power: Required. The exponent
 

@@ -98,7 +98,7 @@ class Navigation(JsPackage):
 
 
 class CellComponent(JsPackage):
-  lib_alias = {"js": "tabulator", 'css': "tabulator"}
+  lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
   lib_selector = "cell"
 
   def getElement(self):

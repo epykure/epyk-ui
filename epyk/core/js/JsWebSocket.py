@@ -37,6 +37,8 @@ class WebSocket(object):
   @property
   def readyState(self):
     """
+    Description:
+    ------------
 
     """
     return JsObjects.JsObject.JsObject.get("%s.readyState" % self._selector)
@@ -44,6 +46,8 @@ class WebSocket(object):
   @property
   def states(self):
     """
+    Description:
+    ------------
     To get connection state, additionally there’s socket.readyState property with values:
 
     Related Pages:
@@ -55,6 +59,8 @@ class WebSocket(object):
   @property
   def http_codes(self):
     """
+    Description:
+    ------------
     To get connection state, additionally there’s socket.readyState property with values:
 
     Related Pages:
@@ -66,11 +72,18 @@ class WebSocket(object):
   @property
   def message(self):
     """
+    Description:
+    ------------
 
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
   def reconnect(self):
+    """
+    Description:
+    ------------
+
+    """
     return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {"varName": self._selector, "connect": self.__connect})
 
   def connect(self, url=None, port=None, protocol=None, from_config=None):
@@ -87,6 +100,7 @@ class WebSocket(object):
     ----------
     :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
         This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
+    :param port:
     :param protocol: String or List. Either a single protocol string or an array of protocol strings.
     :param from_config:
     """
@@ -185,6 +199,8 @@ class WebSocket(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsFncs:
     """
     return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
@@ -258,6 +274,8 @@ class Worker(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     """
     self._src, self.__server = src, server
     self._selector = htmlCode or "worker_%s" % id(self)
@@ -318,6 +336,15 @@ class Worker(object):
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
   def on(self, eventType, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param eventType:
+    :param jsFncs:
+    """
     self._src.js.onReady(self.addEventListener(eventType, jsFncs))
 
   def addEventListener(self, eventType, jsFncs):
@@ -325,6 +352,8 @@ class Worker(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param eventType:
     :param jsFncs:
     """
@@ -335,6 +364,8 @@ class Worker(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsFncs:
     """
     return JsObjects.JsVoid("%(varName)s.onmessage = function (event) {%(data)s}" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
@@ -355,7 +386,7 @@ class Worker(object):
     """
     Description:
     ------------
-    Proxy to the terminate method
+    Proxy to the terminate method.
     """
     return self.terminate()
 
@@ -367,6 +398,8 @@ class ServerSentEvent(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     """
     self._src, self.__server = src, server
     self._selector = htmlCode or "sse_%s" % id(self)
@@ -375,6 +408,8 @@ class ServerSentEvent(object):
   @property
   def message(self):
     """
+    Description:
+    ------------
 
     """
     return JsObjects.JsObject.JsObject.get("event.data")
@@ -393,6 +428,7 @@ class ServerSentEvent(object):
     ----------
     :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
         This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
+    :param port:
     :param protocol: String or List. Either a single protocol string or an array of protocol strings.
     :param from_config:
     """
@@ -467,6 +503,8 @@ class ServerSentEvent(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param eventType:
     :param jsFncs:
     """

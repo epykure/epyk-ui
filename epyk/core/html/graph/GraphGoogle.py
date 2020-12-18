@@ -22,11 +22,21 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     return '''
       %(chartId)s = google.charts.setOnLoadCallback( (function(){
         var data = new google.visualization.DataTable();

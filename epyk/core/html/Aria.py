@@ -1,8 +1,11 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
 
 class Aria(object):
+
   def __init__(self, htmlObj):
     self.htmlObj = htmlObj
 
@@ -12,6 +15,8 @@ class Aria(object):
     ------------
     Set multiple aria properties
 
+    Attributes:
+    ----------
     :param arias:
     """
     for k, v in arias.items():
@@ -23,6 +28,8 @@ class Aria(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param key:
     :param val:
     """
@@ -36,8 +43,6 @@ class Aria(object):
 
     Example of roles
     Roles: button, checkbox, menuitem, menuitemcheckbox, menuitemradio, option, radio, switch, tab or treeitem
-
-    :return:
     """
     return self.htmlObj.attr.get("role", '')
 
@@ -97,8 +102,6 @@ class Aria(object):
     Related Pages:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-busy
-
-    :return:
     """
     return self.htmlObj.attr.get("aria-busy", False)
 
