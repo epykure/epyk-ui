@@ -20,7 +20,7 @@ class ExternalLink(Html.Html):
     self.add_helper(helper)
     self.decoration, self.__url = decoration, {}
     self.__options = OptText.OptionsLink(self, options)
-    if not 'url' in self.val:
+    if 'url' not in self.val:
       self.options.url = self.val['text']
     else:
       self.options.url = self.val['url']
@@ -28,6 +28,8 @@ class ExternalLink(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -46,7 +48,7 @@ class ExternalLink(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     :rtype: OptText.OptionsLink
     """
@@ -70,6 +72,8 @@ class ExternalLink(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param component:
     """
     self.val["url"] = "#%s" % component.htmlCode
@@ -80,11 +84,11 @@ class ExternalLink(Html.Html):
     """
     Description:
     -----------
-    Property to remove the list default style
+    Property to remove the list default style.
 
     Attributes:
     ----------
-    :param color: String. Optional. The color code
+    :param color: String. Optional. The color code.
     """
     self.style.css.text_decoration = None
     self.style.list_style_type = None
@@ -97,13 +101,13 @@ class ExternalLink(Html.Html):
     """
     Description:
     -----------
-    Return the JavaScript fragment to refresh the component content
+    Return the JavaScript fragment to refresh the component content.
 
     Attributes:
     ----------
-    :param data: String or object. The component expected content
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param data: String or object. The component expected content.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):
@@ -137,7 +141,7 @@ class DataLink(Html.Html):
 
   @property
   def _js__builder__(self):
-    return ''' var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b); htmlObj.innerHTML = data.text'''
+    return '''var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b); htmlObj.innerHTML = data.text'''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

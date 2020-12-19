@@ -167,6 +167,7 @@ JS_IMPORTS = {
   'accounting': {
     'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting', 'npm_path': ''},
     "repository": "https://github.com/openexchangerates/accounting.js",
+    "version": "0.4.1",
     'modules': [
       {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -174,6 +175,7 @@ JS_IMPORTS = {
 
   # QR Code
   'qrcodejs': {
+    'version': '1.0.0',
     'modules': [
       {'script': 'qrcode.min.js', 'version': '1.0.0', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -183,6 +185,7 @@ JS_IMPORTS = {
   # data transformation
   'underscore': {
     'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore', 'npm_path': ''},
+    'version': '1.12.0',
     'modules': [
       {'script': 'underscore-min.js', 'version': '1.12.0', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -218,15 +221,18 @@ JS_IMPORTS = {
   'bootstrap': {
     'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/js'},
     'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
+    'version': '4.5.3',
+    'repository': 'https://github.com/twbs/bootstrap',
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.min.js', 'version': '4.5.0', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'script': 'bootstrap.min.js', 'version': '4.5.3', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
       #{'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
     ],
     'website': 'https://getbootstrap.com/'},
 
   'moment': {
     'dsc': 'Module used by Tabulator for datetime objects',
+    "version": "2.29.1",
     #'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
     'modules': [
       {'script': 'moment.min.js', 'version': '2.29.1', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -248,7 +254,7 @@ JS_IMPORTS = {
     'modules': [
       # core only needed for Jupyter for some reasons
       #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'version': '4.8.4', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.js', 'version': '4.9.1', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -449,8 +455,9 @@ JS_IMPORTS = {
   'jszip': {
     'website': 'https://datatables.net/extensions/buttons/',
     'register': {'alias': 'jszip', 'module': 'jszip.min'},
+    'version': '3.5.0',
     'modules': [
-      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'version': '3.1.5', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'version': '3.5.0', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
 
   #
@@ -465,6 +472,7 @@ JS_IMPORTS = {
   'pivottable': {
     'req': [{'alias': 'jqueryui'}],
     'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable', 'npm_path': 'dist'},
+    "repository": 'https://github.com/nicolaskruchten/pivottable',
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'pivot.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -522,13 +530,13 @@ JS_IMPORTS = {
     'repository': "https://github.com/jquery/jquery",
     'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'jquery.min.js', 'version': '3.5.0', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.min.js', 'version': '3.5.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # QUnit package width CDN links
   'qunit': {
     'website': 'https://qunitjs.com',
     'modules': [
-      {'script': 'qunit.min.js', 'version': '2.9.2', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'qunit.min.js', 'version': '2.13.0', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Used to produce sparkline charts in a document and in Tabulator
   'jquery-sparkline': {
@@ -544,12 +552,13 @@ JS_IMPORTS = {
   'jqueryui': {
     'req': [{'alias': 'jquery'}],
     'website': 'http://jquery.com/',
+    'version': '1.12.1',
     'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
       {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
-  # Jquery-brackets package width CDN links
-  'jquery-brackets': {
+  # Jquery-bracket package width CDN links
+  'jquery-bracket': {
     'website': 'http://www.aropupu.fi/bracket/',
     'register': {'alias': 'jQueryBracket', 'module': 'jquery.bracket.min'},
     'req': [{'alias': 'jquery'}],
@@ -568,7 +577,7 @@ JS_IMPORTS = {
       {'alias': 'jquery'},
       {'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.timepicker.min.js', 'version': '1.3.5', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.timepicker.min.js', 'version': '1.13.16', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # To display a context menu when right click on an item
   'jquery-context-menu': {
@@ -732,22 +741,24 @@ JS_IMPORTS = {
 
   # D3 color module
   'd3-color': {
-      'website': 'https://github.com/d3/d3-color',
-      'register': {'alias': 'd3_color', 'module': 'd3-color.min'},
-      'modules': [
-        {'script': 'd3-color.min.js', 'version': '1.2.1', 'path': 'd3-color/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+    'website': 'https://github.com/d3/d3-color',
+    'register': {'alias': 'd3_color', 'module': 'd3-color.min'},
+    'modules': [
+      {'script': 'd3-color.min.js', 'version': '1.2.1', 'path': 'd3-color/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript dependencies for Plotly width CDN links
   'plotly.js': {
     'website': 'https://plot.ly/javascript/',
+    'repository': 'https://github.com/plotly/plotly.js',
     'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'script': 'plotly.min.js', 'version': '1.51.1', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'plotly.min.js', 'version': '1.58.3', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # NVD3 Components width CDN links
   'nvd3': {
     'website': 'http://nvd3.org/',
+    'repository': 'https://github.com/novus/nvd3',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
     'register': {'alias': 'nv', 'module': 'nv.d3.min', 'npm': 'nvd3'},
     'modules': [
@@ -756,6 +767,7 @@ JS_IMPORTS = {
   # C3 modules width CDN links
   'c3': {
     'website': 'https://c3js.org/',
+    'repository': 'https://github.com/c3js/c3',
     'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
     'req': [{'alias': 'd3'}],
     'modules': [
@@ -772,11 +784,12 @@ JS_IMPORTS = {
   # DC modules width CDN links
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
+    'repository': 'https://github.com/dc-js/dc.js',
     'register': {'alias': 'dc', 'module': 'dc.min', 'npm': 'dc'},
     'req': [{'alias': 'd3'}, {'alias': 'crossfilter'},
     ],
     'modules': [
-      {'script': 'dc.min.js', 'version': '4.2.0', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.js', 'version': '4.2.3', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
   'billboard.js': {
@@ -789,6 +802,7 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
+    'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
       #{'script': 'Chart.bundle.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -858,6 +872,7 @@ JS_IMPORTS = {
   # Popper tooltips used by bootstrap in the dropdown components
   '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
+    'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
     'register': {'alias': 'popper', 'module': 'popper.min', 'npm': '@popperjs/core', 'npm_path': 'dist/umd'},
     'modules': [
@@ -866,12 +881,13 @@ JS_IMPORTS = {
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
   'bootstrap-select': {
     'website': 'http://silviomoreto.github.io/bootstrap-select/',
+    'repository': 'https://github.com/snapappointments/bootstrap-select',
     'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.14', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.18', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ]},
 
   'ajax-bootstrap-select': {
@@ -906,6 +922,7 @@ JS_IMPORTS = {
   # https://github.com/mathjax/mathjax
   'mathjax': {
     'website': 'https://www.mathjax.org/',
+    'repository': 'https://github.com/mathjax/MathJax',
     'register': {'alias': 'mathjax', 'module': 'MathJax', 'npm': 'mathjax'},
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
@@ -920,14 +937,14 @@ JS_IMPORTS = {
     'register': {'alias': 'socketio', 'module': 'socket.io'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'socket.io.js', 'version': '2.3.0', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'socket.io.js', 'version': '3.0.4', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
     'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.js', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -936,7 +953,7 @@ JS_IMPORTS = {
     'website': 'https://highlightjs.org/',
     'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
     'modules': [
-      {'script': 'highlight.min.js', 'version': '10.1.1', 'path': 'highlight.js/%(version)s/',
+      {'script': 'highlight.min.js', 'version': '10.4.1', 'path': 'highlight.js/%(version)s/',
        'cdnjs': CDNJS_REPO}
     ]},
 
@@ -944,11 +961,12 @@ JS_IMPORTS = {
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'leaflet.js', 'version': '1.7.1', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # showdown
   'showdown': {
     'website': 'https://github.com/showdownjs/showdown',
+    'repository': 'https://github.com/showdownjs/showdown',
     'register': {'alias': 'showdown', 'npm': 'showdown', 'npm_path': 'dist'},
     'modules': [
       {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
@@ -956,10 +974,11 @@ JS_IMPORTS = {
   },
 
   # Sortable framework
-  'sortable': {
+  'sortablejs': {
     'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
+    'repository': 'https://github.com/SortableJS/Sortable',
     'modules': [
-      {'script': 'Sortable.min.js', 'version': '1.10.1', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'Sortable.min.js', 'version': '1.10.2', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/SortableJS/Sortable'},
 
@@ -1022,10 +1041,10 @@ CSS_IMPORTS = {
   'qunit': {
     'website': 'https://qunitjs.com',
     'modules': [
-      {'script': 'qunit.min.css', 'version': '2.9.2', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'qunit.min.css', 'version': '2.13.0', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
-  # Jquery-brackets package width CDN links
-  'jquery-brackets': {
+  # Jquery-bracket package width CDN links
+  'jquery-bracket': {
     'req': [{'alias': 'jqueryui'}],
     'modules': [
       {'script': 'jquery.bracket.min.css', 'version': '0.11.1', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -1043,7 +1062,7 @@ CSS_IMPORTS = {
     'website': 'https://timepicker.co/',
     'req': [{'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.timepicker.min.css', 'version': '1.3.5', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.timepicker.min.css', 'version': '1.13.16', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # To customize the scrollbar width CDN links
   'jquery-scrollbar': {
@@ -1057,7 +1076,7 @@ CSS_IMPORTS = {
     'website': 'http://tabulator.info',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
-      {'script': 'tabulator.min.css', 'version': '4.8.4', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'version': '4.9.1', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1154,7 +1173,7 @@ CSS_IMPORTS = {
     'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/css'},
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.5.0', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap.min.css', 'version': '4.5.3', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
       #{'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}
     ]},
 
@@ -1189,7 +1208,7 @@ CSS_IMPORTS = {
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
     'modules': [
-      {'script': 'dc.min.css', 'version': '4.2.0', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.css', 'version': '4.2.3', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
   'billboard.js': {
@@ -1205,7 +1224,7 @@ CSS_IMPORTS = {
     'register': {'alias': 'select', 'npm_path': 'dist/css'},
     'req': [{'alias': 'jqueryui'}, {'alias': 'bootstrap'}],
     'modules': [
-      {'script': 'bootstrap-select.min.css', 'version': '1.13.6', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap-select.min.css', 'version': '1.13.18', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]},
 
   'ajax-bootstrap-select': {
@@ -1242,7 +1261,7 @@ CSS_IMPORTS = {
     'website': 'https://codemirror.net/',
     'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.css', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # highlight
@@ -1250,14 +1269,14 @@ CSS_IMPORTS = {
     'website': 'https://highlightjs.org/',
     'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
     'modules': [
-      {'script': 'default.min.css', 'version': '10.1.1', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
+      {'script': 'default.min.css', 'version': '10.4.1', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'leaflet.css', 'version': '1.7.1', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   #
   'json-formatter': {

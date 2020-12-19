@@ -508,7 +508,7 @@ class Items(Html.Html):
 
 class ListTournaments(Html.Html):
   name = 'Brackets'
-  requirements = ('jquery-brackets', )
+  requirements = ('jquery-bracket', )
 
   def __init__(self, report, records, width, height, options, profile):
     self.options = options

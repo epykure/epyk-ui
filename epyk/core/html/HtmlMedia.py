@@ -40,11 +40,11 @@ class Media(Html.Html):
     """
     Description:
     ------------
-    Set the autoplay flag
+    Set the autoplay flag.
 
     Attributes:
     ----------
-    :param flag: Boolean. Default value is true
+    :param flag: Boolean. Optional. Default value is true.
     """
     if flag:
       self.set_attrs(name="autoplay", value=flag)
@@ -72,11 +72,11 @@ class Audio(Html.Html):
     """
     Description:
     ------------
-    Set the autoplay flag
+    Set the autoplay flag.
 
     Attributes:
     ----------
-    :param flag: Boolean. Default value is true
+    :param flag: Boolean. Optional. Default value is true
     """
     if flag:
       self.set_attrs(name="autoplay", value=flag)
@@ -127,6 +127,6 @@ class Youtube(Html.Html):
 
     Attributes:
     ----------
-    :param youtube_link:
+    :param youtube_link: String. The youtube link of the online video.
     """
     return 'http://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]

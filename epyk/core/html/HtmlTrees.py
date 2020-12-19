@@ -72,11 +72,11 @@ class Tree(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: String or List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     if not isinstance(jsFncs, list):
-      jsFncs = []
+      jsFncs = [jsFncs]
 
     self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
@@ -183,7 +183,7 @@ class DropDown(Html.Html):
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(jsFncs, list):
-      jsFncs = []
+      jsFncs = [jsFncs]
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 

@@ -7,7 +7,7 @@ from epyk.core.js.primitives import JsObjects
 
 class Sortable(JsPackage):
 
-  lib_alias = {"js": 'sortable'}
+  lib_alias = {"js": 'sortablejs'}
   lib_set_var = True
 
   def __init__(self, src=None, varName=None, selector=None, setVar=True, parent=None):
