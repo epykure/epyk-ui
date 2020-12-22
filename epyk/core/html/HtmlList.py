@@ -370,7 +370,7 @@ class Items(Html.Html):
           var content = item; if(typeof item.content !== 'undefined'){content = item.content};
           var content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
         var li = document.createElement("li");
-        Object.keys(options.li_style).forEach(function(key){li.style[key] = options.li_style[key]})
+        Object.keys(options.li_style).forEach(function(key){li.style[key] = options.li_style[key]});
         if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
         else{window['%(alias)s' + item.type](li, item, options)};
         if(options.delete){

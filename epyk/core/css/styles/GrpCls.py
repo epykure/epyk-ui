@@ -451,7 +451,6 @@ class ClassHtml(Properties.CssMixin):
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
     cls_obj = v_cls(self.htmlObj._report)
     self.classList['other'].add(cls_obj)
-    print(self.classList['other'])
     return cls_def
 
   def no_class(self):

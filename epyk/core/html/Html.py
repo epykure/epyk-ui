@@ -75,25 +75,35 @@ def inprogress(func):
 class Required(object):
   js, css = None, None
 
-  def __init__(self):
+  def __init__(self, page):
     self.js, self.css = {}, {}
+    self._page = page
 
-  def add(self, package, version=None):
+  def add(self, package, version=None, verbose=True):
     """
     Description:
     -----------
+    Add the package to the main page context.
 
     TODO: Use the version number
 
     Attributes:
     ----------
-    :param package: String. The package alias
-    :param version: String. The package version number
+    :param package: String. The package alias.
+    :param version: String. The package version number.
+    :param verbose: Boolean. Optional. Display version details (default True).
     """
+    html_types = set()
     if package in Imports.JS_IMPORTS:
       self.js[package] = version or '*'
+      self._page.jsImports.add(package)
+      html_types.add('js')
     if package in Imports.CSS_IMPORTS:
       self.css[package] = version or '*'
+      self._page.cssImport.add(package)
+      html_types.add('css')
+    if not html_types and verbose:
+      logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
 
 
 class EventTouch(object):
@@ -224,7 +234,7 @@ class Html(object):
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self.components = collections.OrderedDict() # Child component for this component
-    self.require = Required()
+    self.require = Required(report)
     for package in self.requirements or []:
       if isinstance(package, tuple):
         self.require.add(package[0], package[1])

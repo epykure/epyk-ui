@@ -206,9 +206,9 @@ class PyOuts(object):
         onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
     if self._report is not None:
-      importMng = self._report.imports(online=True)
+      importMng = self._report.imports
     else:
-      importMng = Imports.ImportManager(online=True, report=self._report)
+      importMng = Imports.ImportManager(report=self._report)
     results = {
       'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
@@ -235,9 +235,9 @@ class PyOuts(object):
     """
     results = self._to_html_obj()
     if self._report is not None:
-      importMng = self._report.imports(online=True)
+      importMng = self._report.imports
     else:
-      importMng = Imports.ImportManager(online=True, report=self._report)
+      importMng = Imports.ImportManager(report=self._report)
     require_js = importMng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']
@@ -433,22 +433,27 @@ class PyOuts(object):
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
     results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False))
     if options.get("split", False):
-      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), name)
-      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), name)
+      css_filename = "%s.min" % name if options.get("minify", False) else name
+      js_filename = "%s.min" % name if options.get("minify", False) else name
+      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), css_filename)
+      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), js_filename)
       static_path = path
       if options.get("static_path") is not None:
         static_path = os.path.join(path, options.get("static_path"))
       if not os.path.exists(os.path.join(static_path, 'css')):
         os.makedirs(os.path.join(static_path, 'css'))
-      with open(os.path.join(static_path, 'css', "%s.css" % name), "w") as f:
-        f.write(results['cssStyle'])
+      with open(os.path.join(static_path, 'css', "%s.css" % css_filename), "w") as f:
+        if options.get("minify", False):
+          f.write(results['cssStyle'].replace("\n", ""))
+        else:
+          f.write(results['cssStyle'])
         results['cssStyle'] = "" # empty the styles as written in an external file.
       if not os.path.exists(os.path.join(static_path, 'js')):
         os.makedirs(os.path.join(static_path, 'js'))
-      with open(os.path.join(static_path, 'js', "%s.js" % name), "w") as f:
+      with open(os.path.join(static_path, 'js', "%s.js" % js_filename), "w") as f:
         fncs = []
         for v in results['jsFrgsCommon'].values():
-          fncs.append(JsLinter.parse(v, prettify=options.get("prettify", False)))
+          fncs.append(JsLinter.parse(v, minify=options.get("minify", False)))
         f.write("\n\n".join(fncs))
 
     # Add the worker sections when no server available
@@ -581,9 +586,9 @@ class PyOuts(object):
     self.html_tmpl = HtmlTmplBase.STATIC_PAGE
     results = self._to_html_obj()
     if self._report is not None:
-      importMng = self._report.imports(online=True)
+      importMng = self._report.imports
     else:
-      importMng = Imports.ImportManager(online=True, report=self._report)
+      importMng = Imports.ImportManager(report=self._report)
     require_js = importMng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']

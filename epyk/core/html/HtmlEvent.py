@@ -802,7 +802,7 @@ class Filters(Html.Html):
           div.addEventListener("click", function(event){ 
             var targetElement = event.target || event.srcElement;
             if (targetElement.innerHTML != "reduce"){panel.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
-            else {panel.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}})
+            else {panel.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}});
           div.style.right = "5px"; panel.appendChild(div)
         }
     }'''

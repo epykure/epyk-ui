@@ -123,7 +123,8 @@ class Report(object):
     if path is not None:
       self._node_modules = (path, alias or path, install, update)
 
-  def imports(self, online=True):
+  @property
+  def imports(self):
     """
     Description:
     ------------
@@ -136,7 +137,7 @@ class Report(object):
     :rtype: Imports.ImportManager
     """
     if self.__import_manage is None:
-      self.__import_manage = Imports.ImportManager(online, report=self)
+      self.__import_manage = Imports.ImportManager(report=self)
     return self.__import_manage
 
   @property

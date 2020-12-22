@@ -738,6 +738,10 @@ class Packages:
     """
     Description:
     -----------
+    Get the current latest version of all the package in NPM.
+    This could help on maintaining the internal framework up to date with the improvements.
+
+    It is important to align with the new version in order to benefit from the community hard work !
 
     Attributes:
     ----------
@@ -747,7 +751,13 @@ class Packages:
     results = {}
     for js, js_details in Imports.JS_IMPORTS.items():
       pkg = npm.package(js)
-
+      if pkg is not None:
+        pkg.is_latest(verbose=verbose)
+        results[js] = pkg.release
+      elif verbose:
+        logging.warning("{} - Missing reference".format(js))
+    return results
+  
   @classmethod
   def repositories(cls, verbose=True):
     """
@@ -799,7 +809,7 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   npm = Npm()
   results = {}
   if page is not None:
-    packages = page.imports().requirements
+    packages = page.imports.requirements
   if packages is None:
     packages = Imports.JS_IMPORTS.keys()
   for pkg_alias in packages:
@@ -811,7 +821,7 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   return results
 
 
-def install(packages, path, node_server=False, update=False, verbose=True):
+def install(path, packages=None, node_server=False, update=False, verbose=True, page=None):
   """
   Description:
   ------------
@@ -821,8 +831,7 @@ def install(packages, path, node_server=False, update=False, verbose=True):
   Usage:
   -----
 
-    PyNpm.install(['bootstrap'], r"C:\tmps\packages", update=True)
-
+    PyNpm.install(r"C:\tmps\packages", ['bootstrap'], update=True)
 
   Attributes:
   ----------
@@ -831,7 +840,14 @@ def install(packages, path, node_server=False, update=False, verbose=True):
   :param node_server: Boolean. Optional. Specify if npm from NodeJs must be used to install the package
   :param update: Boolean. Optional. Specify is the version of the package needs to be updated
   :param verbose: Boolean. Optional. Display version details (default True).
+  :param page: Page. Optional. The Page / Report object on which the list of packages will be defined.
   """
+  if packages is None:
+    if page is None:
+      raise Exception("Package or page must be defined")
+
+    packages = page.imports.requirements
+
   if node_server:
     if not isinstance(packages, list):
       packages = [packages]

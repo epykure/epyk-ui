@@ -2,9 +2,17 @@
 # -*- coding: utf-8 -*-
 
 
-def parse(data, prettify=None):
+def parse(data, minify=None):
+  """
+
+  :param data:
+  :param minify:
+  """
   frgs, spaces = [], 2
-  if prettify:
+  if minify:
+    for l in data.split("\n"):
+      frgs.append(l.strip())
+  else:
     line = data.strip()
     in_brackets = line.split("{")
     row = []
@@ -30,7 +38,5 @@ def parse(data, prettify=None):
           frgs.append(";\n".join(row))
         spaces -= 2
         frgs.append("\n%s}\n" % "".join(spaces * [" "]))
-  else:
-    for l in data.split("\n"):
-      frgs.append(l.strip())
   return "".join(frgs)
+
