@@ -8,7 +8,7 @@ Related Pages:
 
 import random
 import math
-
+import re
 
 defined = {
   'MAROON': {'hex': '#800000', 'rgb': '(128,0,0)'},
@@ -157,13 +157,15 @@ def getHexToRgb(hexColor):
   """
   Description:
   ------------
-  Convert a hexadecimal color to a rgb code
+  Convert a hexadecimal color to a rgb code.
 
   An RGB color value is specified with the rgb() function, which has the following syntax:
   rgb(red, green, blue)
   Each parameter (red, green, and blue) defines the intensity of the color and can be an integer between 0 and 255 or a percentage value (from 0% to 100%).
   For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest value (255) and the others are set to 0.
   Also, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).
+
+  A Rgb color can be passed as input.
 
   Usage::
 
@@ -180,6 +182,10 @@ def getHexToRgb(hexColor):
 
   :return: The list with the rgb code color
   """
+  res = re.search('rgba\(([0-9]*), ([0-9]*), ([0-9]*)', hexColor)
+  if res is not None:
+    return [res.group(1), res.group(2), res.group(3)]
+
   if not hexColor.startswith("#"):
     raise Exception("Hexadecimal color should start with #")
 

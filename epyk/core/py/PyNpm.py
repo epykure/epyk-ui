@@ -757,7 +757,7 @@ class Packages:
       elif verbose:
         logging.warning("{} - Missing reference".format(js))
     return results
-  
+
   @classmethod
   def repositories(cls, verbose=True):
     """

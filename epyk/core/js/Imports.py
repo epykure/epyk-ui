@@ -195,9 +195,9 @@ JS_IMPORTS = {
   'promise-polyfill': {
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'polyfill.min.js', 'path': 'promise-polyfill@8/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'},
+      {'script': 'polyfill.min.js', 'node_path': 'dist/', 'path': 'promise-polyfill@8/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'},
     ],
-    'version': '4.2.1',
+    'version': '8.2.0',
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
 
   # Plolyfill for urlSearchParam for very old version of IE
@@ -254,13 +254,14 @@ JS_IMPORTS = {
     'repository': 'https://github.com/ag-grid/ag-grid',
     'version': '24.1.0',
     'modules': [
-      {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]
+  },
 
   # module for tabulator
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
     #'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
-    'version': '4.9.1',
+    'version': '4.9.3',
     'modules': [
       # core only needed for Jupyter for some reasons
       #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
@@ -504,11 +505,6 @@ JS_IMPORTS = {
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'pivot.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
-    ],
-    'assets': [
-      {'script': 'c3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO},
-      {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO},
-      {'script': 'd3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -521,12 +517,14 @@ JS_IMPORTS = {
       {'script': 'require.min.js', 'path': 'require.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Pivot Table SubTotal
-  'pivot-sub-total': {
+  'subtotal': {
     'req': [{'alias': 'pivottable'}],
+    'node_folder': 'pivottable',
     'register': {'alias': 'subtotal', 'module': 'subtotal'},
     'website': 'http://nagarajanchinnasamy.com/subtotal/examples/',
+    'repository': 'https://github.com/nagarajanchinnasamy/subtotal',
     'modules': [
-      {'script': 'subtotal.js', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+      {'script': 'subtotal.js', 'node_path': 'dist/', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
     ]},
 
   # Pivot Table pivot C3 renderer
@@ -535,10 +533,12 @@ JS_IMPORTS = {
       {'alias': 'c3'},
       {'alias': 'pivottable'}
     ],
-    'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
+    #'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
+    'version': '2.23.0',
+    'node_folder': 'pivottable',
     'modules': [
-      {'script': 'c3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'c3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Pivot Table pivot plotly renderer
@@ -547,10 +547,12 @@ JS_IMPORTS = {
       {'alias': 'plotly.js'},
       {'alias': 'pivottable'}
     ],
+    'node_folder': 'pivottable',
+    'version': '2.23.0',
     'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'plotly_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Pivot Table pivot D3 renderer
@@ -559,10 +561,12 @@ JS_IMPORTS = {
         {'alias': 'd3', 'version': '3.5.5'},
         {'alias': 'pivottable'}
       ],
+      'node_folder': 'pivottable',
+      'version': '2.23.0',
       'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
       'website': 'https://github.com/nicolaskruchten/pivottable',
       'modules': [
-        {'script': 'd3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+        {'script': 'd3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
   ]},
 
   # Jquery package width CDN links
@@ -686,10 +690,11 @@ JS_IMPORTS = {
   'd3': {
     'website': 'https://d3js.org/',
     'v_prefix': 'v',
-    'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
+    'version': '6.3.1',
+    #'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
     #'req': [{'alias': 'jquery'}],
     'modules': [
-      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '6.3.0', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # D3 Tips Package
@@ -990,10 +995,9 @@ JS_IMPORTS = {
   '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
     'v_prefix': 'v',
-    'version': '1.14.6',
+    'version': '2.6.0',
     'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
-    'register': {'alias': 'popper', 'module': 'popper.min', 'npm': '@popperjs/core', 'npm_path': 'dist/umd'},
     'modules': [
       {'reqAlias': 'popper', 'script': 'popper.min.js', 'node_path': 'dist/umd/', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}
     ],
@@ -1149,8 +1153,9 @@ JS_IMPORTS = {
   'facebook-sdk': {
     'website': 'https://connect.facebook.net',
     'req': [],
+    'version': '0.3.3',
     'modules': [
-      {'script': 'sdk.js', 'version': '', 'path': 'en-GB/', 'cdnjs': 'https://connect.facebook.net'}]},
+      {'script': 'sdk.js', 'path': 'en-GB/', 'cdnjs': 'https://connect.facebook.net'}]},
 
   # Tiny slider for carousels
   'tiny-slider': {
@@ -1236,9 +1241,6 @@ CSS_IMPORTS = {
 
   # Tabulator definition
   'tabulator-tables': {
-    'website': 'http://tabulator.info',
-    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
-    'version': '4.9.1',
     'modules': [
       {'script': 'tabulator.min.css', 'node_path': 'dist/css/', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
@@ -1593,7 +1595,7 @@ def script_npm_path(alias, script_details, static_path, with_prefix=False):
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
   details["node_path"] = str(details.get("node_path", "\\") % details).replace("/", "\\")
-  details["alias"] = alias
+  details["alias"] = JS_IMPORTS[alias].get("node_folder", alias)
   details["static"] = static_path
   if not details["node_path"].endswith("\\"):
     details["node_path"] += "\\"
