@@ -9,6 +9,7 @@ import os
 import argparse
 
 from epyk.core.js import Imports
+from epyk.core.py import PyNpm
 from epyk.core.cli import utils
 
 
@@ -49,7 +50,7 @@ def install_all(args):
   module_path = os.path.join(reports_path, static_path)
   if not os.path.exists(module_path):
     os.makedirs(module_path)
-  Imports.npm(packages, path=module_path, is_node_server=False, update=False)
+  PyNpm.install(packages, path=module_path, is_node_server=False, update=False)
 
 
 def install_parser(subparser):
@@ -81,7 +82,7 @@ def install(args):
   :param parser: -pkg, String, The packages list comma separated
   :param parser: -p, The project path
   """
-  Imports.npm(args.packages.split(","), path=args.path, is_node_server=False, update=False)
+  PyNpm.install(args.packages.split(","), path=args.path, is_node_server=False, update=False)
 
 
 def update_parser(subparser):
@@ -112,7 +113,7 @@ def update(args):
   :param parser: -pkg, String, The packages list comma separated
   :param parser: -p, The project path
   """
-  Imports.npm(args.packages.split(","), path=args.path, is_node_server=False, update=True)
+  PyNpm.install(args.packages.split(","), path=args.path, is_node_server=False, update=True)
 
 
 def npm_parser(subparser):
@@ -142,7 +143,7 @@ def npm(args):
   :param parser: -pkg, String, The packages list comma separated
   :param parser: -s, Path of the NodeJs server
   """
-  Imports.npm(args.packages.split(","), path=args.server, is_node_server=True, update=False)
+  PyNpm.install(args.packages.split(","), path=args.server, is_node_server=True, update=False)
 
 
 def requirements_parser(parser):

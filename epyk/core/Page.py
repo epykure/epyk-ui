@@ -123,11 +123,15 @@ class Report(object):
     if path is not None:
       self._node_modules = (path, alias or path, install, update)
 
-  def imports(self, online=False):
+  def imports(self, online=True):
     """
     Description:
     ------------
     Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
+
+    Attributes:
+    ----------
+    :param online: Boolean. Optional. Specify where the external packages should be retrieved. (Default online from CDNJS servers).
 
     :rtype: Imports.ImportManager
     """

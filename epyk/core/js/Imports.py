@@ -165,11 +165,11 @@ TABULATOR_EXTENSIONS = '0.0.27'
 JS_IMPORTS = {
   # numbers formatting
   'accounting': {
-    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting', 'npm_path': ''},
     "repository": "https://github.com/openexchangerates/accounting.js",
     "version": "0.4.1",
+    'v_prefix': 'v',
     'modules': [
-      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'accounting.min.js', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -177,17 +177,18 @@ JS_IMPORTS = {
   'qrcodejs': {
     'version': '1.0.0',
     'modules': [
-      {'script': 'qrcode.min.js', 'version': '1.0.0', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'qrcode.min.js', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'repository': 'https://github.com/llyys/qrcodejs',
     'website': 'https://davidshimjs.github.io/qrcodejs/'},
 
   # data transformation
   'underscore': {
-    'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore', 'npm_path': ''},
     'version': '1.12.0',
+    'repository': 'https://github.com/jashkenas/underscore',
     'modules': [
-      {'script': 'underscore-min.js', 'version': '1.12.0', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'underscore-min.js', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'underscore-min.js.map', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -195,47 +196,52 @@ JS_IMPORTS = {
   'promise-polyfill': {
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'polyfill.min.js', 'version': '4.2.1', 'path': 'promise-polyfill@8/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'},
+      {'script': 'polyfill.min.js', 'path': 'promise-polyfill@8/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'},
     ],
+    'version': '4.2.1',
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
 
   # Plolyfill for urlSearchParam for very old version of IE
   'url-search-params': {
+    'version': '1.1.0',
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'url-search-params.js', 'version': '1.1.0', 'path': 'url-search-params/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'url-search-params.js', 'path': 'url-search-params/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
 
 
   # Common module for browser versions compatibilities
   'babel-polyfill': {
+    'version': '7.4.4',
     'website': 'https://babeljs.io/',
     'register': {'alias': 'babel', 'module': 'polyfill', 'name': 'babel'},
     'modules': [
-      {'script': 'polyfill.js', 'version': '7.4.4', 'path': 'babel-polyfill/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'polyfill.js', 'path': 'babel-polyfill/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]
   },
 
   # module are written from the first one to load to the last one
   'bootstrap': {
-    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/js'},
     'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
+    'v_prefix': 'v',
     'version': '4.5.3',
     'repository': 'https://github.com/twbs/bootstrap',
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.min.js', 'version': '4.5.3', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'script': 'bootstrap.min.js', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
       #{'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
+    ],
+    'assets': [
+      {'script': 'bootstrap.min.js.map', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://getbootstrap.com/'},
 
   'moment': {
-    'dsc': 'Module used by Tabulator for datetime objects',
     "version": "2.29.1",
-    #'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
+    'repository': 'https://github.com/moment/moment',
     'modules': [
-      {'script': 'moment.min.js', 'version': '2.29.1', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'moment.min.js', 'node_path': 'min/', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://momentjs.com/',
   },
@@ -244,17 +250,19 @@ JS_IMPORTS = {
   'ag-grid': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist'},
+    'version': '24.0.0',
     'modules': [
-      {'script': 'ag-grid-community.min.js', 'version': '24.0.0', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid-community.min.js', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # module for tabulator
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
-    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
+    #'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
+    'version': '4.9.1',
     'modules': [
       # core only needed for Jupyter for some reasons
       #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'version': '4.9.1', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.js', 'node_path': 'tabulator/dist/js', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -336,136 +344,153 @@ JS_IMPORTS = {
 
   # module for the awesome icons
   'font-awesome': {
+    'version': '5.13.1',
     'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'js'},
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-    'modules': [{'script': 'fontawesome.js', 'version': '5.13.1', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+    'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
     'website': 'https://fontawesome.com/'},
 
   # Javascript packages to handle DataTables
   'datatables': {
     'req': [{'alias': 'jquery'}],
+    'version': '1.10.19',
     'register': {'alias': 'datatables', 'module': 'jquery.dataTables.min'},
     'modules': [
-      {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'version': '1.10.19', 'path': 'datatables/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'path': 'datatables/%(version)s/js/', 'cdnjs': CDNJS_REPO},
   ]},
 
   # Datatable Buttons
   'datatables-buttons': {
+    'version': '1.6.1',
     'website': 'https://datatables.net/extensions/buttons/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.buttons.min.js', 'version': '1.6.1', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.buttons.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Select
   'datatables-select': {
+    'version': '1.3.1',
     'website': 'https://datatables.net/extensions/select/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.select.min.js', 'version': '1.3.1', 'path': 'select/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.select.min.js', 'path': 'select/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Scroller
   'datatables-scroller': {
+    'version': '2.0.1',
     'website': 'https://datatables.net/extensions/scroller/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.scroller.min.js', 'version': '2.0.1', 'path': 'scroller/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.scroller.min.js', 'path': 'scroller/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable SearchPanes
   'datatables-searchPanes': {
+    'version': '1.0.1',
     'website': 'https://datatables.net/extensions/searchPanes/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.searchPanes.min.js', 'version': '1.0.1', 'path': 'searchpanes/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.searchPanes.min.js', 'path': 'searchpanes/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable responsive
   'datatables-responsive': {
+    'version': '2.2.3',
     'website': 'https://datatables.net/extensions/responsive/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.responsive.min.js', 'version': '2.2.3', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.responsive.min.js', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable KeyTable
   'datatables-keytable': {
+    'version': '2.5.1',
     'website': 'https://datatables.net/extensions/keytable/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.keyTable.min.js', 'version': '2.5.1', 'path': 'keytable/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.keyTable.min.js', 'path': 'keytable/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable autoFill
   'datatables-autoFill': {
+    'version': '2.1.0',
     'website': 'https://datatables.net/extensions/autofill/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.autoFill.min.js', 'version': '2.1.0', 'path': 'autofill/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.autoFill.min.js', 'path': 'autofill/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable group rows
   'datatables-rows-group': {
     'req': [{'alias': 'datatables'}],
+    'version': '1.0.0',
     'modules': [
-      {'script': 'dataTables.rowsGroup.js', 'version': '1.0.0', 'path': 'datatables-rowsgroup/v%(version)s/', 'cdnjs': 'https://cdn.rawgit.com/ashl1'}],
-       'website': 'https://datatables.net/forums/discussion/29319/new-rowsgroup-plugin-merge-cells-vertically-rowspan'},
+      {'script': 'dataTables.rowsGroup.js', 'path': 'datatables-rowsgroup/v%(version)s/', 'cdnjs': 'https://cdn.rawgit.com/ashl1'}
+    ],
+    'website': 'https://datatables.net/forums/discussion/29319/new-rowsgroup-plugin-merge-cells-vertically-rowspan'},
 
   # Datatable group row
   'datatables-row-group': {
     'req': [{'alias': 'datatables'}],
+    'version': '1.1.1',
     'modules': [
-      {'script': 'dataTables.rowGroup.min.js', 'version': '1.1.1', 'path': 'rowgroup/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.rowGroup.min.js', 'path': 'rowgroup/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/rowgroup/'},
 
   # Datatable fixed column
   'datatables-fixed-columns': {
     'req': [{'alias': 'datatables'}],
+    'version': '3.2.2',
     'modules': [
-      {'script': 'dataTables.fixedColumns.min.js', 'version': '3.2.2', 'path': 'fixedcolumns/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.fixedColumns.min.js', 'path': 'fixedcolumns/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/fixedcolumns/'},
 
   # Datatable Fixed header
   'datatables-fixed-header': {
     'req': [{'alias': 'datatables'}],
+    'version': '3.1.3',
     'modules': [
-      {'script': 'dataTables.fixedHeader.min.js', 'version': '3.1.3', 'path': 'fixedheader/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.fixedHeader.min.js', 'path': 'fixedheader/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/fixedheader/'},
 
   # Datatable data export
   'datatables-export': {
+    'version': '1.5.2',
     'req': [
       {'alias': 'datatables'},
       {'alias': 'jszip'},
       {'alias': 'pdfmake'}],
     'website': 'https://datatables.net/extensions/buttons/',
     'modules': [
-      {'script': 'buttons.colVis.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.bootstrap4.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.foundation.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.html5.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.jqueryui.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.print.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.semanticui.min.js', 'version': '1.5.2', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'buttons.colVis.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.bootstrap4.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.foundation.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.html5.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.jqueryui.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.print.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
+      {'script': 'buttons.semanticui.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable column reordering modules
   'datatables-col-order': {
     'req': [{'alias': 'datatables'}],
+    'version': '1.5.1',
     'register': {'alias': 'datatableColOrd', 'module': 'dataTables.colReorder.min'},
     'website': 'https://datatables.net/extensions/colreorder/',
     'modules': [
-      {'reqAlias': 'datatableColOrd', 'script': 'dataTables.colReorder.min.js', 'version': '1.5.1', 'path': 'colreorder/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'reqAlias': 'datatableColOrd', 'script': 'dataTables.colReorder.min.js', 'path': 'colreorder/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   #
   'jszip': {
     'website': 'https://datatables.net/extensions/buttons/',
-    'register': {'alias': 'jszip', 'module': 'jszip.min'},
     'version': '3.5.0',
     'modules': [
-      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'version': '3.5.0', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'node_path': 'dist/', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
 
   #
-  'json-formatter': {
+  'json-formatter-js': {
     'website': 'https://azimi.me/json-formatter-js/',
-    'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min', 'npm': 'json-formatter-js'},
+    'version': '2.3.4',
+    'repository': 'https://github.com/mohsen1/json-formatter-js',
+    #'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min', 'npm': 'json-formatter-js'},
     'modules': [
-      {'script': 'json-formatter.umd.min.js', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+      {'script': 'json-formatter.umd.min.js', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
 
   # Datatable pivot
@@ -473,9 +498,17 @@ JS_IMPORTS = {
     'req': [{'alias': 'jqueryui'}],
     'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     "repository": 'https://github.com/nicolaskruchten/pivottable',
+    'version': '2.23.0',
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'pivot.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'pivot.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
+    'assets': [
+      {'script': 'c3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'd3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]
+  },
 
   # require.js
   'require.js': {
@@ -489,7 +522,8 @@ JS_IMPORTS = {
     'register': {'alias': 'subtotal', 'module': 'subtotal'},
     'website': 'http://nagarajanchinnasamy.com/subtotal/examples/',
     'modules': [
-      {'script': 'subtotal.js', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+      {'script': 'subtotal.js', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+    ]},
 
   # Pivot Table pivot C3 renderer
   'pivot-c3': {
@@ -500,7 +534,8 @@ JS_IMPORTS = {
     'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'c3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
 
   # Pivot Table pivot plotly renderer
   'pivot-plotly': {
@@ -511,7 +546,8 @@ JS_IMPORTS = {
     'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'plotly_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'plotly_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
 
   # Pivot Table pivot D3 renderer
   'pivot-d3': {
@@ -522,29 +558,33 @@ JS_IMPORTS = {
       'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
       'website': 'https://github.com/nicolaskruchten/pivottable',
       'modules': [
-        {'script': 'd3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+  ]},
 
   # Jquery package width CDN links
   'jquery': {
     'website': 'http://jquery.com/',
     'repository': "https://github.com/jquery/jquery",
     'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
+    'version': '3.5.1',
     'modules': [
-      {'script': 'jquery.min.js', 'version': '3.5.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.min.js', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # QUnit package width CDN links
   'qunit': {
     'website': 'https://qunitjs.com',
+    'version': '2.13.0',
     'modules': [
-      {'script': 'qunit.min.js', 'version': '2.13.0', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'qunit.js', 'node_path': 'qunit', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Used to produce sparkline charts in a document and in Tabulator
   'jquery-sparkline': {
     'req': [{'alias': 'jquery'}],
-    'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
+    'version': '2.1.2',
+    #'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
     'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
     'modules': [
-      {'script': 'jquery.sparkline.min.js', 'version': '2.1.2', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'jquery.sparkline.min.js', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -560,10 +600,11 @@ JS_IMPORTS = {
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
     'website': 'http://www.aropupu.fi/bracket/',
-    'register': {'alias': 'jQueryBracket', 'module': 'jquery.bracket.min'},
+    'version': '0.11.1',
+    #'register': {'alias': 'jQueryBracket', 'module': 'jquery.bracket.min'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'jquery.bracket.min.js', 'version': '0.11.1', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.bracket.min.js', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery UI package
   # Attempt to try to solve conflict with Bootstrap
@@ -572,12 +613,15 @@ JS_IMPORTS = {
   # Jquery timepicker width CDN links
   'timepicker': {
     'website': 'https://timepicker.co/',
-    'register': {'alias': 'jQueryTime', 'module': 'jquery.timepicker.min'},
+    #'register': {'alias': 'jQueryTime', 'module': 'jquery.timepicker.min'},
+    'version': '1.13.16',
+    'repository': 'https://github.com/jonthornton/jquery-timepicker',
     'req': [
       {'alias': 'jquery'},
       {'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.timepicker.min.js', 'version': '1.13.16', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.timepicker.min.js', 'path': 'jquery-timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
 
   # To display a context menu when right click on an item
   'jquery-context-menu': {
@@ -615,13 +659,15 @@ JS_IMPORTS = {
   # Clipboard features width CDN links
   'clipboard': {
     'website': 'https://clipboardjs.com/',
-    'register': {'alias': 'clipboard', 'module': 'clipboard.min'},
+    'version': '2.0.1',
+    #'register': {'alias': 'clipboard', 'module': 'clipboard.min'},
     'modules': [
-      {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'version': '2.0.1', 'path': 'clipboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'node_path': 'dist/', 'path': 'clipboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript dependencies for D3 and NVD2 components width CDN links
   'd3': {
     'website': 'https://d3js.org/',
+    'v_prefix': 'v',
     'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
     #'req': [{'alias': 'jquery'}],
     'modules': [
@@ -631,6 +677,7 @@ JS_IMPORTS = {
   # D3 Tips Package
   'd3-tip': {
     'req': [{'alias': 'd3'}],
+    'v_prefix': 'v',
     'register': {'alias': 'd3_tip', 'module': 'd3-tip.min'},
     'modules': [
       {'script': 'd3-tip.min.js', 'version': '0.9.1', 'path': 'd3-tip/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -661,6 +708,7 @@ JS_IMPORTS = {
   # D3 ease
   'd3-ease': {
       'website': 'https://github.com/d3/d3-ease',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_ease', 'module': 'd3-ease.min'},
       'modules': [
         {'script': 'd3-ease.min.js', 'version': '1.0.3', 'path': 'd3-ease/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -668,6 +716,7 @@ JS_IMPORTS = {
   # D3 dispatch
   'd3-dispatch': {
       'website': 'https://github.com/d3/d3-dispatch',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_dispatch', 'module': 'd3-dispatch.min'},
       'modules': [
         {'script': 'd3-dispatch.min.js', 'version': '1.0.3', 'path': 'd3-dispatch/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -675,6 +724,7 @@ JS_IMPORTS = {
   # D3 transition
   'd3-transition': {
       'website': 'https://github.com/d3/d3-interpolate',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_transition', 'module': 'd3-transition.min'},
       'req': [{'alias': 'd3-dispatch'}],
       'modules': [
@@ -683,6 +733,7 @@ JS_IMPORTS = {
   # D3 Selection
   'd3-selection': {
       'website': 'https://github.com/d3/d3-interpolate',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_selection', 'module': 'd3-selection.min'},
       'modules': [
         {'script': 'd3-selection.min.js', 'version': '1.2.0', 'path': 'd3-selection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -690,14 +741,17 @@ JS_IMPORTS = {
   # D3 Interpolate
   'd3-interpolate': {
       'website': 'https://github.com/d3/d3-interpolate',
+      'v_prefix': 'v',
+      'version': '1.3.0',
       'register': {'alias': 'd3_interpolate', 'module': 'd3-interpolate.min'},
       'req': [{'alias': 'd3-color'}],
       'modules': [
-        {'script': 'd3-interpolate.js', 'version': '1.3.0', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-interpolate.js', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # D3 Time format
   'd3-time-format': {
       'website': 'https://github.com/d3/d3-time-format',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_time_format', 'module': 'd3-time-format.min'},
       'req': [{'alias': 'd3-time'}],
       'modules': [
@@ -706,6 +760,7 @@ JS_IMPORTS = {
   # D3 Time
   'd3-time': {
       'website': 'https://github.com/d3/d3-time',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_time', 'module': 'd3-time.min'},
       'modules': [
         {'script': 'd3-time.min.js', 'version': '1.0.8', 'path': 'd3-time/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -713,6 +768,7 @@ JS_IMPORTS = {
   # D3 Format
   'd3-array': {
       'website': 'https://github.com/d3/d3-format',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_array', 'module': 'd3-array.min'},
       'modules': [
         {'script': 'd3-array.min.js', 'version': '1.2.2', 'path': 'd3-array/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -720,6 +776,7 @@ JS_IMPORTS = {
   # D3 Format
   'd3-format': {
       'website': 'https://github.com/d3/d3-format',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_format', 'module': 'd3-format.min'},
       'modules': [
         {'script': 'd3-format.min.js', 'version': '1.3.0', 'path': 'd3-format/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -727,6 +784,7 @@ JS_IMPORTS = {
   # D3 collection
   'd3-collection': {
       'website': 'https://github.com/d3/d3-collection',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_collection', 'module': 'd3-collection.min'},
       'modules': [
         {'script': 'd3-collection.min.js', 'version': '1.0.5', 'path': 'd3-collection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -734,6 +792,7 @@ JS_IMPORTS = {
   # D3 Scale
   'd3-scale': {
       'website': 'https://github.com/d3/d3-scale',
+      'v_prefix': 'v',
       'register': {'alias': 'd3_scale', 'module': 'd3-scale.min'},
       'req': [{'alias': 'd3-array'}, {'alias': 'd3-format'}, {'alias': 'd3-interpolate'}, {'alias': 'd3-time-format'}],
       'modules': [
@@ -742,6 +801,7 @@ JS_IMPORTS = {
   # D3 color module
   'd3-color': {
     'website': 'https://github.com/d3/d3-color',
+    'v_prefix': 'v',
     'register': {'alias': 'd3_color', 'module': 'd3-color.min'},
     'modules': [
       {'script': 'd3-color.min.js', 'version': '1.2.1', 'path': 'd3-color/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -760,9 +820,10 @@ JS_IMPORTS = {
     'website': 'http://nvd3.org/',
     'repository': 'https://github.com/novus/nvd3',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
+    'version': '1.8.6',
     'register': {'alias': 'nv', 'module': 'nv.d3.min', 'npm': 'nvd3'},
     'modules': [
-      {'script': 'nv.d3.min.js', 'version': '1.8.6', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'nv.d3.min.js', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # C3 modules width CDN links
   'c3': {
@@ -770,8 +831,9 @@ JS_IMPORTS = {
     'repository': 'https://github.com/c3js/c3',
     'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
     'req': [{'alias': 'd3'}],
+    'version': '0.7.20',
     'modules': [
-      {'script': 'c3.min.js', 'version': '0.7.20', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3.min.js', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   'crossfilter': {
     'website': 'http://square.github.io/crossfilter/',
@@ -788,81 +850,94 @@ JS_IMPORTS = {
     'register': {'alias': 'dc', 'module': 'dc.min', 'npm': 'dc'},
     'req': [{'alias': 'd3'}, {'alias': 'crossfilter'},
     ],
+    'version': '4.2.3',
     'modules': [
-      {'script': 'dc.min.js', 'version': '4.2.3', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.js', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
     'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'billboard.js', 'var': 'bb', 'init_fnc': 'var bb = billboard.bb'},
     'req': [{'alias': 'd3'}],
+    'version': '2.1.4',
     'modules': [
-      {'script': 'billboard.min.js', 'version': '2.1.4', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'billboard.min.js', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
+    'version': '2.9.4',
+    'v_prefix': 'v',
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
       #{'script': 'Chart.bundle.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
-      {'script': 'Chart.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'Chart.min.js', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-dragdata': {
     'website': 'https://www.chartjs.org/',
+    'version': 'latest',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-dragdata.min.js', 'version': 'latest', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+      {'script': 'chartjs-plugin-dragdata.min.js', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-annotation': {
     'website': 'https://www.chartjs.org/',
+    'version': '0.5.7',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-annotation.min.js', 'version': '0.5.7', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'chartjs-plugin-annotation.min.js', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs datalabels plugin modules width CDN links
   'chartjs-plugin-datalabels': {
+    'version': '0.7.0',
     'website': 'https://chartjs-plugin-datalabels.netlify.app/',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-datalabels.min.js', 'version': '0.7.0', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+      {'script': 'chartjs-plugin-datalabels.min.js', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
   # ChartJs Labels plugin modules width CDN links
   'chartjs-plugin-labels': {
+    'version': '1.1.0',
     'website': 'https://github.com/emn178/chartjs-plugin-labels',
     'req': [{'alias': 'chart.js'}],
+    'v_prefix': 'v',
     'modules': [
-      {'script': 'chartjs-plugin-labels.js', 'version': '1.1.0', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}]},
+      {'script': 'chartjs-plugin-labels.js', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-crosshair': {
+    'version': '1.1.6',
     'website': 'https://www.chartjs.org/',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-crosshair.js', 'version': '1.1.6', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
+      {'script': 'chartjs-plugin-crosshair.js', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
 
   # ChartJs Zoom plugin modules width CDN links
   'chartjs-plugin-zoom': {
     'website': 'https://www.chartjs.org/',
+    'version': '0.7.7',
     'req': [{'alias': 'chart.js'}, {"alias": 'hammer'}],
     'modules': [
-      {'script': 'chartjs-plugin-zoom.min.js', 'version': '0.7.7', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'chartjs-plugin-zoom.min.js', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs addon to add some Geo charts
   'chartjs-chart-geo': {
+      'version': '2.1.0',
       'website': 'https://github.com/sgratzl/chartjs-chart-geo',
       'req': [{'alias': 'chart.js'}],
       'modules': [
-        {'script': 'Chart.Geo.min.js', 'version': '2.1.0', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+        {'script': 'Chart.Geo.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
       ]},
 
   # For ChartJs Zoom to get the gesture details.
   'hammer': {
+      'version': '2.0.8',
       'website': 'http://hammerjs.github.io/',
       'modules': [
-        {'script': 'hammer.min.js', 'version': '2.0.8', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
+        {'script': 'hammer.min.js', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
       ],
   },
 
@@ -872,30 +947,34 @@ JS_IMPORTS = {
   # Popper tooltips used by bootstrap in the dropdown components
   '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
+    'v_prefix': 'v',
+    'version': '1.14.6',
     'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
     'register': {'alias': 'popper', 'module': 'popper.min', 'npm': '@popperjs/core', 'npm_path': 'dist/umd'},
     'modules': [
-      {'reqAlias': 'popper', 'script': 'popper.min.js', 'version': '1.14.6', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}]},
+      {'reqAlias': 'popper', 'script': 'popper.min.js', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
   'bootstrap-select': {
     'website': 'http://silviomoreto.github.io/bootstrap-select/',
+    'version': '1.13.18',
     'repository': 'https://github.com/snapappointments/bootstrap-select',
     'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.18', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ]},
 
   'ajax-bootstrap-select': {
+    'version': '1.4.5',
     'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
     'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [{"alias": 'bootstrap-select'}
     ], 'modules': [
-      {'script': 'ajax-bootstrap-select.min.js', 'version': '1.4.5', 'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'ajax-bootstrap-select.min.js', 'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -907,69 +986,95 @@ JS_IMPORTS = {
   'vis': {
     'register': {'alias': 'vis', 'module': 'vis.min', 'npm': 'vis', 'npm_path': 'dist'},
     'website': 'http://visjs.org/',
+    'version': '4.21.0',
     'modules': [
-      {'script': 'vis.min.js', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'vis.min.js', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Vis Timeline style with CDN Links
   'vis-timeline': {
     'register': {'alias': 'vis-timeline', 'npm': 'vis-timeline', 'npm_path': 'dist'},
     'website': 'http://visjs.org/',
+    'version': '7.3.7',
     'modules': [
-      {'script': 'vis-timeline-graph2d.min.js', 'version': '7.3.7', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'vis-timeline-graph2d.min.js', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
   # https://github.com/mathjax/mathjax
   'mathjax': {
     'website': 'https://www.mathjax.org/',
+    'version': '2.7.7',
     'repository': 'https://github.com/mathjax/MathJax',
-    'register': {'alias': 'mathjax', 'module': 'MathJax', 'npm': 'mathjax'},
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
-      {'script': 'MathJax.js', 'version': '2.7.7', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'MathJax.js', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
     # To use the full module online
     #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
     'config': "config=TeX-AMS-MML_HTMLorMML"},
 
   # Socket IO
   'socket.io': {
+    'version': '3.0.4',
     'website': 'https://github.com/socketio/socket.io',
-    'register': {'alias': 'socketio', 'module': 'socket.io'},
+    'repository': 'https://github.com/socketio/socket.io',
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'socket.io.js', 'version': '3.0.4', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'socket.io.min.js', 'node_path': 'client-dist/', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
+    'assets': [
+      {'script': 'socket.io.min.js.map', 'node_path': 'client-dist/', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]
+  },
 
   # Code mirror
   'codemirror': {
+    'version': '5.59.0',
     'website': 'https://codemirror.net/',
-    'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.js', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.js', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
+    'assets': [
+      {'script': 'python.js', 'node_path': 'mode/python/', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': CDNJS_REPO},
+      {'script': 'r.js', 'node_path': 'mode/r/', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': CDNJS_REPO},
+      {'script': 'css.js', 'node_path': 'mode/css/', 'path': 'codemirror/%(version)s/mode/css/', 'cdnjs': CDNJS_REPO},
+      {'script': 'javascript.js', 'node_path': 'mode/javascript/', 'path': 'codemirror/%(version)s/mode/javascript/', 'cdnjs': CDNJS_REPO},
+      {'script': 'markdown.js', 'node_path': 'mode/markdown/', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': CDNJS_REPO},
+      {'script': 'php.js', 'node_path': 'mode/php/', 'path': 'codemirror/%(version)s/mode/php/', 'cdnjs': CDNJS_REPO},
+      {'script': 'ruby.js', 'node_path': 'mode/ruby/', 'path': 'codemirror/%(version)s/mode/ruby/', 'cdnjs': CDNJS_REPO},
     ]
   },
 
   # highlight
   'highlight.js': {
+    'version': '10.4.1',
     'website': 'https://highlightjs.org/',
-    'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
+    'repository': 'https://github.com/highlightjs/highlight.js',
+    #'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
     'modules': [
-      {'script': 'highlight.min.js', 'version': '10.4.1', 'path': 'highlight.js/%(version)s/',
-       'cdnjs': CDNJS_REPO}
+      {'script': 'highlight.min.js', 'node_path': 'lib/', 'path': 'highlight.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet
   'leaflet': {
+    'version': '1.7.1',
     'website': 'https://leafletjs.com/',
+    'repository': 'https://github.com/Leaflet/Leaflet',
     'modules': [
-      {'script': 'leaflet.js', 'version': '1.7.1', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'leaflet.js', 'node_path': 'dist/', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
+    'assets': [
+      {'script': 'leaflet.js.map', 'node_path': 'dist/', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]
+  },
 
   # showdown
   'showdown': {
+    'version': '1.9.1',
     'website': 'https://github.com/showdownjs/showdown',
     'repository': 'https://github.com/showdownjs/showdown',
-    'register': {'alias': 'showdown', 'npm': 'showdown', 'npm_path': 'dist'},
+    #'register': {'alias': 'showdown', 'npm': 'showdown', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
+      {'script': 'showdown.min.js', 'node_path': 'dist/', 'path': 'showdown/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -977,8 +1082,9 @@ JS_IMPORTS = {
   'sortablejs': {
     'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
     'repository': 'https://github.com/SortableJS/Sortable',
+    'version': '1.10.2',
     'modules': [
-      {'script': 'Sortable.min.js', 'version': '1.10.2', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'Sortable.min.js', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/SortableJS/Sortable'},
 
@@ -996,9 +1102,10 @@ JS_IMPORTS = {
 
   # Tiny slider for carousels
   'tiny-slider': {
+    'version': '2.9.3',
     'register': {'alias': 'tns', 'npm': 'tiny-slider'},
     'modules': [
-      {'script': 'tiny-slider.js', 'version': '2.9.3', 'path': 'tiny-slider/%(version)s/min/', 'cdnjs': CDNJS_REPO},
+      {'script': 'tiny-slider.js', 'node_path': 'dist/min/', 'path': 'tiny-slider/%(version)s/min/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/ganlanyuan/tiny-slider',
   }
@@ -1010,7 +1117,7 @@ CSS_IMPORTS = {
     'website': 'http://jquery.com/',
     'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
-      {'script': 'jquery-ui.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]
   },
 
@@ -1039,15 +1146,15 @@ CSS_IMPORTS = {
 
   # QUnit package width CDN links
   'qunit': {
-    'website': 'https://qunitjs.com',
     'modules': [
-      {'script': 'qunit.min.css', 'version': '2.13.0', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'qunit.css', 'node_path': 'qunit', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
     'req': [{'alias': 'jqueryui'}],
+    'version': '0.11.1',
     'modules': [
-      {'script': 'jquery.bracket.min.css', 'version': '0.11.1', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.bracket.min.css', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # To display a context menu when right click on an item width CDN links
   # http://swisnl.github.io/jQuery-contextMenu/demo.html#jquery-context-menu-demo-gallery
@@ -1059,10 +1166,9 @@ CSS_IMPORTS = {
 
   # Jquery timepicker width CDN links
   'timepicker': {
-    'website': 'https://timepicker.co/',
     'req': [{'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.timepicker.min.css', 'version': '1.13.16', 'path': 'timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.timepicker.min.css', 'path': 'jquery-timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # To customize the scrollbar width CDN links
   'jquery-scrollbar': {
@@ -1075,8 +1181,9 @@ CSS_IMPORTS = {
   'tabulator-tables': {
     'website': 'http://tabulator.info',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
+    'version': '4.9.1',
     'modules': [
-      {'script': 'tabulator.min.css', 'version': '4.9.1', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'node_path': 'dist/css/', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1173,9 +1280,12 @@ CSS_IMPORTS = {
     'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/css'},
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.5.3', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
-      #{'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}
-    ]},
+      {'script': 'bootstrap.min.css', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+    ],
+    'assets': [
+      {'script': 'bootstrap.min.css.map', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+    ]
+  },
 
   # Font awesome style width CDN links
   'font-awesome': {
@@ -1195,25 +1305,29 @@ CSS_IMPORTS = {
   # NVD3 Components width CDN links
   'nvd3': {
     'website': 'http://nvd3.org/',
+    'version': '1.8.6',
     'modules': [
-      {'script': 'nv.d3.min.css', 'version': '1.8.6', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'nv.d3.min.css', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # C3 modules width CDN links
   'c3': {
     'website': 'https://c3js.org/',
+    'version': '0.7.20',
     'modules': [
-      {'script': 'c3.min.css', 'version': '0.7.20', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3.min.css', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # DC modules width CDN links
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
+    'version': '4.2.3',
     'modules': [
-      {'script': 'dc.min.css', 'version': '4.2.3', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.min.css', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
   'billboard.js': {
+    'version': '2.1.4',
     'modules': [
-      {'script': 'billboard.min.css', 'version': '2.1.4', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'billboard.min.css', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/'},
 
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},
@@ -1224,7 +1338,7 @@ CSS_IMPORTS = {
     'register': {'alias': 'select', 'npm_path': 'dist/css'},
     'req': [{'alias': 'jqueryui'}, {'alias': 'bootstrap'}],
     'modules': [
-      {'script': 'bootstrap-select.min.css', 'version': '1.13.18', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap-select.min.css', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]},
 
   'ajax-bootstrap-select': {
@@ -1238,9 +1352,8 @@ CSS_IMPORTS = {
 
   # Pivot table style with CDN Links
   'pivottable': {
-    'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'pivot.min.css', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'pivot.min.css', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Vis style with CDN Links
   'vis': {
@@ -1258,31 +1371,25 @@ CSS_IMPORTS = {
 
   # Code mirror
   'codemirror': {
-    'website': 'https://codemirror.net/',
-    'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.css', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.css', 'node_path': 'lib/', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # highlight
   'highlight.js': {
-    'website': 'https://highlightjs.org/',
-    'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
     'modules': [
-      {'script': 'default.min.css', 'version': '10.4.1', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
+      {'script': 'default.min.css', 'node_path': 'styles/', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet
   'leaflet': {
-    'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.css', 'version': '1.7.1', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'leaflet.css', 'node_path': 'dist/', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   #
-  'json-formatter': {
-    'website': 'https://azimi.me/json-formatter-js/',
+  'json-formatter-js': {
     'modules': [
-      {'script': 'json-formatter.css', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+      {'script': 'json-formatter.css', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
 
   # AG Grid tables
@@ -1294,11 +1401,9 @@ CSS_IMPORTS = {
 
   # Tiny slider for carousels
   'tiny-slider': {
-    'register': {'alias': 'tns', 'npm': 'tiny-slider'},
     'modules': [
-      {'script': 'tiny-slider.min.css', 'version': '2.9.3', 'path': 'tiny-slider/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'tiny-slider.min.css', 'node_path': 'dist/', 'path': 'tiny-slider/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
-    'website': 'https://github.com/ganlanyuan/tiny-slider',
   }
 }
 
@@ -1354,6 +1459,82 @@ GOOGLE_EXTENSIONS = {
 }
 
 
+def script_version(alias, script_details, with_prefix=False):
+  """
+  Description:
+  -----------
+  Return the script version number with or without prefix.
+  This will ensure a standard way to get the version number for a given CSS or JavaScript script in the framework.
+
+  Usage:
+  -----
+
+  Attributes:
+  ----------
+  :param alias: String. The package reference alias in the framework and in NPM.
+  :param script_details: Dictionary. The script definition in the framework.
+  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  """
+  if "version" in script_details:
+    if with_prefix:
+      if 'v_prefix' in JS_IMPORTS[alias]:
+        return "%s%s" % (JS_IMPORTS[alias]['v_prefix'], script_details["version"])
+
+    return script_details["version"]
+
+  if with_prefix:
+    if 'v_prefix' in JS_IMPORTS[alias]:
+      return "%s%s" % (JS_IMPORTS[alias]['v_prefix'], JS_IMPORTS[alias]["version"])
+
+  return JS_IMPORTS[alias]["version"]
+
+
+def script_cdnjs_path(alias, script_details, with_prefix=False):
+  """
+  Description:
+  -----------
+  Get the script path to retrieve the content locally.
+  This is mainly used by PyNpm package in order to retrieve the content of the script to produce local copies of them.
+
+  Having script copied locally will speed up the loading of the page and also will ensure a run offline.
+
+  Usage:
+  -----
+
+  Attributes:
+  ----------
+  :param alias: String. The package reference alias in the framework and in NPM.
+  :param script_details: Dictionary. The script definition in the framework.
+  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  """
+  details = dict(script_details)
+  details["version"] = script_version(alias, script_details, with_prefix)
+  details["path"] = details["path"] % details
+  return "%(cdnjs)s/%(path)s%(script)s" % details
+
+
+def script_npm_path(alias, script_details, static_path, with_prefix=False):
+  """
+  Description:
+  -----------
+
+  Attributes:
+  ----------
+  :param alias: String. The package reference alias in the framework and in NPM.
+  :param script_details: Dictionary. The script definition in the framework.
+  :param static_path: String.
+  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  """
+  details = dict(script_details)
+  details["version"] = script_version(alias, script_details, with_prefix)
+  details["node_path"] = str(details.get("node_path", "\\") % details).replace("/", "\\")
+  details["alias"] = alias
+  details["static"] = static_path
+  if not details["node_path"].endswith("\\"):
+    details["node_path"] += "\\"
+  return r"%(static)s\%(alias)s\%(node_path)s%(script)s" % details
+
+
 def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
   """
   Description:
@@ -1378,7 +1559,7 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
           config[reference]['req'] = reqs
     if version in config:
       # take the version from another registered module
-      version = config[version]['modules'][0]['version']
+      version = config[version].get('version') or config[version]['modules'][0]['version']
     config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
 
@@ -1426,6 +1607,165 @@ def extend_imports(extension):
         _SERVICES[alias].setdefault(service['type'], []).append("%(url)s?%(pmts)s" % service)
 
 
+class ImportModule:
+
+  def __init__(self, name, js, css):
+    self._name = name
+    self._js = js[name]
+    self._css = css.get(name, {})
+
+  @property
+  def version(self):
+    """
+    Description:
+    -----------
+    Return the package version number defined in the framework.
+    """
+    return self._js["versions"]
+
+  @version.setter
+  def version(self, val):
+    new_js = collections.OrderedDict()
+    for k, v in self._js["main"].items():
+      new_js[k.replace(v, val)] = val
+    self._js["versions"] = [val]
+    self._js["main"] = new_js
+
+    if self._css:
+      new_css = collections.OrderedDict()
+      for k, v in self._css["main"].items():
+        new_css[k.replace(v, val)] = val
+      self._css["versions"] = [val]
+      self._css = new_css
+
+  @property
+  def path(self):
+    """
+    Description:
+    -----------
+    Get the package path used to retrieve the various modules.
+    """
+    mod = JS_IMPORTS[self._name]['modules'][0]
+    mod["version"] = self.version
+    mod["path"] = mod["path"] % mod
+    return "%(cdnjs)s/%(path)s" % mod
+
+  @path.setter
+  def path(self, full_path):
+    if full_path.endswith("/"):
+      full_path = full_path[:-1]
+    for mod in JS_IMPORTS[self._name]['modules']:
+      mod["cdnjs"] = full_path
+      mod["path"] = ""
+    if self._name in CSS_IMPORTS:
+      for mod in CSS_IMPORTS[self._name]['modules']:
+        mod["cdnjs"] = full_path
+        mod["path"] = ""
+
+  @property
+  def scripts(self):
+    """
+    Description:
+    -----------
+    Get the list of external files used for this package.
+
+    Usage:
+    -----
+
+      pkgs = page.imports().pkgs
+      pkgs.tabulator.version = "4.8.7"
+      print(pkgs.tabulator.scripts)
+    """
+    return self._js["main"].keys() | self._css["main"].keys()
+
+  def set_local(self, static_url="/static"):
+    """
+    Description:
+    -----------
+    Route the package to the local path.
+    Check first of the modules exist and raise an error otherwise.
+
+    Attributes:
+    ----------
+    :param static_url: String. Optional. The static root on the server. (default value /static/)
+    """
+    new_js = collections.OrderedDict()
+    for v in JS_IMPORTS[self._name]["modules"]:
+      node_path = v.get("node_path", "")
+      if node_path:
+        node_path += "/"
+      new_js["%s/%s%s" % (static_url, node_path, v["script"])] = self.version
+    self._js["main"] = new_js
+
+    if self._css:
+      new_css = collections.OrderedDict()
+      for v in CSS_IMPORTS[self._name]["modules"]:
+        node_path = v.get("node_path", "")
+        if node_path:
+          node_path += "/"
+        new_css["%s/%s%s" % (static_url, node_path, v["script"])] = self.version
+      self._css = new_css
+
+
+class ImportPackages:
+
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+  @property
+  def bootstrap(self):
+    """
+    Description:
+    ------------
+    The most popular front-end framework for developing responsive, mobile first projects on the web.
+
+    Related Pages:
+
+      https://getbootstrap.com/
+    """
+    return ImportModule("bootstrap", self._js, self._css)
+
+  @property
+  def jquery(self):
+    """
+    Description:
+    ------------
+    JavaScript library for DOM operations.
+
+    Related Pages:
+
+      https://jquery.com
+    """
+    return ImportModule("jquery", self._js, self._css)
+
+  @property
+  def accounting(self):
+    """
+    Description:
+    ------------
+    number, money and currency formatting library.
+
+    Related Pages:
+
+      http://openexchangerates.github.io/accounting.js
+    """
+    return ImportModule("accounting", self._js, self._css)
+
+  @property
+  def tabulator(self):
+    """
+    Description:
+    ------------
+    Interactive table generation JavaScript library.
+
+    Related Pages:
+
+      http://tabulator.info/
+    """
+    return ImportModule("tabulator-tables", self._js, self._css)
+
+
 class ImportManager(object):
   """
   Description:
@@ -1470,6 +1810,9 @@ class ImportManager(object):
         for i, mod in enumerate(definition['modules']):
           if alias in ovr_version:
             mod['version'] = ovr_version[alias]
+          elif 'version' not in mod:
+            # take the version from the main package definition
+            mod['version'] = JS_IMPORTS[alias]["version"] if alias in JS_IMPORTS else CSS_IMPORTS[alias]["version"]
           script = "".join([mod['path'] % mod, mod['script']])
           if online:
             main["%s/%s" % (mod['cdnjs'], script)] = mod['version']
@@ -1493,7 +1836,11 @@ class ImportManager(object):
     """
     Description:
     ------------
-    Retrieve all the requirements
+    Retrieve all the mandatory requirements required to display the final HTML page.
+
+    Usage:
+
+      print(page.imports().requirements)
     """
     module_alias = set(self.cleanImports(self._report.jsImports, JS_IMPORTS))
     for css in self.cleanImports(self._report.cssImport, CSS_IMPORTS):
@@ -1505,19 +1852,20 @@ class ImportManager(object):
     Description:
     ------------
     Return the list of modules for a given entry.
-    This will be used recursively to resolve all the dependencies
+    This will be used recursively to resolve all the dependencies.
 
-    Usage::
+    Usage:
+    -----
 
       modules = collections.OrderedDict()
-    ImportManager().getModules(modules, 'c3')
+      ImportManager().getModules(modules, 'c3')
 
     Attributes:
     ----------
-    :param modules: The list of modules
-    :param alias: The module reference in the above JS and CSS dictionaries
-    :param folder: Optional. The folder name
-    :param module_details: Optional. The module definition. Default check in the Javascipt modules
+    :param modules: List. The list of modules
+    :param alias: String. The module reference in the above JS and CSS dictionaries
+    :param folder: String. Optional. The folder name
+    :param module_details: Optional. The module definition. Default check in the JavaScipt modules
 
     :return: The list of modules
     """
@@ -1527,6 +1875,9 @@ class ImportManager(object):
       alias = alias['alias']
 
     for mod in module_details[alias]['modules']:
+      if 'version' not in mod:
+        # take the version from the main package definition
+        mod['version'] = JS_IMPORTS[alias]["version"] if alias in JS_IMPORTS else CSS_IMPORTS[alias]["version"]
       script = "".join([mod['path'] % mod, mod['script']])
       if 'url' in module_details[alias]:
         modules["%s/%s" % (module_details[alias]['url'], script)] = True
@@ -1541,6 +1892,10 @@ class ImportManager(object):
     Description:
     ------------
     Returns the list pf required modules for a given alias
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -1580,7 +1935,8 @@ class ImportManager(object):
     ------------
     Remove the underlying imports to avoid duplicated entries
 
-    Usage::
+    Usage:
+    -----
 
       >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
     ['jquery', 'd3', 'c3']
@@ -1608,7 +1964,8 @@ class ImportManager(object):
     ------------
     Return the list of CSS modules to add to the header
 
-    Usage::
+    Usage:
+    -----
 
       >>> ImportManager().cssResolve(['c3'])
     '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
@@ -1654,9 +2011,12 @@ class ImportManager(object):
     ------------
     Retrieve the list of CSS dependencies URL from a header
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param css_str: The CSS String in the page
+    :param css_str: String. The CSS String in the page
 
     :return: A Python list with all the CSS external URL to be imported
     """
@@ -1668,7 +2028,8 @@ class ImportManager(object):
     ------------
     Return the list of Javascript modules to add to the header
 
-    Usage::
+    Usage:
+    -----
 
       >>> ImportManager().jsResolve(['c3'])
     '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
@@ -1713,6 +2074,9 @@ class ImportManager(object):
     ------------
     Retrieve the list of Javascript dependencies URL from a header
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param js_str: The Javascript String in the page
@@ -1727,7 +2091,8 @@ class ImportManager(object):
     ------------
     retrieve the package definition from the list of module aliases
 
-    Usage::
+    Usage:
+    -----
 
       >>> ImportManager().getFiles(['c3'], ['c3'])
     f['css'][0]['file']['script']
@@ -1761,7 +2126,11 @@ class ImportManager(object):
     """
     Description:
     ------------
-    To retrieve the full list of available modules on the server
+    To retrieve the full list of available modules on the server.
+
+    Usage:
+    -----
+
     """
     return self.cssResolve(set(CSS_IMPORTS.keys()))
 
@@ -1769,7 +2138,11 @@ class ImportManager(object):
     """
     Description:
     ------------
-    To retrieve the full list of available modules on the server
+    To retrieve the full list of available modules on the server.
+
+    Usage:
+    -----
+
     """
     return self.jsResolve(set(JS_IMPORTS.keys()))
 
@@ -1781,14 +2154,15 @@ class ImportManager(object):
     This will guarantee the install without having to get any extra features saved on a repository.
     Saved copies of the modules can be done in order to guarantee a offline mode
 
-    Usage::
+    Usage:
+    -----
 
       Imports.ImportManager(report=Report()).getPackage('jqueryui')
 
     Attributes:
     ----------
-    :param alias: The package reference in the above list
-    :param version: Optional. The package version to retrieve
+    :param alias: String. The package reference in the above list
+    :param version: String. Optional. The package version to retrieve
     :param static_path: Optional. The path in which the files should be copied to
     :param with_dep: Optional. Flag to specify if the dependencies should be updated. Default False
     :param reload: Optional. Flag to force the package reloading if the folder already exists. Default Yes
@@ -1814,6 +2188,8 @@ class ImportManager(object):
       if 'package' in pckg.get(alias, {}):
         packages[alias] = os.path.join(_static_path, pckg[alias]['package']['folder'])
       for mod in pckg.get(alias, {}).get('modules', []):
+        if 'version' not in mod:
+          mod['version'] = pckg.get(alias, {})['version']
         _version = self.reqVersion.get(alias, mod['version']) if version is None else version
         script = "".join([mod['path'] % {'version': _version}, mod['script']])
         path = os.path.join(_static_path, mod['path'] % {'version': _version})
@@ -1853,14 +2229,15 @@ class ImportManager(object):
     ------------
     Download a full package (CSS and JS) locally for a server or full offline mode
 
-    Usage::
+    Usage:
+    -----
 
       Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
     Attributes:
     ----------
-    :param alias: The package reference in the above list
-    :param version: Optional. The package version to retrieve
+    :param alias: String. The package reference in the above list
+    :param version: String. Optional. The package version to retrieve
     :param static_path: Optional. The path in which the files should be copied to
     :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
 
@@ -1879,6 +2256,8 @@ class ImportManager(object):
       webscrapper = self._report.py.requests.webscrapping
 
     if 'package' in JS_IMPORTS[alias]:
+      if 'version' not in JS_IMPORTS[alias]['modules'][0]:
+        JS_IMPORTS[alias]['modules'][0]['version'] = JS_IMPORTS[alias]['version']
       versionDict = {'version': JS_IMPORTS[alias]['modules'][0]['version'] if version is None else version}
       packagePath = JS_IMPORTS[alias]['package']['zip'] % versionDict
       if static_path is None:
@@ -1917,7 +2296,8 @@ class ImportManager(object):
     ------------
     Returns the packages used in the Framework for both Js and CSS perimeters
 
-    Usage::
+    Usage:
+    -----
 
       >>> len(ImportManager().package('jqueryui')['modules'])
     4
@@ -1948,6 +2328,9 @@ class ImportManager(object):
 
     This will change the Import important to the Python env
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param alias: The package reference in the above list
@@ -1967,7 +2350,8 @@ class ImportManager(object):
     Add a new package or update an existing one with new parameters.
     Only few parameters are available here in order to limit the changes
 
-    Usage::
+    Usage:
+    -----
 
       i.addPackage('test',
       {
@@ -2016,10 +2400,14 @@ class ImportManager(object):
     Download all the CSS and Js packages from the official CDNJS configured in the configuration.
     It is possible to get the configuration settings by calling the function getPackageInfo(aliasName) attached to the report
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param static_path: The package reference in the above list
     :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
+    :param exclude: Optional.
 
     :return: The Python Import manager
     """
@@ -2036,6 +2424,9 @@ class ImportManager(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -2059,6 +2450,8 @@ class ImportManager(object):
       if 'register' in JS_IMPORTS[m]:
         alias = JS_IMPORTS[m]['register']['alias']
         first_module = JS_IMPORTS[m]['modules'][0]
+        if 'version' not in first_module:
+          first_module['version'] = JS_IMPORTS[m]['version']
         if m in m_versions:
           first_module['version'] = m_versions[m]
         results['paths'][alias] = "%s/%s%s" % (first_module['cdnjs'], first_module['path'] % first_module,
@@ -2098,11 +2491,14 @@ class ImportManager(object):
     """
     Description:
     ------------
-    Show all the underlying packages used in a report or available in the framework
+    Show all the underlying packages used in a report or available in the framework.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param all: Boolean. A flag to specify if only the one requested in the report should be displayed
+    :param all: Boolean. Optional. A flag to specify if only the one requested in the report should be displayed
     """
     packages = {}
     if not all:
@@ -2110,12 +2506,16 @@ class ImportManager(object):
         pkg = self.cleanImports(imp, repo)
         for c in pkg:
           for s in repo[c].get('modules', []):
+            if 'version' not in s:
+              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version'] # propagate the version number if not supplied from JS definition
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     else:
       for mod in [CSS_IMPORTS, JS_IMPORTS]:
         for c, pkg in mod.items():
           for s in pkg.get('modules', []):
+            if 'version' not in s:
+              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version'] # propagate the version number if not supplied
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     return packages
@@ -2128,9 +2528,13 @@ class ImportManager(object):
 
     Those are by default disabled as they are sharing data with Google.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param products: List. The various Google products to enable in the report
+    :param products: List. The various Google products to enable in the report.
+    :param api_key: String. Optional. The Google developer API key.
     """
     global JS_IMPORTS
 
@@ -2151,6 +2555,9 @@ class ImportManager(object):
     Short circuit the import mechanism and retrive the selected ones from a local static path.
     This could help on the debugging and the improvement of the packages before submitting them for review.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param aliases: List. Mandatory. The list of aliases
@@ -2169,64 +2576,12 @@ class ImportManager(object):
         for m in CSS_IMPORTS[alias]['modules']:
           m.update({'path': '', 'cdnjs': end_points})
 
-
-def npm(packages, path="", is_node_server=False, update=False):
-  """
-  Description:
-  ------------
-  Install files using the npm structure is compatible.
-  This will allow to run the script totally locally (without dependencyy on internet)
-
-  Attributes:
-  ----------
-  :param packages: List. All the packages to be added to the install
-  :param path: String. The install path (if node server, the folder root for /node_modules
-  :param is_node_server: Boolean. Specify is npm from NodeJs must be used to install the package
-  :param update: Boolean. Specify is the version of the package needs to be updated
-  """
-  if is_node_server:
-    if not isinstance(packages, list):
-      packages = [packages]
-    if update:
-      subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=path)
-    else:
-      to_be_installed = []
-      for p in packages:
-        package_path = os.path.join(path, 'node_modules', p)
-        if not os.path.exists(package_path):
-          to_be_installed.append(p)
-      if to_be_installed:
-        subprocess.run('npm install %s' % " ".join(to_be_installed), shell=True, cwd=path)
-        print(" PYK_NPM >> All packages installed [%s]" % " ".join(to_be_installed))
-      else:
-        print(" PYK_NPM >> packages already installed")
-  else:
-    package_path = os.path.join(path, 'node_modules')
-    if not os.path.exists(package_path):
-      os.makedirs(package_path)
-    for p in packages:
-      for category in [JS_IMPORTS, CSS_IMPORTS]:
-        if p in category and 'register' in category[p] and 'npm_path' in category[p]['register']:
-          npm_alias = category[p]['register'].get('npm', p)
-          dst_path = os.path.join(package_path, npm_alias, category[p]['register']['npm_path'])
-          module_exist = os.path.exists(dst_path)
-          if not module_exist:
-            os.makedirs(dst_path)
-            update = True
-          if update:
-            for mod in category[p]['modules']:
-              mod['path'] = mod['path'] % mod
-              request = Request("%(cdnjs)s/%(path)s/%(script)s" % mod)
-              response = urlopen(request).read()
-              with open(os.path.join(dst_path, mod['script']), "wb") as f:
-                f.write(response)
-            for mod in category[p].get('assets', []):
-              mod['path'] = mod['path'] % mod
-              request = Request("%(cdnjs)s/%(path)s/%(script)s" % mod)
-              response = urlopen(request).read()
-              if 'npm_path' in mod:
-                dst_path = os.path.join(package_path, npm_alias, mod['npm_path'])
-                if not os.path.exists(dst_path):
-                  os.makedirs(dst_path)
-              with open(os.path.join(dst_path, mod['script']), "wb") as f:
-                f.write(response)
+  @property
+  def pkgs(self):
+    """
+    Description:
+    ------------
+    Shortcut properties to the various package definitions.
+    This can be used in the script in order to change the path of the version of any external modules used.
+    """
+    return ImportPackages(self.jsImports, self.cssImports)

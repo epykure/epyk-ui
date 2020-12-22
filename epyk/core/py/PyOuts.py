@@ -5,6 +5,7 @@ import json
 from epyk.core.js import Imports
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
+from epyk.core.js import JsLinter
 
 from epyk.core.html.templates import HtmlTmplBase
 
@@ -20,15 +21,18 @@ class OutBrowsers(object):
     Update the Html launcher and send the data to codepen
     URL used: https://codepen.io/pen/define/
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.debuggex.com/cheatsheet/regex/python
 
     Attributes:
     ----------
-    :param path: String. Output path in which the static files will be generated
-    :param target: String. Load the data in a new tab in the browser
-    :param open_browser: Boolean. Flag to open the browser automatically
+    :param path: String. Optional. Output path in which the static files will be generated
+    :param target: String. Optional. Load the data in a new tab in the browser
+    :param open_browser: Boolean. Optional. Flag to open the browser automatically
 
     :return: The output launcher full file name
     """
@@ -59,15 +63,18 @@ class OutBrowsers(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://stackblitz.com/docs
 
     Attributes:
     ----------
-    :param path: String. Output path in which the static files will be generated
-    :param target: String. Load the data in a new tab in the browser
-    :param open_browser: Boolean. Flag to open the browser automatically
+    :param path: String. Optional. Output path in which the static files will be generated
+    :param target: String. Optional. Load the data in a new tab in the browser
+    :param open_browser: Boolean. Optional. Flag to open the browser automatically
     """
     import webbrowser
 
@@ -117,10 +124,15 @@ class PyOuts(object):
     ------------
     Create the HTML result object from the report definition
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
-    :param htmlParts: Optional. HTML Content of the page
-    :param cssParts: Optional. CSS classes content of the page
+    :param htmlParts: List. Optional. HTML Content of the page
+    :param cssParts: List. Optional. CSS classes content of the page
+    :param split_js: Boolean. Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
 
     :return: A python dictionary with the HTML results
     """
@@ -193,7 +205,10 @@ class PyOuts(object):
         str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
         onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
-    importMng = Imports.ImportManager(online=True, report=self._report)
+    if self._report is not None:
+      importMng = self._report.imports(online=True)
+    else:
+      importMng = Imports.ImportManager(online=True, report=self._report)
     results = {
       'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
@@ -212,9 +227,17 @@ class PyOuts(object):
     Standard output for Jupyter Notebooks.
 
     This is what will use IPython in order to display the results in cells.
+
+    Usage:
+    -----
+
+
     """
     results = self._to_html_obj()
-    importMng = Imports.ImportManager(online=True, report=self._report)
+    if self._report is not None:
+      importMng = self._report.imports(online=True)
+    else:
+      importMng = Imports.ImportManager(online=True, report=self._report)
     require_js = importMng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']
@@ -226,6 +249,10 @@ class PyOuts(object):
     ------------
     For a display of the report in JupyterLab.
     Thanks to this function some packages will not be imported to not conflict with the existing ones
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -242,6 +269,10 @@ class PyOuts(object):
     For a display of the report in Jupyter.
     Thanks to this function some packages will not be imported to not conflict with the existing ones
 
+    Usage:
+    -----
+
+
     Related Pages:
 
       https://jupyter.org/
@@ -256,7 +287,7 @@ class PyOuts(object):
       nb_path = os.path.split(notebook.__file__)[0]
       for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
         self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
-    except:
+    except Exception as err:
       self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax']
     return self
 
@@ -266,15 +297,17 @@ class PyOuts(object):
     ------------
     This will produce everything in a single page which can be directly copied to the try editor in w3C website
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
     Attributes:
     ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
-
+    :param path: String. Optional. The path in which the output files will be created
+    :param name: String. Optional. The filename without the extension
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", "w3schools")
@@ -294,16 +327,17 @@ class PyOuts(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://codepen.io/
 
     Attributes:
     ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
+    :param path: String. Optional. The path in which the output files will be created
+    :param name: String. Optional. The filename without the extension
 
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
@@ -320,16 +354,18 @@ class PyOuts(object):
 
     The output is always in a sub directory jsfiddle
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://jsfiddle.net/
 
     Attributes:
     ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
+    :param path: String. Optional. The path in which the output files will be created
+    :param name: String. Optional. The filename without the extension
+    :param framework: String. optional. The framework in which the result page will be used.
 
     :return: The file path
     """
@@ -358,20 +394,22 @@ class PyOuts(object):
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path=None, name=None, split_files=False, install_modules=False, options=None):
+  def html_file(self, path=None, name=None, options=None):
     """
     Description:
     ------------
-    Function used to generate a static HTML page for the report
+    Function used to generate a static HTML page for the report.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+    Attributes:
     ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
+    :param path: String. Optional. The path in which the output files will be created.
+    :param name: String. Optional. The filename without the extension.
+    :param options: Dictionary. Optional.
 
-    :return: The file full path
+    :return: The file full path.
     """
     options = options or {}
     if path is None:
@@ -393,8 +431,8 @@ class PyOuts(object):
         htmlParts.append(component.html())
       cssParts.update(component.style.get_classes_css())
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
-    results = self._to_html_obj(htmlParts, cssParts, split_js=split_files)
-    if split_files:
+    results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False))
+    if options.get("split", False):
       results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), name)
       body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), name)
       static_path = path
@@ -404,11 +442,14 @@ class PyOuts(object):
         os.makedirs(os.path.join(static_path, 'css'))
       with open(os.path.join(static_path, 'css', "%s.css" % name), "w") as f:
         f.write(results['cssStyle'])
-
+        results['cssStyle'] = "" # empty the styles as written in an external file.
       if not os.path.exists(os.path.join(static_path, 'js')):
         os.makedirs(os.path.join(static_path, 'js'))
       with open(os.path.join(static_path, 'js', "%s.js" % name), "w") as f:
-        f.write(";".join(results['jsFrgsCommon'].values()))
+        fncs = []
+        for v in results['jsFrgsCommon'].values():
+          fncs.append(JsLinter.parse(v, prettify=options.get("prettify", False)))
+        f.write("\n\n".join(fncs))
 
     # Add the worker sections when no server available
     for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
@@ -417,8 +458,6 @@ class PyOuts(object):
       results['body'] = body
       results['header'] = self._report.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
-    if install_modules and self._report._node_modules is not None:
-      Imports.npm(self._report.imports().requirements, path=self._report._node_modules[0], is_node_server=False)
     return html_file_path
 
   def web(self):
@@ -450,11 +489,19 @@ class PyOuts(object):
     ------------
     Publish the HTML page to a distant web server.
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
-    :param server: String. The webserver type (angular, react, vue, node, deno)
-    :param app_path: String. The webserver path
-    :param name: String. The application name in the webserver
+    :param server: String. The webserver type (angular, react, vue, node, deno).
+    :param app_path: String. The webserver path.
+    :param selector:
+    :param name: String. Optional. The application name in the webserver.
+    :param module:
+    :param target_folder:
+    :param auto_route:
     """
     from epyk.web import angular, node, vue, react, deno
 
@@ -488,12 +535,15 @@ class PyOuts(object):
     """
     Description:
     ------------
-    Writes a Markdown file from the report object
+    Writes a Markdown file from the report object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
+    :param path: The path in which the output files will be created.
+    :param name: The filename without the extension.
 
     :return: The file path
     """
@@ -506,7 +556,6 @@ class PyOuts(object):
     if os.path.exists(path):
       if name is None:
         name = "md_%s.amd" % int(time.time())
-
       file_Path = os.path.join(path, name)
       with open(file_Path, "w") as f:
         order_components = list(self._report.components.keys())
@@ -521,12 +570,20 @@ class PyOuts(object):
 
   def html(self):
     """
+    Description:
+    ------------
+    Function to get the result HTML page fragments from all the HTML components.
 
-    :return:
+    Usage:
+    -----
+
     """
     self.html_tmpl = HtmlTmplBase.STATIC_PAGE
     results = self._to_html_obj()
-    importMng = Imports.ImportManager(online=True, report=self._report)
+    if self._report is not None:
+      importMng = self._report.imports(online=True)
+    else:
+      importMng = Imports.ImportManager(online=True, report=self._report)
     require_js = importMng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']
@@ -552,7 +609,7 @@ class PyOuts(object):
     """
     Description:
     ------------
-    This module will require the package webbrowser.
-    It will allow outputs to be created directly in the webpages (without using intermediary text files
+    This module will require the package web browser.
+    It will allow outputs to be created directly in the web pages (without using intermediary text files
     """
     return OutBrowsers(self)

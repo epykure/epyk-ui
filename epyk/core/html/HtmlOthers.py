@@ -235,7 +235,7 @@ class Loading(Html.Html):
 
 class HtmlJson(Html.Html):
   name = 'Pretty Json'
-  requirements = ('json-formatter', )
+  requirements = ('json-formatter-js', )
 
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})

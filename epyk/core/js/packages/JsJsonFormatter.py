@@ -5,7 +5,7 @@ from epyk.core.js.primitives import JsObjects
 
 
 class Json(JsPackage):
-  lib_alias = {"js": "json-formatter", 'css': "json-formatter"}
+  lib_alias = {"js": "json-formatter-js", 'css': "json-formatter-js"}
 
   def openAtDepth(self, n):
     """

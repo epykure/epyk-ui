@@ -337,7 +337,7 @@ class GroupComponent(JsPackage):
 
 
 class ColumnComponent(JsPackage):
-  lib_alias = {"js": "tabulator", 'css': "tabulator"}
+  lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
   lib_selector = "column"
 
   def getElement(self):
@@ -738,7 +738,7 @@ class RowComponent(JsPackage):
 
 
 class Tabulator(JsPackage):
-  lib_alias = {"js": "tabulator", 'css': "tabulator"}
+  lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
 
   def download(self, format, filename, options=None):
     """
