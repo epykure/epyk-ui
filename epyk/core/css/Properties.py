@@ -2857,3 +2857,29 @@ class CssMixin(object):
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
 
+  def parallax(self, url):
+    """
+    Description:
+    -----------
+    Parallax scrolling is a web site trend where the background content (i.e. an image) is moved at a different
+    speed than the foreground content while scrolling.
+
+    Usage:
+
+      div = page.ui.div()
+      div.style.css.parallax("https://www.w3schools.com/howto/img_parallax.jpg")
+
+    Related Pages:
+
+      https://www.w3schools.com/howto/howto_css_parallax.asp
+
+    Attributes:
+    ----------
+    :param url: String. The path of the picture visible in the background.
+    """
+    self.background_image = 'url("%s")' % url
+    self.background_attachment = "fixed"
+    self.background_position = "center"
+    self.background_repeat = "no-repeat"
+    self.background_size = "cover"
+    return self
