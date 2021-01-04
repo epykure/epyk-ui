@@ -38,6 +38,9 @@ class PyRest(object):
     ------------
     Set the proxy connexions for the Python requests.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param username: String. The username
@@ -59,6 +62,9 @@ class PyRest(object):
     ------------
     Start a local server for all the services.
     This should be at the end of the script in order to allow the services debug
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -100,9 +106,10 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
+      page.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
 
@@ -135,10 +142,11 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.py.requests.get("https://api.cdnjs.com/libraries")
-    pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
+      page.py.requests.get("https://api.cdnjs.com/libraries")
+      pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
 
@@ -174,14 +182,15 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage::
+    Usage:
+    -----
 
       json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
 
     Related Pages:
 
       https://2.python-requests.org/en/master/api/
-    https://docs.python.org/3/library/urllib.request.html
+      https://docs.python.org/3/library/urllib.request.html
 
     Attributes:
     ----------
@@ -206,7 +215,8 @@ class PyRest(object):
     ------------
     Create a REST request with the appropriate header to mimic a browser GET request
 
-    Usage::
+    Usage:
+    -----
 
       PyRest().webscrapping(r"https://doc.scrapy.org/en/latest/topics/request-response.html")
 
@@ -240,7 +250,10 @@ class PyRest(object):
     """
     Description:
     ------------
-    Retrieve tabular data from an external REST service
+    Retrieve tabular data from an external REST service.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -285,6 +298,9 @@ class PyRest(object):
     ------------
     Retrieve Json data from an external REST service
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param url: String. The url with the data to request
@@ -309,10 +325,13 @@ class PyRest(object):
 
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """
+    Description:
+    ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.py.requests.query("SrcTest", "textbubble")
+      page.py.requests.query("SrcTest", "textbubble")
 
     Attributes:
     ----------
@@ -321,8 +340,6 @@ class PyRest(object):
     :param report_name: Optional, The folder name
     :param data: Optional, The input data for the service
     :param encoding: Optional, The encoding for the input data. Default utf-8
-
-    :return:
     """
     if data is None:
       data = {}

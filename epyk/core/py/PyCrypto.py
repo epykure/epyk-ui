@@ -24,12 +24,12 @@ class PyCrypto(object):
     Description:
     ------------
     This function will use the cryptography to ensure a secured encryption of the different credential and private data.
+
     This can be also used to protect data from the report.
     In order to ensure the right privacy please do not store the token and the salt in the framework.
 
-    example
-
-    Documentation
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -63,8 +63,10 @@ class PyCrypto(object):
     This function will use the two keys in order to decrypt the data.
     In case of failure this function will raise an exception.
 
-    Example
-    PyCrypto().decrypt(encrypted)
+    Usage:
+    -----
+
+      PyCrypto().decrypt(encrypted)
 
     Documentation
 
@@ -103,8 +105,10 @@ class PyCrypto(object):
     ------------
     Return a unique token
 
-    Example
-    PyCrypto.getId
+    Usage:
+    -----
+
+      PyCrypto.getId
 
     Related Pages:
 
@@ -121,8 +125,10 @@ class PyCrypto(object):
     ------------
     Return a Fernet key.
 
-    Example
-    PyCrypto().key
+    Usage:
+    -----
+
+      PyCrypto().key
 
     Related Pages:
 
@@ -137,8 +143,10 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Example
-    PyCrypto.b64encode("Test")
+    Usage:
+    -----
+
+      PyCrypto.b64encode("Test")
 
     Related Pages:
 
@@ -163,9 +171,8 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Example
-
-    Documentation
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -183,9 +190,8 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Example
-
-    Documentation
+    Usage:
+    -----
 
     Attributes:
     ----------

@@ -473,7 +473,7 @@ class PyExt(object):
     self.now = self.dates.now
     self.cob = self.dates.cob
     self.request = self.requests.request
-    if not 'py' in self._report._props:
+    if 'py' not in self._report._props:
       self._report._props['py'] = {}
 
   @property
@@ -484,6 +484,9 @@ class PyExt(object):
     This is a simple wrapper to the datetime Python module.
 
     No external package is required to use this interface.
+
+    Usage:
+    -----
 
     :return: A PyDate object
     """
@@ -497,6 +500,9 @@ class PyExt(object):
     This is a simple wrapper to the internal Python modules to run REST calls.
 
     No external package is required to use this interface.
+
+    Usage:
+    -----
 
     :return: A PyRest object
     """
@@ -512,10 +518,13 @@ class PyExt(object):
     This will rely on the package cryptography. This should be added to the python environment before using it.
     This package can be installed using the usual pip install function.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://pypi.org/project/cryptography/
-    https://cryptography.io/en/latest/
+      https://cryptography.io/en/latest/
     """
     return PyCrypto.PyCrypto(self._report)
 
@@ -525,6 +534,10 @@ class PyExt(object):
     Description:
     ------------
     Property to some predefined Geolocation functions
+
+    Usage:
+    -----
+
     """
     return PyGeo.PyGeo(self._report)
 
@@ -534,6 +547,10 @@ class PyExt(object):
     Description:
     ------------
     Property to the Markdown String conversion
+
+    Usage:
+    -----
+
     """
     return PyMarkdown.MarkDown(self._report)
 
@@ -541,11 +558,12 @@ class PyExt(object):
     """
     Description:
     ------------
-    Import dynamically a python module
+    Import dynamically a python module.
 
     Usage:
     -----------
-    rptObj.py.import_lib("test.py", folder="tables", path=r"filePath")
+
+      page.py.import_lib("test.py", folder="tables", path=r"filePath")
 
     Attributes:
     ----------
@@ -576,9 +594,10 @@ class PyExt(object):
     This can automatically installed it from the Python Index online repository is missing
 
     Usage:
-    -----------
-    >>> PyExt().import_package("sqlalchemy").__name__
-    'sqlalchemy'
+    -----
+
+      >>> PyExt().import_package("sqlalchemy").__name__
+      'sqlalchemy'
 
     Attributes:
     ----------
@@ -597,6 +616,10 @@ class PyExt(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -620,6 +643,10 @@ class PyExt(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -649,6 +676,9 @@ class PyExt(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

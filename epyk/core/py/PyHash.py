@@ -87,16 +87,22 @@ class SipHash(object):
 
     def hashId(self, text):
       """
+      Description:
+      ------------
       Produce a unique ID for a given string. This can be used to replace the internal numbers.
 
-      Example
-      >>> SipHash().hashId("Test")
-      3169529217224722230
+      Usage:
+      -----
+
+        >>> SipHash().hashId("Test")
+        3169529217224722230
 
       Related Pages:
 
-      https://github.com/bozhu/siphash-python
+        https://github.com/bozhu/siphash-python
 
+      Attributes:
+      ----------
       :param text: The String to be hashed
       """
       return self.auth(0x0f0e0d0c0b0a09080706050403020100, text)
