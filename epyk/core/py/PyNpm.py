@@ -33,7 +33,9 @@ class NpmRegisteryScore:
     -----------
     
     Usage:
-    pkg = PyNpm.Npm().package('pivottable')
+    -----
+
+      pkg = PyNpm.Npm().package('pivottable')
     """
     return self.__score["final"]
 
@@ -43,8 +45,8 @@ class NpmRegisteryScore:
     Description:
     -----------
 
-
     Usage:
+    -----
 
     """
     return self.__score['detail']['popularity']
@@ -56,6 +58,7 @@ class NpmRegisteryScore:
     -----------
     
     Usage:
+    -----
 
     """
     return self.__score['detail']['maintenance']
@@ -73,6 +76,7 @@ class NpmDistIntegrity:
     -----------
 
     Usage:
+    -----
 
     """
     return self.__controls["integrity"]
@@ -82,6 +86,9 @@ class NpmDistIntegrity:
     """
     Description:
     -----------
+
+    Usage:
+    -----
     """
     return self.__controls["shasum"]
 
@@ -92,6 +99,7 @@ class NpmDistIntegrity:
     -----------
 
     Usage:
+    -----
 
     """
     return self.__controls["fileCount"]
@@ -103,6 +111,7 @@ class NpmDistIntegrity:
     -----------
 
     Usage:
+    -----
 
     """
     return self.__controls["unpackedSize"]
@@ -127,6 +136,7 @@ class NpmRegistery:
     Get the final score for the package on the NPM registry website.
 
     Usage:
+    -----
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.score)
@@ -140,6 +150,7 @@ class NpmRegistery:
     -----------
 
     Usage:
+    -----
 
     """
     return NpmRegisteryScore(self._meta["score"])
@@ -151,6 +162,7 @@ class NpmRegistery:
     -----------
 
     Usage:
+    -----
 
     """
     return NpmDistIntegrity(self.info()['dist'])
@@ -293,6 +305,9 @@ class NpmRegistery:
     Usage:
     -----
 
+      pkg = PyNpm.Npm().package('pivottable')
+      print(pkg.name)
+
     """
     return self._meta['package']['name']
 
@@ -304,6 +319,9 @@ class NpmRegistery:
 
     Usage:
     -----
+
+      pkg = PyNpm.Npm().package('pivottable')
+      print(pkg.is_latest())
 
     Attributes:
     ----------
@@ -327,6 +345,9 @@ class NpmRegistery:
 
     Usage:
     -----
+
+      pkg = PyNpm.Npm().package('pivottable')
+      print(pkg.has_cdnjs())
 
     Attributes:
     ----------
@@ -419,6 +440,8 @@ class NpmRegistery:
     Usage:
     -----
 
+      pkg = PyNpm.Npm().package('bootstrap')
+      print(pkg.dependencies)
     """
     info = self.info()
     results = {}
@@ -706,6 +729,8 @@ class Npm:
     """
     Description:
     -----------
+    Get the package information from the NPM registry.
+    This will return only the exact match in the repository.
 
     Usage:
     -----
@@ -725,6 +750,7 @@ class Npm:
     """
     Description:
     -----------
+    Get the list of packages from the NPM registry matching the name.
 
     Usage:
     -----
