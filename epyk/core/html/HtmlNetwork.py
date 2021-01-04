@@ -4,8 +4,6 @@
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
 
-from epyk.core.data import events
-
 from epyk.core.js.objects import JsComponents
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlNetwork
@@ -18,7 +16,8 @@ class Comments(Html.Html):
   name = 'Comment'
 
   def __init__(self, report, recordSet, width, height, htmlCode, options, profile):
-    super(Comments, self).__init__(report, recordSet, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
+    super(Comments, self).__init__(report, recordSet, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode,
+                                   profile=profile)
     self.__options = OptNet.OptionsChat(self, options)
     self.css({'padding': '5px'})
     self.input = None
@@ -38,6 +37,13 @@ class Comments(Html.Html):
     """
     Description:
     ------------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
+    Usage:
+    -----
 
     :rtype: OptNet.OptionsChat
     """
@@ -49,6 +55,9 @@ class Comments(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :return: A Javascript Dom object
@@ -59,9 +68,7 @@ class Comments(Html.Html):
       self._js = JsComponents.Chat(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
         if (data != null){
           var comments;
           if(!Array.isArray(data)){ var now = new Date();
@@ -85,6 +92,9 @@ class Comments(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param text:
@@ -97,6 +107,9 @@ class Comments(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -122,12 +135,15 @@ class Comments(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param socket:
     :param channel:
     :param jsFncs:
-    :param profile:
+    :param profile: Boolean | Dictionary.
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -150,6 +166,9 @@ class Comments(Html.Html):
 
     The content of data will be used by this component.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://timepicker.co/options/
@@ -158,6 +177,10 @@ class Comments(Html.Html):
     ----------
     :param socket: Socket. A python socket object
     :param channel: String. The channel on which events will be received
+    :param data:
+    :param options: Dictionary.
+    :param jsFncs:
+    :param profile: Boolean | Dictionary.
     """
     if data is None:
       data = socket.message
@@ -202,6 +225,9 @@ class Bot(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component
+
+    Usage:
+    -----
 
     :rtype: GrpClsNetwork.ClassNetworkBot
     """
@@ -277,6 +303,9 @@ class Chat(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: OptNet.OptionsChat
     """
     return self.__options
@@ -286,6 +315,9 @@ class Chat(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -297,9 +329,7 @@ class Chat(Html.Html):
       self._js = JsComponents.Chat(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var feed = document.createElement("p");
       feed.style.margin = "0 0 5px 0";
       if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
@@ -319,11 +349,14 @@ class Chat(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(jsFncs, list):
@@ -338,12 +371,15 @@ class Chat(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param socket:
     :param channel:
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: List.
+    :param profile: Boolean | Dictionary.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -361,6 +397,9 @@ class Chat(Html.Html):
 
     The content of data will be used by this component.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://timepicker.co/options/
@@ -369,6 +408,10 @@ class Chat(Html.Html):
     ----------
     :param socket: Socket. A python socket object
     :param channel: String. The channel on which events will be received
+    :param data:
+    :param options: Dictionary.
+    :param jsFncs:
+    :param profile:
     """
     if data is None:
       data = socket.message
@@ -402,13 +445,14 @@ class Alert(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: OptNet.OptionsAlert
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var feed = document.createElement("p");
       options.classes.forEach(function(cls){ feed.classList.add(cls) });
       if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
@@ -432,9 +476,7 @@ class News(Html.Html):
     self.__options = OptNet.OptionsNews(self, options)
     self._report.jsImports.add('moment')
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
     var feed = document.createElement("p");
     feed.style.margin = "0 0 5px 0";
     if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
@@ -456,8 +498,9 @@ class News(Html.Html):
     Description:
     -----------
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsComponents.News
@@ -471,6 +514,9 @@ class News(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: OptNet.OptionsNews
     """
@@ -515,8 +561,9 @@ class Room(Html.Html):
     Description:
     -----------
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsComponents.Room
@@ -589,6 +636,9 @@ class DropFile(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsHtmlNetwork.JsHtmlDropFiles
     """
     if self._dom is None:
@@ -600,7 +650,10 @@ class DropFile(Html.Html):
     """
     Description:
     ------------
-    Specific options for the files components
+    Specific options for the files components.
+
+    Usage:
+    -----
 
     :rtype: OptNet.OptionFiles
     """
@@ -611,6 +664,9 @@ class DropFile(Html.Html):
     Description:
     -----------
     Create a Ajax transfer to a distant server
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -626,14 +682,15 @@ class DropFile(Html.Html):
     -----------
     Add a drag and drop property to the element
 
-    Usage::
+    Usage:
+    -----
 
     Attributes:
     ----------
     :param jsFncs: List. The Javascript series of functions
-    :param jsData: Data. A datamap objection of a dictionary
-    :param preventDefault: Boolean. Prevent default on the JavaScript event
-    :param profile: Boolean. Profiling
+    :param jsData: Data. Optional. A datamap objection of a dictionary
+    :param preventDefault: Boolean. Optional. Prevent default on the JavaScript event
+    :param profile: Boolean. Optional. Profiling
 
     :return: Return self to allow the chaining
     """
@@ -657,9 +714,12 @@ class DropFile(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param label:
+    :param label: String. Optional.
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
@@ -671,13 +731,18 @@ class DropFile(Html.Html):
 
     This function will first use as underlying the drop method to get the file dropped.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: List. The Javascript series of functions
-    :param jsData: A datamap objection of a dictionary
-    :param preventDefault: Boolean. Prevent default on the JavaScript event
-    :param profile: Boolean. Profiling
+    :param jsData: String. Optional. A datamap objection of a dictionary
+    :param preventDefault: Boolean. Optional. Prevent default on the JavaScript event
+    :param profile: Boolean. Optional. Profiling
     """
+    from epyk.core.data import events
+
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return self.drop(['''
@@ -692,7 +757,15 @@ class DropFile(Html.Html):
              )], jsData=jsData, preventDefault=preventDefault, profile=profile)
 
   def paste(self, jsFncs, profile=False, source_event=None):
+    """
 
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return super(DropFile, self).paste([self.loading()]+jsFncs+[

@@ -23,7 +23,6 @@ import importlib
 
 from epyk.core.data import DataPy
 from epyk.core.data import DataGrpc
-from epyk.core.data import DataOffice
 
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
@@ -157,10 +156,6 @@ class DataSrc(object):
     from epyk.core.data import DataDb
 
     return DataDb.DataDb(self._report)
-
-  @property
-  def office(self):
-    return DataOffice.DataOffice(self._report)
 
   def from_cache(self, code, is_secured=False, report_name=None):
     """

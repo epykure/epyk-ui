@@ -32,7 +32,10 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsMenu.ClassNav
     """
@@ -44,7 +47,11 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
-    Move the object to this position in the final page
+    Move the object to this position in the final page.
+
+    Usage:
+    -----
+
     """
     super(HtmlNavBar, self).move()
     self.style.css.position = None
@@ -76,9 +83,12 @@ class HtmlNavBar(Html.Html):
     -----------
     remove the default navigation bar background and remove the padding.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param to_top: Boolean. To define if the padding must be removed
+    :param to_top: Boolean. Optional. To define if the padding must be removed.
     """
     self.background = False
     self.style.css.background_color = "#11ffee00"
@@ -91,11 +101,14 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
-    Add component to the right
+    Add component to the right.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param component: HTML Component. Internal component to the framework
+    :param component: HTML. Internal component to the framework
     :param css: Dictionary. Optional. The CSS attributes
     """
     if not hasattr(component, 'options'):
@@ -131,11 +144,14 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
-    Add an item to the nav bar
+    Add an item to the nav bar.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param text: String or Component. The link to be added to the navbar
+    :param text: String | HTML. The link to be added to the navbar
     """
     if not hasattr(text, 'options'):
       text = self._report.ui.text(text)
@@ -174,12 +190,23 @@ class HtmlFooter(Html.Html):
 
   @property
   def sections(self):
+    """
+    Usage:
+    -----
+
+    """
     if not self.__col_lst:
       self.__col_lst = []
     return self.__col_lst
 
   @sections.setter
   def sections(self, col_lst):
+    """
+    Usage:
+    -----
+
+    :param col_lst:
+    """
     self.__col_lst = col_lst
 
   @property
@@ -187,7 +214,10 @@ class HtmlFooter(Html.Html):
     """
     Description:
     -----------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsMenu.ClassFooter
     """
@@ -207,8 +237,13 @@ class HtmlFooter(Html.Html):
     """
     Description:
     -----------
-    Return the internal column in the row for the given index
+    Return the internal column in the row for the given index.
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param i: the column index
     """
     return self.val[i]
@@ -241,15 +276,17 @@ class ContextMenu(Html.Html):
     """
     Description:
     -----------
-    Component options
+    Component options.
+
+    Usage:
+    -----
+
 
     :rtype: OptList.OptionsLi
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var contextMenu = htmlObj.querySelector('ul');
       contextMenu.innerHTML = '';
       data.forEach(function(rec){
@@ -267,6 +304,10 @@ class ContextMenu(Html.Html):
     ------------
     Add Item to the context menu
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param value: String.
@@ -280,9 +321,13 @@ class ContextMenu(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
-    :param component: HTML Component. Internal component to the framework
+    :param component: HTML. Internal component to the framework.
     """
     self.__add__(component)
     return self.val[-1].val
@@ -292,9 +337,13 @@ class ContextMenu(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
-    :param htmlObj:
+    :param htmlObj: HTML. The new HTML component to be added to the main component.
     """
     if not hasattr(htmlObj, 'options'):
       if isinstance(htmlObj, dict):
@@ -367,12 +416,16 @@ class PanelsBar(Html.Html):
     """
     Description:
     ------------
-    Add a panel to the panel bar
+    Add a panel to the panel bar.
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
     :param text: String. Required. The anchor visible linked to a panel
-    :param content: HTML Component. Required. The panel
+    :param content: HTML. Required. The panel
     """
     content.style.css.padding = "0 5px"
     if not hasattr(text, 'options'):
@@ -431,6 +484,9 @@ class Shortcut(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: GrpClsMenu.ClassShortcut
     """
     if self._styleObj is None:
@@ -469,6 +525,9 @@ class Shortcut(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

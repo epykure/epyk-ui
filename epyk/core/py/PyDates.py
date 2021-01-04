@@ -31,14 +31,16 @@ class PyDates(object):
     """
     Description:
     ------------
-    Return a String date in a format YYYY-MM-DD
+    Return a String date in a format YYYY-MM-DD.
 
     Even if within the property python date object are used, this function will
     always return a string date in a specific format to guarantee and simplify the compatibility between languages
-    within the components
+    within the components.
 
-    Example
-    PyDates().today
+    Usage:
+    -----
+
+      PyDates().today
 
     Related Pages:
 
@@ -55,8 +57,10 @@ class PyDates(object):
     ------------
     Return the current timestamp in a format YYYY-MM-DD HH:mm:dd
 
-    Example
-    PyDates().now
+    Usage:
+    -----
+
+      PyDates().now
 
     Related Pages:
 
@@ -73,6 +77,9 @@ class PyDates(object):
     Return a predefined format for date in a file path.
     Using this method will ensure a consistency in the naming convention of the various files in the project.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param with_time: Boolean. Optional. Specify if the time should be added to the path.
@@ -87,12 +94,14 @@ class PyDates(object):
     """
     Description:
     ------------
-    Returns the last close of business date
+    Returns the last close of business date.
 
     In this property the parameter weekdays is forced to True.
 
-    Example
-    rptObj.py.dates.cob
+    Usage:
+    -----
+
+      rptObj.py.dates.cob
 
     :return: A string date
     """
@@ -107,8 +116,10 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Example
-    rptObj.py.dates.month_end
+    Usage:
+    -----
+
+      page.py.dates.month_end
 
     :return: A string date
     """
@@ -123,8 +134,10 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Example
-    rptObj.py.dates.months
+    Usage:
+    -----
+
+      page.py.dates.months
 
     :return: A list of String dates
     """
@@ -140,8 +153,10 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Example
-    rptObj.py.dates.quarters
+    Usage:
+    -----
+
+      page.py.dates.quarters
 
     :return: A list of String dates
     """
@@ -157,14 +172,16 @@ class PyDates(object):
     ------------
     Return the date corresponding to an alias code like T, T-N, M...
 
-    Example
-    >>> PyDates().date_from_alias("T", "2019-08-08")
-    '2019-08-07'
+    Usage:
+    -----
+
+      >>> PyDates().date_from_alias("T", "2019-08-08")
+      '2019-08-07'
 
     Attributes:
     ----------
-    :param alias: The alias of the operation (T-3, M-2....)
-    :param from_date: The start date from which the time operation is applied. Today by default
+    :param alias: String. The alias of the operation (T-3, M-2....)
+    :param from_date: String. Optional. The start date from which the time operation is applied. Today by default
 
     :return: The converted date or a list of dates
     """
@@ -222,9 +239,11 @@ class PyDates(object):
     ------------
     Convert a Excel date to a AReS standard date format YYYY-MM-DD.
 
-    Example
-    >>> PyDates().date_from_excel(39448)
-    '2008-01-01'
+    Usage:
+    -----
+
+      >>> PyDates().date_from_excel(39448)
+      '2008-01-01'
 
     Related Pages:
 
@@ -245,14 +264,16 @@ class PyDates(object):
     ------------
     Return the list of end of month dates between two dates
 
-    Example
-    >>> PyDates().month_ends("2019-01-01", "2019-06-05", False)
-    ['2019-01-31', '2019-02-28', '2019-03-31', '2019-04-30', '2019-05-31']
+    Usage:
+    -----
+
+      >>> PyDates().month_ends("2019-01-01", "2019-06-05", False)
+      ['2019-01-31', '2019-02-28', '2019-03-31', '2019-04-30', '2019-05-31']
 
     Attributes:
     ----------
-    :param from_dt: The start date in format YYYY-MM-DD
-    :param to_dt: The end date in format YYYY-MM-DD
+    :param from_dt: String. The start date in format YYYY-MM-DD
+    :param to_dt: String. The end date in format YYYY-MM-DD
     :param weekdays: Boolean. Optional. remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
@@ -283,15 +304,17 @@ class PyDates(object):
     The date should be two string dates in the format YYYY-MM-DD.
     The resulting range of date will always be increasing
 
-    Example
-    >>> PyDates().range_dates("2019-01-01", "2019-01-11")
-    ['2019-01-11', '2019-01-10', '2019-01-09', '2019-01-08', '2019-01-07', '2019-01-04', '2019-01-03', '2019-01-02', '2019-01-01']
+    Usage:
+    -----
+
+      >>> PyDates().range_dates("2019-01-01", "2019-01-11")
+      ['2019-01-11', '2019-01-10', '2019-01-09', '2019-01-08', '2019-01-07', '2019-01-04', '2019-01-03', '2019-01-02', '2019-01-01']
 
     Attributes:
     ----------
-    :param from_dt: The start date in format YYYY-MM-DD
-    :param to_dt: The end date in format YYYY-MM-DD
-    :param weekdays: remove the weekends from the potential dates (take the day before). Default True
+    :param from_dt: String. The start date in format YYYY-MM-DD
+    :param to_dt: String. The end date in format YYYY-MM-DD
+    :param weekdays: Boolean. Optional. Remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
     """
@@ -317,14 +340,16 @@ class PyDates(object):
     ------------
     The default value will be given considering the GMT time
 
-    Example
-    timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
+    Usage:
+    -----
+
+      timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
 
     Attributes:
     ----------
-    :param timestamp: Integer. The timestamp in miliseconds
-    :param offset: Integer. The time zone
-    :param reference: Integer. The reference shift in minutes
+    :param timestamp: Integer. The timestamp in milliseconds
+    :param offset: Integer. Optional. The time zone
+    :param reference: Integer. Optional. The reference shift in minutes
 
     :return: The server timestamp string
     """
@@ -339,15 +364,17 @@ class PyDates(object):
     Return the converted timestamp to be stored in the database.
     This conversion will be based on the offset coming from the UI to convert to common time
 
-    Example
-    >>> PyDates().to_server_time("2019-08-20 20:04:10", 2)
-    '2019-08-20 21:06:10'
+    Usage:
+    -----
+
+      >>> PyDates().to_server_time("2019-08-20 20:04:10", 2)
+      '2019-08-20 21:06:10'
 
     Attributes:
     ----------
-    :param timestamp: The client timestamp
-    :param offset: The client offset time to be applied before storage in hour
-    :param reference: The reference time used on the server side
+    :param timestamp: String. The client timestamp.
+    :param offset: Integer. optional. The client offset time to be applied before storage in hour
+    :param reference: Integer. optional. The reference time used on the server side
 
     :return: The server timestamp string
     """
@@ -362,14 +389,16 @@ class PyDates(object):
     Return the converted timestamp to be returned to the user.
     This is converting a stored timestamp to a user one.
 
-    Example
-    >>> PyDates().to_user_time('2019-08-20 21:06:10', 2)
-    '2019-08-20 20:04:10'
+    Usage:
+    -----
+
+      >>> PyDates().to_user_time('2019-08-20 21:06:10', 2)
+      '2019-08-20 20:04:10'
 
     Attributes:
     ----------
-    :param timestamp: The server timestamp
-    :param offset: The client offset time to be applied before storage
+    :param timestamp: String. The server timestamp
+    :param offset: Integer. Optional. The client offset time to be applied before storage
     :param reference: Integer. Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
@@ -386,9 +415,12 @@ class PyDates(object):
     Get the time between two dates.
     This function will only format the result of a delta time object.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param delta_time: delta_time: The delta time between two python dates
+    :param delta_time: delta_time. The delta time between two python dates
     :param with_time: Boolean. Optional. A flag to mention if the time should be computed
     """
     year = delta_time.days // 365

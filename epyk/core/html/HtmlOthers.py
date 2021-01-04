@@ -34,11 +34,14 @@ class Hr(Html.Html):
     ------------
     Shortcut to set the margin let and right for this HTML component.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param left: Integer. The margin left
-    :param right: Integer. The magin right
-    :param unit: String. The unit by default percentage
+    :param left: Integer. Optional. The margin left.
+    :param right: Integer. Optional. The margin right.
+    :param unit: String. Optional. The unit by default percentage.
     """
     if left:
       self.style.css.margin_left = "%s%s" % (left, unit)
@@ -52,7 +55,10 @@ class Hr(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :return: GrpClsLayout.ClassStandard
     """
@@ -103,6 +109,9 @@ class Stars(Html.Html):
     ------------
     The JavaScript dom object to be used in any events
 
+    Usage:
+    -----
+
     :rtype: JsHtmlStars.Stars
     """
     if self._dom is None:
@@ -116,16 +125,17 @@ class Stars(Html.Html):
     Add the event click and double click to the starts item
     The Javascript function will be triggered after the change of content of the component
 
-    Usage::
+    Usage:
+    -----
 
       stars = rptObj.ui.rich.stars(3, label="test Again")
-    stars.click(rptObj.js.console.log("test").toStr())
+      stars.click(rptObj.js.console.log("test").toStr())
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: self to allow the chains
@@ -143,9 +153,7 @@ class Stars(Html.Html):
       span.click(str_fncs, profile, source_event=source_event, onReady=onReady)
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.dataset.level = data;
       htmlObj.querySelectorAll("span").forEach(function(span, i){
         if (i < data){span.style.color = options.color}
@@ -170,7 +178,10 @@ class Help(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsLayout.ClassHelp
     """
@@ -178,9 +189,7 @@ class Help(Html.Html):
       self._styleObj = GrpClsLayout.ClassHelp(self)
     return self._styleObj
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.setAttribute("title", data);
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
@@ -211,6 +220,9 @@ class Loading(Html.Html):
     ------------
     Set css attributes of the loading div to be fixed
     This can be done directly in options in the component constructor options={"fixed": True}
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -246,13 +258,11 @@ class HtmlJson(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the json object
+    Return the Javascript variable of the json object.
     """
     return "%s_obj" % self.htmlCode
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       window[ htmlObj.id + '_obj'] = new JSONFormatter(data, options.open, options.opts); htmlObj.innerHTML = '';
       htmlObj.appendChild(window[ htmlObj.id + '_obj'].render());
       '''
@@ -260,6 +270,12 @@ class HtmlJson(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
+
+
+    Usage:
+    -----
 
     :rtype: OptJsonFormatter.OptionsJsonFmt
     """
@@ -270,8 +286,10 @@ class HtmlJson(Html.Html):
     """
     Description:
     -----------
+    Return the Javascript internal object.
 
-    Return the Javascript internal object
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -309,9 +327,7 @@ class Breadcrumb(Html.Html):
         self.add(data)
     self.style.background = report.theme.greys[1]
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.innerHTML = "";
       if(data.length == 0){htmlObj.style["height"] = 0}
       else{ 
@@ -354,7 +370,10 @@ class Legend(Html.Html):
     """
     Description:
     -----------
-    Property to set all the input component properties
+    Property to set all the input component properties.
+
+    Usage:
+    -----
 
     :rtype: OptJsonFormatter.OptionsLegend
     """
@@ -444,7 +463,10 @@ class Slides(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
 
     :rtype: OptText.OptionsText
     """
@@ -455,7 +477,10 @@ class Slides(Html.Html):
     """
     Description:
     ------------
-    The JavaScript dom object to be used in any events
+    The JavaScript dom object to be used in any events.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlStars.Slides
     """
@@ -467,6 +492,9 @@ class Slides(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -496,6 +524,9 @@ class Slides(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param title:
@@ -515,9 +546,7 @@ class Slides(Html.Html):
       self._content_table[-1].click([self.dom.goTo(len(self.val))])
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       let index = htmlObj.getAttribute("data-current_slide");
       if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
       document.getElementsByName(htmlObj.id)[index].innerHTML = data;
@@ -547,9 +576,7 @@ class HtmlQRCode(Html.Html):
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlQRCode, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
     console.log(htmlObj.id);
     console.log(data);
     new QRCode(htmlObj, data)

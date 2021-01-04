@@ -27,10 +27,11 @@ class Console(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -47,13 +48,14 @@ class Console(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsConsole
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return ''' 
+  _js__builder__ = ''' 
       if(options.showdown){var converter = new showdown.Converter(options.showdown);
         let frag = document.createRange().createContextualFragment(converter.makeHtml(data)); 
         frag.firstChild.style.display = 'inline-block'; frag.firstChild.style.margin = 0;  
@@ -81,10 +83,11 @@ class Editor(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -100,13 +103,14 @@ class Editor(Html.Html):
     ------------
     Add a bespoke action to the action panel
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. The font awesome icon
     :param jsFncs: Array. The Javascript functions
     :param tooltip: String. Text to be displayed when mouse is hover
-
-    :return:
     """
     icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(jsFncs)
     self.actions.append((icon, icon_button))
@@ -119,13 +123,14 @@ class Editor(Html.Html):
     ------------
     Add an event action to the console object.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
+    :param icons: Tuple. The font awesome icon
     :param jsFncs: Array. The Javascript functions
     :param tooltip: String. Text to be displayed when mouse is hover
-
-    :return:
     """
     icon_button = self._report.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
     jsFncs.append(self.textarea.dom.toggle())
@@ -140,6 +145,9 @@ class Editor(Html.Html):
     Description:
     ------------
     Copy the content of the editor component to the clipboard.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -158,6 +166,9 @@ class Editor(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. The font awesome icon
@@ -173,6 +184,9 @@ class Editor(Html.Html):
     Emtpy save button.
     This function will just add the icon on the actions panel.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. The font awesome icon
@@ -186,6 +200,9 @@ class Editor(Html.Html):
     Description:
     ------------
     Add an event action to the console object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -226,6 +243,9 @@ class Cell(Html.Html):
     ------------
     Add a bespoke action to the action panel
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. The font awesome icon
@@ -245,6 +265,9 @@ class Cell(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. The font awesome icon
@@ -260,6 +283,9 @@ class Cell(Html.Html):
     ------------
     Emtpy save button.
     This function will just add the icon on the actions panel.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -297,6 +323,9 @@ class Code(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptCodeMirror.OptionsCode
     """
     return self.__options
@@ -307,6 +336,9 @@ class Code(Html.Html):
     Description:
     -----------
     A lot of CodeMirror features are only available through its API. Thus, you need to write code (or use addons) if you want to expose them to your users.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -323,10 +355,11 @@ class Code(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -336,13 +369,22 @@ class Code(Html.Html):
       self._dom = JsHtmlEditor.CodeMirror(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
        htmlObj.setValue(data); Object.keys(options).forEach(function(key){ htmlObj.setOption(key, options[key])}); 
        htmlObj.refresh()'''
 
   def build(self, data=None, options=None, profile=False):
+    """
+
+
+    Usage:
+    -----
+
+    :param data:
+    :param options:
+    :param profile:
+    :return:
+    """
     if not self.builder_name:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
@@ -375,7 +417,10 @@ class Code(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the bespoke
+    Return the Javascript variable of the bespoke.
+
+    Usage:
+    -----
     """
     return "editor_%s" % self.htmlCode
 
@@ -396,12 +441,25 @@ class Tags(Html.Html):
 
   @property
   def val(self):
+    """
+
+    Usage:
+    -----
+
+    """
     return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsEmpty(self):
+    """
+
+    Usage:
+    -----
+
+    """
     return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsAdd(self, jsData):
+
     jsData = JsUtils.jsConvertData(jsData, None)
     self.addGlobalFnc('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
@@ -434,13 +492,16 @@ class MarkdownReader(Html.Html):
     ------------
     Add automatically tooltips to the words
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: Dictionary. The list of word to be automatically changed
     """
     from epyk.core.data import components
 
-    if not "markdown_tooltip" in self._report.components:
+    if "markdown_tooltip" not in self._report.components:
       div = self._report.ui.div(htmlCode="markdown_tooltip", width=("auto", ""))
       div.style.css.display = False
       div.style.css.position = "absolute"
@@ -459,9 +520,7 @@ class MarkdownReader(Html.Html):
       ''')
     self._vals = components.markdown(self._vals, data)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (data !== ''){ 
         var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data); htmlObj.innerHTML = data;
         document.querySelectorAll('pre code').forEach((block) => {hljs.highlightBlock(block)});

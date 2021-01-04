@@ -42,7 +42,11 @@ class Li(Html.Html):
     """
     Description:
     ------------
-    Property to remove the list default style
+    Property to remove the list default style.
+
+    Usage:
+    -----
+
     """
     self.css({"text-decoration": "none", "list-style-type": 'none'})
     return self
@@ -53,8 +57,8 @@ class Li(Html.Html):
     ------------
     Add an elementary label component
 
-    Usage::
-
+    Usage:
+    -----
 
     Related Pages:
 
@@ -89,6 +93,9 @@ class Li(Html.Html):
     ------------
     Set the cell content to be an HTML object
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param htmlObj: Python HTML object
@@ -105,6 +112,17 @@ class Li(Html.Html):
     return self
 
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    :param onReady:
+    :return:
+    """
     if self.innerPyHTML is not None:
       return self.innerPyHTML.click(jsFncs, profile)
 
@@ -135,6 +153,9 @@ class List(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: OptList.OptionsLi
     """
     return self.__options
@@ -144,6 +165,9 @@ class List(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsHtml.JsHtmlList
     """
@@ -156,6 +180,9 @@ class List(Html.Html):
     Description:
     ------------
     Function to load a predefined style for the items of the components
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -174,6 +201,9 @@ class List(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -209,6 +239,9 @@ class List(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param i:
@@ -221,6 +254,9 @@ class List(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -239,6 +275,9 @@ class List(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     """
     self.items = self.items or []
     for d in self.val:
@@ -255,6 +294,9 @@ class List(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param event:
@@ -269,6 +311,9 @@ class List(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -312,6 +357,9 @@ class Groups(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -347,7 +395,7 @@ class Items(Html.Html):
   def __init__(self, report, type, records, width, height, options, htmlCode, profile, helper):
     super(Items, self).__init__(report, records, htmlCode=htmlCode,  css_attrs={"width": width, 'height': height})
     self.__options = OptList.OptionsItems(self, options)
-    self._prefix, self._jsStyles['items_type'] = "ListDyn_", type
+    self._jsStyles['prefix'], self._jsStyles['items_type'] = "ListDyn_", type
     self._jsStyles['click'], self._jsStyles['draggable'] = None, False
 
   @property
@@ -356,23 +404,24 @@ class Items(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: GrpClsList.ClassItems
     """
     if self._styleObj is None:
       self._styleObj = GrpClsList.ClassItems(self)
     return self._styleObj
 
-  @property
-  def _js__builder__(self):
-    return ''' htmlObj.innerHTML = "";
+  _js__builder__ = ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
           var content = item; if(typeof item.content !== 'undefined'){content = item.content};
           var content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
         var li = document.createElement("li");
         Object.keys(options.li_style).forEach(function(key){li.style[key] = options.li_style[key]});
-        if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
-        else{window['%(alias)s' + item.type](li, item, options)};
+        if(typeof item.type === 'undefined'){window[options.prefix+ options.items_type](li, item, options)}
+        else{window[options.prefix + item.type](li, item, options)};
         if(options.delete){
           var close = document.createElement("i");
           close.classList.add("fas"); close.classList.add(options.delete_icon); close.style.position = 'absolute';
@@ -383,13 +432,16 @@ class Items(Html.Html):
             close.style[key] = value}
           li.lastChild.style.display = 'inline-block'; li.appendChild(close)}
         if(((options.items_type != 'link') && (options.items_type != 'badge')) && (options.items_type != 'text')){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
-        htmlObj.appendChild(li)})''' % {"alias": self._prefix}
+        htmlObj.appendChild(li)})'''
 
   @property
   def options(self):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: OptList.OptionsItems
     """
@@ -401,6 +453,9 @@ class Items(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsHtmlList.JsItem
     """
     if self._dom is None:
@@ -411,6 +466,9 @@ class Items(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -427,6 +485,9 @@ class Items(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -449,6 +510,9 @@ class Items(Html.Html):
     Add a bespoke item type with it is specific style and components.
 
     TODO: Create a tutorial to explain how to extend list types.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -478,6 +542,9 @@ class Items(Html.Html):
     It is possible to use predefined style or to pass bespoke ones.
 
     Style will be set at list type level so all the list in the page will be using it.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -517,13 +584,19 @@ class ListTournaments(Html.Html):
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
   def addFnc(self, fncName, jsFncs):
+    """
+
+    Usage:
+    -----
+
+    :param fncName:
+    :param jsFncs:
+    """
     if isinstance(jsFncs, list):
       jsFncs = ";".join(jsFncs)
     self.vals[fncName] = jsFncs
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.empty(); parameters = {centerConnectors: true, init: data.vals }; 
       if (data.save != "null"){parameters['save'] = new Function('rec', 'userData', 'var data = {challenge: JSON.stringify(rec), userProno: JSON.stringify(userData) } ;' + data.save) };
       if (data.render != "null"){parameters['decorator'] = {render: new Function('rec', 'userData', data.save), edit: function(container, data, doneCb) { } } };

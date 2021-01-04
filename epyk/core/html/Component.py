@@ -15,10 +15,14 @@ class Component(object):
     """
     Description:
     -----------
+    Change the name of the file in the destination framework.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param name:
+    :param name: String. The name of the file.
     """
     self.name = name.capitalize()
     self.folder = self.name.lower()
@@ -27,6 +31,12 @@ class Component(object):
   @property
   def tag(self):
     """
+    Description:
+    -----------
+    Create a tag for the HTML component. This will be used by some JavaScript framework like Angular.
+
+    Usage:
+    -----
 
     """
     return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
@@ -38,9 +48,12 @@ class Component(object):
     Component export for an Angular app.
     This will allow to build apps directly from reports using each underlying components available in the framework.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param name: Optional. The component name. Can be set to define test components
+    :param name: String. Optional. The component name. Can be set to define test components
     """
     if name is not None:
       self.rename(name)

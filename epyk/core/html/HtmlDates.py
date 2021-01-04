@@ -42,7 +42,15 @@ class DatePicker(Html.Html):
     """
     Description:
     ------------
-    The Javascript Dom proxy to the input object
+    The Javascript Dom proxy to the input object.
+
+    Usage:
+    -----
+
+      today = page.ui.fields.today()
+      today.select([
+        page.js.console.log(today.dom.content)
+      ])
 
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
@@ -56,9 +64,17 @@ class DatePicker(Html.Html):
     -----------
     Event trigger when the datepicker component changes.
 
+    Usage:
+    -----
+
+      today = page.ui.fields.today()
+      today.select([
+        page.js.console.log(today.dom.content)
+      ])
+
     Attributes:
     ----------
-    :param jsFncs: String of Js Events. The Javascript events when the datepicker selection changes.
+    :param jsFncs: String | List. The Javascript events when the datepicker selection changes.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -72,11 +88,19 @@ class DatePicker(Html.Html):
     """
     Description:
     -----------
+    Exclude some dates from the date picker selection.
+    Those dates will be visible but no available for selection.
+
+    Usage:
+    -----
+
+      today = page.ui.fields.today()
+      today.excluded_dates(["2021-01-01"])
 
     Attributes:
     ----------
-    :param dts:
-    :param jsFncs: List. Javascript functions
+    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param jsFncs: List or String. Optional. Javascript functions.
     """
     return self.input.excluded_dates(dts, jsFncs)
 
@@ -84,11 +108,19 @@ class DatePicker(Html.Html):
     """
     Description:
     -----------
+    Include some date to be available for selection.
+    All the other dates will be visible but not valid ones.
+
+    Usage:
+    -----
+
+      today = page.ui.fields.today()
+      today.included_dates(["2021-01-01"])
 
     Attributes:
     ----------
-    :param dts:
-    :param jsFncs: List. Javascript functions
+    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param jsFncs: List or String. Optional. Javascript functions.
     """
     return self.input.included_dates(dts, jsFncs)
 
@@ -96,7 +128,10 @@ class DatePicker(Html.Html):
     """
     Description:
     -----------
-    Add TimePicker options
+    Add DatePicker options
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -145,23 +180,32 @@ class TimePicker(Html.Html):
     ------------
     The Javascript Dom proxy to the input object.
 
+    Usage:
+    -----
+
+      time_picker = page.ui.fields.time()
+      time_picker.change([
+        page.js.console.log(time_picker.dom.content)
+      ])
+
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def change(self, jsFncs):
+  def change(self, jsFncs, profile=False):
     """
     Description:
     -----------
     Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side
 
-    Usage::
+    Usage:
+    -----
 
       morning = rptObj.ui.fields.time("8:13:00", label="Time field")
-    morning.change([
+      morning.change([
       rptObj.js.alert("time", skip_data_convert=True)
     ])
 
@@ -171,9 +215,10 @@ class TimePicker(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions
+    :param jsFncs: List | String. Javascript functions.
+    :param profile:
     """
-    self.input.change(jsFncs)
+    self.input.change(jsFncs, profile)
     return self
 
   def __str__(self):
@@ -197,9 +242,7 @@ class CountDownDate(Html.Html):
   def jqId(self):
     return "$('#%s span')" % self.htmlCode
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
 
@@ -219,11 +262,14 @@ class CountDownDate(Html.Html):
     """
     Description:
     -----------
-    Events triggered at the end of the timer
+    Events triggered at the end of the timer.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions
+    :param jsFncs: List | String. Javascript functions.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -249,7 +295,15 @@ class LastUpdated(Html.Html):
     """
     Description:
     ------------
-    Javascript shortcut to change the timestamp to this component
+    Javascript shortcut to change the timestamp to this component.
+
+    Usage:
+    -----
+
+      update = page.ui.rich.update()
+      update.click([
+        update.refresh()
+      ])
     """
     return self.dom.innerHTML(self._report.js.objects.date().getStrTimeStamp().prepend(self._label))
 
@@ -277,7 +331,10 @@ class Calendar(Html.Html):
     """
     Description:
     -----------
-    Property to set all the Calendar properties
+    Property to set all the Calendar properties.
+
+    Usage:
+    -----
 
     :rtype: OptCalendars.OptionDays
     """
@@ -288,11 +345,14 @@ class Calendar(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function.
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
+    :param jsFncs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(jsFncs, list):
@@ -304,6 +364,9 @@ class Calendar(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -377,6 +440,9 @@ class Calendar(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
@@ -443,9 +509,7 @@ class Timer(Html.Html):
         self.style.css.margin_left = 'auto'
         self.style.css.margin_right = 'auto'
 
-  @property
-  def _js__builder__(self):
-    return '''     
+  _js__builder__ = '''     
       var time = data.minutes * 60, r = htmlObj, tmp=time;
       window["time_" + htmlObj.id] = setInterval(function(){ 
         if(tmp < 0){
@@ -454,18 +518,20 @@ class Timer(Html.Html):
         if (tmp >= 0){
           var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
-        tmp != 0 || (tmp=0)}, 1000)
-      '''
+        tmp != 0 || (tmp=0)}, 1000)'''
 
   def end(self, jsFncs):
     """
     Description:
     -----------
-    Events triggered at the end of the timer
+    Events triggered at the end of the timer.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions
+    :param jsFncs: List | String. Javascript functions
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -488,16 +554,13 @@ class Elapsed(Html.Html):
     self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var startDate = new Date(data.year, data.month-1, data.day);
       var now = new Date().getTime(); var distance = now - startDate.getTime();
       var days = Math.floor(distance / (1000 * 60 * 60 * 24)); var years = 0;
       if (days > 365){years = Math.floor(days / 365); days = days - years * 365}
       if (years > 0){htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ years +"y, "+ days +"d </b>"}
-      else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}
-      '''
+      else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}'''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

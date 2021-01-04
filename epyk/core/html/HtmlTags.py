@@ -27,6 +27,9 @@ class HtmlGeneric(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsText
     """
     return self.__options
@@ -51,10 +54,11 @@ class HtmlGeneric(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -64,9 +68,7 @@ class HtmlGeneric(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return 'htmlObj.innerHTML = data'
+  _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):
     if isinstance(self.val, list):
@@ -83,6 +85,9 @@ class HtmlGenericLInk(HtmlGeneric):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

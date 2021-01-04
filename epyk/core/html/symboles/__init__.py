@@ -1,12 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Related Pages:
-
-		https://www.w3schools.com/charsets/ref_utf_punctuation.asp
-"""
-
 from epyk.core.html.symboles import SymbSmileys
 from epyk.core.html.symboles import SymbHtml
 from epyk.core.html.symboles import SymbArrows
@@ -19,9 +13,12 @@ from epyk.core.html.symboles import SymbShapes
 
 
 class Symboles(object):
+
   @property
   def shapes(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -32,6 +29,8 @@ class Symboles(object):
   @property
   def punctuations(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -42,6 +41,8 @@ class Symboles(object):
   @property
   def maths(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -52,6 +53,8 @@ class Symboles(object):
   @property
   def emojis(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -62,6 +65,8 @@ class Symboles(object):
   @property
   def letters(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -72,6 +77,8 @@ class Symboles(object):
   @property
   def currencies(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -82,6 +89,8 @@ class Symboles(object):
   @property
   def smileys(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -92,17 +101,21 @@ class Symboles(object):
   @property
   def html(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
       https://www.w3schools.com/html/html_symbols.asp
-    https://www.w3schools.com/charsets/ref_utf_math.asp
+      https://www.w3schools.com/charsets/ref_utf_math.asp
     """
     return SymbHtml
 
   @property
   def arrows(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 

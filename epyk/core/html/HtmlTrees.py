@@ -31,20 +31,21 @@ class Tree(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: OptTrees.OptionsTree
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return ''' if(options){htmlObj.innerHTML = ''; options.is_root = false};
+  _js__builder__ = ''' if(options){htmlObj.innerHTML = ''; options.is_root = false};
       data.forEach(function(item, i){
         var li = document.createElement("li");
         var a = document.createElement("a");
         if(typeof item.items !== 'undefined'){
           var ul = document.createElement("ul"); 
           for(const attr in options.style){ul.style[attr] = options.style[attr]};
-          %(builder)s(ul, item.items, options);
+          options.builder(ul, item.items, options);
           var icon = document.createElement("i"); icon.style.marginRight = '5px';
           icon.onclick = function(){ 
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
@@ -60,15 +61,17 @@ class Tree(Html.Html):
           a.innerHTML = item.value;
           a.style.paddingLeft = '18px';
         }
-       
         li.appendChild(a);
         htmlObj.appendChild(li)
-      })''' % {"builder": self.builder_name}
+      })'''
 
   def clickNode(self, jsFncs, profile=False):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -85,6 +88,9 @@ class Tree(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -109,6 +115,9 @@ class TreeInput(Tree):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -153,6 +162,9 @@ class DropDown(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: GrpClsList.ClassDropDown
     """
     if self._styleObj is None:
@@ -166,6 +178,9 @@ class DropDown(Html.Html):
     -----------
     Property to set all the possible object for a dropdown
 
+    Usage:
+    -----
+
     :rtype: OptTrees.OptDropDown
     """
     return self.__options
@@ -174,6 +189,9 @@ class DropDown(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -187,21 +205,19 @@ class DropDown(Html.Html):
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  @property
-  def _js__builder__(self):
-    return ''' 
+  _js__builder__ = ''' 
       var jqHtmlObj = %(jqId)s; if(options.clearDropDown){jqHtmlObj.empty()};
       data.forEach(function(rec){
         if (rec.items != undefined) {
           var li = $('<li class="dropdown" style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); var a = $('<a tabindex=-1>'+ rec.value +'<span class="caret"></span></a>');
           li.append(a); var ul = $('<ul class="submenu"></ul>'); ul.css(options.ul); options.clearDropDown = false; a.css(options.a);
-          %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
+          options.builder(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
         } else {
           if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
           else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}; a.css(options.a);
           a.click(function(event){const value = a.html(); options.click(event, value)} );
           var li = $('<li style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); li.append(a); jqHtmlObj.append(li)}
-      })''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False), "pyCls": self.__class__.__name__}
+      })''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

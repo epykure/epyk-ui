@@ -9,7 +9,7 @@ from epyk.core.js.html import JsHtmlStepper
 from epyk.core.html.options import OptPanel
 
 
-class Step(object):
+class Step:
   name = 'Step'
 
   def __init__(self, src, selector):
@@ -17,7 +17,14 @@ class Step(object):
     self._selector = selector
 
   def click(self, jsFncs, profile=False):
+    """
 
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._src._report._props['js'].setdefault("onReady", []).append("%s.addEventListener('click', function(event){%s})" % (self._selector.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
@@ -56,6 +63,9 @@ class Stepper(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsHtmlStepper.Stepper
     """
     if self._dom is None:
@@ -69,23 +79,24 @@ class Stepper(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptPanel.OptionsStepper
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return ''' htmlObj.innerHTML = '';
+  _js__builder__ = ''' htmlObj.innerHTML = '';
       var width = options.svg_style.width; var height = options.svg_style.height;
       var attrs = ['name', 'text', 'title', 'tooltip'];
       var props = ['color', 'background', 'shape', 'title_color'];
       
       data.forEach(function(step, i){
-        var li = document.createElement("LI") ;
+        var li = document.createElement("LI");
         li.style['margin-bottom'] = '10px';
         
-        attrs.forEach(function(attr){ if (typeof step[attr] === 'undefined'){ step[attr] = ''}; });
-        props.forEach(function(prop){ if (typeof step[prop] === 'undefined'){ step[prop] = options[prop]}; })
+        attrs.forEach(function(attr){if(typeof step[attr] === 'undefined'){step[attr] = ''}});
+        props.forEach(function(prop){if(typeof step[prop] === 'undefined'){step[prop] = options[prop]}});
 
         var span = document.createElement("SPAN"); span.setAttribute('name', step.name);
         span.setAttribute('name', 'label'); span.innerHTML = step.title;
@@ -107,6 +118,9 @@ class Stepper(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

@@ -12,15 +12,18 @@ class OptionDays(Options):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param css_attrs: Dictionary. CSS attributes
+    :prop css: Dictionary. CSS attributes
     """
     return self.get({})
 
   @style.setter
-  def style(self, css_attrs):
-    self.set(css_attrs)
+  def style(self, css):
+    self.set(css)
 
   @property
   def unit(self):
@@ -28,11 +31,14 @@ class OptionDays(Options):
     Description:
     ------------
     Change the unit to the calendar.
-    Default is in percentage
+    Default is in percentage.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param num: Float. Change the scale
+    :prop num: Float. Change the scale
     """
     return self.get(100)
 
@@ -45,11 +51,14 @@ class OptionDays(Options):
     """
     Description:
     ------------
-    Overload style of the day number when workload is above 100%
+    Overload style of the day number when workload is above 100%.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. CSS attributes
+    :prop css_attrs: Dictionary. CSS attributes.
     """
     return self.get({})
 
@@ -62,48 +71,57 @@ class OptionDays(Options):
     """
     Description:
     ------------
-    CSS Style for the day number
+    CSS Style for the day number.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. CSS attributes
+    :prop css: Dictionary. CSS attributes.
     """
     return self.get({})
 
   @number.setter
-  def number(self, css_attrs):
-    self.set(css_attrs)
+  def number(self, css):
+    self.set(css)
 
   @property
   def today(self):
     """
     Description:
     ------------
-    CSS Style for the today cell
+    CSS Style for the today cell.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. CSS attributes
+    :prop css: Dictionary. CSS attributes
     """
     return self.get({})
 
   @today.setter
-  def today(self, css_attrs):
-    self.set(css_attrs)
+  def today(self, css):
+    self.set(css)
 
   @property
   def header(self):
     """
     Description:
     ------------
-    CSS Style for the table header
+    CSS Style for the table header.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. CSS attributes
+    :prop css: Dictionary. CSS attributes.
     """
     return self.get({})
 
   @header.setter
-  def header(self, css_attrs):
-    self.set(css_attrs)
+  def header(self, css):
+    self.set(css)

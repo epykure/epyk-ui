@@ -16,9 +16,28 @@ class DataClass(object):
     return self._attrs[i]
 
   def update(self, vals):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param vals: Dictionary. All the attributes to be added to the component.
+    """
     self._attrs.update(vals)
 
   def attrs(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self._attrs.items()
 
   def custom(self, name, value):
@@ -28,12 +47,15 @@ class DataClass(object):
     Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
-    If the value is a Javascript object, the PyJs object must be used
+    If the value is a Javascript object, the PyJs object must be used.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the attributes
-    :param value: String or JString. The value of the defined attributes
+    :param name: String. The key to be added to the attributes.
+    :param value: String or JString. The value of the defined attributes.
 
     :return: The DataAttrs to allow the chains
     """
@@ -44,12 +66,15 @@ class DataClass(object):
     """
     Description:
     ------------
-    Add an attribute to the Javascript underlying dictionary
+    Add an attribute to the Javascript underlying dictionary.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param name: String. The attribute name
-    :param value: Object. The attribute value
+    :param name: String. The attribute name.
+    :param value: Object. The attribute value.
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -61,7 +86,10 @@ class DataClass(object):
     Description:
     ------------
     Add an extra sub layer to the data structure.
-    The key in the object representation will be the function name
+    The key in the object representation will be the function name.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -73,12 +101,15 @@ class DataClass(object):
     """
     Description:
     ------------
-    Get tje attribute to the underlying attributes dictionary
+    Get tje attribute to the underlying attributes dictionary.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param dflt: Optional. The default value of this attribute
-    :param name: Optional. The attribute name. default the name of the function
+    :param dflt: string. Optional. The default value of this attribute.
+    :param name: String. Optional. The attribute name. default the name of the function.
     """
     return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
@@ -86,12 +117,15 @@ class DataClass(object):
     """
     Description:
     ------------
-    Add an attribute to the Javascript underlying dictionary
+    Add an attribute to the Javascript underlying dictionary.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: Object. The attribute value
-    :param name: Optional. The attribute name. default the name of the function
+    :param value: Object. The attribute value.
+    :param name: String. Optional. The attribute name. default the name of the function.
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -102,14 +136,17 @@ class DataClass(object):
     Description:
     ------------
     Add an extra sub layer to the data structure.
-    The key in the object representation will be the function name
+    The key in the object representation will be the function name.
 
-    Should use has_attribute is the name can be deduced from the parent function
+    Should use has_attribute is the name can be deduced from the parent function.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary
-    :param clsObj: Object. The object which will be added to the nexted data structure
+    :param name: String. The key to be added to the internal data dictionary.
+    :param clsObj: Class. Object. The object which will be added to the nested data structure.
     """
     if name in self._attrs:
       return self._attrs[name]
@@ -123,6 +160,9 @@ class DataClass(object):
     Description:
     ------------
     Add the key and value to the final result object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -138,23 +178,21 @@ class DataClass(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary
-    :param clsObj: Object. The object which will be added to the nexted data structure
+    :param name: String. The key to be added to the internal data dictionary.
+    :param clsObj: Class. Object. The object which will be added to the nested data structure.
     """
-    #if name in self._attrs:
-    #  return self._attrs[name]
-
     self.__sub__enum_levels.add(name)
     enum_data = clsObj(self._report)
     self._attrs.setdefault(name, []).append(enum_data)
     return enum_data
 
   def __str__(self):
-    result = []
-    for s in self.__sub_levels:
-      result.append("%s: %s" % (s, str(self._attrs[s])))
+    result = ["%s: %s" % (s, str(self._attrs[s])) for s in self.__sub_levels]
     for s in self.__sub__enum_levels:
       result.append("%s: [%s]" % (s, ",".join([str(k) for k in self._attrs[s]])))
     result.extend(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items() if k not in self.__sub_levels and k not in self.__sub__enum_levels])
@@ -174,11 +212,14 @@ class DataEnum(object):
     Description:
     ------------
     Set the selected value in this enumeration.
-    The last function call will be persisted
+    The last function call will be persisted.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: Optional. The value to be set (default is the function name)
+    :param value: String. Optional. The value to be set (default is the function name).
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name
@@ -190,11 +231,14 @@ class DataEnum(object):
     """
     Description:
     ------------
-    Set a custom value.This will not use any specific conversion
+    Set a custom value.This will not use any specific conversion.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: String. The value to be set
+    :param value: String. The value to be set.
     """
     self.__value = value
 
@@ -224,11 +268,14 @@ class DataEnumMulti(object):
     Description:
     ------------
     Set the selected value in this enumeration.
-    The last function call will be persisted
+    The last function call will be persisted.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: Optional. The value to be set (default is the function name)
+    :param value: String. Optional. The value to be set (default is the function name).
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name
@@ -238,7 +285,10 @@ class DataEnumMulti(object):
     """
     Description:
     ------------
-    Set a custom value.This will not use any specific conversion
+    Set a custom value.This will not use any specific conversion.
+
+    Usage:
+    -----
 
     Attributes:
     ----------

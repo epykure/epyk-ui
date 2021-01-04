@@ -43,6 +43,12 @@ class Button(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.options.multiple = False
+
     :rtype: OptButton.OptionsButton
     """
     return self.__options
@@ -54,21 +60,31 @@ class Button(Html.Html):
     -----------
     HTML Dom object.
 
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      page.js.console.log(but.dom.content)
+
     :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButton(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
+  _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
 
   def loading(self, status=True):
     """
     Description:
     -----------
     Show / Hide the loading event predefined for this component.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Loading")
+      page.body.onReady([but.loading()])
 
     Attributes:
     ----------
@@ -89,6 +105,13 @@ class Button(Html.Html):
     Description:
     -----------
     remove the default button background and remove the padding.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.no_background()
+
     """
     self.background = False
     self.style.css.background_color = "#11ffee00"
@@ -100,10 +123,17 @@ class Button(Html.Html):
     -----------
     Click event which redirect to another page.
 
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.goto("http://www.epyk-studio.com")
+
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript Events triggered before the redirection
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param url: String. The destination path.
+    :param jsFncs: List | String. Optional. The Javascript Events triggered before the redirection.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param name: String. Optional. The type of link to the next page.
     :param source_event: String. Optional. The event source.
     """
@@ -118,11 +148,13 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
-    Usage::
+    Usage:
+    -----
 
-      self.style.css.margin = "5px"
+      but = page.ui.button("Click Me")
+      but.style.css.margin = "5px"
 
     :rtype: GrpClsButton.ClassButton
     """
@@ -134,6 +166,13 @@ class Button(Html.Html):
     """
     Description:
     -----------
+    Add the HTML tag to disable the button.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.disable()
 
     Attributes:
     ----------
@@ -155,15 +194,18 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    Special click event to keep in memory the state of the component
+    Special click event to keep in memory the state of the component.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+      but = page.ui.button("Click Me")
+
+    Attributes:
     ----------
     :param jsPressFncs:
     :param jsReleaseFncs:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param onReady: Boolean. Optional.
     """
     str_fnc = ""
@@ -188,15 +230,16 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    Change the color of the button background when the mouse is hover
+    Change the color of the button background when the mouse is hover.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.remove("remove").color("blue")
+      page.ui.buttons.remove("remove").color("blue")
 
     Attributes:
     ----------
-    :param color: String. the color of the component (text and borders)
+    :param color: String. the color of the component (text and borders).
     """
     self.style.css.border = "1px solid %s" % color
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
@@ -204,6 +247,19 @@ class Button(Html.Html):
     return self
 
   def properties(self):
+    """
+    Description:
+    -----------
+    Return the full properties of the HTML component.
+    This property should allow another JavaScript framework to build the component.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.properties
+
+    """
     return {"tag": self.name, 'selector': self.htmlCode}
 
   def __str__(self):
@@ -233,13 +289,21 @@ class Checkbox(Html.Html):
     Description:
     -----------
     Add the Tooltip feature when the mouse is over the component.
-    This tooltip version is coming from Bootstrap
+    This tooltip version is coming from Bootstrap.
+
+    TODO: Use the options parameter.
+
+    Usage:
+    -----
+
+      check = page.ui.buttons.check()
+      check.tooltip("Tooltip")
 
     Attributes:
     ----------
-    :param value:
-    :param location:
-    :param options: Not used
+    :param value: String. The tooltip value.
+    :param location: String. Optional. The location of the tooltip compared to the HTML component.
+    :param options: Dictionary. Optional. The tooltip options (not used yet)
     """
     self._jsStyles['tooltip'] = value
     return self
@@ -391,6 +455,7 @@ class CheckButton(Html.Html):
     self.add_label(label, {"width": "none", "float": "none"}, htmlCode=self.htmlCode, position="after")
     self.add_icon(icon, {"float": 'none'}, htmlCode=self.htmlCode, position="after", family=options.get("icon_family"))
     self.css({'display': 'inline-block', 'margin-right': '10px'})
+    self._jsStyles.update({"green": self._report.theme.success[1], 'red': self._report.theme.danger[1]})
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -399,7 +464,10 @@ class CheckButton(Html.Html):
     """
     Description:
     ------------
-    The Javascript Dom object
+    The Javascript Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtml.JsHtmlButtonMenu
     """
@@ -413,8 +481,9 @@ class CheckButton(Html.Html):
     Description:
     -----------
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsComponents.CheckButton
@@ -423,27 +492,28 @@ class CheckButton(Html.Html):
       self._js = JsComponents.CheckButton(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    return ''' htmlObj.innerHTML = '';
+  _js__builder__ = ''' htmlObj.innerHTML = '';
       if (data === true || data == 'Y'){
         var i = document.createElement("i");
         i.classList.add("fas"); i.classList.add("fa-check");
-        i.style.color = '%(green)s'; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
+        i.style.color = options.green; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
         htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', true)}
       else {
         var i = document.createElement("i");
         i.classList.add("fas"); i.classList.add("fa-times");
-        i.style.color = '%(green)s'; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
+        i.style.color = options.red; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
         htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', false)
-      }''' % {'green': self._report.theme.success[1], 'red': self._report.theme.danger[1]}
+      }'''
 
   @property
   def style(self):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsButton.ClassButtonCheckBox
     """
@@ -455,22 +525,23 @@ class CheckButton(Html.Html):
     """
     Description:
     ------------
-    Click even on the checkbox item
+    Click even on the checkbox item.
 
-    Usage::
+    Usage:
+    -----
 
       ch = rptObj.ui.buttons.check(label="Label")
-    ch.click(rptObj.js.alert("true"), rptObj.js.alert("false"))
+      ch.click(rptObj.js.alert("true"), rptObj.js.alert("false"))
 
     Attributes:
     ----------
-    :param jsFncsTrue: Js function or a list of JsFunction to be triggered when checked
-    :param jsFncFalse: Optional. Js function or a list of JsFunction to be triggered when unchecked
-    :param withColors:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param jsFncsTrue: List | String. Js function or a list of JsFunction to be triggered when checked
+    :param jsFncFalse: Boolean. Optional. Js function or a list of JsFunction to be triggered when unchecked
+    :param withColors: Boolean. Optional.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
-    :return: The htmlObl to allow the chaining
+    :return: The htmlObj to allow the chaining
     """
     if self.label is not None and hasattr(self.label, 'style'):
       self.label.style.css.cursor = 'pointer'
@@ -515,6 +586,13 @@ class IconEdit(Html.Html):
     """
     Description:
     ------------
+    Add a spin effect to the icon.
+
+    Usage:
+    -----
+
+      icon = page.ui.icons.awesome("")
+      icon.spin()
 
     Related Pages:
 
@@ -527,6 +605,13 @@ class IconEdit(Html.Html):
     """
     Description:
     ------------
+    Add a pulse effect to the icon.
+
+    Usage:
+    -----
+
+      icon = page.ui.icons.awesome("")
+      icon.pulse()
 
     Related Pages:
 
@@ -539,6 +624,13 @@ class IconEdit(Html.Html):
     """
     Description:
     ------------
+    Add a border to the icon.
+
+    Usage:
+    -----
+
+      icon = page.ui.icons.awesome("")
+      icon.border()
 
     Related Pages:
 
@@ -553,13 +645,19 @@ class IconEdit(Html.Html):
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
+    Usage:
+    -----
+
+      icon = page.ui.icons.awesome("")
+      icon.rotate(90)
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
 
     Attributes:
     ----------
-    :param value: Integer. The rotation angle
+    :param value: Integer. The rotation angle.
     """
     self.icon.rotate(value)
     return self
@@ -570,13 +668,19 @@ class IconEdit(Html.Html):
     ------------
     Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
+    Usage:
+    -----
+
+      icon = page.ui.icons.awesome("")
+      icon.pull()
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
 
     Attributes:
     ----------
-    :param position:
+    :param position: String. Optional. The position of the icon in the page.
     """
     self.icon.pull(position)
     return self
@@ -586,11 +690,14 @@ class IconEdit(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event:
+    :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if self.hover_color:
@@ -605,9 +712,14 @@ class IconEdit(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
+    :param url:
     :param jsFncs:
+    :param name:
     :param profile:
     :param source_event:
     """
@@ -648,10 +760,11 @@ class ButtonMenuItem(object):
     """
     Description:
     -----------
-    Javascript module of the items in the menu
+    Javascript module of the items in the menu.
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsComponents.Menu
@@ -664,7 +777,10 @@ class ButtonMenuItem(object):
     """
     Description:
     -----------
-    Javascript generic events of the items in the menu
+    Javascript generic events of the items in the menu.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -673,16 +789,21 @@ class ButtonMenuItem(object):
     :param profile: Boolean. Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param onReady: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    self._events.append("%s.addEventListener('%s', function (event) { %s })" % (self._selector, event, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._events.append("%s.addEventListener('%s', function (event) {%s})" % (self._selector, event, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._src
 
   def click(self, jsFncs):
     """
     Description:
     -----------
-    Javascript click events of the items in the menu
+    Javascript click events of the items in the menu.
 
-    :param jsFncs: List: The Javascript fragments
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsFncs: List: The Javascript fragments.
     """
     self._events.append("%s.addEventListener('click', function (event) { %s })" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self._src
@@ -711,9 +832,7 @@ class ButtonMenu(Html.Html):
       self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlCode, i), self)
     return self.components[i]
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var panel = htmlObj.querySelector("div");
       data.forEach(function(rec){
         var href = document.createElement("a"); href.innerHTML = rec;
@@ -725,9 +844,10 @@ class ButtonMenu(Html.Html):
     """
     Description:
     -----------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
-    Usage::
+    Usage:
+    -----
 
       self.style.css.margin = "5px"
 

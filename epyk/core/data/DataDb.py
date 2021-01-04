@@ -19,35 +19,46 @@ class NoSql(object):
 
   def mongo(self, host="localhost", port=5000, is_secured=False):
     """
+    Description:
+    -----------
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/python/python_mongodb_getstarted.asp
-    https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.3-signed.msi/download
+      https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.3-signed.msi/download
 
-    :param host: Optional, Database hostname. Default localhost
-    :param port: Optional, Database port. Default 5000
-    :param is_secured:
-
-    :return:
-
+    Attributes:
+    ----------
+    :param host: String. Optional. Database hostname. Default localhost
+    :param port: Integer. Optional. Database port. Default 5000
+    :param is_secured: Boolean. Optional.
     """
     pyMongo = requires("pyMongo", reason='Missing Package', install="pyMongo", source_script=__file__, raise_sxcept=True)
     return pyMongo.MongoClient("mongodb://%s:%s/" % (host, port))
 
   def neo4j(self, host="localhost", port=5000, is_secured=False):
     """
+    Description:
+    -----------
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://neo4j.com/developer/python/
-    https://community.neo4j.com/?_ga=2.69585106.394662973.1539480121-615400289.1539480121
+      https://community.neo4j.com/?_ga=2.69585106.394662973.1539480121-615400289.1539480121
 
-    :param host: Optional, Database hostname. Default localhost
-    :param port: Optional, Database port. Default 5000
-    :param is_secured:
+    Attributes:
+    ----------
+    :param host: String. Optional. Database hostname. Default localhost.
+    :param port: Integer. Optional. Database port. Default 5000.
+    :param is_secured: Boolean. Optional.
 
-    :return: A Python SQL connectionr for Neo4J
+    :return: A Python SQL connection for Neo4J
     """
     if 'neo4j' not in self.pkgs:
       requires("neo4j", reason='Missing Package', install='neo4j-driver', source_script=__file__, raise_sxcept=True)

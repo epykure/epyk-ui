@@ -36,6 +36,9 @@ class ProgressBar(Html.Html):
     The progress bar is designed to display the current percent complete for a process.
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/progressbar
@@ -49,10 +52,13 @@ class ProgressBar(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param number:
-    :param timer: Integer. the spped of the increase in millisecond
+    :param timer: Integer. Optional. the sppended of the increase in millisecond
     """
     self._report.body.onReady([
       self._report.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
@@ -68,9 +74,7 @@ class ProgressBar(Html.Html):
     ])
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       options.value = parseFloat(data);
       %(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
@@ -80,17 +84,16 @@ class ProgressBar(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://api.jqueryui.com/progressbar
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsQueryUi.ProgressBar
@@ -104,10 +107,11 @@ class ProgressBar(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -139,6 +143,9 @@ class Menu(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: rpClsJqueryUI.ClassMenu
     """
     if self._styleObj is None:
@@ -151,6 +158,9 @@ class Menu(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/menu
@@ -159,35 +169,33 @@ class Menu(Html.Html):
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
-          var jqHtmlObj = jQuery(htmlObj); if (options.clearDropDown) {jqHtmlObj.empty()};
-          var isRoot =  options.isRoot; if(typeof isRoot === 'undefined'){isRoot = true}
-          data.forEach(function(rec){
-            if (rec.items != undefined) {
-              var li = $('<li></li>'); var div = $('<div>'+ rec.value +'</div>');
-              li.append(div); var ul = $('<ul aria-hidden="true"></ul>'); 
-              options.clearDropDown = false; options.isRoot = false;
-              %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
-            } else {
-              var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'}); var li = $('<li></li>');
-              li.append(div); jqHtmlObj.append(li)};
-          }); if(isRoot){jqHtmlObj.menu(options)}''' % {"pyCls": self.__class__.__name__}
+  _js__builder__ = '''
+      var jqHtmlObj = jQuery(htmlObj); if (options.clearDropDown) {jqHtmlObj.empty()};
+      var isRoot =  options.isRoot; if(typeof isRoot === 'undefined'){isRoot = true}
+      data.forEach(function(rec){
+        if (rec.items != undefined) {
+          var li = $('<li></li>'); var div = $('<div>'+ rec.value +'</div>');
+          li.append(div); var ul = $('<ul aria-hidden="true"></ul>'); 
+          options.clearDropDown = false; options.isRoot = false;
+          options.builder(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
+        } else {
+          var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'}); var li = $('<li></li>');
+          li.append(div); jqHtmlObj.append(li)};
+      }); if(isRoot){jqHtmlObj.menu(options)}'''
 
   @property
   def js(self):
     """
     Description:
     -----------
-    Javascript Functions
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://api.jqueryui.com/menu
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsQueryUi.Menu
@@ -201,12 +209,14 @@ class Menu(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Usage:
+    -----
+
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
@@ -234,6 +244,9 @@ class Dialog(Html.Html):
     -----------
     Open content in an interactive overlay.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://jqueryui.com/dialog/
@@ -242,9 +255,7 @@ class Dialog(Html.Html):
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return "jQuery(htmlObj).empty(); jQuery(htmlObj).append('<p>'+ data +'</p>'); jQuery(htmlObj).dialog(options)"
+  _js__builder__ = "jQuery(htmlObj).empty(); jQuery(htmlObj).append('<p>'+ data +'</p>'); jQuery(htmlObj).dialog(options)"
 
   @property
   def js(self):
@@ -253,12 +264,13 @@ class Dialog(Html.Html):
     -----------
     Open content in an interactive overlay.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://jqueryui.com/dialog/
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsQueryUi.Dialog
@@ -270,12 +282,16 @@ class Dialog(Html.Html):
   @property
   def dom(self):
     """
-    Javascript Functions
-
+    Description:
+    -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Usage:
+    -----
+
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
@@ -302,6 +318,8 @@ class Slider(Html.Html):
   @property
   def options(self):
     """
+    Usage:
+    -----
 
     :rtype: OptSliders.OptionsSlider
     """
@@ -312,7 +330,10 @@ class Slider(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsJqueryUI.ClassSlider
     """
@@ -325,10 +346,11 @@ class Slider(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -350,15 +372,18 @@ class Slider(Html.Html):
     -----------
     Triggered after the user slides a handle, if the value has changed; or if the value is changed programmatically via the value method.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-change
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
-    :param onReady:
+    :param jsFnc: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param onReady: Boolean. Optional. Trigger the change event when page is ready.
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -371,13 +396,17 @@ class Slider(Html.Html):
     -----------
     Triggered when the user starts sliding.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-start
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -390,13 +419,17 @@ class Slider(Html.Html):
     -----------
     Triggered when the user starts sliding.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-slide
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -409,13 +442,17 @@ class Slider(Html.Html):
     -----------
     Triggered after the user slides a handle.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-stop
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -427,7 +464,10 @@ class Slider(Html.Html):
     """
     Description:
     -----------
-    The Javascript Dom object
+    The Javascript Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlJqueryUI.JsHtmlSlider
     """
@@ -435,9 +475,7 @@ class Slider(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return ''' options.value = data; %(jqId)s.slider(options).css(options.css)
+  _js__builder__ = ''' options.value = data; %(jqId)s.slider(options).css(options.css)
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
@@ -456,9 +494,7 @@ class Slider(Html.Html):
 class Range(Slider):
   name = "Slider Range"
 
-  @property
-  def _js__builder__(self):
-    return '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
+  _js__builder__ = '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
         ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
@@ -471,9 +507,7 @@ class SliderDate(Slider):
     self.options.max = max
     self.options.step = 86400
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       const minDt = new Date(options.min).getTime() / 1000;
       const maxDt = new Date(options.max).getTime() / 1000;
       
@@ -487,7 +521,10 @@ class SliderDate(Slider):
     """
     Description:
     -----------
-    The Javascript Dom object
+    The Javascript Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
@@ -498,9 +535,7 @@ class SliderDate(Slider):
 
 class SliderDates(SliderDate):
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       const minDt = new Date(options.min).getTime() / 1000;
       const maxDt = new Date(options.max).getTime() / 1000;
 
@@ -514,7 +549,10 @@ class SliderDates(SliderDate):
     """
     Description:
     -----------
-    The Javascript Dom object
+    The Javascript Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
@@ -548,9 +586,7 @@ class SkillBar(Html.Html):
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.empty();
       data.forEach(function(rec, i){
         if (options.colTooltip != undefined) {var tooltip = 'title="'+ rec[options.colTooltip] +'"'} else {var tooltip = ''};
@@ -581,6 +617,10 @@ class OptionsBar(Html.Html):
   @property
   def options(self):
     """
+
+    Usage:
+    -----
+
     :rtype: OptSliders.OptionBar
     """
     return self.__options
@@ -651,15 +691,16 @@ class Filters(Html.Html):
     """
     Description:
     -----------
-    Shortcut to the Chip options
+    Shortcut to the Chip options.
+
+    Usage:
+    -----
 
     :rtype: OptList.OptionsTagItems
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
       if (typeof data !== 'undefined'){
       data.forEach(function(val){
@@ -674,6 +715,9 @@ class Filters(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -691,6 +735,9 @@ class Filters(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions
@@ -705,6 +752,9 @@ class Filters(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -724,6 +774,9 @@ class Filters(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param value:
@@ -741,6 +794,9 @@ class Filters(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -761,7 +817,10 @@ class Filters(Html.Html):
     """
     Description:
     -----------
-    The Javascript Dom object
+    The Javascript Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlList.Tags
     """

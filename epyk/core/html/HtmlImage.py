@@ -45,10 +45,11 @@ class Image(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -64,9 +65,13 @@ class Image(Html.Html):
     -----------
     Click event which redirect to another page.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript Events triggered before the redirection
+    :param url: String.
+    :param jsFncs: List | String. The Javascript Events triggered before the redirection
     :param profile: Boolean. Optional
     :param source_event: String. Optional. The event source.
     """
@@ -77,9 +82,7 @@ class Image(Html.Html):
     jsFncs.append(self.js.location.open_new_tab(url, name))
     return self.click(jsFncs, profile, source_event)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if ((typeof data !== 'string') && (typeof data !== 'undefined')){
         if(typeof data.path === 'undefined'){data.path = '%s'}
         htmlObj.src = data.path + "/" + data.image}
@@ -120,18 +123,18 @@ class AnimatedImage(Html.Html):
       ''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'img': self.img.html(), 'div': self.div.html()}
 
 
-class ImgCarrousel(Html.Html):
+class ImgCarousel(Html.Html):
   name = 'Carrousel'
 
   def __init__(self, report, images, path, selected, width, height, options, profile):
     self.items, self.__click_items = [], []
-    super(ImgCarrousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
+    super(ImgCarousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
     self.attr['data-current_picture'] = 0
     for i, rec in enumerate(images):
       if not hasattr(rec, 'options'):
         if not isinstance(rec, dict):
           rec = {"image": rec, 'title': "picture %s" % (i+1)}
-        if not 'path' in rec:
+        if 'path' not in rec:
           rec['path'] = path
         if rec.get('selected') is not None:
           selected = i
@@ -144,7 +147,7 @@ class ImgCarrousel(Html.Html):
       div.options.managed = False
       self.items.append(div)
     self.__point_display = options.get('points', True)
-    self.__inifity = options.get('inifity', False)
+    self.infinity = options.get('infinity', False)
     self.container = self._report.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
     self.container.options.managed = False
     if 'arrows' in options:
@@ -165,6 +168,7 @@ class ImgCarrousel(Html.Html):
       self.next.style.css.display = "none"
       self.previous.style.css.display = "none"
     self.items[selected].css({"display": 'block'})
+    self._jsStyles["color"] = self._report.theme.colors[9]
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
 
   def __getitem__(self, i):
@@ -176,10 +180,13 @@ class ImgCarrousel(Html.Html):
     ------------
     Add click event on this component
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. optional. The reference of the component
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
@@ -188,19 +195,17 @@ class ImgCarrousel(Html.Html):
     self.__click_items.extend(jsFncs)
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       data.forEach(function(rec, i){
         var li = document.createElement('li');
         if (i == 0) {li.style.display = 'block'} else{li.style.display = 'none'};
         var img = document.createElement('img'); img.src = rec.path +'/'+ rec.image; li.appendChild(img);
         var title = document.createElement('h3'); title.innerHTML = rec.title; li.appendChild(title); 
         htmlObj.appendChild(li);
-        var label = document.createElement('label'); label.style.backgroundColor = '%(color)s'; 
+        var label = document.createElement('label'); label.style.backgroundColor = options.color; 
         label.style.borderRadius = '20px'; label.for = i; label.innerHTML = '&nbsp;'; 
         document.getElementById(htmlObj.id +'_bullets').appendChild(label)
-      })''' % {'color': self._report.theme.colors[9]}
+      })'''
 
   def __str__(self):
     self.container._vals = self.items
@@ -226,7 +231,7 @@ class ImgCarrousel(Html.Html):
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", -1),
               self.next.dom.events.trigger("click")
-        ] if self.__inifity else None)
+        ] if self.__infinity else None)
       ])
     if hasattr(self.previous, 'html'):
       self.previous.click([
@@ -238,7 +243,7 @@ class ImgCarrousel(Html.Html):
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", len(self.items)),
               self.previous.dom.events.trigger("click")
-        ] if self.__inifity else None)
+        ] if self.__infinity else None)
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
       ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),
@@ -271,11 +276,15 @@ class Icon(Html.Html):
     -----------
     Click event which redirect to another page.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript Events triggered before the redirection
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param name: String. Optional.
+    :param url:
+    :param jsFncs: List | String. Optional. The Javascript Events triggered before the redirection.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param name: String. Optional. The name (type) of the href link.
     :param source_event: String. Optional. The event source.
     """
     jsFncs = jsFncs or []
@@ -289,10 +298,11 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -307,7 +317,10 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsImage.ClassIcon
     """
@@ -319,6 +332,9 @@ class Icon(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -333,6 +349,9 @@ class Icon(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
@@ -345,6 +364,9 @@ class Icon(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -361,13 +383,16 @@ class Icon(Html.Html):
     Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
     With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons
 
     Attributes:
     ----------
-    :param value:
+    :param value: Integer. The value of the size factor for the icon.
     """
     if 'font-awesome' in self.requirements:
       if isinstance(value, int):
@@ -380,6 +405,9 @@ class Icon(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -395,13 +423,16 @@ class Icon(Html.Html):
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
 
     Attributes:
     ----------
-    :param value: Integer. The rotation angle
+    :param value: Integer. The rotation angle.
     """
     if 'font-awesome' in self.requirements:
       self.attr['class'].add("fa-rotate-%s" % value)
@@ -412,6 +443,10 @@ class Icon(Html.Html):
     Description:
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    This will use the font-awesome flip classes.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -419,7 +454,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param direction:
+    :param direction: String. Optional. The direction reference (h or v).
     """
     if 'font-awesome' in self.requirements:
       if direction.lower() == 'h':
@@ -436,13 +471,16 @@ class Icon(Html.Html):
     ------------
     Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
 
     Attributes:
     ----------
-    :param position:
+    :param position: String. Optional.
     """
     if 'font-awesome' in self.requirements:
         self.attr['class'].add("fa-pull-%s" % position)
@@ -452,10 +490,14 @@ class Icon(Html.Html):
     """
     Description:
     ------------
+    Add the icon class reference to the CSS class attribute of the component.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. An icon class reference.
     """
     self.attr['class'].add(value)
     return self
@@ -464,16 +506,17 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-    Change the color of the button background when the mouse is hover
+    Change the color of the button background when the mouse is hover.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
 
     Attributes:
     ----------
     :param color_hover: String. The color of the icon when mouse hover
-    :param color_out: Optional, String. The color of the icon when mouse out
+    :param color_out: String. Optional. The color of the icon when mouse out
     """
     if color_out is None:
       color_out = self._report.theme.success[1]
@@ -488,19 +531,20 @@ class Icon(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(jsFncs, profile, source_event, onReady=onReady)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (typeof data !== 'undefined'){
       htmlObj.classList = []; data.split(' ').forEach(function(cls){htmlObj.classList.add(cls)});
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
@@ -516,9 +560,12 @@ class IconToggle(Icon):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param components:
+    :param components: HTML. The HTML component.
     """
     self._linked_components = components
     return self
@@ -528,11 +575,14 @@ class IconToggle(Icon):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsOnOffFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
@@ -561,9 +611,7 @@ class Emoji(Html.Html):
     super(Emoji, self).__init__(report, symbole, options=options, profile=profile)
     self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.innerHTML = data; 
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
@@ -572,10 +620,11 @@ class Emoji(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -626,6 +675,9 @@ class Badge(Html.Html):
     ------------
     Property to the options specific to the HTML component
 
+    Usage:
+    -----
+
     :rtype: OptButton.OptionsBadge
     """
     return self.__options
@@ -634,6 +686,9 @@ class Badge(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -680,7 +735,11 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the json object
+    Return the Javascript variable of the json object.
+
+    Usage:
+    -----
+
     """
     return "%s_obj" % self.htmlCode
 
@@ -692,6 +751,9 @@ class SlideShow(Html.Html):
     The tiny slider javascript events
 
     Return the Javascript internal object
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -706,10 +768,11 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -724,13 +787,16 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param event: String. The event type
-    :param jsFncs: List or String. The JavaScript fragments
-    :param source_event: String
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param add:
+    :param jsFncs: List | String. The JavaScript fragments
+    :param source_event: String.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param add: Boolean. Optional
     """
     if add:
       self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(jsFncs, toStr=True))])
@@ -739,30 +805,111 @@ class SlideShow(Html.Html):
     return self
 
   def addIndexChanged(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile)
 
   def remIndexChanged(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
   def addTransitionStart(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile)
 
   def remTransitionStart(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile, add=False)
 
   def addTransitionEnd(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile)
 
   def remTransitionEnd(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
   def addNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile)
 
   def remNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile, add=False)
 
   def addNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
+    """
+
+    Usage:
+    -----
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self._events("newBreakpointEnd", jsFncs, source_event or self.jsonId, profile)
 
   def remNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
@@ -808,7 +955,11 @@ class SlideShow(Html.Html):
     """
     Description:
     -----------
-    Component refresh function. Javascript function which can be called in any Javascript event
+    Component refresh function. Javascript function which can be called in any Javascript event.
+
+    Usage:
+    -----
+
     """
     return self.build([], self._jsStyles)
 
@@ -818,6 +969,9 @@ class SlideShow(Html.Html):
     Description:
     ------------
     The tiny slider options
+
+    Usage:
+    -----
 
     https://github.com/ganlanyuan/tiny-slider
 
@@ -830,7 +984,11 @@ class SlideShow(Html.Html):
     Description:
     ------------
     Empty all the values already defined on the Python side.
-    This will be called before the JavaScript Transpilation
+    This will be called before the JavaScript Transpilation.
+
+    Usage:
+    -----
+
     """
     self._vals = []
     self.components = {}
@@ -840,11 +998,14 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-    Add a component to the slider container
+    Add a component to the slider container.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param component: HTML Component. A component to be added to the slider container
+    :param component: HTML. A component to be added to the slider container
     """
     if not hasattr(component, 'options'):
       component = self._report.ui.div(component)
@@ -856,9 +1017,7 @@ class SlideShow(Html.Html):
   def __len__(self):
     return len(self.val)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(typeof window[ htmlObj.id + '_obj'] !== 'undefined') {window[ htmlObj.id + '_obj'].destroy();} 
       window[ htmlObj.id + '_obj'] = tns(options)'''
 
@@ -871,6 +1030,19 @@ class SlideShow(Html.Html):
 class Background(HtmlContainer.Div):
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data: String.
+    :param options: Dictionary. Optional.
+    :param profile: Boolean | Dictionary.
+    """
     if isinstance(data, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()])
     else:

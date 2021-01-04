@@ -5,10 +5,12 @@
 Module for the HTML Media (audio and video) components
 """
 
+import logging
 import os
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
+from epyk.core.html.options import OptButton
 
 # The list of JSS modules
 from epyk.core.js import JsUtils
@@ -17,38 +19,48 @@ from epyk.core.js import JsUtils
 class Media(Html.Html):
   name = 'Video'
 
+  mime_mapping = {
+    ".avi": "video/x-msvideo",
+    ".mpeg": "video/mpeg",
+    ".ogv": "video/ogg",
+    ".webm": "video/webm",
+    ".3gp": "video/3gpp",
+    ".3g2": "video/3gpp2",
+  }
+
   def __init__(self, report, video, path, width, height, htmlCode, profile, options):
     if path is None:
       path = Defaults.SERVER_PATH or os.path.split(video)[0]
     super(Media, self).__init__(report, {'path': path, 'video': video}, htmlCode=htmlCode,
                                 css_attrs={"width": width, 'height': height}, profile=profile)
-    self._jsStyles = options
-    self.add_options(name="type", value='video/%s' % video.split(".")[-1])
-    self.set_attrs(name="controls", value="controls")
+    self.__options = OptButton.OptMedia(self, options or {})
+    extension = video.split(".")[-1].lower()
+    if ".%s" % extension in self.mime_mapping:
+      self.add_options(name="type", value=self.mime_mapping[".%s" % extension])
+    else:
+      if options.get("verbose", False):
+        logging.warning("Missing MIME Type extension %s" % extension)
+      self.add_options(name="type", value='%s/%s' % (self.name.lower(), extension))
+    self.options.controls = True
 
   @property
-  def _js__builder__(self):
-    return '''
-      var source = document.createElement("source");
-      source.setAttribute('src', data.path +"/"+ data.video);
-      for(var key in options){
-        if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
-        else{source.setAttribute(key, options[key])}};
-      htmlObj.appendChild(source)'''
-
-  def autoplay(self, flag=True):
+  def options(self):
     """
     Description:
-    ------------
-    Set the autoplay flag.
+    -----------
+    Property to set all the possible object for a Media (video and audio).
 
-    Attributes:
-    ----------
-    :param flag: Boolean. Optional. Default value is true.
+    :rtype: OptButton.OptMedia
     """
-    if flag:
-      self.set_attrs(name="autoplay", value=flag)
-    return self
+    return self.__options
+
+  _js__builder__ = '''
+    var source = document.createElement("source");
+    source.setAttribute('src', data.path +"/"+ data.video);
+    for(var key in options){
+      if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
+      else{source.setAttribute(key, options[key])}};
+    htmlObj.appendChild(source)'''
 
   def __str__(self):
     if 'autoplay' in self._jsStyles:
@@ -57,40 +69,28 @@ class Media(Html.Html):
     return '<video %s></video>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
-class Audio(Html.Html):
-  name = 'Video'
+class Audio(Media):
+  name = 'Audio'
 
-  def __init__(self, report, audio, path, width, height, htmlCode, profile, options):
-    if path is None:
-      path = Defaults.SERVER_PATH or os.path.split(audio)[0]
-    super(Audio, self).__init__(report, {'path': path, 'audio': audio}, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
-    self._jsStyles = options
-    self.add_options(name="type", value='audio/%s' % {'mp3': 'mpeg'}.get(audio.split(".")[-1].lower(), audio.split(".")[-1]))
-    self.set_attrs(name="controls", value="controls")
+  mime_mapping = {
+    ".aac": "audio/aac",
+    ".midi": "audio/midi",
+    ".mp3": "audio/mp3",
+    ".mid": "audio/midi",
+    ".oga": "audio/ogg",
+    ".weba": "audio/webm",
+    ".wav": "audio/x-wav",
+    ".3gp": "audio/3gpp",
+    ".3g2": "audio/3gpp2",
+  }
 
-  def autoplay(self, flag=True):
-    """
-    Description:
-    ------------
-    Set the autoplay flag.
-
-    Attributes:
-    ----------
-    :param flag: Boolean. Optional. Default value is true
-    """
-    if flag:
-      self.set_attrs(name="autoplay", value=flag)
-    return self
-
-  @property
-  def _js__builder__(self):
-    return '''
-      var source = document.createElement("source");
-      source.setAttribute('src', data.path +"/"+ data.audio);
-      for(var key in options){
-        if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
-        else{source.setAttribute(key, options[key])}}; 
-      htmlObj.appendChild(source)'''
+  _js__builder__ = '''
+    var source = document.createElement("source");
+    source.setAttribute('src', data.path +"/"+ data.audio);
+    for(var key in options){
+      if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
+      else{source.setAttribute(key, options[key])}}; 
+    htmlObj.appendChild(source)'''
 
   def __str__(self):
     if 'autoplay' in self._jsStyles:

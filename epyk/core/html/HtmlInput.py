@@ -47,7 +47,10 @@ class Input(Html.Html):
     """
     Description:
     -----------
-    Property to set all the input component properties
+    Property to set all the input component properties.
+
+    Usage:
+    -----
 
     :rtype: OptInputs.OptionsInput
     """
@@ -58,7 +61,10 @@ class Input(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsInput.ClassInput
     """
@@ -66,9 +72,7 @@ class Input(Html.Html):
       self._styleObj = GrpClsInput.ClassInput(self)
     return self._styleObj
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       if(typeof options.formatMoney !== 'undefined'){ htmlObj.value = accounting.formatMoney(data, 
         options.formatMoney.symbol, options.formatMoney.digit, 
@@ -84,6 +88,9 @@ class Input(Html.Html):
     Description:
     -----------
     Action on focus
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -115,7 +122,8 @@ class Input(Html.Html):
     -----------
     Add validation rules on the input component
 
-    Usage::
+    Usage:
+    -----
 
       input.validation(pattern="[0-9]{5}")
 
@@ -136,7 +144,8 @@ class Input(Html.Html):
     ------------
     Add an javascript action when the key enter is pressed on the keyboard
 
-    Usage::
+    Usage:
+    -----
 
       htmlObj.input(placeholder="Put your tag").enter("alert()")
 
@@ -159,8 +168,10 @@ class Input(Html.Html):
   def readonly(self, flag=True):
     """
 
+    Usage:
+    -----
+
     :param flag:
-    :return:
     """
     if flag:
       self.attr["readonly"] = "readonly"
@@ -199,9 +210,7 @@ class AutoComplete(Input):
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
 
-  @property
-  def _js__builder__(self):
-    return "if(typeof data === 'object'){jQuery(htmlObj).autocomplete(Object.assign(data, options))} else{jQuery(htmlObj).autocomplete(options)}"
+  _js__builder__ = "if(typeof data === 'object'){jQuery(htmlObj).autocomplete(Object.assign(data, options))} else{jQuery(htmlObj).autocomplete(options)}"
 
   @property
   def options(self):
@@ -209,6 +218,9 @@ class AutoComplete(Input):
     Description:
     ------------
     Property to set all the input timepicker component properties
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -223,6 +235,9 @@ class AutoComplete(Input):
     Description:
     -----------
     Action on focus
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -253,6 +268,9 @@ class AutoComplete(Input):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -291,6 +309,9 @@ class InputTime(Input):
     ------------
     Property to set all the input timepicker component properties
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://timepicker.co/options/
@@ -306,6 +327,9 @@ class InputTime(Input):
     ------------
     Property to the CSS Style of the component
 
+    Usage:
+    -----
+
     :rtype: GrpClsInput.ClassInputTime
     """
     if self._styleObj is None:
@@ -319,6 +343,9 @@ class InputTime(Input):
     ------------
     The Javascript Dom object
 
+    Usage:
+    -----
+
     :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
     """
     if self._dom is None:
@@ -331,6 +358,9 @@ class InputTime(Input):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :return: A Javascript Dom object
@@ -341,28 +371,19 @@ class InputTime(Input):
       self._js = JsTimepicker.Timepicker(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    """
-    else {
-        if (data.value == ''){data.time = new Date()} else{data.time = data.value};
-        if (data.options._change.length > 0) {data.options.change = function(time){
-            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlCode};
-            eval(data.options._change.join(";"))}};
-        jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}
-
-    :return:
-    """
-    return '''
+  _js__builder__ = '''
       if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)} 
       %(jqId)s.timepicker(options); ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def change(self, jsFnc):
+  def change(self, jsFnc, profile=False):
     """
     Description:
     -----------
-    Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+    Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -400,6 +421,9 @@ class InputDate(Input):
     ------------
     Property to set all the input Datepicker component properties
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://timepicker.co/options/
@@ -413,6 +437,9 @@ class InputDate(Input):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -431,6 +458,9 @@ class InputDate(Input):
     ------------
     Property to the CSS Style of the component
 
+    Usage:
+    -----
+
     :rtype: GrpClsInput.ClassInputDate
     """
     if self._styleObj is None:
@@ -444,6 +474,9 @@ class InputDate(Input):
     ------------
     The Javascript Dom object
 
+    Usage:
+    -----
+
     :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
     """
     if self._dom is None:
@@ -454,6 +487,9 @@ class InputDate(Input):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -469,6 +505,9 @@ class InputDate(Input):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -487,6 +526,9 @@ class InputDate(Input):
     Change the CSS style for some selected dates in the datepicker.
     This function can be also used on the Javascript side from the js property.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param class_name: String. The name of the CSS added to the page with the CSS attributes.
@@ -502,9 +544,7 @@ class InputDate(Input):
         if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
       }''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name}
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(data == null){data = eval(options.date_if_null)}
       %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
@@ -531,11 +571,20 @@ class InputInteger(Input):
     -----------
     Property to set all the input component properties
 
+    Usage:
+    -----
+
     :rtype: OptInputs.OptionsInputInteger
     """
     return self.__options
 
   def quantity(self):
+    """
+
+    Usage:
+    -----
+
+    """
     factors, strFcts = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
     for f, val in factors.items():
       strFcts.append("if(event.key.toUpperCase() == '%s'){this.value *= %s}" % (f, val))
@@ -568,6 +617,9 @@ class InputRange(Input):
     ------------
     Property to set input range properties
 
+    Usage:
+    -----
+
     :rtype: OptSelect.OptionsInputRange
     """
     return self.__options
@@ -578,6 +630,9 @@ class InputRange(Input):
     Description:
     ------------
     Property to the CSS Style of the component
+
+    Usage:
+    -----
 
     :rtype: GrpClsInput.ClassInputRange
     """
@@ -613,6 +668,9 @@ class Field(Html.Html):
     Description:
     -----------
     Javascript Functions
+
+    Usage:
+    -----
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
@@ -653,6 +711,9 @@ class FieldAutocomplete(Field):
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-change
@@ -670,6 +731,9 @@ class FieldAutocomplete(Field):
     -----------
     Triggered before a search is performed, after minLength and delay are met.
     If canceled, then no request will be started and no items suggested.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -690,6 +754,9 @@ class FieldAutocomplete(Field):
     The default action is to replace the text field's value with the value of the focused item, though only if the event was triggered by a keyboard interaction.
     Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-focus
@@ -709,6 +776,9 @@ class FieldAutocomplete(Field):
     Description:
     -----------
     Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -732,6 +802,9 @@ class FieldAutocomplete(Field):
     The default action is to replace the text field's value with the value of the selected item.
     Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-select
@@ -753,6 +826,9 @@ class FieldAutocomplete(Field):
     Triggered after a search completes, before the menu is shown.
     Useful for local manipulation of suggestion data, where a custom source option callback is not required.
     This event is always triggered when a search completes, even if the menu will not be shown because there are no results or the Autocomplete is disabled.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -849,6 +925,9 @@ class Checkbox(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :return: A Javascript Dom object
@@ -859,9 +938,7 @@ class Checkbox(Html.Html):
       self._dom = JsHtmlField.Check(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.checked = data.value; 
+  _js__builder__ = '''htmlObj.checked = data.value; 
       if(data.text !== null){
         htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
@@ -899,8 +976,9 @@ class Radio(Html.Html):
     Description:
     -----------
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsHtmlField.Radio
@@ -916,15 +994,16 @@ class Radio(Html.Html):
     -----------
     Javascript Functions
 
+    Usage:
+    -----
+
     :rtype: JsComponents.Radio
     """
     if self._js is None:
       self._js = JsComponents.Radio(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.checked = data.value; 
+  _js__builder__ = '''htmlObj.checked = data.value; 
       if(data.text !== null){
         htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
@@ -950,6 +1029,9 @@ class TextArea(Html.Html):
     -----------
     Property to set all the input component properties
 
+    Usage:
+    -----
+
     :rtype: OptInputs.OptionsTextarea
     """
     return self.__options
@@ -958,6 +1040,9 @@ class TextArea(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -978,6 +1063,9 @@ class TextArea(Html.Html):
     -----------
     Return the HTML DOM object
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom.asp
@@ -988,9 +1076,7 @@ class TextArea(Html.Html):
       self._dom = JsHtmlField.Textarea(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return 'htmlObj.innerHTML = data'
+  _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):
     return '<textarea %(strAttr)s>%(val)s</textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
@@ -1019,20 +1105,24 @@ class Search(Html.Html):
   def dom(self):
     """
 
+    Usage:
+    -----
+
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.find('input').val(data)'''
+  _js__builder__ = '''htmlObj.find('input').val(data)'''
 
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1049,13 +1139,15 @@ class Search(Html.Html):
     -----------
     Add an javascript action when the key enter is pressed on the keyboard
 
-    Example
-    htmlObj.enter(" alert() ")
+    Usage:
+    -----
+
+      htmlObj.enter(" alert() ")
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 

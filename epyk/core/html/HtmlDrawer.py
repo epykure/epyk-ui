@@ -44,7 +44,10 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
-    Property to get the common dom features
+    Property to get the common dom features.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlStepper.Drawer
     """
@@ -57,7 +60,10 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a drawer
+    Property to set all the possible object for a drawer.
+
+    Usage:
+    -----
 
     :rtype: OptPanel.OptionDrawer
     """
@@ -69,11 +75,14 @@ class Drawer(Html.Html):
     ------------
     Add panel to the drawer object.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param link: String | HTML object. The value in the drawer
-    :param container: HTML object. The component to be displayed
-    :param display: String. The CSS Display property
+    :param link: String | HTML. The value in the drawer.
+    :param container: HTML. The component to be displayed.
+    :param display: String. Optional. The CSS Display property.
     """
     if not hasattr(link, 'options'):
       link = self._report.ui.div(link)
@@ -91,7 +100,10 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
-    Get the CSS Style of the object
+    Get the CSS Style of the object.
+
+    Usage:
+    -----
 
     :rtype: GrpClsContainer.ClassDrawer
     """
@@ -103,7 +115,14 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
-    Set the handle used to trigger the open / close events
+    Set the handle used to trigger the open / close events.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param component: HTML. An HTML component.
     """
     self.handle = self._report.ui.div()
     self.handle.style.clear_all()
@@ -167,7 +186,10 @@ class DrawerMulti(Html.Html):
     """
     Description:
     ------------
-    Property to get the common dom features
+    Property to get the common dom features.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlStepper.Drawer
     """
@@ -180,7 +202,10 @@ class DrawerMulti(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a drawer
+    Property to set all the possible object for a drawer.
+
+    Usage:
+    -----
 
     :rtype: OptPanel.OptionDrawer
     """
@@ -192,10 +217,13 @@ class DrawerMulti(Html.Html):
     ------------
     Add panel to the drawer object.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param link: String | HTML object. The value in the drawer
-    :param container: HTML object. The component to be displayed
+    :param link: String | HTML. The value in the drawer.
+    :param container: HTML. The component to be displayed.
     """
     if not hasattr(link, 'options'):
       link = self._report.ui.div(link)
@@ -232,7 +260,10 @@ class DrawerMulti(Html.Html):
     """
     Description:
     ------------
-    Get the CSS Style of the object
+    Get the CSS Style of the object.
+
+    Usage:
+    -----
 
     :rtype: GrpClsContainer.ClassDrawer
     """

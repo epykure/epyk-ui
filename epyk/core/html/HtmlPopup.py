@@ -48,7 +48,10 @@ class Popup(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
 
     :rtype: OptPanel.OptionPopup
     """
@@ -59,10 +62,13 @@ class Popup(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param size:
-    :param unit:
+    :param unit: String. Optional.
     """
     self.__max_height = (size, unit)
     return self
@@ -72,10 +78,14 @@ class Popup(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param text:
-    :param level:
+    :param text: String.
+    :param align: String. Optional.
+    :param level: Integer. Optional
     :param css:
     :param position:
     :param options:
@@ -88,6 +98,15 @@ class Popup(Html.Html):
     return self
 
   def html(self):
+    """
+    Description:
+    ------------
+
+
+    Usage:
+    -----
+
+    """
     if self.options.background:
       self.style.css.padding_top = self.options.top
     if self.__options.closure:

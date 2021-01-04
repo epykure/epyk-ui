@@ -23,10 +23,13 @@ class Radio(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param val:
-    :param checked:
+    :param checked: Boolean. Optional.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
       val = self._report.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
@@ -39,6 +42,9 @@ class Radio(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -53,6 +59,9 @@ class Radio(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -69,6 +78,9 @@ class Radio(Html.Html):
     Description:
     ------------
     HTML Dom object
+
+    Usage:
+    -----
 
     :rtype: JsHtmlSelect.Tick
     """
@@ -113,7 +125,10 @@ class Tick(Html.Html):
     """
     Description:
     ------------
-    HTML Dom object
+    HTML Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlSelect.Tick
     """
@@ -164,7 +179,10 @@ class Switch(Html.Html):
     """
     Description:
     ------------
-    HTML Dom object
+    HTML Dom object.
+
+    Usage:
+    -----
 
     :rtype: JsHtmlSelect.JsHtmlSwitch
     """
@@ -172,9 +190,7 @@ class Switch(Html.Html):
       self._dom = JsHtmlSelect.JsHtmlSwitch(self, report=self._report)
     return self._dom
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (data.off == data.checked){htmlObj.querySelector("input").checked = false; htmlObj.querySelector("p").innerHTML = data.off}
       else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on};
       window[htmlObj.getAttribute('id') +"_data"] = data '''
@@ -184,6 +200,9 @@ class Switch(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -195,24 +214,26 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
-  def click(self, onFncs=None, offFncs=None, source_event=None, onReady=False):
+  def click(self, onFncs=None, offFncs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
-    Set the click property for the Switch
+    Set the click property for the Switch.
 
-    Usage::
+    Usage:
+    -----
 
       sw = rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
-    sw.click([
-      rptObj.js.console.log(sw.content)
-    ])
+      sw.click([
+        rptObj.js.console.log(sw.content)
+      ])
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
+    :param onFncs: String | List. The Javascript functions
+    :param offFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if onFncs is not None:

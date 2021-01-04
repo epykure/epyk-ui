@@ -9,17 +9,25 @@ import importlib
 
 
 class DataGrpc(object):
+
   def __init__(self, service_name, path, module, host, port):
     """
-    The path will be added to the python path
+    Description:
+    ------------
+    The path will be added to the python path.
 
-    :param service_name: The Service name (the class name in the python module)
-    :param path: The path with the GRPC features
-    :param module: The python module name for the service
-    :param host: The service host name (e.g localhost)
-    :param port: The service port
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param service_name: String. The Service name (the class name in the python module).
+    :param path: String. The path with the GRPC features.
+    :param module: String. The python module name for the service.
+    :param host: String. The service host name (e.g localhost).
+    :param port: Integer. The service port.
     """
-    if not path in sys.path:
+    if path not in sys.path:
       sys.path.append(path)
     self.host, self.port, self.module = host, port, module.replace(".py", "")
     self.service_name, self._libs = service_name, {}
@@ -29,11 +37,15 @@ class DataGrpc(object):
   @property
   def py(self):
     """
+    Description:
+    -----------
     Return the main module in the GRPC service for the data.
-    Namely is return the module without the _grpc
+    Namely is return the module without the _grpc.
 
-    Example
-    grpc.py.HelloRequest(name="Test 3")
+    Usage:
+    -----
+
+      grpc.py.HelloRequest(name="Test 3")
 
     :return: A python module
     """
@@ -41,39 +53,45 @@ class DataGrpc(object):
 
   def imp(self, module):
     """
-    Return any module from the GRPC service based on its module name
+    Description:
+    -----------
+    Return any module from the GRPC service based on its module name.
 
-    Example
-    grpc.imp(self.module)
+    Usage:
+    -----
 
-    :param module: The python module name
+      grpc.imp(self.module)
+
+    Attributes:
+    ----------
+    :param module: String. The python module name.
 
     :return: A python module
     """
     module = module.replace(".py", "")
-    if not module in self._libs:
+    if module not in self._libs:
       self._libs[module] = importlib.import_module(module)
     return self._libs[module]
 
   def request(self, method, data=None, options=None):
     """
-    Run the GRPC call from the service definition in the init
+    Description:
+    -----------
+    Run the GRPC call from the service definition in the init.
 
-    Example
-    grpc.request("SayHello", data)
+    Usage:
+    -----
 
-    :param method: The function name to be called for the request
-    :param data: The data to be passed during the call
-    :param options: The GRPC service call options
+      grpc.request("SayHello", data)
 
-    :return:
+    Attributes:
+    ----------
+    :param method: String. The function name to be called for the request.
+    :param data: Dictionary. Optional. The data to be passed during the call.
+    :param options: Dictionary. Optional. The GRPC service call options.
     """
     import grpc
 
     with grpc.insecure_channel(target="%s:%s" % (self.host, self.port), options=options) as channel:
       stub = getattr(self.imp(self.module), self.service_name)(channel)
-      if data is None:
-        results = getattr(stub, method)()
-      else:
-        results = getattr(stub, method)(data)
-      return results
+      return getattr(stub, method)() if data is None else getattr(stub, method)(data)

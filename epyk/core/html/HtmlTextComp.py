@@ -38,13 +38,14 @@ class UpDown(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsNumber
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var delta = data.value - data.previous; htmlObj.innerHTML = "";
       if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
@@ -75,6 +76,9 @@ class UpDown(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -110,13 +114,14 @@ class BlockText(Html.Html):
     """
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsText
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
       if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
       else {content = data.text}
@@ -159,13 +164,14 @@ class TextWithBorder(Html.Html):
     """
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsText
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(options.showdown){var converter = new showdown.Converter(options.showdown); 
         data.title = converter.makeHtml(data.title); data.value = converter.makeHtml(data.value)} 
       htmlObj.querySelector('legend').innerHTML = data.title; htmlObj.querySelector('span').innerHTML = data.value'''
@@ -233,13 +239,14 @@ class Delta(Html.Html):
     """
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsNumber
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
        jHtmlObj = jQuery(htmlObj);
        var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
        var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
@@ -278,9 +285,7 @@ class Formula(Html.Html):
     self.add_helper(helper)
     #self._report.jsGlobal.addJs("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}})")
 
-  @property
-  def _js__builder__(self):
-    return 'htmlObj.innerHTML = data'
+  _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):
     return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
@@ -310,10 +315,11 @@ class TrafficLight(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -328,6 +334,9 @@ class TrafficLight(Html.Html):
     Description:
     ------------
     Set the 3 colors of the traffic light
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -351,6 +360,9 @@ class TrafficLight(Html.Html):
     ------------
     Turn a error warning to a green one
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions
@@ -371,6 +383,9 @@ class TrafficLight(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions
@@ -384,9 +399,7 @@ class TrafficLight(Html.Html):
                                                    self._report.theme.danger[1])] + jsFncs
     return super(TrafficLight, self).click(jsFncs, profile, source_event, onReady)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
       else if (data === true){htmlObj.querySelector('div').style.backgroundColor = options.green}
       else if (data === null){htmlObj.querySelector('div').style.backgroundColor = options.orange}
@@ -421,15 +434,16 @@ class ContentsTable(Html.Html):
     ------------
     Property to the CSS Style of the component
 
+    Usage:
+    -----
+
     :rtype: GrpClsText.ContentTable
     """
     if self._styleObj is None:
       self._styleObj = GrpClsText.ContentTable(self)
     return self._styleObj
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var menu = htmlObj.querySelector("div[name=menu]");
       menu.innerHTML = "";
       if ((data == null) || (data.length == 0)){ htmlObj.style.display = 'none'}
@@ -447,6 +461,9 @@ class ContentsTable(Html.Html):
     Description:
     ------------
     Add link to the content table
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -491,9 +508,7 @@ class SearchResult(Html.Html):
                       'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
 
   # self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ;
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
       if (typeof options.currPage == 'undefined'){options.currPage = 0}; var pageNumber = options.pageNumber;
       data.slice(options.currPage * pageNumber).forEach( function(rec){
@@ -521,24 +536,24 @@ class SearchResult(Html.Html):
         var paginate = $('<div style="display:inline-block;height:35px;padding:0;width:100%%;text-align:center;margin-top:10px" class="py_cssdivpagination"></div>');
         if (currIndex > 1){
           var href = $('<a href="#">&laquo;</a>');
-          href.click({page: options.currPage-1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
+          href.click({page: options.currPage-1, rec: data}, function(e){options.builder(htmlObj, e.data.rec, options, e.data.page)});
           paginate.append(href)};
         for (var i = 0; i < reste; i++){
           var indexPage = i + 1;
           if (options.currPage == i) { 
             var href = $('<a href="#" style="background-color:'+ options.greyColor +';padding:5px;color:'+ options.whiteColor +'">'+ indexPage +'</a>');
-            href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, options, e.data.page)});
+            href.click({page: i, rec: data}, function(e) {options.builder(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}
           else{
             var href = $('<a href="#" style="padding:5px;">'+ indexPage +'</a>') ;
-            href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
+            href.click({page: i, rec: data}, function(e){options.builder(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}}
         if(currIndex < reste){
           var href = $('<a href="#">&raquo;</a>');
-          href.click({page: options.currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
+          href.click({page: options.currPage+1, rec: data}, function(e){options.builder(htmlObj, e.data.rec, options, e.data.page)});
           paginate.append(href)};
         jHtmlObj.append(paginate)
-      } ''' % {"class": self.__class__.__name__, 'jquery': JsQuery.decorate_var("htmlObj", convert_var=False)}
+      } ''' % {'jquery': JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -563,6 +578,9 @@ class Composite(Html.Html):
   def options(self):
     """
 
+    Usage:
+    -----
+
     :rtype: ptText.OptionsComposite
     """
     return self.__options
@@ -576,6 +594,9 @@ class Composite(Html.Html):
     Those functions will use plain javascript by default.
 
     This is the only flexible component in which this DOM object can be changed.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -594,6 +615,9 @@ class Composite(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: GrpCls.ClassHtmlEmpty
     """
@@ -617,6 +641,9 @@ class Composite(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     """
     return {
@@ -649,6 +676,9 @@ class Composite(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -717,13 +747,14 @@ class Status(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: ptText.OptionsStatus
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
         if(options.showdown){var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  else {var content = data}
         htmlObj.innerHTML = content;
         if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''

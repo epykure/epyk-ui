@@ -19,8 +19,11 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Returns the maximum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    Returns the maximum value in list. If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
     -Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -28,7 +31,7 @@ class DataAggregators(object):
 
     Attributes:
     ----------
-    :param column:
+    :param column: String. The column name. The key in the list of dictionary.
     """
     self._report.jsImports.add('underscore')
     return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){return rec['%s']; })]" % (self.varName, column), report=self._report)
@@ -37,8 +40,11 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Returns the minimum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    Returns the minimum value in list. If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
     Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -46,7 +52,7 @@ class DataAggregators(object):
 
     Attributes:
     ----------
-    :param column:
+    :param column: String. The column name. The key in the list of dictionary.
     """
     self._report.jsImports.add('underscore')
     return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (self.varName, column), report=self._report)
@@ -55,12 +61,15 @@ class DataAggregators(object):
     """
     Description:
     ------------
-    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
-    iteratee may also be the string name of the property to sort by (eg. length).
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iterator.
+    iterator may also be the string name of the property to sort by (eg. length).
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param column:
+    :param column: String. The column name. The key in the list of dictionary.
     """
     self._report.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
@@ -70,15 +79,18 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Reduce the record set by adding all the columns
+    Reduce the record set by adding all the columns.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param columns: List. The columns in the recordset to be counted
-    :param attrs: Dictionary. The static values to be added to the final recordset
+    :param columns: List. The columns in the recordset to be counted.
+    :param attrs: Dictionary. Optional. The static values to be added to the final recordset.
     """
     return JsObjects.JsArray.JsArray('''
-       (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
+       (function(r, cs){var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += v[c]}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
         ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
@@ -87,12 +99,15 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Reduce the record set by counting all the columns
+    Reduce the record set by counting all the columns.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
     :param columns: List. The columns in the recordset to be counted
-    :param attrs: Dictionary. The static values to be added to the final recordset
+    :param attrs: Dictionary. Optional. The static values to be added to the final recordset
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
@@ -105,12 +120,15 @@ class DataAggregators(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param columns:
-    :param keys:
-    :param dstKey:
-    :param cast_vals:
+    :param columns: List.
+    :param keys: List.
+    :param dstKey: Dictionary. Optional.
+    :param cast_vals: Boolean. Optional.
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     keys = JsUtils.jsConvertData(keys, None)
@@ -134,6 +152,9 @@ class DataAggregators(object):
     -----------
     A convenient version of what is perhaps the most common use-case for map: extracting a list of property values.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://underscorejs.org/#pluck
@@ -154,9 +175,12 @@ class DataFilters(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param name:
+    :param name: String. The filter reference on the JavaScript side.
     """
     self.filter_map[name] = self.toStr()
     return JsObjects.JsVoid("const %s = %s" % (name, self.filter_map[name]))
@@ -167,10 +191,13 @@ class DataFilters(object):
     -----------
     Filtering rule based on a Dictionary of lists
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param data: Dictionary. The keys, values to be filtered
-    :param case_sensitive: Boolean. To make sure algorithm case sensitive
+    :param data: Dictionary. The keys, values to be filtered.
+    :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     data = JsUtils.jsConvertData(data, None)
@@ -189,6 +216,9 @@ class DataFilters(object):
     This is not case sensitive.
 
     TODO: improve the performances by filtering on a list of keys if passed
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -209,13 +239,16 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filtering rule based on a key, value
+    Filtering rule based on a key, value.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param key: String, The key in the various records
-    :param value: Object. The value to keep
-    :param case_sensitive: Boolean. To make sure algorithm case sensitive
+    :param key: String, The key in the various records.
+    :param value: Object. The value to keep.
+    :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
@@ -233,14 +266,17 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filtering rule based on a key, list of values
+    Filtering rule based on a key, list of values.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param key: String, The key in the various records
-    :param values: List . The list of values to keep
-    :param case_sensitive: Boolean. To make sure algorithm case sensitive
-    :param empty_all: Boolean. To specify how to consider the empty case
+    :param key: String, The key in the various records.
+    :param values: List. The list of values to keep.
+    :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
+    :param empty_all: Boolean. Optional. To specify how to consider the empty case.
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
@@ -260,12 +296,15 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filtering rule based on a key, and a value starting with a specific format
+    Filtering rule based on a key, and a value starting with a specific format.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param key: String, The key in the various records
-    :param value: String . The list of values to keep
+    :param key: String, The key in the various records.
+    :param value: String. The list of values to keep.
     """
     name = "filterStartsWith"
     key = JsUtils.jsConvertData(key, None)
@@ -279,13 +318,16 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filter values below a certain value
+    Filter values below a certain value.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param key: String, The key in the various records
-    :param value: Number. The threshold
-    :param strict: Boolean. Include threshold
+    :param key: String, The key in the various records.
+    :param value: Number. The threshold.
+    :param strict: Boolean. Optional. Include threshold.
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -303,13 +345,16 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filter values above a certain value
+    Filter values above a certain value.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param key: String, The key in the various records
-    :param value: Number. The threshold
-    :param strict: Boolean. Include threshold
+    :param key: String, The key in the various records.
+    :param value: Number. The threshold.
+    :param strict: Boolean. Optional. Include threshold.
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -328,13 +373,21 @@ class DataFilters(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     """
     return DataAggregators(self.toStr(), self._report)
 
   def sortBy(self, column):
     """
-    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
-    iteratee may also be the string name of the property to sort by (eg. length).
+    Description:
+    -----------
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iterator.
+    iterator may also be the string name of the property to sort by (eg. length).
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -342,7 +395,7 @@ class DataFilters(object):
 
     Attributes:
     ----------
-    :param column:
+    :param column: String. The key in the record to be used as key for sorting.
     """
     self._report.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
@@ -350,6 +403,11 @@ class DataFilters(object):
     return self
 
   def toStr(self):
+    """
+    Description:
+    -----------
+
+    """
     result = "%s"
     for rec in self.__filters[::-1]:
       result %= rec
@@ -369,10 +427,13 @@ class DataGlobal(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
-    :param groupName:
+    :param groupName: Optional.
     """
     if groupName is None:
       saved_filter = None
@@ -392,6 +453,9 @@ class DataGlobal(object):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -413,9 +477,12 @@ class DataGlobal(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param groupName: String. The filter name
+    :param groupName: String. The filter name.
     """
     if not groupName in self.__filters_groups:
       self.__filter_saved[groupName] = {}
@@ -427,9 +494,12 @@ class DataGlobal(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param groupName: String. The filter name
+    :param groupName: String. The filter name.
     """
     if not groupName in self.__filters_groups:
       del self.__filters_groups[groupName]
@@ -440,7 +510,11 @@ class DataGlobal(object):
     """
     Description:
     -----------
-    Remove all the filters
+    Remove all the filters.
+
+    Usage:
+    -----
+
     """
     self.__filters_groups = {}
     return self
@@ -458,8 +532,9 @@ class ServerNameSpaceConfig(object):
     Description:
     ------------
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
 
     """
     return JsObjects.JsObject.JsObject.get(self.__config.varId)[self.alias]['u']
@@ -468,6 +543,9 @@ class ServerNameSpaceConfig(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -480,6 +558,9 @@ class ServerNameSpaceConfig(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -502,6 +583,9 @@ class ServerConfig(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param alias:
@@ -513,10 +597,13 @@ class ServerConfig(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
-    :param alias:
+    :param alias: String. Optional.
     :param endPoints:
     """
     if alias is None:
@@ -529,6 +616,9 @@ class ServerConfig(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
@@ -540,6 +630,9 @@ class ServerConfig(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -554,16 +647,27 @@ class ServerConfig(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
     """
-    if not name in self.__end_points:
+    if name not in self.__end_points:
       raise Exception("Missing end point in the server configuration - %s" % name)
 
     return JsObjects.JsObject.JsObject.get(self.varId)[name]
 
   def toStr(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     for np, np_val in self.__namespaces.items():
       self.__end_points[np] = {'e': np_val.end_points, 'n': np_val.name, 'u': "http://%s:%s/%s" % (self.host, self.port, np_val.name)}
     return "var %s = %s" % (self.varId, JsUtils.jsConvertData(self.__end_points, None))

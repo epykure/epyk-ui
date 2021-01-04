@@ -73,7 +73,10 @@ class Select(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
 
     :rtype: OptSelect.OptionsSelectJs
     """
@@ -86,6 +89,9 @@ class Select(Html.Html):
     -----------
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
+
+    Usage:
+    -----
 
     :rtype: GrpClsList.ClassSelect
     """
@@ -101,8 +107,9 @@ class Select(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsHtmlSelect.DomSelect
@@ -119,6 +126,9 @@ class Select(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
@@ -133,9 +143,7 @@ class Select(Html.Html):
       self._js = JsSelect.JSelect(self, report=self._report)
     return self._js
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var selectObj = %s; selectObj.empty();
       const attrs = ['icon', 'content']; var selections = [];
       if(typeof options.auto_select !== 'undefined'){
@@ -156,6 +164,9 @@ class Select(Html.Html):
     Description:
     -----------
     Javascript event triggered when the value has changed.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -178,6 +189,9 @@ class Select(Html.Html):
     Description:
     -----------
     Create a AJAX request.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -237,9 +251,7 @@ class Lookup(Select):
     super(Lookup, self).__init__(report, records, htmlCode, width, height, filter, profile, multiple, options)
     self._jsStyles['lookups'] = records
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
         var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
         if (typeof lookupData !== 'undefined') {
           for (var idx in lookupData) {

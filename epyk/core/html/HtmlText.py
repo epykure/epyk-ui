@@ -39,11 +39,12 @@ class Label(Html.Html):
   def id_html(self):
     """
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
-
-    :return:
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
@@ -53,6 +54,9 @@ class Label(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button
+
+    Usage:
+    -----
 
     :rtype: OptText.OptionsText
     """
@@ -67,13 +71,15 @@ class Label(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build
 
-    Example
-    select.label.click(str(rptObj.js.console.log("test")))
+    Usage:
+    -----
+
+      select.label.click(str(rptObj.js.console.log("test")))
 
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
-    https://www.w3schools.com/jsref/event_onload.asp
+      https://www.w3schools.com/jsref/event_onload.asp
 
     Attributes:
     ----------
@@ -96,6 +102,9 @@ class Label(Html.Html):
 
     This will be done by adding the class CssTextNotSelectable to the component
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param flag: Boolean.
@@ -106,9 +115,7 @@ class Label(Html.Html):
       self.style.add_classes.text.no_selection()
     return self
 
-  @property
-  def _js__builder__(self):
-    return ''' 
+  _js__builder__ = ''' 
       if (typeof data !== "undefined"){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); 
         var content = converter.makeHtml(data).replace(/<\/?p[^>]*>/ig, '')}  else {var content = data}
@@ -148,6 +155,9 @@ class Span(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsText
     """
     return self.__options
@@ -166,11 +176,13 @@ class Span(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
-    :return:
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
@@ -179,10 +191,11 @@ class Span(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -201,14 +214,15 @@ class Span(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build
 
-    Usage::
+    Usage:
+    -----
 
       select.label.click(str(rptObj.js.console.log("test")))
 
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
-    https://www.w3schools.com/jsref/event_onload.asp
+      https://www.w3schools.com/jsref/event_onload.asp
 
     Attributes:
     ----------
@@ -223,13 +237,10 @@ class Span(Html.Html):
     self.on("click", jsFncs, profile, source_event, onReady)
     return self
 
-  @property
-  def _js__builder__(self):
-    return ''' 
+  _js__builder__ = ''' 
       if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
       if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
-      else{htmlObj.innerHTML = data}
-      '''
+      else{htmlObj.innerHTML = data}'''
 
   def __str__(self):
     val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
@@ -244,6 +255,9 @@ class Position(Span):
     ------------
     Specify if the count should be done from the commas
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param flag: Boolean (default false)
@@ -257,6 +271,9 @@ class Position(Span):
     ------------
     Set the CSS format for a specific character at a given position
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param index: Integer. A number
@@ -265,9 +282,7 @@ class Position(Span):
     self._jsStyles.setdefault("positions", {})[index] = style
     return self
 
-  @property
-  def _js__builder__(self):
-    return ''' htmlObj.innerHTML = ""; 
+  _js__builder__ = ''' htmlObj.innerHTML = ""; 
         var prevCursor = 0; var content = ""+ data; var shift = 0;
         if (options.digits === true){ shift = content.indexOf(".") + 1; }
         if (typeof options.positions !== 'undefined'){
@@ -321,6 +336,9 @@ class Text(Html.Html):
     Add a click event on the text component.
     The style of the mouse on the component will be changed to make the event more visible
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions
@@ -340,8 +358,12 @@ class Text(Html.Html):
     -----------
     Click event which redirect to another page.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
+    :param url:
     :param jsFncs: List. The Javascript Events triggered before the redirection
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param name: String. Optional.
@@ -363,6 +385,9 @@ class Text(Html.Html):
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
 
+    Usage:
+    -----
+
     :returns: Javascript string with the function to get the current value of the component
     """
     return self._vals
@@ -379,6 +404,9 @@ class Text(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Usage:
+    -----
+
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlRich
@@ -392,7 +420,10 @@ class Text(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
 
     :rtype: OptText.OptionsText
     """
@@ -404,8 +435,10 @@ class Text(Html.Html):
     ------------
     Change the component properties to be editable if double clicked
 
-    Example
-    rptObj.ui.text("This is a text").editable()
+    Usage:
+    -----
+
+      rptObj.ui.text("This is a text").editable()
 
     :return: Self to allow the chaining
     """
@@ -419,6 +452,9 @@ class Text(Html.Html):
     Description:
     ------------
     Add a typing effect on this text
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -443,9 +479,7 @@ class Text(Html.Html):
     ])
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var content = data;
       if(options.reset){htmlObj.innerHTML = ""}; 
       if(data != ''){ 
@@ -481,10 +515,11 @@ class Pre(Html.Html):
   @property
   def dom(self):
     """
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -501,6 +536,9 @@ class Pre(Html.Html):
     Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -519,13 +557,14 @@ class Pre(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsText
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
         if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} 
         else{htmlObj.innerHTML = data}'''
 
@@ -574,21 +613,21 @@ class Paragraph(Html.Html):
     -----------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: Options
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (typeof options.reset === 'undefined' || options.reset){htmlObj.innerHTML = ''};
       if (typeof data === 'string' || data instanceof String){data = data.split('\\n')}; 
       if(typeof data !== 'undefined'){
       data.forEach(function(line, i){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); line = converter.makeHtml(line)} 
         var p = document.createElement('p'); p.innerHTML = line;
-        htmlObj.appendChild(p)})
-      }
+        htmlObj.appendChild(p)})}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       '''
 
@@ -597,10 +636,11 @@ class Paragraph(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -624,9 +664,7 @@ class BlockQuote(Html.Html):
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
 
-  @property
-  def _js__builder__(self):
-      return '''var div = htmlObj.querySelector('div'); div.innerHTML = '';
+  _js__builder__ = '''var div = htmlObj.querySelector('div'); div.innerHTML = '';
         data.text.split("\\n").forEach(function(rec) {
           if(options.showdown){var converter = new showdown.Converter(options.showdown); rec = converter.makeHtml(rec)} 
           var p = document.createElement("p"); p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
@@ -690,6 +728,9 @@ class Title(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: GrpCls.ClassHtmlEmpty
     """
     if self._styleObj is None:
@@ -703,6 +744,9 @@ class Title(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -719,13 +763,14 @@ class Title(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsTitle
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
@@ -738,13 +783,16 @@ class Title(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build
 
-    Example
-    select.label.click(str(rptObj.js.console.log("test")))
+
+    Usage:
+    -----
+
+      select.label.click(str(rptObj.js.console.log("test")))
 
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
-    https://www.w3schools.com/jsref/event_onload.asp
+      https://www.w3schools.com/jsref/event_onload.asp
 
     Attributes:
     ----------
@@ -791,6 +839,9 @@ class Numeric(Html.Html):
     -----------
     Format any number into currency
 
+    Usage:
+    -----
+
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
@@ -815,6 +866,9 @@ class Numeric(Html.Html):
     -----------
     Format a number with custom precision and localisation
 
+    Usage:
+    -----
+
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
@@ -823,6 +877,7 @@ class Numeric(Html.Html):
     ----------
     :param digits: Integer. Number of digit
     :param thousand_sep: String. The thousand separator
+    :param decimal_sep:
     """
     self._jsStyles["type_number"] = "number"
     self.options.digits = digits
@@ -835,10 +890,11 @@ class Numeric(Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -852,6 +908,9 @@ class Numeric(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -877,6 +936,9 @@ class Numeric(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param jsFncs:
@@ -895,13 +957,14 @@ class Numeric(Html.Html):
     ------------
     Property to set all the possible object for a button
 
+    Usage:
+    -----
+
     :rtype: OptText.OptionsNumber
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (options.type_number == 'money'){ htmlObj.querySelector('font').innerHTML = accounting.formatMoney(data, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
       else { htmlObj.querySelector('font').innerHTML = accounting.formatNumber(data, options.digits, options.thousand_sep, options.decimal_sep) }      
       '''
@@ -931,9 +994,7 @@ class Highlights(Html.Html):
     self.set_attrs(name='role', value="alert")
     self.dom.display_value = "block"
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if(typeof data === 'undefined'){htmlObj.remove()}
       else {htmlObj.querySelector('div[name=content]').innerHTML = data} '''
 
@@ -954,9 +1015,7 @@ class Fieldset(Html.Html):
     self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block', 'margin': '5px 0'})
     self.__options = OptText.OptionsText(self, options)
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.firstChild.innerHTML = data; 
+  _js__builder__ = '''htmlObj.firstChild.innerHTML = data; 
       if(typeof options.css !== 'undefined'){Object.keys(options.css).forEach(function(key){htmlObj.firstChild.style[key] = options.css[key]})}'''
 
   @property
@@ -965,6 +1024,9 @@ class Fieldset(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button
+
+    Usage:
+    -----
 
     :rtype: OptText.OptionsText
     """

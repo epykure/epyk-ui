@@ -451,15 +451,15 @@ class Images(object):
     ------------
     Carousel component for pictures
 
-    Usage::
+    Usage:
 
-      car = rptObj.ui.images.carrousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
+      car = rptObj.ui.images.carousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
                                  path=r"../../../static/images", height=(200, 'px'))
       car.click([rptObj.js.console.log('data', skip_data_convert=True)])
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlImage.ImgCarrousel`
+      - :class:`epyk.core.html.HtmlImage.ImgCarousel`
 
     Related Pages:
 
@@ -484,7 +484,7 @@ class Images(object):
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
-    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
+    html_i = html.HtmlImage.ImgCarousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
     return html_i
 
   def emoji(self, symbole=None, top=(20, 'px'), options=None, profile=None):

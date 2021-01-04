@@ -5,15 +5,25 @@
 class DataConfig(object):
 
   def __getitem__(self, key):
-    """
-
-    :param key:
-    """
     from epyk.core.js.primitives import JsObjects
 
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
   def fromConfig(self, k, default=None, page=None, end_point="/static/configs"):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param k:
+    :param default:
+    :param page:
+    :param end_point:
+    """
     if page.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
