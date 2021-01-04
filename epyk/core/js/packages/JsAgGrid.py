@@ -444,7 +444,7 @@ class ColumnApi(object):
 
 
 class AgGrid(JsPackage):
-  lib_alias = {"js": "ag-grid", "css": "ag-grid"}
+  lib_alias = {"js": "ag-grid-community", "css": "ag-grid-community"}
 
   def sizeColumnsToFit(self):
     """

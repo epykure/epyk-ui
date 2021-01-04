@@ -3,7 +3,6 @@
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
-from epyk.core.data import events
 from epyk.core.js import JsUtils
 
 
@@ -112,10 +111,17 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param delimiter: String. Optional. The file delimiter
+    :param delimiter: String. Optional. The file delimiter.
+    :param format: String. Optional.
+    :param varName: String. Optional.
     """
+    from epyk.core.data import events
+
     delimiter = delimiter or self._src.options.delimiter
     format = format or self._src.options.format
     varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)

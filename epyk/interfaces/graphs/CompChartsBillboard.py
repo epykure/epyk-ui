@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import graph
 
@@ -7,7 +9,8 @@ class Billboard(object):
     self.parent = context
     self.chartFamily = "C3"
 
-  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -30,14 +33,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def line_range(self, record, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
+                 height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -60,7 +64,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart._type = "area-line-range"
     line_chart.labels(data['labels'])
@@ -68,7 +72,8 @@ class Billboard(object):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+             options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -91,7 +96,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     bubble_chart = graph.GraphBillboard.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bubble_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -99,7 +104,8 @@ class Billboard(object):
       bubble_chart.data.labels = True
     return bubble_chart
 
-  def radar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+            options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -122,7 +128,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     radar_chart = graph.GraphBillboard.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -130,7 +136,8 @@ class Billboard(object):
       radar_chart.data.labels = True
     return radar_chart
 
-  def spline(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+             options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -153,14 +160,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -183,7 +191,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart._type = 'step'
     line_chart.labels(data['labels'])
@@ -191,7 +199,8 @@ class Billboard(object):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -214,14 +223,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def area_step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+                options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -244,7 +254,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart._type = "area-step"
     line_chart.labels(data['labels'])
@@ -252,7 +262,8 @@ class Billboard(object):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+                 height=(330, "px"), htmlCode=None):
     """
     Description:
     ------------
@@ -278,7 +289,8 @@ class Billboard(object):
     line.axis.x.tick.format = "%Y-%m-%d"
     return line
 
-  def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+          options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -301,14 +313,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def stacked(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -331,7 +344,7 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     line_chart.data.groups = [data['series']]
@@ -339,7 +352,8 @@ class Billboard(object):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -364,7 +378,8 @@ class Billboard(object):
     h_bar.axis.rotated = True
     return h_bar
 
-  def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -387,14 +402,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
-  def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+          options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -417,14 +433,15 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
 
-  def donut(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+            options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -447,14 +464,14 @@ class Billboard(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartDonut(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
 
-  def gauge(self, value, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Description:
     ------------

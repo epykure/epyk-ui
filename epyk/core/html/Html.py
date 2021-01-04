@@ -46,8 +46,12 @@ def deprecated(func):
   Description:
   -----------
   This is a decorator which can be used to mark functions
-  as deprecated. It will result in a warning being emmitted
+  as deprecated. It will result in a warning being emitted
   when the function is used.
+
+  Attributes:
+  ----------
+  :param func: Function. A python function.
   """
 
   @functools.wraps(func)
@@ -60,6 +64,15 @@ def deprecated(func):
 
 
 def inprogress(func):
+  """
+  Description:
+  -----------
+  Decorator to specify a function is still in development so the result might not be fully tested yet.
+
+  Attributes:
+  ----------
+  :param func: Function. A python function.
+  """
   @functools.wraps(func)
   def new_func(*args, **kwargs):
     # warnings.simplefilter('always', DeprecationWarning)  # turn off filter
@@ -87,10 +100,14 @@ class Required(object):
 
     TODO: Use the version number
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param package: String. The package alias.
-    :param version: String. The package version number.
+    :param version: String. Optional. The package version number.
     :param verbose: Boolean. Optional. Display version details (default True).
     """
     html_types = set()
@@ -121,15 +138,18 @@ class EventTouch(object):
 
     Tip: Other events related to the touchstart event are:
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchstart.asp
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param jsFncs: List.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional.
     """
     self._page.on("touchstart", jsFncs, profile)
     return self._page
@@ -142,6 +162,9 @@ class EventTouch(object):
 
     The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger is released.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchmove.asp
@@ -149,8 +172,8 @@ class EventTouch(object):
     Attributes:
     ----------
     :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional.
     """
     self._page.on("touchmove", jsFncs, profile)
     return self._page
@@ -163,6 +186,9 @@ class EventTouch(object):
 
     Different devices will interrupt a touch event at different actions, and it is considered good practice to include this event to clean up code if this "error" should occur.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchcancel.asp
@@ -170,8 +196,8 @@ class EventTouch(object):
     Attributes:
     ----------
     :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional.
     """
     self._page.on("touchcancel", jsFncs, profile)
     return self._page
@@ -186,6 +212,9 @@ class EventTouch(object):
 
     Tip: Other events related to the touchend event are:
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchend.asp
@@ -193,8 +222,8 @@ class EventTouch(object):
     Attributes:
     ----------
     :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional.
     """
     self._page.on("touchend", jsFncs, profile)
     return self._page
@@ -204,12 +233,15 @@ class EventTouch(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncsLeft:
-    :param jsFncsRight:
-    :param profile:
-    :param source_event:
+    :param jsFncsLeft: List.
+    :param jsFncsRight: List.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional
     """
     self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"])
     self.move(self._page.js.if_("window.longTouch != null", ["let swap =  (event.touches[0].clientX || event.originalEvent.touches[0].clientX) - window.longTouch",
@@ -229,7 +261,7 @@ class Html(object):
   # This is done in order to avoid having users to change them. Thanks to the name
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
-  builder_name = None
+  builder_name, _js__builder__ = None, None
 
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
@@ -280,7 +312,26 @@ class Html(object):
     self._internal_components = [self.htmlCode]
 
   def add(self, component):
-    """ Add items to a container """
+    """
+    Description:
+    -----------
+    Add items to a container.
+
+    The added HTML component will not be managed by the page by default. This means it might not be visible on the
+    JavaScript page if it is not by default managed by the main HTML component.
+
+    For example containers are designed to handle sub components.
+
+    Usage:
+    -----
+
+      div = page.ui.div()
+      div.add(page.ui.button("Run"))
+
+    Attributes:
+    ----------
+    :param component: HTML. Component added to the val main component
+    """
     return self.__add__(component)
 
   def __add__(self, component):
@@ -301,6 +352,14 @@ class Html(object):
     """
     Description:
     -----------
+    The CSS style (class and attributes) of the HTML component.
+    This property will allow to custom any component in the page.
+
+    Usage:
+    -----
+
+      div = page.ui.div()
+      div.style.css.background = 'black'
 
     :rtype: GrpCls.ClassHtml
     """
@@ -318,6 +377,14 @@ class Html(object):
 
     This reference can be used in the Python to get the html object from components in the page but it is also
     used in any web framework by the JavaScript to get the DOM object and apply the necessary transformations.
+
+    There is not setter for this property in order to ensure a consistancy in Python and JavaScript.
+
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      print(div.htmlCode)
     """
     if self.__htmlCode is not None:
       return self.__htmlCode
@@ -334,7 +401,16 @@ class Html(object):
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      div.click([
+        div.js.alert("Hello")
+      ])
+
     :return: A Javascript object
+
     :rtype: Js.JsBase
     """
     if self._js is None:
@@ -344,12 +420,19 @@ class Html(object):
   @property
   def dom(self):
     """
-    Javascript Functions
-
+    Description:
+    -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+    
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      print(div.dom.content)
 
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
@@ -361,23 +444,30 @@ class Html(object):
     """
     Description:
     -----------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+    
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      div.options.inline = True
 
     :rtype: Options
     """
     return self.__options
 
-  def prepend_child(self, htmlObj):
+  def prepend_child(self, component):
     """
     Description:
     -----------
-    Wrapper to the Javascript method insertChild to add an HTML component
+    Wrapper to the Javascript method insertChild to add an HTML component.
 
-    Usage::
+    Usage:
+    -----
 
       for i in range(10):
-      encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
-      select.prepend_child(encore)
+        comp = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
+        select.prepend_child(comp)
 
     Related Pages:
 
@@ -385,29 +475,31 @@ class Html(object):
 
     Attributes:
     ----------
-    :param htmlObj: The html component
+    :param component: The html component.
+
     :return: The htmlObj
     """
-    self._sub_htmls.append(htmlObj)
-    self.components[htmlObj.htmlCode] = htmlObj
+    self._sub_htmls.append(component)
+    self.components[component.htmlCode] = component
     #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.insertBefore(htmlObj.dom)], toStr=True))
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.insertBefore(component.dom)], toStr=True))
     return self
 
-  def append_child(self, htmlObj):
+  def append_child(self, component):
     """
     Description:
     -----------
     Wrapper to the Javascript method appendChild to append an HTML component
 
-    Usage::
+    Usage:
+    -----
 
       for i in range(10):
-      encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
-      select.append_child(encore)
+        component = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
+        select.append_child(component)
 
     Related Pages:
 
@@ -415,35 +507,36 @@ class Html(object):
 
     Attributes:
     ----------
-    :param htmlObj: The html component
+    :param component: HTML. The html component
 
     :return: The htmlObj
     """
-    self._sub_htmls.append(htmlObj)
+    self._sub_htmls.append(component)
     #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(htmlObj.dom)], toStr=True))
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(component.dom)], toStr=True))
     return self
 
   def onReady(self, jsFncs):
     """
     Description:
     -----------
-    Add set of event / actions whihc will be triggered after the build of the object.
-    usually this can be used to add js functions on a chart or a table
+    Add set of event / actions which will be triggered after the build of the object.
+    Usually this can be used to add js functions on a chart or a table.
 
-    Usage::
+    Usage:
+    -----
 
       network = rptObj.ui.charts.vis.network()
-    network.onReady([
-      network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
-    ])
+      network.onReady([
+        network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
+      ])
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript function to be added once the object is built
+    :param jsFncs: List. Javascript function to be added once the object is built.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -454,11 +547,14 @@ class Html(object):
     Description:
     -----------
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
-    the report will not be triggered
+    the report will not be triggered.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param context_menu: A Python context menu object
+    :param context_menu: A Python context menu object.
     """
     context_menu.source = self
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
@@ -468,22 +564,31 @@ class Html(object):
     """
     Description:
     ------------
-    Add an icon to the HTML object
+    Add an icon to the HTML object.
 
-    Usage::
+    Usage:
+    -----
 
       checks.title.add_icon("fas fa-align-center")
 
     Related Pages:
-Attributes:
+
+
+    Attributes:
     ----------
-    :param text: The icon reference from font awsome website
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
+    :param text: String. The icon reference from font-awsome website
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param position: String. Optional. The position compared to the main component tag.
+    :param family: String. Optional. The icon framework to be used (preferred one is font-awesome).
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
 
     :return: The Html object
     """
     self.icon = ""
+    defined_families = ('office-ui-fabric-core', 'material-design-icons')
+    if family is not None and self.options.verbose and family not in defined_families:
+      logging.warning("Family %s not defined in %s" % (family, defined_families))
+
     if text is not None:
       self.icon = self._report.ui.images.icon(text, htmlCode="%s_icon" % htmlCode if htmlCode is not None else htmlCode,
                                               family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
@@ -499,21 +604,22 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary label component
+    Add an elementary label component.
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------
-    :param text: The label content
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
-    :param htmlCode:
-    :param for_: Specifies which form element a label is bound to
+    :param text: String. The label content
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param position: String. Optional. The position compared to the main component tag.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param for_: String. Optional. Specifies which form element a label is bound to
     """
     self.label = ""
     if text is not None:
@@ -535,20 +641,22 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary span component
+    Add an elementary span component.
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
     Attributes:
     ----------
-    :param text: The Span content
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
-    :param i:
+    :param text: String. The Span content.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param position: String. Optional. The position compared to the main component tag.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param i: Integer. Optional.
     """
     if i is not None:
       key_attr = 'span_%s' % i
@@ -575,21 +683,22 @@ Attributes:
     -----------
     Add an elementary label component
 
-    Usage::
+    Usage:
+    -----
 
       div = rptObj.ui.div()
-    div.add_link("test.py", name="Click to go to the test report")
+      div.add_link("test.py", name="Click to go to the test report")
 
     Attributes:
     ----------
-    :param text:
-    :param url:
+    :param text: String. The value of the link displayed in the page.
+    :param url: String. Optional. The URL path.
     :param script_name:
     :param report_name:
     :param name:
     :param icon:
     :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
+    :param position: String. Optional. The position compared to the main component tag.
     """
     self.link = ""
     if url is not None or script_name is not None:
@@ -612,17 +721,19 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary title component
+    Add an elementary title component.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+
+    Attributes:
     ----------
-    :param text: The title content
-    :param level:
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
-    :param options:
+    :param text: String. The title content.
+    :param level: Integer. Optional. The level of title.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param position: String. Optional. The position compared to the main component tag.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     self.title = ""
     if text is not None:
@@ -644,16 +755,18 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary input component
+    Add an elementary input component.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+
+    Attributes:
     ----------
-    :param text: The title content
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param attrs: Optional
-    :param position:
+    :param text: String. The title content.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param attrs: Dictionary. Optional. The HTML tag attributes.
+    :param position: Dictionary. Optional. Specific Python options available for this component.
     """
     self.input = ""
     if text is not None:
@@ -672,16 +785,17 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary checkbox component
+    Add an elementary checkbox component.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+    Attributes:
     ----------
     :param flag: Boolean. The state of the checkbox component
     :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param attrs: Optional
-    :param position:
+    :param attrs: Dictionary. Optional. The HTML tag attributes.
+    :param position: Dictionary. Optional. Specific Python options available for this component.
     """
     self.checkbox = ""
     if flag is not None:
@@ -700,16 +814,17 @@ Attributes:
     """
     Description:
     -----------
-    Add an elementary helper icon
+    Add an elementary helper icon.
 
-    The helper is not managed by the main page and should be written in the component
+    The helper is not managed by the main page and should be written in the component.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+    Attributes:
     ----------
-    :param text: The helper content
-    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param text: String. The helper content.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
 
     :rtype: self._report.ui.rich.info
     """
@@ -726,6 +841,9 @@ Attributes:
     Description:
     -----------
     The onkeydown event occurs when the user is pressing a key (on the keyboard).
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -744,6 +862,9 @@ Attributes:
     -----------
     The onkeypress event occurs when the user presses a key (on the keyboard).
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
@@ -759,7 +880,11 @@ Attributes:
     """
     Description:
     -----------
-    The onkeypress event occurs when the user presses a key (on the keyboard)
+    The onkeypress event occurs when the user presses a key (on the keyboard).
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -775,7 +900,10 @@ Attributes:
   def aria(self):
     """
     Accessible Rich Internet Applications is a [HTML] specification module.
-    Web developers MAY use the ARIA role and aria-* attributes on HTML elements
+    Web developers MAY use the ARIA role and aria-* attributes on HTML elements.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -790,7 +918,10 @@ Attributes:
     -----------
     Property to get the jquery value of the HTML object in a python HTML object.
     This method can be used in any jsFunction to get the value of a component in the browser.
-    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
+    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python.
+
+    Usage:
+    -----
 
     :returns: Javascript string with the function to get the current value of the component
     """
@@ -798,6 +929,14 @@ Attributes:
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     if self.innerPyHTML is not None:
       if isinstance(self.innerPyHTML, list):
         return "".join([h.html() for h in self.innerPyHTML])
@@ -810,7 +949,11 @@ Attributes:
     """
     Description:
     -----------
-    Move the component to this position in the page
+    Move the component to this position in the page.
+
+    Usage:
+    -----
+
     """
     self._report.components.move_to_end(self.htmlCode)
 
@@ -818,16 +961,20 @@ Attributes:
     """
     Description:
     -----------
-    Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
+    Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function.
+
+    Usage:
+    -----
 
     Related Pages:
-http://api.jquery.com/css/
+
+      http://api.jquery.com/css/
 
     Attributes:
     ----------
-    :param key: The key style in the CSS attributes (Can also be a dictionary)
-    :param value: The value corresponding to the key style
-    :param reset: Boolean
+    :param key: String. Optional. The key style in the CSS attributes (Can also be a dictionary)
+    :param value: String. Optional. The value corresponding to the key style
+    :param reset: Boolean. Optional. Specify if the CSS styles need to be emptied first.
 
     :return: The python object itself
     """
@@ -847,7 +994,7 @@ http://api.jquery.com/css/
       if isinstance(value, tuple):
         value = value[0] if value[0] is None else "%s%s" % (value[0], value[1])
       css_vals = {key: value}
-    if not 'css' in self.attr:
+    if 'css' not in self.attr:
       self.attr['css'] = self.style.css.attrs
     for key, value in css_vals.items():
       if isinstance(value, tuple):
@@ -869,7 +1016,8 @@ http://api.jquery.com/css/
     Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap
 
-    Usage::
+    Usage:
+    -----
 
       htmlObj.tooltip("My tooltip", location="bottom")
 
@@ -879,9 +1027,9 @@ http://api.jquery.com/css/
 
     Attributes:
     ----------
-    :param value:
-    :param location:
-    :param options:
+    :param value: String. The tooltip text.
+    :param location: String. Optional. The position of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
 
     :return: The Python object self
     """
@@ -901,7 +1049,9 @@ http://api.jquery.com/css/
     """
     Description:
     -----------
-    All the attributes will be added to the
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -909,9 +1059,9 @@ http://api.jquery.com/css/
 
     Attributes:
     ----------
-    :param content: String. The tooltip content
-    :param title: String. The tooltip title
-    :param options: Dictionary all the options to be attached to the component
+    :param content: String. The tooltip content.
+    :param title: String. Optional. The tooltip title.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     if content is not None:
       self.attr["data-content"] = content
@@ -929,6 +1079,15 @@ http://api.jquery.com/css/
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event:
     """
     jsFncs = jsFncs or []
     if not isinstance(jsFncs, list):
@@ -941,13 +1100,16 @@ http://api.jquery.com/css/
     Description:
     -----------
     Change the Javascript options of the component.
-    This will change the options sent to the Javascript
+    This will change the options sent to the Javascript.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param options: Dictionary with the options
-    :param name: String. The key
-    :param value: String. The value
+    :param options: Dictionary. Optional. the extra options to be added to the component.
+    :param name: String. Optional. The key.
+    :param value: String. Optional. The value.
 
     :return: self to allow the chains
     """
@@ -969,16 +1131,18 @@ http://api.jquery.com/css/
     Either the attrs or the tuple (name, value) can be used to add information to the dom object.
 
     All the attributes should be Python object which are ready to use on the Javascript side.
-    For example True should be written 'true'
+    For example True should be written 'true'.
 
     Tips: It is possible to use the data- attributes to store any kind of information in the dom.
 
-    Related Pages:
-Attributes:
+    Usage:
+    -----
+
+    Attributes:
     ----------
-    :param attrs: A python dictionary with the attributes
-    :param name: A python string with the name of the attribute
-    :param value: A python string with the value of the attribute
+    :param attrs: Dictionary. Optional. A python dictionary with the attributes.
+    :param name: String. Optional. A python string with the name of the attribute.
+    :param value: String. Optional. A python string with the value of the attribute.
     """
     if attrs is None and name is None:
       raise Exception("Either the attrs or the name should be specified")
@@ -992,7 +1156,7 @@ Attributes:
           self.style.clear_style()
           continue
 
-        if not 'css' in self.attr:
+        if 'css' not in self.attr:
           self.attr['css'] = dict(v)
         else:
           self.attr['css'].update(v)
@@ -1015,15 +1179,18 @@ Attributes:
     """
     Description:
     -----------
-    Return the string line with all the attributes
+    Return the string line with all the attributes.
 
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
     and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param withId:
-    :param pyClassNames:
+    :param withId: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
+    :param pyClassNames: List. Optional. The Python class names.
 
     :return: A string with the dom attributes
     """
@@ -1064,18 +1231,21 @@ Attributes:
     Add an event to the document ready function.
     This is to mimic the Jquery on function.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jquery/event_on.asp
-    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
-    https://www.w3schools.com/jsref/dom_obj_event.asp
+      https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+      https://www.w3schools.com/jsref/dom_obj_event.asp
 
     Attributes:
     ----------
-    :param event: A string with the Javascript event type from the dom_obj_event.asp
-    :param jsFncs: A Javascript Python function.
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
+    :param event: String. A string with the Javascript event type from the dom_obj_event.asp
+    :param jsFncs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: self to allow the chains
@@ -1098,18 +1268,19 @@ Attributes:
     """
     Description:
     -----------
-    Add a drag and drop property to the element
+    Add a drag and drop property to the element.
 
-    Usage::
+    Usage:
+    -----
 
       d = rptObj.ui.div()
-    d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+      d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param preventDefault: Boolean.
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param jsFncs: List | String. A Javascript Python function.
+    :param preventDefault: Boolean. Optional. Specify if the event should have a default behaviour on the page.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
 
     :return: Return self to allow the chaining
     """
@@ -1126,6 +1297,25 @@ Attributes:
     return self
 
   def hover(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+    Add an mouse hover event on the component.
+
+    Usage:
+    -----
+
+      div = page.ui.div()
+      div.hover([
+        page.js.alert("This is a test")
+      ])
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. A String. Optional. The source target for the event.
+    """
     return self.on("mouseover", jsFncs, profile, source_event)
 
   def click(self, jsFncs, profile=False, source_event=None, onReady=False):
@@ -1134,15 +1324,23 @@ Attributes:
     -----------
     The onclick event occurs when the user clicks on an element.
 
+    Usage:
+    -----
+
+      div = page.ui.div()
+      div.click([
+        page.js.alert("This is a test")
+      ])
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onclick.asp
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
+    :param jsFncs: List | String. A Javascript Python function
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if onReady:
@@ -1155,15 +1353,18 @@ Attributes:
     -----------
     The ondblclick event occurs when the user double-clicks on an element.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_ondblclick.asp
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
+    :param jsFncs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if onReady:
@@ -1171,6 +1372,22 @@ Attributes:
     return self.on("dblclick", jsFncs, profile, source_event)
 
   def scroll(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    """
     return self.on("scroll", jsFncs, profile, source_event)
 
   def mouse(self, on_fncs=None, out_fncs=None, profile=False, source_event=None):
@@ -1184,18 +1401,18 @@ Attributes:
 
     Tip: As function are defined to be chaining in most of the components use .r to get the string representation and clean the cache.
 
-    Usage::
+    Usage:
+    -----
 
       span.mouse([
-        span.dom.css("color", "red"),
-        span.dom.css("cursor", "pointer").r],
-        span.dom.css("color", "blue").r)
+      span.dom.css("color", "red"),
+      span.dom.css("cursor", "pointer").r],
+      span.dom.css("color", "blue").r)
 
-    Related Pages:
-Attributes:
+    Attributes:
     ----------
-    :param on_fncs: Array or String of Javascript events
-    :param out_fncs: Array or String of Javascript events
+    :param on_fncs: List | String. The Javascript events.
+    :param out_fncs: List | String. The Javascript events
 
     :return: self to allow the chains
     """
@@ -1210,10 +1427,16 @@ Attributes:
     """
     Description:
     -----------
+    Add a paste event to the component.
 
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. A String. Optional. The source target for the event.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -1226,11 +1449,14 @@ Attributes:
     -----------
     Attach a context menu to a component and set a function to called before the display
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param menu:
-    :param jsFncs: List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param jsFncs: List | String. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
@@ -1247,12 +1473,11 @@ Attributes:
   def touch(self):
     """
 
+    Usage:
+    -----
+
     """
     return EventTouch(self)
-
-  @property
-  def _js__builder__(self):
-    raise Exception("Builder must be defined in %s" % self.__class__.__name__)
 
   def build(self, data=None, options=None, profile=False):
     """
@@ -1260,19 +1485,21 @@ Attributes:
     -----------
     Return the JavaScript fragment to refresh the component content
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: String or object. The component expected content
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    if not self.builder_name:
+    if not self.builder_name or self._js__builder__ is None:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (
-    self.builder_name, self._js__builder__)
-
+    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
+    self._jsStyles["builder"] = self.builder_name
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
       tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
@@ -1303,6 +1530,10 @@ Attributes:
     Description:
     -----------
     Component refresh function. Javascript function which can be called in any Javascript event
+
+    Usage:
+    -----
+
     """
     return self.build(self.val, self._jsStyles)
 
@@ -1315,6 +1546,9 @@ Attributes:
 
     The content of data will be used by this component.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://timepicker.co/options/
@@ -1323,6 +1557,10 @@ Attributes:
     ----------
     :param socket: Socket. A python socket object
     :param channel: String. The channel on which events will be received
+    :param data:
+    :param options:
+    :param jsFncs:
+    :param profile:
     """
     if data is None:
       data = socket.message
@@ -1330,12 +1568,15 @@ Attributes:
     socket.on(channel, [self.build(data, options, profile)] + jsFncs)
     return self
 
-  @packageImport('sortable')
+  @packageImport('sortablejs')
   def sortable(self, options=None, propagate=True, propagate_only=False):
     """
     Description:
     ------------
     Sortable is a JavaScript library for reorderable drag-and-drop lists.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -1387,10 +1628,22 @@ Attributes:
 
     This will be then used by the different framework to define the elementary bricks on which the complex component
     will be based on.
+
+    Usage:
+    -----
+
     """
     return Component.Component(self)
 
   def html(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     str_result = []
     if self._on_ready_js:
       self.onReady(list(self._on_ready_js.values()))
@@ -1429,6 +1682,9 @@ class Body(Html):
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
 
+    Usage:
+    -----
+
     :rtype: GrpCls.ClassPage
     """
     if self._styleObj is None:
@@ -1440,10 +1696,11 @@ class Body(Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -1459,10 +1716,13 @@ class Body(Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param jsFncs: List. Javascript functions.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     :param source_event:
     """
     if not isinstance(jsFncs, list):
@@ -1473,15 +1733,16 @@ class Body(Html):
     """
     Description:
     -----------
-    Add set of event / actions whihc will be triggered after the build of the object.
+    Add set of event / actions which will be triggered after the build of the object.
     usually this can be used to add js functions on a chart or a table
 
-    Usage::
+    Usage:
+    -----
 
       network = rptObj.ui.charts.vis.network()
-    network.onReady([
-      network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
-    ])
+      network.onReady([
+        network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
+      ])
 
     Attributes:
     ----------
@@ -1496,9 +1757,12 @@ class Body(Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List. Javascript functions.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -1511,14 +1775,18 @@ class Body(Html):
     Load teh configuration file in order to fill the templates with static data.
     This will allow to externalise the configuration and design rich web templates.
 
-    Do not forget to use CTRL+F5 in order to refresh the browser cache to get the uupdates
+    Do not forget to use CTRL+F5 in order to refresh the browser cache to get the updates
+
+    Usage:
+    -----
 
     Attributes:
     ----------
     :param jsFncs: List. Optional. The various transformations to be triggered from the configuration data
     :param components: List. Optional. The various HTML Components to be updated fro the configuration file
-    :param lang: String. Optional. The default lang for the configuration
-    :param end_point: String. Optional. The url for the configuration files
+    :param lang: String. Optional. The default lang for the configuration.
+    :param end_point: String. Optional. The url for the configuration files.
+    :param sync: Boolean. Optional. Specify if the type of loading event.
     """
     if self._report.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
@@ -1546,6 +1814,9 @@ class Body(Html):
     Function to allow the templating of the report.
     This can be overridden by a generic class which can be shared within a set of report
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param report: Report. The main report object
@@ -1562,14 +1833,15 @@ class Body(Html):
     ------------
     Change the body background color
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.body.set_background("#101626", "#374F67")
 
     Attributes:
     ----------
-    :param start_color:
-    :param end_color:
+    :param start_color: String. Optional.
+    :param end_color: String. Optional.
     """
     if from_theme or (start_color is None and end_color is None):
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (self._report.theme.colors[-1], self._report.theme.colors[2])
@@ -1585,9 +1857,12 @@ class Body(Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param status: Boolean. Optional.
+    :param status: Boolean. Optional. A flag to specify the status of the loading event.
     """
     if status:
       return ''' 
@@ -1608,9 +1883,12 @@ class Body(Html):
     ------------
     Add an extra layer
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param css:
+    :param css: Dictionary.
     """
     self.header = self._report.ui.div()
     self.header.options.managed = False

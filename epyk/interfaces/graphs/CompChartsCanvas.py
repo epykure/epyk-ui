@@ -7,7 +7,7 @@ class Canvas(object):
   def __init__(self, context):
     self.parent = context
 
-  def new(self, height=(400, "px"), width=(100, "%")):
+  def new(self, height=(400, "px"), width=(100, "%"), profile=None, options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -27,8 +27,11 @@ class Canvas(object):
     ----------
     :param height:
     :param width:
+    :param htmlCode:
+    :param options:
+    :param profile:
     """
     if not isinstance(width, tuple):
       width = (width, "px")
-    html_svg = graph.GraphCanvas.Canvas(self.parent.context.rptObj, width, height)
+    html_svg = graph.GraphCanvas.Canvas(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     return html_svg

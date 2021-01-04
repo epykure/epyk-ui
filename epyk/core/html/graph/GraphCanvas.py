@@ -8,8 +8,9 @@ from epyk.core.js.objects import JsCanvas
 class Canvas(Html.Html):
   name = 'Canvas'
 
-  def __init__(self, report, width, height):
-    super(Canvas, self).__init__(report, "", css_attrs={"width": width, "height": height})
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(Canvas, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+                                 options=options, profile=profile)
     self.__ctx = None
 
   @property

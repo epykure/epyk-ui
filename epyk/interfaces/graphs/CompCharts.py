@@ -29,12 +29,14 @@ class Graphs(object):
     ------------
     Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS
 
-    Example
-    records = [
-      {"label": 'python', 'value': 12},
-      {"label": 'Java', 'value': 5},
-      {"label": 'Javascript', 'value': 80}]
-    rptObj.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
+    Usage:
+    -----
+
+      records = [
+        {"label": 'python', 'value': 12},
+        {"label": 'Java', 'value': 5},
+        {"label": 'Javascript', 'value': 80}]
+      rptObj.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
 
     Related Pages:
 
@@ -64,10 +66,11 @@ class Graphs(object):
     ------------
     Display a sparkline component
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
-    rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
+      rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Related Pages:
 
@@ -79,8 +82,6 @@ class Graphs(object):
     :param data: A list of values
     :param options: The chart options
     :param column:
-
-    :rtype: graph.GraphSparklines.Sparklines
 
     :return: A python Sparkline object
     """
@@ -96,10 +97,16 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface for the Plotly library
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python Plolty object
+
+      https://plotly.com/javascript/
+
+    :return: A Python Plolty object
     """
     return CompChartsPlotly.Plotly(self)
 
@@ -108,10 +115,16 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface for the ChartJs library
+    Simple yet flexible JavaScript charting for designers & developers.
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python ChartJs object
+
+      https://www.chartjs.org/
+
+    :return: A Python ChartJs object
     """
     return CompChartsChartJs.ChartJs(self)
 
@@ -120,10 +133,18 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface to the Javsacript C3 module
+    Interface to the JavaScript C3 module.
+
+    Usage:
+    -----
+
+      page.ui.charts.billboard.line(x_axis="Date")
 
     Related Pages:
-:return: A Python C3 object
+
+      https://c3js.org/
+
+    :return: A Python C3 object
     """
     return CompChartsC3.C3(self)
 
@@ -136,6 +157,9 @@ class Graphs(object):
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -150,10 +174,16 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface to the Javascript Vis module
+    A dynamic, browser based visualization library.
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python Vis object
+
+      https://visjs.org/
+
+    :return: A Python Vis object
     """
     return CompChartsVis.Vis(self)
 
@@ -164,8 +194,12 @@ class Graphs(object):
     ------------
     Interface to the Javascript NVD3 library
 
+    Usage:
+    -----
+
     Related Pages:
-http://nvd3.org/
+
+      http://nvd3.org/
 
     :return: A Python NVD3 object
     """
@@ -176,6 +210,14 @@ http://nvd3.org/
     """
     Description:
     ------------
+    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://dc-js.github.io/dc.js/
     """
     return CompChartsDc.DC(self)
 
@@ -184,9 +226,15 @@ http://nvd3.org/
     """
     Description:
     ------------
+    D3.js is a JavaScript library for manipulating documents based on data.
+
+    Usage:
+    -----
 
     Related Pages:
-"""
+
+      https://d3js.org/
+    """
     return CompChartsD3.D3(self)
 
   @property
@@ -194,10 +242,15 @@ http://nvd3.org/
     """
     Description:
     ------------
-    Google Charts interface
+    Google chart tools are powerful, simple to use, and free. Try out our rich gallery of interactive charts and data tools.
+
+    Usage:
+    -----
 
     Related Pages:
-"""
+
+      https://developers.google.com/chart
+    """
     if not getattr(self.context.rptObj, '_with_google_imports', False):
       raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
 
@@ -210,6 +263,9 @@ http://nvd3.org/
     ------------
     SVG defines vector-based graphics in XML format
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_intro.asp
@@ -221,9 +277,18 @@ http://nvd3.org/
     """
     Description:
     ------------
+    The HTML <canvas> element is used to draw graphics on a web page.
+
+    The graphic to the left is created with <canvas>.
+    It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
+
+    Usage:
+    -----
 
     Related Pages:
-"""
+
+      https://www.w3schools.com/html/html5_canvas.asp
+    """
     return CompChartsCanvas.Canvas(self)
 
 
@@ -237,10 +302,16 @@ class Chart2d(object):
     """
     Description:
     ------------
-    Interface for the Plotly library
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python Plolty object
+
+      https://plotly.com/javascript/
+
+    :return: A Python Plolty object
     """
     return CompChartsPlotly.Plotly2D(self)
 
@@ -249,10 +320,14 @@ class Chart2d(object):
     """
     Description:
     ------------
-    Interface to the Javascript NVD3 library
+    This project is an attempt to build re-usable charts and chart components for d3.js without taking away the power that d3.js gives you.
+
+    Usage:
+    -----
 
     Related Pages:
-http://nvd3.org/
+
+      http://nvd3.org/
 
     :return: A Python NVD3 object
     """
@@ -263,6 +338,14 @@ http://nvd3.org/
     """
     Description:
     ------------
+    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://dc-js.github.io/dc.js/
     """
     return CompChartsDc.DC(self)
 
@@ -271,9 +354,15 @@ http://nvd3.org/
     """
     Description:
     ------------
+    D3.js is a JavaScript library for manipulating documents based on data.
+
+    Usage:
+    -----
 
     Related Pages:
-"""
+
+      https://d3js.org/
+    """
     return CompChartsD3.D3(self)
 
   @property
@@ -281,7 +370,12 @@ http://nvd3.org/
     """
     Description:
     ------------
-    SVG defines vector-based graphics in XML format
+    SVG stands for Scalable Vector Graphics.
+
+    SVG defines vector-based graphics in XML format.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -294,9 +388,18 @@ http://nvd3.org/
     """
     Description:
     ------------
+    The HTML <canvas> element is used to draw graphics on a web page.
+
+    The graphic to the left is created with <canvas>.
+    It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
+
+    Usage:
+    -----
 
     Related Pages:
-"""
+
+      https://www.w3schools.com/html/html5_canvas.asp
+    """
     return CompChartsCanvas.Canvas(self)
 
   @property
@@ -306,8 +409,14 @@ http://nvd3.org/
     ------------
     Interface for the ChartJs library
 
+    Usage:
+    -----
+
     Related Pages:
-:return: A Python ChartJs object
+
+      https://www.chartjs.org/
+
+    :return: A Python ChartJs object
     """
     return CompChartsChartJs.ChartJs(self)
 
@@ -316,10 +425,16 @@ http://nvd3.org/
     """
     Description:
     ------------
-    Interface to the Javsacript C3 module
+    Interface to the JavaScript C3 module
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python C3 object
+
+      https://c3js.org/
+
+    :return: A Python C3 object
     """
     return CompChartsC3.C3(self)
 
@@ -332,6 +447,9 @@ http://nvd3.org/
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -348,8 +466,14 @@ http://nvd3.org/
     ------------
     Interface for the Vis library
 
+    Usage:
+    -----
+
     Related Pages:
-:return: A Python Vis object
+
+      https://visjs.org/
+
+    :return: A Python Vis object
     """
     return CompChartsVis.Vis2D(self)
 
@@ -364,10 +488,16 @@ class Chart3d(object):
     """
     Description:
     ------------
-    Interface for the Plotly library
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+
+    Usage:
+    -----
 
     Related Pages:
-:return: A Python Plolty object
+
+      https://plotly.com/javascript/
+
+    :return: A Python Plolty object
     """
     return CompChartsPlotly.Plotly3D(self)
 
@@ -378,7 +508,13 @@ class Chart3d(object):
     ------------
     Interface for the Vis library
 
+    Usage:
+    -----
+
     Related Pages:
-:return: A Python Vis object
+
+      https://visjs.org/
+
+    :return: A Python Vis object
     """
     return CompChartsVis.Vis3D(self)

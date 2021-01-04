@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-
 from epyk.core.py import OrderedSet
 
 
@@ -15,13 +13,19 @@ class Plotly(object):
       Description:
       -----------
 
+      Usage:
+      -----
+
+
       Attributes:
       ----------
-      :param data:
-      :param y_columns:
-      :param x_axis:
-      :param z_axis:
+      :param data: List of dictionaries.
+      :param y_columns: List. The keys in the dictionaries used as y axes.
+      :param x_axis: String. The key in the dictionaries used as x axis.
+      :param z_axis: String. The key in the dictionaries used as z axis.
       """
+      naps = {'datasets': [], 'series': [], 'python': True}
+
       z_a, x_a, agg_y = set(), set(), {}
       for rec in data:
         if z_axis in rec:
@@ -34,7 +38,6 @@ class Plotly(object):
             agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y] if rec[y] else 0)
       z_array = sorted(list(z_a))
       x_array = sorted(list(x_a))
-      naps = {'datasets': [], 'series': [], 'python': True}
       for y in y_columns:
         nap = []
         for z in z_array:
@@ -46,10 +49,35 @@ class Plotly(object):
 
   @staticmethod
   def map(data):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data: List of Dictionaries.
+    """
     return {'datasets': data, 'series': [], 'python': True}
 
   @staticmethod
   def countries(data, country_col, size_col, scale=False):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param country_col:
+    :param size_col:
+    :param scale:
+    """
     aggregated = {}
     for rec in data:
       if country_col in rec:
@@ -70,6 +98,20 @@ class Plotly(object):
 
   @staticmethod
   def choropleth(data, country_col, size_col, scale=False):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param country_col:
+    :param size_col:
+    :param scale:
+    """
     aggregated = {}
     for rec in data:
       if country_col in rec:
@@ -91,13 +133,28 @@ class Plotly(object):
 
   @staticmethod
   def locations(data, long_col, lat_col, size_col, scale=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param long_col:
+    :param lat_col:
+    :param size_col:
+    :param scale:
+    """
     aggregated = {}
     for rec in data:
       if long_col in rec and lat_col in rec:
         point = (rec[long_col], rec[lat_col])
         try:
           aggregated[point] = aggregated.get(point, 0) + float(rec.get(size_col, 0))
-        except:
+        except Exception as err:
           pass
 
     records = []
@@ -117,6 +174,9 @@ class Plotly(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -146,6 +206,9 @@ class Plotly(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -178,6 +241,9 @@ class Plotly(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -216,6 +282,9 @@ class Plotly(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -259,6 +328,9 @@ class Plotly(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
@@ -282,6 +354,12 @@ class Vis(object):
     Description:
     ------------
 
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param data:
     :param y_columns:
     :param x_axis:
@@ -307,6 +385,11 @@ class Vis(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param data:
     :param y_columns:
     :param x_axis:
@@ -330,7 +413,10 @@ class Vis(object):
     """
     Description:
     -----------
-    Data transformation for the Vis Timeline chart
+    Data transformation for the Vis Timeline chart.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -370,6 +456,9 @@ class ChartJs(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -415,6 +504,9 @@ class ChartJs(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
@@ -445,6 +537,9 @@ class ChartJs(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -491,18 +586,21 @@ class C3(object):
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
+    is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+    if data is None or y_columns is None:
+      return is_data
+
     agg_data = {}
     for rec in data:
       for y in y_columns:
         if y in rec:
           agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = OrderedSet(), []
+
     for c in y_columns:
       for x, y in agg_data.get(c, {}).items():
-        labels.add(x)
-    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
+        is_data["labels"].add(x)
     for i, y in enumerate(y_columns):
-      is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
+      is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in is_data["labels"]])
       is_data["series"].append(y)
     return is_data
 
@@ -515,25 +613,30 @@ class NVD3(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
+    is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+    if data is None or y_columns is None:
+      return is_data
+
     agg_data = {}
     for rec in data:
       for y in y_columns:
         if y in rec:
           agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
     for c in y_columns:
       series = []
       for x, y in agg_data.get(c, {}).items():
-        labels.add(x)
+        is_data["labels"].add(x)
         series.append({"x": x, "y": y})
       data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
       is_data["datasets"].append(data[i])
@@ -546,25 +649,30 @@ class NVD3(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
+    is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+    if data is None or y_columns is None:
+      return is_data
+
     agg_data = {}
     for rec in data:
       for y in y_columns:
         if y in rec:
           agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
     for c in y_columns:
       series = []
       for x, y in agg_data.get(c, {}).items():
-        labels.add(x)
+        is_data["labels"].add(x)
         series.append({"label": x, "y": y})
       data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
       is_data["datasets"].append(data[i])
@@ -579,13 +687,16 @@ class Datatable(object):
     """
     Description:
     ------------
-    Tranform the data in a list of list for Datatable
+    Transform the data in a list of list for Datatable
+
+    Usage:
+    -----
 
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
     :param columns: List. The key in the recordset to be used to build the row
-    :param dflt: Optional. The default value if key is missing
+    :param dflt: String. Optional. The default value if key is missing.
     """
     records = []
     for rec in data:
@@ -601,9 +712,12 @@ class Google(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
+    :param data: List of dict. The Python records.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
@@ -633,6 +747,9 @@ class Google(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -640,6 +757,9 @@ class Google(object):
     :param cols:
     """
     is_data = {"rows": rows, 'datasets': [], 'cols': cols, 'python': True}
+    if data is None:
+      return is_data
+
     for rec in data:
       is_data['datasets'].append([rec.get(c, '') for c in rows + cols])
     return is_data
@@ -651,7 +771,10 @@ class HtmlComponents(object):
     """
     Description:
     ------------
-    Format the markdown text with tooltips
+    Format the markdown text with tooltips.
+
+    Usage:
+    -----
 
     Attributes:
     ----------

@@ -76,7 +76,7 @@ class PivotTable(Html.Html):
     -----------
 
     """
-    self._report.jsImports.add('pivot-sub-total')
+    self._report.jsImports.add('subtotal')
     self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
     self.options.renderers = "$.pivotUtilities.subtotal_renderers"
     self.options.rendererName = 'Table With Subtotal'

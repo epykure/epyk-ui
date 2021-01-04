@@ -21,6 +21,7 @@ from epyk.core import auth
 
 from epyk.core.html import symboles
 from epyk.core.html import entities
+from epyk.core.html import skins
 from epyk.core.py import OrderedSet
 from epyk.core.py import PyOuts
 from epyk.core.py import PyExt
@@ -58,7 +59,7 @@ class Report(object):
     }
     self.components = collections.OrderedDict() # Components for the entire page
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
-    self._scroll, self._contextMenu = set(), {}
+    self._scroll, self._contextMenu, self.verbose = set(), {}, False
     self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
 
     self.jsImports, self.jsLocalImports, self.cssImport, self.cssLocalImports = set(), set(), set(), set()
@@ -73,7 +74,15 @@ class Report(object):
     """
     Description:
     ------------
-    Property that returns the Body element of the HTML page
+    Property that returns the Body element of the HTML page.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.body.onReady([
+        page.js.alert("Loading started")
+      ])
 
     :rtype: html.Html.Body
     """
@@ -92,7 +101,13 @@ class Report(object):
     """
     Description:
     ------------
-    Return the currently used :doc:`report/theme` for the report
+    Return the currently used :doc:`report/theme` for the report.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.theme = themes.ThemeBlue.Blue
 
     :rtype: Theme.ThemeDefault
     """
@@ -108,10 +123,27 @@ class Report(object):
     else:
       self._theme = theme
 
+  @property
+  def skins(self):
+    """
+    Description:
+    ------------
+    Add a special skin to the page.
+    This could be used for special event or season during the year (Christmas for example).
+
+    Usage:
+    -----
+
+    """
+    return skins.Skins(self)
+
   def node_modules(self, path, alias=None, install=False, update=False):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -129,10 +161,15 @@ class Report(object):
     Description:
     ------------
     Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
+    By default the imports are retrieved online from CDNJS paths.
 
-    Attributes:
-    ----------
-    :param online: Boolean. Optional. Specify where the external packages should be retrieved. (Default online from CDNJS servers).
+    This can be changed by loading the packages locally and switching off the online mode.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.imports
 
     :rtype: Imports.ImportManager
     """
@@ -145,14 +182,20 @@ class Report(object):
     """
     Description:
     ------------
-    Shortcut to the HTML symbols
+    Shortcut to the HTML symbols.
+
+    Those can be added in string in order to improve the render of a text.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.ui.text(page.symbols.shapes.BLACK_SQUARE)
 
     Related Pages:
 
       https://www.w3schools.com/html/html_symbols.asp
       https://www.w3schools.com/charsets/ref_utf_math.asp
-
-    Those can be added in string in order to improve the render of a text.
     """
     return symboles.Symboles()
 
@@ -161,13 +204,19 @@ class Report(object):
     """
     Description:
     ------------
-    Shortcut to the HTML Entities
+    Shortcut to the HTML Entities.
+
+    Those can be added in string in order to improve the render of a text.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.ui.text(page.entities.non_breaking_space)
 
     Related Pages:
 
       https://www.w3schools.com/html/html_entities.asp
-
-    Those can be added in string in order to improve the render of a text.
     """
     return entities.Entities()
 
@@ -181,9 +230,15 @@ class Report(object):
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...)
 
+    Usage:
+    -----
+
+      page = Report()
+      page.ui.text("This is a text")
+
     Related Pages:
 
-	    https://www.w3schools.com/html/default.asp
+      https://www.w3schools.com/html/default.asp
 
     :rtype: Interface.Components
     """
@@ -194,7 +249,11 @@ class Report(object):
   @property
   def css(self):
     """
-    Returns the set of :doc:`CSS Classes <css>` for the HTML report
+    Returns the set of :doc:`CSS Classes <css>` for the HTML report.
+
+    Usage:
+    -----
+
     """
     return Classes.Catalog(self, {'other': set()})._class_type('other')
 
@@ -204,11 +263,13 @@ class Report(object):
     Description:
     ------------
     Go to the Javascript section. Property to get all the JavaScript features.
-    Most of the standard modules will be available in order to add event and interaction to the Js transpiled
+    Most of the standard modules will be available in order to add event and interaction to the Js transpiled.
 
-    Usage::
+    Usage:
+    -----
 
-      js.console.log("test")
+      page = Report()
+      page.js.console.log("test")
 
     Related Pages:
 
@@ -228,6 +289,13 @@ class Report(object):
     Description:
     ------------
     Python external module section.
+    Those are pre defined Python function to simplify the use of the various components.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.py.dates.today()
 
     Related Pages:
 
@@ -246,7 +314,10 @@ class Report(object):
     """
     Description:
     ------------
-    Auth interface to allow easy signin pages
+    Auth interface to allow easy sign-in pages.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -265,10 +336,14 @@ class Report(object):
     """
     Description:
     ------------
-    Python internal data source management
+    Python internal data source management.
 
-    This can be extended by inheriting from this epyk.core.data.DataSrc.DataSrc
-    and adding extra entry points
+    This can be extended by inheriting from this epyk.core.data.DataSrc.DataSrc and adding extra entry points.
+
+    Usage:
+    -----
+
+      page = Report()
 
     :return: The framework available data source
     """
@@ -278,22 +353,23 @@ class Report(object):
     """
     Description:
     ------------
+    This function allows you to register external epyk objects (namely coming from Pyk Reports)
+    by registering them you this will engrave the object within your report.
 
-      This function allows you to register external epyk objects (namely coming from Pyk Reports)
-      by registering them you this will engrave the object within your report
-      The example below will add obj1 and obj2 from an external pyk report previously required,
-      then create a div and then add obj3 from an external file
+    The example below will add obj1 and obj2 from an external pyk report previously required,
+    then create a div and then add obj3 from an external file.
 
     Usage:
     ------
 
-      rptObj.register([obj1, obj2])
-      rptObj.ui.div('this is a div')
-      rptObj.register(obj3)
+      page = Report()
+      page.register([obj1, obj2])
+      page.ui.div('this is a div')
+      page.register(obj3)
 
     Attributes:
     ----------
-    :param ext_components:
+    :param ext_components: List | HTML. The external components to be added.
     """
     if type(ext_components) != list:
       ext_components = [ext_components]
@@ -305,30 +381,52 @@ class Report(object):
 
       self.components[comp.htmlCode] = comp
 
-  def get_components(self, htmlcodes):
+  def get_components(self, htmlCodes):
     """
     Description:
     ------------
     retrieve the components based on their ID.
     This should be used when the htmlCode is defined for a component.
 
+    Usage:
+    -----
+
+      page = Report()
+      page.ui.button(htmlCode="Button")
+
+      but = page.get_components(["Button"])
+
     Attributes:
     ----------
-    :param htmlcodes:
+    :param htmlCodes: List | String. The reference of the HTML components loaded on the page.
     """
-    if not isinstance(htmlcodes, list):
-      return self.components[htmlcodes]
+    if not isinstance(htmlCodes, list):
+      return self.components[htmlCodes]
 
-    return [self.components[htmlcode] for htmlcode in htmlcodes]
+    return [self.components[htmlCode] for htmlCode in htmlCodes]
 
   def framework(self, name):
     """
     Description:
     ------------
+    Flag to change the way code is transpiled in order to fit with the destination framework.
+
+    By default the code transpiled will be used from a browser in plain Vanilla Js but this will be extended to then
+    be compatible with other framework in order to simplify the path to production and the collaboration between teams.
+
+    Many framework will be compatible like React, Angular, Vue but also some features will be exposed to Kotlin for
+    mobile generation.
+
+    This work is still in progress.
+
+    Usage:
+    -----
+
+      page = Report()
 
     Attributes:
     ----------
-    :param name:
+    :param name: String. The destination framework for the page.
     """
     self._props['context']['framework'] = name.upper()
 
@@ -337,7 +435,13 @@ class Report(object):
     """
     Description:
     ------------
-    Link to the possible output formats for a page
+    Link to the possible output formats for a page.
+
+    Usage:
+    -----
+
+      page = Report()
+
     """
     return PyOuts.PyOuts(self)
 
@@ -346,7 +450,13 @@ class Report(object):
     """
     Description:
     ------------
-    Property to the HTML page header
+    Property to the HTML page header.
+
+    Usage:
+    -----
+
+      page = Report()
+      page.headers.meta.viewport({"width": "device-width"})
 
     :rtype: html.Header.Header
     """
@@ -364,9 +474,11 @@ class Report(object):
     As NaN is not valid on the Json side those object are not allowed during the dump.
     It is advised to use fillna() in your script before returning the data to the framework to avoid this issue.
 
-    Example::
+    Usage:
+    -----
 
-      report.dumps(result)
+      page = Report()
+      page.dumps(result)
 
     Related Pages:
 
@@ -374,7 +486,7 @@ class Report(object):
 
     Attributes:
     ----------
-    :param data: The python dictionary or data structure
+    :param data: Dictionary. The python dictionary or data structure
 
     :return: The serialised data
     """
@@ -389,6 +501,12 @@ class Report(object):
 
     This will add extra features available on the target framework.
     For example this HTML page can be transformed to an Angular app, a React App or a Vue one.
+
+    Usage:
+    -----
+
+      page = Report()
+
     """
     self._props['web'] = {
       'modules': {}

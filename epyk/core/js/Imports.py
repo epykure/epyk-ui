@@ -12,7 +12,6 @@ import sys
 import json
 import importlib
 import collections
-import subprocess
 import logging
 
 try:
@@ -154,7 +153,6 @@ CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
 NOTEBOOK_MAPPING = {
   'MathJax': 'mathjax',
   'jquery-ui': 'jqueryui',
-
 }
 
 
@@ -1171,8 +1169,6 @@ JS_IMPORTS = {
 
 CSS_IMPORTS = {
   'jqueryui': {
-    'website': 'http://jquery.com/',
-    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
       {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]
@@ -1213,8 +1209,6 @@ CSS_IMPORTS = {
 
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
-    'req': [{'alias': 'jqueryui'}],
-    'version': '0.11.1',
     'modules': [
       {'script': 'jquery.bracket.min.css', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -1228,7 +1222,6 @@ CSS_IMPORTS = {
 
   # Jquery timepicker width CDN links
   'timepicker': {
-    'req': [{'alias': 'jqueryui'}],
     'modules': [
       {'script': 'jquery.timepicker.min.css', 'path': 'jquery-timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -1335,9 +1328,6 @@ CSS_IMPORTS = {
 
   # Bootstrap style width CDN links
   'bootstrap': {
-    'website': 'https://getbootstrap.com/',
-    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/css'},
-    'req': [{'alias': 'font-awesome'}],
     'modules': [
       {'script': 'bootstrap.min.css', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ],
@@ -1377,10 +1367,8 @@ CSS_IMPORTS = {
 
   # DC modules width CDN links
   'dc': {
-    'website': 'https://dc-js.github.io/dc.js/examples/',
-    'version': '4.2.3',
     'modules': [
-      {'script': 'dc.min.css', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'dc.css', 'path': 'dc/%(version)s/style/', 'cdnjs': CDNJS_REPO}]},
 
   # billboard modules width CDN links
   'billboard.js': {
@@ -1418,16 +1406,11 @@ CSS_IMPORTS = {
 
   # Vis style with CDN Links
   'vis': {
-    'register': {'alias': 'vis', 'module': 'vis', 'npm': 'vis', 'npm_path': 'dist'},
-    'website': 'http://visjs.org/',
     'modules': [
       {'script': 'vis.min.css', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Vis Timeline style with CDN Links
   'vis-timeline': {
-    'register': {'alias': 'vis', 'module': 'vis', 'npm': 'vis-timeline', 'npm_path': 'dist'},
-    'website': 'http://visjs.org/',
-    'version': '7.4.5',
     'modules': [
       {'script': 'vis-timeline-graph2d.min.css', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -1618,7 +1601,7 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
   """
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
-    if not reference in config:
+    if reference not in config:
       config[reference] = {"modules": []}
       if required is not None:
         reqs = [{'alias': req} for req in required if req in config]
@@ -1655,7 +1638,7 @@ def extend_imports(extension):
           js['req'].append(req)
     if 'modules' in mod:
       for module in mod['modules']:
-        if not 'cdnjs' in module:
+        if 'cdnjs' not in module:
           module['cdnjs'] = CDNJS_REPO
         module['version'] = mod['version']  # propagate the version tag
         if module['script'].endswith(".js"):
@@ -1751,12 +1734,14 @@ class ImportModule:
     """
     Description:
     -----------
+    Just change the overriden flag of this package to ensure it will not be changed by the set_local method.
+    Indeed this method will not impact any modules with this flag set to True.
 
-    Attributes:
-    ----------
+    Usage:
+    -----
+
     """
-    if self.overriden:
-      return
+    self.overriden = True
 
   def set_local(self, static_url="/static"):
     """
@@ -1765,9 +1750,12 @@ class ImportModule:
     Route the package to the local path.
     Check first of the modules exist and raise an error otherwise.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param static_url: String. Optional. The static root on the server. (default value /static/)
+    :param static_url: String. Optional. The static root on the server. (default value /static/).
     """
     if self.overriden:
       return
@@ -1803,6 +1791,14 @@ class ImportPackages:
     ------------
     Generic way to retrieve packages from the framework.
     This is a shortcut to change any properties for the package (version, path...).
+
+    Usage:
+    -----
+
+
+    Attributes:
+    ----------
+    :param name: String. The package alias to be loaded.
     """
     return ImportModule(name, self._js, self._css)
 
@@ -2089,7 +2085,7 @@ class ImportManager:
     ----------
     :param css_aliases: List. An array with the list of aliases for the external packages.
     :param local_css: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
+    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
 
     :return: The string to be added to the header.
     """
@@ -2155,8 +2151,8 @@ class ImportManager:
     Attributes:
     ----------
     :param js_aliases: List. An array with the list of aliases for the external packages.
-    :param local_css: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
+    :param local_js: Dictionary. Optional. The external file overrides with the full path.
+    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
 
     :return: The string to be added to the header
     """
@@ -2199,7 +2195,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param js_str: The Javascript String in the page
+    :param js_str: String. The Javascript String in the page.
 
     :return: A Python list with all the Javascript external URL to be imported
     """
@@ -2219,8 +2215,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param cssAlias: An array with the list of aliases for the CSS external packages
-    :param jsAlias: An array with the list of aliases for the Js external packages
+    :param cssAlias: List. An array with the list of aliases for the CSS external packages
+    :param jsAlias: List. An array with the list of aliases for the Js external packages
 
     :return: A dictionary with the CSS and JS files definition
     """
@@ -2358,7 +2354,7 @@ class ImportManager:
     """
     Description:
     ------------
-    Download a full package (CSS and JS) locally for a server or full offline mode
+    Download a full package (CSS and JS) locally for a server or full offline mode.
 
     Usage:
     -----
@@ -2369,8 +2365,8 @@ class ImportManager:
     ----------
     :param alias: String. The package reference in the above list
     :param version: String. Optional. The package version to retrieve
-    :param static_path: Optional. The path in which the files should be copied to
-    :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
+    :param static_path: String. Optional. The path in which the files should be copied to
+    :param reload: Boolean. Optional. Flag to force the package reloading if the folder already exists. Default False
 
     :return: The Python Import manager
     """
@@ -2478,7 +2474,7 @@ class ImportManager:
     Description:
     ------------
     Add a new package or update an existing one with new parameters.
-    Only few parameters are available here in order to limit the changes
+    Only few parameters are available here in order to limit the changes.
 
     Usage:
     -----
@@ -2511,7 +2507,7 @@ class ImportManager:
           for req in config['req']:
             if req['alias'] in CSS_IMPORTS:
               mod_entry['css'].setdefault('req', []).append(req)
-      elif mod['script'].endswith(".js"):
+      elif mod['script'].endswith(".js") or mod['script'].startswith("js"):
         mod_entry['js'].setdefault('modules', []).append(mod)
         if 'req' in config:
           for req in config['req']:
@@ -2519,8 +2515,14 @@ class ImportManager:
               mod_entry['js'].setdefault('req', []).append(req)
     if len(mod_entry['css']) > 0:
       CSS_IMPORTS.setdefault(alias, {}).update(mod_entry['css'])
+      self.cssImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
+      for pkg in mod_entry['js']["modules"]:
+        self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg["version"]
     if len(mod_entry['js']) > 0:
       JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
+      self.jsImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
+      for pkg in mod_entry['js']["modules"]:
+        self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg["version"]
     return self
 
   # def getPackages(self, static_path=None, reload=False, exclude=None):
@@ -2566,7 +2568,7 @@ class ImportManager:
     deps_level, alias_to_name, name_to_alias, results = {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
     m_versions = {}
 
-    # Check first if some specific versions are requried for the packages
+    # Check first if some specific versions are required for the packages
     for m in self._report.jsImports:
       for req in JS_IMPORTS[m].get('req', []):
         if 'version' in req:
@@ -2658,8 +2660,14 @@ class ImportManager:
 
     Those are by default disabled as they are sharing data with Google.
 
+    TODO: Add the use of the API Key.
+
     Usage:
     -----
+
+      page.imports.google_products(['charts'])
+      page.imports.google_products(['maps'])
+      page.imports.google_products(['tables'])
 
     Attributes:
     ----------
@@ -2669,19 +2677,17 @@ class ImportManager:
     global JS_IMPORTS
 
     for p in products:
-
       self.addPackage("google-%s" % p, GOOGLE_EXTENSIONS[p])
       JS_IMPORTS["google-%s" % p] = GOOGLE_EXTENSIONS[p]
       if 'launcher' in GOOGLE_EXTENSIONS[p]:
         self._report._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
     self._report._with_google_imports = True
-    # add the launchers
 
-  def locals(self, aliases, end_points="/static"):
+  def locals(self, aliases, end_points=None):
     """
     Description:
     ------------
-    Short circuit the import mechanism and retrive the selected ones from a local static path.
+    Short circuit the import mechanism and retrieve the selected ones from a local static path.
     This could help on the debugging and the improvement of the packages before submitting them for review.
 
     Usage:
@@ -2690,7 +2696,7 @@ class ImportManager:
     Attributes:
     ----------
     :param aliases: List. Mandatory. The list of aliases
-    :param end_points: String. The end point on the server
+    :param end_points: String. Optional. The end point on the server (The module static_path as default)
     """
     global JS_IMPORTS
     global CSS_IMPORTS
@@ -2699,11 +2705,11 @@ class ImportManager:
     for alias in aliases:
       if alias in JS_IMPORTS:
         for m in JS_IMPORTS[alias]['modules']:
-          m.update({'path': '', 'cdnjs': end_points})
+          m.update({'path': '', 'cdnjs': end_points or self.static_path})
     for alias in aliases:
       if alias in CSS_IMPORTS:
         for m in CSS_IMPORTS[alias]['modules']:
-          m.update({'path': '', 'cdnjs': end_points})
+          m.update({'path': '', 'cdnjs': end_points or self.static_path})
 
   @property
   def pkgs(self):

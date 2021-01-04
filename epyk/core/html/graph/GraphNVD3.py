@@ -163,14 +163,14 @@ class ChartLine(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})
-        }); result = [];
+              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              temp[name][rec[options.x_axis]] = rec[name]}})
+        }); result = []; console.log(temp);
         options.y_columns.forEach(function(series){
           dataSet = {key: series, values: [], labels: labels};
           labels.forEach(function(x, i){
             var value = temp[series][x]; 
-            if (isNaN(value)) { value = null};
+            if (isNaN(value)) {value = null};
             if (value !== undefined) {dataSet.values.push({y: value, x: i, label: x})}
           }); result.push(dataSet)})
       }'''
@@ -219,7 +219,7 @@ class ChartCumulativeLine(ChartLine):
     return self._dom
 
 
-class ChartFocusLine(Chart):
+class ChartFocusLine(ChartLine):
 
   @property
   def dom(self):
@@ -272,8 +272,8 @@ class ChartBar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})
+              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              temp[name][rec[options.x_axis]] = rec[name]}})
         }); var result = [];
         options.y_columns.forEach(function(series){
           dataSet = {key: series, values: [], labels: labels};
@@ -339,9 +339,9 @@ class ChartPie(Chart):
       } else {
         var temp = {}; var labels = {};
         data.forEach(function(rec){ 
-          if(!(rec[options.x_column] in temp)){temp[rec[options.x_column]] = {}};
+          if(!(rec[options.x_axis] in temp)){temp[rec[options.x_axis]] = {}};
           options.y_columns.forEach(function(name){
-            labels[name] = true; if(rec[name] !== undefined) {if (!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} else {temp[rec[options.x_column]][name] += rec[name]}}  }) ;
+            labels[name] = true; if(rec[name] !== undefined) {if (!(name in temp[rec[options.x_axis]])){temp[rec[options.x_axis]][name] = rec[name]} else {temp[rec[options.x_axis]][name] += rec[name]}}  }) ;
         });
         var labels = Object.keys(labels); result = [];
         for(var series in temp){
@@ -500,7 +500,7 @@ class ChartSunbrust(Chart):
   @property
   def _js__convertor__(self):
     return '''
-      var result = [{name: options.x_column, children: []}]; var sizeTree = options.y_columns.length-1;
+      var result = [{name: options.x_axis, children: []}]; var sizeTree = options.y_columns.length-1;
       data.forEach(function(rec){
         var path = []; var tmpResultLevel = result[0].children; var branchVal = 0;
         options.y_columns.forEach(function(s, i){
@@ -508,7 +508,7 @@ class ChartSunbrust(Chart):
           tmpResultLevel.forEach(function(l, j){if(l.name == rec[s]){treeLevel = j}});
           if(i == sizeTree){
             if(treeLevel >= 0){
-              tmpResultLevel[treeLevel].size += rec[options.x_column]}else{tmpResultLevel.push({name: rec[s], size: rec[options.x_column]})}
+              tmpResultLevel[treeLevel].size += rec[options.x_axis]}else{tmpResultLevel.push({name: rec[s], size: rec[options.x_axis]})}
           }else{
             if(treeLevel < 0 ){
               tmpResultLevel.push({name: rec[s], children: []}); treeLevel = tmpResultLevel.length - 1};

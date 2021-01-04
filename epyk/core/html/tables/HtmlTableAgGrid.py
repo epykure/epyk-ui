@@ -13,7 +13,7 @@ from epyk.core.css.styles import GrpClsTable
 
 class Table(Html.Html):
   name = 'Ag Grid Table'
-  requirements = ('ag-grid', )
+  requirements = ('ag-grid-community', )
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None

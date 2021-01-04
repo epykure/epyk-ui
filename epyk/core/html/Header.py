@@ -1,33 +1,44 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import logging
+
 from epyk.core.html import Defaults
 
 
-class Meta(object):
-  def __init__(self):
+class Meta:
+  def __init__(self, page):
+    self._report = page
     self._metas = {}
     self.__cols = ['charset', 'viewport']
     self.viewport().charset()
     self.http_equiv("X-UA-Compatible", "IE=EDGE").http_equiv("Content-Type", "text/html; charset=utf-8")
     self.http_equiv("Cache-control", "no-cache")
 
-  def viewport(self, value="width=device-width,height=device-height,initial-scale=1.0"):
+  def viewport(self, attrs=None):
     """
     Description:
     ------------
-    Setting the viewport to make your website look good on all devices
+    Setting the viewport to make your website look good on all devices.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.viewport("test")
+      page.headers.meta.viewport({"width": "device-width"})
 
     Related Pages:
 
       https://www.w3schools.com/html/html_head.asp
+      https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
     ----------
-    :param value: Optional. A string with the view port content
+    :param attrs: Dictionary. Optional. The view port attributes.
     """
-    self._metas["viewport"] = '<meta name="viewport" content="%s">' % value
+    dflt_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
+    if attrs is not None:
+      dflt_attrs.update(attrs)
+    self._metas["viewport"] = '<meta name="viewport" content="%s">' % ", ".join(["%s=%s" % (k, v) for k, v in dflt_attrs.items()])
     return self
 
   def charset(self, value="utf-8"):
@@ -36,18 +47,24 @@ class Meta(object):
     ------------
     Define the character set used
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.charset("test")
+      page.headers.meta.charset("test")
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_meta.asp
+      https://www.w3schools.com/tags/att_meta_charset.asp
 
     Attributes:
     ----------
-    :param value: Optional. A String
+    :param value: String. Optional. The charset encoding.
     """
+    common_vals = ("UTF-8", "ISO-8859-1")
+    if self._report.verbose and value.upper() not in common_vals:
+      logging.warning("Charset value %s not in common ones %s" % (value, common_vals))
+
     self._metas["charset"] = '<meta charset="%s">' % value
     return self
 
@@ -55,11 +72,12 @@ class Meta(object):
     """
     Description:
     ------------
-    Refresh document every X seconds
+    Refresh document every X seconds.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.refresh(10)
+      page.headers.meta.refresh(10)
 
     Related Pages:
 
@@ -67,10 +85,10 @@ class Meta(object):
 
     Attributes:
     ----------
-    :param time: A time in second
+    :param time: Integer. A time in second.
     """
     self._metas["refresh"] = '<meta http-equiv="refresh" content="%s">' % time
-    if not "refresh" in self.__cols:
+    if "refresh" not in self.__cols:
       self.__cols.append("refresh")
     return self
 
@@ -78,18 +96,23 @@ class Meta(object):
     """
     Description:
     ------------
-    Define the author of the page
+    Define the author of the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.author('epykure')
+      page.headers.meta.author('epykure')
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_meta_name.asp
 
     Attributes:
     ----------
-    :param name: String. The author name
+    :param name: String. The author name.
     """
     self._metas["author"] = '<meta name="author" content="%s">' % name
-    if not "author" in self.__cols:
+    if "author" not in self.__cols:
       self.__cols.append("author")
     return self
 
@@ -97,11 +120,12 @@ class Meta(object):
     """
     Description:
     ------------
-    Define a description of your web page
+    Define a description of your web page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.description('This is a description')
+      page.headers.meta.description('This is a description')
 
     Related Pages:
 
@@ -109,7 +133,7 @@ class Meta(object):
 
     Attributes:
     ----------
-    :param value: String. The report description
+    :param value: String. The report description.
     """
     self._metas["description"] = '<meta name="description" content="%s">' % value
     if "description" not in self.__cols:
@@ -120,11 +144,12 @@ class Meta(object):
     """
     Description:
     ------------
-    Define keywords for search engine
+    Define keywords for search engine.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.keywords(['python', 'javascript'])
+      page.headers.meta.keywords(['python', 'javascript'])
 
     Related Pages:
 
@@ -132,7 +157,7 @@ class Meta(object):
 
     Attributes:
     ----------
-    :param content: String or list with the keyword data
+    :param content: String | list. The keyword data.
     """
     if isinstance(content, list):
       content = ",".join(content)
@@ -145,16 +170,21 @@ class Meta(object):
     """
     Description:
     ------------
-    Bespoke function to add other meta tags
+    Bespoke function to add other meta tags.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta.custom('language', 'python')
+      page.headers.meta.custom('language', 'python')
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_meta_name.asp
 
     Attributes:
     ----------
-    :param name: String.
-    :param content: String.
+    :param name: String. The name for the meta tag.
+    :param content: String. The value of the meta tag.
     """
     self._metas[name] = '<meta name="%s" content="%s">' % (name, content)
     if name not in self.__cols:
@@ -165,16 +195,21 @@ class Meta(object):
     """
     Description:
     ------------
-    Bespoke function to add other http-equiv tags to the meta section
+    Bespoke function to add other http-equiv tags to the meta section.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.headers.meta.http_equiv('language', 'python')
 
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_meta_http_equiv.asp
+
     Attributes:
     ----------
-    :param name: String.
-    :param content: String
+    :param name: String. The name for the meta tag.
+    :param content: String. The value of the meta tag.
     """
     self._metas[name] = '<meta http-equiv="%s" content="%s">' % (name, content)
     if name not in self.__cols:
@@ -189,30 +224,431 @@ class Meta(object):
     return "\n".join(h)
 
 
-class Links(object):
+class Links:
 
   def __init__(self, header):
     self.__header = header
 
-  def stylesheet(self, href, type="text/css"):
+  def icon(self, href, crossorigin=False):
+    """
+    Description:
+    ------------
+    Defines a resource for representing the page in the user interface, usually an icon (auditory or visual).
+    In the browser, it is usually referred to as the favicon.
+
+    If there are multiple <link rel="icon">s, the browser uses their media, type, and sizes attributes to select the most appropriate icon.
+    If several icons are equally appropriate, the last one is used.
+    If the most appropriate icon is later found to be inappropriate, for example because it uses an unsupported format, the browser proceeds to the next-most appropriate, and so on.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type="", media=None, rel="icon", crossorigin=crossorigin)
+
+  def pingback(self, href, crossorigin=False):
+    """
+    Description:
+    ------------
+    Pingbacks (also known as trackbacks) are a form of automated comment for a page or post,
+    created when another WordPress blog links to that page or post.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://wordpress.stackexchange.com/questions/116079/what-is-rel-pingback-and-what-is-the-use-of-this-in-my-website
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type="", media=None, rel="pingback", crossorigin=crossorigin)
+
+  def shortlink(self, href):
+    """
+    Description:
+    ------------
+    Some websites create short links to make sharing links via instant messaging easier.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+
+    Attributes:
+    ----------
+    :param href: String. The url path.
+    """
+    self.stylesheet(href=href, file_type="", media=None, rel="shortlink", crossorigin=False)
+
+  def preload(self, href, file_type="", media=None, crossorigin=False):
+    """
+    Description:
+    ------------
+    The preload keyword for the rel attribute of the <link> element indicates the user is highly likely to require
+    the target resource for the current navigation, and therefore the browser must preemptively fetch and cache
+    the resource.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param file_type: String. Optional. The type of the href tag.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type=file_type, media=media, rel="preload", crossorigin=crossorigin)
+
+  def prefetch(self, href, media=None, crossorigin=False):
+    """
+    Description:
+    ------------
+    The prefetch keyword for the rel attribute of the <link> element is a hint to browsers that the user is likely to
+    need the target resource for future navigations, and therefore the browser can likely improve the user experience
+    by preemptively fetching and caching the resource.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/prefetch
+
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type=media, media=media, rel="prefetch", crossorigin=crossorigin)
+
+  def dns_prefetch(self, href, media=None, crossorigin=False):
+    """
+    Description:
+    ------------
+    The dns-prefetch keyword for the rel attribute of the <link> element is a hint to browsers that the user is likely
+    to need resources from the target resource's origin, and therefore the browser can likely improve the user
+    experience by preemptively performing DNS resolution for that origin.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/dns-prefetch
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type="", media=media, rel="dns-prefetch", crossorigin=crossorigin)
+
+  def prerender(self, href, media=None, crossorigin=False):
+    """
+    Description:
+    ------------
+    The prerender keyword for the rel attribute of the <link> element is a hint to browsers that the user might need
+    the target resource for the next navigation, and therefore the browser can likely improve the user experience
+    by preemptively fetching and processing the resource — for example, by fetching its subresources or performing
+    some rendering in the background offscreen.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/prerender
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type="", media=media, rel="prerender", crossorigin=crossorigin)
+
+  def preconnect(self, href, media=None, crossorigin=False):
+    """
+    Description:
+    ------------
+    The preconnect directive allows the browser to setup early connections before an HTTP request is actually sent to the server.
+    This includes DNS lookups, TLS negotiations, TCP handshakes.
+    This in turn eliminates roundtrip latency and saves time for users.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.keycdn.com/blog/resource-hints
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    self.stylesheet(href=href, file_type="", media=media, rel="preconnect", crossorigin=crossorigin)
+
+  def imports(self, href, file_type="", media=None, rel="import"):
+    """
+    Description:
+    ------------
+    HTML Imports is intended to be the packaging mechanism for web components, but you can also use HTML Imports by itself.
+
+    Usage:
+    -----
+
+      https://developer.mozilla.org/en-US/docs/Web/Web_Components/HTML_Imports
+
+    Related Pages:
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param file_type: String. Optional. The type of the href tag.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param rel: String. Optional. This attribute names a relationship of the linked document to the current document.
+    """
+    self.stylesheet(href, file_type, media, rel)
+
+  def manifest(self, href, file_type="", media=None):
+    """
+    Description:
+    ------------
+    The manifest keyword for the rel attribute of the <link> element indicates that the target resource is a Web app manifest.
+
+    Web app manifests are deployed in your HTML pages using a <link> element in the <head> of a document:
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/manifest
+      https://developer.mozilla.org/en-US/docs/Web/Manifest
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param file_type: String. Optional. The type of the href tag.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    """
+    if not href.endswith(".json"):
+      raise Exception("Manifest file should be a json file")
+
+    self.stylesheet(href, file_type, media, rel="manifest")
+
+  def stylesheet(self, href, file_type="text/css", media=None, rel="stylesheet", crossorigin=False):
+    """
+    Description:
+    ------------
+    Link the page to a style sheet.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+
+    Attributes:
+    ----------
+    :param href: String. The link path for the stylesheet page.
+    :param file_type: String. Optional. The type of the href tag.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
+    :param rel: String. Optional. This attribute names a relationship of the linked document to the current document.
+    :param crossorigin: Boolean. Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    """
+    if isinstance(href, list):
+      self.__header._links.append({"href": href[0], "rel": rel})
+      for h in href[1:]:
+        self.alternative(h, file_type=file_type, media=media)
+    else:
+      self.__header._links.append({"href": href, "rel": rel, "crossorigin": crossorigin})
+    if file_type:
+      self.__header._links["type"] = file_type
+    if media is not None:
+      self.__header._links["media"] = media
+
+  def alternative(self, href, file_type="text/css", media=None):
     """
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+
     Attributes:
     ----------
-    :param href:
-    :param type:
+    :param href: String. The link path for the stylesheet page.
+    :param file_type: String. Optional. The type of the href tag.
+    :param media: String. Optional. This resource will then only be loaded if the media condition is true.
     """
-    self.__header._links.append({"href": href, "type": type, "rel": "stylesheet"})
+    self.__header._links.append({"href": href, "rel": "alternate stylesheet"})
+    if file_type is not None:
+      self.__header._links["type"] = file_type
+    if media is not None:
+      self.__header._links["media"] = media
 
 
-class Header(object):
+class Icons:
+
+  def __init__(self, header):
+    self.__header = header
+
+  def icon(self, url, sizes=None, img_type=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+
+    Attributes:
+    ----------
+    :param url: String.
+    :param sizes: String. Optional.
+    :param img_type: String. Optional.
+    """
+    self.__header.favicon(url, rel="icon", sizes=sizes, img_type=img_type)
+    return self.__header
+
+  def gif(self, url, sizes=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_link_sizes.asp
+
+    Attributes:
+    ----------
+    :param url: String. The path for the gif.
+    :param sizes: String. Optional. The size in a format 25x25.
+    """
+    self.__header.favicon(url, rel="icon", sizes=sizes, img_type="image/gif")
+    return self.__header
+
+  def svg(self, url, sizes=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_link_sizes.asp
+
+    Attributes:
+    ----------
+    :param url: String. The path for the svg file.
+    :param sizes: String. Optional. The size for 25x25.
+    """
+    self.__header.favicon(url, rel="icon", sizes=sizes, img_type="image/svg+xml")
+    return self.__header
+
+  def apple_touch_icon(self, url, sizes=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW4
+
+    Attributes:
+    ----------
+    :param url: String. The path for the svg file.
+    :param sizes: String. Optional. The size for 25x25.
+    """
+    self.__header.favicon(url, rel="apple-touch-icon", sizes=sizes)
+    return self.__header
+
+  def apple_touch_startup_icon(self, url, sizes=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW4
+
+    Attributes:
+    ----------
+    :param url: String. The path for the svg file.
+    :param sizes: String. Optional. The size for 25x25.
+    """
+    self.__header.favicon(url, rel="apple-touch-startup-image", sizes=sizes)
+    return self.__header
+
+
+class Header:
+
+  # Internal mapping to deduce the corresponding type mime for the item.
+  mime_mapping = {
+    ".ico": "image/x-icon",
+    ".jpeg": "image/jpeg",
+    ".jpg": "image/jpeg",
+    ".gif": "image/gif",
+    ".bmp": "image/bmp",
+    ".webp": "image/webp",
+    ".tif": "image/tiff",
+    ".tiff": "image/tiff",
+    ".svg": "image/svg+xml",
+  }
+
   def __init__(self, report=None):
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
-    self._favicon_url = Defaults.FAVICON_URL
+    self._favicon_url = {}
+    self.favicon(Defaults.FAVICON_URL)
+    self._report = report
     if report is not None:
-      self._report = report
       self._report._props["header"] = self._headers
 
   def dev(self, icon=None):
@@ -221,9 +657,12 @@ class Header(object):
     ------------
     Change the tab icon to highlight this page is still in dev mode
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param icon:
+    :param icon: String. Optional.
     """
     self._favicon_url = icon or Defaults.FAVICON_DEV_URL
 
@@ -232,36 +671,43 @@ class Header(object):
     """
     Description:
     ------------
-    Property to the Meta data dictionary for the HTML page
+    Property to the Meta data dictionary for the HTML page.
 
     Metadata is data (information) about data.
 
     The <meta> tag provides metadata about the HTML document.
     Metadata will not be displayed on the page, but will be machine parsable.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.headers.meta
+      page.headers.meta
 
     Related Pages:
 
-	    https://www.w3schools.com/tags/tag_meta.asp
+      https://www.w3schools.com/tags/tag_meta.asp
 
     :rtype: Meta
     """
     if self.__meta is None:
-      self.__meta = Meta()
+      self.__meta = Meta(self._report)
     return self.__meta
 
   def addScripts(self, src, attrs=None):
     """
     Description:
     -----------
+    Add a JavaScript tag to th eHTML page.
+
+    The script will be added in a script tag.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param src:
-    :param attrs:
+    :param src: String. The script path added to the page.
+    :param attrs: Dictionary. optional. The various attributes to be added to the script tag.
     """
     attr_list = []
     if attrs is not None:
@@ -275,7 +721,9 @@ class Header(object):
     ------------
     The <title> tag is required in all HTML documents and it defines the title of the document.
 
-    Usage::
+    You can NOT have more than one <title> element in an HTML document.
+
+    Usage:-----
 
       rptObj.headers.title("title")
 
@@ -285,7 +733,7 @@ class Header(object):
 
     Attributes:
     ----------
-    :param value: String.
+    :param value: String. The title value for the page.
     """
     self._headers['title'] = value
     return self
@@ -295,7 +743,11 @@ class Header(object):
     Description:
     ------------
     Specify a dedicated path for the relative paths in the page.
-    Basically the images will use this path as base if present in the page
+
+    Basically the images will use this path as base if present in the page.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -303,12 +755,12 @@ class Header(object):
 
     Attributes:
     ----------
-    :param url:
+    :param url: String. The url path.
     """
     self._base = url
     return self
 
-  def favicon(self, url):
+  def favicon(self, url, rel="icon", sizes=None, img_type=None):
     """
     Description:
     ------------
@@ -316,19 +768,33 @@ class Header(object):
 
     The <link> tag is used to link to external style sheets.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.headers.favicon('https://github.com/favicon.ico')
 
     Related Pages:
 
+      https://developer.mozilla.org/fr/docs/Web/HTML/Element/link
       https://www.w3schools.com/tags/tag_link.asp
 
     Attributes:
     ----------
-    :param url: String. The url full path
+    :param url: String. The url full path.
+    :param rel: String. Optional.
+    :param sizes: String. Optional.
+    :param img_type: String. Optional.
     """
-    self._favicon_url = url
+    extension = url.split(".")[-1].lower()
+    if ".%s" % extension in self.mime_mapping:
+      img_type = self.mime_mapping[".%s" % extension]
+    else:
+      logging.warning("Missing extension %s - No default used" % extension)
+    self._favicon_url[rel] = {"href": url, "rel": rel}
+    if img_type is not None:
+      self._favicon_url[rel]["type"] = img_type
+    if sizes is not None:
+      self._favicon_url[rel]["sizes"] = sizes
     return self
 
   @property
@@ -336,20 +802,42 @@ class Header(object):
     """
     Description:
     ------------
-    The various HTML page header links
+    The various HTML page header links.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/jsref/dom_obj_link.asp
+      https://developer.mozilla.org/fr/docs/Web/HTML/Element/link
     """
     return Links(self)
+
+  @property
+  def icons(self):
+    """
+    Description:
+    ------------
+    Property to defined / add more icons to the page header.
+    Some browsers (like Safari or Opera) could require specify tags in the page.
+
+    Usage:
+    -----
+
+    """
+    return Icons(self)
 
   def __str__(self):
     result = [str(self.meta)]
     if self._headers.get("title") is not None:
       result.append("<title>%s</title>" % self._headers.get("title"))
-    result.append("<link rel='icon' href='%s' type='image/x-icon'/ >" % self._favicon_url)
+    for rel, rel_attrs in self._favicon_url.items():
+      result.append("<link %s>" % " ".join(["%s='%s'" % (k, v) for k, v in rel_attrs.items()]))
     for link in self._links:
-      result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s'/ >" % link)
+      if "media" in link:
+        result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s' media='%(media)s'>" % link)
+      else:
+        result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s'>" % link)
     result.extend(self._scripts)
     return "\n".join(result)
