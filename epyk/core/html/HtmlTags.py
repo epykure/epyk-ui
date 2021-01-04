@@ -91,7 +91,7 @@ class HtmlGenericLInk(HtmlGeneric):
 
     Attributes:
     ----------
-    :param url:
+    :param url: String.
     """
     self.on('mouseenter', [
       self._report.js.request_http("test", 'GET', url).send().onSuccess([

@@ -18,10 +18,14 @@ class Step:
 
   def click(self, jsFncs, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param profile:
     """
@@ -50,11 +54,6 @@ class Stepper(Html.Html):
     self.__options = OptPanel.OptionsStepper(self, dflt_options)
 
   def __getitem__(self, i):
-    """
-    Description:
-    ------------
-
-    """
     return Step(self, selector=self.dom[i])
 
   @property

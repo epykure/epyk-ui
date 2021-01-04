@@ -204,8 +204,6 @@ class Switch(Html.Html):
     Usage:
     -----
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsComponents.Switch

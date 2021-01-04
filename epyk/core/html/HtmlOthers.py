@@ -259,6 +259,10 @@ class HtmlJson(Html.Html):
     Description:
     ------------
     Return the Javascript variable of the json object.
+
+    Usage:
+    -----
+
     """
     return "%s_obj" % self.htmlCode
 

@@ -195,8 +195,8 @@ class DropDown(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
+    :param jsFncs: List | String. A Javascript Python function
+    :param profile: Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """

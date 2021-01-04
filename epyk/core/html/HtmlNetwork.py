@@ -687,7 +687,7 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript series of functions
+    :param jsFncs: List | String. The Javascript series of functions
     :param jsData: Data. Optional. A datamap objection of a dictionary
     :param preventDefault: Boolean. Optional. Prevent default on the JavaScript event
     :param profile: Boolean. Optional. Profiling
