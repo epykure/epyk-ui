@@ -1,10 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Module for the HTML Media (audio and video) components
-"""
-
 import logging
 import os
 
@@ -49,6 +45,9 @@ class Media(Html.Html):
     Description:
     -----------
     Property to set all the possible object for a Media (video and audio).
+
+    Usage:
+    -----
 
     :rtype: OptButton.OptMedia
     """
