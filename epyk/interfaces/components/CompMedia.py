@@ -11,12 +11,15 @@ class Media(object):
 
   def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
+    Description:
+    -----------
     Add a video from the server to the page.
-    The format for the video must be MP4
+    The format for the video must be MP4.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.media.video("CWWB3673.MP4")
+      page.ui.media.video("CWWB3673.MP4")
 
     Underlying HTML Objects:
 
@@ -29,13 +32,13 @@ class Media(object):
     Attributes:
     ----------
     :param value: String. Optional. The name of the video.
-    :param path: String. Optional. THe path to the video
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param path: String. Optional. THe path to the video.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -58,7 +61,7 @@ class Media(object):
     Usage:
     -----
 
-      rptObj.ui.media.video("CWWB3673.mpeg")
+      page.ui.media.video("CWWB3673.mpeg")
 
     Underlying HTML Objects:
 
@@ -70,13 +73,13 @@ class Media(object):
 
     Attributes:
     ----------
-    :param value: String. Optional. The name of the audio object
-    :param path: String. Optional. THe path to the audio object
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param value: String. Optional. The name of the audio object.
+    :param path: String. Optional. THe path to the audio object.
+    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -88,11 +91,14 @@ class Media(object):
 
   def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
+    Description:
+    -----------
     This will add a youtube video using the shared line to embedded to a website.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
+      page.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
 
     Underlying HTML Objects:
 
@@ -100,17 +106,17 @@ class Media(object):
 
     Related Pages
 
-    https://www.w3schools.com/html/html5_video.asp
+      https://www.w3schools.com/html/html5_video.asp
 
     Attributes:
     ----------
-    :param link: String. The youtube link
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. A dictionary with the components properties
+    :param link: String. The youtube link.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. A dictionary with the components properties.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
