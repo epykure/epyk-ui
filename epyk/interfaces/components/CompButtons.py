@@ -652,9 +652,10 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     """
     Description:
     ------------
-    Python wrapper to the HTML checkbox elements
+    Python wrapper to the HTML checkbox elements.
 
-    Usage::
+    UUsage:
+    -----
 
       rptObj.ui.buttons.checkboxes(data)
 
@@ -668,7 +669,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
     Templates:
 
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_checkboxes.py
 
     Attributes:
     ----------
@@ -677,7 +678,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param color:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align:
+    :param align: String. The text-align property within this component.
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param dfColumn:

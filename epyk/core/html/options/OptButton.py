@@ -18,6 +18,8 @@ class OptionsButton(Options):
     Usage:
     -----
 
+      but = page.ui.button("Click Me")
+      but.options.multiple = False
 
     Attributes:
     ----------
@@ -39,9 +41,12 @@ class OptionsButton(Options):
     Usage:
     -----
 
+      but = page.ui.button("Click Me")
+      but.options.group = "buttons"
+
     Attributes:
     ----------
-    :prop val:
+    :prop val: String. The group name for several buttons.
     """
     return self._report.attr.get('name')
 
@@ -118,7 +123,7 @@ class OptMedia(Options):
 
     Attributes:
     ----------
-    :param bool: Boolean. Optional. Default value is false.
+    :prop bool: Boolean. Optional. Default value is false.
     """
     return self.get(True)
 

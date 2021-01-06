@@ -228,7 +228,8 @@ class TimePicker(Html.Html):
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options, profile):
+  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height,
+               htmlCode, helper, options, profile):
     super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour, 'minute': minute, 'second': second},
       htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True, 'reload': False}
@@ -503,7 +504,8 @@ class Timer(Html.Html):
   name = 'Timer'
 
   def __init__(self, report, minutes, text, width, height, align, options, htmlCode, profile):
-    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, htmlCode, options=options,
+                                css_attrs={"width": width, "height": height}, profile=profile)
     if align is not None:
       if align == 'center':
         self.style.css.margin_left = 'auto'

@@ -13,23 +13,25 @@ class DataConfig(object):
     """
     Description:
     ------------
+    Get the configuration for loading the report from json files.
+    This will allow the creation of templates on the Python side and configuration in a static manner in json.
+
+    By using this way of working it is easier to split the page and the configuration and non developers can
+    change the content or create new ones based on the templates.
 
     Usage:
     -----
 
+
     Attributes:
     ----------
-    :param k:
-    :param default:
-    :param page:
-    :param end_point:
+    :param k: String. THe alias of the cache, variable.
+    :param default: Object. Optional. The default value of the cache.
+    :param page: Report. Optional. The page object.
+    :param end_point: String. Optional. THe static end point for the configurations.
     """
     if page.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
-
-    # TODO add a check on the configuration file location
-    #if not os.path.exists():
-    #  raise Exception("Configuration file missing: %s%s" % (end_point, page.json_config_file))
 
     return '''
       (function(){
@@ -57,8 +59,13 @@ class TabulatorEvents(object):
   @property
   def row(self):
     """
+    Description:
+    ------------
+    Get a Tabulator Row object.
 
-    :return:
+    Usage:
+    -----
+
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -67,8 +74,13 @@ class TabulatorEvents(object):
   @property
   def cell(self):
     """
+    Description:
+    ------------
+    Get a Tabulator cell object.
 
-    :return:
+    Usage:
+    -----
+
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -77,8 +89,13 @@ class TabulatorEvents(object):
   @property
   def column(self):
     """
+    Description:
+    ------------
+    Get a Tabulator column object.
 
-    :return:
+    Usage:
+    -----
+
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -89,13 +106,24 @@ class DataEvents(object):
 
   @property
   def tabulator(self):
-    return  TabulatorEvents()
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
+    return TabulatorEvents()
 
   @property
   def files(self):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -107,6 +135,9 @@ class DataEvents(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     """
     return DataFile("value")
 
@@ -116,7 +147,10 @@ class DataEvents(object):
     Description:
     ------------
     Interface to a standard data object available in any Event.
-    This is the default variable name in all the JavaScript embedded methods
+    This is the default variable name in all the JavaScript embedded methods.
+
+    Usage:
+    -----
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObjects.get("data")
@@ -127,7 +161,11 @@ class DataEvents(object):
     Description:
     ------------
     Interface to a standard value object available in any Event.
-    This is the default variable name in all the JavaScript embedded methods
+    This is the default variable name in all the JavaScript embedded methods.
+
+    Usage:
+    -----
+
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObjects.get("value")
@@ -137,7 +175,11 @@ class DataEvents(object):
     """
     Description:
     ------------
-    Interface to the standard event
+    Interface to the standard event.
+
+    Usage:
+    -----
+
     """
     from epyk.core.js.objects import JsEvents
 
@@ -148,7 +190,11 @@ class DataEvents(object):
     """
     Description:
     ------------
-    Interface to the standard mouse event
+    Interface to the standard mouse event.
+
+    Usage:
+    -----
+
     """
     from epyk.core.js.objects import JsEvents
 
@@ -159,7 +205,7 @@ class DataEvents(object):
     """
     Description:
     ------------
-    Interface to the UI generic event
+    Interface to the UI generic event.
     """
     from epyk.core.js.objects import JsEvents
 

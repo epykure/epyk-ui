@@ -12,6 +12,20 @@ from epyk.core.html.options import OptButton
 from epyk.core.js import JsUtils
 
 
+class Source(Html.Html):
+  name = 'Source'
+
+  def __init__(self, report, path, video):
+    super(Source, self).__init__(report, "")
+    self.path = path
+    self.video = video
+
+  def __str__(self):
+    self.attr["src"] = os.path.join(self.path, self.video)
+    attrs = " ".join(['%s="%s"' % (k, v) for k, v in self.attr.items() if k not in ("class", 'css', 'id')])
+    return "<source %s></source>" % attrs
+
+
 class Media(Html.Html):
   name = 'Video'
 
@@ -31,12 +45,15 @@ class Media(Html.Html):
                                 css_attrs={"width": width, 'height': height}, profile=profile)
     self.__options = OptButton.OptMedia(self, options or {})
     extension = video.split(".")[-1].lower()
+    self._vals = Source(report, path, video)
     if ".%s" % extension in self.mime_mapping:
       self.add_options(name="type", value=self.mime_mapping[".%s" % extension])
+      self._vals.attr["type"] = self.mime_mapping[".%s" % extension]
     else:
       if options.get("verbose", False):
         logging.warning("Missing MIME Type extension %s" % extension)
       self.add_options(name="type", value='%s/%s' % (self.name.lower(), extension))
+      self._vals.attr["type"] = extension
     self.options.controls = True
 
   @property
@@ -54,7 +71,7 @@ class Media(Html.Html):
     return self.__options
 
   _js__builder__ = '''
-    var source = document.createElement("source");
+    var source = document.createElement("source"); htmlObj.innerHTML = "";
     source.setAttribute('src', data.path +"/"+ data.video);
     for(var key in options){
       if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
@@ -84,7 +101,7 @@ class Audio(Media):
   }
 
   _js__builder__ = '''
-    var source = document.createElement("source");
+    var source = document.createElement("source"); htmlObj.innerHTML = "";
     source.setAttribute('src', data.path +"/"+ data.audio);
     for(var key in options){
       if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
@@ -94,8 +111,8 @@ class Audio(Media):
   def __str__(self):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
-    self.set_attrs(name="src", value=os.path.join(self.val['path'], self.val['audio']))
-    return '<audio %(attrs)s></audio>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
+    self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
+    return '<audio %(attrs)s>%(source)s</audio>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "source": self.val}
 
 
 class Youtube(Html.Html):
@@ -117,7 +134,7 @@ class Youtube(Html.Html):
     """
     Description:
     -------------
-    simple function to convert a youtube link to the embedded version
+    simple function to convert a youtube link to the embedded version.
 
     Usage:
     ------

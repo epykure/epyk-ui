@@ -233,7 +233,8 @@ class Dialog(Html.Html):
   name = 'Menu'
 
   def __init__(self, report, text, width, height, attrs, helper, options, htmlCode, profile):
-    super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
+                                 profile=profile)
     self.add_helper(helper)
     self.__options = OptSliders.OptionDialog(self, options)
 
@@ -781,6 +782,7 @@ class Filters(Html.Html):
     ----------
     :param value:
     :param category:
+    :param name:
     :param disabled:
     :param fixed:
     """

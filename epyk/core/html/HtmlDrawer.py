@@ -156,7 +156,7 @@ class DrawerMulti(Html.Html):
   name = 'Multi Drawers'
 
   def __init__(self, report, component, width, height, options, helper, profile):
-    super(DrawerMulti, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    super(DrawerMulti, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.__options = OptPanel.OptionDrawer(self, options)
     self.style.css.position = 'relative'

@@ -9,7 +9,7 @@ class Media(object):
   def __init__(self, context):
     self.context = context
 
-  def video(self, value, align="center", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     Add a video from the server to the page.
     The format for the video must be MP4
@@ -28,8 +28,8 @@ class Media(object):
 
     Attributes:
     ----------
-    :param value: The name of the video
-    :param path: Optional. THe path to the video
+    :param value: String. Optional. The name of the video.
+    :param path: String. Optional. THe path to the video
     :param align: String. Optional. A string with the horizontal position of the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -48,12 +48,15 @@ class Media(object):
       html_media.style.css.display = "block"
     return html_media
 
-  def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  def audio(self, value="", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
+    Description:
+    -----------
     Add a audio track from the server to the page.
-    The format for the video must be mpeg
+    The format for the video must be mpeg.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.media.video("CWWB3673.mpeg")
 
@@ -67,7 +70,7 @@ class Media(object):
 
     Attributes:
     ----------
-    :param value: The name of the audio object
+    :param value: String. Optional. The name of the audio object
     :param path: String. Optional. THe path to the audio object
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit

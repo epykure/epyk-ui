@@ -12,6 +12,7 @@ class Plotly(object):
       """
       Description:
       -----------
+      Transform a record to a valid data structure for Plotly surfaces.
 
       Usage:
       -----
@@ -19,7 +20,7 @@ class Plotly(object):
 
       Attributes:
       ----------
-      :param data: List of dictionaries.
+      :param data: List of dictionaries. The data to be converted.
       :param y_columns: List. The keys in the dictionaries used as y axes.
       :param x_axis: String. The key in the dictionaries used as x axis.
       :param z_axis: String. The key in the dictionaries used as z axis.

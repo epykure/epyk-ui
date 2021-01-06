@@ -442,7 +442,8 @@ class Checkbox(Html.Html):
 class CheckButton(Html.Html):
   name = 'Check Button'
 
-  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None, options=None, profile=None):
+  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None,
+               options=None, profile=None):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,  css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
     if flag:
