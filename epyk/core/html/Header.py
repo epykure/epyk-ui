@@ -655,16 +655,19 @@ class Header:
     """
     Description:
     ------------
-    Change the tab icon to highlight this page is still in dev mode
+    Change the tab icon to highlight this page is still in dev mode.
 
     Usage:
     -----
 
+      page = Report()
+      page.headers.dev()
+
     Attributes:
     ----------
-    :param icon: String. Optional.
+    :param icon: String. Optional. The url path of the icon.
     """
-    self._favicon_url = icon or Defaults.FAVICON_DEV_URL
+    self.favicon(icon or Defaults.FAVICON_DEV_URL)
 
   @property
   def meta(self):
