@@ -28,7 +28,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param val:
+    :param val: HTML | String. The item to be added.
     :param checked: Boolean. Optional.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
@@ -48,7 +48,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. The item value to disable.
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -65,7 +65,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. The item value to set as checked.
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -77,7 +77,7 @@ class Radio(Html.Html):
     """
     Description:
     ------------
-    HTML Dom object
+    HTML Dom object.
 
     Usage:
     -----
@@ -212,7 +212,7 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
-  def click(self, onFncs=None, offFncs=None, profile=False, source_event=None, onReady=False):
+  def click(self, on_funcs=None, off_funcs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -228,20 +228,20 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param onFncs: String | List. The Javascript functions
-    :param offFncs: String | List. The Javascript functions
+    :param on_funcs: String | List. The Javascript functions
+    :param off_funcs: String | List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    if onFncs is not None:
-      if not isinstance(onFncs, list):
-        onFncs = [onFncs]
-      self._clicks['on'].extend(onFncs)
-    if offFncs is not None:
-      if not isinstance(offFncs, list):
-        offFncs = [offFncs]
-      self._clicks['off'].extend(offFncs)
+    if on_funcs is not None:
+      if not isinstance(on_funcs, list):
+        on_funcs = [on_funcs]
+      self._clicks['on'].extend(on_funcs)
+    if off_funcs is not None:
+      if not isinstance(off_funcs, list):
+        off_funcs = [off_funcs]
+      self._clicks['off'].extend(off_funcs)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(
