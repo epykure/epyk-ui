@@ -40,13 +40,13 @@ class HtmlGeneric(Html.Html):
 
     return self.val[i]
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
+    component.options.managed = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val, list):
       self._vals = [] if self.val is None else [self.val]
-    if htmlObj is not None:
-      self.val.append(htmlObj)
+    if component is not None:
+      self.val.append(component)
     return self
 
   @property
