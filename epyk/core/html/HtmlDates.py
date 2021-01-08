@@ -99,7 +99,7 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param dts: List. Optional. A list of dates format YYYY-MM-DD.
     :param js_funcs: List | String. Optional. Javascript functions.
     """
     return self.input.excluded_dates(dts, js_funcs)
@@ -119,7 +119,7 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param dts: List. A list of dates format YYYY-MM-DD.
+    :param dts: List. Optional. A list of dates format YYYY-MM-DD.
     :param js_funcs: List | String. Optional. Javascript functions.
     """
     return self.input.included_dates(dts, js_funcs)
@@ -139,8 +139,8 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param options:
-    :param name: Optional. String | Python dictionary with the options to set
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param name: String. Optional. String | Python dictionary with the options to set.
     :param value: Optional.
     """
     if options is None and name is None:
@@ -199,7 +199,7 @@ class TimePicker(Html.Html):
     Description:
     -----------
     Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
-    Note: the variable time is a function parameter received in the Javascript side
+    Note: the variable time is a function parameter received in the Javascript side.
 
     Usage:
     -----
@@ -216,7 +216,7 @@ class TimePicker(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self.input.change(js_funcs, profile)
     return self
@@ -368,12 +368,12 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param name:
+    :param name: String.
     :param start:
-    :param capacity: Float. A figure in percentage
+    :param capacity: Float. A figure in percentage.
     :param end:
-    :param weekend:
-    :param options:
+    :param weekend: Boolean. Optional. Flag to specify if the weekends should be considered.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     if self.options.unit != 100 and options is None:
       options = {'unit': self.options.unit}
@@ -447,7 +447,7 @@ class Calendar(Html.Html):
     :param start:
     :param capacity:
     :param frequency:
-    :param weekend:
+    :param weekend: Boolean. Optional. Flag to specify if the weekends should be considered.
     :param options:
     """
     dt = datetime.date(*map(lambda x: int(x), start.split("-")))
@@ -530,7 +530,7 @@ class Timer(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions
+    :param js_funcs: List | String. Javascript functions.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

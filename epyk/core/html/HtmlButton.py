@@ -665,10 +665,10 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.hover_color:
       if self.hover_color == 'danger':
