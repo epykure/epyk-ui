@@ -62,14 +62,14 @@ class Label(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
-    Add a click event for a component
+    Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component
-    has been build
+    has been build.
 
     Usage:
     -----
@@ -83,15 +83,15 @@ class Label(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs, profile, source_event=source_event, onReady=onReady)
+    self.on("click", js_funcs, profile, source_event=source_event, onReady=onReady)
     return self
 
   def selectable(self, flag=False):
@@ -205,7 +205,7 @@ class Span(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -226,15 +226,15 @@ class Span(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs, profile, source_event, onReady)
+    self.on("click", js_funcs, profile, source_event, onReady)
     return self
 
   _js__builder__ = ''' 
@@ -329,7 +329,7 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -341,18 +341,18 @@ class Text(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = 'pointer'
     if "data-group" in self.attr:
-      return super(Text, self).click(jsFncs + ["document.querySelectorAll('[data-group=%s]').forEach(function(dom){dom.classList.remove('%s')})" % (self.attr["data-group"], self.dom.classList.style_select), self.dom.classList.select()], profile, source_event, onReady)
+      return super(Text, self).click(js_funcs + ["document.querySelectorAll('[data-group=%s]').forEach(function(dom){dom.classList.remove('%s')})" % (self.attr["data-group"], self.dom.classList.style_select), self.dom.classList.select()], profile, source_event, onReady)
 
-    return super(Text, self).click(jsFncs, profile, source_event, onReady)
+    return super(Text, self).click(js_funcs, profile, source_event, onReady)
 
-  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None, onReady=False):
+  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -364,17 +364,17 @@ class Text(Html.Html):
     Attributes:
     ----------
     :param url:
-    :param jsFncs: List. The Javascript Events triggered before the redirection
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. The Javascript Events triggered before the redirection.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param name: String. Optional.
     :param source_event: String. Optional. The event source.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append(self.js.location.open_new_tab(url, name))
-    return self.click(jsFncs, profile, source_event, onReady)
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.js.location.open_new_tab(url, name))
+    return self.click(js_funcs, profile, source_event, onReady)
 
   @property
   def val(self):
@@ -774,7 +774,7 @@ class Title(Html.Html):
       if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -796,15 +796,15 @@ class Title(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    return super(Title, self).click(jsFncs, profile, source_event, onReady)
+    return super(Title, self).click(js_funcs, profile, source_event, onReady)
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
@@ -931,7 +931,7 @@ class Numeric(Html.Html):
     ])
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -941,14 +941,14 @@ class Numeric(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event:
     :param onReady:
     """
     self.style.css.cursor = "pointer"
     self.style.add_classes.div.border_hover()
-    return super(Numeric, self).click(jsFncs, profile, source_event, onReady)
+    return super(Numeric, self).click(js_funcs, profile, source_event, onReady)
 
   @property
   def options(self):
