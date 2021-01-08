@@ -83,7 +83,7 @@ class Input(Html.Html):
       else { htmlObj.value = data; }
       '''
 
-  def focus(self, jsFncs=None, profile=False, options=None, source_event=None, onReady=False):
+  def focus(self, js_funcs=None, profile=False, options=None, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -94,27 +94,27 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List or String with the Javascript events
+    :param js_funcs: List | String with the Javascript events
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.__focus = True
-    if jsFncs is None:
-      jsFncs = []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if js_funcs is None:
+      js_funcs = []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if options is not None:
       if options.get("reset", False):
-        jsFncs.append(self.dom.empty())
+        js_funcs.append(self.dom.empty())
       if options.get("select", False):
-        jsFncs.append(self.dom.select())
+        js_funcs.append(self.dom.select())
     if self.options.reset:
-      jsFncs.append(self.dom.empty())
+      js_funcs.append(self.dom.empty())
     if self.options.select:
-      jsFncs.append(self.dom.select())
-    return self.on("focus", jsFncs, profile, source_event, onReady)
+      js_funcs.append(self.dom.select())
+    return self.on("focus", js_funcs, profile, source_event, onReady)
 
   def validation(self, pattern, required=True):
     """
@@ -138,7 +138,7 @@ class Input(Html.Html):
     self.style.add_classes.input.is_valid()
     return self
 
-  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def enter(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -151,7 +151,7 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     :param onReady:
@@ -159,10 +159,10 @@ class Input(Html.Html):
     :return: The python object itself
     """
 
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append(self.dom.select())
-    self.keydown.enter(jsFncs, profile, source_event=source_event)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.dom.select())
+    self.keydown.enter(js_funcs, profile, source_event=source_event)
     return self
 
   def readonly(self, flag=True):
@@ -230,7 +230,7 @@ class AutoComplete(Input):
     """
     return self.__options
 
-  def focus(self, jsFncs=None, profile=False, options=None, source_event=None, onReady=False):
+  def focus(self, js_funcs=None, profile=False, options=None, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -241,27 +241,27 @@ class AutoComplete(Input):
 
     Attributes:
     ----------
-    :param jsFncs: List or String with the Javascript events
+    :param js_funcs: List or String with the Javascript events
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.__focus = True
-    if jsFncs is None:
-      jsFncs = []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if js_funcs is None:
+      js_funcs = []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if options is not None:
       if options.get("reset", False):
-        jsFncs.append(self.dom.empty())
+        js_funcs.append(self.dom.empty())
       if options.get("select", False):
-        jsFncs.append(self.dom.select())
+        js_funcs.append(self.dom.select())
     if self.options.reset:
-      jsFncs.append(self.dom.empty())
+      js_funcs.append(self.dom.empty())
     if self.options.select:
-      jsFncs.append(self.dom.select())
-    return self.on("focus", jsFncs, profile, source_event, onReady)
+      js_funcs.append(self.dom.select())
+    return self.on("focus", js_funcs, profile, source_event, onReady)
 
   @property
   def js(self):
@@ -483,7 +483,7 @@ class InputDate(Input):
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
     return self._dom
 
-  def excluded_dates(self, dts=None, jsFncs=None):
+  def excluded_dates(self, dts=None, js_funcs=None):
     """
     Description:
     ------------
@@ -494,14 +494,14 @@ class InputDate(Input):
     Attributes:
     ----------
     :param dts:
-    :param jsFncs:
+    :param js_funcs:
     """
     self._jsStyles['beforeShowDay'] = '''function (date) {
             var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
             %(jsFnc)s; if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
-          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(jsFncs, toStr=True)}
+          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True)}
 
-  def included_dates(self, dts=None, jsFncs=None):
+  def included_dates(self, dts=None, js_funcs=None):
     """
     Description:
     ------------
@@ -512,12 +512,12 @@ class InputDate(Input):
     Attributes:
     ----------
     :param dts:
-    :param jsFncs:
+    :param js_funcs:
     """
     self._jsStyles['beforeShowDay'] = '''function (date) {
         var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
         %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
-      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(jsFncs, toStr=True)}
+      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True)}
 
   def format_dates(self, class_name, dts=None, css=None, tooltip=""):
     """
@@ -1036,7 +1036,7 @@ class TextArea(Html.Html):
     """
     return self.__options
 
-  def selectable(self, jsFncs=None, profile=False):
+  def selectable(self, js_funcs=None, profile=False):
     """
     Description:
     -----------
@@ -1046,14 +1046,14 @@ class TextArea(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
 
     :return: self. to allow the function chaining
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.attr['onclick'] = "this.blur();this.select();%s" % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.attr['onclick'] = "this.blur();this.select();%s" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   @property
@@ -1116,7 +1116,7 @@ class Search(Html.Html):
 
   _js__builder__ = '''htmlObj.find('input').val(data)'''
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1126,14 +1126,14 @@ class Search(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String or List. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    return self.icon.click(jsFncs, profile, source_event, onReady=onReady)
+    return self.icon.click(js_funcs, profile, source_event, onReady=onReady)
 
-  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def enter(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1146,14 +1146,14 @@ class Search(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
+    :param js_funcs: String | List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself
     """
-    self.click(jsFncs)
+    self.click(js_funcs)
     return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {"jsFnc": self.icon.dom.events.trigger("click")}],
                    profile=profile, source_event=source_event, onReady=onReady)
 
