@@ -29,12 +29,12 @@ class Li(Html.Html):
       text.options.managed = False
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    if not hasattr(htmlObj, 'options'):
+    if not hasattr(component, 'options'):
       raise Exception("This can only be used for HTML components")
 
-    self.set_html_content(htmlObj)
+    self.set_html_content(component)
     return self
 
   @property
@@ -55,7 +55,7 @@ class Li(Html.Html):
     """
     Description:
     ------------
-    Add an elementary label component
+    Add an elementary label component.
 
     Usage:
     -----
@@ -66,9 +66,9 @@ class Li(Html.Html):
 
     Attributes:
     ----------
-    :param text: The label content
-    :param css: Optional. A dictionary with the CSS style to be added to the component
-    :param position:
+    :param text: String. The label content.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param position: String. Optional. The position.
     :param for_: Specifies which form element a label is bound to
     """
     self.label = ""
@@ -87,46 +87,49 @@ class Li(Html.Html):
       self.label.css(dfl_css)
     return self
 
-  def set_html_content(self, htmlObj):
+  def set_html_content(self, component):
     """
     Description:
     ------------
-    Set the cell content to be an HTML object
+    Set the cell content to be an HTML object.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param htmlObj: Python HTML object
+    :param component: HTML. Python HTML object.
 
     :return: self, the cell object to allow the chaining
     """
-    htmlObj.options.managed = False
+    component.options.managed = False
     if self.innerPyHTML is not None:
       if not isinstance(self.innerPyHTML, list):
         self.innerPyHTML = [self.innerPyHTML]
-      self.innerPyHTML.append(htmlObj)
+      self.innerPyHTML.append(component)
     else:
-      self.innerPyHTML = htmlObj
+      self.innerPyHTML = component
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param jsFncs:
-    :param profile:
-    :param source_event:
-    :param onReady:
-    :return:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.innerPyHTML is not None:
-      return self.innerPyHTML.click(jsFncs, profile)
+      return self.innerPyHTML.click(js_funcs, profile)
 
-    return super(Li, self).click(jsFncs, profile, source_event, onReady=onReady)
+    return super(Li, self).click(js_funcs, profile, source_event, onReady=onReady)
 
   def __str__(self):
     return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
@@ -179,14 +182,14 @@ class List(Html.Html):
     """
     Description:
     ------------
-    Function to load a predefined style for the items of the components
+    Function to load a predefined style for the items of the components.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param style. String. Mandatory. The alias of the style to apply
+    :param style. String. Mandatory. The alias of the style to apply.
     """
     if style == "bullets":
       bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',  'background': self._report.theme.greys[2],
@@ -197,7 +200,7 @@ class List(Html.Html):
         item.css(self.options.li_css)
     return self
 
-  def drop(self, jsFncs=None, preventDefault=True, profile=False):
+  def drop(self, js_funcs=None, prevent_default=True, profile=False):
     """
     Description:
     ------------
@@ -207,31 +210,31 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param preventDefault:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param prevent_default:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     from epyk.core.js.primitives import JsObjects
 
-    if jsFncs is None:
+    if js_funcs is None:
       # events.data
-      jsFncs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
+      js_funcs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
         self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))]
     else:
-      if not isinstance(jsFncs, list):
-        jsFncs = [jsFncs]
-      jsFncs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
-        self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))] + jsFncs
-    return super(List, self).drop(jsFncs, preventDefault, profile)
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
+      js_funcs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
+        self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))] + js_funcs
+    return super(List, self).drop(js_funcs, prevent_default, profile)
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    if not isinstance(htmlObj, Li):
+    if not isinstance(component, Li):
       raise Exception("This can only be used for Li")
 
     self.items = self.items or []
-    htmlObj.options.managed = False
-    self.items.append(htmlObj)
+    component.options.managed = False
+    self.items.append(component)
     return self
 
   def __getitem__(self, i):
@@ -289,7 +292,7 @@ class List(Html.Html):
       self.items.append(li_obj)
     return self
 
-  def on_items(self, event, jsFncs, profile=False):
+  def on_items(self, event, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -300,14 +303,14 @@ class List(Html.Html):
     Attributes:
     ----------
     :param event:
-    :param jsFncs:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     for i in self.items:
-      i.on(event, jsFncs, profile)
+      i.on(event, js_funcs, profile)
     return self
 
-  def click_items(self, jsFncs, profile=False):
+  def click_items(self, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -317,15 +320,15 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs)
     for i, item in enumerate(self.items):
       fnc = JsUtils.jsConvertFncs([
         self._report.js.getElementsByName("divs_%s" % self.htmlCode).all(self._report.js.objects.dom("elt").hide().r),
         self._report.js.getElementsByName("divs_%s" % self.htmlCode)[i].toggle().r])
-      item.click(fnc + jsFncs, profile)
+      item.click(fnc + js_funcs, profile)
     return self
 
   def __str__(self):
@@ -462,7 +465,7 @@ class Items(Html.Html):
       self._dom = JsHtmlList.JsItem(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -472,16 +475,17 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = []
-    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = []
+    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+  def draggable(self, js_funcs=None, options=None, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -491,16 +495,16 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param options:
-    :param profile:
-    :param source_event:
+    :param js_funcs: List | String. Javascript functions.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append('event.dataTransfer.setData("text", value)')
-    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append('event.dataTransfer.setData("text", value)')
+    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def add_type(self, type, item_def, dependencies=None):
@@ -517,8 +521,8 @@ class Items(Html.Html):
     Attributes:
     ----------
     :param type: String. The reference of this type in the framework.
-    :param item_def: String. The definition of the items (examples in JsHtmlList.py)
-    :param dependencies: List. Optional. The external module dependencies
+    :param item_def: String. The definition of the items (examples in JsHtmlList.py).
+    :param dependencies: List. Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:
@@ -583,18 +587,18 @@ class ListTournaments(Html.Html):
                                           css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
-  def addFnc(self, fncName, jsFncs):
+  def addFnc(self, func_name, js_funcs):
     """
 
     Usage:
     -----
 
-    :param fncName:
-    :param jsFncs:
+    :param func_name: String. The function name.
+    :param js_funcs: List | String. Javascript functions.
     """
-    if isinstance(jsFncs, list):
-      jsFncs = ";".join(jsFncs)
-    self.vals[fncName] = jsFncs
+    if isinstance(js_funcs, list):
+      js_funcs = ";".join(js_funcs)
+    self.vals[func_name] = js_funcs
 
   _js__builder__ = '''
       htmlObj.empty(); parameters = {centerConnectors: true, init: data.vals }; 

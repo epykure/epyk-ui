@@ -87,18 +87,18 @@ class Input(Html.Html):
     """
     Description:
     -----------
-    Action on focus
+    Action on focus.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcs: List | String with the Javascript events
-    :param profile: Boolean to add the Javascript fragment to profile
-    :param options: Python dictionary with special options (shortcuts) for the component
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.__focus = True
     if js_funcs is None:
@@ -120,7 +120,7 @@ class Input(Html.Html):
     """
     Description:
     -----------
-    Add validation rules on the input component
+    Add validation rules on the input component.
 
     Usage:
     -----
@@ -130,6 +130,8 @@ class Input(Html.Html):
     Attributes:
     ----------
     :param pattern: String.
+    :param required: Boolean. Optional.
+
     :return: Self to allow the chaining
     """
     self.attr["pattern"] = pattern
@@ -142,7 +144,7 @@ class Input(Html.Html):
     """
     Description:
     ------------
-    Add an javascript action when the key enter is pressed on the keyboard
+    Add an javascript action when the key enter is pressed on the keyboard.
 
     Usage:
     -----
@@ -151,10 +153,10 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
-    :param source_event:
-    :param onReady:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The python object itself
     """
@@ -167,11 +169,15 @@ class Input(Html.Html):
 
   def readonly(self, flag=True):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param flag:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     if flag:
       self.attr["readonly"] = "readonly"
@@ -217,7 +223,7 @@ class AutoComplete(Input):
     """
     Description:
     ------------
-    Property to set all the input timepicker component properties
+    Property to set all the input timepicker component properties.
 
     Usage:
     -----
@@ -234,18 +240,18 @@ class AutoComplete(Input):
     """
     Description:
     -----------
-    Action on focus
+    Action on focus.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcs: List or String with the Javascript events
-    :param profile: Boolean to add the Javascript fragment to profile
-    :param options: Python dictionary with special options (shortcuts) for the component
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.__focus = True
     if js_funcs is None:
@@ -307,7 +313,7 @@ class InputTime(Input):
     """
     Description:
     ------------
-    Property to set all the input timepicker component properties
+    Property to set all the input timepicker component properties.
 
     Usage:
     -----
@@ -325,7 +331,7 @@ class InputTime(Input):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -341,7 +347,7 @@ class InputTime(Input):
     """
     Description:
     ------------
-    The Javascript Dom object
+    The Javascript Dom object.
 
     Usage:
     -----
@@ -361,8 +367,6 @@ class InputTime(Input):
     Usage:
     -----
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsTimepicker.Timepicker
@@ -375,12 +379,14 @@ class InputTime(Input):
       if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)} 
       %(jqId)s.timepicker(options); ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def change(self, jsFnc, profile=False):
+  def change(self, js_fncs, profile=False):
     """
     Description:
     -----------
-    Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
-    Note: the variable time is a function parameter received in the Javascript side
+    Event triggered when the value of the input field changes.
+
+    A Date object containing the selected time is passed as the first argument of the callback.
+    Note: the variable time is a function parameter received in the Javascript side.
 
     Usage:
     -----
@@ -389,11 +395,14 @@ class InputTime(Input):
 
       https://timepicker.co/options/
 
-    :param jsFnc:
+    Attributes:
+    ----------
+    :param js_fncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_fncs, list):
+      js_fncs = [js_fncs]
+    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(js_fncs, toStr=True)
     return self
 
   def __str__(self):

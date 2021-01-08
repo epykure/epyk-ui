@@ -5,10 +5,6 @@ from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptText
 
-# The list of CSS classes
-# from epyk.core.css.styles import GrpCls
-# from epyk.core.css.styles import CssGrpClsText
-
 
 class ExternalLink(Html.Html):
   name = 'External link'
@@ -71,13 +67,15 @@ class ExternalLink(Html.Html):
     """
     Description:
     ------------
+    Create a link to an HTML component defined in the page.
+    This will create a shortcut to directly scroll to this component.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param component: HTML.
+    :param component: HTML. A link to this HTML component.
     """
     self.val["url"] = "#%s" % component.htmlCode
     self.options.url = "#%s" % component.htmlCode
