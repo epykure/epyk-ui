@@ -159,7 +159,7 @@ class Select(Html.Html):
       selectObj.selectpicker(options).selectpicker('refresh');
       selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, jsFncs, emtpyFncs=None, profile=False, source_event=None, onReady=False):
+  def change(self, js_funcs, emtpyFncs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -170,19 +170,19 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Set of Javascript function to trigger on this event
-    :param emtpyFncs: ist. Set of Js function to trigger if the value is empty
-    :param profile: Boolean. To set the profiling.
+    :param js_funcs: List | String. Set of Javascript function to trigger on this event
+    :param emtpyFncs: List | String. Set of Js function to trigger if the value is empty
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if emtpyFncs is not None:
       if not isinstance(emtpyFncs, list):
         emtpyFncs = [emtpyFncs]
-      jsFncs.append("if (%s === ''){ %s }" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
-    return self.on("change", jsFncs, profile, source_event, onReady)
+      js_funcs.append("if (%s === ''){ %s }" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
+    return self.on("change", js_funcs, profile, source_event, onReady)
 
   def ajax(self, url, jsData="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
     """
