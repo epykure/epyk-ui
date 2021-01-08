@@ -128,7 +128,7 @@ class EventTouch(object):
   def __init__(self, page):
     self._page = page
 
-  def start(self, jsFncs, profile=False, source_event=None):
+  def start(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -147,14 +147,14 @@ class EventTouch(object):
 
     Attributes:
     ----------
-    :param jsFncs: List.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional.
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchstart", jsFncs, profile)
+    self._page.on("touchstart", js_funcs, profile)
     return self._page
 
-  def move(self, jsFncs, profile=False, source_event=None):
+  def move(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -171,14 +171,14 @@ class EventTouch(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional.
+    :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchmove", jsFncs, profile)
+    self._page.on("touchmove", js_funcs, profile)
     return self._page
 
-  def cancel(self, jsFncs, profile=False, source_event=None):
+  def cancel(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -195,14 +195,14 @@ class EventTouch(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional.
+    :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchcancel", jsFncs, profile)
+    self._page.on("touchcancel", js_funcs, profile)
     return self._page
 
-  def end(self, jsFncs, profile=False, source_event=None):
+  def end(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -221,14 +221,14 @@ class EventTouch(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional.
+    :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchend", jsFncs, profile)
+    self._page.on("touchend", js_funcs, profile)
     return self._page
 
-  def swap(self, jsFncsLeft, jsFncsRight, profile=False, source_event=None):
+  def swap(self, js_funcsLeft, js_funcsRight, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -238,14 +238,14 @@ class EventTouch(object):
 
     Attributes:
     ----------
-    :param jsFncsLeft: List.
-    :param jsFncsRight: List.
+    :param js_funcsLeft: List | String. Javascript functions.
+    :param js_funcsRight: List | String. Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional
+    :param source_event: String. Optional. The source target for the event.
     """
     self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"])
     self.move(self._page.js.if_("window.longTouch != null", ["let swap =  (event.touches[0].clientX || event.originalEvent.touches[0].clientX) - window.longTouch",
-      "window.longTouch = null", self._page.js.if_("swap < 0", jsFncsLeft).else_(jsFncsRight)]))
+      "window.longTouch = null", self._page.js.if_("swap < 0", js_funcsLeft).else_(js_funcsRight)]))
     return self
 
 
@@ -330,7 +330,7 @@ class Html(object):
 
     Attributes:
     ----------
-    :param component: HTML. Component added to the val main component
+    :param component: HTML. Component added to the val main component.
     """
     return self.__add__(component)
 
@@ -475,7 +475,7 @@ class Html(object):
 
     Attributes:
     ----------
-    :param component: The html component.
+    :param component: HTML. The html component.
 
     :return: The htmlObj
     """
@@ -507,7 +507,7 @@ class Html(object):
 
     Attributes:
     ----------
-    :param component: HTML. The html component
+    :param component: HTML. The html component.
 
     :return: The htmlObj
     """
@@ -519,7 +519,7 @@ class Html(object):
     self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(component.dom)], toStr=True))
     return self
 
-  def onReady(self, jsFncs):
+  def onReady(self, js_funcs):
     """
     Description:
     -----------
@@ -536,11 +536,11 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript function to be added once the object is built.
+    :param js_funcs: List | String. Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(jsFncs))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(js_funcs))
 
   def add_menu(self, context_menu):
     """
@@ -554,7 +554,7 @@ class Html(object):
 
     Attributes:
     ----------
-    :param context_menu: A Python context menu object.
+    :param context_menu: ContextMenu. A Python context menu object.
     """
     context_menu.source = self
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
@@ -576,8 +576,8 @@ class Html(object):
 
     Attributes:
     ----------
-    :param text: String. The icon reference from font-awsome website
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param text: String. The icon reference from font-awesome website.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     :param family: String. Optional. The icon framework to be used (preferred one is font-awesome).
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -615,11 +615,11 @@ class Html(object):
 
     Attributes:
     ----------
-    :param text: String. The label content
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param text: String. The label content.
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param for_: String. Optional. Specifies which form element a label is bound to
+    :param for_: String. Optional. Specifies which form element a label is bound to.
     """
     self.label = ""
     if text is not None:
@@ -653,7 +653,7 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The Span content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param i: Integer. Optional.
@@ -697,7 +697,7 @@ class Html(object):
     :param report_name:
     :param name:
     :param icon:
-    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     """
     self.link = ""
@@ -764,7 +764,7 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The title content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param attrs: Dictionary. Optional. The HTML tag attributes.
     :param position: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -792,8 +792,8 @@ class Html(object):
 
     Attributes:
     ----------
-    :param flag: Boolean. The state of the checkbox component
-    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param flag: Boolean. The state of the checkbox component.
+    :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param attrs: Dictionary. Optional. The HTML tag attributes.
     :param position: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -824,7 +824,7 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The helper content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component
+    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
 
     :rtype: self._report.ui.rich.info
     """
@@ -972,8 +972,8 @@ class Html(object):
 
     Attributes:
     ----------
-    :param key: String. Optional. The key style in the CSS attributes (Can also be a dictionary)
-    :param value: String. Optional. The value corresponding to the key style
+    :param key: String. Optional. The key style in the CSS attributes (Can also be a dictionary).
+    :param value: String. Optional. The value corresponding to the key style.
     :param reset: Boolean. Optional. Specify if the CSS styles need to be emptied first.
 
     :return: The python object itself
@@ -1014,7 +1014,7 @@ class Html(object):
     Description:
     -----------
     Add the Tooltip feature when the mouse is over the component.
-    This tooltip version is coming from Bootstrap
+    This tooltip version is coming from Bootstrap.
 
     Usage:
     -----
@@ -1074,7 +1074,7 @@ class Html(object):
       self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
-  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+  def draggable(self, js_funcs=None, options=None, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -1084,16 +1084,16 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event:
+    :param source_event: String. Optional. The source target for the event.
     """
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.attr["draggable"] = True
-    return self.on("dragstart", jsFncs + ['event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
+    return self.on("dragstart", js_funcs + ['event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
 
   def add_options(self, options=None, name=None, value=None):
     """
@@ -1224,7 +1224,7 @@ class Html(object):
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  def on(self, event, jsFncs, profile=False, source_event=None, onReady=False):
+  def on(self, event, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1242,29 +1242,29 @@ class Html(object):
 
     Attributes:
     ----------
-    :param event: String. A string with the Javascript event type from the dom_obj_event.asp
-    :param jsFncs: List | String. A Javascript Python function.
+    :param event: String. A string with the Javascript event type from the dom_obj_event.asp.
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: self to allow the chains
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
     # span.on("mouseover", span.dom.css("color", "red").r)
     # span.on("mouseleave", span.dom.css("color", "blue"))
     source_event = source_event or self.dom.varId
     if event not in self._browser_data['mouse']:
       self._browser_data['mouse'][event] = {}
-    self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
+    self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(js_funcs))
     self._browser_data['mouse'][event][source_event]['profile'] = profile
     if onReady:
       self._report.body.onReady([self.dom.events.trigger(event)])
     return self
 
-  def drop(self, jsFncs, preventDefault=True, profile=False):
+  def drop(self, js_funcs, prevent_default=True, profile=False):
     """
     Description:
     -----------
@@ -1278,25 +1278,25 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function.
-    :param preventDefault: Boolean. Optional. Specify if the event should have a default behaviour on the page.
+    :param js_funcs: List | String. A Javascript Python function.
+    :param prevent_default: Boolean. Optional. Specify if the event should have a default behaviour on the page.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
 
     :return: Return self to allow the chaining
     """
     dft_fnc = ""
-    if preventDefault:
+    if prevent_default:
       dft_fnc = self._report.js.objects.event.preventDefault()
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.text] + js_funcs, toStr=True)
     # By default change the box shadow of this component
     self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (dft_fnc, str_fncs, self.dom.css('box-shadow', 'none').r)
     self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self._report.theme.success[1]).r)
     self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
 
-  def hover(self, jsFncs, profile=False, source_event=None):
+  def hover(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -1312,13 +1312,13 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. A String. Optional. The source target for the event.
     """
-    return self.on("mouseover", jsFncs, profile, source_event)
+    return self.on("mouseover", js_funcs, profile, source_event)
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1338,16 +1338,16 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function
+    :param js_funcs: List | String. A Javascript Python function
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if onReady:
       self._report.body.onReady([self.dom.events.trigger("click")])
-    return self.on("click", jsFncs, profile, source_event)
+    return self.on("click", js_funcs, profile, source_event)
 
-  def dblclick(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def dblclick(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -1362,16 +1362,16 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function.
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if onReady:
       self._report.body.onReady([self.dom.events.trigger("dblclick")])
-    return self.on("dblclick", jsFncs, profile, source_event)
+    return self.on("dblclick", js_funcs, profile, source_event)
 
-  def scroll(self, jsFncs, profile=False, source_event=None):
+  def scroll(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -1384,20 +1384,20 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function.
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     """
-    return self.on("scroll", jsFncs, profile, source_event)
+    return self.on("scroll", js_funcs, profile, source_event)
 
-  def mouse(self, on_fncs=None, out_fncs=None, profile=False, source_event=None):
+  def mouse(self, on_funcs=None, out_funcs=None, profile=False, source_event=None):
     """
     Description:
     -----------
     Wrapper function fot the mouse event.
     This function will cover the on mouse hover event and mouse out.
 
-    More specific events are possible using the generic out function
+    More specific events are possible using the generic out function.
 
     Tip: As function are defined to be chaining in most of the components use .r to get the string representation and clean the cache.
 
@@ -1411,19 +1411,21 @@ class Html(object):
 
     Attributes:
     ----------
-    :param on_fncs: List | String. The Javascript events.
-    :param out_fncs: List | String. The Javascript events
+    :param on_funcs: List | String. The Javascript events.
+    :param out_funcs: List | String. The Javascript events.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
 
     :return: self to allow the chains
     """
     self.style.css.cursor = 'pointer'
-    if on_fncs is not None:
-      self.on("mouseenter", on_fncs, profile, source_event)
-    if out_fncs is not None:
-      self.on("mouseleave", out_fncs, profile, source_event)
+    if on_funcs is not None:
+      self.on("mouseenter", on_funcs, profile, source_event)
+    if out_funcs is not None:
+      self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, jsFncs, profile=False, source_event=None):
+  def paste(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -1434,20 +1436,20 @@ class Html(object):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. A String. Optional. The source target for the event.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, js_funcs=None, profile=False):
     """
     Description:
     -----------
-    Attach a context menu to a component and set a function to called before the display
+    Attach a context menu to a component and set a function to called before the display.
 
     Usage:
     -----
@@ -1455,8 +1457,8 @@ class Html(object):
     Attributes:
     ----------
     :param menu:
-    :param js_funcs: List | String. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
@@ -1472,6 +1474,8 @@ class Html(object):
   @property
   def touch(self):
     """
+    Description:
+    -----------
 
     Usage:
     -----
@@ -1490,9 +1494,9 @@ class Html(object):
 
     Attributes:
     ----------
-    :param data: String or object. The component expected content
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param data: String | object. The component expected content.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not self.builder_name or self._js__builder__ is None:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
@@ -1529,7 +1533,7 @@ class Html(object):
     """
     Description:
     -----------
-    Component refresh function. Javascript function which can be called in any Javascript event
+    Component refresh function. Javascript function which can be called in any Javascript event.
 
     Usage:
     -----
@@ -1537,7 +1541,7 @@ class Html(object):
     """
     return self.build(self.val, self._jsStyles)
 
-  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -1555,17 +1559,17 @@ class Html(object):
 
     Attributes:
     ----------
-    :param socket: Socket. A python socket object
-    :param channel: String. The channel on which events will be received
+    :param socket: Socket. A python socket object.
+    :param channel: String. The channel on which events will be received.
     :param data:
-    :param options:
-    :param jsFncs:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data is None:
       data = socket.message
-    jsFncs = jsFncs if jsFncs is not None else []
-    socket.on(channel, [self.build(data, options, profile)] + jsFncs)
+    js_funcs = js_funcs if js_funcs is not None else []
+    socket.on(channel, [self.build(data, options, profile)] + js_funcs)
     return self
 
   @packageImport('sortablejs')
@@ -1584,9 +1588,9 @@ class Html(object):
 
     Attributes:
     ----------
-    :param options: Dictionary. The sortable options
-    :param propagate: Boolean. Specify if the sub children should get the draggable property
-    :param propagate_only: Boolean. Specify if the first level of child is draggable
+    :param options: Dictionary. The sortable options.
+    :param propagate: Boolean. Specify if the sub children should get the draggable property.
+    :param propagate_only: Boolean. Specify if the first level of child is draggable.
 
     :rtype: JsSortable.Sortable
     """
@@ -1711,7 +1715,7 @@ class Body(Html):
       self._dom.varName = "document.body"
     return self._dom
 
-  def scroll(self, jsFncs, profile=False, source_event=None):
+  def scroll(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -1721,20 +1725,20 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._report.js.onReady(self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._report.js.onReady(self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
 
-  def onReady(self, jsFncs):
+  def onReady(self, js_funcs):
     """
     Description:
     -----------
     Add set of event / actions which will be triggered after the build of the object.
-    usually this can be used to add js functions on a chart or a table
+    usually this can be used to add js functions on a chart or a table.
 
     Usage:
     -----
@@ -1746,13 +1750,13 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript function to be added once the object is built
+    :param js_funcs: List | String. Javascript function to be added once the object is built.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._report.js.onReady(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._report.js.onReady(js_funcs)
 
-  def onLoad(self, jsFncs):
+  def onLoad(self, js_funcs):
     """
     Description:
     -----------
@@ -1762,28 +1766,28 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(js_funcs, toStr=True))
 
-  def fromConfig(self, jsFncs=None, components=None, lang="eng", end_point="/static/configs", sync=True):
+  def fromConfig(self, js_funcs=None, components=None, lang="eng", end_point="/static/configs", sync=True):
     """
     Description:
     -----------
     Load teh configuration file in order to fill the templates with static data.
     This will allow to externalise the configuration and design rich web templates.
 
-    Do not forget to use CTRL+F5 in order to refresh the browser cache to get the updates
+    Do not forget to use CTRL+F5 in order to refresh the browser cache to get the updates.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param jsFncs: List. Optional. The various transformations to be triggered from the configuration data
-    :param components: List. Optional. The various HTML Components to be updated fro the configuration file
+    :param js_funcs: List | String. Optional. The various transformations to be triggered from the configuration data.
+    :param components: List. Optional. The various HTML Components to be updated fro the configuration file.
     :param lang: String. Optional. The default lang for the configuration.
     :param end_point: String. Optional. The url for the configuration files.
     :param sync: Boolean. Optional. Specify if the type of loading event.
@@ -1791,9 +1795,9 @@ class Body(Html):
     if self._report.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
 
     return '''
       if (typeof window['page_config'] === 'undefined'){
@@ -1805,7 +1809,7 @@ class Body(Html):
                var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %(fncs)s}}
         rawFile.send(null)} 
       else {var data = window['page_config']; %(fncs)s}''' % {"sync": JsUtils.jsConvertData(not sync, None), "lang": lang, 'url': end_point, 'json': self._report.json_config_file,
-            'fncs': JsUtils.jsConvertFncs(jsFncs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
+            'fncs': JsUtils.jsConvertFncs(js_funcs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
 
   def set_content(self, report, page_content):
     """
@@ -1819,8 +1823,8 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param report: Report. The main report object
-    :param page_content: String. The html content of the page
+    :param report: Report. The main report object.
+    :param page_content: String. The html content of the page.
 
     :return: The Body HTML object
     """
@@ -1831,7 +1835,7 @@ class Body(Html):
     """
     Description:
     ------------
-    Change the body background color
+    Change the body background color.
 
     Usage:
     -----

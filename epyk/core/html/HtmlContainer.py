@@ -281,7 +281,7 @@ class PanelSlide(Panel):
       self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -293,17 +293,17 @@ class PanelSlide(Panel):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String or List. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__clicks = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__clicks = js_funcs
     return self
 
-  def open(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def open(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -314,14 +314,14 @@ class PanelSlide(Panel):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__clicks_open = [self._report.js.if_(self.icon.dom.content.toString().indexOf(self.options.icon_expanded.split(" ")[-1]) >= 0, jsFncs).toStr()]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__clicks_open = [self._report.js.if_(self.icon.dom.content.toString().indexOf(self.options.icon_expanded.split(" ")[-1]) >= 0, js_funcs).toStr()]
     return self
 
   def __add__(self, component):
@@ -380,7 +380,7 @@ class Div(Html.Html):
       self.set_attrs(name='contenteditable', value="true")
       self.css('overflow', 'auto')
 
-  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
     """
     Description:
     -----------
@@ -392,17 +392,17 @@ class Div(Html.Html):
     Attributes:
     ----------
     :param url:
-    :param jsFncs: List. The Javascript Events triggered before the redirection
+    :param js_funcs: List. The Javascript Events triggered before the redirection
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param name: String. Optional.
     :param source_event: String. Optional. The event source.
     """
     self.style.css.cursor = "pointer"
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append(self.js.location.open_new_tab(url, name))
-    return self.click(jsFncs, profile, source_event)
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.js.location.open_new_tab(url, name))
+    return self.click(js_funcs, profile, source_event)
 
   @property
   def dom(self):
@@ -1824,7 +1824,7 @@ class Indices(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click_item(self, i, jsFncs, profile=False):
+  def click_item(self, i, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -1833,14 +1833,14 @@ class Indices(Html.Html):
     -----
 
     :param i:
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return self[i].on("click", [
       self[i].dom.by_name.css({"border-bottom": "1px solid %s" % self._report.theme.colors[0]}).r,
-      self[i].dom.css({"border-bottom": "1px solid %s" % self.options.background_color})] + jsFncs, profile)
+      self[i].dom.css({"border-bottom": "1px solid %s" % self.options.background_color})] + js_funcs, profile)
 
   def __str__(self):
     str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [self.next.html(), self.last.html()])
@@ -1879,7 +1879,7 @@ class Points(Html.Html):
     """
     return self.__options
 
-  def on(self, event, jsFncs, profile=False, source_event=None, onReady=False):
+  def on(self, event, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -1891,14 +1891,14 @@ class Points(Html.Html):
     Attributes:
     ----------
     :param event:
-    :param jsFncs: Array. The Javascript functions.
+    :param js_funcs: Array. The Javascript functions.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    str_fnc = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_fnc = JsUtils.jsConvertFncs(js_funcs, toStr=True)
     if event == "click":
       for i in range(len(self.items)):
         self.click_item(i, str_fnc)
@@ -1907,7 +1907,7 @@ class Points(Html.Html):
         self.on_item(i, event, str_fnc)
     return self
 
-  def on_item(self, i, event, jsFncs, profile=False):
+  def on_item(self, i, event, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -1919,15 +1919,15 @@ class Points(Html.Html):
     ----------
     :param i: Integer. The item index
     :param event: String. The Javascript event reference
-    :param jsFncs: Array. The Javascript functions
+    :param js_funcs: Array. The Javascript functions
     :param profile:
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return self[i].on(event, [
-      'var data = {position: this.getAttribute("data-position")}'] + jsFncs, profile)
+      'var data = {position: this.getAttribute("data-position")}'] + js_funcs, profile)
 
-  def click_item(self, i, jsFncs, profile=False, onReady=False):
+  def click_item(self, i, js_funcs, profile=False, onReady=False):
     """
     Description:
     ------------
@@ -1939,16 +1939,16 @@ class Points(Html.Html):
     Attributes:
     ----------
     :param i: Integer. The item index
-    :param jsFncs: Array. The Javascript functions
+    :param js_funcs: Array. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return self[i].on("click", [
       'var data = {position: this.getAttribute("data-position")}',
       self[i].dom.by_name.css({"background-color": ""}).r,
-      self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile, onReady=onReady)
+      self[i].dom.css({"background-color": self.options.background_color})] + js_funcs, profile, onReady=onReady)
 
   def __getitem__(self, i):
     return self.items[i]
