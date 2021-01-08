@@ -344,8 +344,7 @@ class Breadcrumb(Html.Html):
             if (rec.selected){var aHref = document.createTextNode(rec.text)}
             else{
               var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
-            htmlObj.appendChild(aHref)
-          }
+            htmlObj.appendChild(aHref)}
           var text = document.createTextNode(options.delimiter);
           if (i < data.length-1){htmlObj.appendChild(text)}
       })}'''
@@ -535,7 +534,7 @@ class Slides(Html.Html):
     ----------
     :param title: String. The title value in the slide.
     :param component: HTML. The HTML component.
-    :param options: Dictionary. The various component options.
+    :param options: Dictionary. Optional. The various component options.
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
