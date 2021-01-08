@@ -30,13 +30,16 @@ class FmtNumber(object):
     -----------
     The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_tofixed.asp
 
     Attributes:
     ----------
-    :param value: Integer. The number of digit to be displayed
+    :param value: Integer. Optional. The number of digit to be displayed.
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toFixed()" % (self.selector, self._val))
@@ -49,13 +52,16 @@ class FmtNumber(object):
     -----------
     The toPrecision() method formats a number to a specified length.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_toprecision.asp
 
     Attributes:
     ----------
-    :param value: Integer. The number of digit to be displayed
+    :param value: Integer. Optional. The number of digit to be displayed.
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toPrecision()" % (self.selector, self._val))
@@ -67,6 +73,9 @@ class FmtNumber(object):
     Description:
     -----------
     The toExponential() method converts a number into an exponential notation.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -86,7 +95,10 @@ class Formatters(object):
     """
     Description:
     -----------
-    Standard conversion to number
+    Standard conversion to number.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -99,7 +111,10 @@ class Formatters(object):
     """
     Description:
     -----------
-    Convert to number using the accounting Javascript module
+    Convert to number using the accounting Javascript module.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -107,8 +122,8 @@ class Formatters(object):
 
     Attributes:
     ----------
-    :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep: String. The thousand symbol separator
+    :param digit: Integer. Optional. The number of digit to be displayed.
+    :param thousand_sep: String. Optional. The thousand symbol separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (self.selector, self.selector, digit, thousand_sep))
@@ -118,7 +133,10 @@ class Formatters(object):
     """
     Description:
     -----------
-    Convert to number with a symbol using the accounting Javascript module
+    Convert to number with a symbol using the accounting Javascript module.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -126,10 +144,10 @@ class Formatters(object):
 
     Attributes:
     ----------
-    :param symbol: String. The currency sympol
-    :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep: String. The thousand symbol separator
-    :param decimal_sep: String. The decimal symbol separator
+    :param symbol: String. Optional. The currency symbol.
+    :param digit: Integer. Optional. The number of digit to be displayed.
+    :param thousand_sep: String. Optional. The thousand symbol separator.
+    :param decimal_sep: String. Optional. The decimal symbol separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -166,9 +184,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    Convert markwdown to HTML string
+    Convert markwdown to HTML string.
 
-    Usage::
+    Usage:
+    -----
 
       t.dom.content.fromMarkdown()
 
@@ -178,7 +197,7 @@ class ContentFormatters(object):
 
     Attributes:
     ----------
-    :param options: Dictionary. Options allowed in the showdown module
+    :param options: Dictionary. Optional. Options allowed in the showdown module.
     """
     options = JsUtils.jsConvertData(options or {}, None)
     return JsObjects.JsObjects.get(
@@ -190,18 +209,19 @@ class ContentFormatters(object):
     """
     Description:
     -----------
-    Convert to number using the accounting Javascript module-
+    Convert to number using the accounting Javascript module.
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
-    :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep:  The thousand symbol separator
+    :param digit: Integer. Optional. The number of digit to be displayed.
+    :param thousand_sep: String. Optional. The thousand symbol separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("accounting.formatNumber(%s, %s, %s)" % (self.selector, digit, thousand_sep))
@@ -211,7 +231,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    Convert to number with a symbol using the accounting Javascript module
+    Convert to number with a symbol using the accounting Javascript module.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -219,10 +242,10 @@ class ContentFormatters(object):
 
     Attributes:
     ----------
-    :param symbol: String. The currency sympol
-    :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep: String. The thousand symbol separator
-    :param decimal_sep: String. The decimal symbol separator
+    :param symbol: String. Optional. The currency symbol.
+    :param digit: Integer. Optional. The number of digit to be displayed.
+    :param thousand_sep: String. Optional. The thousand symbol separator.
+    :param decimal_sep: String. Optional. The decimal symbol separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -234,7 +257,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    parse a value from any formatted number/currency string
+    parse a value from any formatted number/currency string.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -247,7 +273,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    Standard conversion to number
+    Standard conversion to number.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
@@ -256,7 +285,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    Standard conversion to string
+    Standard conversion to string.
+
+    Usage:
+    -----
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector)
 
@@ -265,7 +297,10 @@ class ContentFormatters(object):
     """
     Description:
     ------------
-    Standard conversion to Date object
+    Standard conversion to Date object.
+
+    Usage:
+    -----
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
@@ -292,7 +327,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Return a Javascript val object
+    Return a Javascript val object.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.content.toStr()))
 
@@ -301,6 +340,9 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     :rtype: JsNodeDom.JsDomsList
     """
@@ -314,7 +356,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Check if the component is in the visible part of the page (the viewpport)
+    Check if the component is in the visible part of the page (the viewpport).
+
+    Usage:
+    -----
 
     :rtype: JsObject.JsObject
 
@@ -325,17 +370,20 @@ class JsHtml(JsNodeDom.JsDoms):
     bool._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(bool.r).return_("visibleFlag").call()
 
-  def onViewPort(self, jsFncs):
+  def onViewPort(self, js_funcs):
     """
     Description:
     -----------
-    Trigger some code when the component is visible on the visible part of the page (the viewpport)
+    Trigger some code when the component is visible on the visible part of the page (the viewpport).
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript events
+    :param js_funcs: List | String. The Javascript events.
     """
-    return self._src.js.if_(self.isInViewPort, jsFncs)
+    return self._src.js.if_(self.isInViewPort, js_funcs)
 
   @property
   def content(self):
@@ -343,17 +391,30 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
+    Usage:
+    -----
     """
     return ContentFormatters(self._report, "%s.value" % self.varName)
 
-  def empty(self): return '%s.value = ""' % self.varName
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
+    return '%s.value = ""' % self.varName
 
   @property
   def events(self):
     """
     Description:
     -----------
-    Link to the events attached to a Javascript DOM object
+    Link to the events attached to a Javascript DOM object.
+
+    Usage:
+    -----
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -364,7 +425,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Link to the JQuery functions
+    Link to the JQuery functions.
+
+    Usage:
+    -----
 
     :rtype: JsQuery.JQuery
     """
@@ -377,7 +441,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Wrapper to the D3 library
+    Wrapper to the D3 library.
+
+    Usage:
+    -----
 
     :rtype: JsD3.D3Select
     """
@@ -390,7 +457,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Wrapper to the JqueryUI component
+    Wrapper to the JqueryUI component.
+
+    Usage:
+    -----
 
     :rtype: JsQueryUi.JQueryUI
     """
@@ -403,7 +473,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Interface to the main Javascript Classes and Primitives
+    Interface to the main Javascript Classes and Primitives.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects(self)
 
@@ -412,7 +486,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Interface to CrossFilter package
+    Interface to CrossFilter package.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -425,7 +502,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Specific formatters for the HTML components
+    Specific formatters for the HTML components.
+
+    Usage:
+    -----
     """
     return Formatters(self._report, self.content.toStr())
 
@@ -435,10 +515,11 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Style property to change from the javascript the CSS attributes of an HTML object.
 
-    Usage::
+    Usage:
+    -----
 
       button.js.style({"backgroundColor": 'red'})
-    button.js.style({"backgroundColor": None})
+      button.js.style({"backgroundColor": None})
 
     Related Pages:
 
@@ -446,7 +527,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param attrs: Dictionary. The CSS attributes
+    :param attrs: Dictionary. The CSS attributes.
     """
     styles = []
     for k, v in attrs.items():
@@ -456,36 +537,38 @@ class JsHtml(JsNodeDom.JsDoms):
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return ";".join(styles)
 
-  def registerFunction(self, fncName, jsFncs, pmts=None):
+  def registerFunction(self, fnc_name, js_funcs, pmts=None):
     """
     Description:
     -----------
-    Javascript Framework extension
+    Javascript Framework extension.
 
-    Register a predefined Javascript function
-    This is only dedicated to specific Javascript transformation functions
+    Register a predefined Javascript function.
+    This is only dedicated to specific Javascript transformation functions.
 
-    Usage::
+    Usage:
+    -----
 
-      Attributes:
+    Attributes:
     ----------
-    :param fncName: String. The function name
-    :param jsFncs: String or List. The Javascript function definition
-    :param pmts:
+    :param fnc_name: String. The function name.
+    :param js_funcs: String | List. The Javascript function definition.
+    :param pmts: List. Optional. The parameters for the function.
 
     :return: The JsObject
     """
-    jsData = JsUtils.jsConvertFncs(jsFncs)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
+    js_funcs = JsUtils.jsConvertFncs(js_funcs)
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': ";".join(js_funcs), 'pmt': pmts}
     return self
 
   def hide(self):
     """
     Description:
     -----------
-    Hide the component
+    Hide the component.
 
-    Usage::
+    Usage:
+    -----
 
       input.js.hide()
 
@@ -499,9 +582,10 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Display the component
+    Display the component.
 
-    Usage::
+    Usage:
+    -----
 
       input.js.show()
 
@@ -511,9 +595,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param inline: String
-    :param duration: Integer. A time in second for the component display
-    :param display_value: String. Optional. The display value. Default inline-block
+    :param inline: String. Optional.
+    :param duration: Integer. Optional. A time in second for the component display.
+    :param display_value: String. Optional. The display value. Default inline-block.
     """
     display_value = display_value or self.display_value
     if duration is not None:
@@ -526,11 +610,14 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: Boolean.
-    :param inline: String.
-    :param display_value: String.
+    :param inline: String. Optional.
+    :param display_value: String. Optional.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
@@ -539,7 +626,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Select the content of the HTMl component
+    Select the content of the HTMl component.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
@@ -547,12 +638,13 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Toggle (hide / show) the display of the component
+    Toggle (hide / show) the display of the component.
 
-    Usage::
+    Usage:
+    -----
 
       input.js.toggle()
-    input.js.toggle("background", "red", "blue")
+      input.js.toggle("background", "red", "blue")
 
     Related Pages:
 
@@ -575,15 +667,16 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       s.dom.highlight()
-    s.dom.highlight(css_attrs={"background": "red"}),
+      s.dom.highlight(css_attrs={"background": "red"}),
 
     Attributes:
     ----------
-    :param css_attrs: A dictionary with the CSS attributes
-    :param time_event: Integer. The time of the event
+    :param css_attrs: Dictionary. Optional. he CSS attributes.
+    :param time_event: Integer. Optional. The time of the event.
     """
     if css_attrs is None:
       css_attrs, css_attrs_origin = {}, {}
@@ -608,40 +701,41 @@ class JsHtml(JsNodeDom.JsDoms):
     return '''%s; setTimeout(function(){%s}, %s)
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, htmlObjs, append=False):
+  def loadHtml(self, components, append=False):
     """
     Description:
     ------------
     Load during a Javascript event a component within the one using this method.
     This cannot be tested during the Python execution and should be tested in the browser.
 
-    Tip: It is possible to add a break point to debug in the browser by adding
+    Tip: It is possible to add a break point to debug in the browser by adding.
 
-    Usage::
+    Usage:
+    -----
 
       d = rptObj.ui.div().css({"border": "1px solid black"})
-    b = rptObj.ui.button("test")
-    b.click([
-      rptObj.js.console.debugger,
-      d.dom.loadHtml(rptObj.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
-    ])
+      b = rptObj.ui.button("test")
+      b.click([
+        rptObj.js.console.debugger,
+        d.dom.loadHtml(rptObj.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
+      ])
 
     Attributes:
     ----------
-    :param htmlObjs: List. The different HTML objects to be added to the component
-    :param append: Boolean. Mention if the component should replace or append the data
+    :param components: List. The different HTML objects to be added to the component.
+    :param append: Boolean. Mention if the component should replace or append the data.
 
     :return: The Javascript string to be added to the page
     """
-    if not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
+    if not isinstance(components, list):
+      components = [components]
 
-    jsFncs = []
-    for i, h in enumerate(htmlObjs):
+    js_funcs = []
+    for i, h in enumerate(components):
       h.options.managed = False
-      jsFncs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
-      jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
-    return JsUtils.jsConvertFncs(jsFncs, toStr=True)
+      js_funcs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
+      js_funcs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
+    return JsUtils.jsConvertFncs(js_funcs, toStr=True)
 
   def options(self, options=None):
     """
@@ -650,11 +744,14 @@ class JsHtml(JsNodeDom.JsDoms):
     Return the builder options used to generate the object on the Javascript side.
     This is not necessarily the same object than the component options as some can be only used on the Python side.
 
-    This will not change the original option object used during the first obhect creation.
-    
+    This will not change the original option object used during the first object creation.
+
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The value to be changed
+    :param options: Dictionary. Optional. The value to be changed.
     """
     opt = dict(self._src._jsStyles)
     if options is not None:
@@ -669,7 +766,11 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     -----------
-    Return the val object
+    Return the val object.
+
+    Usage:
+    -----
+
     """
     values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
     return JsObjects.JsObjects.get(
@@ -677,13 +778,24 @@ class JsHtmlRich(JsHtml):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return ContentFormatters(self._report, "(function(domObl){if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} else {return domObl.innerHTML}})(%(varName)s)" % {"varName": self.varName})
 
   def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None):
     """
     Description:
     -----------
-    Toggle (change) the content of the HTML component
+    Toggle (change) the content of the HTML component.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -706,7 +818,11 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     -----------
-    Select the content of the HTMl component
+    Select the content of the HTMl component.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get('''
      (function(node){
@@ -721,11 +837,14 @@ class JsHtmlRich(JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param value:
-    :param new_line:
-    :param options:
+    :param new_line: Boolean. Optional.
+    :param options: Dictionary. Optional.
     """
     value = JsUtils.jsConvertData(value, None)
     if options is not None and options.get('showdown') is not None:
@@ -744,7 +863,10 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     ------------
-    Empty the content of the HTML component using the innerHTML JavaScript property
+    Empty the content of the HTML component using the innerHTML JavaScript property.
+
+    Usage:
+    -----
     """
     return '%s.innerHTML = ""' % self.varName
 
@@ -753,9 +875,28 @@ class JsHtmlImg(JsHtml):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return ContentFormatters(self._report, "%s.src" % self.varName)
 
   def src(self, image):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param image: String.
+    """
     image = JsUtils.jsConvertData(image, None)
     return JsFncs.JsFunctions("%s.src = %s" % (self.varName, image))
 
@@ -768,6 +909,9 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
       offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
@@ -775,27 +919,37 @@ class JsHtmlButton(JsHtml):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
   def loading(self, flag, multiple=False):
     """
     Description:
     -----------
-    Add a loading icon to the button
+    Add a loading icon to the button.
 
-    Example
-    b = rptObj.ui.button("test")
-    b.click([
-      b.dom.loading(True),
-      rptObj.js.window.setTimeout([
-        b.dom.loading(False)
-      ], 5000),
-    ])
+    Usage:
+    -----
+
+      b = rptObj.ui.button("test")
+      b.click([
+        b.dom.loading(True),
+        rptObj.js.window.setTimeout([
+          b.dom.loading(False)
+        ], 5000),
+      ])
 
     Attributes:
     ----------
-    :param flag:
-    :param multiple:
+    :param flag: Boolean. Optional.
+    :param multiple: Boolean. Optional.
     """
     i_loading = '<i class="fas fa-spinner fa-spin" style="margin-right:5px"></i>'
     fnc = self.disable(False) if multiple else self.disable(flag)
@@ -810,33 +964,42 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param time:
-    :param color:
+    :param color: String. Optional.
     """
     return JsFncs.JsFunction("var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; setTimeout(function() {%s.style.borderColor = bgColor}, %s)" % (self.varName, self.varName, color, self.varName, time))
 
-  def disable(self, bool=True):
+  def disable(self, flag=True):
     """
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param bool:
+    :param flag: Boolean. Optional.
     """
-    bool = JsUtils.jsConvertData(bool, None)
-    return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, bool))
+    flag = JsUtils.jsConvertData(flag, None)
+    return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, flag))
 
   def release(self, by_name=False):
     """
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param by_name:
+    :param by_name: Boolean. Optional.
     """
     if by_name:
       fncs = JsFncs.JsFunctions(self.by_name.css("color", ''))
@@ -855,9 +1018,12 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param not_allowed:
+    :param not_allowed: Boolean. Optional.
     """
     fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
     fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
@@ -869,29 +1035,81 @@ class JsHtmlButton(JsHtml):
       fncs.append(self.attr('data-locked', True))
     return fncs
 
-  def empty(self): return '%s.innerHTML = ""' % self.varName
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
+    return '%s.innerHTML = ""' % self.varName
 
 
 class JsHtmlButtonChecks(JsHtml):
 
   @property
   def val(self):
+    """
+    Description:
+    -----------
+    Get the full content of the list.
+
+    This will return the current list status. Selected items but also the full content.
+    It will return also the common parameters.
+
+    Usage:
+    -----
+
+    """
     return ""
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+    Get the content of the list.
+
+    This will return all the selected items in a list.
+
+    Usage:
+    -----
+
+    """
     return ""
 
   def disable(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return JsObjects.JsObjects.get('''
       ''')
 
-  def add(self, jsData, is_unique=True, css_style=None):
+  def add(self, jsData, is_unique=True, css_style=None, position="bottom"):
     """
+    Description:
+    -----------
+    Add an item to the list.
 
+    THis will add the item at the end of the list by default.
+    By default the list will not add duplicated entries.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param jsData: List of dict | JsObj.
-    :param is_unique: Boolean. Optional
-    :param css_style: Dictionary. Optional
+    :param is_unique: Boolean. Optional. Flag to specify if only distinct values should be added (no duplicates).
+    :param css_style: Dictionary. Optional. The CSS style of the added item.
+    :param position: String. Optional. The position of the new item in the list (bottom or top).
     """
     css_style = css_style or {'margin': 0, 'display': 'block', 'position': 'relative', 'cursor': 'pointer'}
     is_unique = JsUtils.jsConvertData(is_unique, None)
@@ -912,11 +1130,27 @@ class JsHtmlButtonChecks(JsHtml):
           %(jqId)s.append($('<label style="' + strCss.join(";") + '">'+ spanContent +'</label>'))}
       }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": jsData})
 
-  def empty(self): return '%s.empty()' % self.jquery.varId
+  def empty(self):
+    """
+    Description:
+    -----------
+    Empty the list content.
+
+    Usage:
+    -----
+    """
+    return '%s.empty()' % self.jquery.varId
 
   def delete(self, jsData):
     """
+    Description:
+    -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param jsData:
     """
     jsData = JsUtils.jsConvertData(jsData, None)
@@ -929,7 +1163,14 @@ class JsHtmlButtonChecks(JsHtml):
 
   def check(self, jsData):
     """
+    Description:
+    -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param jsData:
     """
     jsData = JsUtils.jsConvertData(jsData, None)
@@ -946,26 +1187,36 @@ class JsHtmlButtonChecks(JsHtml):
   @property
   def current(self):
     """
+    Description:
+    -----------
+    Return the current value in the list.
+
+    Usage:
+    -----
 
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
 
   def css_label(self, jsData, attrs):
     """
+    Description:
+    -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param jsData:
-    :param attrs:
+    :param attrs: Dictionary.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     attrs = JsUtils.jsConvertData(attrs, None)
     return JsObjects.JsObjects.get('''
-      var compData = %(jsData)s;
-      var compAttrs = %(attrs)s;
+      var compData = %(jsData)s; var compAttrs = %(attrs)s;
       %(jqId)s.find('span').each(function(){
         var itemCode = $(this).data('content');
-        if (compData.indexOf(itemCode) > -1){
-          $(this).parent().find("p").css(compAttrs)
-        }
+        if (compData.indexOf(itemCode) > -1){$(this).parent().find("p").css(compAttrs)}
       }) ''' % {"jsData": jsData, "jqId": self.jquery.varId, "attrs": attrs})
 
 
@@ -977,6 +1228,9 @@ class JsHtmlButtonMenu(JsHtmlButton):
     Description:
     -----------
 
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get('''
         {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
@@ -984,6 +1238,14 @@ class JsHtmlButtonMenu(JsHtmlButton):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     check = self._src.options.icon_check.split(" ")[-1]
     return ContentFormatters(self._report, "%s.querySelector('i').classList.contains('%s')" % (self.varName, check))
 
@@ -995,12 +1257,24 @@ class JsHtmlIcon(JsHtml):
     """
     Description:
     -----------
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self._src.dom.getAttribute("class")))
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return self._src.dom.getAttribute("class")
 
 
@@ -1012,6 +1286,10 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the standard value object with the fields (value, timestamp, offset).
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
@@ -1022,6 +1300,10 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the values of the items in the list.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsArray.JsArray.get('''
       (function(){
@@ -1035,6 +1317,10 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the class name of the list item.
+
+    Usage:
+    -----
+
     """
     return self._src.dom.getAttribute("class")
 
@@ -1044,11 +1330,15 @@ class JsHtmlList(JsHtml):
     ------------
     Add a new item to the list.
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param item: String. The Item to be added to the list.
     :param unique: Boolean. optional. Only add the item if it is not already in the list.
-    :param draggable: Boolean. Optional. Set the new entry as draggable
+    :param draggable: Boolean. Optional. Set the new entry as draggable.
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
@@ -1088,6 +1378,10 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Clear all the items in the list.
+
+    Usage:
+    -----
+
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
 
@@ -1100,12 +1394,24 @@ class JsHtmlBackground(JsHtml):
     Description:
     -----------
 
+    Usage:
+    -----
+
+
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
       self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return ContentFormatters(self._report, self._src.dom.querySelector("div").css("backgroundColor").toStr())
 
 
@@ -1116,9 +1422,12 @@ class JsHtmlNumeric(JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param number:
+    :param number: Float.
     :param timer: Integer. the ppend of the increase in millisecond.
     """
     return JsUtils.jsConvertFncs([
@@ -1138,10 +1447,14 @@ class JsHtmlNumeric(JsHtmlRich):
     """
     Description:
     ------------
+    Add a value to the component value.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param item:
+    :param item: Float. The value to be added.
     """
     return JsObjects.JsVoid('''
       %(component)s.innerText = parseFloat(%(component)s.innerText) + %(value)s
@@ -1152,6 +1465,14 @@ class JsHtmlLink(JsHtml):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
     return ContentFormatters(self._report, "%s.innerText" % self.varName)
 
   def url(self, url):
@@ -1160,12 +1481,17 @@ class JsHtmlLink(JsHtml):
     -----------
     The href attribute specifies the URL of the page the link goes to.
 
+    Usage:
+    -----
+
     Related Pages:
     --------------
 
       https://www.w3schools.com/tags/att_a_href.asp
 
-    :param url:
+    Attributes:
+    ----------
+    :param url: String. The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
@@ -1176,12 +1502,17 @@ class JsHtmlLink(JsHtml):
     -----------
     The href attribute specifies the URL of the page the link goes to.
 
+    Usage:
+    -----
+
     Related Pages:
     --------------
 
       https://www.w3schools.com/tags/att_a_href.asp
 
-    :param url:
+    Attributes:
+    ----------
+    :param url: String. The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
@@ -1192,12 +1523,17 @@ class JsHtmlLink(JsHtml):
     -----------
     The target attribute specifies where to open the linked document.
 
+    Usage:
+    -----
+
     Related Pages:
     --------------
 
       https://www.w3schools.com/tags/att_a_target.asp
 
-    :param name:
+    Attributes:
+    ----------
+    :param name: String. The target name.
     """
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunctions("%s.target = %s" % (self.varName, name))
