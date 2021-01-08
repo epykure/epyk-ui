@@ -59,7 +59,7 @@ class Image(Html.Html):
       self._dom = JsHtml.JsHtmlImg(self, report=self._report)
     return self._dom
 
-  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
     """
     Description:
     -----------
@@ -71,16 +71,17 @@ class Image(Html.Html):
     Attributes:
     ----------
     :param url: String.
-    :param jsFncs: List | String. The Javascript Events triggered before the redirection
+    :param js_funcs: List | String. The Javascript Events triggered before the redirection
     :param profile: Boolean. Optional
+    :param name: String. Optional.
     :param source_event: String. Optional. The event source.
     """
-    jsFncs = jsFncs or []
+    js_funcs = js_funcs or []
     self.style.css.cursor = 'pointer'
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append(self.js.location.open_new_tab(url, name))
-    return self.click(jsFncs, profile, source_event)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.js.location.open_new_tab(url, name))
+    return self.click(js_funcs, profile, source_event)
 
   _js__builder__ = '''
       if ((typeof data !== 'string') && (typeof data !== 'undefined')){
@@ -174,7 +175,7 @@ class ImgCarousel(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -185,14 +186,14 @@ class ImgCarousel(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
+    :param js_funcs: String | List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. optional. The reference of the component
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__click_items.extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__click_items.extend(js_funcs)
     return self
 
   _js__builder__ = '''
@@ -270,7 +271,7 @@ class Icon(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
     """
     Description:
     -----------
@@ -282,16 +283,16 @@ class Icon(Html.Html):
     Attributes:
     ----------
     :param url:
-    :param jsFncs: List | String. Optional. The Javascript Events triggered before the redirection.
+    :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param name: String. Optional. The name (type) of the href link.
     :param source_event: String. Optional. The event source.
     """
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append(self.js.location.open_new_tab(url, name))
-    return self.click(jsFncs, profile, source_event)
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.js.location.open_new_tab(url, name))
+    return self.click(js_funcs, profile, source_event)
 
   @property
   def dom(self):
@@ -526,7 +527,7 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -536,13 +537,13 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String or List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
-    return super(Icon, self).click(jsFncs, profile, source_event, onReady=onReady)
+    return super(Icon, self).click(js_funcs, profile, source_event, onReady=onReady)
 
   _js__builder__ = '''
       if (typeof data !== 'undefined'){
@@ -588,19 +589,19 @@ class IconToggle(Icon):
     self.style.css.cursor = "pointer"
     if jsOnOffFncs is None:
       jsOnOffFncs = {}
-    jsFncs_on = jsOnOffFncs.get("on", [])
-    jsFncs_off = jsOnOffFncs.get("off", [])
+    js_funcs_on = jsOnOffFncs.get("on", [])
+    js_funcs_off = jsOnOffFncs.get("off", [])
     if getattr(self, "_linked_components", None) is not None:
       for c in self._linked_components:
-        jsFncs_on.append(c.dom.hide().r)
-    jsFncs_on.append(self.build(self.icon_off))
-    if not isinstance(jsFncs_off, list):
-      jsFncs_off = [jsFncs_off]
+        js_funcs_on.append(c.dom.hide().r)
+    js_funcs_on.append(self.build(self.icon_off))
+    if not isinstance(js_funcs_off, list):
+      js_funcs_off = [js_funcs_off]
     if getattr(self, "_linked_components", None) is not None:
       for c in self._linked_components:
-        jsFncs_off.append(c.dom.show().r)
-    jsFncs_off.append(self.build(self.icon_on))
-    return super(Icon, self).click(self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, jsFncs_on).else_(jsFncs_off),
+        js_funcs_off.append(c.dom.show().r)
+    js_funcs_off.append(self.build(self.icon_on))
+    return super(Icon, self).click(self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, js_funcs_on).else_(js_funcs_off),
                                    profile, source_event, onReady=onReady)
 
 
@@ -682,7 +683,7 @@ class Badge(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -692,13 +693,13 @@ class Badge(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String or List. The Javascript functions
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.icon.style.add_classes.icon.standard()
-    return super(Badge, self).click(jsFncs, profile, source_event, onReady=onReady)
+    return super(Badge, self).click(js_funcs, profile, source_event, onReady=onReady)
 
   def __str__(self):
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
@@ -782,7 +783,7 @@ class SlideShow(Html.Html):
       self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self._report)
     return self._dom
 
-  def _events(self, event, jsFncs, source_event, profile=False, add=True):
+  def _events(self, event, js_funcs, source_event, profile=False, add=True):
     """
     Description:
     ------------
@@ -793,163 +794,163 @@ class SlideShow(Html.Html):
     Attributes:
     ----------
     :param event: String. The event type
-    :param jsFncs: List | String. The JavaScript fragments
+    :param js_funcs: List | String. The JavaScript fragments
     :param source_event: String.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param add: Boolean. Optional
     """
     if add:
-      self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(jsFncs, toStr=True))])
+      self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True))])
     else:
-      self.onReady(["%s.off('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(jsFncs, toStr=True))])
+      self.onReady(["%s.off('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True))])
     return self
 
-  def addIndexChanged(self, jsFncs, profile=False, source_event=None):
+  def addIndexChanged(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile)
+    return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def remIndexChanged(self, jsFncs, profile=False, source_event=None):
+  def remIndexChanged(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("indexChanged", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
+    return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def addTransitionStart(self, jsFncs, profile=False, source_event=None):
+  def addTransitionStart(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile)
+    return self._events("transitionStart", js_funcs, source_event or "%s.events" %self.jsonId, profile)
 
-  def remTransitionStart(self, jsFncs, profile=False, source_event=None):
+  def remTransitionStart(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("transitionStart", jsFncs, source_event or "%s.events" %self.jsonId, profile, add=False)
+    return self._events("transitionStart", js_funcs, source_event or "%s.events" %self.jsonId, profile, add=False)
 
-  def addTransitionEnd(self, jsFncs, profile=False, source_event=None):
+  def addTransitionEnd(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile)
+    return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def remTransitionEnd(self, jsFncs, profile=False, source_event=None):
+  def remTransitionEnd(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("transitionEnd", jsFncs, source_event or "%s.events" % self.jsonId, profile, add=False)
+    return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def addNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+  def addNewBreakpointStart(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile)
+    return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remNewBreakpointStart(self, jsFncs, profile=False, source_event=None):
+  def remNewBreakpointStart(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("newBreakpointStart", jsFncs, source_event or self.jsonId, profile, add=False)
+    return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
+  def addNewBreakpointEnd(self, js_funcs, profile=False, source_event=None):
     """
 
     Usage:
     -----
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     """
-    return self._events("newBreakpointEnd", jsFncs, source_event or self.jsonId, profile)
+    return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remNewBreakpointEnd(self, jsFncs, profile=False, source_event=None):
-    return self._events("newBreakpointEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remNewBreakpointEnd(self, js_funcs, profile=False, source_event=None):
+    return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchStart(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchStart", jsFncs, source_event or self.jsonId, profile)
+  def addTouchStart(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchStart(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchStart", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remTouchStart(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchMove(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchMove", jsFncs, source_event or self.jsonId, profile)
+  def addTouchMove(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchMove", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchMove(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchMove", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remTouchMove(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchEnd(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchEnd", jsFncs, source_event or self.jsonId, profile)
+  def addTouchEnd(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchEnd(self, jsFncs, profile=False, source_event=None):
-    return self._events("touchEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remTouchEnd(self, js_funcs, profile=False, source_event=None):
+    return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragStart(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragStart", jsFncs, source_event or self.jsonId, profile)
+  def addDragStart(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragStart(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragStart", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remDragStart(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragMove(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragMove", jsFncs, source_event or self.jsonId, profile)
+  def addDragMove(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragMove", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragMove(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragMove", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remDragMove(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragEnd(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragEnd", jsFncs, source_event or self.jsonId, profile)
+  def addDragEnd(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragEnd(self, jsFncs, profile=False, source_event=None):
-    return self._events("dragEnd", jsFncs, source_event or self.jsonId, profile, add=False)
+  def remDragEnd(self, js_funcs, profile=False, source_event=None):
+    return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
   def refresh(self):
     """
