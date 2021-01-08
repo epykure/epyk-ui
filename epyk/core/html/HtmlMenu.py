@@ -191,6 +191,9 @@ class HtmlFooter(Html.Html):
   @property
   def sections(self):
     """
+    Description:
+    -----------
+
     Usage:
     -----
 
@@ -202,6 +205,9 @@ class HtmlFooter(Html.Html):
   @sections.setter
   def sections(self, col_lst):
     """
+    Description:
+    -----------
+
     Usage:
     -----
 
@@ -287,14 +293,10 @@ class ContextMenu(Html.Html):
     return self.__options
 
   _js__builder__ = '''
-      var contextMenu = htmlObj.querySelector('ul');
-      contextMenu.innerHTML = '';
+      var contextMenu = htmlObj.querySelector('ul'); contextMenu.innerHTML = '';
       data.forEach(function(rec){
-        var li = document.createElement("li");
-        var item = document.createElement("DIV");  
-        item.innerHTML = rec;
-        li.appendChild(item);
-      })
+        var li = document.createElement("li"); var item = document.createElement("DIV");  
+        item.innerHTML = rec; li.appendChild(item)})
       contextMenu.appendChild(li)
       '''
 
@@ -332,7 +334,7 @@ class ContextMenu(Html.Html):
     self.__add__(component)
     return self.val[-1].val
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """
     Description:
     -----------
@@ -343,24 +345,24 @@ class ContextMenu(Html.Html):
 
     Attributes:
     ----------
-    :param htmlObj: HTML. The new HTML component to be added to the main component.
+    :param component: HTML. The new HTML component to be added to the main component.
     """
-    if not hasattr(htmlObj, 'options'):
-      if isinstance(htmlObj, dict):
-        if htmlObj.get('icon') is not None:
-          i = self._report.ui.icon(htmlObj['icon'])
+    if not hasattr(component, 'options'):
+      if isinstance(component, dict):
+        if component.get('icon') is not None:
+          i = self._report.ui.icon(component['icon'])
           i.css({'display': 'inline', 'margin-right': '5px'})
-          v = self._report.ui.text(htmlObj['value'])
+          v = self._report.ui.text(component['value'])
           v.css({'display': 'inline'})
-          htmlObj = self._report.ui.div([i, v])
+          component = self._report.ui.div([i, v])
         else:
-          htmlObj = self._report.ui.div(htmlObj['value'])
+          component = self._report.ui.div(component['value'])
       else:
-        htmlObj = self._report.ui.div(htmlObj)
-    li_obj = Li(self._report, htmlObj) if not isinstance(htmlObj, Li) else htmlObj
+        component = self._report.ui.div(component)
+    li_obj = Li(self._report, component) if not isinstance(component, Li) else component
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
     li_obj.options.managed = False
-    htmlObj.options.managed = False
+    component.options.managed = False
     self.val.append(li_obj)
     return self
 
@@ -385,7 +387,7 @@ class PanelsBar(Html.Html):
   name = 'Panel Bar'
 
   def __init__(self, report, width, height, options, helper, profile):
-    super(PanelsBar, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    super(PanelsBar, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
     self.menus = report.ui.div(options={'inline': True})
     self.menus.options.managed = False
     self.panels = report.ui.div()
