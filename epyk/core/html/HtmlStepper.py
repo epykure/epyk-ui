@@ -16,7 +16,7 @@ class Step:
     self._src = src
     self._selector = selector
 
-  def click(self, jsFncs, profile=False):
+  def click(self, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -26,12 +26,12 @@ class Step:
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._src._report._props['js'].setdefault("onReady", []).append("%s.addEventListener('click', function(event){%s})" % (self._selector.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._src._report._props['js'].setdefault("onReady", []).append("%s.addEventListener('click', function(event){%s})" % (self._selector.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
 
