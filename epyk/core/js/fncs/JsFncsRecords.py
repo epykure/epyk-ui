@@ -34,24 +34,53 @@ class JsRecFunc(object):
   value = None
 
   @staticmethod
-  def extendArgs(category, originParams, newCols): return originParams
+  def extendArgs(category, originParams, newCols):
+    """
+    Description:
+    ------------
+
+    :param category:
+    :param originParams:
+    :param newCols:
+    """
+    return originParams
 
   @staticmethod
   def extendColumns(jsSchema, params):
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
     raise Exception("Method extendColumns should be overriden")
 
 
 class JsRowBuckets(JsRecFunc):
-  """
-  """
+
   @staticmethod
   def extendArgs(category, originParams, newCols):
+    """
+    Description:
+    ------------
+
+    :param category:
+    :param originParams:
+    :param newCols:
+    """
     originParams[1] += newCols
     return originParams
 
   @staticmethod
   def extendColumns(jsSchema, params):
-    pass
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
 
   alias = "row-buckets"
   params = ("allGroups", "seriesNames")
@@ -76,14 +105,29 @@ class JsRowBuckets(JsRecFunc):
 
 
 class JsRowTotal(JsRecFunc):
+
   @staticmethod
   def extendArgs(category, originParams, newCols):
+    """
+    Description:
+    ------------
+
+    :param category:
+    :param originParams:
+    :param newCols:
+    """
     originParams[0] += newCols
     return originParams
 
   @staticmethod
   def extendColumns(jsSchema, params):
-    pass
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
 
   alias = "row-total"
   params = ("seriesNames", "rowDefinition")
@@ -99,6 +143,13 @@ class JsRowTotal(JsRecFunc):
 class JsAll(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
     if params[0] is not None and params[1] is not None:
       jsSchema['keys'] |= set(params[0])
       jsSchema['values'] |= set(params[1])
@@ -109,11 +160,16 @@ class JsAll(JsRecFunc):
 
 
 class JsSum(JsRecFunc):
-  """
-  """
 
   @staticmethod
   def extendColumns(jsSchema, params):
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
     if params[0] is not None and params[1] is not None:
       jsSchema['keys'] |= set(params[0])
       jsSchema['values'] |= set(params[1])
@@ -139,11 +195,16 @@ class JsSum(JsRecFunc):
 
 
 class JsPercentage(JsRecFunc):
-  """
-  """
 
   @staticmethod
   def extendColumns(jsSchema, params):
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
     if params[0] is not None and params[1] is not None:
       jsSchema['keys'] |= set(params[0])
       jsSchema['values'] |= set(params[1])
@@ -183,6 +244,8 @@ class JsOperations(JsRecFunc):
   @staticmethod
   def extendArgs(category, originParams, newCols):
     """
+    Description:
+    ------------
     This function will update the function argument according to the mode defined by the user. Indeed some properties can be received to validate the accuracy of the data.
     Those data should be added to the different transformation functions and the columns should be passed to the final object.
     This function will ensure that by activating the mode the columns will be automatically added to the aggregated data.
@@ -198,7 +261,11 @@ class JsOperations(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
+    Description:
+    ------------
 
+    :param jsSchema:
+    :param params:
     """
     if params[0] is not None and params[1] is not None:
       jsSchema['keys'] |= set(params[0])
@@ -263,8 +330,6 @@ class JsCountSum(JsRecFunc):
 
 
 class JsTop(object):
-  """
-  """
 
   @staticmethod
   def extendColumns(jsSchema, params): pass
@@ -434,7 +499,13 @@ class JsIntensity(object):
 
   @staticmethod
   def extendColumns(jsSchema, params):
-    pass
+    """
+    Description:
+    ------------
+
+    :param jsSchema:
+    :param params:
+    """
 
 
 class JsToUrl(object):

@@ -17,11 +17,14 @@ class JsInfo(object):
     Description:
     ------------
     Set the slider info variable on the JavaScript side.
-    This is not mandatory in a Slider event as it is already passed in the event function
+    This is not mandatory in a Slider event as it is already passed in the event function.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param varName: String. Optional. The slider info variable name. Default info
+    :param varName: String. Optional. The slider info variable name. Default info.
     """
     self.varName = varName
     return JsObjects.JsVoid("var %s = %s.getInfo()" % (varName, self._src.jsonId))
@@ -31,7 +34,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    Get the slider current index (starts from 1)
+    Get the slider current index (starts from 1).
+
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.index" % self.varName)
 
@@ -40,7 +46,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    Get the slider past index
+    Get the slider past index.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.indexCached" % self.varName)
 
@@ -49,7 +58,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    display index starts from 1
+    display index starts from 1.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.displayIndex" % self.varName)
 
@@ -59,6 +71,9 @@ class JsInfo(object):
     Description:
     ------------
     Get the container ID
+
+    Usage:
+    -----
     """
     return JsObjects.JsString.JsString.get("%s.container.Id" % self.varName)
 
@@ -67,7 +82,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    Get the slider views count
+    Get the slider views count.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.slideCount" % self.varName)
 
@@ -77,6 +95,8 @@ class JsInfo(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.slideCountNew" % self.varName)
 
@@ -88,7 +108,7 @@ class JsInfo(object):
 
     Attributes:
     ----------
-    :param n: Integer. Optional. The index of the slide to be retrieved in the slider object
+    :param n: Integer. Optional. The index of the slide to be retrieved in the slider object.
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.slideItems[%s]" % (self.varName, n))
 
@@ -98,6 +118,8 @@ class JsInfo(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.isOn" % self.varName)
 
@@ -107,6 +129,8 @@ class JsInfo(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasControls" % self.varName)
 
@@ -116,6 +140,8 @@ class JsInfo(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.navCurrentIndex" % self.varName)
 
@@ -125,6 +151,8 @@ class JsInfo(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsNumber.JsNumber.get("%s.navCurrentIndexCached" % self.varName)
 
@@ -133,7 +161,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    Get the slider next button DOM object
+    Get the slider next button DOM object.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.nextButton" % self.varName)
 
@@ -142,7 +173,10 @@ class JsInfo(object):
     """
     Description:
     ------------
-    Return the slider previous button DOM object
+    Return the slider previous button DOM object.
+
+    Usage:
+    -----
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.prevButton" % self.varName)
 
@@ -152,13 +186,15 @@ class JsInfo(object):
 
 class JsHtmlTinySlider(JsHtml.JsHtmlRich):
 
-
   @property
   def content(self):
     """
     Description:
     ------------
-    Get the current index in the tiny slider
+    Get the current index in the tiny slider.
+
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, "%s.getInfo().index" % self._src.jsonId)
 
@@ -168,5 +204,7 @@ class JsHtmlTinySlider(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsInfo(self._src)

@@ -660,7 +660,7 @@ class ServerConfig(object):
 
     Attributes:
     ----------
-    :param name: String. 
+    :param name: String.
     """
     if name not in self.__end_points:
       raise Exception("Missing end point in the server configuration - %s" % name)

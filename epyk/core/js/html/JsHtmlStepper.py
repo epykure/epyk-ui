@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -13,6 +15,17 @@ class JsShapes(object):
   shapes = ['triangle', 'rectangle', 'circle', 'arrow']
 
   def _svg(self, shape_def):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param shape_def:
+    """
     return '''
         var width = options.svg_style.width; var height = options.svg_style.height;
         var svgns = '%(svgns)s';
@@ -51,6 +64,13 @@ class JsShapes(object):
       ''' % {'shape_def': shape_def, 'svgns': Defaults.SVGNS}
 
   def triangle(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
       shape.setAttribute('points', ''+ ((width)/2) + ' 0,'+ (width - 20) +' '+ height +',20 '+ height);
@@ -59,6 +79,13 @@ class JsShapes(object):
     return self._svg(shape_def)
 
   def rectangle(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'rect');
       shape.setAttribute('stroke', options.backgrounds[step.status]);
@@ -69,6 +96,13 @@ class JsShapes(object):
     return self._svg(shape_def)
 
   def circle(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'circle');
       shape.setAttribute('stroke', options.backgrounds[step.status]);
@@ -80,6 +114,13 @@ class JsShapes(object):
     return self._svg(shape_def)
 
   def arrow(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
       shape.setAttribute('points', '10 0,'+ (width-30) +' 0,'+ (width-10) + ' ' + (height/2) +','+ (width-30) +' '+ height +',10 0'+ height +',25 '+ (height/2) +',10 0');
@@ -88,6 +129,17 @@ class JsShapes(object):
     return self._svg(shape_def)
 
   def custom(self, shape_def):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param shape_def:
+    """
     return self._svg(shape_def)
 
 
@@ -102,9 +154,14 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param colors:
+    :param colors: List.
+    :param status: String. Optional.
+    :param clear_gradient: Boolean. Optional.
     """
     clear_gradient = JsUtils.jsConvertData(clear_gradient, None)
     if not isinstance(colors[0], dict):
@@ -132,15 +189,47 @@ class Step(JsNodeDom.JsDoms):
              'clear_gradient': clear_gradient, 'status': status})
 
   def success(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self.colors(self._src.options.success, status='success')
 
   def error(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self.colors(self._src.options.error, status='error')
 
   def pending(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self.colors(self._src.options.pending, status='pending')
 
   def waiting(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self.colors(self._src.options.waiting, status='waiting')
 
   def blink(self):
@@ -148,10 +237,21 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
+    Usage:
+    -----
+
     """
 
   @property
   def status(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
 
   def shape(self, shape, status='success', step=None):
@@ -159,10 +259,14 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param shape:
-    :param status:
+    :param shape: String.
+    :param status: String. Optional.
+    :param step: Dictionary. Optional.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
@@ -174,7 +278,15 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param status: String. Optional.
+    :param step: Dictionary. Optional.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
@@ -185,9 +297,17 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
 
-    htmlObj.querySelector('svg').remove();
+    Usage:
+    -----
+
+      htmlObj.querySelector('svg').remove()
+
+    Attributes:
+    ----------
+    :param status: String. Optional.
+    :param step: Dictionary. Optional.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
@@ -198,7 +318,15 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param status: String. Optional.
+    :param step: Dictionary. Optional.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
@@ -209,7 +337,15 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param status: String. Optional.
+    :param step: Dictionary. Optional.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
@@ -220,11 +356,14 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Add a text label below the shape
+    Add a text label below the shape.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: String. The text to be added
+    :param value: String. The text to be added.
     """
     return self.querySelector('span[name=label]').innerHTML(value)
 
@@ -232,14 +371,17 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    Add a text on the shape
+    Add a text on the shape.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param text: String. The text to be added
-    :param x: Number. Optional. The x position
-    :param y: Number. Optional. The y position
-    :param css: Dictionary. Optional. The CSS attributes
+    :param text: String. The text to be added.
+    :param x: Number. Optional. The x position.
+    :param y: Number. Optional. The y position.
+    :param css: Dictionary. Optional. The CSS attributes.
     """
     text = JsUtils.jsConvertData(text, None)
     if y is None:
@@ -263,10 +405,13 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param color:
-    :param border:
+    :param color: String. Optional. The hexadecimal color code.
+    :param border: String. Optional. The hexadeciment color code.
     """
     return JsObjects.JsObjects.get('''
       var svg_holder = %(comp)s; 
@@ -289,9 +434,12 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs: Array the Javascript actions when click is triggered
+    :param jsFncs: List | String. Javascript functions.
     """
     return JsObjects.JsObjects.get('%s.addEventListener("click", function(){%s})' % (self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
 
@@ -309,12 +457,21 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     -----------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
       self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
     return JsHtml.ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
   def __getitem__(self, i):
@@ -325,9 +482,12 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param label:
+    :param label: String. The label value.
     """
     label = JsUtils.jsConvertData(label, None)
     return Step(self, src=self._src, varName='''
@@ -337,6 +497,9 @@ class Stepper(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -370,6 +533,9 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param i:
@@ -384,7 +550,10 @@ class Drawer(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
+
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, ''' 
       (function(doms, contents){var index =-1; doms.childNodes.forEach(function(dom, k){if(dom.style.display !== 'none'){index = k}}); 
@@ -395,7 +564,10 @@ class Drawer(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Hide all the panels in the drawer component
+    Hide all the panels in the drawer component.
+
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(''' 
       (function(doms){doms.childNodes.forEach(function(dom){dom.style.display = 'none'; })})(%s)
@@ -406,10 +578,13 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param link:
-    :param panel:
+    :param link: String.
+    :param panel: String. Optional
     """
     return JsObjects.JsObjects.get('''
       ''' % self.querySelectorAll("[name=drawer_panels]"))
@@ -419,9 +594,12 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param link:
+    :param i: Integer.
     """
     return JsObjects.JsObjects.get(''' 
           %(panel)s.childNodes[%(i)s].remove(); %(drawer)s.childNodes[%(i)s].remove(); 

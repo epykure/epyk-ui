@@ -1,15 +1,24 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 from epyk.core.js.fncs import JsFncsRecords
-
 from epyk.core.js.objects import JsChartD3
-
 from epyk.core.js.primitives import JsObject
-
 from epyk.core.js import JsUtils
 
 
 class FncToObject(object):
   def __init__(self, data, js_src, data_schema=None):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param data:
     :param js_src:
     :param data_schema:
@@ -18,12 +27,18 @@ class FncToObject(object):
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
     """
-    This function will attach to the report object only the javascript functions used during the report
+    Description:
+    ------------
+    This function will attach to the report object only the javascript functions used during the report.
 
-    :param fnc_name:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param fnc_name: String.
     :param fnc_def:
-
-    :return:
+    :param fnc_pmts:
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
@@ -32,14 +47,24 @@ class FncToObject(object):
   @property
   def d3(self):
     """
-    Data transformation to the D3 package
+    Description:
+    ------------
+    Data transformation to the D3 package.
+
+    Usage:
+    -----
     """
     return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
 
   @property
   def dc(self):
     """
-    Data transformation to the DC package
+    Description:
+    ------------
+    Data transformation to the DC package.
+
+    Usage:
+    -----
     """
     from epyk.core.js.objects import JsChartDC
 
@@ -52,12 +77,18 @@ class FncRoAggRec(object):
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
     """
-    This function will attach to the report object only the javascript functions used during the report
+    Description:
+    ------------
+    This function will attach to the report object only the javascript functions used during the report.
 
-    :param fnc_name:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param fnc_name: String.
     :param fnc_def:
-
-    :return:
+    :param fnc_pmts: Dictionary. Optional.
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
@@ -71,20 +102,31 @@ class FncOnRecords(object):
   @property
   def o(self):
     """
+    Description:
+    ------------
     Property to the data final object.
-    Those items help to the link to external packages
+    Those items help to the link to external packages.
+
+    Usage:
+    -----
     """
     return FncToObject(self._js_src, self._data_schema)
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
-    This function will attach to the report object only the javascript functions used during the report
+    Description:
+    ------------
+    This function will attach to the report object only the javascript functions used during the report.
 
-    :param fnc_name:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param fnc_name: String.
     :param fnc_def:
-    :param fnc_pmts:
-
-    :return:
+    :param fnc_pmts: Dictionary. Optional.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
@@ -92,13 +134,19 @@ class FncOnRecords(object):
 
   def custom(self, fnc_name, fnc_content, fnc_pmts=None, profile=False):
     """
+    Description:
+    ------------
+    The function content should use data and produce an object record.
 
-    The function content should use data and produce an object record
+    Usage:
+    -----
 
-    :param fnc_name: A string for the Javascript function name
-    :param fnc_content: The javascript function content
-    :param fnc_pmts: A String, The Javascript function parameters
-    :param profile: A Boolean flag to activate the profiling
+    Attributes:
+    ----------
+    :param fnc_name: A string for the Javascript function name.
+    :param fnc_content: The javascript function content.
+    :param fnc_pmts: String. Optional. The Javascript function parameters.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: "This" in order to allow the chains
     """
@@ -107,8 +155,11 @@ class FncOnRecords(object):
 
   def url(self):
     """
+    Description:
+    ------------
 
-    :return:
+    Usage:
+    -----
     """
     fnc_name = JsFncsRecords.JsToUrl.__name__
     fnc_pmts = ["data"]
@@ -121,15 +172,22 @@ class FncOnRecords(object):
 
   def count(self, keys, values=None, profile=False):
     """
-
-    The Javascript function are using the main data as a first parameter
+    Description:
+    ------------
+    The Javascript function are using the main data as a first parameter.
 
     If values is defined, the Javascript will aggregate the data based on the composite key and the values will be
     available in the record. Also the count will be displayed.
-    The values will be one in the record and not the sum
+    The values will be one in the record and not the sum.
 
-    :param keys: A list with the column names
-    :param values: A list with the values to keep in the result record
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param keys: List | String. The column names.
+    :param values: List. Optional. The values to keep in the result record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
@@ -148,11 +206,17 @@ class FncOnRecords(object):
 
   def count_with_kpi(self, keys, values, profile=False):
     """
+    Description:
+    ------------
 
-    :param keys:
-    :param values:
-    :param profile:
-    :return:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param keys: List | String. The column names.
+    :param values: List. Optional. The values to keep in the result record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     fnc_name = JsFncsRecords.JsCountSum.__name__
     self.__register_records_fnc(fnc_name, JsFncsRecords.JsCountSum.value, fnc_pmts=list(JsFncsRecords.JsCountSum.params))
@@ -161,8 +225,16 @@ class FncOnRecords(object):
 
   def count_distinct(self, keys, profile=False):
     """
+    Description:
+    ------------
 
-    :param keys:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param keys: List | String. The column names.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
@@ -175,13 +247,19 @@ class FncOnRecords(object):
 
   def top(self, column, n=1, order='desc', profile=False):
     """
-    The Javascript function are using the main data as a first parameter
+    Description:
+    ------------
+    The Javascript function are using the main data as a first parameter.
 
-    Example
+    Usage:
+    -----
 
+    Attributes:
+    ----------
     :param column:
-    :param n:
-    :param order:
+    :param n: Integer. Optional.
+    :param order: String. Optional.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
@@ -192,29 +270,70 @@ class FncOnRecords(object):
 
 
 class FncFiltere(object):
+
   def __init__(self, data, js_src, data_schema=None, profile=False):
     self._js_src, self._data_schema, self._data = js_src, data_schema, data
     fnc_name = JsFncsRecords.JsFilter.__name__
     fnc_pmts = ["data"] + (list(JsFncsRecords.JsFilter.pmts) or [])
-    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+    if fnc_name not in self._js_src.get('js', {}).get('functions', {}):
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
         'content': "var result = []; %s;return result" % JsUtils.cleanFncs(JsFncsRecords.JsFilter.content), 'pmt': fnc_pmts}
     self._data_schema['filters'] = []
 
   def custom(self, column, val, compare_type, all_if_empty=True):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param column:
+    :param val:
+    :param compare_type:
+    :param all_if_empty: Boolean. Optional.
+    """
     filter_data = JsUtils.jsConvertData({"colName": column, "val": val, "op": compare_type, "allIfEmpty": all_if_empty}, None)
     self._data_schema['filters'].append(filter_data.toStr())
     return self._data
 
   def not_in_(self):
-    pass
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
 
   def not_range_(self, column, val, compare_type="in", all_if_empty=True):
-    pass
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param column:
+    :param val:
+    :param compare_type: String. Optional.
+    :param all_if_empty: Boolean. Optional.
+    """
 
   def in_(self, column, val):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param column:
     :param val:
     """
@@ -222,11 +341,18 @@ class FncFiltere(object):
 
   def range_(self, column, val, strict_left=False, strict_right=False):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param column:
     :param val:
-    :param strict_left:
-    :param strict_right:
+    :param strict_left: Boolean. Optional.
+    :param strict_right: Boolean. Optional.
     """
     if not strict_left:
       if not strict_right:
@@ -244,7 +370,14 @@ class FncFiltere(object):
 
   def eq_(self, column, val):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param column:
     :param val:
     """
@@ -252,11 +385,18 @@ class FncFiltere(object):
 
   def sup_(self, column, val, strict=False):
     """
-    Filter only the data above the value for the given key in the record
+    Description:
+    ------------
+    Filter only the data above the value for the given key in the record.
 
-    :param column: String. The column name
-    :param val: Object. The value in the dictionary
-    :param strict: Boolean. A flag to specify if the value should be included
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param column: String. The column name.
+    :param val: Object. The value in the dictionary.
+    :param strict: Boolean. Optional. A flag to specify if the value should be included.
     """
     if strict:
       return self.custom(column, val, ">", True)
@@ -265,11 +405,18 @@ class FncFiltere(object):
 
   def inf_(self, column, val, strict=False):
     """
-    Filter only the data below the value for the given key in the record
+    Description:
+    ------------
+    Filter only the data below the value for the given key in the record.
 
-    :param column: String. The column name
-    :param val: Object. The value in the dictionary
-    :param strict: Boolean. A flag to specify if the value should be included
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param column: String. The column name.
+    :param val: Object. The value in the dictionary.
+    :param strict: Boolean. Optional. A flag to specify if the value should be included.
     """
     if strict:
       return self.custom(column, val, "<", True)
@@ -278,19 +425,27 @@ class FncFiltere(object):
 
 
 class JsRegisteredFunctions(object):
+
   class __internal(object):
     _props = {}
 
   def __init__(self, src=None):
     src = src or self.__internal()
-    if not 'js' in src._props:
+    if 'js' not in src._props:
       src._props['js'] = {}
     self._js_src = src._props['js']
 
   def cssStyle(self, params):
     """
+    Description:
+    ------------
 
-    :return:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param params:
     """
     self._js_src.setdefault('functions', {})["cssStyle"] = {
       'content': 'cssParams = []; for(var i in params){cssParams.push(i +":"+ params[i])}; return cssParams.join(";")',
@@ -299,6 +454,8 @@ class JsRegisteredFunctions(object):
 
   def anonymous(self, jsFnc, pmts=None):
     """
+    Description:
+    ------------
     Create a anonymous / lambda function.
     Those functions are directly called when they are defined.
 
@@ -306,10 +463,13 @@ class JsRegisteredFunctions(object):
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    :param jsFnc:
-    :param pmts:
+    Usage:
+    -----
 
-    :return:
+    Attributes:
+    ----------
+    :param jsFnc: List | String. Javascript functions.
+    :param pmts: Dictionary. Optional. The function parameters.
     """
     if pmts is None:
       return JsFunction("(function(){%s})()" % jsFnc)
@@ -318,10 +478,17 @@ class JsRegisteredFunctions(object):
 
   def get(self, fnc_name, *args):
     """
-    Call a bespoke functions on the Javascript side
+    Description:
+    ------------
+    Call a bespoke functions on the Javascript side.
 
-    :param fnc_name: The function name
-    :param args: The different arguments in the function definition
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param fnc_name: String. The function name.
+    :param args: Dictionary. The different arguments in the function definition.
 
     :return: The Javascript sting
     """
@@ -330,15 +497,22 @@ class JsRegisteredFunctions(object):
 
   def inline(self, fnc_name, jsFnc, pmts=None):
     """
-    Create a name function which can be then called later
+    Description:
+    ------------
+    Create a name function which can be then called later.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    :param fnc_name:
-    :param jsFnc:
-    :param pmts:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param fnc_name: String. The function name.
+    :param jsFnc: List | String. Javascript functions.
+    :param pmts: Dictionary. Optional. The function parameters.
 
     :return: The function name which can be used in the Javascript
     """
@@ -348,16 +522,18 @@ class JsRegisteredFunctions(object):
   @property
   def records(self):
     """
+    Description:
+    ------------
     Javascript pre defined function dedicated to transform a records.
-    Namely a list of dictionaries
+    Namely a list of dictionaries.
+
+    Usage:
+    -----
     """
     return FncOnRecords(self._js_src)
 
 
 class JsFunction(object):
-  """
-
-  """
   fncName = "lambda"
 
   def __init__(self, strFnc):
@@ -371,18 +547,38 @@ class JsFunction(object):
 
 
 class JsFunctions(list):
-  """
 
-  """
   def __init__(self, strFnc):
     if not isinstance(strFnc, list):
       strFnc = [strFnc]
     self.__strFncs = strFnc
 
   def append(self, strFnc):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param strFnc:
+    """
     self.__strFncs.append(strFnc)
 
   def extend(self, strFncs):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param strFncs:
+    """
     self.__strFncs.extend(strFncs)
 
   def toStr(self):
@@ -393,13 +589,8 @@ _JSFNCS = 0
 
 
 class JsLambda(object):
-  """
-
-  """
 
   def __init__(self):
-    """
-    """
     global _JSFNCS
 
     _JSFNCS += 1
@@ -407,9 +598,6 @@ class JsLambda(object):
 
 
 class JsTypeOf(object):
-  """
-
-  """
   fncName = "typeof"
 
   def __init__(self, jsData):
@@ -419,10 +607,6 @@ class JsTypeOf(object):
     self.__jsArgs = [jsData]
 
   def __str__(self):
-    """
-
-    :return:
-    """
     return "%s(%s)" % (self.fncName, ", ".join([str(a) for a in self.__jsArgs]))
 
 
@@ -432,6 +616,17 @@ class JsAnonymous(object):
     self.__strFnc, self.__returnFnc, self.__paramsFnc = jsFncs, "", []
 
   def return_(self, value):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param value:
+    """
     self.__returnFnc = value
     return self
 
@@ -439,6 +634,13 @@ class JsAnonymous(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param pmts: Dictionary. The function parameters.
     """
     self.__paramsFnc = pmts
     return self
@@ -448,6 +650,11 @@ class JsAnonymous(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param args:
     :param kwargs:
     """

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js.fncs import JsFncs
@@ -13,6 +15,9 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     """
     Description:
     ------------
+
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -24,6 +29,8 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
@@ -35,6 +42,9 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
     """
     Description:
     ------------
+
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -46,6 +56,8 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.input.dom.jquery.varId)
 
@@ -58,6 +70,8 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.progressbar('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -69,6 +83,8 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.progressbar("value")' % self._src.dom.jquery.varId)
 
@@ -77,10 +93,13 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param number:
-    :param timer: Integer. the spped of the increase in millisecond
+    :param number: Integer.
+    :param timer: Integer. Optional. the spped of the increase in millisecond.
     """
     return JsUtils.jsConvertFncs([
       self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
@@ -100,10 +119,13 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param val:
-    :param jsFnc:
+    :param jsFnc: List | String. Javascript functions.
     """
     return JsFncs.JsFunction("if((%(content)s >= %(val)s) && (%(content)s <= %(val)s + 10)){%(fnc)s}" % {'content': self.content, 'val': val, 'fnc': JsUtils.jsConvertFncs(jsFnc, toStr=True)})
 
@@ -112,7 +134,12 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    :param jsFnc:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsFnc: List | String. Javascript functions.
     """
     return self.position(100, jsFnc)
 
@@ -125,6 +152,8 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -136,6 +165,8 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
@@ -148,6 +179,8 @@ class JsHtmlSlider(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -159,6 +192,8 @@ class JsHtmlSlider(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.slider("value")' % self._src.dom.jquery.varId)
 
@@ -171,6 +206,8 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('values'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -182,6 +219,8 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, '%s.slider("values")' % self._src.dom.jquery.varId)
 
@@ -194,6 +233,8 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -205,6 +246,8 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, 'new Date(%s.slider("value") * 1000).toISOString().split("T")[0]' % self._src.dom.jquery.varId)
 
@@ -217,6 +260,8 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -228,6 +273,8 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, 'function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (self._src.dom.jquery.varId, self._src.dom.jquery.varId))
 
@@ -239,6 +286,9 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     """
     Description:
     ------------
+
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.region))
@@ -249,6 +299,8 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
@@ -257,6 +309,13 @@ class JsHtmlSparkline(JsHtml.JsHtml):
 
   @property
   def value(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     if self._src._jsStyles['type'] in ['bar']:
       return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
 
@@ -264,10 +323,24 @@ class JsHtmlSparkline(JsHtml.JsHtml):
 
   @property
   def region(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()")
 
   @property
   def x(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
 
@@ -275,6 +348,13 @@ class JsHtmlSparkline(JsHtml.JsHtml):
 
   @property
   def offset(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].offset")
 
@@ -282,6 +362,13 @@ class JsHtmlSparkline(JsHtml.JsHtml):
 
   @property
   def y(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].value")
 

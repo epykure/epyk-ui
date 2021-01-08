@@ -11,24 +11,32 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.checkbox.dom.varName)
 
   def set_text(self, value, is_on_val=True):
     """
     Description:
     ------------
-    Change the value of the text component
+    Change the value of the text component.
 
-    Usage::
+    Usage:
+    -----
 
-      sw = rptObj.ui.buttons.switch()
-    rptObj.ui.button("test").click([
+      sw = page.ui.buttons.switch()
+      page.ui.button("test").click([
       sw.dom.set_text("ok")])
 
     Attributes:
     ----------
-    :param value: String. The new value
-    :param is_on_val: Boolean. Change either the on or the off value displayed
+    :param value: String. The new value.
+    :param is_on_val: Boolean. Optional. Change either the on or the off value displayed.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get(''' if(%(text)s == %(htmlCode)s_data.%(switch_type)s){ %(htmlObj)s };
@@ -45,6 +53,8 @@ class Tick(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, label: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -55,7 +65,10 @@ class Tick(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
+
+    Usage:
+    -----
     """
     # the option variable is coming from the Tick class to get the icon details
     return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
@@ -69,6 +82,9 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the select Picker selected values.
+
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, text: %s, options_text: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -79,7 +95,10 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
+
+    Usage:
+    -----
     """
     return JsHtml.ContentFormatters(self._report, "%s.val()" % self.jquery.varId)
 
@@ -88,8 +107,10 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').text()" % self.jquery.varId)
 
@@ -98,8 +119,10 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').index()" % self.jquery.varId)
 
@@ -108,8 +131,10 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
 
+    Usage:
+    -----
     """
     return JsObjects.JsObjects.get("%s.text()" % self.jquery.varId)
 
@@ -121,7 +146,10 @@ class Radio(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the selected content from the Select component
+    Get the selected content from the Select component.
+
+    Usage:
+    -----
     """
     # the option variable is coming from the Tick class to get the icon details
     return JsHtml.ContentFormatters(self._report, "%s.querySelector('input:checked').getAttribute('data-content')" % self._src.dom.varName)
@@ -131,7 +159,10 @@ class Radio(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    returns the checked DOM object
+    returns the checked DOM object.
+
+    Usage:
+    -----
     """
     return JsNodeDom.JsDoms.get("%s.querySelector('input:checked').parentNode" % self._src.dom.varName, report=self._report)
 
@@ -142,7 +173,7 @@ class Radio(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value:
+    :param value: String.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid('''
