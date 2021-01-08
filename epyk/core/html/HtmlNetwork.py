@@ -15,8 +15,8 @@ from epyk.core.css.styles import GrpClsNetwork
 class Comments(Html.Html):
   name = 'Comment'
 
-  def __init__(self, report, recordSet, width, height, htmlCode, options, profile):
-    super(Comments, self).__init__(report, recordSet, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode,
+  def __init__(self, report, record, width, height, htmlCode, options, profile):
+    super(Comments, self).__init__(report, record, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode,
                                    profile=profile)
     self.__options = OptNet.OptionsChat(self, options)
     self.css({'padding': '5px'})
