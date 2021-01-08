@@ -107,7 +107,7 @@ class Stars(Html.Html):
     """
     Description:
     ------------
-    The JavaScript dom object to be used in any events
+    The JavaScript dom object to be used in any events.
 
     Usage:
     -----
@@ -118,12 +118,12 @@ class Stars(Html.Html):
       self._dom = JsHtmlStars.Stars(self, report=self._report)
     return self._dom
 
-  def click(self, js_fncs=None, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
-    Add the event click and double click to the starts item
-    The Javascript function will be triggered after the change of content of the component
+    Add the event click and double click to the starts item.
+    The Javascript function will be triggered after the change of content of the component.
 
     Usage:
     -----
@@ -133,7 +133,7 @@ class Stars(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
+    :param js_funcs: String | List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
@@ -141,14 +141,14 @@ class Stars(Html.Html):
     :return: self to allow the chains
     """
     self.css({"cursor": "pointer"})
-    if js_fncs is None:
-      js_fncs = []
+    if js_funcs is None:
+      js_funcs = []
     else:
-      if not isinstance(js_fncs, list):
-        js_fncs = [js_fncs]
-    js_fncs = ["var data = parseInt(event.target.dataset.level)+1",
-               self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_fncs
-    str_fncs = JsUtils.jsConvertFncs(js_fncs)
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
+    js_funcs = ["var data = parseInt(event.target.dataset.level)+1",
+                self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_funcs
+    str_fncs = JsUtils.jsConvertFncs(js_funcs)
     for span in self._spans:
       span.click(str_fncs, profile, source_event=source_event, onReady=onReady)
     return self
@@ -218,16 +218,16 @@ class Loading(Html.Html):
     """
     Description:
     ------------
-    Set css attributes of the loading div to be fixed
-    This can be done directly in options in the component constructor options={"fixed": True}
+    Set css attributes of the loading div to be fixed.
+    This can be done directly in options in the component constructor options={"fixed": True}.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param css: Dictionary with the css attributes
-    :param icon_css: Dictionary with the CSS attributes
+    :param css: Dictionary. Optional. The css attributes.
+    :param icon_css: Dictionary. Optional. The CSS attributes.
 
     :return: self to allow the chains
     """
@@ -365,8 +365,8 @@ class Breadcrumb(Html.Html):
 class Legend(Html.Html):
   name = 'Legend'
 
-  def __init__(self, report, recordse, width, height, align, options, profile):
-    super(Legend, self).__init__(report, recordse, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, record, width, height, align, options, profile):
+    super(Legend, self).__init__(report, record, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptJsonFormatter.OptionsLegend(self, options)
 
   @property
@@ -502,7 +502,7 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param component:
+    :param component: HTML. The HTML component to be added to this component.
     """
     if isinstance(component, list):
       for c in component:
@@ -533,9 +533,9 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param title:
-    :param component:
-    :param options:
+    :param title: String. The title value in the slide.
+    :param component: HTML. The HTML component.
+    :param options: Dictionary. The various component options.
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
@@ -581,8 +581,6 @@ class HtmlQRCode(Html.Html):
     super(HtmlQRCode, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
 
   _js__builder__ = '''
-    console.log(htmlObj.id);
-    console.log(data);
     new QRCode(htmlObj, data)
     '''
 
