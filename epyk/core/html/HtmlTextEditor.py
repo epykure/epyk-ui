@@ -46,7 +46,7 @@ class Console(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -97,7 +97,7 @@ class Editor(Html.Html):
       self._dom = JsHtmlEditor.Editor(self, report=self._report)
     return self._dom
 
-  def action(self, icon, jsFncs, tooltip=None):
+  def action(self, icon, js_funcs, tooltip=None):
     """
     Description:
     ------------
@@ -109,15 +109,15 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
+    :param js_funcs: List | String. The Javascript functions
     :param tooltip: String. Text to be displayed when mouse is hover
     """
-    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(jsFncs)
+    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
     return self
 
-  def toggle(self, jsFncs, icons=("fas fa-eye", "far fa-eye-slash"), tooltip=None):
+  def toggle(self, js_funcs, icons=("fas fa-eye", "far fa-eye-slash"), tooltip=None):
     """
     Description:
     ------------
@@ -129,18 +129,18 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icons: Tuple. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
+    :param js_funcs: List | String. The Javascript functions
     :param tooltip: String. Text to be displayed when mouse is hover
     """
     icon_button = self._report.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
-    jsFncs.append(self.textarea.dom.toggle())
-    jsFncs.append(icon_button.dom.switchClass(icons[0], icons[1]).r)
-    icon_button.click(jsFncs)
+    js_funcs.append(self.textarea.dom.toggle())
+    js_funcs.append(icon_button.dom.switchClass(icons[0], icons[1]).r)
+    icon_button.click(js_funcs)
     icon_button.options.managed = False
     self.actions.append((icons[0], icon_button))
     return self
 
-  def copy(self, jsFncs, icon="far fa-clipboard", tooltip=None):
+  def copy(self, js_funcs, icon="far fa-clipboard", tooltip=None):
     """
     Description:
     ------------
@@ -151,15 +151,15 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
     """
-    jsFncs.append(self.textarea.dom.select())
-    jsFncs.append('document.execCommand("copy")')
-    return self.action(icon, jsFncs, tooltip)
+    js_funcs.append(self.textarea.dom.select())
+    js_funcs.append('document.execCommand("copy")')
+    return self.action(icon, js_funcs, tooltip)
 
-  def run(self, jsFncs, icon="fas fa-play", tooltip=None):
+  def run(self, js_funcs, icon="fas fa-play", tooltip=None):
     """
     Description:
     ------------
@@ -171,13 +171,13 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
     """
-    return self.action(icon, jsFncs, tooltip)
+    return self.action(icon, js_funcs, tooltip)
 
-  def save(self, jsFncs, icon="fas fa-save", tooltip=None):
+  def save(self, js_funcs, icon="fas fa-save", tooltip=None):
     """
     Description:
     ------------
@@ -189,13 +189,13 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
     """
-    return self.action(icon, jsFncs, tooltip)
+    return self.action(icon, js_funcs, tooltip)
 
-  def clear(self, jsFncs, icon="fas fa-times-circle", tooltip=None):
+  def clear(self, js_funcs, icon="fas fa-times-circle", tooltip=None):
     """
     Description:
     ------------
@@ -206,12 +206,12 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
     :param tooltip: String. Text to be displayed when mouse is hover
     """
-    jsFncs.append(self.textarea.dom.clear())
-    return self.action(icon, jsFncs, tooltip)
+    js_funcs.append(self.textarea.dom.clear())
+    return self.action(icon, js_funcs, tooltip)
 
   def __str__(self):
     actions = "".join([b.html() for _, b in self.actions])
@@ -237,7 +237,7 @@ class Cell(Html.Html):
     self.css({'padding': '10px', "min-height": "30px", 'box-sizing': 'border-box', 'display': 'inline-block'})
     self.actions = []
 
-  def action(self, icon, jsFncs, tooltip=None):
+  def action(self, icon, js_funcs, tooltip=None):
     """
     Description:
     ------------
@@ -248,17 +248,17 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
 
     :return:
     """
-    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(jsFncs)
+    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
 
-  def run(self, jsFncs, icon="fas fa-play", tooltip=None):
+  def run(self, js_funcs, icon="fas fa-play", tooltip=None):
     """
     Description:
     ------------
@@ -270,14 +270,14 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
     """
-    jsFncs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
-    return self.action(icon, jsFncs, tooltip)
+    js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
+    return self.action(icon, js_funcs, tooltip)
 
-  def save(self, jsFncs, icon="fas fa-save", tooltip=None):
+  def save(self, js_funcs, icon="fas fa-save", tooltip=None):
     """
     Description:
     ------------
@@ -289,11 +289,11 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param jsFncs: Array. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Text to be displayed when mouse is hover.
     """
-    return self.action(icon, jsFncs, tooltip)
+    return self.action(icon, js_funcs, tooltip)
 
   def __str__(self):
     actions = "".join([b.html() for _, b in self.actions])
