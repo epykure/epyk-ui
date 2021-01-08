@@ -367,7 +367,7 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, report=self._report)
     return self._js
 
-  def change(self, jsFnc, profile=None, onReady=False):
+  def change(self, js_funcs, profile=None, onReady=False):
     """
     Description:
     -----------
@@ -382,16 +382,16 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     :param onReady: Boolean. Optional. Trigger the change event when page is ready.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["change"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["change"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  def start(self, jsFnc, profile=None):
+  def start(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -406,15 +406,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["start"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["start"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  def slide(self, jsFnc, profile=None):
+  def slide(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -429,15 +429,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["slide"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["slide"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  def stop(self, jsFnc, profile=None):
+  def stop(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -452,12 +452,12 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["stop"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["stop"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   @property
@@ -712,7 +712,7 @@ class Filters(Html.Html):
         chipAdd(panel, val, options)})}
         '''
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, js_funcs, profile=False):
     """
     Description:
     -----------
@@ -722,16 +722,16 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List or String. The JavaScript events
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. The JavaScript events
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     self.__enter_def = True
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs + [self.input.dom.empty()], profile)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.keydown.enter([JsUtils.jsConvertFncs(js_funcs, toStr=True), self.dom.add(self.dom.input)] + js_funcs + [self.input.dom.empty()], profile)
     return self
 
-  def drop(self, jsFncs, preventDefault=True, profile=False):
+  def drop(self, js_funcs, preventDefault=True, profile=False):
     """
     Description:
     -----------
@@ -741,15 +741,15 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String | List. The Javascript functions
     :param preventDefault:
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     self.style.css.border = "1px dashed black"
     self.tooltip("Drag and drop values here")
-    return super(Filters, self).drop(jsFncs, preventDefault, profile)
+    return super(Filters, self).drop(js_funcs, preventDefault, profile)
 
-  def delete(self, jsFncs, profile=False):
+  def delete(self, js_funcs, profile=False):
     """
     Description:
     -----------
@@ -759,15 +759,15 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if self.__enter_def:
       raise Exception("delete on chip must be triggered before enter")
 
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._jsStyles['delete'] = JsUtils.jsConvertFncs(["this.parentNode.remove()"] + jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles['delete'] = JsUtils.jsConvertFncs(["this.parentNode.remove()"] + js_funcs, toStr=True)
     return self
 
   def append(self, value, category=None, name=None, disabled=False, fixed=False):
@@ -792,7 +792,7 @@ class Filters(Html.Html):
     rec['name'] = name or rec['category']
     self._vals.append(rec)
 
-  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+  def draggable(self, js_funcs=None, options=None, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -802,16 +802,16 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param options:
     :param profile:
     :param source_event:
     """
-    jsFncs = jsFncs or []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    jsFncs.append('event.dataTransfer.setData("text", value)')
-    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    js_funcs = js_funcs or []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append('event.dataTransfer.setData("text", value)')
+    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   @property
