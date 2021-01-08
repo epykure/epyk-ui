@@ -16,7 +16,7 @@ class Drawer(Html.Html):
   name = 'Drawer'
 
   def __init__(self, report, width, height, options, helper, profile):
-    super(Drawer, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    super(Drawer, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.__options = OptPanel.OptionDrawer(self, options)
     self.style.css.position = 'relative'
