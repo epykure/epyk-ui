@@ -65,7 +65,7 @@ class Tree(Html.Html):
         htmlObj.appendChild(li)
       })'''
 
-  def clickNode(self, jsFncs, profile=False):
+  def click_node(self, js_funcs, profile=False):
     """
     Description:
     -----------
@@ -75,16 +75,15 @@ class Tree(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-
-    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -94,14 +93,14 @@ class Tree(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._jsStyles['click_leaf'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles['click_leaf'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def __str__(self):
@@ -176,7 +175,7 @@ class DropDown(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a dropdown
+    Property to set all the possible object for a dropdown.
 
     Usage:
     -----
@@ -185,7 +184,7 @@ class DropDown(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -195,14 +194,14 @@ class DropDown(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function
+    :param js_funcs: List | String. A Javascript Python function
     :param profile: Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   _js__builder__ = ''' 
