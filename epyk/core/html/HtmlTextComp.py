@@ -36,7 +36,7 @@ class UpDown(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -84,8 +84,8 @@ class UpDown(Html.Html):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event:
-    :param onReady:
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
     self.style.add_classes.div.color_light_background_hover()
@@ -99,10 +99,9 @@ class UpDown(Html.Html):
 class BlockText(Html.Html):
   requirements = ('font-awesome', )
   name = 'Block text'
-  # _grpCls = CssGrpClsText.CssClassTextBlock
 
-  def __init__(self, report, recordSet, color, border, width, height, helper, options, profile):
-    super(BlockText, self).__init__(report, recordSet, css_attrs={'color': color, "width": width, "height": height}, profile=profile)
+  def __init__(self, report, record, color, border, width, height, helper, options, profile):
+    super(BlockText, self).__init__(report, record, css_attrs={'color': color, "width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
     self.css({'padding': '5px'})
@@ -112,7 +111,7 @@ class BlockText(Html.Html):
   @property
   def options(self):
     """
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -148,21 +147,21 @@ class TextWithBorder(Html.Html):
   requirements = ('font-awesome', )
   name = 'Text with Border and Icon'
 
-  def __init__(self, report, recordSet, width, height, align, helper, options, profile):
-    super(TextWithBorder, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, record, width, height, align, helper, options, profile):
+    super(TextWithBorder, self).__init__(report, record, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
     self.align = align
-    if not 'colorTitle' in self.val:
+    if 'colorTitle' not in self.val:
       self.val['colorTitle'] = self._report.theme.colors[9]
-    if not 'color' in self.val:
+    if 'color' not in self.val:
       self.val['color'] = self._report.theme.colors[9]
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
   def options(self):
     """
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -222,11 +221,11 @@ class Delta(Html.Html):
   def __init__(self, report, records, width, height, options, helper, profile):
     super(Delta, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    if not 'color' in self.val:
+    if 'color' not in self.val:
       self.val['color'] = self._report.theme.colors[9]
-    if not 'thresold1' in self.val:
+    if 'thresold1' not in self.val:
       self.val['thresold1'] = 100
-    if not 'thresold2' in self.val:
+    if 'thresold2' not in self.val:
       self.val['thresold2'] = 50
     self.css({"color": self.val['color']})
     self.__options = OptText.OptionsNumber(self, options)
@@ -237,7 +236,9 @@ class Delta(Html.Html):
   @property
   def options(self):
     """
-    Property to set all the possible object for a button
+    Description:
+    ------------
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -333,16 +334,16 @@ class TrafficLight(Html.Html):
     """
     Description:
     ------------
-    Set the 3 colors of the traffic light
+    Set the 3 colors of the traffic light.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param green: The color used in case of result true
-    :param red: The color used in case of result false
-    :param neutral: The color used in case of null
+    :param green: String. Optional. The color used in case of result true.
+    :param red: String. Optional. The color used in case of result false.
+    :param neutral: String. Optional. The color used in case of null.
 
     :return: self to allow the chains
     """
@@ -358,7 +359,7 @@ class TrafficLight(Html.Html):
     """
     Description:
     ------------
-    Turn a error warning to a green one
+    Turn a error warning to a green one.
 
     Usage:
     -----
@@ -366,7 +367,7 @@ class TrafficLight(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self.action = self._report.ui.icon("fas fa-wrench")
     self.action.options.managed = False
@@ -432,7 +433,7 @@ class ContentsTable(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -460,16 +461,16 @@ class ContentsTable(Html.Html):
     """
     Description:
     ------------
-    Add link to the content table
+    Add link to the content table.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param text:
-    :param level:
-    :param anchor:
+    :param text: String.
+    :param level: Integer. Optional.
+    :param anchor: String. Optional.
     """
     href = self._report.ui.link(text, url=anchor)
     href.options.managed = False
@@ -483,6 +484,14 @@ class ContentsTable(Html.Html):
     return self
 
   def move(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     super(ContentsTable, self).move()
     self.style.css.position = None
     self.style.css.margin = 5
@@ -577,6 +586,8 @@ class Composite(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     Usage:
     -----
@@ -588,8 +599,8 @@ class Composite(Html.Html):
   @property
   def dom(self):
     """
-    Javascript Functions
-
+    Description:
+    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -628,12 +639,12 @@ class Composite(Html.Html):
   def __getitem__(self, i):
     return self.val.val[i]
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
+    component.options.managed = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val.val, list):
       self._vals = self.val._vals
-    self.val.val.append(htmlObj)
+    self.val.val.append(component)
     return self
 
   @property
