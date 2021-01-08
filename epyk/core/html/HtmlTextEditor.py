@@ -101,16 +101,16 @@ class Editor(Html.Html):
     """
     Description:
     ------------
-    Add a bespoke action to the action panel
+    Add a bespoke action to the action panel.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon
-    :param js_funcs: List | String. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icon: String. The font awesome icon.
+    :param js_funcs: List | String. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
@@ -128,9 +128,9 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icons: Tuple. The font awesome icon
-    :param js_funcs: List | String. The Javascript functions
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param icons: Tuple. The font awesome icon.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self._report.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
     js_funcs.append(self.textarea.dom.toggle())
@@ -152,8 +152,8 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.textarea.dom.select())
     js_funcs.append('document.execCommand("copy")')
@@ -172,8 +172,8 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
@@ -190,8 +190,8 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
@@ -207,8 +207,8 @@ class Editor(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.textarea.dom.clear())
     return self.action(icon, js_funcs, tooltip)
@@ -241,7 +241,7 @@ class Cell(Html.Html):
     """
     Description:
     ------------
-    Add a bespoke action to the action panel
+    Add a bespoke action to the action panel.
 
     Usage:
     -----
@@ -250,9 +250,7 @@ class Cell(Html.Html):
     ----------
     :param icon: String. The font awesome icon.
     :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
-
-    :return:
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
@@ -271,8 +269,8 @@ class Cell(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
     return self.action(icon, js_funcs, tooltip)
@@ -290,8 +288,8 @@ class Cell(Html.Html):
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Text to be displayed when mouse is hover.
+    :param js_funcs: List | String. Optional. The Javascript functions.
+    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
@@ -321,7 +319,7 @@ class Code(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
 
     Usage:
     -----
@@ -375,7 +373,8 @@ class Code(Html.Html):
 
   def build(self, data=None, options=None, profile=False):
     """
-
+    Description:
+    ------------
 
     Usage:
     -----
@@ -383,7 +382,6 @@ class Code(Html.Html):
     :param data:
     :param options:
     :param profile:
-    :return:
     """
     if not self.builder_name:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
@@ -421,6 +419,7 @@ class Code(Html.Html):
 
     Usage:
     -----
+
     """
     return "editor_%s" % self.htmlCode
 
@@ -431,7 +430,6 @@ class Code(Html.Html):
 
 class Tags(Html.Html):
   name = 'Tags'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
     super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
@@ -442,6 +440,8 @@ class Tags(Html.Html):
   @property
   def val(self):
     """
+    Description:
+    ------------
 
     Usage:
     -----
@@ -451,6 +451,8 @@ class Tags(Html.Html):
 
   def jsEmpty(self):
     """
+    Description:
+    ------------
 
     Usage:
     -----
@@ -490,14 +492,14 @@ class MarkdownReader(Html.Html):
     """
     Description:
     ------------
-    Add automatically tooltips to the words
+    Add automatically tooltips to the words.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param data: Dictionary. The list of word to be automatically changed
+    :param data: Dictionary. The list of word to be automatically changed.
     """
     from epyk.core.data import components
 
