@@ -37,7 +37,8 @@ class JsNumber(JsObject.JsObject):
     The NEGATIVE_INFINITY property represents negative infinity.
     Negative infinity can be explained as something that is lower than any other number.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").NEGATIVE_INFINITY
 
@@ -55,7 +56,8 @@ class JsNumber(JsObject.JsObject):
     The POSITIVE_INFINITY property represents positive infinity.
     Positive infinity can be explained as something that is higher than any other number.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").POSITIVE_INFINITY
 
@@ -74,7 +76,8 @@ class JsNumber(JsObject.JsObject):
 
     This static property has a value of 1.7976931348623157e+308.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").MAX_VALUE
 
@@ -93,7 +96,8 @@ class JsNumber(JsObject.JsObject):
 
     This static property has a value of 5e-324.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").MIN_VALUE
 
@@ -107,9 +111,10 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Check whether the value is NaN
+    Check whether the value is NaN.
 
-    Usage::
+    Usage:
+    -----
 
       string.parseFloat().isNaN()
 
@@ -127,15 +132,16 @@ class JsNumber(JsObject.JsObject):
     Description:
     ------------
     Add a value to a Javascript Number.
-    The value will be added and it will return a new number object on the Javascript side
+    The value will be added and it will return a new number object on the Javascript side.
 
-    Usage::
+    Usage:
+    -----
 
       jsNumber.add(34.5)
 
     Attributes:
     ----------
-    :param n: The number value
+    :param n: Float. The number value.
 
     :return: A new Python Javascript Number
     """
@@ -145,11 +151,14 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Add a cap to the value using the min function
+    Add a cap to the value using the min function.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: Value. The maximum value for this object
+    :param value: Integer. The maximum value for this object.
     """
     return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
@@ -157,11 +166,14 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Add a floor to the value using the max function
+    Add a floor to the value using the max function.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param value: Value. The minimum value for this object
+    :param value: Integer. The minimum value for this object.
     """
     return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
@@ -170,15 +182,16 @@ class JsNumber(JsObject.JsObject):
     Description:
     ------------
     Subtract a value to a Javascript Number.
-    The value will be subtracted and it will return a new number object on the Javascript side
+    The value will be subtracted and it will return a new number object on the Javascript side.
 
-    Usage::
+    Usage:
+    -----
 
       jsNumber.sub(34.5)
 
     Attributes:
     ----------
-    :param n: The number value
+    :param n: Integer. The number value.
 
     :return: A new Python Javascript Number
     """
@@ -188,9 +201,10 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Convert a number into an exponential notation
+    Convert a number into an exponential notation.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").toExponential()
 
@@ -206,9 +220,10 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Convert a number into a string, keeping only two decimals
+    Convert a number into a string, keeping only two decimals.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").toFixed()
 
@@ -218,7 +233,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
+    :param digits: Integer. Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
 
     :return: A Javascript Number
     """
@@ -228,9 +243,10 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Check whether a value is a finite number
+    Check whether a value is a finite number.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.number.get("MyNumber").isFinite()
 
@@ -241,6 +257,7 @@ class JsNumber(JsObject.JsObject):
     :return: A Javascript boolean
     """
     from epyk.core.js.primitives import JsBoolean
+
     return JsBoolean.JsBoolean("Number.isFinite(%s)" % self.varId, isPyData=False)
 
   def toPrecision(self, n):
@@ -249,7 +266,8 @@ class JsNumber(JsObject.JsObject):
     ------------
     Format a number into a specified length:
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.js.number(varName="myNumber").toPrecision(10) for 5776 returns 5776.000000
 
@@ -259,7 +277,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting)
+    :param n: Integer. Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
 
     :return: A Javascript Number
     """
@@ -295,7 +313,18 @@ class JsNumber(JsObject.JsObject):
 
   @classmethod
   def proto(cls, jsObj, fncName):
-    """"""
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsObj:
+    :param fncName: String. The function name.
+    """
     jsObj.extendProto(cls, "formatMoney", '''
           var n = this, decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces, decSeparator = decSeparator == undefined ? "." : decSeparator,
           thouSeparator = thouSeparator == undefined ? "," : thouSeparator, sign = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
@@ -307,17 +336,21 @@ class JsNumber(JsObject.JsObject):
     """
     Description:
     ------------
-    Wrapper function
+    Wrapper function.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://en.wikipedia.org/wiki/Decimal_separator
-    https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
+      https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
 
     Attributes:
     ----------
     :param jsObj: The base Javascript Python object
-    :param decPlaces: The number of decimal
+    :param decPlaces: Integer. Optional. The number of decimal.
+    :param countryCode: String. Optional. The country code. Default uk.
     """
     thouSeparator, decSeparator = (",", ".") if countryCode.upper() in ["UK", 'US'] else (" ", ".")
     jsObj.extendProto(self, "formatMoney", '''
@@ -327,4 +360,5 @@ class JsNumber(JsObject.JsObject):
       return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
       ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
     from epyk.core.js.primitives import JsString
+
     return JsString.JsString("%s.formatMoney(%s, '%s', '%s')" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)

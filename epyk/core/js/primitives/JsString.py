@@ -43,17 +43,31 @@ class JsString(JsObject.JsObject):
 
   def __getitem__(self, value):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param value:
-    :return:
     """
     return JsString(None, "%s[%s]" % (self.varId, value), setVar=False)
 
   def startswith(self, val):
     """
-    Proxy to the Python method startswith
+    Description:
+    ------------
+    Proxy to the Python method startswith.
 
-    :param val: The Python value
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param val: The Python value.
+
     :return: Always False as this is dedicated to be a Javascript Object
     """
     return False
@@ -65,6 +79,9 @@ class JsString(JsObject.JsObject):
     ------------
     The length property of an array returns the length of an array (the number of array elements).
 
+    Usage:
+    -----
+
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_length_string.asp
@@ -72,6 +89,7 @@ class JsString(JsObject.JsObject):
     :return: The length of a string
     """
     from epyk.core.js.primitives import JsNumber
+
     newObj = JsNumber.JsNumber("%s.length" % self.varId, isPyData=False)
     newObj._js.extend(self._js)
     return newObj
@@ -80,11 +98,14 @@ class JsString(JsObject.JsObject):
     """
     Description:
     ------------
-    Prepend Object to the String Javascript Object
+    Prepend Object to the String Javascript Object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param data: Obhect. String or other Javascript objects
+    :param data: Object. String or other Javascript objects.
     """
     self.varData = "%s + %s" % (JsUtils.jsConvertData(data, None), self.varData)
     return self
@@ -93,11 +114,14 @@ class JsString(JsObject.JsObject):
     """
     Description:
     ------------
-    Add object to the String Javascript object
+    Add object to the String Javascript object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param str: Object. String or other Javascript objects
+    :param strVal: Object. String or other Javascript objects.
 
     :return: return a new JString object
     """
@@ -105,17 +129,23 @@ class JsString(JsObject.JsObject):
 
   def indexOf(self, searchvalue, start=0):
     """
+    Description:
+    ------------
     The indexOf() method returns the position of the first occurrence of a specified value in a string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_indexof.asp
 
-    :param searchvalue: Required. The string to search for
-    :param start: Optional. Default 0. At which position to start the search
+    Attributes:
+    ----------
+    :param searchvalue: String. Required. The string to search for.
+    :param start: Integer. Optional. Default 0. At which position to start the search.
 
     :rtype: JsNumber.JsNumber
-    :return:
     """
     from epyk.core.js.primitives import JsNumber
 
@@ -124,17 +154,23 @@ class JsString(JsObject.JsObject):
 
   def lastIndexOf(self, searchvalue, start=0):
     """
+    Description:
+    ------------
     The lastIndexOf() method returns the position of the last occurrence of a specified value in a string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_lastindexof.asp
 
-    :param searchvalue: Required. The string to search for
-    :param start: Optional. Default 0. At which position to start the search
+    Attributes:
+    ----------
+    :param searchvalue: Required. The string to search for.
+    :param start: Integer. Optional. Default 0. At which position to start the search.
 
     :rtype: JsNumber.JsNumber
-    :return:
     """
     from epyk.core.js.primitives import JsNumber
 
@@ -142,16 +178,21 @@ class JsString(JsObject.JsObject):
 
   def substring(self, start=0, end=None):
     """
+    Description:
+    ------------
     The substring() method extracts the characters from a string, between two specified indices, and returns the new sub string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_substring.asp
 
-    :param start: Required. The position where to start the extraction. First character is at index 0
-    :param end: Optional. The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the string
-
-    :return:
+    Attributes:
+    ----------
+    :param start: Integer. Required. The position where to start the extraction. First character is at index 0.
+    :param end: Integer. Optional. The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the string
     """
     if end is None:
       end = self.length
@@ -159,16 +200,21 @@ class JsString(JsObject.JsObject):
 
   def substr(self, start=0, length=None):
     """
+    Description:
+    ------------
     The substr() method extracts parts of a string, beginning at the character at the specified position, and returns the specified number of characters.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_substr.asp
 
-    :param start: Required. The position where to start the extraction. First character is at index 0.
-    :param length: Optional. The number of characters to extract. If omitted, it extracts the rest of the string
-
-    :return:
+    Attributes:
+    ----------
+    :param start: Integer. Required. The position where to start the extraction. First character is at index 0.
+    :param length: Integer. Optional. The number of characters to extract. If omitted, it extracts the rest of the string.
     """
     if length is None:
       return JsString("%s.substr(%s)" % (self.varId, start), isPyData=False)
@@ -177,19 +223,24 @@ class JsString(JsObject.JsObject):
 
   def replace(self, searchvalue, newvalue, isPyData=True):
     """
+    Description:
+    ------------
     The replace() method replaces a specified value with another value in a string
 
     The replace() method does not change the string it is called on. It returns a new string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/js/js_string_methods.asp
 
-    :param searchvalue: Required. The value, or regular expression, that will be replaced by the new value
-    :param newvalue: Required. The value to replace the search value with
-    :param isPyData:
-
-    :return:
+    Attributes:
+    ----------
+    :param searchvalue: Required. The value, or regular expression, that will be replaced by the new value.
+    :param newvalue: Required. The value to replace the search value with.
+    :param isPyData: Boolean. Optional.
     """
     if isPyData:
       searchvalue = json.dumps(searchvalue)
@@ -198,31 +249,42 @@ class JsString(JsObject.JsObject):
 
   def slice(self, start, end):
     """
+    Description:
+    ------------
     The slice() method extracts parts of a string and returns the extracted parts in a new string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_slice_string.asp
 
-    :param start: Required. The position where to begin the extraction. First character is at position 0
-    :param end: Optional. The position (up to, but not including) where to end the extraction.
+    Attributes:
+    ----------
+    :param start: Integer. Required. The position where to begin the extraction. First character is at position 0.
+    :param end: Integer. Optional. The position (up to, but not including) where to end the extraction.
                 If omitted, slice() selects all characters from the start-position to the end of the string
-
-    :return:
     """
     return JsString("%s.replace(%s, %s)" % (self.varId, start, end), isPyData=False)
 
   def search(self, searchvalue, isPyData=True):
     """
+    Description:
+    ------------
     The search() method searches a string for a specified value, and returns the position of the match.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_search.asp
 
-    :param searchvalue: Required. A regular expression. A string will automatically be converted to a regular expression.
-
-    :return:
+    Attributes:
+    ----------
+    :param searchvalue: String. Required. A regular expression. A string will automatically be converted to a regular expression..
+    :param isPyData: Boolean. Optional.
     """
     from epyk.core.js.primitives import JsNumber
 
@@ -232,12 +294,19 @@ class JsString(JsObject.JsObject):
 
   def concat(self, *args, newVarName=None, isPyData=True):
     """
+    Description:
+    ------------
     The concat() method is used to join two or more strings.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_concat_string.asp
 
+    Attributes:
+    ----------
     :param args: Required. The strings to be joined
     :param newVarName: The new Javascript Variable Name
     :param isPyData: The data input type
@@ -258,14 +327,16 @@ class JsString(JsObject.JsObject):
 
   def clean(self):
     """
-    Javascript Extension
-
+    Description:
+    ------------
     Remove the special characts in a string and only keep the ones necessary to be considered as a valid Javascript
     variable name. Indeed some rules are defined for the variable names and the HTML codes values must follow those rules.
     Check are on the Python side with an exception raised but it can also be added on the Javascript side
 
-    Example
-    rptObj.js.string("iib$% rni233n", varName="MyTest").clean() => returns "iibrni233n"
+    Usage:
+    -----
+
+      page.js.string("iib$% rni233n", varName="MyTest").clean() => returns "iibrni233n"
 
     Related Pages:
 
@@ -277,14 +348,23 @@ class JsString(JsObject.JsObject):
 
   def leftTrim(self):
     """
+    Description:
+    ------------
 
-    :return:
+    Usage:
+    -----
+
     """
     return JsString("%s.leftTrim()" % self.varId, isPyData=False)
 
   def trim(self):
     """
+    Description:
+    ------------
     The trim() method removes whitespace from both sides of a string.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -296,13 +376,20 @@ class JsString(JsObject.JsObject):
 
   def charAt(self, i):
     """
+    Description:
+    ------------
     The charAt() method returns the character at the specified index in a string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_charat.asp
 
-    :param i: Required. An integer representing the index of the character you want to return
+    Attributes:
+    ----------
+    :param i: Required. An integer representing the index of the character you want to return.
 
     :return: A String, representing the character at the specified index, or an empty string if the index number is not found
     """
@@ -310,13 +397,20 @@ class JsString(JsObject.JsObject):
 
   def charCodeAt(self, i):
     """
+    Description:
+    ------------
     The charCodeAt() method returns the Unicode of the character at the specified index in a string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_charcodeat.asp
 
-    :param i: Required. A number representing the index of the character you want to return
+    Attributes:
+    ----------
+    :param i: Required. A number representing the index of the character you want to return.
 
     :return: A Number, representing the unicode of the character at the specified index.
     """
@@ -326,7 +420,12 @@ class JsString(JsObject.JsObject):
 
   def toLowerCase(self):
     """
+    Description:
+    ------------
     The toLocaleLowerCase() method converts a string to lowercase letters, according to the host's current locale.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -338,7 +437,12 @@ class JsString(JsObject.JsObject):
 
   def toUpperCase(self):
     """
+    Description:
+    ------------
     The toUpperCase() method converts a string to uppercase letters.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -350,16 +454,23 @@ class JsString(JsObject.JsObject):
 
   def includes(self, searchvalue, start=0, jsFnc=None, jsObj=None):
     """
+    Description:
+    ------------
     The includes() method determines whether a string contains the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_includes.asp
 
-    :param searchvalue: Required. The string to search for
-    :param start: Optional. Default 0. At which position to start the search
-    :param jsObj: Optional. The base Javascript object to add the pollyfill to the Javascript imports
+    Attributes:
+    ----------
+    :param searchvalue: String. Required. The string to search for.
+    :param start: Integer. Optional. Default 0. At which position to start the search.
+    :param jsObj: Integer. Optional. The base Javascript object to add the pollyfill to the Javascript imports.
 
     :return: A Boolean. Returns true if the string contains the value, otherwise it returns false
     """
@@ -373,15 +484,24 @@ class JsString(JsObject.JsObject):
 
   def startsWith(self, searchvalue, start=0, jsFnc=None, jsObj=None):
     """
+    Description:
+    ------------
     The startsWith() method determines whether a string begins with the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_startswith.asp
 
-    :param searchvalue: Required. The string to search for
-    :param start: Optional. Default 0. At which position to start the search
+    Attributes:
+    ----------
+    :param searchvalue: String. Required. The string to search for.
+    :param start: Integer. Optional. Default 0. At which position to start the search.
+    :param jsFnc: List | String. Javascript functions.
+    :param jsObj:
 
     :return: A Boolean. Returns true if the string starts with the value, otherwise it returns false
     """
@@ -396,14 +516,22 @@ class JsString(JsObject.JsObject):
 
   def endsWith(self, searchvalue, length=None, jsFnc=None):
     """
+    Description:
+    ------------
     The endsWith() method determines whether a string ends with the characters of a specified string.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_endswith.asp
 
-    :param searchvalue: Required. The string to search for
-    :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length of the string
+    Attributes:
+    ----------
+    :param searchvalue: Required. The string to search for.
+    :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length of the string.
+    :param jsFnc: List | String. Javascript functions.
 
     :return: A Boolean. Returns true if the string ends with the value, otherwise it returns false
     """
@@ -417,13 +545,20 @@ class JsString(JsObject.JsObject):
 
   def repeat(self, count):
     """
+    Description:
+    ------------
     The repeat() method returns a new string with a specified number of copies of the string it was called on.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_repeat.asp
 
-    :param count: Required. The number of times the original string value should be repeated in the new string
+    Attributes:
+    ----------
+    :param count: Integer. Required. The number of times the original string value should be repeated in the new string.
 
     :return: A String, a new string containing copies of the original string
     """
@@ -431,16 +566,23 @@ class JsString(JsObject.JsObject):
 
   def split(self, separator="", limit=None):
     """
+    Description:
+    ------------
     The split() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is a List with as a first value an emtpy String.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_split.asp
 
-    :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
-                                If omitted, the entire string will be returned (an array with only one item)
-    :param limit: Optional. An integer that specifies the number of splits, items after the split limit will not be included in the array
+    Attributes:
+    ----------
+    :param separator: String. Optional. Specifies the character, or the regular expression, to use for splitting the string.
+                                If omitted, the entire string will be returned (an array with only one item).
+    :param limit: Integer. Optional. An integer that specifies the number of splits, items after the split limit will not be included in the array
 
     :return: A Python JsArray
     """
@@ -451,25 +593,32 @@ class JsString(JsObject.JsObject):
 
     return JsArray("%s.split('%s')" % (self.varId, separator), isPyData=False)
 
-  def splitEmptyArray(self, rptObj, separator, limit=None):
+  def splitEmptyArray(self, page, separator, limit=None):
     """
+    Description:
+    ------------
     The splitEmptyArray() method is used to split a string into an array of substrings, and returns the new array.
-    The empty value is an emtpy list
+    The empty value is an emtpy list.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
 
-    :param rptObj: The report object in order to register the prototype extension
-    :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
-                      If omitted, the entire string will be returned (an array with only one item)
-    :param limit: Optional. An integer that specifies the number of splits, items after the split limit will not be included in the array
+    Attributes:
+    ----------
+    :param page: Report. The report object in order to register the prototype extension.
+    :param separator: String. Optional. Specifies the character, or the regular expression, to use for splitting the string.
+                      If omitted, the entire string will be returned (an array with only one item).
+    :param limit: Integer. Optional. An integer that specifies the number of splits, items after the split limit will not be included in the array
 
     :return: A Python JsArray
     """
     from epyk.core.js.primitives.JsArray import JsArray
 
-    rptObj._props.setdefault('js', {}).setdefault('prototypes', {})['String.prototype.splitEmptyArray'] = "function(sep) {var a = this.split(sep); if(a[0] == '' && a.length == 1){ return []}; return a}"
+    page._props.setdefault('js', {}).setdefault('prototypes', {})['String.prototype.splitEmptyArray'] = "function(sep) {var a = this.split(sep); if(a[0] == '' && a.length == 1){ return []}; return a}"
     if limit is not None:
       return JsArray("%s.splitEmptyArray('%s', %s)" % (self.varId, separator, limit), isPyData=False)
 
@@ -477,12 +626,17 @@ class JsString(JsObject.JsObject):
 
   def formatMoney(self, jsObj, decPlaces, countryCode='UK'):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param jsObj:
     :param decPlaces:
     :param countryCode:
-
-    :return:
     """
     jsObj.extendProto(self, "formatMoney", '''var n = parseFloat(this); n.formatMoney(decPlaces, thouSeparator, decSeparator);
       ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
@@ -490,10 +644,13 @@ class JsString(JsObject.JsObject):
 
   def parseFloat(self):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    -----
 
-    Documentation
+    Related Pages:
 
     :return: A Python Javascript Number
     """
@@ -503,10 +660,13 @@ class JsString(JsObject.JsObject):
 
   def parseInt(self):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    -----
 
-    Documentation
+    Related Pages:
 
     :return: A Python Javascript Integer
     """
@@ -516,8 +676,12 @@ class JsString(JsObject.JsObject):
 
   def toDate(self, jsFormat="YYYY-MM-DD"):
     """
+    Description:
+    ------------
 
-    :return:
+    Usage:
+    -----
+
     """
     from epyk.core.js.primitives import JsDate
 
