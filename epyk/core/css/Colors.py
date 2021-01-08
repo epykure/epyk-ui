@@ -167,7 +167,8 @@ def getHexToRgb(hexColor):
 
   A Rgb color can be passed as input.
 
-  Usage::
+  Usage:
+  -----
 
       ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
@@ -178,7 +179,7 @@ def getHexToRgb(hexColor):
 
   Attributes:
   ----------
-  :param hexColor: A String with a hexadecimal code color
+  :param hexColor: String. A hexadecimal code color.
 
   :return: The list with the rgb code color
   """
@@ -205,16 +206,19 @@ def rgba(red, green, blue, alpha):
   rgba(red, green, blue, alpha)
   The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
 
+  Usage:
+  -----
+
   Related Pages:
 
       https://www.w3schools.com/cssref/css_colors_legal.asp
 
   Attributes:
   ----------
-  :param red:
-  :param green:
-  :param blue:
-  :param alpha:
+  :param red: Integer. The red RGB color number.
+  :param green: Integer. The green RGB color number.
+  :param blue: Integer. The blue RGB color number.
+  :param alpha: Integer. The alpha number.
   """
   return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
@@ -225,14 +229,15 @@ def getRgbToHex(rgbColor):
   ------------
   Convert a RGB color to a hexadecimal code.
 
-  Usage::
+  Usage:
+  -----
 
       >>> ColorMaker().getRgbToHex([255, 0, 0])
   '#ff0000'
 
   Attributes:
   ----------
-  :param rgbColor: A list corresponding to the RGB color code
+  :param rgbColor: List. A list corresponding to the RGB color code.
 
   :return: String object defining the hexadecimal color code
   """
@@ -252,14 +257,15 @@ def randColor(seedNo=None):
   ------------
   Generate a random hexadecimal color code.
 
-  Usage::
+  Usage:
+  -----
 
       >>> ColorMaker.randColor(10)
   '#9693DD'
 
   Attributes:
   ----------
-  :param seedNo: Optional, The seed number used to generate random numbers
+  :param seedNo: Integer. Optional. The seed number used to generate random numbers.
 
   :return: String with Hexadecimal color code
   """
@@ -280,16 +286,17 @@ def gradient(start, end, factor):
   ------------
   Deduce the color from a factor in a range of colors.
 
-  Usage::
+  Usage:
+  -----
 
       >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
   '#ffcccc'
 
   Attributes:
   ----------
-  :param start: The start hexadecimal color code
-  :param end: The end hexadecimal color code
-  :param factor: A factor in the range [0, 1]
+  :param start: String. The start hexadecimal color code.
+  :param end: String. The end hexadecimal color code.
+  :param factor: Float. A factor in the range [0, 1].
 
   :return: The hexadecimal color code
   """
@@ -307,18 +314,19 @@ def colors(start, end, steps):
   ------------
   Generate a list of colors between two color codes.
 
-  Usage::
+  Usage:
+  -----
 
       >>> colors("#ffffff", "#FF0000", 10)
   ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
   Attributes:
   ----------
-  :param start: The start hexadecimal color code
-  :param end: The end hexadecimal color code
-  :param steps: The number of colors in the array
+  :param start: String. The start hexadecimal color code.
+  :param end: String. The end hexadecimal color code.
+  :param steps: Float. The number of colors in the array.
 
-  :return: A list of hexadecimal color codes
+  :return: A list of hexadecimal color codes.
   """
   colors = [start]
   for i in range(steps-2):
@@ -609,7 +617,10 @@ class DefinedColors(object):
     """
     Description:
     ------------
-    Returns the Hexadecimal predefined color codes
+    Returns the Hexadecimal predefined color codes.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -622,7 +633,10 @@ class DefinedColors(object):
     """
     Description:
     ------------
-    Returns the RGB predefined color codes
+    Returns the RGB predefined color codes.
+
+    Usage:
+    -----
 
     Related Pages:
 

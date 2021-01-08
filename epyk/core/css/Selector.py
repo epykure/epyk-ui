@@ -11,7 +11,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Specify HTML attributes to select
+    Specify HTML attributes to select.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -19,8 +22,11 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param name: String. The attribute name
-    :param value: String. The attribute value
+    :param name: String. The attribute name.
+    :param value: String. The attribute value.
+    :param startswith:
+    :param containing:
+    :param endswith:
     """
     if value is None:
       self._js.append("[%s]" % name)
@@ -40,13 +46,16 @@ class Selector(object):
     -----------
     The element>element selector is used to select elements with a specific parent.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_gt.asp
 
     Attributes:
     ----------
-    :param element: String. The HTML type (tag)
+    :param element: String. The HTML type (tag).
     """
     self._js.append(" + %s" % element)
     return self
@@ -57,13 +66,16 @@ class Selector(object):
     -----------
     The element>element selector is used to select elements with a specific parent.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_gt.asp
 
     Attributes:
     ----------
-    :param element: String. The HTML type (tag)
+    :param element: String. The HTML type (tag).
     """
     self._js.append(" > %s" % element)
     return self
@@ -73,9 +85,12 @@ class Selector(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param tags: List. The HTML types (tags)
+    :param tags: List. The HTML types (tags).
     """
     self._js.append(" %s" % ",".join(tags))
     return self
@@ -84,9 +99,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects a specific status for the item
+    Selects a specific status for the item.
 
-    usage:
+    Usage:
+    -----
 
         self.state("disabled")
 
@@ -96,7 +112,7 @@ class Selector(object):
 
     Attributes:
     ----------
-    :params value: String. The state value
+    :params value: String. The state value.
     """
     self._js.append(":%s" % value)
     return self
@@ -105,7 +121,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects the input element which has focus
+    Selects the input element which has focus.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -118,7 +137,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects links on mouse over
+    Selects links on mouse over.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -132,9 +154,12 @@ class Selector(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param tag: String. The HTML tag
+    :param tag: String. The HTML tag.
     """
     self._js.append(" %s" % tag)
     return self
@@ -144,9 +169,12 @@ class Selector(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param htmlCode:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     self._js.append("#%s" % htmlCode)
     return self
@@ -155,13 +183,18 @@ class Selector(object):
     """
     Description:
     -----------
-    Specify the class to use as a filter
+    Specify the class to use as a filter.
 
-    https://www.w3schools.com/cssref/css_selectors.asp
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/css_selectors.asp
 
     Attributes:
     ----------
-    :param class_name: String. The CSS Class name
+    :param class_name: String. The CSS Class name.
     """
     self._js.append(".%s" % class_name)
     return self
@@ -170,13 +203,18 @@ class Selector(object):
     """
     Description:
     -----------
-    Specify the element to exclude from the selection
+    Specify the element to exclude from the selection.
 
-    https://www.w3schools.com/cssref/css_selectors.asp
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/css_selectors.asp
 
     Attributes:
     ----------
-    :param selector: String or Selector. The id to exclude
+    :param selector: String | Selector. The id to exclude.
     """
     if hasattr(selector, 'htmlCode'):
       selector = "[id='%s']" % selector.htmlCode
@@ -187,7 +225,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the first child of its parent
+    Selects every <> element that is the first child of its parent.
+
+    Usage:
+    -----
     """
     self._js.append(":first-child")
     return self
@@ -196,7 +237,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the last child of its parent
+    Selects every <> element that is the last child of its parent.
+
+    Usage:
+    -----
     """
     self._js.append(":last-child")
     return self
@@ -205,7 +249,10 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects the first letter of every <> element
+    Selects the first letter of every <> element.
+
+    Usage:
+    -----
     """
     self._js.append("::first-letter")
     return self
@@ -214,11 +261,14 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the first <> element of its parent
+    Selects every <> element that is the first <> element of its parent.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag)
+    :param type: String. The HTML type (tag).
     """
     self._js.append("%s:first-of-type" % type)
     return self
@@ -227,11 +277,14 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the last <> element of its parent
+    Selects every <> element that is the last <> element of its parent.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag)
+    :param type: String. The HTML type (tag).
     """
     self._js.append("%s:last-of-type" % type)
     return self
@@ -240,11 +293,14 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the second child of its parent
+    Selects every <> element that is the second child of its parent.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param i: Integer. The index (starting from 1)
+    :param i: Integer. The index (starting from 1).
     """
     self._js.append(":nth-child(%s)" % i)
     return self
@@ -253,11 +309,14 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <> element that is the second child of its parent, counting from the last child
+    Selects every <> element that is the second child of its parent, counting from the last child.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param i: Integer. The index (starting from 1)
+    :param i: Integer. The index (starting from 1).
     """
     self._js.append(":nth-last-child(%s)" % i)
     return self
@@ -266,12 +325,15 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <p> element that is the second <> element of its parent, counting from the last child
+    Selects every <p> element that is the second <> element of its parent, counting from the last child.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag)
-    :param i:  Integer. The index (starting from 1)
+    :param type: String. The HTML type (tag).
+    :param i: Integer. The index (starting from 1).
     """
     self._js.append("%s:nth-last-of-type(%s)" % (type, i))
     return self
@@ -280,12 +342,15 @@ class Selector(object):
     """
     Description:
     -----------
-    Selects every <p> element that is the only <> element of its parent
+    Selects every <p> element that is the only <> element of its parent.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag)
-    :param i:  Integer. The index (starting from 1)
+    :param type: String. The HTML type (tag).
+    :param i: Integer. The index (starting from 1).
     """
     self._js.append("%s:nth-of-type(%s)" % (type, i))
     return self
@@ -296,9 +361,12 @@ class Selector(object):
     -----------
     The :only-of-type selector matches every element that is the only child of its type, of its parent.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param type: String. The HTML type (tag)
+    :param type: String. The HTML type (tag).
     """
     self._js.append("%s:only-of-type" % type)
     return self
@@ -308,6 +376,10 @@ class Selector(object):
     Description:
     -----------
     The :only-child selector matches every element that is the only child of its parent.
+
+    Usage:
+    -----
+
     """
     self._js.append(":only-child")
     return self

@@ -13,9 +13,12 @@ class Overflow(object):
 
   def button(self):
     """
-    Add the arrows to the scroll bar
+    Description:
+    -----------
+    Add the arrows to the scroll bar.
 
-    :return:
+    Usage:
+    -----
     """
     self._cssObj.cssStyles["::-webkit-scrollbar-button:single-button"] = "{ background-color: #bbbbbb; display: block; border-style: solid; height: 13px; width: 16px; }"
     self._cssObj.cssStyles["::-webkit-scrollbar-button:single-button:vertical:decrement"] = "{ border-width: 0 8px 8px 8px; border-color: transparent transparent #555555 transparent; }"
@@ -23,12 +26,17 @@ class Overflow(object):
 
   def thumb(self, style=None, css_hover=None, css_active=None):
     """
+    Description:
+    -----------
 
-    :param style:
-    :param css_hover:
-    :param css_active:
+    Usage:
+    -----
 
-    :return:
+    Attributes:
+    ----------
+    :param style: Dictionary. Optional.
+    :param css_hover: Dictionary. Optional.
+    :param css_active: Dictionary. Optional.
     """
     if style is not None:
       self._cssObj.cssStyles["::-webkit-scrollbar-thumb"] = CssStyle.CssCls.toCss(style)
@@ -39,14 +47,20 @@ class Overflow(object):
 
   def horizontal(self):
     """
+    Description:
+    -----------
 
-    :return:
+    Usage:
+    -----
     """
 
   def vertical(self):
     """
+    Description:
+    -----------
 
-    :return:
+    Usage:
+    -----
     """
 
 
@@ -57,18 +71,32 @@ class CssGlobal(object):
 
   @property
   def overflow(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
     return Overflow(self._cssObj)
 
   def style(self, name, attrs):
     """
-    Add a new CSS Class in the page header
+    Description:
+    -----------
+    Add a new CSS Class in the page header.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/html/html_css.asp
 
-    :param name: The CSS Style reference as a string
-    :param attrs: The CSS attributes as a dictionary
+    Attributes:
+    ----------
+    :param name: String. The CSS Style reference as a string.
+    :param attrs: Dictionary. The CSS attributes as a dictionary.
 
     :return: The CSS Object
     """
@@ -77,48 +105,63 @@ class CssGlobal(object):
 
   def style_per_id(self, html_id, attrs):
     """
-    Add a new CSS Class in the page header
+    Description:
+    -----------
+    Add a new CSS Class in the page header.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/html/html_css.asp
 
-    :param html_id: The HTML object ID
-    :param attrs: The CSS attributes as a dictionary
-
-    :return:
+    Attributes:
+    ----------
+    :param html_id: String. The HTML object ID.
+    :param attrs: Dictionary. The CSS attributes as a dictionary.
     """
     self._cssObj.cssStyles["#%s" % html_id] = CssStyle.CssCls.toCss(attrs)
     return self
 
   def style_per_tag(self, html_tag, attrs):
     """
-    Add a new CSS Class in the page header
+    Description:
+    -----------
+    Add a new CSS Class in the page header.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/html/html_css.asp
 
-    :param html_tag: The HTML object tag
-    :param attrs: The CSS attributes as a dictionary
-
-    :return:
+    Attributes:
+    ----------
+    :param html_tag: String. The HTML object tag.
+    :param attrs: Dictionary. The CSS attributes as a dictionary.
     """
     self._cssObj.cssStyles[html_tag] = CssStyle.CssCls.toCss(attrs)
     return self
 
   def new_class(self, clss_nam, attrs):
     """
-    Add a new CSS Class in the page header
+    Description:
+    -----------
+    Add a new CSS Class in the page header.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://www.w3schools.com/html/html_css.asp
 
-    :param clss_nam: The CSS class name as a string
-    :param attrs: The CSS attributes as a dictionary
-
-    :return:
+    Attributes:
+    ----------
+    :param clss_nam: String. The CSS class name as a string.
+    :param attrs: Dictionary. The CSS attributes as a dictionary.
     """
     self._cssObj.cssStyles[".%s" % clss_nam] = CssStyle.CssCls.toCss(attrs)
     return self

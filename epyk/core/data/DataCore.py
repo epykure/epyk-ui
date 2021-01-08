@@ -19,8 +19,10 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Returns the maximum value in list. If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
-    -Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
+    Returns the maximum value in list.
+    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    -Infinity is returned if list is empty, so an isEmpty guard may be required.
+    Non-numerical values in list will be ignored.
 
     Usage:
     -----
@@ -40,8 +42,10 @@ class DataAggregators(object):
     """
     Description:
     -----------
-    Returns the minimum value in list. If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
-    Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
+    Returns the minimum value in list.
+    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    Infinity is returned if list is empty, so an isEmpty guard may be required.
+    Non-numerical values in list will be ignored.
 
     Usage:
     -----
@@ -106,8 +110,8 @@ class DataAggregators(object):
 
     Attributes:
     ----------
-    :param columns: List. The columns in the recordset to be counted
-    :param attrs: Dictionary. Optional. The static values to be added to the final recordset
+    :param columns: List. The columns in the recordset to be counted.
+    :param attrs: Dictionary. Optional. The static values to be added to the final recordset.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
@@ -158,6 +162,10 @@ class DataAggregators(object):
     Related Pages:
 
       https://underscorejs.org/#pluck
+
+    Attributes:
+    ----------
+    :param column:
     """
     self._report.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
@@ -189,7 +197,7 @@ class DataFilters(object):
     """
     Description:
     -----------
-    Filtering rule based on a Dictionary of lists
+    Filtering rule based on a Dictionary of lists.
 
     Usage:
     -----
@@ -273,7 +281,7 @@ class DataFilters(object):
 
     Attributes:
     ----------
-    :param key: String, The key in the various records.
+    :param key: String. The key in the various records.
     :param values: List. The list of values to keep.
     :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     :param empty_all: Boolean. Optional. To specify how to consider the empty case.
@@ -303,7 +311,7 @@ class DataFilters(object):
 
     Attributes:
     ----------
-    :param key: String, The key in the various records.
+    :param key: String. The key in the various records.
     :param value: String. The list of values to keep.
     """
     name = "filterStartsWith"
@@ -325,7 +333,7 @@ class DataFilters(object):
 
     Attributes:
     ----------
-    :param key: String, The key in the various records.
+    :param key: String. The key in the various records.
     :param value: Number. The threshold.
     :param strict: Boolean. Optional. Include threshold.
     """
@@ -604,7 +612,7 @@ class ServerConfig(object):
     ----------
     :param name:
     :param alias: String. Optional.
-    :param endPoints:
+    :param endPoints: List. Optional.
     """
     if alias is None:
       alias = name
@@ -621,7 +629,7 @@ class ServerConfig(object):
 
     Attributes:
     ----------
-    :param name:
+    :param name: String. The enpoint name.
     """
     self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
     return self
@@ -636,7 +644,7 @@ class ServerConfig(object):
 
     Attributes:
     ----------
-    :param names:
+    :param names: List. The end points names.
     """
     for name in names:
       self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
@@ -652,7 +660,7 @@ class ServerConfig(object):
 
     Attributes:
     ----------
-    :param name:
+    :param name: String. 
     """
     if name not in self.__end_points:
       raise Exception("Missing end point in the server configuration - %s" % name)

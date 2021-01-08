@@ -16,6 +16,8 @@ from epyk.core.js.objects import JsCanvas
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsBoolean
 
+from epyk.core.html import Defaults as Defaults_html
+
 
 class ChartJs(JsCanvas.Canvas):
   display_value = "inline-block"
@@ -309,7 +311,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     if css_attrs is None:
       css_attrs, css_attrs_origin = {}, {}
-      for k, v in Defaults.HTML_HIGHLIGHT.items():
+      for k, v in Defaults_html.HTML_HIGHLIGHT.items():
         if isinstance(v, dict):
           dyn_attrs, dyn_attrs_orign = {}, {}
           if 'color' in v:

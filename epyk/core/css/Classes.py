@@ -36,19 +36,22 @@ class Catalog(object):
     In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to the font file.
 
     Entry to get a font family from a local file to avoid loading it online.
-    This is safer but also improve the speed of the website
+    This is safer but also improve the speed of the website.
 
     https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
 
     TODO: Use the page property self.__rptObj._props['css']["font-face"] in the CSS definition
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param font_family: String. Required. Defines the name of the font
-    :param src: String. Required. Defines the URL(s) where the font should be downloaded from
-    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal"
-    :param style: String. Required. Optional. Defines how the font should be styled. Default value is "normal"
-    :param weight: String. Required. Optional. Defines the boldness of the font. Default value is "normal"
+    :param font_family: String. Required. Defines the name of the font.
+    :param src: String. Required. Defines the URL(s) where the font should be downloaded from.
+    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal".
+    :param style: String. Required. Optional. Defines how the font should be styled. Default value is "normal".
+    :param weight: String. Required. Optional. Defines the boldness of the font. Default value is "normal".
     """
     self.__rptObj._props['css']["font-face"][font_family] = {'src': "url(%s)" % src, 'font-stretch': stretch,
                                                              'font-style': style, 'font-weight': weight}
@@ -59,9 +62,12 @@ class Catalog(object):
     Description:
     ------------
 
-    :param type:
+    Usage:
+    -----
 
-    :return:
+    Attributes:
+    ----------
+    :param type:
     """
     self.__class_list_type = self.__class_list[type]
     return self
@@ -71,7 +77,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the buttons components
+    CSS Classes specific to the buttons components.
+
+    Usage:
+    -----
 
     :rtype: CatalogButton.CatalogButton
     """
@@ -84,7 +93,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the select compatibility components
+    CSS Classes specific to the select compatibility components.
+
+    Usage:
+    -----
 
     :rtype: CatalogMedia.CatalogSelect
     """
@@ -97,7 +109,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the screen compatibility components
+    CSS Classes specific to the screen compatibility components.
+
+    Usage:
+    -----
 
     :rtype: CatalogMedia.CatalogMedia
     """
@@ -110,7 +125,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the Icons components
+    CSS Classes specific to the Icons components.
+
+    Usage:
+    -----
 
     :rtype: CatalogIcons.CatalogIcon
     """
@@ -124,6 +142,9 @@ class Catalog(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: CatalogLayout.CatalogLayout
     """
     if "layout" not in self.__ctx:
@@ -135,7 +156,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the dropdown components
+    CSS Classes specific to the dropdown components.
+
+    Usage:
+    -----
 
     :rtype: CatalogTree.CssStyleDropdown
     """
@@ -148,7 +172,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the Table components
+    CSS Classes specific to the Table components.
+
+    Usage:
+    -----
 
     :rtype: CatalogTable.CatalogTable
     """
@@ -161,7 +188,10 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the buttons components
+    CSS Classes specific to the buttons components.
+
+    Usage:
+    -----
 
     :rtype: CatalogButton.CatalogButton
     """
@@ -175,6 +205,9 @@ class Catalog(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: CatalogLink.CatalogLink
     """
     if "link" not in self.__ctx:
@@ -186,6 +219,9 @@ class Catalog(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: CatalogInput.CatalogDate
     """
@@ -199,6 +235,9 @@ class Catalog(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: CatalogText.CatalogText
     """
     if "text" not in self.__ctx:
@@ -211,6 +250,9 @@ class Catalog(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: CatalogInput.CatalogInput
     """
     if "inputs" not in self.__ctx:
@@ -220,6 +262,13 @@ class Catalog(object):
   @property
   def image(self):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    :rtype: CatalogImg.CatalogImg
     """
     if "image" not in self.__ctx:
       self.__ctx['image'] = CatalogImg.CatalogImg(self.__rptObj, self.__class_list_type)
@@ -230,6 +279,9 @@ class Catalog(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: CatalogDiv.CatalogDiv
     """
@@ -243,6 +295,9 @@ class Catalog(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: CatalogRadio.CatalogRadio
     """
     if "radio" not in self.__ctx:
@@ -253,13 +308,14 @@ class Catalog(object):
     """
     Description:
     ------------
-    Register a bespoke external class to the report object
+    Register a bespoke external class to the report object.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
     :param cssClass:
-
-    :return:
     """
     cssObj = cssClass(self.__rptObj)
     cssObj.customize()
@@ -270,15 +326,16 @@ class Catalog(object):
     """
     Description:
     ------------
-    Add an external CSS file to the final HTML report
+    Add an external CSS file to the final HTML report.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param filename: String. The file name
+    :param filename: String. The file name.
     :param path: String. Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
-                 will be used
-
-    :return:
+                 will be used.
     """
     if path is None:
       self.__rptObj.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
@@ -290,13 +347,14 @@ class Catalog(object):
     """
     Description:
     ------------
-    Add a bespoke CSS fragment
+    Add a bespoke CSS fragment.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param text: String. The CSS fragment to be added to the HTML report. THis can be a class or a group of class
-
-    :return:
+    :param text: String. The CSS fragment to be added to the HTML report. THis can be a class or a group of class.
     """
     self.__rptObj._cssText.append(text)
     return self
@@ -308,7 +366,8 @@ class Catalog(object):
     Create a bespoke class based on the various attributes.
     This will internal build the class and return it
 
-    Usage::
+    Usage:
+    -----
 
       v_cls = rptObj.css.anonymous_cls({
       '_attrs': {'color': 'green', 'cursor': 'pointer'},
@@ -316,7 +375,7 @@ class Catalog(object):
 
     Attributes:
     ----------
-    :param attrs: Dictionary. The expected class attributes
+    :param attrs: Dictionary. The expected class attributes.
 
     :return: The Python class
     """
@@ -335,9 +394,12 @@ class Catalog(object):
     ------------
     Add external CSS classes to a component
 
-    :param classname: String or array
+    Usage:
+    -----
 
-    :return:
+    Attributes:
+    ----------
+    :param classname: String or array.
     """
     if isinstance(classname, list):
       classname = " ".join(classname)

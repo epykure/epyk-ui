@@ -40,12 +40,15 @@ class DataJs(object):
     Description:
     ------------
     Interface to transform Python records to Javascript objects.
-    This will allow interactivity of the various HTML components
+    This will allow interactivity of the various HTML components.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param varName: String. The Javascript variable name
-    :param data: Dictionary of lists. Object passed to the Javascript layer
+    :param varName: String. Optional. The Javascript variable name.
+    :param data: Dictionary | lists. Object passed to the Javascript layer.
     """
     from epyk.core.data import DataCore
 
@@ -56,10 +59,13 @@ class DataJs(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param varName: String. The Javascript variable name
-    :param data: List. Object passed to the Javascript layer
+    :param varName: String. The Javascript variable name.
+    :param data: List. Object passed to the Javascript layer.
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().array(data, varName=varName, setVar=True, report=self._report)
@@ -69,10 +75,13 @@ class DataJs(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param varName: String. The Javascript variable name
-    :param value: Float or Integer. Object passed to the Javascript layer
+    :param varName: String. The Javascript variable name.
+    :param value: Float | Integer. Object passed to the Javascript layer.
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().number(value, varName=varName, setVar=True, report=self._report)
@@ -82,10 +91,13 @@ class DataJs(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param varName: String. The Javascript variable name
-    :param value: Float or Integer. Object passed to the Javascript layer
+    :param varName: String. The Javascript variable name.
+    :param value: Float or Integer. Object passed to the Javascript layer.
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
@@ -97,10 +109,13 @@ class DataJs(object):
     Configuration data for server interaction.
     This will only help on centralising the configuration in the final page.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param hostname: String. The server hostname
-    :param port: Integer. The server port
+    :param hostname: String. The server hostname.
+    :param port: Integer. Optional. The server port.
     """
     from epyk.core.data import DataCore
 
@@ -116,14 +131,35 @@ class DataSrc(object):
 
   @property
   def vis(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.Vis()
 
   @property
   def chartJs(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.ChartJs()
 
   @property
   def plotly(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.Plotly()
 
   @property
@@ -132,14 +168,35 @@ class DataSrc(object):
 
   @property
   def bb(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.C3()
 
   @property
   def nvd3(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.NVD3()
 
   @property
   def google(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     return DataPy.Google()
 
   @property
@@ -147,12 +204,22 @@ class DataSrc(object):
     """
     Description:
     ------------
-    Interface to the Javascript world
+    Interface to the Javascript world.
+
+    Usage:
+    -----
     """
     return DataJs(self._report)
 
   @property
   def db(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     from epyk.core.data import DataDb
 
     return DataDb.DataDb(self._report)
@@ -161,13 +228,16 @@ class DataSrc(object):
     """
     Description:
     -----------
-    Loads data from a cached files
+    Loads data from a cached files.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param code: The code for the data
-    :param is_secured: Optional, boolean to set if the file should be secured. Default False
-    :param report_name: Optional, the environment in which cache are stored. Default current one
+    :param code: String. The code for the data.
+    :param is_secured: Boolean. Optional, boolean to set if the file should be secured. Default False.
+    :param report_name: String. Optional. the environment in which cache are stored. Default current one.
 
     :return: Return the data
     """
@@ -192,12 +262,15 @@ class DataSrc(object):
     -----------
     Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param data: The data to be saved
-    :param code: The code for the data
-    :param is_secured: Optional, boolean to set if the file should be secured. Default False
-    :param if_missing: Optional, boolean to set the fact that caches are only saved if missing
+    :param data: The data to be saved.
+    :param code: String. The code for the data.
+    :param is_secured: Boolean. Optional. boolean to set if the file should be secured. Default False.
+    :param if_missing: Boolean. Optional. boolean to set the fact that caches are only saved if missing.
     """
     if getattr(self._report, "run", None) is not None:
       cache_path = os.path.join(self._report.run.local_path, "tmp")
@@ -211,13 +284,16 @@ class DataSrc(object):
     """
     Description:
     -----------
-    Return the file
+    Return the file.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param filename: The filename
-    :param isSecured: Optional, Check if the file is secured or not
-    :param report_name: The environment with the file
+    :param filename: String. The filename.
+    :param isSecured: Boolean. Optional. Check if the file is secured or not.
+    :param report_name: String. Optional. The environment with the file.
 
     :return: The file object
     """
@@ -236,7 +312,10 @@ class DataSrc(object):
     """
     Description:
     ------------
-    Returns data from a internal data service defined in the sources folder
+    Returns data from a internal data service defined in the sources folder.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -266,6 +345,9 @@ class DataSrc(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param script:
@@ -280,6 +362,11 @@ class DataSrc(object):
 
   def from_get(self, url, data=None, code=None):
     """
+    Description:
+    -----------
+
+    Usage:
+    -----
 
     """
     return JsQuery.JQuery(self._report).get(url, data)
