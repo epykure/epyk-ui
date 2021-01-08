@@ -1443,7 +1443,7 @@ class Html(object):
     str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
-  def contextMenu(self, menu, jsFncs=None, profile=False):
+  def contextMenu(self, menu, js_funcs=None, profile=False):
     """
     Description:
     -----------
@@ -1455,18 +1455,18 @@ class Html(object):
     Attributes:
     ----------
     :param menu:
-    :param jsFncs: List | String. The Javascript functions
+    :param js_funcs: List | String. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
     self.context_menu = menu
     menu.source = self
-    new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
+    new_js_funcs = (js_funcs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
                                     self.context_menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
                                   'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
                    self._report.js.objects.mouseEvent.preventDefault()]
-    self.on("contextmenu", new_js_fncs, profile)
+    self.on("contextmenu", new_js_funcs, profile)
     return self
 
   @property

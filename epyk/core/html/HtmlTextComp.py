@@ -72,7 +72,7 @@ class UpDown(Html.Html):
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
       '''
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -82,14 +82,14 @@ class UpDown(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event:
     :param onReady:
     """
     self.style.css.cursor = "pointer"
     self.style.add_classes.div.color_light_background_hover()
-    return super(UpDown, self).click(jsFncs, profile, source_event, onReady)
+    return super(UpDown, self).click(js_funcs, profile, source_event, onReady)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -354,7 +354,7 @@ class TrafficLight(Html.Html):
       self._jsStyles['red'] = red
     return self
 
-  def resolve(self, jsFncs, profile=False):
+  def resolve(self, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -365,8 +365,8 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     self.action = self._report.ui.icon("fas fa-wrench")
     self.action.options.managed = False
@@ -375,10 +375,10 @@ class TrafficLight(Html.Html):
     self.action.style.css.margin_top = 8
     self.action.style.css.cursor = 'pointer'
     self.action.style.css.vertical_align = 'top'
-    self.action.click(jsFncs, profile)
+    self.action.click(js_funcs, profile)
     return self
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -388,16 +388,16 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     success = Colors.getHexToRgb(self._report.theme.success[1])
     self.style.css.cursor = "pointer"
-    jsFncs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
-                                                   self._report.theme.danger[1])] + jsFncs
-    return super(TrafficLight, self).click(jsFncs, profile, source_event, onReady)
+    js_funcs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
+                                                   self._report.theme.danger[1])] + js_funcs
+    return super(TrafficLight, self).click(js_funcs, profile, source_event, onReady)
 
   _js__builder__ = '''
       if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
@@ -739,7 +739,7 @@ class Status(Html.Html):
     self.style.css.margin = 2
     self.style.css.padding = '10px auto'
     self.context = self._report.ui.menus.contextual()
-    self.contextMenu(self.context, jsFncs=[])
+    self.contextMenu(self.context, js_funcs=[])
 
   @property
   def options(self):
