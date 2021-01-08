@@ -128,8 +128,8 @@ class Stars(Html.Html):
     Usage:
     -----
 
-      stars = rptObj.ui.rich.stars(3, label="test Again")
-      stars.click(rptObj.js.console.log("test").toStr())
+      stars = page.ui.rich.stars(3, label="test Again")
+      stars.click(page.js.console.log("test").toStr())
 
     Attributes:
     ----------

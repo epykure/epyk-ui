@@ -74,7 +74,7 @@ class Label(Html.Html):
     Usage:
     -----
 
-      select.label.click(str(rptObj.js.console.log("test")))
+      select.label.click(str(page.js.console.log("test")))
 
     Related Pages:
 
@@ -217,7 +217,7 @@ class Span(Html.Html):
     Usage:
     -----
 
-      select.label.click(str(rptObj.js.console.log("test")))
+      select.label.click(str(page.js.console.log("test")))
 
     Related Pages:
 
@@ -438,7 +438,7 @@ class Text(Html.Html):
     Usage:
     -----
 
-      rptObj.ui.text("This is a text").editable()
+      page.ui.text("This is a text").editable()
 
     :return: Self to allow the chaining
     """
@@ -787,7 +787,7 @@ class Title(Html.Html):
     Usage:
     -----
 
-      select.label.click(str(rptObj.js.console.log("test")))
+      select.label.click(str(page.js.console.log("test")))
 
     Related Pages:
 

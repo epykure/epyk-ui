@@ -29,6 +29,10 @@ class Media(object):
 
       https://www.w3schools.com/html/html5_video.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/
+
     Attributes:
     ----------
     :param value: String. Optional. The name of the video.
@@ -69,7 +73,11 @@ class Media(object):
 
     Related Pages
 
-    https://www.w3schools.com/html/html5_video.asp
+      https://www.w3schools.com/html/html5_video.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/
 
     Attributes:
     ----------
@@ -107,6 +115,10 @@ class Media(object):
     Related Pages
 
       https://www.w3schools.com/html/html5_video.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/
 
     Attributes:
     ----------

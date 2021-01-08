@@ -262,3 +262,105 @@ class OptMedia(Options):
   @autoplay.setter
   def autoplay(self, bool=True):
     self.set(bool)
+
+
+class OptCheckboxes(Options):
+  component_properties = ("icon", "all_selected", "tooltip")
+
+  @property
+  def icon(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :prop icon: String. The font-awesome icon reference.
+    """
+    return self._config_get("fas fa-check")
+
+  @icon.setter
+  def icon(self, value):
+    self._config(value)
+
+  @property
+  def all_selected(self):
+    return self._config_get(False)
+
+  @all_selected.setter
+  def all_selected(self, bool):
+    self._config(bool)
+
+  @property
+  def tooltip(self):
+    return self._config_get("")
+
+  @tooltip.setter
+  def tooltip(self, value):
+    self._config(value)
+
+  @property
+  def tooltip_options(self):
+    return self._config_get({})
+
+  @tooltip_options.setter
+  def tooltip_options(self, values):
+    self._config(values)
+
+
+class OptCheck(Options):
+
+  @property
+  def icon_check(self):
+    return self._config_get("fas fa-check")
+
+  @icon_check.setter
+  def icon_check(self, icon):
+    self._config(icon)
+
+  @property
+  def icon_not_check(self):
+    """
+
+    """
+    return self._config_get("fas fa-times")
+
+  @icon_not_check.setter
+  def icon_not_check(self, icon):
+    self._config(icon)
+
+  @property
+  def disable(self):
+    """
+
+    """
+    return self._config_get(False)
+
+  @disable.setter
+  def disable(self, bool):
+    self._config(bool)
+
+  @property
+  def green(self):
+    """
+
+    """
+    return self._config_get(self._report._report.theme.success[1])
+
+  @green.setter
+  def green(self, values):
+    self._config(values)
+
+  @property
+  def red(self):
+    """
+
+    """
+    return self._config_get(self._report._report.theme.danger[1])
+
+  @red.setter
+  def red(self, values):
+    self._config(values)

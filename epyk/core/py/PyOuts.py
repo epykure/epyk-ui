@@ -189,7 +189,12 @@ class PyOuts(object):
       for event, source_fncs in component._browser_data['mouse'].items():
         for source, event_fncs in source_fncs.items():
           str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
-          onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+          if 'sub_items' in event_fncs:
+            # This is using jquery
+            # TODO: Find a way to replace Jquery
+            onloadParts.append("%s.on('%s', '%s', function(event){%s})" % (source, event, event_fncs['sub_items'], str_fncs))
+          else:
+            onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
       for event, source_fncs in component._browser_data['keys'].items():
         for source, event_fncs in source_fncs.get_event().items():

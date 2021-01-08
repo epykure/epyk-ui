@@ -58,7 +58,7 @@ class DatePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def select(self, jsFncs):
+  def select(self, js_funcs):
     """
     Description:
     -----------
@@ -74,17 +74,17 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript events when the datepicker selection changes.
+    :param js_funcs: String | List. The Javascript events when the datepicker selection changes.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if self.icon is not None:
       self.icon.tooltip(self.input.dom.content)
-      jsFncs.append(self.icon.dom.setattr("title", self.input.dom.content))
-    self.input.options.onSelect = jsFncs
+      js_funcs.append(self.icon.dom.setattr("title", self.input.dom.content))
+    self.input.options.onSelect = js_funcs
     return self
 
-  def excluded_dates(self, dts=None, jsFncs=None):
+  def excluded_dates(self, dts=None, js_funcs=None):
     """
     Description:
     -----------
@@ -100,11 +100,11 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param dts: List. A list of dates format YYYY-MM-DD.
-    :param jsFncs: List or String. Optional. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     """
-    return self.input.excluded_dates(dts, jsFncs)
+    return self.input.excluded_dates(dts, js_funcs)
 
-  def included_dates(self, dts=None, jsFncs=None):
+  def included_dates(self, dts=None, js_funcs=None):
     """
     Description:
     -----------
@@ -120,15 +120,15 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param dts: List. A list of dates format YYYY-MM-DD.
-    :param jsFncs: List or String. Optional. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     """
-    return self.input.included_dates(dts, jsFncs)
+    return self.input.included_dates(dts, js_funcs)
 
   def add_options(self, options=None, name=None, value=None):
     """
     Description:
     -----------
-    Add DatePicker options
+    Add DatePicker options.
 
     Usage:
     -----
@@ -140,7 +140,7 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param options:
-    :param name: Optional. A string or a Python dictionary with the options to set
+    :param name: Optional. String | Python dictionary with the options to set
     :param value: Optional.
     """
     if options is None and name is None:
@@ -194,7 +194,7 @@ class TimePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def change(self, jsFncs, profile=False):
+  def change(self, js_funcs, profile=False):
     """
     Description:
     -----------
@@ -204,10 +204,10 @@ class TimePicker(Html.Html):
     Usage:
     -----
 
-      morning = rptObj.ui.fields.time("8:13:00", label="Time field")
+      morning = page.ui.fields.time("8:13:00", label="Time field")
       morning.change([
-      rptObj.js.alert("time", skip_data_convert=True)
-    ])
+        page.js.alert("time", skip_data_convert=True)
+      ])
 
     Related Pages:
 
@@ -215,10 +215,10 @@ class TimePicker(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile:
     """
-    self.input.change(jsFncs, profile)
+    self.input.change(js_funcs, profile)
     return self
 
   def __str__(self):
@@ -238,10 +238,7 @@ class CountDownDate(Html.Html):
     self.add_label(label, htmlCode=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
     self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
-
-  @property
-  def jqId(self):
-    return "$('#%s span')" % self.htmlCode
+    self._jquery_ref = '#%s span' % self.htmlCode
 
   _js__builder__ = '''
       var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
@@ -259,7 +256,7 @@ class CountDownDate(Html.Html):
         clearInterval(window[htmlObj.id +"_interval"])
       }'''
 
-  def end(self, jsFncs):
+  def end(self, js_funcs):
     """
     Description:
     -----------
@@ -270,11 +267,11 @@ class CountDownDate(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._jsStyles["end"] = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def __str__(self):
@@ -341,7 +338,7 @@ class Calendar(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -351,14 +348,14 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function.
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__click = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__click = JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def task(self, name, start, capacity, end=None, weekend=False, options=None):
@@ -522,7 +519,7 @@ class Timer(Html.Html):
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
         tmp != 0 || (tmp=0)}, 1000)'''
 
-  def end(self, jsFncs):
+  def end(self, js_funcs):
     """
     Description:
     -----------
@@ -533,11 +530,11 @@ class Timer(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions
+    :param js_funcs: List | String. Javascript functions
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._jsStyles["end"] = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def __str__(self):

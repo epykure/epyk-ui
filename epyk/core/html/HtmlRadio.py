@@ -221,9 +221,9 @@ class Switch(Html.Html):
     Usage:
     -----
 
-      sw = rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
+      sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
       sw.click([
-        rptObj.js.console.log(sw.content)
+        page.js.console.log(sw.content)
       ])
 
     Attributes:

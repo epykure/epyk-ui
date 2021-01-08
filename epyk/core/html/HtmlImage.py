@@ -511,7 +511,7 @@ class Icon(Html.Html):
     Usage:
     -----
 
-      rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
+      page.ui.icons.capture().icon.hover_colors("red", "yellow")
 
     Attributes:
     ----------

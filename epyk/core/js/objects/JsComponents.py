@@ -38,21 +38,25 @@ class CheckButton(JsPackage):
     self._src, self._report = htmlObj, report
     self._js, self._jquery = [], None
 
-  def checked(self):
+  def checked(self, color=None):
     """
     Description:
     -----------
 
     """
-    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('fa-times', 'fa-check'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, self._src.dom.varName, self._report.theme.success[1]))
+    times = self._src.options.icon_not_check
+    check = self._src.options.icon_check
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, times, check, self._src.dom.varName, color or self._report.theme.success[1]))
 
-  def unchecked(self):
+  def unchecked(self, color=None):
     """
     Description:
     -----------
 
     """
-    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('fa-check', 'fa-times'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, self._src.dom.varName, self._report.theme.danger[1]))
+    times = self._src.options.icon_not_check
+    check = self._src.options.icon_check
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, check, times, self._src.dom.varName, color or self._report.theme.danger[1]))
 
 
 class Menu(JsPackage):

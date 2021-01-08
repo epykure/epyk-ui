@@ -872,6 +872,103 @@ class JsHtmlButton(JsHtml):
   def empty(self): return '%s.innerHTML = ""' % self.varName
 
 
+class JsHtmlButtonChecks(JsHtml):
+
+  @property
+  def val(self):
+    return ""
+
+  @property
+  def content(self):
+    return ""
+
+  def disable(self):
+    return JsObjects.JsObjects.get('''
+      ''')
+
+  def add(self, jsData, is_unique=True, css_style=None):
+    """
+
+    :param jsData: List of dict | JsObj.
+    :param is_unique: Boolean. Optional
+    :param css_style: Dictionary. Optional
+    """
+    css_style = css_style or {'margin': 0, 'display': 'block', 'position': 'relative', 'cursor': 'pointer'}
+    is_unique = JsUtils.jsConvertData(is_unique, None)
+    jsData = JsUtils.jsConvertData(jsData, None)
+    css_style = JsUtils.jsConvertData(css_style, None)
+    return JsObjects.JsObjects.get('''
+      var existingCols = {}; var options = %(options)s;
+      if (%(unique)s){%(jqId)s.find('span').each(function(){
+        var pItem = $(this); existingCols[pItem.data('content')] = true})};
+      %(jsData)s.forEach(function(rec){
+        if ((!%(unique)s) || (%(unique)s && (!(rec.value in existingCols))) ){
+          var style = %(styls)s;
+          var strCss = []; for (key in style) {strCss.push(key + ":" + style[key])}; checkData = '&nbsp;';
+          if (rec.color != undefined){style.color = rec.color};
+          if (rec.name == undefined) {rec.name = rec.value};
+          if (rec.checked){var checkData = '<i class="'+ options.icon + '" style="margin:2px"></i>'};
+          var spanContent = '<span data-content="'+ rec.value + '" style="width:16px;display:inline-block;float:left;margin:0">'+ checkData +'</span><p style="margin:0" title="'+ rec.dsc + '">' + rec.name + '</p>';
+          %(jqId)s.append($('<label style="' + strCss.join(";") + '">'+ spanContent +'</label>'))}
+      }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": jsData})
+
+  def empty(self): return '%s.empty()' % self.jquery.varId
+
+  def delete(self, jsData):
+    """
+
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('''
+      var compData = %(jsData)s;
+      if (compData === true) {%(jqId)s.empty()}
+      else {%(jqId)s.find('span').each(function(){
+          if (compData.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
+      })}''' % {"jsData": jsData, "jqId": self.jquery.varId})
+
+  def check(self, jsData):
+    """
+
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('''
+      var compData = %(jsData)s;
+      %(jqId)s.find('span').each(function(){
+        var itemCode = $(this).data('content');
+        if(typeof compData === "boolean"){
+          if (compData === true && $(this).find("i").attr("class") === undefined){$(this).trigger("click")}
+          if (!compData && $(this).find("i").attr("class") !== undefined){$(this).trigger("click")}}
+        else if (compData.indexOf(itemCode) > -1){if ($(this).find("i").attr("class") === undefined){$(this).trigger("click")}}
+      })''' % {"jsData": jsData, "jqId": self.jquery.varId})
+
+  @property
+  def current(self):
+    """
+
+    """
+    return JsObjects.JsVoid("$(this).find('p').text()")
+
+  def css_label(self, jsData, attrs):
+    """
+
+    :param jsData:
+    :param attrs:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    attrs = JsUtils.jsConvertData(attrs, None)
+    return JsObjects.JsObjects.get('''
+      var compData = %(jsData)s;
+      var compAttrs = %(attrs)s;
+      %(jqId)s.find('span').each(function(){
+        var itemCode = $(this).data('content');
+        if (compData.indexOf(itemCode) > -1){
+          $(this).parent().find("p").css(compAttrs)
+        }
+      }) ''' % {"jsData": jsData, "jqId": self.jquery.varId, "attrs": attrs})
+
+
 class JsHtmlButtonMenu(JsHtmlButton):
 
   @property
@@ -887,7 +984,8 @@ class JsHtmlButtonMenu(JsHtmlButton):
 
   @property
   def content(self):
-    return ContentFormatters(self._report, "%s.querySelector('i').classList.contains('fa-check')" % self.varName)
+    check = self._src.options.icon_check.split(" ")[-1]
+    return ContentFormatters(self._report, "%s.querySelector('i').classList.contains('%s')" % (self.varName, check))
 
 
 class JsHtmlIcon(JsHtml):
@@ -1021,7 +1119,7 @@ class JsHtmlNumeric(JsHtmlRich):
     Attributes:
     ----------
     :param number:
-    :param timer: Integer. the spped of the increase in millisecond
+    :param timer: Integer. the ppend of the increase in millisecond.
     """
     return JsUtils.jsConvertFncs([
       self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
@@ -1064,7 +1162,8 @@ class JsHtmlLink(JsHtml):
 
     Related Pages:
     --------------
-    https://www.w3schools.com/tags/att_a_href.asp
+
+      https://www.w3schools.com/tags/att_a_href.asp
 
     :param url:
     """
@@ -1079,7 +1178,8 @@ class JsHtmlLink(JsHtml):
 
     Related Pages:
     --------------
-    https://www.w3schools.com/tags/att_a_href.asp
+
+      https://www.w3schools.com/tags/att_a_href.asp
 
     :param url:
     """
@@ -1094,9 +1194,10 @@ class JsHtmlLink(JsHtml):
 
     Related Pages:
     --------------
-    https://www.w3schools.com/tags/att_a_target.asp
 
-    :param url:
+      https://www.w3schools.com/tags/att_a_target.asp
+
+    :param name:
     """
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunctions("%s.target = %s" % (self.varName, name))

@@ -510,6 +510,7 @@ class JsBase(object):
     self.sessionStorage = JsWindow.JsSessionStorage()
     self.json = JsJson()
     self.math = JsMaths.JsMaths()
+    self._jquery_ref = None
 
     # shortcut functions
     self.alert = self.window.alert
@@ -608,7 +609,7 @@ class JsBase(object):
     """
     from epyk.core.js.packages import JsQuery
 
-    return JsQuery.JQuery(None)
+    return JsQuery.JQuery(self._jquery_ref)
 
   def eval(self, jsData, jsFnc=None):
     """

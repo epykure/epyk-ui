@@ -969,8 +969,8 @@ class Col(Html.Html):
     Usage:
     -----
 
-      ps = rptObj.ui.layouts.grid()
-      ps += [rptObj.ui.text("test %s" % i) for i in range(5)]
+      ps = page.ui.layouts.grid()
+      ps += [page.ui.text("test %s" % i) for i in range(5)]
       ps[0][0].set_size(10)
 
     Attributes:

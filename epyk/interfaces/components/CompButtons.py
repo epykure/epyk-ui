@@ -648,16 +648,16 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     return html_toggle
 
   def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
-               htmlCode=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):
+               htmlCode=None, tooltip='', dfColumn=None, options=None, profile=None):
     """
     Description:
     ------------
     Python wrapper to the HTML checkbox elements.
 
-    UUsage:
+    Usage:
     -----
 
-      rptObj.ui.buttons.checkboxes(data)
+      page.ui.buttons.checkboxes(data)
 
     Underlying HTML Objects:
 
@@ -682,7 +682,6 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param dfColumn:
-    :param icon: Optional. The component icon content from font-awesome references
     :param options: Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
@@ -705,7 +704,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
     html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, tooltip, icon, options or {}, profile)
+                                             height, align, htmlCode, tooltip, options or {}, profile)
     return html_boxes
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
