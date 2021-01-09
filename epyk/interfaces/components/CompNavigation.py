@@ -751,7 +751,7 @@ class Banners(object):
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
-      data = self.context.rptObj.ui.div(data, htmlCode=htmlCode, width=("auto", ""))
+      data = self.context.rptObj.ui.div(self.context.rptObj.py.encode_html(data), htmlCode=htmlCode, width=("auto", ""))
       data.style.css.display = "inline-block"
       data.style.css.text_align = align
       data.style.css.font_size = Defaults_css.font(size_notch)

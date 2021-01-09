@@ -235,6 +235,7 @@ FEMININE_ORDINAL_INDICATOR = '&#xAA;'
 LEFT_POINTING_DOUBLE_ANGLE_QUOTATION_MARK = '&#xAB;'
 NOT_SIGN = '&#xAC;'
 SOFT_HYPHEN = '&#xAD;'
+HYPHEN = '&#8211;'
 REGISTERED_SIGN = '&#xAE;'
 MACRON = '&#xAF;'
 DEGREE_SIGN = '&#xB0;'
@@ -318,6 +319,9 @@ LATIN_SMALL_LETTER_Y_WITH_ACUTE = '&#xFD;'
 LATIN_SMALL_LETTER_THORN = '&#xFE;'
 LATIN_SMALL_LETTER_Y_WITH_DIAERESIS = '&#xFF;'
 EM_DASH = '&#x2014;'
+LEFT_DOUBLE_QUOTE_MARK = '&#8220;' # https://dwheeler.com/essays/quotes-in-html.html
+RIGHT_DOUBLE_QUOTE_MARK = '&#8221;' # https://dwheeler.com/essays/quotes-in-html.html
+
 
 if __name__ == '__main__':
 

@@ -18,6 +18,9 @@ from epyk.core.html import entities
 # https://www.utf8-chartable.de/unicode-utf8-table.pl?unicodeinhtml=dec
 
 UTF8_TO_HTML = {
+  b'\xe2\x80\x93': entities.EntUtf8.HYPHEN,
+  b'\xe2\x80\x9c': entities.EntUtf8.LEFT_DOUBLE_QUOTE_MARK,
+  b'\xe2\x80\x9d': entities.EntUtf8.RIGHT_DOUBLE_QUOTE_MARK,
   b'\xe2\x80\x99': "'",
   b'\xe2\x81\x80': entities.EntUtf8.CHARACTER_TIE,
   b'\xe2\x81\x81': entities.EntUtf8.CARET_INSERTION_POINT,
