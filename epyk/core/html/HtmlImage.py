@@ -108,8 +108,9 @@ class AnimatedImage(Html.Html):
         path = os.path.split(image)[0]
         image = os.path.split(image)[-1]
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
-                                        css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'}, profile=profile)
-    self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''))
+                                        css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'},
+                                        options=options, profile=profile)
+    self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''), options=options)
     self.img.options.managed = False
     self.title = report.ui.tags.h2(title).css({"display": 'block'})
     self.text = report.ui.tags.p(text).css({"display": 'block'})
@@ -169,7 +170,7 @@ class ImgCarousel(Html.Html):
       self.next.style.css.display = "none"
       self.previous.style.css.display = "none"
     self.items[selected].css({"display": 'block'})
-    self._jsStyles["color"] = self._report.theme.colors[9]
+    self._jsStyles["color"] = self._report.theme.colors[-1]
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
 
   def __getitem__(self, i):
@@ -232,7 +233,7 @@ class ImgCarousel(Html.Html):
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", -1),
               self.next.dom.events.trigger("click")
-        ] if self.__infinity else None)
+        ] if self.infinity else None)
       ])
     if hasattr(self.previous, 'html'):
       self.previous.click([
@@ -244,7 +245,7 @@ class ImgCarousel(Html.Html):
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", len(self.items)),
               self.previous.dom.events.trigger("click")
-        ] if self.__infinity else None)
+        ] if self.infinity else None)
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
       ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),

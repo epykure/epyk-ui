@@ -270,15 +270,13 @@ class Checkbox(Html.Html):
   name = 'Check Box'
   requirements = ('font-awesome', 'bootstrap', 'jquery')
 
-  def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, tooltip, options, profile):
+  def __init__(self, rptObj, records, color, width, height, align, htmlCode, tooltip, options, profile):
     if rptObj.inputs.get(htmlCode) is not None:
       selectedVals = set(rptObj.inputs[htmlCode].split(","))
       for rec in records:
         if rec["value"] in selectedVals:
           rec["checked"] = True
     super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    # Add the component title
-    self.add_title(title, options={'content_table': False})
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
     self.__options = OptButton.OptCheckboxes(self, options or {})
     if tooltip:

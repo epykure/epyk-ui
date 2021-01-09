@@ -211,7 +211,12 @@ class PyDates(object):
       return cob_date.strftime('%Y-%m-%d')
 
     if f_type == 'M':
-      end_month_date = datetime.datetime(cob_date.year, cob_date.month - int(f_count), 1)
+      month = cob_date.month - int(f_count)
+      year = cob_date.year
+      if month <= 0:
+        month = 12 - month
+        year -= 1
+      end_month_date = datetime.datetime(year, month, 1)
       end_month_date = end_month_date - datetime.timedelta(days=1)
       while end_month_date.weekday() in [5, 6]:
         end_month_date = end_month_date - datetime.timedelta(days=1)

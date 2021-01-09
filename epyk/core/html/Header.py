@@ -492,9 +492,9 @@ class Links:
     else:
       self.__header._links.append({"href": href, "rel": rel, "crossorigin": crossorigin})
     if file_type:
-      self.__header._links["type"] = file_type
+      self.__header._links[-1]["type"] = file_type
     if media is not None:
-      self.__header._links["media"] = media
+      self.__header._links[-1]["media"] = media
 
   def alternative(self, href, file_type="text/css", media=None):
     """
@@ -640,6 +640,7 @@ class Header:
     ".webp": "image/webp",
     ".tif": "image/tiff",
     ".tiff": "image/tiff",
+    ".png": "image/png",
     ".svg": "image/svg+xml",
   }
 
@@ -791,8 +792,11 @@ class Header:
     extension = url.split(".")[-1].lower()
     if ".%s" % extension in self.mime_mapping:
       img_type = self.mime_mapping[".%s" % extension]
+    elif self._report is not None:
+      if self._report.verbose:
+        logging.warning("Favicon - Missing extension %s - No default used" % extension)
     else:
-      logging.warning("Missing extension %s - No default used" % extension)
+      logging.warning("Favicon - Missing extension %s - No default used" % extension)
     self._favicon_url[rel] = {"href": url, "rel": rel}
     if img_type is not None:
       self._favicon_url[rel]["type"] = img_type

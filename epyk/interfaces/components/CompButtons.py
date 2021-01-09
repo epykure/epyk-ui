@@ -647,7 +647,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     html_toggle = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
     return html_toggle
 
-  def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
+  def checkboxes(self, records=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                htmlCode=None, tooltip='', dfColumn=None, options=None, profile=None):
     """
     Description:
@@ -673,29 +673,21 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
     Attributes:
     ----------
-    :param records:
-    :param title:
-    :param color:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param records: List. Optional. The list of dictionaries with the data.
+    :param color: String. Optional. The color code.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. The text-align property within this component.
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param dfColumn:
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
-        # if globalFilter:
-        #   dataId = id(records)
-        #   dataCode = "df_code_%s" % dataId
-        #   globalFilter = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': options.get("all_selected", False), 'operation': 'in'}
-        #   if not dataCode in self.context.rptObj.jsSources:
-        #     self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': records}
-        #     self.context.rptObj.jsSources[dataCode]['containers'].append(self)
         if options.get("all_selected", False):
           records = [{"value": rec, "checked": True} for rec in records[dfColumn].unique().tolist()]
         else:
@@ -703,8 +695,8 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     elif isinstance(records, list) and len(records) > 0:
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
-    html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, tooltip, options or {}, profile)
+    html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, color, width,
+                                          height, align, htmlCode, tooltip, options or {}, profile)
     return html_boxes
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,

@@ -357,8 +357,6 @@ class Slider(Html.Html):
 
       https://api.jqueryui.com/slider
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsQueryUi.Slider

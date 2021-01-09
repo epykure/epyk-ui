@@ -532,7 +532,7 @@ class JsItem(JsHtml.JsHtmlRich):
         const cls = %(cls)s;
         if (cls != null){li.classList.add(cls)}
       } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value, 'event': "prepend" if before else 'appendChild',
-             'cls': JsUtils.jsConvertData(css_cls, None), 'shape': "%s%s" % (self._src._prefix, self._src._jsStyles['items_type'])})
+             'cls': JsUtils.jsConvertData(css_cls, None), 'shape': "%s%s" % (self._src._jsStyles['prefix'], self._src._jsStyles['items_type'])})
 
   def tags(self, values, css_attrs=None, css_cls=None):
     """

@@ -376,7 +376,7 @@ class ContextMenu(Html.Html):
       raise Exception("Context Menu should be added to a component with the function contextMenu")
 
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    self.mouse(out_fncs=[self.dom.hide()]) # hide when mouse leave the component
+    self.mouse(out_funcs=[self.dom.hide()]) # hide when mouse leave the component
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>

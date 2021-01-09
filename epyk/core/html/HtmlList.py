@@ -533,7 +533,7 @@ class Items(Html.Html):
     self.style.css.padding_left = 0
     self.css({"list-style": 'none'})
     self._jsStyles['items_type'] = type
-    item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
+    item_type_name = "%s%s" % (self._jsStyles['prefix'], self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def))
     return self
@@ -566,7 +566,7 @@ class Items(Html.Html):
       classname="list_%s_selected" % (type or self._jsStyles['items_type']))
 
   def __str__(self):
-    item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
+    item_type_name = "%s%s" % (self._jsStyles['prefix'], self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     self.options.style_select = "list_%s_selected" % self._jsStyles['items_type']
     if not item_type_name in constructors:
