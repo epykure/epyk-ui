@@ -64,6 +64,7 @@ class Chart(Html.Html):
     """
     Description:
     ------------
+    This function is not implementated.
 
     Usage:
     -----
@@ -152,6 +153,7 @@ class Chart(Html.Html):
     """
     Description:
     ------------
+    Return the JavaScript fragment to refresh the component content.
 
     Usage:
     -----

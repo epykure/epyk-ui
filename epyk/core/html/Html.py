@@ -1489,7 +1489,7 @@ class Html(object):
     """
     Description:
     -----------
-    Return the JavaScript fragment to refresh the component content
+    Return the JavaScript fragment to refresh the component content.
 
     Usage:
     -----
