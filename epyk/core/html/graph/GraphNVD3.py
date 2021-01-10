@@ -35,7 +35,7 @@ class Chart(Html.Html):
     Description:
     -----------
     Property to the last dataset added to the NVD3 chart.
-    Use the function traces to get a specific series from the chart object
+    Use the function traces to get a specific series from the chart object.
 
     Usage:
     -----
@@ -53,7 +53,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. Optional. The Index number.
+    :param i: Integer. Optional. An Index number.
     """
     if i is None:
       return self._datasets[-1]

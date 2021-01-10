@@ -19,6 +19,7 @@ RULES = {
 PARAMS = {
   "text": {"type": "String", "Optional": True, "value": "The value to be displayed to the button."},
   "angle": {"type": "Integer", "value": "The rotation angle."},
+  "i": {"type": "Integer", "value": "An Index number."},
   "width": {"type": "Tuple", "Optional": True, "value": "A tuple with the integer for the component width and its unit."},
   "height": {"type": "Tuple", "Optional": True, "value": "A tuple with the integer for the component height and its unit."},
   "icon": {"type": "String", "Optional": True, "value": "A string with the value of the icon to display from font-awesome."},
@@ -52,13 +53,25 @@ def doc_string_attrs(func):
   ----------
   :param func: Function. A python function.
   """
+  dflt_vals = {}
+  if func.__defaults__ is not None:
+    for i, k in enumerate(list(func.__code__.co_varnames)[::-1]):
+      if i >= len(func.__defaults__):
+        break
+
+      dflt_vals[k] = func.__defaults__[i]
   for arg in func.__code__.co_varnames:
     if arg == "self":
       continue
 
     if arg in PARAMS:
-      required = "Required" if PARAMS[arg].get('Optional', True) else "Optional"
-      print(":param %s: %s. %s. %s" % (arg, PARAMS[arg]["type"], required, PARAMS[arg]["value"]))
+      dfl_val = ""
+      if arg in dflt_vals:
+        required = "Optional"
+        dfl_val = "(Default = %s)" % dflt_vals[arg]
+      else:
+        required = "Required" if PARAMS[arg].get('Optional', True) else "Optional"
+      print(":param %s: %s. %s. %s %s" % (arg, PARAMS[arg]["type"], required, PARAMS[arg]["value"], dfl_val))
     else:
       print(":param %s:" % arg)
 
