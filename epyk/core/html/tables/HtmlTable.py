@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import json
-
 from epyk.core.html import Html
 
 # The list of CSS classes
@@ -19,6 +17,17 @@ class Row(Html.Html):
     return self.val[i]
 
   def cell(self, i):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param i:
+    """
     return self[i]
 
   def __str__(self):
@@ -33,17 +42,23 @@ class Cell(Html.Html):
     super(Cell, self).__init__(report, text, options=options)
     self.is_header = is_header
 
-  def set_html_content(self, htmlObj):
+  def set_html_content(self, component):
     """
     Description:
     ------------
-    Set the cell content to be an HTML object
+    Set the cell content to be an HTML object.
 
-    :param htmlObj: Python HTML object
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param component: HTML. Python HTML object
+
     :return: self, the cell object to allow the chaining
     """
-    htmlObj.options.managed = False
-    self.innerPyHTML = htmlObj
+    component.options.managed = False
+    self.innerPyHTML = component
     return self
 
   def __str__(self):
@@ -75,6 +90,9 @@ class Bespoke(Html.Html):
     Description:
     -----------
     Return the Javascript variable of the bespoke
+
+    Usage:
+    -----
     """
     return self.dom.varId
 
@@ -83,7 +101,10 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Get the header row. Returns none if missing
+    Get the header row. Returns none if missing.
+
+    Usage:
+    -----
     """
     return self._header
 
@@ -91,6 +112,9 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -104,6 +128,13 @@ class Bespoke(Html.Html):
     return self
 
   def set_items(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
     if self.items is None:
       self.items = []
     if self._fields is not None:
@@ -120,7 +151,14 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Get the table rows
+    Get the table rows.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param i: Integer. The column number
     """
     return self.items[i]
 
@@ -128,14 +166,15 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Get the table rows
+    Get the table rows.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param i: Integer. The column number
-    :param inc_header: Boolean. Default False
-
-    :return:
+    :param i: Integer. The column number.
+    :param inc_header: Boolean. Optional. Default False
     """
     if not inc_header and self._fields is not None:
       return self[i+1]
@@ -148,10 +187,13 @@ class Bespoke(Html.Html):
     -----------
     Get the table column cells as a generator
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param header: String.
-    :param i: Integer
+    :param header: String. Optional.
+    :param i: Integer. Optional.
     """
     for v in self.items:
       if header is not None:
@@ -164,15 +206,19 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Add a row to the table
+    Add a row to the table.
 
-    Example
-    simple_table.row_add({"column": "value"})
+
+    Usage:
+    -----
+
+      simple_table.row_add({"column": "value"})
 
     Attributes:
     ----------
     :param row: The row to be added to the table
     :param missing: The data to put when a cell is missing
+    :param is_header: Boolean. Optional.
 
     :return: The python table
     """
@@ -202,9 +248,7 @@ class Excel(Html.Html):
     self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
     self.add_title(title, options={'content_table': False})
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       var tr = $('<tr></tr>');
       jsStyles.header.forEach(function(rec){tr.append("<th>"+ rec +"</th>")});
       htmlObj.append(tr); var tr = $('<tr></tr>'); var tbody = $('<tbody></tbody>');

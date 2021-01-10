@@ -27,6 +27,8 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def line(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/bubble-maps/
 
@@ -37,6 +39,8 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def font(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/bubble-maps/
 
@@ -47,6 +51,8 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def fill(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/bubble-maps/
 
@@ -76,6 +82,8 @@ class DataCells(GraphPlotly.DataChart):
   @property
   def line(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/bubble-maps/
 
@@ -183,6 +191,8 @@ class Table(GraphPlotly.Chart):
   @property
   def chart(self):
     """
+    Description:
+    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -193,6 +203,8 @@ class Table(GraphPlotly.Chart):
   @property
   def layout(self):
     """
+    Description:
+    ------------
 
     :rtype: GraphPlotly.Layout
     """
@@ -218,6 +230,8 @@ class Table(GraphPlotly.Chart):
 
   def headers_font_color(self, colors):
     """
+    Description:
+    ------------
 
     :param colors:
     """
@@ -226,6 +240,8 @@ class Table(GraphPlotly.Chart):
 
   def columns_color(self, colors):
     """
+    Description:
+    ------------
 
     :param colors:
     """
@@ -234,6 +250,8 @@ class Table(GraphPlotly.Chart):
 
   def columns_font_color(self, colors):
     """
+    Description:
+    ------------
 
     :param colors:
     """
@@ -242,6 +260,8 @@ class Table(GraphPlotly.Chart):
 
   def add_trace(self, data, type='table', mode=None):
     """
+    Description:
+    ------------
 
     :param data:
     :param type:

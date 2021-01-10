@@ -26,7 +26,10 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 
@@ -35,6 +38,9 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     :rtype: OptVis.Options2D
     """
@@ -47,10 +53,11 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -65,6 +72,9 @@ class Chart(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -77,6 +87,10 @@ class Chart(Html.Html):
     return '%s; var %s = %s' % (self.groups.toStr(), self.chartId, self.getCtx())
 
   def getCtx(self):
+    """
+
+
+    """
     raise Exception("Cannot create an object from the Vis base class directly")
 
   def __str__(self):
@@ -96,10 +110,11 @@ class ChartLine(Chart):
     """
     Description:
     -----------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -115,6 +130,9 @@ class ChartLine(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
@@ -125,6 +143,9 @@ class ChartLine(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -142,6 +163,9 @@ class ChartLine(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param records:
@@ -151,6 +175,14 @@ class ChartLine(Chart):
     return self
 
   def getCtx(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return "new vis.Graph2d(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
 
 
@@ -185,10 +217,11 @@ class Chart3D(Chart):
     """
     Description:
     -----------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -204,6 +237,9 @@ class Chart3D(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: OptVis.Options3D
     """
     if self._options is None:
@@ -215,6 +251,9 @@ class Chart3D(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     :rtype: JsVis.VisGroups
     """
@@ -228,6 +267,9 @@ class Chart3D(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: JsVis.VisGraph3D
     """
     if self._js is None:
@@ -238,6 +280,9 @@ class Chart3D(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -251,6 +296,9 @@ class Chart3D(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -268,6 +316,9 @@ class Chart3D(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -280,6 +331,14 @@ class Chart3D(Chart):
     return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
 
   def getCtx(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return "new vis.Graph3d(%s, %s, %s)" % (self.dom.varId, self.items, self.options)
 
 
@@ -319,6 +378,9 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: OptVis.OptionsNetwork
     """
     if self._options is None:
@@ -330,10 +392,11 @@ class ChartNetwork(Chart):
     """
     Description:
     ------------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
-    THis is an entry point to the full Javascript ecosystem.
+    This is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -349,6 +412,9 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
@@ -359,6 +425,9 @@ class ChartNetwork(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -374,6 +443,9 @@ class ChartNetwork(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param fromId:
@@ -385,6 +457,13 @@ class ChartNetwork(Chart):
     return self
 
   def getCtx(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
     return "new vis.Network(%s, %s, %s, %s)" % (self.dom.varId, {"nodes": self._nodes, 'edges': self._edges}, self.groups.varId, self.options)
 
 
@@ -399,6 +478,9 @@ class ChartTimeline(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -422,6 +504,9 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: GrpClsCharts.ClassVisTimeline
     """
     if self._styleObj is None:
@@ -434,6 +519,9 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: OptVis.OptionsTimeline
     """
     if self._options is None:
@@ -445,10 +533,11 @@ class ChartTimeline(Chart):
     """
     Description:
     ------------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
-    THis is an entry point to the full Javascript ecosystem.
+    This is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -464,6 +553,9 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
@@ -475,6 +567,9 @@ class ChartTimeline(Chart):
     Description:
     ------------
     Add group labels to the timeline.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -488,6 +583,9 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param records:
@@ -496,6 +594,13 @@ class ChartTimeline(Chart):
     return self
 
   def getCtx(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     if self.__cats is not None:
       # Remove the managed parameter to avoid issue with the library
       return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ); %s" % (self.dom.varId, self.items, self.options, self.__cats)

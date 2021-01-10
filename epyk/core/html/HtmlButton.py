@@ -606,7 +606,7 @@ class IconEdit(Html.Html):
     self.icon.border()
     return self
 
-  def rotate(self, value):
+  def rotate(self, angle):
     """
     Description:
     ------------
@@ -624,9 +624,9 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param value: Integer. The rotation angle.
+    :param angle: Integer. The rotation angle.
     """
-    self.icon.rotate(value)
+    self.icon.rotate(angle)
     return self
 
   def pull(self, position='left'):

@@ -31,6 +31,9 @@ class Sparklines(Html.Html):
     Property to the sparkline style properties.
     This will group all the default CSS classes which are defined by default to a sparkline component.
 
+    Usage:
+    -----
+
     :rtype: GrpChart.ClassBSpartlines
     """
     if self._styleObj is None:
@@ -42,7 +45,10 @@ class Sparklines(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a button
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
 
     :rtype: OptSparkline.OptionsSparkLine
     """
@@ -53,10 +59,11 @@ class Sparklines(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -66,7 +73,7 @@ class Sparklines(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSparkline(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
@@ -74,46 +81,49 @@ class Sparklines(Html.Html):
     The event object contains a property called "sparklines" that holds an array of the sparkline objects under the mouse at the time of the click.
     For non-composite sparklines, this array will have just one entry.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://omnipotent.net/jquery.sparkline/#interactive
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: List | String. Required. Javascript functions.
+    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
+    :param source_event: String. Required. The source target for the event.
+    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  def hover(self, jsFncs, profile=False, source_event=None):
+  def hover(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     ------------
     When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
     This can be useful to hook in an alternate tooltip library.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://omnipotent.net/jquery.sparkline/#interactive
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
+    :param js_funcs: List | String. Required. Javascript functions.
+    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
+    :param source_event: String. Required. The source target for the event.
     """
-    self.onReady("%s.bind('sparklineRegionChange', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self.onReady("%s.bind('sparklineRegionChange', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  @property
-  def _js__builder__(self):
-    return '%s.sparkline(data, options)' % JsQuery.decorate_var("htmlObj", convert_var=False)
+  _js__builder__ = '%s.sparkline(data, options)' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
-    # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     if self.title is not None:
       return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (self.title, self.get_attrs(pyClassNames=self.style.get_classes()))

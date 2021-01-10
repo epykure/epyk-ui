@@ -28,7 +28,10 @@ class ChartJsActivePoints(object):
     -----------
     Get the index of the clicked series in teh datasets.
 
-    :return: A javascirpt number
+    Usage:
+    -----
+
+    :return: A javaScript number.
     """
     return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.chartId) # % (self.chartId, self.num))
 

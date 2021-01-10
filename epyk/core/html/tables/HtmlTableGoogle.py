@@ -18,7 +18,12 @@ class Table(Html.Html):
   @property
   def tableId(self):
     """
-    Return the Javascript variable of the chart
+    Description:
+    -----------
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 

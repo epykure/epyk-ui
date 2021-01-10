@@ -37,6 +37,9 @@ class Table(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: GrpClsTable.Datatable
     """
     if self._styleObj is None:
@@ -48,7 +51,10 @@ class Table(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 
@@ -58,6 +64,9 @@ class Table(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: TableConfig
     """
     if self.__config is None:
@@ -65,18 +74,30 @@ class Table(Html.Html):
     return self.__config
 
   def get_column(self, by_title):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param by_title:
+    """
     for c in self.config._attrs.get('columns', []):
       if c.title == by_title:
         return c
-
-    return None
 
   @property
   def js(self):
     """
     Description:
     -----------
-    Return the Javascript internal object
+    Return the Javascript internal object.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -87,6 +108,19 @@ class Table(Html.Html):
     return self._js
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return JsUtils.jsConvertFncs([self.js.clear(), self.js.rows.add(data, update=True)], toStr=True) # self.js.rows.add(data)
 
@@ -102,8 +136,15 @@ class EnumStyleOptions(DataEnum):
 
   def __wrap(self, name,  header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     if header_only:
       return self.set('dt-head-%s' % name)
@@ -115,36 +156,71 @@ class EnumStyleOptions(DataEnum):
 
   def left(self, header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     return self.__wrap('left', header_only, body_only)
 
   def right(self, header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     return self.__wrap('right', header_only, body_only)
 
   def center(self, header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     return self.__wrap('center', header_only, body_only)
 
   def justify(self, header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     return self.__wrap('justify', header_only, body_only)
 
   def nowrap(self, header_only=False, body_only=False):
     """
+    Description:
+    -----------
 
-    https://datatables.net/manual/styling/classes
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://datatables.net/manual/styling/classes
     """
     return self.__wrap('nowrap', header_only, body_only)
 
@@ -157,6 +233,9 @@ class ColumnDef(DataClass):
     Description:
     -----------
     The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -174,6 +253,10 @@ class ColumnDef(DataClass):
     Description:
     -----------
     Enable or disable the display of this column.
+
+    Usage:
+    -----
+
 
     Related Pages:
 

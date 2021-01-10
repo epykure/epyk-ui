@@ -22,7 +22,10 @@ class Chart(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 
@@ -33,6 +36,9 @@ class Chart(Html.Html):
     -----------
     Property to the last dataset added to the NVD3 chart.
     Use the function traces to get a specific series from the chart object
+
+    Usage:
+    -----
     """
     return self._datasets[-1]
 
@@ -41,23 +47,33 @@ class Chart(Html.Html):
     Description:
     ------------
     Get a specific series from the datasets attributes in the NVD3 chart.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param i: Integer. Optional. The Index number.
     """
     if i is None:
       return self._datasets[-1]
 
     return self._datasets[i]
 
-  def click(self, jsFnc, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
-    :param source_event:
-    :param onReady:
+    :param js_funcs: List | String. Required. Javascript functions.
+    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
+    :param source_event: String. Required. The source target for the event.
+    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
     raise Exception("Not implemented for this chart !")
 
@@ -65,6 +81,9 @@ class Chart(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -84,6 +103,9 @@ class Chart(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
@@ -94,6 +116,9 @@ class Chart(Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -124,6 +149,19 @@ class Chart(Html.Html):
     return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return "d3.select('#%(htmlCode)s').datum(%(data)s).transition().duration(500).call(%(chart)s); nv.utils.windowResize(%(chart)s.update)" % {'htmlCode': self.htmlCode, 'data': self.convert(data, options, profile), 'chart': self.dom.var}
 
@@ -143,6 +181,9 @@ class ChartLine(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsNvd3.JsNvd3Line
     """
@@ -184,23 +225,31 @@ class ChartScatter(ChartLine):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3Scatter
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: List | String. Required. Javascript functions.
+    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
+    :param source_event: String. Required. The source target for the event.
+    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
 
@@ -211,6 +260,9 @@ class ChartCumulativeLine(ChartLine):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsNvd3.JsNvd3CumulativeLine
     """
@@ -227,6 +279,9 @@ class ChartFocusLine(ChartLine):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3LineWithFocus
     """
     if self._dom is None:
@@ -242,21 +297,31 @@ class ChartBar(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3Bar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, jsFnc, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
+    Description:
+    ------------
 
-    :param jsFnc:
-    :param profile:
-    :param source_event:
-    :param onReady:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Required. Javascript functions.
+    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
+    :param source_event: String. Required. The source target for the event.
+    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.selectAll('.nv-bar').on('click', function(event){ %s })" % (self.d3.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.selectAll('.nv-bar').on('click', function(event){ %s })" % (self.d3.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
   @property
@@ -293,6 +358,9 @@ class ChartHorizontalBar(ChartBar):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3MultiBarHorizontal
     """
     if self._dom is None:
@@ -308,6 +376,9 @@ class ChartMultiBar(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3MultiBar
     """
     if self._dom is None:
@@ -322,6 +393,9 @@ class ChartPie(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsNvd3.JsNvd3Pie
     """
@@ -351,25 +425,31 @@ class ChartPie(Chart):
           result.push(values)}
       }'''
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     :param source_event:
     :param onReady:
     """
-    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
   def add_trace(self, data, name=""):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -389,6 +469,9 @@ class ChartArea(ChartBar):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3Area
     """
     if self._dom is None:
@@ -403,6 +486,9 @@ class ChartHistoBar(ChartBar):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsNvd3.JsNvd3HistoricalBar
     """
@@ -419,6 +505,9 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3ParallelCoordinates
     """
     if self._dom is None:
@@ -429,6 +518,9 @@ class ChartParallelCoord(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -442,6 +534,9 @@ class ChartParallelCoord(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -460,6 +555,9 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3Sunburst
     """
     if self._dom is None:
@@ -471,9 +569,12 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param color:
+    :param color: String.
     :param data:
     """
     for rec in data:
@@ -485,6 +586,9 @@ class ChartSunbrust(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -524,6 +628,9 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3BoxPlot
     """
     if self._dom is None:
@@ -535,6 +642,9 @@ class ChartBoxPlot(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -568,6 +678,9 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -585,6 +698,9 @@ class ChartCandlestick(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3CandlestickBar
     """
     if self._dom is None:
@@ -599,6 +715,9 @@ class ChartOhlcBar(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: JsNvd3.JsNvd3OhlcBar
     """
@@ -615,6 +734,9 @@ class ChartForceDirected(Chart):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: JsNvd3.JsNvd3ForceDirectedGraph
     """
     if self._dom is None:
@@ -625,6 +747,9 @@ class ChartForceDirected(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

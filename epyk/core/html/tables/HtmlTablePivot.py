@@ -38,6 +38,9 @@ class PivotTable(Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: GrpClsTable.Pivot
     """
     if self._styleObj is None:
@@ -49,7 +52,10 @@ class PivotTable(Html.Html):
     """
     Description:
     ------------
-    Pivot Table options
+    Pivot Table options.
+
+    Usage:
+    -----
 
     :rtype: OptTable.OptionsPivot
     """
@@ -57,15 +63,23 @@ class PivotTable(Html.Html):
 
   @property
   def aggregators(self):
+    """
+    Description:
+    ------------
+
+    """
     return PivotAggregator(self._report, self._jsStyles)
 
   @property
   def renderers(self):
+    """
+    Description:
+    ------------
+
+    """
     return PivotRenderer(self._report, self._jsStyles)
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
       if (options.showUI){%(jqId)s.pivotUI(data, options)}
       else {%(jqId)s.pivot(data, options)}
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
@@ -75,6 +89,8 @@ class PivotTable(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
     """
     self._report.jsImports.add('subtotal')
     self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
@@ -99,15 +115,16 @@ class PivotUITable(PivotTable):
     """
     Description:
     ------------
-    Pivot Table options
+    Pivot Table options.
+
+    Usage:
+    -----
 
     :rtype: OptTable.OptionsPivotUI
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return '''
+  _js__builder__ = '''
         %(jqId)s.pivotUI(data, options)
         ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
@@ -122,6 +139,11 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param cola:
     """
     cola = JsUtils.jsConvertData(cola, None)
@@ -133,6 +155,8 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     self.options['aggregator'] = '$.pivotUtilities.aggregators["Count"]()'
     self.options['aggregatorName'] = "count"
@@ -142,6 +166,11 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     """
     col1 = JsUtils.jsConvertData(col1, None)
     self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
@@ -152,6 +181,11 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     """
     self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)")
     self.options['aggregatorName'] = "Max"
@@ -161,6 +195,12 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param col1:
     """
     self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)")
     self.options['aggregatorName'] = "Min"
@@ -170,6 +210,12 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param col1:
     """
     self.singleFactorFormulas(col1, "+= Math.abs(col1)")
     self.options['aggregatorName'] = "sum (abs)"
@@ -178,6 +224,9 @@ class PivotAggregator(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -201,6 +250,9 @@ class PivotAggregator(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -229,6 +281,9 @@ class PivotAggregator(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param col1:
@@ -240,6 +295,11 @@ class PivotAggregator(object):
 
   def custom(self, name, js_def):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
 
@@ -260,7 +320,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Horizontal bar chart from C3
+    Horizontal bar chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -275,7 +338,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Scatter chart from C3
+    Scatter chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -289,7 +355,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Area chart from C3
+    Area chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -303,7 +372,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Line chart from C3
+    Line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -317,7 +389,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Stacked bar chart from C3
+    Stacked bar chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -331,7 +406,10 @@ class PivotRendererC3(object):
     """
     Description:
     ------------
-    Stacked bar chart from C3
+    Stacked bar chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -351,7 +429,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Multiple Pies charts from Plotly
+    Multiple Pies charts from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -365,7 +446,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Area chart from Plotly
+    Area chart from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -379,7 +463,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Scatter chart from Plotly
+    Scatter chart from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -393,7 +480,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Line chart from Plotly
+    Line chart from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -407,7 +497,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Bar chart from Plotly
+    Bar chart from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -421,7 +514,10 @@ class PivotRendererPlotly(object):
     """
     Description:
     ------------
-    Horizontal Bar chart from Plotly
+    Horizontal Bar chart from Plotly.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -438,24 +534,46 @@ class PivotRenderer(object):
     self._report, self.options = report, options
 
   def table(self):
+    """
+    Description:
+    ------------
+
+    """
     self.options['renderer'] = '$.pivotUtilities.renderers["table"]'
 
   @property
   def plotly(self):
     """
-    Property to use the Plotly special renderers
+    Description:
+    ------------
+    Property to use the Plotly special renderers.
+
+    Usage:
+    -----
+
     """
     return PivotRendererPlotly(self._report, self.options)
 
   @property
   def c3(self):
     """
-    Property to use the C3 special renderers
+    Description:
+    ------------
+    Property to use the C3 special renderers.
+
+    Usage:
+    -----
     """
     return PivotRendererC3(self._report, self.options)
 
   def treemap(self):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
     https://pivottable.js.org/examples/plotly.html
 
     """
@@ -464,16 +582,38 @@ class PivotRenderer(object):
     self.options['rendererName'] = "Treemap"
 
   def heatmap(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+    """
     self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'
 
   def bars(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     self.options['renderer'] = '$.pivotUtilities.renderers["Table Barchart"]'
 
   def custom(self, name, js_def):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     https://github.com/nicolaskruchten/pivottable/wiki/Renderers
 
+    Attributes:
+    ----------
     :param name:
     :param js_def:
     """

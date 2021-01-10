@@ -27,6 +27,11 @@ class Table(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param colsDef:
     """
     for col in self.config['columnDefs']:
@@ -38,6 +43,9 @@ class Table(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     :rtype: GrpClsTable.Aggrid
     """
@@ -51,9 +59,10 @@ class Table(Html.Html):
     Description:
     -----------
 
-    :rtype: TableConfig
+    Usage:
+    -----
 
-    :return:
+    :rtype: TableConfig
     """
     if self.__config is None:
       self.__config = TableConfig(self._report)
@@ -64,7 +73,10 @@ class Table(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript internal object
+    Return the Javascript internal object.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -79,6 +91,11 @@ class Table(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param field:
     :param title:
     """
@@ -94,11 +111,27 @@ class Table(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return self.js.setRowData(data)
 

@@ -37,7 +37,6 @@ class Table(Html.Html):
     Description:
     ------------
 
-    :return:
     """
     return JsHtmlTabulator.JsHtmlTabulatorCell(self.tableId, self._report)
 
@@ -58,7 +57,7 @@ class Table(Html.Html):
     """
     Description:
     -----------
-    HTML Dom object
+    HTML Dom object.
 
     :rtype: JsHtml.JsHtmlButton
     """
@@ -71,7 +70,7 @@ class Table(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
@@ -92,7 +91,7 @@ class Table(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript internal object
+    Return the Javascript internal object.
 
     :return: A Javascript object
 
@@ -103,6 +102,12 @@ class Table(Html.Html):
     return self._js
 
   def data(self, data):
+    """
+    Description:
+    ------------
+
+    :param data:
+    """
     self.config.data = data
 
   def add_column(self, field, title=None):
@@ -178,6 +183,14 @@ class Table(Html.Html):
     return self
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param data:
+    :param options:
+    :param profile:
+    """
     if data:
       return self.js.setData(data)
 
@@ -285,7 +298,7 @@ class EnumSorter(DataEnum):
     """
     Description:
     -----------
-    Sorts column as strings of characters
+    Sorts column as strings of characters.
 
     Related Pages:
 
