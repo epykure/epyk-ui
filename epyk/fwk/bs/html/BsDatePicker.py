@@ -8,7 +8,8 @@ from epyk.fwk.bs.html.options import BsOptions
 
 
 class BsDate(html.Html.Html):
-  __reqCss, __reqJs = ['bootstrap-datetimepicker'], ['bootstrap-datetimepicker']
+
+  requirements = ('bootstrap-datetimepicker', 'jquery')
   name = 'Bootstrap Name'
 
   def __init__(self, report, value, label, icon, htmlCode, profile, options, helper):
@@ -48,9 +49,7 @@ class BsDate(html.Html.Html):
     """
     return self.__options
 
-  @property
-  def _js__builder__(self):
-    return 'options.date = data; $(htmlObj).datetimepicker(options)' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+  _js__builder__ = 'options.date = data; delete options.builder; $(htmlObj).datetimepicker(options)' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

@@ -867,6 +867,19 @@ class WebComponents:
 
     :rtype: Bs.Bootstrap
     """
+    self.rptObj.ext_packages = {
+      'bootstrap-datetimepicker': {
+        'version': '4.17.47',
+        'req': [
+          {'alias': 'moment'},
+          {'alias': 'bootstrap', 'version': '3.4.1'}],
+        'website': 'https://material.io/components',
+        'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
+        'modules': [
+          {'script': 'bootstrap-datetimepicker.min.js', 'path': 'bootstrap-datetimepicker/%(version)s/js/'},
+          {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
+        ]},
+    }
     if 'bs' not in self.fwks:
       self.rptObj.jsImports.add("bootstrap")
       self.rptObj.cssImport.add("bootstrap")
