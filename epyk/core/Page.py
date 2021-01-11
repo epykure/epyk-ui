@@ -243,7 +243,33 @@ class Report(object):
     :rtype: Interface.Components
     """
     if self._ui is None:
-      self._ui = Interface.Components(self)
+      self._ui = Interface.WebComponents(self)
+    return self._ui.std
+
+  @property
+  def web(self):
+    """
+    Description:
+    ------------
+    User Interface section.
+
+    All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
+    Within this object different categories of items can be used like (list, simple text, charts...)
+
+    Usage:
+    -----
+
+      page = Report()
+      page.ui.text("This is a text")
+
+    Related Pages:
+
+      https://www.w3schools.com/html/default.asp
+
+    :rtype: Interface.Components
+    """
+    if self._ui is None:
+      self._ui = Interface.WebComponents(self)
     return self._ui
 
   @property

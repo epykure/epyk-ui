@@ -50,19 +50,19 @@ class Chart(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param js_funcs: List of Js Functions. A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.data.onclick(jsFncs, profile)
+    self.data.onclick(js_funcs, profile)
     return self
 
   @property
@@ -318,8 +318,10 @@ class JsData(DataClass):
   def selection(self):
     return self.sub_data("selection", BBSelection)
 
-  def onclick(self, jsFncs, profile=False):
-    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+  def onclick(self, js_funcs, profile=False):
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
 
 
 class JsScales(DataClass):
@@ -578,7 +580,7 @@ class ChartLine(Chart):
 
     :rtype: BBPoints
     """
-    if not 'point' in self._attrs:
+    if 'point' not in self._attrs:
       self._attrs['point'] = BBPoints(self._report)
     return self._attrs['point']
 
@@ -590,7 +592,7 @@ class ChartLine(Chart):
 
     :rtype: JsZoom
     """
-    if not 'zoom' in self._attrs:
+    if 'zoom' not in self._attrs:
       self._attrs['zoom'] = JsZoom(self._report)
     return self._attrs['zoom']
 
@@ -603,7 +605,7 @@ class ChartLine(Chart):
     :rtype: JsData
 
     """
-    if not 'data' in self._attrs:
+    if 'data' not in self._attrs:
       self._attrs['data'] = JsData(self._report)
     return self._attrs['data']
 
@@ -615,7 +617,7 @@ class ChartLine(Chart):
 
     :rtype: BBGrid
     """
-    if not 'grid' in self._attrs:
+    if 'grid' not in self._attrs:
       self._attrs['grid'] = BBGrid(self._report)
     return self._attrs['grid']
 
@@ -707,8 +709,7 @@ class ChartPie(ChartLine):
     for i, value in enumerate(values):
       self.data.columns.append([self._labels[i], value])
       self.data.colors[self._labels[i]] = self._report.theme.colors[i]
-      if type is None:
-        self.data.add_type(self._labels[i], self._type)
+      self.data.add_type(self._labels[i], type or self._type)
     return self._attrs
 
 

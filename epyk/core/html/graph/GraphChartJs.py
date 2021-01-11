@@ -41,6 +41,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the name of the selected series.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("%s.data.datasets[%s].label" % (self.chartId, self.num))
 
@@ -50,6 +53,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the series label name.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("%s.data.labels[activePoints[%s]]" % (self.chartId, self.num))
 
@@ -59,6 +65,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the series value.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("activePoints[%s]['_model']" % self.num)
 
@@ -68,6 +77,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the series name.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("activePoints[%s]['_model'].datasetLabel" % self.num)
 
@@ -77,6 +89,8 @@ class ChartJsActivePoints(object):
     Description:
     -----------
 
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("%s.data.labels[activePoints[%s]._index]" % (self.chartId, self.num))
 
@@ -86,6 +100,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the series dataset.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("activePoints[%s]['_model'].label" % self.num)
 
@@ -95,6 +112,9 @@ class ChartJsActivePoints(object):
     Description:
     -----------
     Get the point value.
+
+    Usage:
+    -----
     """
     return JsObject.JsObject.get("%s.data.datasets[activePoints[%s]._datasetIndex].data[activePoints[%s]._index]" % (self.chartId, self.num, self.num))
 
@@ -119,6 +139,9 @@ class Chart(Html.Html):
     -----------
     The current active points selected by an event on a chart.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/api.html
@@ -136,6 +159,9 @@ class Chart(Html.Html):
     -----------
     Property to the D3 library.
 
+    Usage:
+    -----
+
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
@@ -147,10 +173,11 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Javascript base function
-
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
+
+    Usage:
+    -----
 
     :return: A Javascript object
 
@@ -165,10 +192,11 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 
@@ -185,6 +213,9 @@ class Chart(Html.Html):
     -----------
     Property to the series options.
 
+    Usage:
+    -----
+
     :rtype: OptChartJs.Options
     """
     if self._options is None:
@@ -197,6 +228,9 @@ class Chart(Html.Html):
     Description:
     -----------
     Shortcut property to all the external plugins defined in the framework.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -213,6 +247,9 @@ class Chart(Html.Html):
 
     Makes data points draggable. Supports touch events.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://github.com/chrispahm/chartjs-plugin-dragdata
@@ -225,6 +262,9 @@ class Chart(Html.Html):
     Description:
     -----------
     Set the labels of the different series in the chart.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -241,7 +281,10 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Change the series name
+    Change the series name.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -257,13 +300,16 @@ class Chart(Html.Html):
     -----------
     The data property of a ChartJs chart.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/master/general/data-structures
 
     Attributes:
     ----------
-    :param i: Integer. The series index according to the y_columns
+    :param i: Integer. The series index according to the y_columns.
 
     :rtype: JsChartJs.DataSetPie
     """
@@ -279,6 +325,9 @@ class Chart(Html.Html):
     -----------
     Property to the list of colors used for the border of the series in the chart.
 
+    Usage:
+    -----
+
     :return: A list of colors.
     """
     return self._options_init['colors']
@@ -290,6 +339,9 @@ class Chart(Html.Html):
     -----------
     Property to the list of colors used to fill the series in the chart.
 
+    Usage:
+    -----
+
     :return: A list of colors.
     """
     return self._options_init['bgColors']
@@ -300,8 +352,12 @@ class Chart(Html.Html):
     Description:
     -----------
     Set the colors of the chart.
+
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -325,53 +381,62 @@ class Chart(Html.Html):
       rec.borderColor = self._options_init['colors'][i]
       rec.borderWidth = 1
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
     Add a click event on the chart.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
     Attributes:
     ----------
-    :param jsFncs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event
     :param profile: Boolean. To set the profiling.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
-    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return super(Chart, self).click(tmpJsFncs, profile)
 
-  def dblclick(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def dblclick(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
     Add a double click event on the chart.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
     Attributes:
     ----------
-    :param jsFncs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event
     :param profile: Boolean. To set the profiling.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
-    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return super(Chart, self).dblclick(tmpJsFncs, profile)
 
-  def hover(self, jsFncs, profile=False, source_event=None):
+  def hover(self, js_funcs, profile=False, source_event=None):
     """
     Description:
     -----------
     Add an on mouse hover event on the chart.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -379,16 +444,23 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event
     :param profile: Boolean. To set the profiling.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     """
     tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
-    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self.on("mouseover", tmpJsFncs, profile)
 
   @property
   def datasets(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+    """
     return self._datasets
 
   def getCtx(self):
@@ -397,6 +469,9 @@ class Chart(Html.Html):
     -----------
     Get the ChartJs context. The internal configuration of the chart.
     The context is a dictionary object with javascript fragments.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -414,6 +489,9 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -489,6 +567,9 @@ class Chart(Html.Html):
     ------------
     Update the chart with context and / or data changes.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -505,6 +586,9 @@ class Chart(Html.Html):
     Description:
     ------------
     Loading component on a chart.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -546,6 +630,14 @@ class Fabric(Html.Html):
     self.chart.chartId = "window['%s_' + %s]" % (self.htmlCode, self.dom.getAttribute("data-current"))
 
   def new(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
     return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
       var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
       htmlObj.setAttribute("data-counter", parseInt(htmlObj.getAttribute("data-counter")) + 1);
@@ -554,10 +646,37 @@ class Fabric(Html.Html):
       return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
     return '''%(chartId)s = new Chart(%(chartId)s.getContext('2d'), {type: 'bar'}); 
       Object.assign(%(chartId)s.data, %(data)s); %(chartId)s.update()''' % {"chartId": self.chart.chartId, "data": self.chart.convert(data, options, profile)}
 
   def create(self, data=None, options=None, attrs=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param attrs:
+    :param profile:
+    """
     return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
       var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
       htmlObj.setAttribute("data-counter", parseInt(htmlObj.getAttribute("data-counter")) + 1);
@@ -583,6 +702,9 @@ class Datasets(object):
     ------------
     Add a series to an existing dataset.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data: List. A list of numbers.
@@ -600,6 +722,9 @@ class ChartLine(Chart):
     Description:
     ------------
     Property to the specific ChartJs Line chart.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -619,6 +744,9 @@ class ChartLine(Chart):
     The dataset structure of a chart is a list of dataset.
 
     For a chart line the default Opacity is None which will set the fill to attribute to False.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -648,6 +776,9 @@ class ChartLine(Chart):
     Description:
     ------------
     Add a new Dataset to the chart list of Datasets.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -705,6 +836,9 @@ class ChartBubble(Chart):
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
@@ -730,6 +864,9 @@ class ChartBubble(Chart):
     Description:
     ------------
     Add a new Dataset to the chart list of Datasets.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -781,6 +918,9 @@ class ChartBar(ChartLine):
     ------------
     Property to the bar chart options.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/bar.html
@@ -797,6 +937,9 @@ class ChartBar(ChartLine):
     ------------
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -826,6 +969,9 @@ class ChartBar(ChartLine):
     Description:
     ------------
     Add a new Dataset to the chart list of Datasets.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -859,6 +1005,9 @@ class ChartPolar(Chart):
     ------------
     Property to the Polar chart options.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/polar.html
@@ -873,6 +1022,9 @@ class ChartPolar(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -899,6 +1051,9 @@ class ChartPolar(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -959,6 +1114,9 @@ class ChartPie(Chart):
     -----------
     Property to the Pie Chart options.
 
+    Usage:
+    -----
+
     :rtype: OptChartJs.OptionsPie
     """
     if self._options is None:
@@ -969,6 +1127,9 @@ class ChartPie(Chart):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -988,6 +1149,9 @@ class ChartPie(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1035,6 +1199,9 @@ class ChartRadar(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param id:
@@ -1057,6 +1224,9 @@ class ChartRadar(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1106,6 +1276,9 @@ class ChartScatter(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param id:
@@ -1126,6 +1299,9 @@ class ChartScatter(Chart):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

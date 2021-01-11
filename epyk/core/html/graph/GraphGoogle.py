@@ -23,6 +23,9 @@ class Chart(Html.Html):
     Description:
     -----------
     Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "%s_obj" % self.htmlCode
 
@@ -30,6 +33,9 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

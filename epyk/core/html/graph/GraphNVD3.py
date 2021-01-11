@@ -64,7 +64,7 @@ class Chart(Html.Html):
     """
     Description:
     ------------
-    This function is not implementated.
+    This function is not implemented.
 
     Usage:
     -----

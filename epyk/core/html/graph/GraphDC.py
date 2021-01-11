@@ -19,7 +19,10 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
+
+    Usage:
+    -----
     """
     return "chart_%s" % self.htmlCode
 
@@ -27,6 +30,9 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -37,6 +43,17 @@ class Chart(Html.Html):
     return self
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    :param data:
+    :param options:
+    :param profile:
+    """
     return self.dom.render().toStr()
 
   def __str__(self):
@@ -54,6 +71,10 @@ class ChartLine(Chart):
     A line chart is used to display information as a series of data points connected by straight lines.
     A data point represents two values, one plotted along the horizontal axis and another along the vertical axis.
     For example, the popularity of food items can be drawn as a line chart in such a way that the food item is represented along the x-axis and its popularity is represented along the y-axis.
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -76,6 +97,9 @@ class ChartBar(Chart):
     Bar chart is one of the most commonly used types of graph and are used to display and compare the number, frequency or other measure (e.g. mean) for different discrete categories or groups.
     The graph is constructed such that the heights or lengths of the different bars are proportional to the size of the category they represent.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_bar_chart.htm
@@ -95,6 +119,9 @@ class ChartRow(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: JsDc.Row
     """
     if self._dom is None:
@@ -112,6 +139,10 @@ class ChartScatter(Chart):
     A scatter plot is a type of mathematical diagram.
     It is represented using the Cartesian coordinates to display values for typically two variables for a set of data.
     The data is displayed as a collection of points and the points maybe colored.
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -135,6 +166,9 @@ class ChartBubble(Chart):
     It is a variation of scatter chart, in which the data points are replaced with bubbles. The bubble sizes are represented with respect to the data dimension.
     It uses horizontal and vertical axes as value axes.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
@@ -153,7 +187,10 @@ class ChartPie(Chart):
     """
     Description:
     -----------
-    A pie chart is a circular statistical graph. It is divided into slices to show a numerical proportion
+    A pie chart is a circular statistical graph. It is divided into slices to show a numerical proportion.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -174,6 +211,9 @@ class ChartSunburst(Chart):
     Description:
     -----------
 
+    Usage:
+    -----
+
     :rtype: JsDc.Sunburst
     """
     if self._dom is None:
@@ -189,6 +229,9 @@ class ChartSeries(Chart):
     Description:
     -----------
     A series is a set of data. You can plot a chart based on the data.
+
+    Usage:
+    -----
 
     Related Pages:
 

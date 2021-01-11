@@ -52,7 +52,7 @@ class Chart(Html.Html):
       self._js = JsC3.C3(self, varName=self.chartId, report=self._report)
     return self._js
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -64,12 +64,12 @@ class Chart(Html.Html):
 
 		Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param js_funcs: List of Js Functions. A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.data.onclick(jsFncs, profile)
+    self.data.onclick(js_funcs, profile)
     return self
 
   @property
@@ -331,8 +331,10 @@ class JsData(DataClass):
   def selection(self):
     return self.sub_data("selection", C3Selection)
 
-  def onclick(self, jsFncs, profile=False):
-    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+  def onclick(self, js_funcs, profile=False):
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
 
 
 class JsDataEpochs(JsData):
@@ -596,7 +598,6 @@ class ChartLine(Chart):
     """
 
     :rtype: JsScales
-    :return:
     """
     if not'axis' in self._attrs:
       self._attrs['axis'] = JsScales(self._report)
@@ -637,7 +638,6 @@ class ChartLine(Chart):
     """
 
     :rtype: JsScales
-    :return:
     """
     if not 'grid' in self._attrs:
       self._attrs['grid'] = C3Grid(self._report)
@@ -757,7 +757,7 @@ class ChartStanford(ChartPie):
 
     :rtype: JsDataEpochs
     """
-    if not 'data' in self._attrs:
+    if 'data' not in self._attrs:
       self._attrs['data'] = JsDataEpochs(self._report)
     return self._attrs['data']
 
@@ -766,7 +766,6 @@ class ChartStanford(ChartPie):
     self.data.columns.append([str(name)] + series)
 
   def add_dataset(self, name, data, type=None):
-    self.data.columns.append([name]+ data)
-    if type is None:
-      self.data.type = self._type
+    self.data.columns.append([name] + data)
+    self.data.type = type or self._type
     return self._attrs

@@ -15,6 +15,8 @@ from epyk.interfaces.components import CompNumbers
 from epyk.interfaces.tables import CompTables
 from epyk.interfaces.graphs import CompCharts
 from epyk.interfaces.geo import CompGeo
+from epyk.interfaces.bs import Bs
+from epyk.interfaces.mt import Mt
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -40,7 +42,7 @@ from epyk.interfaces.components import CompPictos
 from epyk.interfaces import Arguments
 
 
-class Components(object):
+class Components:
   def __init__(self, rptObj):
     self.rptObj = rptObj
 
@@ -837,3 +839,63 @@ class Components(object):
     component.style.css.vertical_align = "top"
     component.style.css.color = self.rptObj.theme.greys[5]
     return component
+
+
+class WebComponents:
+
+  def __init__(self, page):
+    self.rptObj = page
+
+  @property
+  def std(self):
+    return Components(self.rptObj)
+
+  @property
+  def bs(self):
+    """
+
+    """
+    self.rptObj.jsImports.add("bootstrap")
+    self.rptObj.cssImport.add("bootstrap")
+    return Bs.Bootstrap(self.rptObj)
+
+  @property
+  def mt(self):
+    """
+    Description:
+    ------------
+    Set the material components entry point.
+    This will be available in the same way than ui is available for anything else in the core framework.
+
+    Related Pages:
+
+      https://material.io/develop/web/
+
+    :rtype: :doc:`Components.Materials <report/ui>`
+
+    :return: Python HTML object
+    """
+    self.rptObj.ext_packages = {
+      'material-icons': {
+        'website': 'https://material.io/resources/icons/?style=baseline',
+        'services': [
+          {'type': 'css', 'url': 'https://fonts.googleapis.com/icon', 'values': {'family': 'Material+Icons'}},
+        ]
+      },
+
+      'material-components-web': {
+        'version': '5.1.0',
+        'website': 'https://material.io/components',
+        'register': {'alias': 'mdc', 'module': 'material-components-web.min', 'npm': 'mdc'},
+        'modules': [
+          {'script': 'material-components-web.min.js', 'path': 'material-components-web/%(version)s/'},
+          {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
+      ]},
+    }
+    self.rptObj.jsImports.add("material-components-web")
+    self.rptObj.cssImport.add("material-components-web")
+    self.rptObj.css.customText('''
+    :root {--mdc-theme-primary: %(color)s; --mdc-theme--on-primary: %(color)s; --mdc-theme--primary-bg: %(color)s;}
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
+        ''' % {"color": self.rptObj.theme.success[1]})
+    return Mt.Materials(self.rptObj)

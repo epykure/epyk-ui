@@ -657,30 +657,33 @@ class Composite(Html.Html):
     -----
 
     """
+    comp_ui = self._report.ui
+    if hasattr(self._report.ui, 'std'):
+      comp_ui = getattr(self._report.ui, 'std')
     return {
-      'div': self._report.ui.div,
-      'textarea': self._report.ui.textarea,
-      'button': self._report.ui.button,
-      'label': self._report.ui.label,
-      'img': self._report.ui.img,
-      'header': self._report.ui.header,
-      'section': self._report.ui.section,
-      'icon': self._report.ui.icon,
-      'span': self._report.ui.texts.span,
-      'checkbox': self._report.ui.inputs.checkbox,
-      'radio': self._report.ui.inputs.d_radio,
-      'input': self._report.ui.inputs.d_text,
-      'circle': self._report.ui.charts.svg.circle,
-      'svg': self._report.ui.charts.svg.new,
-      'path': self._report.ui.charts.svg.path,
-      'list': self._report.ui.list,
-      'item': self._report.ui.lists.item,
-      'nav': self._report.ui.tags.nav,
-      'p': self._report.ui.tags.p,
-      'link': self._report.ui.tags.a,
-      'ol': self._report.ui.tags.ol,
-      'aside': self._report.ui.tags.aside,
-      'hr': self._report.ui.layouts.hr,
+      'div': comp_ui.div,
+      'textarea': comp_ui.textarea,
+      'button': comp_ui.button,
+      'label': comp_ui.label,
+      'img': comp_ui.img,
+      'header': comp_ui.header,
+      'section': comp_ui.section,
+      'icon': comp_ui.icon,
+      'span': comp_ui.texts.span,
+      'checkbox': comp_ui.inputs.checkbox,
+      'radio': comp_ui.inputs.d_radio,
+      'input': comp_ui.inputs.d_text,
+      'circle': comp_ui.charts.svg.circle,
+      'svg': comp_ui.charts.svg.new,
+      'path': comp_ui.charts.svg.path,
+      'list': comp_ui.list,
+      'item': comp_ui.lists.item,
+      'nav': comp_ui.tags.nav,
+      'p': comp_ui.tags.p,
+      'link': comp_ui.tags.a,
+      'ol': comp_ui.tags.ol,
+      'aside': comp_ui.tags.aside,
+      'hr': comp_ui.layouts.hr,
     }
 
   def _set_comp(self, comp, schema_child, builders, ref_map):

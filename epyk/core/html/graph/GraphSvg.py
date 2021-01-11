@@ -15,28 +15,28 @@ class SVG(Html.Html):
     self.css({"display": 'inline-block'})
     self.html_objs = []
 
-  def __add__(self, obj):
-    obj.options.managed = False
-    self.html_objs.append(obj)
+  def __add__(self, component):
+    component.options.managed = False
+    self.html_objs.append(component)
 
   def __getitem__(self, i):
     return self.html_objs[i]
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
-    Add an event on the SVG
+    Add an event on the SVG.
 
     Attributes:
     ----------
-    :param jsFncs: List of Js Functions. A Javascript Python function
+    :param js_funcs: List of Js Functions. A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.css({"cursor": 'pointer'})
-    return self.on("click", jsFncs, profile, source_event)
+    return self.on("click", js_funcs, profile, source_event)
 
   def defs(self):
     """
@@ -560,16 +560,16 @@ class ForeignObject(SVG):
     self.set_attrs({"x": x, "y": y, "width": width, "height": height})
     self.html_objs = []
 
-  def add(self, htmlObj):
+  def add(self, components):
     """
     Description:
     -----------
 
-    :param htmlObj:
+    :param components:
     """
-    if not isinstance(htmlObj, list):
-      htmlObj = [htmlObj]
-    for h in htmlObj:
+    if not isinstance(components, list):
+      components = [components]
+    for h in components:
       h.options.managed = False
       self.html_objs.append(h)
 
