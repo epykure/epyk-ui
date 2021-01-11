@@ -20,8 +20,10 @@ class BsComposite(html.HtmlTextComp.Composite):
     Span are replaced by div as I did not want to use the span as a container object.
     I believe this component should remain a base one.
 
-    """
+    Usage:
+    -----
 
+    """
     if self.extended_map is None:
       self.extended_map = dict(super(BsComposite, self)._get_comp_map)
       self.extended_map.update({
@@ -45,9 +47,12 @@ class Section(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param i: Integer. The internal row based on the index
+    :param i: Integer. The internal row based on the index.
 
     :rtype: Tr
     """
@@ -63,6 +68,11 @@ class Section(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param i:
     :param comp:
     """
@@ -97,6 +107,9 @@ class BsToasts(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param i: Integer. The internal row based on the index
@@ -108,15 +121,20 @@ class BsToasts(html.Html.Html):
 
     return self.body.val[i]
 
-  def __add__(self, comp):
+  def __add__(self, component):
     """
     Description:
     ------------
-    Add items to a container
+    Add items to a container.
 
-    :param comp:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param component:
     """
-    self.body.__add__(comp)
+    self.body.__add__(component)
     return self
 
   @property
@@ -125,6 +143,8 @@ class BsToasts(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     if self.__header is None:
       self.__header = Section(self._report, 'div')
@@ -138,6 +158,8 @@ class BsToasts(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
     """
     if self.__body is None:
       self.__body = Section(self._report, 'div')
@@ -166,6 +188,9 @@ class BsCards(html.Html.Html):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param i: Integer. The internal row based on the index
@@ -177,26 +202,36 @@ class BsCards(html.Html.Html):
 
     return self.body.val[i]
 
-  def __add__(self, comp):
+  def __add__(self, component):
     """
     Description:
     ------------
-    Add items to a container
+    Add items to a container.
 
-    :param comp:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param component:
     """
-    self.body.__add__(comp)
+    self.body.__add__(component)
     return self
 
-  def insert(self, i, comp):
+  def insert(self, i, component):
     """
     Description:
     ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param i:
-    :param comp:
+    :param component:
     """
-    self.body.insert(i, comp)
+    self.body.insert(i, component)
     return self
 
   @property
@@ -204,6 +239,9 @@ class BsCards(html.Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     """
     if self.__header is None:
@@ -217,6 +255,9 @@ class BsCards(html.Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     """
     if self.__body is None:
@@ -257,8 +298,6 @@ class BsModals(html.Html.Html):
     self._content += header
     self._content += body
     self._content += footer
-
-
     if title is not None:
       self.header.__add__(title)
 
@@ -269,8 +308,13 @@ class BsModals(html.Html.Html):
     """
     Description:
     ------------
-    Add items to a container
+    Add items to a container.
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param comp:
     """
     if hasattr(comp, 'options'):
@@ -282,6 +326,9 @@ class BsModals(html.Html.Html):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -299,10 +346,11 @@ class BsModals(html.Html.Html):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
+
+    Usage:
+    -----
 
     :return: A Javascript Dom object
 

@@ -39,7 +39,10 @@ class BsDate(html.Html.Html):
     """
     Description:
     -----------
-    Dedicated options for the Datetimepicker object
+    Dedicated options for the Datetimepicker object.
+
+    Usage:
+    -----
 
     Related Pages:
 
