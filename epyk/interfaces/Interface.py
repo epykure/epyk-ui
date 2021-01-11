@@ -845,19 +845,33 @@ class WebComponents:
 
   def __init__(self, page):
     self.rptObj = page
+    self.fwks = {}
 
   @property
   def std(self):
-    return Components(self.rptObj)
+    """
+    Description:
+    ------------
+
+    :rtype: Components
+    """
+    if 'ui' not in self.fwks:
+      self.fwks["ui"] = Components(self.rptObj)
+    return self.fwks["ui"]
 
   @property
   def bs(self):
     """
+    Description:
+    ------------
 
+    :rtype: Bs.Bootstrap
     """
-    self.rptObj.jsImports.add("bootstrap")
-    self.rptObj.cssImport.add("bootstrap")
-    return Bs.Bootstrap(self.rptObj)
+    if 'bs' not in self.fwks:
+      self.rptObj.jsImports.add("bootstrap")
+      self.rptObj.cssImport.add("bootstrap")
+      self.fwks["bs"] = Bs.Bootstrap(self.rptObj)
+    return self.fwks["bs"]
 
   @property
   def mt(self):
@@ -871,7 +885,7 @@ class WebComponents:
 
       https://material.io/develop/web/
 
-    :rtype: :doc:`Components.Materials <report/ui>`
+    :rtype: Mt.Materials
 
     :return: Python HTML object
     """
@@ -892,10 +906,13 @@ class WebComponents:
           {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
       ]},
     }
-    self.rptObj.jsImports.add("material-components-web")
-    self.rptObj.cssImport.add("material-components-web")
-    self.rptObj.css.customText('''
-    :root {--mdc-theme-primary: %(color)s; --mdc-theme--on-primary: %(color)s; --mdc-theme--primary-bg: %(color)s;}
-    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
-        ''' % {"color": self.rptObj.theme.success[1]})
-    return Mt.Materials(self.rptObj)
+    if 'mt' not in self.fwks:
+      self.rptObj.jsImports.add("material-components-web")
+      self.rptObj.cssImport.add("material-components-web")
+      self.rptObj.css.customText('''
+:root {--mdc-theme-primary: %(color)s; --mdc-theme--on-primary: %(color)s; --mdc-theme--primary-bg: %(color)s;}
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
+          ''' % {"color": self.rptObj.theme.success[1]})
+
+      self.fwks["mt"] = Mt.Materials(self.rptObj)
+    return self.fwks["mt"]
