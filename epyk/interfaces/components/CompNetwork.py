@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import logging
 
 from epyk.core import html
 from epyk.interfaces import Arguments
@@ -18,7 +19,8 @@ class Network(object):
     ------------
     Python wrapper to a div item composed to several sub html items to display message
 
-    Usage::
+    Usage:
+    -----
 
       db = report.db(database="test.db")
       report.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
@@ -30,7 +32,7 @@ class Network(object):
     Related Pages:
 
       https://leaverou.github.io/bubbly/
-    http://manos.malihu.gr/jquery-custom-content-scroller/
+      http://manos.malihu.gr/jquery-custom-content-scroller/
 
     Attributes:
     ----------
@@ -52,6 +54,9 @@ class Network(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -81,6 +86,9 @@ class Network(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -118,7 +126,8 @@ class Network(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage::
+    Usage:
+    -----
 
       report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
@@ -136,7 +145,8 @@ class Network(object):
 
     Attributes:
     ----------
-    :param value: The content of the notification
+    :param type: String. The warning level.
+    :param value: String. Optional. The content of the notification.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
@@ -149,6 +159,11 @@ class Network(object):
                     'classes': ['alert', 'alert-%s' % type]}
     if options is not None:
       dflt_options.update(options)
+    alert_types = ("danger", "info", "success", "warning")
+    if self.context.rptObj.verbose or dflt_options.get("verbose"):
+      if type not in alert_types:
+        logging.warning("Alert type not recognized: %s, %s " % (type, alert_types))
+
     return html.HtmlNetwork.Alert(self.context.rptObj, value, width, height, htmlCode, dflt_options, profile)
 
   def danger(self, value="", htmlCode=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
@@ -163,7 +178,8 @@ class Network(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
@@ -194,7 +210,8 @@ class Network(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
@@ -225,7 +242,8 @@ class Network(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
@@ -256,7 +274,8 @@ class Network(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
@@ -284,7 +303,8 @@ class Network(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       b = rptObj.ui.button("Display")
       n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
@@ -347,7 +367,8 @@ class Network(object):
 
       - :class:`epyk.core.html.HtmlFiles.DropFile`
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.network.dropfile()
 
@@ -373,6 +394,9 @@ class Network(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param icon: String. Optional. The component icon content from font-awesome references
@@ -391,6 +415,9 @@ class Network(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -428,6 +455,9 @@ class Network(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

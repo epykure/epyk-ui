@@ -17,7 +17,8 @@ class Navigation(object):
     ------------
     Navigation button to go to the top of the page directly
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.up()
 
@@ -60,7 +61,8 @@ class Navigation(object):
     ------------
     Navigation button to go to the bottom of the page directly
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.down()
 
@@ -102,7 +104,8 @@ class Navigation(object):
     ------------
     Navigation button to go to a specific point in the page directly
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.to(100, tooltip="test")
 
@@ -146,7 +149,8 @@ class Navigation(object):
     ------------
     Shortcut to a specific position in the page
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
@@ -188,7 +192,8 @@ class Navigation(object):
     ------------
     Add a horizontal progressbar to display the status of the page scrollbar.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.scroll()
 
@@ -211,7 +216,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.ui.navigation.indices(10)
 
@@ -236,7 +242,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       p = rptObj.ui.navigation.points(10)
       for i, _ in enumerate(p):
@@ -264,7 +271,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       d = rptObj.ui.navigation.dots(10)
 
@@ -318,7 +326,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       nav = rptObj.ui.navigation.bar(title="test")
       nav.add_text("Test text")
@@ -386,6 +395,9 @@ class Navigation(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
@@ -426,6 +438,9 @@ class Navigation(object):
 
     Will create a footer object in the body of the report
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlMenu.HtmlFooter`
@@ -452,6 +467,9 @@ class Navigation(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -513,6 +531,9 @@ class Navigation(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
@@ -537,6 +558,9 @@ class Navigation(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -571,6 +595,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
@@ -600,6 +627,9 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -633,6 +663,8 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
 
     page.ui.banners.cookies("Test", "#")
 
@@ -664,6 +696,9 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -706,6 +741,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -738,6 +776,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -768,6 +809,9 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -809,6 +853,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param content:
@@ -847,6 +894,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param copyright:
@@ -880,6 +930,9 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -944,6 +997,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param headers:
@@ -980,6 +1036,9 @@ class Banners(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param title:
@@ -1014,6 +1073,9 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1072,6 +1134,9 @@ class NavBars(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param logo:
@@ -1088,6 +1153,9 @@ class NavBars(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1106,6 +1174,9 @@ class NavBars(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -1126,6 +1197,9 @@ class NavBars(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

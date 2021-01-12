@@ -62,18 +62,42 @@ class OptionsAlert(Options):
     """
     Description:
     ------------
+    Set the time in milliseconds before hidden the popup.
+    If None the popup will not hide progressively.
+
+    Usage:
+    -----
+
+      danger = page.ui.network.warning()
+      danger.options.time = None
+
+    Attributes:
+    ----------
+    :prop num: Integer. The time in millisecond. Default 1000.
     """
     return self._config_get(1000)
 
   @time.setter
-  def time(self, attrs):
-    self._config(attrs)
+  def time(self, num):
+    self._config(num)
 
   @property
   def delay(self):
     """
     Description:
     ------------
+    The delay between the event and the display of the popup.
+    THe time is in millisecond.
+
+    Usage:
+    -----
+
+      danger = page.ui.network.warning()
+      danger.options.delay = 100
+
+    Attributes:
+    ----------
+    :prop num: Integer. The time in millisecond. Default 1000.
     """
     return self._config_get(1000)
 
@@ -91,6 +115,9 @@ class OptionsAlert(Options):
 
   @close.setter
   def close(self, bool):
+    if bool:
+      self._report.jsImports.add("font-awesome")
+      self._report.cssImport.add("font-awesome")
     self._config(bool)
 
   @property

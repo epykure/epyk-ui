@@ -221,3 +221,25 @@ class Options(DataClass):
     props = self.details()
     result = [v for k, v in props.items() if v["type"] == "optional"]
     return result
+
+  def js_clone(self, attrs=None):
+    """
+    Description:
+    ------------
+    Clone the js options of an HTML component.
+    This can be used in the build method in order to change some options.
+
+    Usage:
+    -----
+
+      info = page.ui.network.warning()
+      info.build("Test", info.options.js_clone({"time": 100}))
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. Optional. The Js options of the HTML component.
+    """
+    js_options = dict(self._report._jsStyles)
+    if attrs is not None:
+      js_options.update(attrs)
+    return js_options

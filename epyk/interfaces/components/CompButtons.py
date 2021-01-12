@@ -815,29 +815,31 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       badge.style.css.display = "block"
     return badge
 
-  def live(self, time, jsFncs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), profile=None, options=None):
+  def live(self, time, js_funcs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), profile=None, options=None):
     """
     Description:
     -----------
     Live component which will trigger event every x second.
     This will then allow other components to be refreshed in the page.
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_icon.py
+
     Attributes:
     ----------
-    :param time: Integer. Interval time in second
-    :param jsFncs: String or List. The Javascript functions
-    :param icon: String. The font awesome icon reference
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param time: Integer. Interval time in second.
+    :param js_funcs: String or List. The Javascript functions.
+    :param icon: String. Optional. The font awesome icon reference.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     dflt_options = {"started": True}
     if options is not None:
       dflt_options.update(options)
     live = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, options=options, profile=profile)
-    live.style.css.color = self.context.rptObj.theme.danger[1]
-    live.style.css.border = "1px solid %s" % self.context.rptObj.theme.success[1]
     live.style.css.border_radius = "50px"
     live.style.css.padding = "2px"
     live.style.css.margin = 0
@@ -848,8 +850,11 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     if dflt_options["started"]:
       live.attr["data-active"] = 1
       live.icon.style.effects.blink(2)
-      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % live.htmlCode, time * 1000)])
+      live.style.css.border = "1px solid %s" % self.context.rptObj.theme.success[1]
+      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(js_funcs, "%s_timer" % live.htmlCode, time * 1000)])
     else:
+      live.icon.style.css.color = self.context.rptObj.theme.danger[1]
+      live.style.css.border = "1px solid %s" % self.context.rptObj.theme.danger[1]
       live.attr["data-active"] = 0
     live.click([
       self.context.rptObj.js.if_(live.dom.getAttribute("data-active") == 1, [
@@ -863,7 +868,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
         live.dom.css("border-color", self.context.rptObj.theme.success[1]).r,
         live.icon.dom.css("color", self.context.rptObj.theme.success[1]).r,
         live.icon.dom.effects.blink(2),
-        self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % live.htmlCode, time)
+        self.context.rptObj.js.window.setInterval(js_funcs, "%s_timer" % live.htmlCode, time)
       ]),
     ])
     return live
