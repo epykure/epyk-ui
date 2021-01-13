@@ -163,7 +163,7 @@ class Panel(Html.Html):
 
 
 class PanelSplit(Html.Html):
-  #requirements = ('jqueryui', )
+  requirements = ('jqueryui', )
   name = 'Panel Split'
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
@@ -179,7 +179,7 @@ class PanelSplit(Html.Html):
                       'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
-  def left(self, html_obj):
+  def left(self, component):
     """
     Description:
     ------------
@@ -188,15 +188,18 @@ class PanelSplit(Html.Html):
     Usage:
     -----
 
+      split_panel = page.ui.panels.split()
+      split_panel.left(page.ui.col([page.ui.text("Left")]))
+
     Attributes:
     ----------
-    :param html_obj:
+    :param component: HTML. An HTML component.
     """
-    html_obj.options.managed = False
-    self.html_left = html_obj
+    component.options.managed = False
+    self.html_left = component
     return self
 
-  def right(self, html_obj):
+  def right(self, component):
     """
     Description:
     ------------
@@ -205,12 +208,15 @@ class PanelSplit(Html.Html):
     Usage:
     -----
 
+      split_panel = page.ui.panels.split()
+      split_panel.right(page.ui.col([page.ui.text("Right")]))
+
     Attributes:
     ----------
-    :param html_obj:
+    :param component: HTML. An HTML component.
     """
-    html_obj.options.managed = False
-    self.html_right = html_obj
+    component.options.managed = False
+    self.html_right = component
     return self
 
   def __str__(self):

@@ -1011,6 +1011,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/snapappointments/bootstrap-select',
     #'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
+      {'alias': '@popperjs/core', 'version': '1.14.6'}, # Cannot be upgraded bug with bootstrap select
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
@@ -2090,7 +2091,8 @@ class ImportManager:
     :return: The string to be added to the header.
     """
     css = []
-    css_aliases = self.cleanImports(css_aliases, CSS_IMPORTS)
+    # Import hierarchy will rely on the JS_IMPORT definition.
+    css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in CSS_IMPORTS]
     for css_alias in css_aliases:
       if excluded is not None and css_alias in excluded:
         continue

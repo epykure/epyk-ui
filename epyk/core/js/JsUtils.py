@@ -169,6 +169,20 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   return jsData
 
 
+def jsWrap(data):
+  """
+  Description:
+  ------------
+  Shortcut to wrap a python object to a generic JavaScript object.
+  This will avoid the automatic conversion to string if it is a variable.
+
+  Attributes:
+  ----------
+  :param data: Object. A python object.
+  """
+  return JsObject.JsObject.get(data)
+
+
 def getJsValid(value, fail=True):
   """
   Description:

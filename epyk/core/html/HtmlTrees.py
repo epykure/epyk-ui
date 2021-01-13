@@ -147,7 +147,6 @@ class DropDown(Html.Html):
   name = 'DropDown Select'
 
   def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
-    self.__options = {}
     super(DropDown, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self._vals, self.text = data, text
     self.css({'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
@@ -204,7 +203,7 @@ class DropDown(Html.Html):
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
-  _js__builder__ = ''' 
+  _js__builder__ = '''
       var jqHtmlObj = %(jqId)s; if(options.clearDropDown){jqHtmlObj.empty()};
       data.forEach(function(rec){
         if (rec.items != undefined) {

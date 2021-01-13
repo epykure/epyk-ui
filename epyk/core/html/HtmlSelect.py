@@ -51,6 +51,7 @@ class Optgroup(Html.Html):
 class Select(Html.Html):
   requirements = ('bootstrap-select', )
   name = 'Select'
+  builder_name = "SelectPicker"
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
@@ -159,7 +160,7 @@ class Select(Html.Html):
       selectObj.selectpicker(options).selectpicker('refresh');
       selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, js_funcs, emtpyFncs=None, profile=False, source_event=None, onReady=False):
+  def change(self, js_funcs, empty_funcs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     -----------
@@ -171,17 +172,17 @@ class Select(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Set of Javascript function to trigger on this event
-    :param emtpyFncs: List | String. Set of Js function to trigger if the value is empty
+    :param empty_funcs: List | String. Set of Js function to trigger if the value is empty
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    if emtpyFncs is not None:
-      if not isinstance(emtpyFncs, list):
-        emtpyFncs = [emtpyFncs]
-      js_funcs.append("if (%s === ''){ %s }" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
+    if empty_funcs is not None:
+      if not isinstance(empty_funcs, list):
+        empty_funcs = [empty_funcs]
+      js_funcs.append("if (%s === ''){%s}" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(empty_funcs, toStr=True)))
     return self.on("change", js_funcs, profile, source_event, onReady)
 
   def ajax(self, url, jsData="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
@@ -230,7 +231,7 @@ class Select(Html.Html):
       opt_rp = Optgroup(self._report, opt_groups[k], k)
       opt_rp.options.managed = False
       data.append(opt_rp.html())
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (JsQuery.decorate_var(self.dom.varId, convert_var=False), json.dumps(self._jsStyles)))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (self.dom.jquery.varId, json.dumps(self._jsStyles)))
     if self.attr.get("data-width") is not None:
       self._report.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-width")))
       self.attr['class'].add("%s_width" % self.htmlCode)

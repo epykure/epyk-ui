@@ -83,7 +83,7 @@ class Options(DataClass):
     :param value: Object. The value for the name.
     :param name: String. Optional. The attribute name.
     """
-    if not group in self._report._jsStyles:
+    if group not in self._report._jsStyles:
       self._report._jsStyles[group] = {}
     self._report._jsStyles[group][name or sys._getframe().f_back.f_code.co_name] = value
 
