@@ -738,7 +738,7 @@ class Components:
     html_i = html.HtmlImage.SlideShow(self.rptObj, components or [], width, height, options or {}, profile)
     return html_i
 
-  def qrcode(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
+  def qrcode(self, data=None, width=(128, 'px'), height=(128, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -759,7 +759,7 @@ class Components:
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     data = data or {}
-    width = Arguments.size(width, unit="%")
+    width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     h_qrcode = html.HtmlOthers.HtmlQRCode(self.rptObj, data, width, height, options, profile)
     if height[1] != '%':

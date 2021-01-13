@@ -13,11 +13,17 @@ class JsNvd3Axis(object):
 
   def axisLabel(self, text):
     """
-    Chart axis settings
+    Description:
+    ------------
+    Chart axis settings.
 
-    Example
-    chart.xAxis.axisLabel('Time (ms)')
+    Usage:
+    -----
 
+      chart.xAxis.axisLabel('Time (ms)')
+
+    Attributes:
+    ----------
     :param text:
     """
     text = JsUtils.jsConvertData(text, None)
@@ -26,6 +32,8 @@ class JsNvd3Axis(object):
 
   def tickFormat(self, jsFnc):
     """
+    Description:
+    ------------
     Chart axis settings
 
     Example
@@ -51,6 +59,8 @@ class JsNvd3Axis(object):
 
   def tickValues(self, values):
     """
+    Description:
+    ------------
     Chart axis settings
 
     Example
@@ -64,6 +74,8 @@ class JsNvd3Axis(object):
 
   def toStr(self):
     """
+    Description:
+    ------------
     Javascript representation
 
     :return: Return the Javascript String
@@ -86,6 +98,8 @@ class JsNvd3Utils(object):
 
   def windowResize(self, jsFnc):
     """
+    Description:
+    ------------
     Update the chart when window resizes.
 
     :param jsFnc:

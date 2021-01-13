@@ -4,9 +4,11 @@
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
 from epyk.core.html.options import OptText
+from epyk.core.html.options import OptQrCode
 
 from epyk.core.js.html import JsHtmlStars
 from epyk.core.js.packages import JsJsonFormatter
+from epyk.core.js.packages import JsQrCode
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js import JsUtils
@@ -578,10 +580,56 @@ class HtmlQRCode(Html.Html):
 
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlQRCode, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
+    self.__options = OptQrCode.OptionsQrCode(self, options)
+    self.options.width = width[0]
+    self.options.height = height[0]
 
-  _js__builder__ = ''' htmlObj.innerHTML = "";
-    new QRCode(htmlObj, data)
-    '''
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+
+    Usage:
+    -----
+
+    :rtype: OptQrCode.OptionsQrCode
+    """
+    return self.__options
+
+  @property
+  def jsonId(self):
+    """
+    Description:
+    ------------
+    Return the Javascript variable of the json object.
+
+    Usage:
+    -----
+
+    """
+    return "%s_obj" % self.htmlCode
+
+  _js__builder__ = ''' htmlObj.innerHTML = ""; window[ htmlObj.id + '_obj'] = new QRCode(htmlObj, Object.assign({'text': data}, options) )'''
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Return the Javascript internal object.
+
+    Usage:
+    -----
+
+    :return: A Javascript object
+
+    :rtype: JsQrCode.QrCode
+    """
+    if self._js is None:
+      self._js = JsQrCode.QrCode(self._report, varName=self.jsonId, setVar=False, parent=self)
+    return self._js
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
