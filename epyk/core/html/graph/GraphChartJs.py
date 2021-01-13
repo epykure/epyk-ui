@@ -31,9 +31,12 @@ class ChartJsActivePoints(object):
     Usage:
     -----
 
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().index])
+
     :return: A javaScript number.
     """
-    return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.chartId) # % (self.chartId, self.num))
+    return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.chartId)
 
   @property
   def x(self):
@@ -44,6 +47,9 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().x])
     """
     return JsObject.JsObject.get("%s.data.datasets[%s].label" % (self.chartId, self.num))
 
@@ -56,8 +62,11 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().labels])
     """
-    return JsObject.JsObject.get("%s.data.labels[activePoints[%s]]" % (self.chartId, self.num))
+    return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)]]" % (self.chartId, self.num))
 
   @property
   def model(self):
@@ -68,8 +77,11 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().model])
     """
-    return JsObject.JsObject.get("activePoints[%s]['_model']" % self.num)
+    return JsObject.JsObject.get("activePoints[Math.min(%s, activePoints.length - 1)]['_model']" % self.num)
 
   @property
   def datasetLabel(self):
@@ -80,8 +92,11 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().datasetLabel])
     """
-    return JsObject.JsObject.get("activePoints[%s]['_model'].datasetLabel" % self.num)
+    return JsObject.JsObject.get("activePoints[Math.min(%s, activePoints.length - 1)]['_model'].datasetLabel" % self.num)
 
   @property
   def label(self):
@@ -91,8 +106,11 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().label])
     """
-    return JsObject.JsObject.get("%s.data.labels[activePoints[%s]._index]" % (self.chartId, self.num))
+    return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (self.chartId, self.num))
 
   @property
   def dataset(self):
@@ -103,8 +121,9 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
     """
-    return JsObject.JsObject.get("activePoints[%s]['_model'].label" % self.num)
+    return JsObject.JsObject.get("activePoints[Math.min(%s, activePoints.length - 1)]['_model'].label" % self.num)
 
   @property
   def value(self):
@@ -115,8 +134,11 @@ class ChartJsActivePoints(object):
 
     Usage:
     -----
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().value])
     """
-    return JsObject.JsObject.get("%s.data.datasets[activePoints[%s]._datasetIndex].data[activePoints[%s]._index]" % (self.chartId, self.num, self.num))
+    return JsObject.JsObject.get("%s.data.datasets[activePoints[Math.min(%s, activePoints.length - 1)]._datasetIndex].data[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (self.chartId, self.num, self.num))
 
 
 class Chart(Html.Html):
