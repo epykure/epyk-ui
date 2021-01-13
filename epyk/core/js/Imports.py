@@ -145,6 +145,10 @@ def installed_packages():
   subprocess.call(["pip", 'list', '-o'])
 
 
+# Module variable to be updated in environment to share info related to packages.
+PACKAGE_STATUS = {}
+
+
 CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
 
 # Mapping to match the folder names in Jupyter
@@ -2064,6 +2068,11 @@ class ImportManager:
     for mod in imports:
       self.getReq(mod, import_resolved, import_hierarchy or JS_IMPORTS)
     for a in set(import_resolved):
+      if a in PACKAGE_STATUS:
+        if not PACKAGE_STATUS[a].get("allowed", True):
+          raise Exception("Package %s not allowed" % a)
+        if self._report is not None and self._report.verbose:
+          logging.warning("%s: %s" % (a, PACKAGE_STATUS[a].get("info", "")))
       occurences = [j for j, x in enumerate(import_resolved) if x == a]
       if len(occurences) > 1:
         for j in occurences[::-1][1:]:
