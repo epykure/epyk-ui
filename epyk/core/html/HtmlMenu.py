@@ -540,6 +540,7 @@ class Shortcut(Html.Html):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     """
     self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
+    self.logo.options.managed = False
     return self
 
   def __str__(self):
