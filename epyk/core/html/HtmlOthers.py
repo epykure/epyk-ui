@@ -579,7 +579,7 @@ class HtmlQRCode(Html.Html):
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlQRCode, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
 
-  _js__builder__ = '''
+  _js__builder__ = ''' htmlObj.innerHTML = "";
     new QRCode(htmlObj, data)
     '''
 

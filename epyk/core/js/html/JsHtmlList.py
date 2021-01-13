@@ -191,6 +191,7 @@ class JsItemsDef(object):
     
     var span = document.createElement("span");  
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', false);
+    span.style.marginLeft = "5px";
     if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
     span.style.verticalAlign = "middle";
     
