@@ -140,3 +140,48 @@ class Media(object):
     html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
     html_youtube.style.css.text_align = align
     return html_youtube
+
+  def camera(self, align="center", width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+    """
+    Description:
+    -----------
+    Add a video from the server to the page.
+    The format for the video must be MP4.
+
+    Usage:
+    -----
+
+      page.ui.media.camera()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMedia.Camera`
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_video.asp
+      https://www.kirupa.com/html5/accessing_your_webcam_in_html5.htm
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/
+
+    Attributes:
+    ----------
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dft_options = {"autoplay": True}
+    if options is not None:
+      dft_options.update(options)
+    html_media = html.HtmlMedia.Camera(self.context.rptObj, width, height, htmlCode, profile, dft_options)
+    if align == "center":
+      html_media.style.css.margin = "auto"
+      html_media.style.css.display = "block"
+    return html_media

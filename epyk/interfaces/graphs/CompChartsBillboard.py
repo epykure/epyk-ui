@@ -7,7 +7,7 @@ from epyk.core.html import graph
 class Billboard(object):
   def __init__(self, context):
     self.parent = context
-    self.chartFamily = "C3"
+    self.chartFamily = "BB"
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, htmlCode=None):

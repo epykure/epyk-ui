@@ -10,3 +10,4 @@ from . import GraphPlotly
 from . import GraphSparklines
 from . import GraphCanvas
 from . import GraphGoogle
+from . import GraphApexCharts

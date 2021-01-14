@@ -10,6 +10,7 @@ from epyk.core.html.options import OptButton
 
 # The list of JSS modules
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtml
 
 
 class Source(Html.Html):
@@ -146,3 +147,49 @@ class Youtube(Html.Html):
     :param youtube_link: String. The youtube link of the online video.
     """
     return 'http://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
+
+
+class Camera(Html.Html):
+  name = 'Camera'
+
+  def __init__(self, report, width, height, htmlCode, profile, options):
+    super(Camera, self).__init__(report, "", htmlCode=htmlCode,
+                        css_attrs={"width": width, 'height': height}, profile=profile)
+    self.__options = OptButton.OptMedia(self, options or {})
+    self.options.controls = True
+    self.options.autoplay = True
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a Media (video and audio).
+
+    Usage:
+    -----
+
+    :rtype: OptButton.OptMedia
+    """
+    return self.__options
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    The Javascript Dom object.
+
+    Usage:
+    -----
+
+    :rtype: JsHtml.Media
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsMedia(self, report=self._report)
+    return self._dom
+
+  def __str__(self):
+    if 'autoplay' in self._jsStyles:
+      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    return '<video %s></video><img src="" id="photo" alt="photo">' % self.get_attrs(pyClassNames=self.style.get_classes())

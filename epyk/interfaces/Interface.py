@@ -766,6 +766,12 @@ class Components:
       h_qrcode.style.css.overflow = 'auto'
     return h_qrcode
 
+  def captcha(self, text="Submit", width=(None, 'px'), height=(None, 'px'), options=None, profile=None):
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    captcha = html.HtmlOthers.HtmlCaptcha(self.rptObj, text, width, height, options or {}, profile)
+    return captcha
+
   def postit(self, components=None, anchor=None, options=None, profile=None):
     """
     Description:

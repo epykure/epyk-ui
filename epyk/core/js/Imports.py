@@ -585,6 +585,17 @@ JS_IMPORTS = {
     ]
   },
 
+  # Jquery vector Maps
+  'jqvmap': {
+    'req': [{'alias': 'jquery'}],
+    'website': 'https://www.10bestdesign.com/jqvmap/',
+    'repository': "https://github.com/10bestdesign/jqvmap/",
+    'version': '1.5.1',
+    'modules': [
+      {'script': 'jquery.vmap.min.js', 'node_path': 'dist/', 'path': 'jqvmap/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+  },
+
   # QUnit package width CDN links
   'qunit': {
     'website': 'https://qunitjs.com',
@@ -879,6 +890,15 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'crossfilter.min.js', 'path': 'crossfilter/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
+  },
+
+  'apexcharts': {
+    'website': 'https://apexcharts.com/',
+    'repository': 'https://github.com/apexcharts/apexcharts.js',
+    'version': '3.23.1',
+    'modules': [
+      {'script': 'apexcharts.min.js', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
   },
 
   # DC modules width CDN links
@@ -1184,6 +1204,11 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # The Apexcharts CDN links
+  'apexcharts': {
+    'modules': [
+      {'script': 'apexcharts.min.css', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   # material design icons
   'material-design-icons': {
     'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons', 'npm_path': 'iconfont'},
@@ -1211,6 +1236,11 @@ CSS_IMPORTS = {
   'qunit': {
     'modules': [
       {'script': 'qunit.css', 'node_path': 'qunit', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # jqvmap
+  'jqvmap': {
+    'modules': [
+      {'script': 'jqvmap.min.css', 'path': 'jqvmap/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
@@ -1511,6 +1541,10 @@ GOOGLE_EXTENSIONS = {
     'website': 'https://developers.google.com/chart',
     'launcher': "google.charts.load('current', {'packages':['corechart']})",
   },
+  'captcha': {'modules': [
+      {'script': 'api.js?render=%(site_key)s', 'version': '', 'path': '', 'cdnjs': 'https://www.google.com/recaptcha'},
+    ],
+  }
 }
 
 
@@ -2513,12 +2547,16 @@ class ImportManager:
     mod_entry = {'css': {}, 'js': {}}
     for mod in config['modules']:
       if mod['script'].endswith(".css"):
+        if "cdnjs" not in mod:
+          mod["cdnjs"] = CDNJS_REPO
         mod_entry['css'].setdefault('modules', []).append(mod)
         if 'req' in config:
           for req in config['req']:
             if req['alias'] in CSS_IMPORTS:
               mod_entry['css'].setdefault('req', []).append(req)
-      elif mod['script'].endswith(".js") or mod['script'].startswith("js"):
+      elif mod['script'].endswith(".js") or mod['script'].startswith("js") or mod['script'].startswith("api"):
+        if "cdnjs" not in mod:
+          mod["cdnjs"] = CDNJS_REPO
         mod_entry['js'].setdefault('modules', []).append(mod)
         if 'req' in config:
           for req in config['req']:
@@ -2528,12 +2566,13 @@ class ImportManager:
       CSS_IMPORTS.setdefault(alias, {}).update(mod_entry['css'])
       self.cssImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
       for pkg in mod_entry['js']["modules"]:
-        self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg["version"]
+        self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
     if len(mod_entry['js']) > 0:
       JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
+      JS_IMPORTS[alias]["version"] = config.get("version", "")
       self.jsImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
       for pkg in mod_entry['js']["modules"]:
-        self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg["version"]
+        self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config.get("version", ''))
     return self
 
   # def getPackages(self, static_path=None, reload=False, exclude=None):
@@ -2663,7 +2702,7 @@ class ImportManager:
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     return packages
 
-  def google_products(self, products, api_key=None):
+  def google_products(self, products, api_key=None, site_key="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
     """
     Description:
     ------------
@@ -2680,14 +2719,19 @@ class ImportManager:
       page.imports.google_products(['maps'])
       page.imports.google_products(['tables'])
 
+      https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
+
     Attributes:
     ----------
     :param products: List. The various Google products to enable in the report.
     :param api_key: String. Optional. The Google developer API key.
+    :param site_key: String. Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3
     """
     global JS_IMPORTS
 
     for p in products:
+      for m in GOOGLE_EXTENSIONS[p].get("modules", []):
+        m["script"] = m["script"] % {"api_key": api_key, 'site_key': site_key}
       self.addPackage("google-%s" % p, GOOGLE_EXTENSIONS[p])
       JS_IMPORTS["google-%s" % p] = GOOGLE_EXTENSIONS[p]
       if 'launcher' in GOOGLE_EXTENSIONS[p]:

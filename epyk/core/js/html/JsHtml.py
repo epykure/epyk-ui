@@ -9,6 +9,7 @@ from epyk.core.js.statements import JsIf
 from epyk.core.js.fncs import JsFncs
 
 from epyk.core.js.objects import JsNodeDom
+from epyk.core.js import JsMediaRecorder
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
@@ -1537,3 +1538,132 @@ class JsHtmlLink(JsHtml):
     """
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunctions("%s.target = %s" % (self.varName, name))
+
+
+class JsMedia(JsHtml):
+
+  # TODO: Implement properly this with JsMediaRecorder
+
+  def start(self):
+    """
+    Description:
+    -----------
+    Start the cmera.
+    This can only work with https and localhost urls.
+
+    Usage:
+    -----
+
+    Related Pages:
+    --------------
+
+      https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
+    """
+    return '''
+      var mediaConfig =  { video: true };
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+              navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+      %(varId)s.srcObject = stream; %(varId)s.play();});
+      }
+    else if(navigator.getUserMedia) { 
+      navigator.getUserMedia(mediaConfig, function(stream) {
+        %(varId)s.src = stream; %(varId)s.play();
+      }, errBack);
+    } else if(navigator.webkitGetUserMedia) {
+      navigator.webkitGetUserMedia(mediaConfig, function(stream){
+        %(varId)s.src = window.webkitURL.createObjectURL(stream); %(varId)s.play();
+      }, errBack);
+    } else if(navigator.mozGetUserMedia) {
+      navigator.mozGetUserMedia(mediaConfig, function(stream){
+        %(varId)s.src = window.URL.createObjectURL(stream); %(varId)s.play();
+      }, errBack);
+    } ''' % {"varId": self.varId}
+
+  def stop(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Related Pages:
+    --------------
+
+      https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
+    """
+    return '''
+      var stream = %s.srcObject; var tracks = stream.getTracks();
+      for (var i = 0; i < tracks.length; i++) {
+        var track = tracks[i]; track.stop()}
+      video.srcObject = null;
+      ''' % self.varId
+
+  def play(self):
+    return '''%s.play()''' % self.varId
+
+  def takepicture(self, width=50, height=50):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Related Pages:
+    --------------
+
+      https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
+    """
+    return '''
+      var canvas = document.createElement("canvas");
+      canvas.width = %(width)s; canvas.height = %(height)s;
+      canvas.getContext('2d').drawImage(%(varId)s, 0, 0, canvas.width, canvas.height);
+      var data = canvas.toDataURL('image/png');
+      photo.setAttribute('src', data);
+      ''' % {"varId": self.varId, "width": width, "height": height}
+
+  def record(self, start=True):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Related Pages:
+    --------------
+
+      https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
+    """
+    if not start:
+      return '''
+        window.recorder.stop()
+        '''
+
+    return '''
+      var stream = %(varId)s.srcObject;
+      window.recorder = new MediaRecorder(stream, {mimeType: 'video/webm'});
+      
+      const chunks = [];
+      window.recorder.ondataavailable = e => chunks.push(e.data);
+      window.recorder.onstop = e => {
+          const blob = new Blob(chunks, { type: chunks[0].type });
+          stream.getVideoTracks()[0].stop();
+      
+          filename="yourCustomFileName"
+          if(window.navigator.msSaveOrOpenBlob) {
+              window.navigator.msSaveBlob(blob, filename);
+          }
+          else{
+              var elem = window.document.createElement('a');
+              elem.href = window.URL.createObjectURL(blob);
+              elem.download = filename;        
+              document.body.appendChild(elem);
+              elem.click();        
+              document.body.removeChild(elem);
+          }
+          };
+      window.recorder.start();
+      ''' % {"varId": self.varId}
+

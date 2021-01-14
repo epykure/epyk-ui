@@ -5,6 +5,7 @@
 from epyk.core import html
 from epyk.core.html import graph
 
+from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
 from epyk.interfaces.graphs import CompChartsDc
 from epyk.interfaces.graphs import CompChartsC3
@@ -127,6 +128,24 @@ class Graphs(object):
     :return: A Python ChartJs object
     """
     return CompChartsChartJs.ChartJs(self)
+
+  @property
+  def apex(self):
+    """
+    Description:
+    ------------
+    Interface for the ApexChart library.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://apexcharts.com/
+
+    :return: A Python ChartJs object
+    """
+    return CompChartsApex.ApexChart(self)
 
   @property
   def c3(self):
@@ -419,6 +438,24 @@ class Chart2d(object):
     :return: A Python ChartJs object
     """
     return CompChartsChartJs.ChartJs(self)
+
+  @property
+  def apex(self):
+    """
+    Description:
+    ------------
+    Interface for the ApexChart library.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://apexcharts.com/
+
+    :return: A Python ChartJs object
+    """
+    return CompChartsApex.ApexChart(self)
 
   @property
   def c3(self):

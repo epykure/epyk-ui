@@ -634,3 +634,18 @@ class HtmlQRCode(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+
+
+class HtmlCaptcha(Html.Html):
+  name = 'Google Catch'
+  requirements = ('google-captcha', )
+
+  def __init__(self, report, data, width, height, options, profile):
+    super(HtmlCaptcha, self).__init__(report, data, profile=profile, options=options, css_attrs={"height": height, "width": width})
+    self.attr["data-callback"] = "onSubmit"
+    self.attr["data-action"] = "submit"
+    self.style.add_classes.external("g-recaptcha")
+    print()
+
+  def __str__(self):
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
