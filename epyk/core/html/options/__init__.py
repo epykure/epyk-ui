@@ -1,21 +1,25 @@
 """
 
 TODO: Split the component_properties class attribute into two decorators
+TODO: Change the model to get Option as an interface of two sub classes .js and .html to remove the _config...
+
 @js_option =>  self._report._jsStyles
 @html_option =>  self._attrs
 """
 
 import sys
-
 from epyk.core.data.DataClass import DataClass
 
 
 class Options(DataClass):
   component_properties = ()
 
-  def __init__(self, report, attrs=None, options=None):
+  def __init__(self, report, attrs=None, options=None, js_tree=None):
     super(Options, self).__init__(report, attrs, options)
-    self.js_type = {}
+    self.js_type, self.__config_sub_levels, self.__config_sub__enum_levels = {}, set(), set()
+    # By default it is the component dictionary
+    self.js_tree = self._report._jsStyles if js_tree is None else js_tree
+    self.js = None
     # Set the default options for a component
     for c in self.component_properties:
       setattr(self, c, getattr(self, c))
@@ -24,7 +28,7 @@ class Options(DataClass):
         if hasattr(self, k):
           setattr(self, k, v)
         else:
-          self._report._jsStyles[k] = v
+          self.js_tree[k] = v
 
   def _config_get(self, dflt=None, name=None):
     """
@@ -39,7 +43,7 @@ class Options(DataClass):
     :param dflt: String. Optional. The default value for this category.
     :param name: String. Optional. The attribute name (default the function property).
     """
-    return self._report._jsStyles.get(name or sys._getframe().f_back.f_code.co_name, dflt)
+    return self.js_tree.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
   def _config(self, value, name=None):
     """
@@ -55,7 +59,7 @@ class Options(DataClass):
     :param value: Object. The value for the name
     :param name: String. Optional. The attribute name. Default is the property name.
     """
-    self._report._jsStyles[name or sys._getframe().f_back.f_code.co_name] = value
+    self.js_tree[name or sys._getframe().f_back.f_code.co_name] = value
 
   def _config_group_get(self, group, dflt=None, name=None):
     """
@@ -69,7 +73,7 @@ class Options(DataClass):
     :param dflt: String. Optional.
     :param name: String. Optional. The attribute name
     """
-    return self._report._jsStyles.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
+    return self.js_tree.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
   def _config_group(self, group, value, name=None):
     """
@@ -83,9 +87,69 @@ class Options(DataClass):
     :param value: Object. The value for the name.
     :param name: String. Optional. The attribute name.
     """
-    if group not in self._report._jsStyles:
-      self._report._jsStyles[group] = {}
-    self._report._jsStyles[group][name or sys._getframe().f_back.f_code.co_name] = value
+    if group not in self.js_tree:
+      self.js_tree[group] = {}
+      self.js_tree[group][name or sys._getframe().f_back.f_code.co_name] = value
+
+  def _config_sub_data(self, name, clsObj):
+    """
+    Description:
+    ------------
+    Create a nested structure for the JavaScript configuration layer.
+    This is required for Charts and Tables configurations.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the internal data dictionary.
+    :param clsObj: Options. The object which will be added to the nested data structure.
+    """
+    if name in self.js_tree:
+      return self.js_tree[name]
+
+    self.__config_sub_levels.add(name)
+    self.js_tree[name] = clsObj(self._report, js_tree={})
+    return self.js_tree[name]
+
+  def _config_sub_data_enum(self, name, clsObj):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the internal data dictionary.
+    :param clsObj: Class. Object. The object which will be added to the nested data structure.
+    """
+    self.__config_sub__enum_levels.add(name)
+    enum_data = clsObj(self._report, js_tree={})
+    self.js_tree.setdefault(name, []).append(enum_data)
+    return enum_data
+
+  def custom_config(self, name, value):
+    """
+    Description:
+    ------------
+    Add a custom JavaScript configuration.
+
+    Usage:
+    -----
+
+      chart = page.ui.charts.apex.scatter()
+      chart.options.chart.zoom.custom_config("test", False)
+
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the attributes.
+    :param value: String or JString. The value of the defined attributes.
+    """
+    self.js_tree[name] = value
+    return self
 
   def isJsContent(self, property_name):
     """
@@ -239,7 +303,55 @@ class Options(DataClass):
     ----------
     :param attrs: Dictionary. Optional. The Js options of the HTML component.
     """
-    js_options = dict(self._report._jsStyles)
+    js_options = self.config_jd()
     if attrs is not None:
       js_options.update(attrs)
     return js_options
+
+  def config_jd(self):
+    """
+    Description:
+    ------------
+    Return the JavaScript options used by the builders functions.
+    Builder functions can be defined in the framework or external from the various packages.
+
+    The returned dictionary is a copy so it can be changed or used in other processes.
+    To change the internal component property, the options property should be used.
+
+    Usage:
+    -----
+    """
+    if self.__config_sub_levels:
+      js_attrs = {}
+      for k, v in self.js_tree.items():
+        if k in self.__config_sub_levels:
+          js_attrs[k] = v.config_jd()
+        elif k in self.__config_sub__enum_levels:
+          js_attrs[k] = []
+          for s in v:
+            js_attrs[k].append(s.config_jd())
+        else:
+          js_attrs[k] = v
+      return js_attrs
+
+    return dict(self.js_tree)
+
+  def config_html(self):
+    """
+    Description:
+    ------------
+    Return the HTML options used by the python and passed to the HTML.
+    THose options will not be available in the JavaScript layer and they are only defined either
+    to build the HTML from Python or to set some HTML properties.
+
+    The returned dictionary is a copy so it can be changed or used in other processes.
+    To change the internal component property, the options property should be used.
+
+    Usage:
+    -----
+    """
+    html_attrs = {}
+    for k, v in self._attrs.items():
+      if k not in self.js_tree:
+        html_attrs[k] = v
+    return html_attrs

@@ -103,7 +103,7 @@ def untilVersion(data, newFeature):
 # --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
-def jsConvertData(jsData, jsFnc):
+def jsConvertData(jsData, jsFnc, depth=False):
   """
   Description:
   ------------
@@ -111,18 +111,25 @@ def jsConvertData(jsData, jsFnc):
   This will convert to String any data coming from the Javascript Python interface.
 
   Any pure Python object will be converted using the json function to be then written as a string
-  to the resulting page
+  to the resulting page.
 
   Attributes:
   ----------
-  :param jsData: The Python Javascript data
-  :param jsFnc: Optional. The conversion function
+  :param jsData: The Python Javascript data.
+  :param jsFnc: Optional. The conversion function (not used).
+  :param depth: Boolean. Optional. Set to true of it is a nested object.
   """
   if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
     if hasattr(jsData, 'toStr'):
       return jsData.toStr()
     else:
       try:
+        if depth and isinstance(jsData, dict):
+          result = []
+          for k, v in jsData.items():
+            result.append("%s: %s" % (k, jsConvertData(v, jsFnc, depth=depth)))
+          return "{%s}" % ", ".join(result)
+
         return JsObject.JsObject(json.dumps(jsData))
 
       except TypeError as err:

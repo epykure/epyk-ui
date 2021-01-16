@@ -28,7 +28,7 @@ class JqueryVertorMap(object):
     self.parent.context.rptObj.imports.addPackage('jqvm-%s' % name, {
       'version': version, 'req': [{'alias': 'jqvmap'}],
       'modules': [
-        {'script': 'jquery.vmap.%s.js' % name, 'node_path': 'dist/',
+        {'script': 'jquery.vmap.%s.js' % name, 'node_path': 'dist/maps/continents/' if continent else 'dist/maps/',
          'path': 'jqvmap/%(version)s/maps/continents/' if continent else 'jqvmap/%(version)s/maps/'}]})
     self.parent.context.rptObj.jsImports.add("jqvm-%s" % name)
 

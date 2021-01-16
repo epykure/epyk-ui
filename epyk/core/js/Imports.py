@@ -897,7 +897,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/apexcharts/apexcharts.js',
     'version': '3.23.1',
     'modules': [
-      {'script': 'apexcharts.min.js', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
   },
 
@@ -1207,7 +1207,7 @@ CSS_IMPORTS = {
   # The Apexcharts CDN links
   'apexcharts': {
     'modules': [
-      {'script': 'apexcharts.min.css', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'apexcharts.css', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # material design icons
   'material-design-icons': {
@@ -1240,7 +1240,7 @@ CSS_IMPORTS = {
   # jqvmap
   'jqvmap': {
     'modules': [
-      {'script': 'jqvmap.min.css', 'path': 'jqvmap/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jqvmap.min.css', 'node_path': 'dist', 'path': 'jqvmap/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
