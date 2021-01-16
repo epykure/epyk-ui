@@ -33,9 +33,8 @@ class ApexChart(object):
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
-    #data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "line"
     return chart
 
@@ -62,8 +61,8 @@ class ApexChart(object):
     :param htmlCode:
     """
     options = options or {}
-    #data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "scatter"
     return chart
 
@@ -91,6 +90,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Bar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "bar"
     return chart
 
@@ -118,6 +118,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Bar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "bar"
     chart.options.plotOptions.bar.horizontal = True
     return chart
@@ -146,6 +147,8 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "area"
     return chart
 
@@ -173,6 +176,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "radar"
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
@@ -202,6 +206,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "polarArea"
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
@@ -231,6 +236,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "pie"
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
@@ -260,6 +266,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "donut"
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
@@ -289,6 +296,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "radialBar"
     return chart
 
@@ -316,6 +324,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "bubble"
     return chart
 
@@ -343,6 +352,7 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "heatmap"
     return chart
 
@@ -370,5 +380,6 @@ class ApexChart(object):
     """
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "treemap"
     return chart

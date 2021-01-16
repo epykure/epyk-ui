@@ -912,6 +912,14 @@ class OptionResponsive(Options):
 class OptionTheme(Options):
 
   @property
+  def mode(self):
+    return self._config_get()
+
+  @mode.setter
+  def mode(self, value):
+    self._config(value)
+
+  @property
   def palette(self):
     return self._config_get()
 
@@ -1010,6 +1018,26 @@ class OptionsLine(Options):
     return self._config_sub_data("chart", OptionChart)
 
   @property
+  def colors(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/colors/
+
+    Attributes:
+    ----------
+    :prop values: List. The color codes
+    """
+    return self._config_get()
+
+  @colors.setter
+  def colors(self, valuea):
+    self._config(valuea)
+
+  @property
   def grid(self):
     return self._config_sub_data("grid", OptionGrid)
 
@@ -1051,6 +1079,10 @@ class OptionsLine(Options):
 
   @property
   def theme(self):
+    """
+
+    https://apexcharts.com/docs/options/theme/
+    """
     return self._config_sub_data("theme", OptionTheme)
 
   def add_series(self):
