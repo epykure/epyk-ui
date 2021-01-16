@@ -92,3 +92,17 @@ class Area(Chart):
     :rtype: OptChartApex.OptionFill
     """
     return self._options
+
+
+class Pie(Chart):
+  _options_type_cls = OptChartApex.OptionsPie
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptChartApex.OptionsPie
+    """
+    return self._options

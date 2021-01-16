@@ -161,6 +161,14 @@ class OptionLabels(Options):
   def offsetX(self, num):
     self._config(num)
 
+  @property
+  def useSeriesColors(self):
+    return self._config_get()
+
+  @useSeriesColors.setter
+  def useSeriesColors(self, flag):
+    self._config(flag)
+
 
 class OptionAxisTicks(Options):
 
@@ -363,6 +371,17 @@ class OptionZoom(Options):
     self._config(flag)
 
 
+class OptionSparkline(Options):
+
+  @property
+  def enabled(self):
+    return self._config_get()
+
+  @enabled.setter
+  def enabled(self, value):
+    self._config(value)
+
+
 class OptionDynamicAnimations(Options):
 
   @property
@@ -461,6 +480,10 @@ class OptionChart(Options):
     self._config(num)
 
   @property
+  def sparkline(self):
+    return self._config_sub_data("sparkline", OptionSparkline)
+
+  @property
   def stackType(self):
     return self._config_get()
 
@@ -478,6 +501,14 @@ class OptionName(Options):
   @show.setter
   def show(self, flag):
     self._config(flag)
+
+  @property
+  def fontSize(self):
+    return self._config_get()
+
+  @fontSize.setter
+  def fontSize(self, num):
+    self._config("%spx" % num)
 
 
 class OptionValue(Options):
@@ -497,6 +528,28 @@ class OptionValue(Options):
   @fontSize.setter
   def fontSize(self, num):
     self._config("%spx" % num)
+
+
+class OptionTotal(Options):
+
+  @property
+  def show(self):
+    return self._config_get()
+
+  @show.setter
+  def show(self, flag):
+    self._config(flag)
+
+  @property
+  def label(self):
+    return self._config_get()
+
+  @label.setter
+  def label(self, value):
+    self._config(value)
+
+  def formatter(self, jsFncs):
+    pass
 
 
 class OptionDataLabels(Options):
@@ -528,6 +581,10 @@ class OptionDataLabels(Options):
   @property
   def style(self):
     return self._config_sub_data("style", OptionStyle)
+
+  @property
+  def total(self):
+    return self._config_sub_data("total", OptionTotal)
 
   def formatter(self, jsFncs):
     pass
@@ -621,6 +678,14 @@ class OptionTitle(Options):
 class OptionLegend(Options):
 
   @property
+  def show(self):
+    return self._config_get()
+
+  @show.setter
+  def show(self, flag):
+    self._config(flag)
+
+  @property
   def position(self):
     return self._config_get()
 
@@ -662,6 +727,10 @@ class OptionLegend(Options):
 
   def tooltipHoverFormatter(self, jsFncs):
     pass
+
+  @property
+  def labels(self):
+    return self._config_sub_data("labels", OptionLabels)
 
 
 class OptionY(Options):
@@ -825,6 +894,21 @@ class OptionSeries(Options):
     self._config(values)
 
 
+class OptionResponsive(Options):
+
+  @property
+  def breakpoint(self):
+    return self._config_get()
+
+  @breakpoint.setter
+  def breakpoint(self, value):
+    self._config(value)
+
+  @property
+  def opts(self):
+    return self._config_sub_data("options", OptionsLine)
+
+
 class OptionTheme(Options):
 
   @property
@@ -833,6 +917,17 @@ class OptionTheme(Options):
 
   @palette.setter
   def palette(self, value):
+    self._config(value)
+
+
+class OptionHollow(Options):
+
+  @property
+  def size(self):
+    return self._config_get()
+
+  @size.setter
+  def size(self, value):
     self._config(value)
 
 
@@ -859,11 +954,53 @@ class OptionPlotOptionsBar(Options):
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
+class plotOptionsRadialBar(Options):
+
+  @property
+  def hollow(self):
+    return self._config_sub_data("hollow", OptionHollow)
+
+  @property
+  def offsetY(self):
+    return self._config_get()
+
+  @offsetY.setter
+  def offsetY(self, num):
+    self._config(num)
+
+  @property
+  def startAngle(self):
+    return self._config_get()
+
+  @startAngle.setter
+  def startAngle(self, num):
+    self._config(num)
+
+  @property
+  def endAngle(self):
+    return self._config_get()
+
+  @endAngle.setter
+  def endAngle(self, num):
+    self._config(num)
+
+
 class OptionPlotOptions(Options):
 
   @property
   def bar(self):
     return self._config_sub_data("bar", OptionPlotOptionsBar)
+
+
+class plotOptionsRadial(Options):
+
+  @property
+  def radialBar(self):
+    return self._config_sub_data("radialBar", plotOptionsRadialBar)
+
+  @property
+  def dataLabels(self):
+    return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
 class OptionsLine(Options):
@@ -922,6 +1059,12 @@ class OptionsLine(Options):
   def get_series(self, i=0):
     return self.js_tree["series"][i]
 
+  def add_responsive(self):
+    return self._config_sub_data_enum("responsive", OptionResponsive)
+
+  def get_responsive(self, i=0):
+    return self.js_tree["responsive"][i]
+
 
 class OptionsArea(OptionsLine):
 
@@ -932,6 +1075,30 @@ class OptionsArea(OptionsLine):
 
 class OptionsBar(OptionsLine):
 
+
   @property
   def plotOptions(self):
     return self._config_sub_data("plotOptions", OptionPlotOptions)
+
+
+class OptionsPie(OptionsLine):
+
+  @property
+  def series(self):
+    return self._config_get()
+
+  @series.setter
+  def series(self, values):
+    self._config(values)
+
+  @property
+  def labels(self):
+    return self._config_get()
+
+  @labels.setter
+  def labels(self, values):
+    self._config(values)
+
+  @property
+  def plotOptions(self):
+    return self._config_sub_data("plotOptions", plotOptionsRadial)
