@@ -21,6 +21,14 @@ class Chart(Html.Html):
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
 
+  def zoomable(self, flag=True):
+    if flag:
+      self.options.chart.zoom.type = "x"
+      self.options.chart.zoom.enabled = True
+      self.options.chart.zoom.autoScaleYaxis = True
+    else:
+      self.options.chart.zoom.enabled = False
+
   @property
   def js(self):
     """

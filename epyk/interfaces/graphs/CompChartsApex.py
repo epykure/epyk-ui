@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import graph
+from epyk.interfaces import Arguments
 
 
 class ApexChart(object):
@@ -32,9 +33,17 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
+    chart.options.xaxis.categories = data['labels']
+    for i, d in enumerate(data['datasets']):
+      series = chart.options.add_series()
+      series.name = data['series'][i]
+      series.data = d
     chart.options.chart.type = "line"
     return chart
 
@@ -60,9 +69,17 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
+    chart.options.xaxis.categories = data['labels']
+    for i, d in enumerate(data['datasets']):
+      series = chart.options.add_series()
+      series.name = data['series'][i]
+      series.data = d
     chart.options.chart.type = "scatter"
     return chart
 
@@ -88,9 +105,17 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Bar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
+    chart.options.xaxis.categories = data['labels']
+    for i, d in enumerate(data['datasets']):
+      series = chart.options.add_series()
+      series.name = data['series'][i]
+      series.data = d
     chart.options.chart.type = "bar"
     return chart
 
@@ -116,9 +141,17 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Bar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
+    chart.options.xaxis.categories = data['labels']
+    for i, d in enumerate(data['datasets']):
+      series = chart.options.add_series()
+      series.name = data['series'][i]
+      series.data = d
     chart.options.chart.type = "bar"
     chart.options.plotOptions.bar.horizontal = True
     return chart
@@ -145,10 +178,17 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
-    chart.options.colors = self.parent.context.rptObj.theme.charts
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], y_columns, x_axis)
+    chart.options.xaxis.categories = data['labels']
+    for i, d in enumerate(data['datasets']):
+      series = chart.options.add_series()
+      series.name = data['series'][i]
+      series.data = d
     chart.options.chart.type = "area"
     return chart
 
@@ -174,6 +214,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Chart(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -204,6 +246,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -234,6 +278,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -264,6 +310,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -294,6 +342,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -322,6 +372,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -350,6 +402,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
@@ -378,6 +432,8 @@ class ApexChart(object):
     :param options:
     :param htmlCode:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     chart = graph.GraphApexCharts.Area(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts

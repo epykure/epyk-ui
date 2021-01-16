@@ -300,7 +300,7 @@ class OptionsJqVM(Options):
     ----------
     :prop colors: List. The colors codes.
     """
-    return self._config_get(self._report._report.theme.charts)
+    return self._config_get([self._report._report.theme.colors[0], self._report._report.theme.colors[-1]])
 
   @scaleColors.setter
   def scaleColors(self, colors):

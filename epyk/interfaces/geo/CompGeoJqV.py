@@ -1,5 +1,8 @@
 
+import logging
+
 from epyk.core.html import geo
+from epyk.core.html.geo import mappings
 
 
 class JqueryVertorMap(object):
@@ -72,39 +75,236 @@ class JqueryVertorMap(object):
     chart.options.map = "africa_en"
     return chart
 
-  def france(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+  def france(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+
+    Usage:
+    -----
+
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The records
+    :param y_column: String. Optional. The column in the record for the keys.
+    :param x_axis: String. Optional. The column in the record for the values.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    options = options or {}
     self.add_map("france")
+    data = {}
+    if record is not None:
+      for rec in record:
+        if rec[y_column]:
+          try:
+            if rec[x_axis] not in mappings.france.r:
+              if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+                logging.warning("Missing country mapping for %s" % rec[x_axis])
+              continue
+
+            state = mappings.france.r[rec[x_axis]]
+            data[state] = data.get(state, 0) + float(rec[y_column])
+          except Exception as err:
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              logging.warning(rec)
+              logging.warning(err)
+
     chart = geo.GeoJqv.JqueryVectorMap(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     chart.options.map = "france_fr"
+    chart.options.values = data
     return chart
 
-  def europe(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+  def europe(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The records
+    :param y_column: String. Optional. The column in the record for the keys.
+    :param x_axis: String. Optional. The column in the record for the values.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     options = options or {}
     self.add_map("europe", continent=options.get("continent", True))
+    data = {}
+    if record is not None:
+      for rec in record:
+        if rec[y_column]:
+          try:
+            if rec[x_axis] not in mappings.europe.r:
+              if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+                logging.warning("Missing country mapping for %s" % rec[x_axis])
+              continue
+
+            state = mappings.europe.r[rec[x_axis]]
+            data[state] = data.get(state, 0) + float(rec[y_column])
+          except Exception as err:
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              logging.warning(rec)
+              logging.warning(err)
+
     chart = geo.GeoJqv.JqueryVectorMap(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     chart.options.map = "europe_en"
+    chart.options.values = data
     return chart
 
-  def world(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+  def world(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The records
+    :param y_column: String. Optional. The column in the record for the keys.
+    :param x_axis: String. Optional. The column in the record for the values.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     options = options or {}
     self.add_map("world", continent=options.get("continent", False))
+    data = {}
+    if record is not None:
+      for rec in record:
+        if rec[y_column]:
+          try:
+            if rec[x_axis] not in mappings.world.r:
+              if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+                logging.warning("Missing country mapping for %s" % rec[x_axis])
+              continue
+
+            state = mappings.world.r[rec[x_axis]]
+            data[state] = data.get(state, 0) + float(rec[y_column])
+          except Exception as err:
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              logging.warning(rec)
+              logging.warning(err)
+
     chart = geo.GeoJqv.JqueryVectorMap(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     chart.options.map = "world_en"
+    chart.options.values = data
     return chart
 
-  def usa(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+  def usa(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The records
+    :param y_column: String. Optional. The column in the record for the keys.
+    :param x_axis: String. Optional. The column in the record for the values.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    options = options or {}
     self.add_map("usa")
+    data = {}
+    if record is not None:
+      for rec in record:
+        if rec[y_column]:
+          try:
+            state = mappings.usa.r.get(rec[x_axis], rec[x_axis])
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              if rec[x_axis] not in mappings.usa.r:
+                logging.warning("Missing country mapping for %s" % rec[x_axis])
+            data[state] = data.get(state, 0) + float(rec[y_column])
+          except Exception as err:
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              logging.warning(rec)
+              logging.warning(err)
+
     chart = geo.GeoJqv.JqueryVectorMap(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     chart.options.map = "usa_en"
+    chart.options.values = data
     return chart
 
-  def map(self, name, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
+  def map(self, name, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param name: String. The map alias.
+    :param record: List. Optional. The records
+    :param y_column: String. Optional. The column in the record for the keys.
+    :param x_axis: String. Optional. The column in the record for the values.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     options = options or {}
+    data = {}
+    if record is not None:
+      for rec in record:
+        if rec[y_column]:
+          try:
+            state = rec[x_axis]
+            data[state] = data.get(state, 0) + float(rec[y_column])
+          except Exception as err:
+            if options.get("verbose", False) or self.parent.context.rptObj.verbose:
+              logging.warning(rec)
+              logging.warning(err)
+
     self.add_map(name, continent=options.get("continent", False))
     chart = geo.GeoJqv.JqueryVectorMap(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
+    chart.options.values = data
     return chart
