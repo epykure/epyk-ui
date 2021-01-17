@@ -264,7 +264,7 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
   builder_name, _js__builder__ = None, None
-
+  
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self.components = collections.OrderedDict() # Child component for this component
@@ -1340,7 +1340,7 @@ class Html(object):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.

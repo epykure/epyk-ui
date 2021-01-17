@@ -1,5 +1,6 @@
 
 from epyk.core.html.options import Options
+from epyk.core.js import JsUtils
 
 
 class OptionsJqVM(Options):
@@ -29,6 +30,29 @@ class OptionsJqVM(Options):
   @map.setter
   def map(self, value):
     self._config(value)
+
+  @property
+  def multiSelectRegion (self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/documentation/
+
+    Attributes:
+    ----------
+    :prop value: String. The map alias code.
+    """
+    return self._config_get(False)
+
+  @multiSelectRegion .setter
+  def multiSelectRegion(self, flag):
+    self._config(flag)
 
   @property
   def borderColor(self):
@@ -321,3 +345,20 @@ class OptionsJqVM(Options):
   @normalizeFunction.setter
   def normalizeFunction(self, value):
     self._config(value)
+
+  def onRegionClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/documentation/
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    self.js_type["onRegionClick"] = True
+    self._config("function(element, code, region){var data = region; %s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), "onRegionClick")
