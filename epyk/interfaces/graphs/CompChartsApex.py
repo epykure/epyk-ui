@@ -256,7 +256,7 @@ class ApexChart(object):
     responsive.breakpoint = 480
     return chart
 
-  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+  def pie(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, htmlCode=None):
     """
     Description:
@@ -269,26 +269,29 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. The Python recordset.
+    :param y_column: String. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. The width of the component in the page, default (100, '%').
+    :param height: Tuple. The height of the component in the page, default (330, "px").
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], [y_column], x_axis)
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "pie"
+    chart.options.series = data["datasets"][0]
+    chart.options.labels = data["labels"]
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
     return chart
 
-  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+  def donut(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, htmlCode=None):
     """
     Description:
@@ -302,7 +305,7 @@ class ApexChart(object):
     Attributes:
     ----------
     :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param y_column: String. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
     :param width: Tuple. The width of the component in the page, default (100, '%')
@@ -313,9 +316,12 @@ class ApexChart(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
+    data = self.parent.context.rptObj.data.chartJs.y(record or [], [y_column], x_axis)
     chart = graph.GraphApexCharts.Pie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     chart.options.colors = self.parent.context.rptObj.theme.charts
     chart.options.chart.type = "donut"
+    chart.options.series = data["datasets"][0]
+    chart.options.labels = data["labels"]
     responsive = chart.options.add_responsive()
     responsive.breakpoint = 480
     return chart

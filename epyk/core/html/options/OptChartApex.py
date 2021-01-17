@@ -563,6 +563,18 @@ class OptionDataLabels(Options):
     self._config(flag)
 
   @property
+  def textAnchor(self):
+    """
+
+    https://apexcharts.com/docs/options/datalabels/
+    """
+    return self._config_get()
+
+  @textAnchor.setter
+  def textAnchor(self, flag):
+    self._config(flag)
+
+  @property
   def offsetY(self):
     return self._config_get()
 
@@ -909,6 +921,17 @@ class OptionResponsive(Options):
     return self._config_sub_data("options", OptionsLine)
 
 
+class OptionMonochrome(Options):
+
+  @property
+  def enabled(self):
+    return self._config_get()
+
+  @enabled.setter
+  def enabled(self, value):
+    self._config(value)
+
+
 class OptionTheme(Options):
 
   @property
@@ -926,6 +949,10 @@ class OptionTheme(Options):
   @palette.setter
   def palette(self, value):
     self._config(value)
+
+  @property
+  def monochrome(self):
+    return self._config_sub_data("monochrome", OptionMonochrome)
 
 
 class OptionHollow(Options):
@@ -991,7 +1018,7 @@ class plotOptionsRadialBar(Options):
   @endAngle.setter
   def endAngle(self, num):
     self._config(num)
-
+  
 
 class OptionPlotOptions(Options):
 
