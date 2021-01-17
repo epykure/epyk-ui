@@ -1505,7 +1505,7 @@ class Html(object):
 
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
-    self._jsStyles["builder"] = JsUtils.jsWrap(self.builder_name)
+    self.options.builder = self.builder_name
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
       tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]

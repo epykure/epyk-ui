@@ -218,6 +218,31 @@ class Options(DataClass):
   def verbose(self, bool):
     self.set(bool)
 
+  @property
+  def builder(self):
+    """
+    Description:
+    ------------
+    Add a JavaScript Builder function to the options.
+    This will be used to automatically map the Python component to its corresponding JavaScript builder function used by the build method.
+
+    Usage:
+    -----
+
+      but = page.ui.button()
+      but.options.builder = "Button"
+
+    Attributes:
+    ----------
+    :prop value: String. The JavaScript builder function name.
+    """
+    return self._config_get(None)
+
+  @builder.setter
+  def builder(self, value):
+    self.js_type["builder"] = True
+    self._config(value)
+
   def details(self):
     """
     Description:
@@ -303,12 +328,12 @@ class Options(DataClass):
     ----------
     :param attrs: Dictionary. Optional. The Js options of the HTML component.
     """
-    js_options = self.config_jd()
+    js_options = self.config_js()
     if attrs is not None:
       js_options.update(attrs)
     return js_options
 
-  def config_jd(self):
+  def config_js(self):
     """
     Description:
     ------------
