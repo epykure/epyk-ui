@@ -187,10 +187,10 @@ class OptionsPivot(Options):
 
 
 class OptionsPivotUI(OptionsPivot):
-  component_properties = ('aggregator', 'aggregatorName', 'showUI', 'rowOrder', 'colOrder', 'derivedAttributes',
+  component_properties = ('aggregator', 'aggregatorName', 'showUI', 'derivedAttributes',
     'dataClass', 'sorters', 'rendererOptions',
     'inclusions', 'exclusions', 'hiddenAttributes', 'hiddenFromAggregators', 'hiddenFromDragDrop',
-    'onRefresh', 'menuLimit', 'autoSortUnusedAttrs', 'unusedAttrsVertical', 'rendererOptions')
+    'menuLimit', 'autoSortUnusedAttrs', 'unusedAttrsVertical', 'rendererOptions')
 
   @property
   def inclusions(self):
@@ -362,6 +362,23 @@ class OptionsPivotUI(OptionsPivot):
   @rendererOptions.setter
   def rendererOptions(self, bool):
     self._config(bool)
+
+  @property
+  def renderer(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+    """
+    return self._config_get("$.pivotUtilities.renderers")
+
+  @renderer.setter
+  def renderer(self, value):
+    self.js_type['renderers'] = True
+    self._config(value)
 
   @property
   def renderers(self):

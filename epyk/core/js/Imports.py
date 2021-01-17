@@ -532,7 +532,8 @@ JS_IMPORTS = {
   # Pivot Table pivot C3 renderer
   'pivot-c3': {
     'req': [
-      {'alias': 'c3'},
+      {'alias': 'd3', 'version': '3.5.5'},
+      {'alias': 'c3', 'version': '0.4.11'},
       {'alias': 'pivottable'}
     ],
     #'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
@@ -1876,6 +1877,153 @@ class ImportPackages:
     return ImportModule(name, self._js, self._css)
 
   @property
+  def vis(self):
+    """
+    Description:
+    ------------
+    A dynamic, browser based visualization library..
+
+    TODO: Add the split of packages
+
+    Related Pages:
+
+      http://visjs.org
+    """
+    return ImportModule("vis", self._js, self._css)
+
+  @property
+  def d3(self):
+    """
+    Description:
+    ------------
+    D3.js is a JavaScript library for manipulating documents based on data.
+
+    TODO: Add the split of packages
+
+    Related Pages:
+
+      https://d3js.org/
+    """
+    return ImportModule("d3", self._js, self._css)
+
+  @property
+  def dc(self):
+    """
+    Description:
+    ------------
+    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets.
+
+    Related Pages:
+
+      https://dc-js.github.io/dc.js
+    """
+    return ImportModule("dc", self._js, self._css)
+
+  @property
+  def nvd3(self):
+    """
+    Description:
+    ------------
+    This project is an attempt to build re-usable charts and chart components for d3.js without taking away the power that d3.js gives you.
+
+    Related Pages:
+
+      http://nvd3.org/
+    """
+    return ImportModule("nvd3", self._js, self._css)
+
+  @property
+  def c3(self):
+    """
+    Description:
+    ------------
+    C3.js D3-based reusable chart library.
+
+    Related Pages:
+
+      https://c3js.org/
+    """
+    return ImportModule("c3", self._js, self._css)
+
+  @property
+  def billboard(self):
+    """
+    Description:
+    ------------
+    Re-usable, easy interface JavaScript chart library, based on D3 v4+.
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/
+    """
+    return ImportModule("billboard.js", self._js, self._css)
+
+  @property
+  def chart_js(self):
+    """
+    Description:
+    ------------
+    Simple yet flexible JavaScript charting for designers & developers.
+
+    Related Pages:
+
+      https://www.chartjs.org/
+    """
+    return ImportModule("chart.js", self._js, self._css)
+
+  @property
+  def crossfilter(self):
+    """
+    Description:
+    ------------
+    Fast Multidimensional Filtering for Coordinated Views.
+
+    Related Pages:
+
+      http://square.github.io/crossfilter
+    """
+    return ImportModule("crossfilter", self._js, self._css)
+
+  @property
+  def apexcharts(self):
+    """
+    Description:
+    ------------
+    Modern & Interactive Open-source Charts.
+
+    Related Pages:
+
+      https://apexcharts.com
+    """
+    return ImportModule("apexcharts", self._js, self._css)
+
+  @property
+  def plotly(self):
+    """
+    Description:
+    ------------
+    Plotly JavaScript Open Source Graphing Library.
+
+    Related Pages:
+
+      https://plot.ly/javascript/
+    """
+    return ImportModule("plotly.js", self._js, self._css)
+
+  @property
+  def ag_grid(self):
+    """
+    Description:
+    ------------
+    The Best JavaScript Grid in the World.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid/
+    """
+    return ImportModule("ag-grid-community", self._js, self._css)
+
+  @property
   def bootstrap(self):
     """
     Description:
@@ -1902,6 +2050,71 @@ class ImportPackages:
     return ImportModule("jquery", self._js, self._css)
 
   @property
+  def jqueryui(self):
+    """
+    Description:
+    ------------
+    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.
+
+    Related Pages:
+
+      https://jqueryui.com/
+    """
+    return ImportModule("jqueryui", self._js, self._css)
+
+  @property
+  def jquery_bracket(self):
+    """
+    Description:
+    ------------
+    jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for tournament play.
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+    """
+    return ImportModule("jquery-bracket", self._js, self._css)
+
+  @property
+  def jquery_sparkline(self):
+    """
+    Description:
+    ------------
+    This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied either inline in the HTML, or via javascript.
+
+    Related Pages:
+
+      https://omnipotent.net/jquery.sparkline
+    """
+    return ImportModule("jquery-sparkline", self._js, self._css)
+
+  @property
+  def jqvmap(self):
+    """
+    Description:
+    ------------
+    JQVMap is a jQuery plugin that renders Interactive, Clickable Vector Maps.
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/
+    """
+    return ImportModule("jqvmap", self._js, self._css)
+
+  @property
+  def qunit(self):
+    """
+    Description:
+    ------------
+    The powerful, easy-to-use JavaScript testing framework.
+
+    Related Pages:
+
+      https://qunitjs.com/
+    """
+    return ImportModule("qunit", self._js, self._css)
+
+  @property
   def accounting(self):
     """
     Description:
@@ -1913,6 +2126,33 @@ class ImportPackages:
       http://openexchangerates.github.io/accounting.js
     """
     return ImportModule("accounting", self._js, self._css)
+
+  @property
+  def qrcodejs(self):
+    """
+    Description:
+    ------------
+    QRCode.js is javascript library for making QRCode.
+    QRCode.js supports Cross-browser with HTML5 Canvas and table tag in DOM. QRCode.js has no dependencies.
+
+    Related Pages:
+
+      https://davidshimjs.github.io/qrcodejs
+    """
+    return ImportModule("qrcodejs", self._js, self._css)
+
+  @property
+  def underscore(self):
+    """
+    Description:
+    ------------
+    accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number, money and currency formatting.
+
+    Related Pages:
+
+      https://openexchangerates.github.io/accounting.js/
+    """
+    return ImportModule("underscore", self._js, self._css)
 
   @property
   def tabulator(self):
@@ -1928,6 +2168,32 @@ class ImportPackages:
     return ImportModule("tabulator-tables", self._js, self._css)
 
   @property
+  def datatables(self):
+    """
+    Description:
+    ------------
+    Add advanced interaction controls to your HTML tables the free & easy way.
+
+    Related Pages:
+
+      https://datatables.net/
+    """
+    return ImportModule("tabulator-tables", self._js, self._css)
+
+  @property
+  def mathjax(self):
+    """
+    Description:
+    ------------
+    Beautiful and accessible math in all browsers.
+
+    Related Pages:
+
+      https://www.mathjax.org/
+    """
+    return ImportModule("mathjax", self._js, self._css)
+
+  @property
   def moment(self):
     """
     Description:
@@ -1938,6 +2204,176 @@ class ImportPackages:
 
     """
     return ImportModule("moment", self._js, self._css)
+
+  @property
+  def hammer(self):
+    """
+    Description:
+    ------------
+    Add touch gestures to your webapp.
+
+    Related Pages:
+
+      https://hammerjs.github.io/
+    """
+    return ImportModule("hammer", self._js, self._css)
+
+  @property
+  def popper_js(self):
+    """
+    Description:
+    ------------
+    Tooltip & Popover Positioning Engine.
+
+    Related Pages:
+
+      https://github.com/popperjs/popper-core
+    """
+    return ImportModule("@popperjs/core", self._js, self._css)
+
+  @property
+  def font_awesome(self):
+    """
+    Description:
+    ------------
+    The next generation of our icon library + toolkit is coming with more icons, more styles, more services, and more awesome
+
+    Related Pages:
+
+      https://fontawesome.com
+    """
+    return ImportModule("font-awesome", self._js, self._css)
+
+  @property
+  def json_formatter(self):
+    """
+    Description:
+    ------------
+    Render JSON objects in HTML with a collapsible navigation.
+
+    Related Pages:
+
+      https://azimi.me/json-formatter-js/
+    """
+    return ImportModule("json-formatter-j", self._js, self._css)
+
+  @property
+  def pivottable(self):
+    """
+    Description:
+    ------------
+    Open-source Javascript Pivot Table (aka Pivot Grid, Pivot Chart, Cross-Tab) implementation with drag'n'drop.
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable
+    """
+    return ImportModule("pivottable", self._js, self._css)
+
+  @property
+  def require_js(self):
+    """
+    Description:
+    ------------
+    RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node
+
+    Related Pages:
+
+      https://requirejs.org/
+    """
+    return ImportModule("requirejs", self._js, self._css)
+
+  @property
+  def timepicker(self):
+    """
+    Description:
+    ------------
+    jQuery Timepicker is a plugin to enhance standard form input fields, helping users to select (or type) times.
+
+    Related Pages:
+
+      https://timepicker.co
+    """
+    return ImportModule("timepicker", self._js, self._css)
+
+  @property
+  def socket(self):
+    """
+    Description:
+    ------------
+    Realtime application framework.
+    Socket.IO enables real-time bidirectional event-based communication.
+
+    Related Pages:
+
+      https://github.com/socketio/socket.io
+    """
+    return ImportModule("socket.io", self._js, self._css)
+
+  @property
+  def codemirror(self):
+    """
+    Description:
+    ------------
+    CodeMirror is a versatile text editor implemented in JavaScript for the browser.
+
+    Related Pages:
+
+      https://codemirror.net
+    """
+    return ImportModule("codemirror", self._js, self._css)
+
+  @property
+  def highlight(self):
+    """
+    Description:
+    ------------
+    Syntax highlighting for the Web.
+
+    Related Pages:
+
+      https://highlightjs.org/
+    """
+    return ImportModule("highlight.js", self._js, self._css)
+
+  @property
+  def leaflet(self):
+    """
+    Description:
+    ------------
+    An open-source JavaScript library for mobile-friendly interactive maps.
+
+    Related Pages:
+
+      https://leafletjs.com/
+    """
+    return ImportModule("leaflet", self._js, self._css)
+
+  @property
+  def showdown(self):
+    """
+    Description:
+    ------------
+    Showdown is a Javascript Markdown to HTML converter.
+
+    Related Pages:
+
+      https://github.com/showdownjs/showdown
+    """
+    return ImportModule("showdown", self._js, self._css)
+
+  @property
+  def sortablejs(self):
+    """
+    Description:
+    ------------
+    Create and reorder lists with drag-and-drop. For use with modern browsers and touch devices.
+
+    Related Pages:
+
+      https://github.com/SortableJS/Sortable
+    """
+    return ImportModule("sortablejs", self._js, self._css)
 
 
 class ImportManager:
@@ -2092,6 +2528,8 @@ class ImportManager:
       # This will allow different versions of packages according to the modules
       # For example NVD3 cannot use any recent version of D3
       if 'version' in mod:
+        if self._report is not None and self._report.verbose:
+          logging.warning("Setting %(alias)s to version %(version)s" % mod)
         self.reqVersion[mod['alias']] = mod['version']
         new_main_for_alias, new_main_for_alias_css = collections.OrderedDict(), collections.OrderedDict()
         for path in self.jsImports[mod['alias']]['main']:

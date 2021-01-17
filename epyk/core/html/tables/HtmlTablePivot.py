@@ -68,7 +68,7 @@ class PivotTable(Html.Html):
     ------------
 
     """
-    return PivotAggregator(self._report, self._jsStyles)
+    return PivotAggregator(self._report, self.options)
 
   @property
   def renderers(self):
@@ -77,7 +77,7 @@ class PivotTable(Html.Html):
     ------------
 
     """
-    return PivotRenderer(self._report, self._jsStyles)
+    return PivotRenderer(self._report, self.options)
 
   _js__builder__ = '''
       if (options.showUI){%(jqId)s.pivotUI(data, options)}
@@ -147,8 +147,8 @@ class PivotAggregator(object):
     :param cola:
     """
     cola = JsUtils.jsConvertData(cola, None)
-    self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cola
-    self.options['aggregatorName'] = "sumOverSum"
+    self.options.aggregator = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cola
+    self.options.aggregatorName = "sumOverSum"
 
   def count(self):
     """
@@ -158,8 +158,8 @@ class PivotAggregator(object):
     Usage:
     -----
     """
-    self.options['aggregator'] = '$.pivotUtilities.aggregators["Count"]()'
-    self.options['aggregatorName'] = "count"
+    self.options.aggregator = '$.pivotUtilities.aggregators["Count"]()'
+    self.options.aggregatorName = "count"
 
   def sum(self, col1):
     """
@@ -173,8 +173,8 @@ class PivotAggregator(object):
     ----------
     """
     col1 = JsUtils.jsConvertData(col1, None)
-    self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
-    self.options['aggregatorName'] = "sum"
+    self.options.aggregator = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
+    self.options.aggregatorName = "sum"
 
   def max(self, col1):
     """
@@ -188,7 +188,7 @@ class PivotAggregator(object):
     ----------
     """
     self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)")
-    self.options['aggregatorName'] = "Max"
+    self.options.aggregatorName = "Max"
 
   def min(self, col1):
     """
@@ -203,7 +203,7 @@ class PivotAggregator(object):
     :param col1:
     """
     self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)")
-    self.options['aggregatorName'] = "Min"
+    self.options.aggregatorName = "Min"
 
   def absSum(self, col1):
     """
@@ -218,7 +218,7 @@ class PivotAggregator(object):
     :param col1:
     """
     self.singleFactorFormulas(col1, "+= Math.abs(col1)")
-    self.options['aggregatorName'] = "sum (abs)"
+    self.options.aggregatorName = "sum (abs)"
 
   def singleFactorFormulas(self, col1, formula):
     """
@@ -234,7 +234,7 @@ class PivotAggregator(object):
     :param formula:
     """
     col1 = JsUtils.jsConvertData(col1, None)
-    self.options['aggregator'] = '''
+    self.options.aggregator = '''
       function(keyAgg) { 
         return function(data, rowKey, colKey) {
           return {
@@ -244,7 +244,7 @@ class PivotAggregator(object):
             value: function() { return this.tmpVal; },
             format: function(x) { return x; },
           }}}(%s)''' % (formula, col1)
-    self.options['aggregatorName'] = "diff Abs Agg"
+    self.options.aggregatorName = "diff Abs Agg"
 
   def twoFactorFormulas(self, col1, col2, formula):
     """
@@ -262,7 +262,7 @@ class PivotAggregator(object):
     """
     col1 = JsUtils.jsConvertData(col1, None)
     col2 = JsUtils.jsConvertData(col2, None)
-    self.options['aggregator'] = '''
+    self.options.aggregator = '''
       function(keyAgg, key2Agg) { 
         return function(data, rowKey, colKey) {
           return {
@@ -274,7 +274,7 @@ class PivotAggregator(object):
           };
         };
       }(%s, %s)''' % (formula, col1, col2)
-    self.options['aggregatorName'] = "diff Abs Agg"
+    self.options.aggregatorName = "diff Abs Agg"
 
   def diffAbsolute(self, col1, col2, formula="+= col1 - col2"):
     """
@@ -291,7 +291,7 @@ class PivotAggregator(object):
     :param formula:
     """
     self.twoFactorFormulas(col1, col2, formula)
-    self.options['aggregatorName'] = "diff Abs Agg"
+    self.options.aggregatorName = "diff Abs Agg"
 
   def custom(self, name, js_def):
     """
@@ -308,8 +308,8 @@ class PivotAggregator(object):
     :param name:
     :param js_def:
     """
-    self.options['aggregator'] = js_def
-    self.options['aggregatorName'] = name
+    self.options.aggregator = js_def
+    self.options.aggregatorName = name
 
 
 class PivotRendererC3(object):
@@ -331,8 +331,8 @@ class PivotRendererC3(object):
 
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Bar Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Bar Chart"
 
   def scatter(self):
     """
@@ -348,8 +348,8 @@ class PivotRendererC3(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Area Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Area Chart"
 
   def area(self):
     """
@@ -365,8 +365,8 @@ class PivotRendererC3(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Area Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Area Chart"
 
   def line(self):
     """
@@ -382,8 +382,8 @@ class PivotRendererC3(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Line Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Line Chart"
 
   def hbar(self):
     """
@@ -399,8 +399,8 @@ class PivotRendererC3(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Horizontal Stacked Bar Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Horizontal Stacked Bar Chart"
 
   def stacked(self):
     """
@@ -416,8 +416,8 @@ class PivotRendererC3(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
-    self.options['rendererName'] = "Stacked Bar Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options.rendererName = "Stacked Bar Chart"
 
 
 class PivotRendererPlotly(object):
@@ -439,8 +439,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/plotly.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Multiple Pie Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Multiple Pie Chart"
 
   def area(self):
     """
@@ -456,8 +456,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Area Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Area Chart"
 
   def scatter(self):
     """
@@ -473,8 +473,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Scatter Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Scatter Chart"
 
   def line(self):
     """
@@ -490,8 +490,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Line Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Line Chart"
 
   def bar(self):
     """
@@ -507,8 +507,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Bar Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Bar Chart"
 
   def hbar(self):
     """
@@ -524,8 +524,8 @@ class PivotRendererPlotly(object):
       https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
-    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
-    self.options['rendererName'] = "Horizontal Bar Chart"
+    self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options.rendererName = "Horizontal Bar Chart"
 
 
 class PivotRenderer(object):
@@ -539,7 +539,7 @@ class PivotRenderer(object):
     ------------
 
     """
-    self.options['renderer'] = '$.pivotUtilities.renderers["table"]'
+    self.options.renderer = '$.pivotUtilities.renderers["table"]'
 
   @property
   def plotly(self):
@@ -578,8 +578,8 @@ class PivotRenderer(object):
 
     """
     self._report.jsImports.add('pivot-d3')
-    self.options['renderers'] = "$.pivotUtilities.d3_renderers"
-    self.options['rendererName'] = "Treemap"
+    self.options.renderers = "$.pivotUtilities.d3_renderers"
+    self.options.rendererName = "Treemap"
 
   def heatmap(self):
     """
@@ -589,7 +589,7 @@ class PivotRenderer(object):
     Usage:
     -----
     """
-    self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'
+    self.options.renderer = '$.pivotUtilities.renderers["Heatmap"]'
 
   def bars(self):
     """
@@ -600,7 +600,7 @@ class PivotRenderer(object):
     -----
 
     """
-    self.options['renderer'] = '$.pivotUtilities.renderers["Table Barchart"]'
+    self.options.renderer = '$.pivotUtilities.renderers["Table Barchart"]'
 
   def custom(self, name, js_def):
     """
