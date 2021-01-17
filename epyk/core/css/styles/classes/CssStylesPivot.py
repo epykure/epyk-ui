@@ -31,7 +31,7 @@ class CssPivotLabel(CssStyle.Style):
   classname = "pvtColLabel, .pvtAxisLabel, .pvtRowLabel, .pvtTotalLabel,  th"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
               'border': '1px solid %s' % self.rptObj.theme.colors[5]}, important=True)
 
 
