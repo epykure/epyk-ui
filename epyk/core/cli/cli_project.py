@@ -216,10 +216,10 @@ def compile(args):
     if not os.path.exists(settings.VIEWS_FOLDER):
       # If it is not an absolute path
       settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
-    output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=args.name, split_files=settings.SPLIT_FILES,
-                                 install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+    output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=args.name,
+                                 options={"split": split_files, "css_route": '/css', "js_route": '/js'})
   except:
-    output = page.outs.html_file(name=args.name, split_files=False, install_modules=False)
+    output = page.outs.html_file(name=args.name, options={"split": False})
   print(output)
 
 
@@ -363,7 +363,9 @@ def transpile_all(args):
             options["static_path"] = os.path.join(reports_path, '..', '..', settings.PACKAGE_PATH)
           else:
             options["static_path"] = settings.PACKAGE_PATH
-        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=args.split, install_modules=settings.INSTALL_MODULES, options=options)
+        options["split"] = args.split
+        # TODO review install_modules
+        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, options=options)
         results["completed"].append(view_name)
         print(output)
       except Exception as err:

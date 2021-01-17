@@ -60,8 +60,8 @@ def transpile(args):
       page = utils.get_page(mod)
       if settings is not None:
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
-      output = page.outs.html_file(path=view_folder, name=v, split_files=split_files, install_modules=install_modules,
-                                   options={"css_route": '/css', "js_route": '/js'})
+      output = page.outs.html_file(path=view_folder, name=v,
+                                   options={"split": split_files, "css_route": '/css', "js_route": '/js'})
       print(output)
     except Exception as err:
       print(err)
@@ -223,7 +223,7 @@ def html(args):
   sys.path.append(report_path)
   mod = __import__(args.name, fromlist=['object'])
   page = utils.get_page(mod)
-  output = page.outs.html_file(path="", name=args.name, split_files=args.split)
+  output = page.outs.html_file(path="", name=args.name, options={"split": False})
   print(output)
 
 

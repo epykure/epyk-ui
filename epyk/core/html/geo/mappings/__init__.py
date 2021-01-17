@@ -2,3 +2,8 @@ from . import usa
 from . import europe
 from . import world
 from . import france
+from . import africa
+from . import asia
+from . import australia
+from . import america
+from . import germany
