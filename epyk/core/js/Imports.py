@@ -1496,6 +1496,40 @@ CSS_IMPORTS = {
 _SERVICES = {}
 
 
+MATERIAL_DESIGN_COMPONENTS = {
+  'material-icons': {
+    'website': 'https://material.io/resources/icons/?style=baseline',
+    'services': [
+      {'type': 'css', 'url': 'https://fonts.googleapis.com/icon', 'values': {'family': 'Material+Icons'}},
+    ]
+  },
+
+  'material-components-web': {
+    'version': '9.0.0',
+    'website': 'https://material.io/components',
+    'register': {'alias': 'mdc', 'module': 'material-components-web.min', 'npm': 'mdc'},
+    'modules': [
+      {'script': 'material-components-web.min.js', 'path': 'material-components-web/%(version)s/'},
+      {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
+  ]},
+}
+
+
+BOOTSTRAP = {
+  'bootstrap-datetimepicker': {
+    'version': '4.17.47',
+    'req': [
+      {'alias': 'moment'},
+      {'alias': 'bootstrap', 'version': '3.4.1'}],
+    'website': 'https://material.io/components',
+    'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
+    'modules': [
+      {'script': 'bootstrap-datetimepicker.min.js', 'path': 'bootstrap-datetimepicker/%(version)s/js/'},
+      {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
+    ]},
+}
+
+
 GOOGLE_EXTENSIONS = {
   'charts': {'modules': [
       {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},

@@ -3,6 +3,7 @@
 
 
 from epyk.core import html
+from epyk.core.js import Imports
 
 from epyk.interfaces.components import CompLayouts
 from epyk.interfaces.components import CompCodes
@@ -873,19 +874,9 @@ class WebComponents:
 
     :rtype: Bs.Bootstrap
     """
-    self.rptObj.ext_packages = {
-      'bootstrap-datetimepicker': {
-        'version': '4.17.47',
-        'req': [
-          {'alias': 'moment'},
-          {'alias': 'bootstrap', 'version': '3.4.1'}],
-        'website': 'https://material.io/components',
-        'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
-        'modules': [
-          {'script': 'bootstrap-datetimepicker.min.js', 'path': 'bootstrap-datetimepicker/%(version)s/js/'},
-          {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
-        ]},
-    }
+    if self.rptObj.ext_packages is None:
+      self.rptObj.ext_packages = {}
+    self.rptObj.ext_packages.update(Imports.BOOTSTRAP)
     if 'bs' not in self.fwks:
       self.rptObj.jsImports.add("bootstrap")
       self.rptObj.cssImport.add("bootstrap")
@@ -908,23 +899,9 @@ class WebComponents:
 
     :return: Python HTML object
     """
-    self.rptObj.ext_packages = {
-      'material-icons': {
-        'website': 'https://material.io/resources/icons/?style=baseline',
-        'services': [
-          {'type': 'css', 'url': 'https://fonts.googleapis.com/icon', 'values': {'family': 'Material+Icons'}},
-        ]
-      },
-
-      'material-components-web': {
-        'version': '5.1.0',
-        'website': 'https://material.io/components',
-        'register': {'alias': 'mdc', 'module': 'material-components-web.min', 'npm': 'mdc'},
-        'modules': [
-          {'script': 'material-components-web.min.js', 'path': 'material-components-web/%(version)s/'},
-          {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
-      ]},
-    }
+    if self.rptObj.ext_packages is None:
+      self.rptObj.ext_packages = {}
+    self.rptObj.ext_packages.update(Imports.MATERIAL_DESIGN_COMPONENTS)
     if 'mt' not in self.fwks:
       self.rptObj.jsImports.add("material-components-web")
       self.rptObj.cssImport.add("material-components-web")

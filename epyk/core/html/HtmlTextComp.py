@@ -573,7 +573,7 @@ class Composite(Html.Html):
   name = 'Composite'
 
   def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
-    super(Composite, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    super(Composite, self).__init__(report, None, htmlCode=htmlCode, css_attrs={"width": width, "height": height})
     self.__builders, ref_map = set(), {}
     self.__options = OptText.OptionsComposite(self, options)
     self.add_helper(helper)
@@ -705,8 +705,8 @@ class Composite(Html.Html):
     if comp is None:
       # delegate the htmlCode to the main component
       del self._report.components[self.htmlCode]
+
       new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlCode, **schema_child.get('args', {}))
-      new_comp.options.managed = False
       self._vals = new_comp
     else:
       new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))

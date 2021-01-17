@@ -1018,7 +1018,7 @@ class plotOptionsRadialBar(Options):
   @endAngle.setter
   def endAngle(self, num):
     self._config(num)
-  
+
 
 class OptionPlotOptions(Options):
 

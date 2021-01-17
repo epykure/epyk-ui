@@ -355,7 +355,7 @@ class Inputs(object):
     html_c.dom = dom_obj
     return html_c
 
-  def checkbox(self, flag, text, width=24, height=24):
+  def checkbox(self, flag, text, width=24, height=24, htmlCode=None):
     """
     Description:
     ------------
@@ -390,7 +390,7 @@ class Inputs(object):
         ]},
       {'type': 'label', 'css': False, 'args': {'text': text}}
       ]}
-    html_chk = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_chk = self.context.rptObj.web.mt.composite(schema, htmlCode=htmlCode, options={"reset_class": True})
     dom_obj = JsMdcComponents.CheckBox(html_chk)
     if flag:
       self.context.rptObj.body.onReady([dom_obj.setStatus('checked')])

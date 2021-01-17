@@ -188,5 +188,6 @@ class Materials(object):
     :param options: Optional. Dictionary. the component specific items
     :param profile: Optional. Not yet available
     """
-    html_help = MdcHtml.MdcComposite(self.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
+    html_help = MdcHtml.MdcComposite(self.rptObj, schema, width=width, height=height, htmlCode=htmlCode,
+                                     profile=profile, options=options or {}, helper=helper)
     return html_help
