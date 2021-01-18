@@ -139,7 +139,7 @@ class OptionDropShadow(Options):
 class OptionLabels(Options):
 
   def formatter(self, jsFncs):
-    pass
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
 
   @property
   def style(self):
@@ -168,6 +168,10 @@ class OptionLabels(Options):
   @useSeriesColors.setter
   def useSeriesColors(self, flag):
     self._config(flag)
+
+  @property
+  def formatters(self):
+    return OptionFormatters(self, "formatter")
 
 
 class OptionAxisTicks(Options):
@@ -285,6 +289,14 @@ class OptionYaxis(Options):
 
   def axisTicks(self):
     return self._config_sub_data("axisTicks", OptionAxisTicks)
+
+  @property
+  def tickAmount(self):
+    return self._config_get()
+
+  @tickAmount.setter
+  def tickAmount(self, num):
+    self._config(num)
 
 
 class OptionRow(Options):
@@ -418,11 +430,195 @@ class OptionAnimations(Options):
 
 class OptionEvents(Options):
 
-  def click(self, jsFncs):
-    pass
+  def click(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user clicks on any area of the chart.
 
-  def updated(self, jsFncs):
-    pass
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def mouseMove(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user moves mouse on any area of the chart.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def legendClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user clicks on legend.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#legendClick
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, seriesIndex, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def markerClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user clicks on the markers.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#markerClick
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, seriesIndex, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def selection(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user selects rect using the selection tool.
+    The second argument contains the yaxis and xaxis coordinates where user made the selection
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#selection
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def zoomed(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user zooms in/out the chart using either the selection zooming tool or zoom in/out buttons.
+    The 2nd argument includes information of the new xaxis/yaxis generated after zooming.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#zoomed
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def scrolled(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when user drags the brush in a brush chart.
+    The 2nd argument includes information of the new axes generated after scrolling the brush.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#scrolled
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def animationEnd(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when the chart’s initial animation is finished.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#animationEnd
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def updated(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires when the chart has been dynamically updated either with updateOptions() or updateSeries() functions.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#updated
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def mounted(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires after the chart has been drawn on screen.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#mounted
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  def beforeMount(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Fires before the chart has been drawn on screen.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/#beforeMount
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
 
 
 class OptionChart(Options):
@@ -549,7 +745,64 @@ class OptionTotal(Options):
     self._config(value)
 
   def formatter(self, jsFncs):
-    pass
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  @property
+  def formatters(self):
+    return OptionFormatters(self, "formatter")
+
+
+class OptionFormatters:
+  def __init__(self, options, name):
+    self.__option = options
+    self._report = options._report
+    self.__name = name
+
+  @packageImport("accounting")
+  def toNumber(self, digit=0, thousand_sep="."):
+    """
+
+    :param digit:
+    :param thousand_sep:
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    self.__option._config("function (value){return accounting.formatNumber(value, %s, %s)}" % (digit, thousand_sep), self.__name, True)
+
+  @packageImport("accounting")
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s)}" % (symbol, digit, thousand_sep, decimal_sep), self.__name, True)
+
+  @packageImport("accounting")
+  def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param factor:
+    :param alias:
+    :param digits:
+    :param thousand_sep:
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
+    self.__option._config(
+      "function(value) {var pointVal = value/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'}" % (
+      factor, digits, thousand_sep, alias), self.__name, True)
+
+  def mapTo(self, mapping):
+    self.__option._config("function (value){var mapping = %s; if (value in mapping){return mapping[value]}; return value}" % mapping, self.__name, js_type=True)
 
 
 class OptionDataLabels(Options):
@@ -599,7 +852,11 @@ class OptionDataLabels(Options):
     return self._config_sub_data("total", OptionTotal)
 
   def formatter(self, jsFncs):
-    pass
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  @property
+  def formatters(self):
+    return OptionFormatters(self, "formatter")
 
 
 class OptionStroke(Options):
@@ -748,7 +1005,11 @@ class OptionLegend(Options):
 class OptionY(Options):
 
   def formatter(self, jsFncs):
-    pass
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+
+  @property
+  def formatters(self):
+    return OptionFormatters(self, "formatter")
 
 
 class OptionFixed(Options):

@@ -6,6 +6,58 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
 
 
+class _Export:
+
+  @property
+  def options(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("options")
+
+  @property
+  def event(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("event")
+
+  @property
+  def config(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("config")
+
+  @property
+  def chartContext(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("chartContext")
+
+  @property
+  def seriesIndex(self):
+    """
+
+    """
+    return JsObjects.JsNumber.JsNumber.get("seriesIndex")
+
+  @property
+  def x(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("config.globals.labels[config.dataPointIndex]")
+
+  @property
+  def y(self):
+    """
+
+    """
+    return JsObjects.JsNumber.JsNumber.get("config.globals.series[config.seriesIndex][config.dataPointIndex]")
+
+
 class ApexChart(JsPackage):
   lib_alias = {'js': "apexcharts", 'css': 'apexcharts'}
 

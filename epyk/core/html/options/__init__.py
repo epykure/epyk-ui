@@ -8,7 +8,10 @@ TODO: Change the model to get Option as an interface of two sub classes .js and 
 """
 
 import sys
+import json
+
 from epyk.core.data.DataClass import DataClass
+from epyk.core.js import JsUtils
 
 
 class Options(DataClass):
@@ -45,7 +48,7 @@ class Options(DataClass):
     """
     return self.js_tree.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
-  def _config(self, value, name=None):
+  def _config(self, value, name=None, js_type=False):
     """
     Description:
     ------------
@@ -58,8 +61,11 @@ class Options(DataClass):
     ----------
     :param value: Object. The value for the name
     :param name: String. Optional. The attribute name. Default is the property name.
+    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
     """
     self.js_tree[name or sys._getframe().f_back.f_code.co_name] = value
+    if js_type:
+      self.js_type[name or sys._getframe().f_back.f_code.co_name] = True
 
   def _config_group_get(self, group, dflt=None, name=None):
     """
@@ -131,7 +137,7 @@ class Options(DataClass):
     self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 
-  def custom_config(self, name, value):
+  def custom_config(self, name, value, js_type=False):
     """
     Description:
     ------------
@@ -147,7 +153,10 @@ class Options(DataClass):
     ----------
     :param name: String. The key to be added to the attributes.
     :param value: String or JString. The value of the defined attributes.
+    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
     """
+    if js_type:
+      self.js_type[name] = True
     self.js_tree[name] = value
     return self
 
@@ -311,29 +320,7 @@ class Options(DataClass):
     result = [v for k, v in props.items() if v["type"] == "optional"]
     return result
 
-  def js_clone(self, attrs=None):
-    """
-    Description:
-    ------------
-    Clone the js options of an HTML component.
-    This can be used in the build method in order to change some options.
-
-    Usage:
-    -----
-
-      info = page.ui.network.warning()
-      info.build("Test", info.options.js_clone({"time": 100}))
-
-    Attributes:
-    ----------
-    :param attrs: Dictionary. Optional. The Js options of the HTML component.
-    """
-    js_options = self.config_js()
-    if attrs is not None:
-      js_options.update(attrs)
-    return js_options
-
-  def config_js(self):
+  def config_js(self, attrs=None):
     """
     Description:
     ------------
@@ -346,20 +333,35 @@ class Options(DataClass):
     Usage:
     -----
     """
+    js_attrs, attrs = [], attrs or {}
     if self.__config_sub_levels:
-      js_attrs = {}
-      for k, v in self.js_tree.items():
+      tmp_tree = dict(self.js_tree)
+      for k, v in attrs.items():
+        if k not in tmp_tree:
+          tmp_tree[k] = v
+      for k, v in tmp_tree.items():
         if k in self.__config_sub_levels:
-          js_attrs[k] = v.config_jd()
+          js_attrs.append("%s: %s" % (k, v.config_js(attrs=attrs.get(k, {})).toStr()))
         elif k in self.__config_sub__enum_levels:
-          js_attrs[k] = []
-          for s in v:
-            js_attrs[k].append(s.config_jd())
+          js_attrs.append("%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
         else:
-          js_attrs[k] = v
-      return js_attrs
+          if k in attrs:
+            v = attrs[k]
+          if k in self.js_type:
+            js_attrs.append("%s: %s" % (k, v))
+          else:
+            js_attrs.append("%s: %s" % (k, json.dumps(v)))
+      return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
-    return dict(self.js_tree)
+    #
+    tmp_tree = dict(self.js_tree)
+    tmp_tree.update(attrs)
+    for k, v in tmp_tree.items():
+      if k in self.js_type:
+        js_attrs.append("%s: %s" % (k, v))
+      else:
+        js_attrs.append("%s: %s" % (k, json.dumps(v)))
+    return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
   def config_html(self):
     """

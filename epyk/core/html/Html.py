@@ -264,7 +264,7 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
   builder_name, _js__builder__ = None, None
-  
+
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self.components = collections.OrderedDict() # Child component for this component

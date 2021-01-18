@@ -18,8 +18,15 @@ class Chart(Html.Html):
     super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._options = self._options_type_cls(self, options)
     self.options.chart.height = height[0]
+    self.options.yaxis.labels.formatters.toNumber()
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
+
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.options.chart.events.click(js_funcs)
+    return self
 
   def zoomable(self, flag=True):
     if flag:
@@ -62,12 +69,12 @@ class Chart(Html.Html):
     """
     """
     if options is not None:
-      return self.js.updateOptions(self.options.js_clone(options))
+      return self.js.updateOptions(self.options.config_js(options))
 
     if data is not None:
       return self.js.updateSeries(data)
 
-    return JsUtils.jsConvertFncs([self.js.new(self.dom.varId, self.options.js_clone(options), "window['%s']" % self.chartId), self.js.render()], toStr=True)
+    return JsUtils.jsConvertFncs([self.js.new(self.dom.varId, self.options.config_js(options), "window['%s']" % self.chartId), self.js.render()], toStr=True)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.build())

@@ -155,6 +155,10 @@ class OptionAxesTicks(DataClass):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (digit, thousand_sep))
 
+  def mapTo(self, mapping):
+    self._attrs["callback"] = JsObjects.JsVoid(
+      "function(label, index, labels) {var mapping = %s; if (labels in mapping){return mapping[labels]}; return labels}" % mapping)
+
 
 class OptionLabels(DataClass):
 
