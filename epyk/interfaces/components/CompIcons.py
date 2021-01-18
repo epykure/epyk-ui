@@ -49,6 +49,7 @@ class Icons(object):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
+    html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline"
     return html_edit
@@ -82,6 +83,7 @@ class Icons(object):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
+    html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
     return html_edit

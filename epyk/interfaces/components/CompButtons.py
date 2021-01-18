@@ -736,6 +736,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
+    html_but.css({'display': 'inline-block', 'margin-right': '10px'})
     return html_but
 
   def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -777,6 +778,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.ButtonMenu(self.context.rptObj, record, text, icon, width, height, htmlCode=htmlCode,
                                               tooltip=tooltip, profile=profile, options=options)
+    html_button.container.style.css({"display": "none", "position": "absolute", "z-index": 5})
     return html_button
 
   def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left", options=None, profile=None):

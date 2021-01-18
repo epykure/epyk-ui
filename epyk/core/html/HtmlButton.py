@@ -407,7 +407,6 @@ class CheckButton(Html.Html):
     self.input.options.managed = False
     self.add_label(label, {"width": "none", "float": "none"}, htmlCode=self.htmlCode, position="after")
     self.add_icon(icon, {"float": 'none'}, htmlCode=self.htmlCode, position="after", family=options.get("icon_family"))
-    self.css({'display': 'inline-block', 'margin-right': '10px'})
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -546,7 +545,6 @@ class IconEdit(Html.Html):
       self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     else:
       self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, htmlCode=self.htmlCode, family=options.get("icon_family"))
-    self.css({"margin": "5px 0", 'cursor': 'pointer'})
     self.hover_color = True
 
   def spin(self):
@@ -795,10 +793,6 @@ class ButtonMenu(Html.Html):
     self.style.css.display = "inline-block"
     self.container = report.ui.div()
     self.container.options.managed = False
-    self.container.attr['class'].add("dropdown-content")
-    self.container.style.css.display = "none"
-    self.container.style.css.position = "absolute"
-    self.container.style.css.z_index = 5
     self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
 
   def __getitem__(self, i):
