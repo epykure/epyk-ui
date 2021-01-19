@@ -46,6 +46,7 @@ from epyk.interfaces import Arguments
 class Components:
   def __init__(self, rptObj):
     self.rptObj = rptObj
+    self.components_skin = None #
 
     # Special shortcut for some components
     self.button = self.buttons.button #: shortcut for button :func:`epyk.interfaces.components.CompButtons.Buttons.button`

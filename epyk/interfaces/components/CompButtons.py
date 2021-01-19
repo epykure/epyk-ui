@@ -50,6 +50,7 @@ class Buttons(object):
       data = [result[k] for k in sorted(result.keys())]
     return data
 
+  @html.Html.css_skin()
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -101,6 +102,7 @@ class Buttons(object):
       html_button.style.css.display = "block"
     return html_button
 
+  @html.Html.css_skin()
   def colored(self, text="", icon=None, color=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -148,6 +150,7 @@ class Buttons(object):
     component.style.css.margin_bottom = 5
     return component
 
+  @html.Html.css_skin()
   def clear(self, text="", icon="fas fa-eraser", color=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -196,6 +199,7 @@ class Buttons(object):
     component.style.hover({"background-color": "%s !IMPORTANT" % self.context.rptObj.theme.danger[0]})
     return component
 
+  @html.Html.css_skin()
   def large(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -244,6 +248,7 @@ class Buttons(object):
       html_button.style.css.display = "block"
     return html_button
 
+  @html.Html.css_skin()
   def absolute(self, text, size_notch=None, icon="", top=(50, "%"), left=(50, "%"), bottom=None, width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
@@ -292,6 +297,7 @@ class Buttons(object):
       html_button.style.css.display = "inline-block"
     return html_button
 
+  @html.Html.css_skin()
   def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -325,6 +331,7 @@ class Buttons(object):
     html_button.style.css.padding = 2
     return html_button
 
+  @html.Html.css_skin()
   def normal(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -357,6 +364,7 @@ class Buttons(object):
     html_button.style.css.line_height = 18
     return html_button
 
+  @html.Html.css_skin()
   def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -398,6 +406,7 @@ class Buttons(object):
     html_button.style.add_classes.button.important()
     return html_button
 
+  @html.Html.css_skin()
   def validate(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -437,6 +446,7 @@ class Buttons(object):
                                       tooltip=tooltip, profile=profile, options=options)
     return html_but
 
+  @html.Html.css_skin()
   def remove(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -476,6 +486,7 @@ class Buttons(object):
                              tooltip=tooltip, profile=profile, options=options)
     return html_but
 
+  @html.Html.css_skin()
   def phone(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -515,6 +526,7 @@ class Buttons(object):
                                          tooltip=tooltip, profile=profile, options=options)
     return html_button
 
+  @html.Html.css_skin()
   def mail(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -554,6 +566,7 @@ class Buttons(object):
                                       tooltip=tooltip, profile=profile, options=options)
     return html_but
 
+  @html.Html.css_skin()
   def radio(self, recordSet=None, checked=None, htmlCode=None, group_name=None, width=(100, '%'), height=(None, "px"),
             column=None, align='left', options=None, profile=None):
     """
@@ -608,6 +621,7 @@ class Buttons(object):
     html_radio.style.css.text_align = align
     return html_radio
 
+  @html.Html.css_skin()
   def toggle(self, recordSet=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
     Description:
@@ -647,6 +661,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     html_toggle = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
     return html_toggle
 
+  @html.Html.css_skin()
   def checkboxes(self, records=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                htmlCode=None, tooltip='', dfColumn=None, options=None, profile=None):
     """
@@ -699,6 +714,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
                                           height, align, htmlCode, tooltip, options or {}, profile)
     return html_boxes
 
+  @html.Html.css_skin()
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
             profile=None, options=None):
     """
@@ -739,6 +755,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     html_but.css({'display': 'inline-block', 'margin-right': '10px'})
     return html_but
 
+  @html.Html.css_skin()
   def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -781,6 +798,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     html_button.container.style.css({"display": "none", "position": "absolute", "z-index": 5})
     return html_button
 
+  @html.Html.css_skin()
   def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left", options=None, profile=None):
     """
     Description:
@@ -817,6 +835,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       badge.style.css.display = "block"
     return badge
 
+  @html.Html.css_skin()
   def live(self, time, js_funcs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), profile=None, options=None):
     """
     Description:
@@ -875,6 +894,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     ])
     return live
 
+  @html.Html.css_skin()
   def text(self, text, width=('auto', ""), tooltip=None, height=(None, "px"), profile=None, options=None):
     """
     Description:
@@ -896,6 +916,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     c.style.css.padding = '1px 2px'
     return c
 
+  @html.Html.css_skin()
   def thumbs_up(self, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -918,6 +939,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     but.icon.style.css.color = "white"
     return but
 
+  @html.Html.css_skin()
   def thumbs_down(self, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -940,6 +962,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     but.icon.style.css.color = "white"
     return but
 
+  @html.Html.css_skin()
   def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
                                       profile=profile, options=options)

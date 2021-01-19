@@ -87,6 +87,39 @@ def inprogress(func):
   return new_func
 
 
+def css_skin():
+  """
+  Description:
+  ------------
+  In dev. Transversal way to change the skin of all the HTML Interfaces.
+  This override is done just after the interface call in order to allow specific style definition in the reports.
+  
+  """
+  def decorator(func):
+    @functools.wraps(func)
+    def decorated(*args, **kwargs):
+      html_obj = func(*args, **kwargs)
+      if html_obj._report.ui.components_skin is not None:
+        if "button" in html_obj._report.ui.components_skin:
+          html_obj._report.ui.components_skin["buttons.button"] = html_obj._report.ui.components_skin["button"]
+        alias = func.__qualname__.lower()
+        if alias in html_obj._report.ui.components_skin:
+          comp_skin = html_obj._report.ui.components_skin[alias]
+          if 'clear' in comp_skin:
+            if comp_skin["clear"].get("css"):
+              html_obj.style.clear_style()
+            if comp_skin["clear"].get("cls"):
+              html_obj.style.clear(True)
+          html_obj.css(html_obj._report.ui.components_skin[alias].get('css', {}))
+          for cls in comp_skin.get("cls", []):
+            html_obj.attr["class"].add(cls)
+      return html_obj
+
+    return decorated
+
+  return decorator
+
+
 class Required(object):
   js, css = None, None
 

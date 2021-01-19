@@ -62,7 +62,7 @@ class CssSelectOption(CssStyle.Style):
 
 
 class CssSelectOptionItems(CssStyle.Style):
-  _attrs = {"padding": "2px 5px", 'border-radius': '5px', 'margin-top': '-2px !IMPORTANT'}
+  _attrs = {"padding": "1px 15px 1px 5px", 'border-radius': '5px', 'margin-top': '-2px !IMPORTANT'}
   classname = "dropdown-item"
   _focus = {'outline': 0}
 
