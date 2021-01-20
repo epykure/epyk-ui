@@ -274,7 +274,10 @@ class ChartJs(object):
     for i, d in enumerate(data['datasets']):
       bar_chart.add_dataset(d, data['series'][i], opacity=self.opacity)
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
+    bar_chart.options.scales.y_axis().ticks.toNumber()
+    bar_chart.options.tooltips.callbacks.labelNumber()
     bar_chart.options.scales.x_axes().offset = True
+
     return bar_chart
 
   def custom(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):

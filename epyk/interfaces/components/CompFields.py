@@ -66,13 +66,14 @@ class Fields(object):
     width = Arguments.size(width, unit="px")
     if width[0] is None:
       width = (Defaults.TEXTS_SPAN_WIDTH, width[1])
+
     height = Arguments.size(height, unit="px")
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
       dfl_options.update(options)
     text = self.context.rptObj.py.encode_html(text)
     if label is not None:
-      text_comp = self.context.rptObj.ui.div()
+      text_comp = self.context.rptObj.ui.div(width=width, height=height, profile=profile)
       text_comp.label = self.context.rptObj.ui.texts.label(label, options=options,
                   htmlCode="%s_label" % htmlCode if htmlCode is not None else htmlCode)
       text_comp.label.style.css.display = "inline-block"

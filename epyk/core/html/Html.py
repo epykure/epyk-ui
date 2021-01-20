@@ -786,7 +786,7 @@ class Html(object):
         self.title.css(css)
     return self
 
-  def add_input(self, text, css=None, attrs=None, position="before"):
+  def add_input(self, text, css=None, attrs=None, position="before", options=None):
     """
     Description:
     -----------
@@ -805,7 +805,7 @@ class Html(object):
     """
     self.input = ""
     if text is not None:
-      self.input = self._report.ui.inputs.input(text)
+      self.input = self._report.ui.inputs.input(text, options=options)
       if position == "before":
         self.prepend_child(self.input)
       else:

@@ -15,6 +15,7 @@ class Icons(object):
   def get(self):
     return JsFontAwesome
 
+  @html.Html.css_skin()
   def awesome(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'),
               htmlCode=None, options=None, profile=None):
     """
@@ -191,6 +192,46 @@ class Icons(object):
     """
     components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, htmlCode, profile)
     components.icon.style.css.font_factor(10)
+    return components
+
+  def zoom_out(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    components = self.awesome('fas fa-search-minus', text, tooltip, position, width, height, htmlCode, profile)
+    components.style.css.color = self.context.rptObj.theme.greys[-6]
+    return components
+
+  def zoom_in(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
+    components.style.css.color = self.context.rptObj.theme.greys[-6]
     return components
 
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),

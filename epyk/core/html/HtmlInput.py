@@ -1104,10 +1104,19 @@ class Search(Html.Html):
       self.style.css.width = "100%"
     else:
       self.style.add_classes.layout.search_extension()
-    self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
-    self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-    self.add_icon("fas fa-search", htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
-    self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
+    self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
+    self.add_icon(options["icon"], htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+    self.style.css.position = "relative"
+    self.style.css.border_bottom_width = options["border"]
+    self.style.css.border_bottom_style = "solid"
+
+    if options.get("position", 'left') == 'left':
+      self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
+      self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
+    else:
+      self.input.css({"text-align": 'left', 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
+      self.icon.css({"margin": '6px 5px 6px 0px', 'cursor': 'pointer', "right": 0,
+                     'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
 
   @property

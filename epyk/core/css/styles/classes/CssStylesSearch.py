@@ -20,7 +20,7 @@ class CssSearch(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0], "border-bottom": '1px solid %s' % self.rptObj.theme.greys[3], 'color': self.rptObj.theme.greys[-1]})
+    self.css({"background-color": self.rptObj.theme.greys[0], "border-bottom-color": self.rptObj.theme.greys[3], 'color': self.rptObj.theme.greys[-1]})
     self.hover.css({'color': self.rptObj.theme.greys[-1], 'border-bottom-color': self.rptObj.theme.colors[6]})
 
 

@@ -508,6 +508,8 @@ class CssMixin(object):
   @border_bottom_width.setter
   def border_bottom_width(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"border-bottom-width": val})
 
   @property

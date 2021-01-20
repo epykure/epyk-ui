@@ -267,8 +267,11 @@ class Rich(object):
     :param profile:
     """
     height = Arguments.size(height, unit="px")
+    dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
+    if options is not None:
+      dflt_options.update(options)
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
-                                   extensible, options or {}, profile)
+                                   extensible, dflt_options, profile)
     return html_s
 
   def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None, profile=None):
