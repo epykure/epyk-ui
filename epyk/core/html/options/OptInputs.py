@@ -541,7 +541,7 @@ class OptionsTimePicker(OptionsInput):
     self._config(number)
 
 
-class OptionAutoComplete(Options):
+class OptionAutoComplete(OptionsInput):
 
   @property
   def appendTo(self):

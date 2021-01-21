@@ -215,6 +215,8 @@ class AutoComplete(Input):
   def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
+    self._jsStyles = {}
+    self.__options = OptInputs.OptionAutoComplete(self, options)
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
 
@@ -417,6 +419,8 @@ class InputDate(Input):
   name = 'Input Time'
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, options, attrs, profile):
+    self._jsStyles = {}
+    self.__options = OptInputs.OptionAutoComplete(self, options)
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsDatePicker(self, options)
     if options.get("date_if_null", None) is None:
