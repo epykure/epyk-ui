@@ -39,6 +39,8 @@ class Input(Html.Html):
     self.set_attrs(attrs=attrs)
     self.style.css.padding = 0
     self.__options, self.__focus = OptInputs.OptionsInput(self, options), False
+    if self.options.background:
+      self.style.css.background_color = report.theme.colors[0]
     if width[0] is None:
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
 
@@ -914,6 +916,8 @@ class FieldSelect(Field):
     input = report.ui.select(report.inputs.get(htmlCode, value), "%s_input" % htmlCode if htmlCode is not None else htmlCode,
                              width=(100, "%"), options=options)
     super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
+    if label is not None:
+      self.label.style.css.line_height = None
 
 
 class Checkbox(Html.Html):
@@ -1094,14 +1098,14 @@ class TextArea(Html.Html):
 class Search(Html.Html):
   name = 'Search'
 
-  def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, options, profile):
+  def __init__(self, report, text, placeholder, color, width, height, htmlCode, tooltip, extensible, options, profile):
     super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
     #
     if not extensible:
       self.style.add_classes.layout.search()
-      self.style.css.width = "100%"
+      self.style.css.width = "%s%s" % (width[0], width[1])
     else:
       self.style.add_classes.layout.search_extension()
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
@@ -1114,7 +1118,7 @@ class Search(Html.Html):
       self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
       self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
     else:
-      self.input.css({"text-align": 'left', 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
+      self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
       self.icon.css({"margin": '6px 5px 6px 0px', 'cursor': 'pointer', "right": 0,
                      'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)

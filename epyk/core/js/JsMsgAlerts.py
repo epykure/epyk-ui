@@ -22,7 +22,7 @@ class Msg(object):
     :param timer: Number. Optional. The time the popup will be displayed
     :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "absolute", "padding": "5px 10px", 'border-radius': "5px",
+    dflt_attrs = {"position": "fixed", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
@@ -42,7 +42,7 @@ class Msg(object):
           for (var key in content.css) {popup.style[key] = content.css[key]}}
         %s
         popup.innerHTML = content.status; document.body.appendChild(popup);
-        setTimeout(function(){ document.body.removeChild(popup); }, %s);
+        setTimeout(function(){ document.body.removeChild(popup)}, %s);
       })(event, data, response)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer)
 
   def mouse(self, content, timer=3000, cssAttrs=None):

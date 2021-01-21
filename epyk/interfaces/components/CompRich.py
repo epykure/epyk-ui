@@ -237,7 +237,7 @@ class Rich(object):
                   'padding': '5px'})
     return html_div
 
-  def search_input(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
+  def search_input(self, text='', placeholder='Search..', color=None, width=(100, '%'), height=(None, "px"), htmlCode=None,
                    tooltip=None, extensible=False, options=None, profile=None):
     """
     Description:
@@ -260,17 +260,19 @@ class Rich(object):
     :param text:
     :param placeholder:
     :param color:
+    :param width:
     :param height:
     :param htmlCode:
     :param tooltip:
     :param extensible:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)
-    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, width, height, htmlCode, tooltip,
                                    extensible, dflt_options, profile)
     return html_s
 

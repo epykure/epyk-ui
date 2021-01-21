@@ -96,6 +96,23 @@ http://openexchangerates.github.io/accounting.js/
     return self
 
   @property
+  def background(self):
+    """
+    Description:
+    ------------
+    Specifies the maximum number of characters allowed in the text area
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_textarea_maxlength.asp
+    """
+    return self.get(True)
+
+  @background.setter
+  def background(self, flag):
+    self.set(flag)
+
+  @property
   def maxlength(self):
     """
     Description:

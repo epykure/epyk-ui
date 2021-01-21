@@ -32,6 +32,8 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
     html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
