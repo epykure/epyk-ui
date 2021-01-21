@@ -49,7 +49,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position', 'li_style')
+  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style')
 
   @property
   def style(self):
@@ -143,13 +143,26 @@ class OptionsItems(Options):
     self._config(text)
 
   @property
+  def info_icon(self):
+    """
+    Description:
+    ------------
+    Set the delete icon
+    """
+    return self._config_get("fas fa-info-circle")
+
+  @info_icon.setter
+  def info_icon(self, attrs):
+    self._config(attrs)
+
+  @property
   def delete_icon(self):
     """
     Description:
     ------------
     Set the delete icon
     """
-    return self._config_get("fa-trash-alt")
+    return self._config_get("fas fa-trash-alt")
 
   @delete_icon.setter
   def delete_icon(self, attrs):

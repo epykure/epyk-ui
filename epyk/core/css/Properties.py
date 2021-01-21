@@ -1674,6 +1674,7 @@ class CssMixin(object):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    self.overflow_y = "auto"
     self.htmlObj.css({"max-height": val})
 
   @property

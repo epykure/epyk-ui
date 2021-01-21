@@ -8,7 +8,6 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
 from epyk.core.css import Defaults
 
-from epyk.core.js.packages import JsQuery
 from epyk.core.js.primitives import JsObjects
 
 
@@ -53,9 +52,7 @@ class JsItemsDef(object):
     if(typeof options.style !== 'undefined'){
       Object.keys(options.style).forEach(function(key){item.style[key] = options.style[key] })}
     if(typeof data === 'object'){ 
-      if(typeof data.tooltip !== 'undefined'){item.setAttribute('title', data.tooltip); 
-        item.setAttribute('data-html', true); item.setAttribute('data-toggle', 'tooltip'); %s.tooltip()}
-      item.innerHTML = data.text} else { item.innerHTML = data }''' % JsQuery.decorate_var("item", convert_var=False)
+      item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
   def tweet(self, report):
@@ -130,9 +127,7 @@ class JsItemsDef(object):
     else {options.icon.split(" ").forEach(function(s){icon.classList.add(s)}) }
     icon.style.marginRight = '5px'; var span = document.createElement("span");  
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', true); 
-    if(typeof data === 'object'){ 
-      if(typeof data.tooltip !== 'undefined'){span.setAttribute('title', data.tooltip)}
-      span.innerHTML = data.text} else {span.innerHTML = data};
+    if(typeof data === 'object'){span.innerHTML = data.text} else {span.innerHTML = data};
     if(options.click != null){ item.style.cursor = 'pointer';
       item.onclick = function(event){ var value = span.innerHTML; options.click(event, value)}};
     item.appendChild(icon); item.appendChild(span)'''

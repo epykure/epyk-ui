@@ -10,6 +10,7 @@ List are standard and very popular HTML objects, please have a look at the below
 
 from epyk.core.js import Imports
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsQuery
 from epyk.core.html import Html
 from epyk.core.html.options import OptList
 
@@ -427,9 +428,23 @@ class Items(Html.Html):
         Object.keys(options.li_style).forEach(function(key){li.style[key] = options.li_style[key]});
         if(typeof item.type === 'undefined'){window[options.prefix+ options.items_type](li, item, options)}
         else{window[options.prefix + item.type](li, item, options)};
+        if(typeof item.tooltip !== 'undefined'){
+          var info = document.createElement("i");
+          info.classList.add(...options.info_icon.split(" ")); info.style.position = 'absolute';
+          info.style.top = "5px"; info.style.right = "20px";
+          li.style.position = "relative";
+          
+          info.setAttribute('title', item.tooltip); 
+          info.setAttribute('data-html', true); 
+          info.setAttribute('data-placement', 'right'); 
+          info.setAttribute('data-toggle', 'tooltip'); 
+          li.lastChild.style.display = 'inline-block'; li.appendChild(info);
+          %s.tooltip();
+          
+        }
         if(options.delete){
           var close = document.createElement("i");
-          close.classList.add("fas"); close.classList.add(options.delete_icon); close.style.position = 'absolute';
+          close.classList.add(...options.delete_icon.split(" ")); close.style.position = 'absolute';
           close.style.top = "10px"; close.style.right = "0"; close.style.cursor = 'pointer';
           close.onclick = function(event){this.parentNode.remove()};
           li.style.position = "relative";
@@ -437,7 +452,7 @@ class Items(Html.Html):
             close.style[key] = value}
           li.lastChild.style.display = 'inline-block'; li.appendChild(close)}
         if(((options.items_type != 'link') && (options.items_type != 'badge')) && (options.items_type != 'text') && (options.items_type != 'icon')){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
-        htmlObj.appendChild(li)})'''
+        htmlObj.appendChild(li)})''' % JsQuery.decorate_var("info", convert_var=False)
 
   @property
   def options(self):
