@@ -138,6 +138,18 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("%s.text()" % self.jquery.varId)
 
+  @property
+  def all(self):
+    """
+    Description:
+    ------------
+    Get all the items in the selection box (selected or not).
+
+    Usage:
+    -----
+    """
+    return JsObjects.JsObjects.get("(function(){var result = []; %s.find('option').each(function(i, dom){result.push(dom.innerText)}); return result})()" % self.jquery.varId)
+
 
 class Radio(JsHtml.JsHtmlRich):
 

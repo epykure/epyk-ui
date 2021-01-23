@@ -484,6 +484,18 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(colDefs, None)))
 
+  def getColumnDefs(self):
+    """
+    Description:
+    -----------
+    Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
+
+    Related Pages:
+
+      https://www.ag-grid.com/documentation/javascript/column-updating-definitions/
+    """
+    return JsObjects.JsVoid("%s.api.getColumnDefs()" % self.varId)
+
   def setRowData(self, rows):
     """
     Description:
@@ -654,42 +666,6 @@ class AgGrid(JsPackage):
     """
     index = JsUtils.jsConvertData(index, None)
     return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, index))
-
-  def getDisplayedRowCount(self):
-    """
-    Description:
-    -----------
-    Returns the total number of displayed rows.
-
-    Related Pages:
-
-      https://www.ag-grid.com/javascript-grid-api/
-    """
-    return JsObjects.JsVoid("%s.api.getDisplayedRowCount()" % self.varId)
-
-  def getFirstDisplayedRow(self):
-    """
-    Description:
-    -----------
-    Get the index of the first displayed row due to scrolling (includes invisible rendered rows in the buffer).
-
-    Related Pages:
-
-      https://www.ag-grid.com/javascript-grid-api/
-    """
-    return JsObjects.JsVoid("%s.api.getFirstDisplayedRow()" % self.varId)
-
-  def getLastDisplayedRow(self):
-    """
-    Description:
-    -----------
-    Get the index of the last displayed row due to scrolling (includes invisible rendered rows in the buffer).
-
-    Related Pages:
-
-      https://www.ag-grid.com/javascript-grid-api/
-    """
-    return JsObjects.JsVoid("%s.api.getLastDisplayedRow()" % self.varId)
 
   def selectAll(self):
     """

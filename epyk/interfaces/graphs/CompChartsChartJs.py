@@ -51,7 +51,7 @@ class ChartJs(object):
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(d, data['series'][i])
+      line_chart.add_dataset(d, d['label'])
     line_chart.options.scales.y_axis().ticks.beginAtZero = True
     return line_chart
 
@@ -117,7 +117,7 @@ class ChartJs(object):
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(d, data['series'][i], opacity=self.opacity)
+      line_chart.add_dataset(d, d['label'], opacity=self.opacity)
     return line_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -155,7 +155,7 @@ class ChartJs(object):
     pie_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, dflt_options, profile)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(d, data['series'][i], opacity=self.opacity)
+      pie_chart.add_dataset(d, d['label'], opacity=self.opacity)
     return pie_chart
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -193,7 +193,7 @@ class ChartJs(object):
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(d, data['series'][i], opacity=self.opacity)
+      line_chart.add_dataset(d, d['label'], opacity=self.opacity)
       line_chart.dataset().fill = True
     return line_chart
 
@@ -233,7 +233,7 @@ class ChartJs(object):
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(d, data['series'][i])
+      line_chart.add_dataset(d, d['label'])
       line_chart.dataset().steppedLine = 'before'
     return line_chart
 
@@ -272,7 +272,7 @@ class ChartJs(object):
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      bar_chart.add_dataset(d, data['series'][i], opacity=self.opacity)
+      bar_chart.add_dataset(d, d['label'], opacity=self.opacity)
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     bar_chart.options.scales.y_axis().ticks.toNumber()
     bar_chart.options.tooltips.callbacks.labelNumber()
@@ -350,7 +350,7 @@ class ChartJs(object):
     bar_chart = graph.GraphChartJs.ChartExts(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      bar_chart.add_dataset(d, data['series'][i])
+      bar_chart.add_dataset(d, d['label'])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
@@ -390,7 +390,7 @@ class ChartJs(object):
     bar_chart.labels(data['labels'])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     for i, d in enumerate(data['datasets']):
-      bar_chart.add_dataset(d, data['series'][i])
+      bar_chart.add_dataset(d, d['label'])
     return bar_chart
 
   def multi(self, type, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
@@ -428,7 +428,7 @@ class ChartJs(object):
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      bar_chart.add_dataset(d, data['series'][i])
+      bar_chart.add_dataset(d, d['label'])
     bar_chart._attrs['type'] = type
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
@@ -544,7 +544,7 @@ class ChartJs(object):
     polar_chart.labels(data['labels'])
     polar_chart.options.scales.y_axis().display = False
     for i, d in enumerate(data['datasets']):
-      polar_chart.add_dataset(d, data['series'][i])
+      polar_chart.add_dataset(d, d['label'])
     return polar_chart
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -583,7 +583,7 @@ class ChartJs(object):
     radar_chart.labels(data['labels'])
     radar_chart.options.scales.y_axis().display = False
     for i, d in enumerate(data['datasets']):
-      radar_chart.add_dataset(d, data['series'][i])
+      radar_chart.add_dataset(d, d['label'])
     return radar_chart
 
   def fabric(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):

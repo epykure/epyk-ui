@@ -254,7 +254,7 @@ JS_IMPORTS = {
   'ag-grid-community': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'repository': 'https://github.com/ag-grid/ag-grid',
-    'version': '24.1.0',
+    'version': '25.0.1',
     'modules': [
       {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]
   },

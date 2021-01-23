@@ -29,8 +29,10 @@ class PivotTable(Html.Html):
     self.__options = OptTable.OptionsPivot(self, options)
     # to add all the columns in the table if nothing defined
     self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
-    self.style.css.display = 'block'
+    self.style.css.display = 'inline-block'
+    self.style.css.position = 'relative'
     self.style.css.overflow = 'auto'
+    self.style.css.background_color = "white"
 
   @property
   def style(self):

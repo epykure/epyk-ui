@@ -49,7 +49,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style')
+  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable')
 
   @property
   def style(self):
@@ -237,13 +237,41 @@ class OptionsItems(Options):
     Description:
     ------------
     Internal CSS class name to be used when the component is selected.
-"""
+    """
     return self._config_get(None)
 
   @style_select.setter
   def style_select(self, value):
     self._config(value)
-    
+
+  @property
+  def click(self):
+    """
+    Description:
+    ------------
+    Option property to defined click event on list items.
+    By default this is None.
+    """
+    return self._config_get('null')
+
+  @click.setter
+  def click(self, value):
+    self._config(value, js_type=True)
+
+  @property
+  def draggable(self):
+    """
+    Description:
+    ------------
+    Property to defined JavaScript draggable events to the list items.
+    By default items are not draggable.
+    """
+    return self._config_get('false')
+
+  @draggable.setter
+  def draggable(self, value):
+    self._config(value, js_type=True)
+
 
 class OptionsTagItems(Options):
   component_properties = ('delete', 'max_height')

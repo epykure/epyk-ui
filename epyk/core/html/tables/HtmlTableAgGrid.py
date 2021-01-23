@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import logging
+
 from epyk.core.html import Html
 
 from epyk.core.data.DataClass import DataClass
@@ -158,8 +160,12 @@ class CellEditor(DataGroup):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
 
+      https://www.ag-grid.com/javascript-grid-cell-editing/
+
+    Attributes:
+    ----------
     :param values:
     :param kwargs:
     """
@@ -188,7 +194,9 @@ class AggFnc(DataGroup):
     -----------
 
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["renderer"] = None
 
@@ -198,7 +206,9 @@ class AggFnc(DataGroup):
     -----------
 
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["renderer"] = "sum"
 
@@ -210,14 +220,20 @@ class ColType(DataGroup):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["type"] = 'nonEditableColumn'
 
   def dateColumn(self):
     """
+    Description:
+    -----------
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["type"] = 'dateColumn'
 
@@ -243,9 +259,13 @@ class ColumnFilter(DataGroup):
 
   def agTextColumnFilter(self, **kwargs):
     """
+    Description:
+    -----------
     A Text Filter for string comparisons.
 
-    https://www.ag-grid.com/javascript-grid-filtering/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filtering/
 
     :param kwargs:
     """
@@ -256,9 +276,13 @@ class ColumnFilter(DataGroup):
 
   def agDateColumnFilter(self, **kwargs):
     """
+    Description:
+    -----------
     A Date Filter for date comparisons.
 
-    https://www.ag-grid.com/javascript-grid-filter-date/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filter-date/
 
     :param kwargs:
     """
@@ -269,19 +293,26 @@ class ColumnFilter(DataGroup):
 
   def agNumberColumnFilter(self):
     """
+    Description:
+    -----------
     A Number Filter for number comparisons.
 
-    https://www.ag-grid.com/javascript-grid-filtering/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filtering/
     """
     self._attrs["filter"] = "'agNumberColumnFilter'"
     return self
 
   def agSetColumnFilter(self, filterName):
     """
+    Description:
+    -----------
     A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
 
-    https://www.ag-grid.com/javascript-grid-filter-component/
-    :return:
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filter-component/
     """
     self._attrs["filter"] = filterName
     return self
@@ -306,7 +337,9 @@ class Column(DataClass):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-grouping-headers/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-grouping-headers/
     """
     return self._attrs["children"]
 
@@ -320,7 +353,9 @@ class Column(DataClass):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-grouping-headers/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-grouping-headers/
     """
     return self._attrs["colId"]
 
@@ -333,7 +368,7 @@ class Column(DataClass):
     """
     Description:
     -----------
-    values closed, open
+    values closed, open.
 
     https://www.ag-grid.com/javascript-grid-grouping-headers/
     """
@@ -350,7 +385,9 @@ class Column(DataClass):
     -----------
     Cell editing format
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
 
     :rtype: CellEditor
     """
@@ -374,7 +411,9 @@ class Column(DataClass):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     return self._attrs["enableRowGroup"]
 
@@ -395,13 +434,15 @@ class Column(DataClass):
     self._attrs["field"] = val
 
   @property
-  def filter(self):
+  def filters(self):
     """
     Description:
     -----------
     Set filtering on a column using the column definition property filter. The property can have one of the following values:
 
-    https://www.ag-grid.com/javascript-grid-filtering/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filtering/
     """
     return ColumnFilter(self, self._attrs)
 
@@ -412,7 +453,9 @@ class Column(DataClass):
     -----------
     True if the column is hidden, otherwise false.
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     return self._attrs["hide"]
 
@@ -440,7 +483,9 @@ class Column(DataClass):
     If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
     This will block the UI in the following way:
 
-    https://www.ag-grid.com/javascript-grid-pinning/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-pinning/
     """
     return self._attrs["lockPinned"]
 
@@ -496,7 +541,9 @@ class Column(DataClass):
     it is possible to use the flex config.
     Some columns could be set with a regular width config, while other columns would have a flex config.
 
-    https://www.ag-grid.com/javascript-grid-resizing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-resizing/
     """
     return self._attrs["flex"]
 
@@ -523,7 +570,9 @@ class Column(DataClass):
     -----------
     The column property suppressMovable changes whether the column can be dragged.
 
-    https://www.ag-grid.com/javascript-grid-column-moving/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-moving/
     """
     return self._attrs["suppressMovable"]
 
@@ -550,8 +599,9 @@ class Column(DataClass):
     -----------
     The column property lockPosition locks columns to the first position in the grid.
 
-    https://www.ag-grid.com/javascript-grid-column-moving/
+    Related Pages:
 
+      https://www.ag-grid.com/javascript-grid-column-moving/
     """
     return self._attrs["lockPosition"]
 
@@ -592,7 +642,9 @@ class Column(DataClass):
     Turn column resizing on for the grid by setting resizable=true for each column.
     To set resizing for each column, set resizable=true on the default column definition.
 
-    https://www.ag-grid.com/javascript-grid-resizing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-resizing/
     """
     return self._attrs["resizable"]
 
@@ -620,7 +672,9 @@ class Column(DataClass):
     The index of the row group. If the column is not grouped, this field is null.
     If multiple columns are used to group, this index provides the order of the grouping.
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     return self._attrs["rowGroupIndex"]
 
@@ -646,7 +700,6 @@ class Column(DataClass):
     Description:
     -----------
 
-    :return:
     """
     return ColType(self, self._attrs)
 
@@ -656,7 +709,9 @@ class Column(DataClass):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-refresh/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-refresh/
     """
     return self._attrs["enableCellChangeFlash"]
 
@@ -670,7 +725,9 @@ class Column(DataClass):
     Description:
     -----------
 
-    https://www.ag-grid.com/javascript-grid-refresh/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-refresh/
     """
     return self._attrs["suppressCellFlash"]
 
@@ -686,7 +743,9 @@ class Column(DataClass):
     It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the colDef.
     If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default, and then tailoring per column.
 
-    https://www.ag-grid.com/javascript-grid-sorting/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-sorting/
     """
     return self._attrs["sortingOrder"]
 
@@ -701,7 +760,9 @@ class Column(DataClass):
     -----------
     Cell editing format
 
-    https://www.ag-grid.com/javascript-grid-sorting/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-sorting/
     """
     return ColOrder(self, self._attrs)
 
@@ -729,7 +790,9 @@ class DefaultColDef(DataClass):
     it is possible to use the flex config.
     Some columns could be set with a regular width config, while other columns would have a flex config.
 
-    https://www.ag-grid.com/javascript-grid-resizing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-resizing/
     """
     return self._attrs["flex"]
 
@@ -769,7 +832,9 @@ class DefaultColDef(DataClass):
     Turn column resizing on for the grid by setting resizable=true for each column.
     To set resizing for each column, set resizable=true on the default column definition.
 
-    https://www.ag-grid.com/javascript-grid-resizing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-resizing/
     """
     return self._attrs["resizable"]
 
@@ -788,6 +853,25 @@ class DefaultColDef(DataClass):
   @sortable.setter
   def sortable(self, val):
     self._attrs["sortable"] = val
+
+  @property
+  def treeData(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/documentation/javascript/tree-data/
+    """
+    return self._attrs["treeData"]
+
+  @treeData.setter
+  def treeData(self, val):
+    if 'ag-grid-community' in self._report.jsImports and self._report.verbose:
+      logging.warning("treeData not available in the community version")
+
+    self._attrs["treeData"] = val
 
 
 class TableToolPanelsParams(DataClass):
@@ -869,6 +953,8 @@ class TableToolPanelsFilters(DataClass):
 
   def toolPanelParams(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -879,6 +965,8 @@ class TableToolPanels(DataClass):
 
   def filters(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -945,7 +1033,9 @@ class TableConfig(DataClass):
     -----------
     To have one (the first) grid reflect column changes in another (the second), place the first grid's options in alignedGrids property of the second grids.
 
-    https://www.ag-grid.com/javascript-grid-aligned-grids/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-aligned-grids/
     """
     return self._attrs["alignedGrids"]
 
@@ -976,7 +1066,9 @@ class TableConfig(DataClass):
     You can also change the default behaviour for resizing.
     Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when shift key is pressed.
 
-    https://www.ag-grid.com/javascript-grid-resizing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-resizing/
     """
     return self._attrs["colResizeDefault"]
 
@@ -1055,7 +1147,9 @@ class TableConfig(DataClass):
     -----------
     Set to true to have Enter key move focus to the cell below if not editing. The default is Enter key starts editing the currently focused cell.
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["enterMovesDown"]
 
@@ -1070,7 +1164,9 @@ class TableConfig(DataClass):
     -----------
     Set to true to have Enter key move focus to the cell below after Enter is pressed while editing. The default is editing will stop and focus will remain on the editing cell.
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["enterMovesDownAfterEdit"]
 
@@ -1086,7 +1182,9 @@ class TableConfig(DataClass):
     To enable pagination in, set the grid property pagination=true.
     The following simple example shows this, the only difference to this and previous examples is the pagination=true property.
 
-    https://www.ag-grid.com/javascript-grid-pagination/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["pagination"]
 
@@ -1102,7 +1200,9 @@ class TableConfig(DataClass):
     How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored. See Customising Pagination.
     Default: 100
 
-    https://www.ag-grid.com/javascript-grid-pagination/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs.get("paginationPageSize", 100)
 
@@ -1119,7 +1219,9 @@ class TableConfig(DataClass):
     This is demonstrated below. Note if you resize the display area of the grid, the page size automatically changes.
     To view this, open the example up in a new tab and resize your browser.
 
-    https://www.ag-grid.com/javascript-grid-pagination/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["paginationAutoPageSize"]
 
@@ -1134,7 +1236,9 @@ class TableConfig(DataClass):
     -----------
 
 
-    https://www.ag-grid.com/javascript-grid-pagination/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["groupSelectsChildren"]
 
@@ -1150,7 +1254,9 @@ class TableConfig(DataClass):
     To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
     This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you get when inside Excel.
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["singleClickEdit"]
 
@@ -1165,7 +1271,9 @@ class TableConfig(DataClass):
     -----------
     The grid configures a cellRenderer with a button to start editing.
 
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["suppressClickEdit"]
 
@@ -1360,7 +1468,9 @@ class TableConfig(DataClass):
     It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the colDef.
     If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default, and then tailoring per column.
 
-    https://www.ag-grid.com/javascript-grid-sorting/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-sorting/
     """
     return self._attrs["sortingOrder"]
 

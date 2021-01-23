@@ -42,7 +42,7 @@ class ApexChart(object):
     chart.options.xaxis.categories = data['labels']
     for i, d in enumerate(data['datasets']):
       series = chart.options.add_series()
-      series.name = data['series'][i]
+      series.name = d["label"]
       series.data = d
     chart.options.chart.type = "line"
     return chart
@@ -78,7 +78,7 @@ class ApexChart(object):
     chart.options.xaxis.categories = data['labels']
     for i, d in enumerate(data['datasets']):
       series = chart.options.add_series()
-      series.name = data['series'][i]
+      series.name = d["label"]
       series.data = d
     chart.options.chart.type = "scatter"
     return chart
@@ -114,7 +114,7 @@ class ApexChart(object):
     chart.options.xaxis.categories = data['labels']
     for i, d in enumerate(data['datasets']):
       series = chart.options.add_series()
-      series.name = data['series'][i]
+      series.name = d["label"]
       series.data = d
     chart.options.chart.type = "bar"
     return chart
@@ -150,7 +150,7 @@ class ApexChart(object):
     chart.options.xaxis.categories = data['labels']
     for i, d in enumerate(data['datasets']):
       series = chart.options.add_series()
-      series.name = data['series'][i]
+      series.name = d["label"]
       series.data = d
     chart.options.chart.type = "bar"
     chart.options.plotOptions.bar.horizontal = True
@@ -187,7 +187,7 @@ class ApexChart(object):
     chart.options.xaxis.categories = data['labels']
     for i, d in enumerate(data['datasets']):
       series = chart.options.add_series()
-      series.name = data['series'][i]
+      series.name = d["label"]
       series.data = d
     chart.options.chart.type = "area"
     return chart

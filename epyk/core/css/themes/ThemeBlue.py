@@ -35,7 +35,7 @@ class BlueGrey(Theme.Theme):
     '#fff3e0', '#ffe0b2', '#ffcc80', # orange
     '#efebe9', '#d7ccc8', '#bcaaa4', # brown
   ]
-  _colors = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
+  _colors = ['#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
              '#37474f', '#263238']
   _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
             '#212121', '#000000']

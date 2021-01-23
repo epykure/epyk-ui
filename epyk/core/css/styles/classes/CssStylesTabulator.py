@@ -99,11 +99,9 @@ class CssTabulatorEvenRowNoStrip(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.greys[0],
-              'background-color': self.rptObj.theme.greys[0]
-              },
-             important=True)
+              'background-color': self.rptObj.theme.greys[0]}, important=True)
     self.hover.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.success[1],
-                    'background-color': self.rptObj.theme.colors[3]})
+                    'background-color': self.rptObj.theme.colors[1]})
 
 
 class CssTabulatorOddRow(CssStyle.Style):
@@ -119,7 +117,7 @@ class CssTabulatorRow(CssStyle.Style):
 
   def customize(self):
     self.hover.css({'color': self.rptObj.theme.greys[-1], "padding": 0, "margin": 0,
-                    'background-color': self.rptObj.theme.colors[3]}, important=True)
+                    'background-color': self.rptObj.theme.colors[1]}, important=True)
 
 
 class CssTabulatorCell(CssStyle.Style):

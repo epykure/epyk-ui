@@ -544,7 +544,7 @@ class Inputs(object):
     html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
     return html_cell
 
-  def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
+  def search(self, text='', placeholder='Search..', color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              tooltip='', extensible=False, options=None, profile=None):
     """
     Description:
@@ -577,7 +577,12 @@ class Inputs(object):
     :param extensible:
     :param profile:
     """
-    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip, extensible, options or {}, profile)
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
+    if options is not None:
+      dflt_options.update(options)
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, width, height, htmlCode, tooltip, extensible, dflt_options, profile)
     return html_s
 
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,

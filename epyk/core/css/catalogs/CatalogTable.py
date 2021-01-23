@@ -219,8 +219,36 @@ class CatalogTable(Catalog.CatalogGroup):
     return self._set_class(CssStylesDiv.CssDivTableContent)
 
   def ag_head(self):
-    """  """
+    """
+    Description:
+    ------------
+    Predefined CSS class for the AG Grid header.
+    """
     return self._set_class(CssStylesTableAgGrid.CssAgHead)
+
+  def ag_filter(self):
+    """
+    Description:
+    ------------
+    Predefined CSS Class for the AG Grid filter boxes.
+    """
+    return self._set_class(CssStylesTableAgGrid.CssAgFilter)
+
+  def ag_popup(self):
+    """
+    Description:
+    ------------
+    Predefined CSS Class for the AG Grid Popup selection in the filter boxes.
+    """
+    return self._set_class(CssStylesTableAgGrid.CssAgMFilterPopup)
+
+  def ag_menu(self):
+    """
+    Description:
+    ------------
+    Predefined CSS class for the AG Grid Menu.
+    """
+    return self._set_class(CssStylesTableAgGrid.CssAgHeaderLabel)
 
   def ag_row_odd(self):
     """  """

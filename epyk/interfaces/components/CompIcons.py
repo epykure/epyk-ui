@@ -703,7 +703,7 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", width=(25, 'px'),
+  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="", width=(25, 'px'),
               htmlCode=None, profile=None):
     """
     Description:
@@ -802,7 +802,7 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="linkedIn",
+  def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="",
                width=(25, 'px'), htmlCode=None, profile=None):
     """
     Description:

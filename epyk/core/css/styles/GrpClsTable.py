@@ -491,17 +491,62 @@ class Aggrid(GrpCls.ClassHtml):
     super(Aggrid, self).__init__(htmlObj)
     self.classList['main'].clear()
     self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
-    self._css_cell_focus, self._css_cell = 2 * [None]
+    self._css_cell_focus, self._css_cell, self._css_filter, self._css_menu, self._css_popup = 5 * [None]
     self.classList['other'].add(self.cls_head)
     self.classList['other'].add(self.cls_row_even)
     self.classList['other'].add(self.cls_row_odd)
     self.classList['other'].add(self.cls_row)
     self.classList['other'].add(self.cls_cell_focus)
     self.classList['other'].add(self.cls_cell)
+    self.classList['other'].add(self.css_filter)
+    self.classList['other'].add(self.css_menu)
+    self.classList['other'].add(self.css_popup)
+
+  @property
+  def css_popup(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Class definition for filter popups.
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_popup is None:
+      self._css_popup = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_popup()
+    return self._css_popup
+
+  @property
+  def css_menu(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Class definition for menu.
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_menu is None:
+      self._css_menu = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_menu()
+    return self._css_menu
+
+  @property
+  def css_filter(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Class definition for filter.
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_filter is None:
+      self._css_filter = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_filter()
+    return self._css_filter
 
   @property
   def cls_head(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for header.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
@@ -512,6 +557,9 @@ class Aggrid(GrpCls.ClassHtml):
   @property
   def cls_row_even(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for rows.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
@@ -522,6 +570,9 @@ class Aggrid(GrpCls.ClassHtml):
   @property
   def cls_row(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for rows.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
@@ -532,6 +583,9 @@ class Aggrid(GrpCls.ClassHtml):
   @property
   def cls_row_odd(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for rows.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
@@ -542,6 +596,9 @@ class Aggrid(GrpCls.ClassHtml):
   @property
   def cls_cell_focus(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for cells when focus.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """
@@ -552,6 +609,9 @@ class Aggrid(GrpCls.ClassHtml):
   @property
   def cls_cell(self):
     """
+    Description:
+    ------------
+    Property to the CSS Class definition for cells.
 
     :rtype: Classes.CatalogTable.CatalogTable
     """

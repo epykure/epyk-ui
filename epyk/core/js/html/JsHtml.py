@@ -1386,6 +1386,16 @@ class JsHtmlList(JsHtml):
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
 
+  @property
+  def dropped_value(self):
+    """
+    Description:
+    ------------
+    Get the current dropped values to the list.
+    Object can be structure (DOM) so the text content is wrapped in a specific variable.
+    """
+    return JsObjects.JsString.JsString.get("wrapper.innerText")
+
 
 class JsHtmlBackground(JsHtml):
 
