@@ -1514,7 +1514,7 @@ class CssMixin(object):
 
   @line_height.setter
   def line_height(self, val):
-    if val == False:
+    if val is False:
       self.remove()
     else:
       if isinstance(val, int):
@@ -1573,10 +1573,13 @@ class CssMixin(object):
 
   @margin.setter
   def margin(self, val):
-    if isinstance(val, int):
-      val = "%spx" % val
-    val = val if val is not None else 'None'
-    self.htmlObj.css({"margin": val})
+    if val is False:
+      self.remove()
+    else:
+      if isinstance(val, int):
+        val = "%spx" % val
+      val = val if val is not None else 'None'
+      self.htmlObj.css({"margin": val})
 
   @property
   def margin_bottom(self):

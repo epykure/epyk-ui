@@ -6,7 +6,7 @@ class CssHrefNoDecoration(CssStyle.Style):
   _attrs = {'text-decoration': 'none', 'color': 'inherit'}
 
   def customize(self):
-    self.hover.css({'color': self.rptObj.theme.success[1]})
+    self.hover.css({'color': self.rptObj.theme.colors[4]})
 
 
 class CssLabelDates(CssStyle.Style):

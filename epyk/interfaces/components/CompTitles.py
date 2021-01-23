@@ -112,6 +112,8 @@ class Titles(object):
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
+    if hasattr(self.context.rptObj, '_content_table'): # and self.options.content_table:
+      self.context.rptObj._content_table.add_title(html_title, level=1)
     return html_title
 
   def section(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
@@ -140,6 +142,8 @@ class Titles(object):
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 20
     html_title.style.css.margin_bottom = 10
+    if hasattr(self.context.rptObj, '_content_table'): # and self.options.content_table:
+      self.context.rptObj._content_table.add_title(html_title, level=4)
     return html_title
 
   def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):

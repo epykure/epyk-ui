@@ -496,6 +496,19 @@ class ContentsTable(Html.Html):
     self.style.css.position = None
     self.style.css.margin = 5
 
+  def add_title(self, component, level=None, css=None, position="before", options=None):
+    # Special attribute set in the base component interface
+    div = self._report.ui.div(htmlCode="%s_anchor" % component.htmlCode)
+    if self._report.body.css('padding-top') is None:
+      div.style.css.margin_top = - 10
+    else:
+      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+    div.style.css.position = "absolute"
+    div.style.css.z_index = -1
+    self._report._content_table.anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
+    self._report._content_table[-1].click([
+      component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
+
   def __str__(self):
     self.menu._vals = self.val
     self.menu.attr["name"] = "menu"
