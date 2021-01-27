@@ -3,9 +3,171 @@
 
 from epyk.core.html.options import Options
 from epyk.core.js import Imports
+from epyk.core.js.packages import packageImport
+from epyk.core.js import JsUtils
+
+
+class OptionExtraKeys(Options):
+
+  def alt_f(self, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value: String. The event code reference.
+    """
+    self._config(value, "'Alt-F'")
+
+  def ctrl_space(self, value):
+    self._config(value, "'Ctrl-Space'")
+
+  def f_11(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'F11'", js_type=True)
+
+  def esc(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'Esc'", js_type=True)
+
+  def ctrl_q(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'Ctrl-Q'", js_type=True)
+
+
+class OptionCMAddons:
+
+  def __init__(self, options):
+    self.__option = options
+    self._report = options._report
+
+  @packageImport('codemirror-search', 'codemirror-search')
+  def search(self):
+    """
+    Description:
+    ------------
+    Adds the getSearchCursor(query, start, options) => cursor method to CodeMirror instances, which can be used to
+    implement search/replace functionality. query can be a regular expression or a string.
+    start provides the starting position of the search.
+
+    Related Pages:
+
+      https://codemirror.net/demo/search.html
+    """
+    extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
+    extra_keys.alt_f("findPersistent")
+    return self._report
+
+  @packageImport('codemirror-trailingspace')
+  def trailingspace(self):
+    """
+    Description:
+    ------------
+    Adds an option showTrailingSpace which, when enabled, adds the CSS class cm-trailingspace to stretches of whitespace at the end of lines.
+
+    Related Pages:
+
+      https://codemirror.net/demo/trailingspace.html
+    """
+    self._report._report.body.style.custom_class({
+      "background-image": "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==)",
+      "background-position": "bottom left", "background-repeat": "repeat-x"}, "cm-trailingspace")
+    self.__option._config(True, "showTrailingSpace")
+
+  @packageImport('codemirror-fold', 'codemirror-fold')
+  def foldcode(self):
+    self.__option._config(True, "foldGutter")
+    self.__option._config(True, "lineWrapping")
+    extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
+    extra_keys.ctrl_q("cm.foldCode(cm.getCursor())")
+    self.__option.gutters = ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+
+  @packageImport('codemirror-highlighter')
+  def highlighter(self):
+    """
+    Description:
+    ------------
+    Adds a highlightSelectionMatches option that can be enabled to highlight all instances of a currently selected word.
+
+    Related Pages:
+
+      https://codemirror.net/demo/matchhighlighter.html
+    """
+    self._report._report.body.style.custom_class({"background-color": self._report._report.theme.colors[1]}, "cm-matchhighlight")
+    self.__option._config("{showToken: /\w/, annotateScrollbar: true}", "highlightSelectionMatches", js_type=True)
+
+  @packageImport('codemirror-hint', 'codemirror-hint')
+  def hint(self):
+    extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
+    extra_keys.ctrl_space('autocomplete')
+    return self._report
+
+  @packageImport('codemirror-fullscreen', 'codemirror-fullscreen')
+  def fullscreen(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://codemirror.net/demo/fullscreen.html
+    """
+    extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
+    extra_keys.f_11('cm.setOption("fullScreen", !cm.getOption("fullScreen"))')
+    extra_keys.esc('if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false)')
+    return self._report
+
+  @packageImport('codemirror-placeholder')
+  def placeholder(self):
+    """
+    Description:
+    ------------
+    Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
+
+    Related Pages:
+
+      https://codemirror.net/demo/placeholder.html
+    """
+    return self.__option
+
+  @packageImport('codemirror-panel')
+  def panel(self):
+    pass
 
 
 class OptionsCode(Options):
+
+  @property
+  def addons(self):
+    return OptionCMAddons(self)
 
   @property
   def value(self):
@@ -42,7 +204,7 @@ class OptionsCode(Options):
 
   @mode.setter
   def mode(self, value):
-    Imports.extend('codemirror-%s' % value, [('%s.min.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
+    Imports.extend('codemirror-%s' % value, [('%s.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-%s' % value)
     self._config(value)
 

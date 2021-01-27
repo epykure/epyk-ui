@@ -106,6 +106,22 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUp)
 
+  def pivot_filter_popup_header(self):
+    """  """
+    return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUpHeader)
+
+  def pivot_filter_popup_button(self):
+    """  """
+    return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUpButton)
+
+  def pivot_filter_popup_checks(self):
+    """  """
+    return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUpCheck)
+
+  def pivot_filter_popup_checks_label(self):
+    """  """
+    return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUpCheckLabel)
+
   def excel(self):
     """  """
     return self._set_class(CssStylesTableExcel.CssTableExcel)

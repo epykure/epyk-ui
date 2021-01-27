@@ -3,6 +3,7 @@ CSS Style module for the Pivot components
 """
 
 from epyk.core.css.styles.classes import CssStyle
+from epyk.core.css import Defaults as Defaults_css
 
 
 class CssPivotHead(CssStyle.Style):
@@ -64,5 +65,43 @@ class CssPivotFilterBoxPopUp(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
-              #'border': '1px solid %s' % self.rptObj.theme.colors[1]
               }, important=True)
+
+
+class CssPivotFilterBoxPopUpHeader(CssStyle.Style):
+  classname = "pvtFilterBox h4"
+
+  def customize(self):
+    self.css({'font-size': Defaults_css.font(5), "margin": "2px 0"}, important=True)
+
+
+class CssPivotFilterBoxPopUpButton(CssStyle.Style):
+  classname = "pvtFilterBox button"
+
+  _attrs = {'font-weight': 'bold', 'padding': '0 20px', 'margin': 0, 'text-decoration': 'none',
+            'border-radius': '4px', 'white-space': 'nowrap', 'display': 'inline-block', 'line-height': '20px',
+            '-webkit-appearance': 'none', '-moz-appearance': 'none'}
+  _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
+  _focus = {'outline': 0}
+  _disabled = {'cursor': 'none'}
+
+  def customize(self):
+    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[4], 'color': 'white',
+              'background-color': self.rptObj.theme.colors[-1]})
+    self.hover.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]}, important=True)
+
+
+class CssPivotFilterBoxPopUpCheck(CssStyle.Style):
+  classname = "pvtCheckContainer p"
+  _attrs = {"margin": 0}
+
+  def customize(self):
+    self.css({"font-size": Defaults_css.font(), "vertical-align": "middle", "padding-bottom": 0})
+
+
+class CssPivotFilterBoxPopUpCheckLabel(CssStyle.Style):
+  classname = "pvtCheckContainer p label"
+  _attrs = {"margin": 0}
+
+  def customize(self):
+    self.css({"font-size": Defaults_css.font()})

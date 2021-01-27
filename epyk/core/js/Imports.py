@@ -1108,7 +1108,7 @@ JS_IMPORTS = {
 
   # Code mirror
   'codemirror': {
-    'version': '5.59.0',
+    'version': '5.59.2',
     'website': 'https://codemirror.net/',
     'modules': [
       {'script': 'codemirror.js', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -1123,6 +1123,99 @@ JS_IMPORTS = {
       {'script': 'ruby.js', 'node_path': 'mode/ruby/', 'path': 'codemirror/%(version)s/mode/ruby/', 'cdnjs': CDNJS_REPO},
     ]
   },
+
+  'codemirror-search': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/search.html',
+      'modules': [
+        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'search.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'jump-to-line.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'dialog.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/', 'cdnjs': CDNJS_REPO}
+  ]},
+
+  'codemirror-placeholder': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/placeholder.html',
+      'modules': [
+        {'script': 'placeholder.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+  ]},
+
+  'codemirror-trailingspace': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/trailingspace.html',
+      'modules': [
+        {'script': 'trailingspace.js', 'node_path': 'addon/edit/', 'path': 'codemirror/%(version)s/addon/edit/', 'cdnjs': CDNJS_REPO}
+  ]},
+
+  'codemirror-fullscreen': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/trailingspace.html',
+      'modules': [
+        {'script': 'fullscreen.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+  ]},
+
+  'codemirror-highlighter': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/matchhighlighter.html',
+      'modules': [
+        {'script': 'annotatescrollbar.js', 'node_path': 'addon/scroll/', 'path': 'codemirror/%(version)s/addon/scroll/', 'cdnjs': CDNJS_REPO},
+        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'match-highlighter.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+  ]},
+
+  'codemirror-hint': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/complete.html',
+      'modules': [
+        {'script': 'show-hint.js', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/', 'cdnjs': CDNJS_REPO},
+  ]},
+
+  'codemirror-panel': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/panel.html#',
+      'modules': [
+        {'script': 'panel.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO},
+  ]},
+
+  'codemirror-fold': {
+      'req': [
+        {'alias': 'codemirror'}
+      ],
+      'node_folder': 'codemirror',
+      'website': 'https://codemirror.net/demo/folding.html',
+      'modules': [
+        {'script': 'foldcode.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'foldgutter.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'brace-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'xml-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'indent-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'markdown-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'comment-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+  ]},
 
   # highlight
   'highlight.js': {
@@ -1453,7 +1546,29 @@ CSS_IMPORTS = {
   # Code mirror
   'codemirror': {
     'modules': [
-      {'script': 'codemirror.css', 'node_path': 'lib/', 'version': '5.58.3', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.css', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
+
+  'codemirror-search': {
+    'modules': [
+      {'script': 'matchesonscrollbar.css', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+      {'script': 'dialog.css', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/', 'cdnjs': CDNJS_REPO}
+    ]},
+
+  'codemirror-fullscreen': {
+    'modules': [
+      {'script': 'fullscreen.css', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+    ]},
+
+  'codemirror-fold': {
+    'modules': [
+      {'script': 'foldgutter.css', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO}
+    ]},
+
+  'codemirror-hint': {
+    'modules': [
+      {'script': 'show-hint.css', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   # highlight
@@ -1610,6 +1725,9 @@ def script_version(alias, script_details, with_prefix=False):
     if 'v_prefix' in JS_IMPORTS[alias]:
       return "%s%s" % (JS_IMPORTS[alias]['v_prefix'], JS_IMPORTS[alias]["version"])
 
+  if 'node_folder' in JS_IMPORTS[alias]:
+    # use the version of the node folder
+    JS_IMPORTS[alias]["version"] = JS_IMPORTS[JS_IMPORTS[alias]['node_folder']]['version']
   return JS_IMPORTS[alias]["version"]
 
 
@@ -2692,10 +2810,10 @@ class ImportManager:
             if os.path.exists(package_path):
               url_module = os.path.join(self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
 
-        if '/mode/' in url_module:
-          js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
-        else:
-          js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
+        #if '/mode/' in url_module:
+        #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
+        #else:
+        js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
     if local_js is not None and len(local_js) > 0:
       for local_js_file in local_js:
         js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)

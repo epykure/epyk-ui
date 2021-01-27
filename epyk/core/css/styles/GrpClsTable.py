@@ -406,6 +406,7 @@ class Pivot(GrpCls.ClassHtml):
     super(Pivot, self).__init__(htmlObj)
     self._css_pt_head, self._css_pt_cell, self._css_pt_axis = 3 * [None]
     self._css_pt_box, self._css_pt_pop, self._css_pt_val, self._css_pt_label = 4 * [None]
+    self._css_pt_pop_header, self._css_pt_pop_button, self._css_pt_pop_checks, self._css_pt_pop_checks_label = 4 * [None]
     self.classList['main'].add(self.cls_pt_head)
     self.classList['other'].add(self.cls_pt_cell)
     self.classList['other'].add(self.cls_pt_axis)
@@ -413,6 +414,32 @@ class Pivot(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_pt_popup)
     self.classList['other'].add(self.cls_pt_val)
     self.classList['other'].add(self.cls_pt_label)
+    self.classList['other'].add(self.cls_pt_popup_header)
+    self.classList['other'].add(self.cls_pt_popup_button)
+    self.classList['other'].add(self.cls_pt_popup_checks)
+    self.classList['other'].add(self.cls_pt_popup_checks_label)
+
+  @property
+  def cls_pt_popup_checks_label(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_pop_checks_label is None:
+      self._css_pt_pop_checks_label = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                  self.classList['other']).pivot_filter_popup_checks_label()
+    return self._css_pt_pop_checks_label
+
+  @property
+  def cls_pt_popup_checks(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_pop_checks is None:
+      self._css_pt_pop_checks = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                  self.classList['other']).pivot_filter_popup_checks()
+    return self._css_pt_pop_checks
 
   @property
   def cls_pt_head(self):
@@ -453,6 +480,28 @@ class Pivot(GrpCls.ClassHtml):
     if self._css_pt_box is None:
       self._css_pt_box = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_box()
     return self._css_pt_box
+
+  @property
+  def cls_pt_popup_header(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_pop_header is None:
+      self._css_pt_pop_header = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                           self.classList['other']).pivot_filter_popup_header()
+    return self._css_pt_pop_header
+
+  @property
+  def cls_pt_popup_button(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_pop_button is None:
+      self._css_pt_pop_button = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                           self.classList['other']).pivot_filter_popup_button()
+    return self._css_pt_pop_button
 
   @property
   def cls_pt_popup(self):

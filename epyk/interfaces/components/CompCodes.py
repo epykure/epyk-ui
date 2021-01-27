@@ -184,7 +184,8 @@ class Code(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'python', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': False}
+    dflt_options = {"lineNumbers": True, 'mode': 'python', 'styleActiveLine': True, 'autoRefresh': False
+                    }
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text.strip(), color, width, height, htmlCode, dflt_options, helper, profile)

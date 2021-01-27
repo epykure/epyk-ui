@@ -306,7 +306,7 @@ class Cell(Html.Html):
 
 class Code(Html.Html):
   name = 'Code'
-  requirements = ('codemirror', )
+  requirements = ('codemirror',)
 
   def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
     super(Code, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
@@ -367,26 +367,47 @@ class Code(Html.Html):
       self._dom = JsHtmlEditor.CodeMirror(self, report=self._report)
     return self._dom
 
-  _js__builder__ = '''
-       htmlObj.setValue(data); Object.keys(options).forEach(function(key){ htmlObj.setOption(key, options[key])}); 
-       htmlObj.refresh()'''
-
-  def build(self, data=None, options=None, profile=False):
+  @property
+  def addon(self):
     """
     Description:
     ------------
+    The addon directory in the distribution contains a number of reusable components that implement extra editor functionality.
 
-    Usage:
-    -----
+    Related Pages:
 
-    :param data:
-    :param options:
-    :param profile:
+      https://codemirror.net/doc/manual.html#addons
     """
-    if not self.builder_name:
+    return self.options.addons
+
+  def placeholder(self, text):
+    """
+    Description:
+    ------------
+    Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
+
+    Attributes:
+    ----------
+    :param text: String. The text displayed if empty editor.
+    """
+    self.options.addons.placeholder()
+    self.attr["placeholder"] = text
+    return self
+
+  # extraKeys: { "Ctrl-Space": "autocomplete" }
+  _js__builder__ = ''' 
+       window["editor_"+ htmlObj.id] = CodeMirror.fromTextArea(htmlObj, options);
+       window["editor_"+ htmlObj.id].setValue(data); Object.keys(options).forEach(
+          function(key){ window["editor_"+ htmlObj.id].setOption(key, options[key])})
+       '''
+
+  def build(self, data=None, options=None, profile=False):
+    if not self.builder_name or self._js__builder__ is None:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
+    self.options.builder = self.builder_name
 
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
@@ -394,21 +415,27 @@ class Code(Html.Html):
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or self._jsStyles, []
-    for k, v in options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    #
-    constructors[
-      self.builder_name] = "var %(editorId)s = CodeMirror.fromTextArea(%(htmlCode)s, {%(options)s}); %(editorId)s.setSize(null, '%(height)s'); function %(name)s(htmlObj, data, options){%(builder)s}" % {"editorId": self.editorId,
-        'htmlCode': self.htmlCode, 'options': ",".join(js_options), 'name': self.builder_name, 'builder': self._js__builder__, 'height': self.attr['css']['height']}
-    return "%s(%s, %s, %s)" % (self.builder_name, self.editorId, js_data, "{%s}" % ",".join(js_options))
+    fnc_call = "%s(document.getElementById('%s'), %s, %s)" % (self.builder_name, self.htmlCode, js_data, self.options.config_js(options))
+    if profile:
+      if isinstance(profile, dict):
+        return "(function(){var t0 = performance.now(); %s; console.log('%s: ' + (performance.now() - t0) + ' ms' )})()" % (
+        fnc_call, profile['name'])
+
+      return "(function(){var t0 = performance.now(); %s; console.log(performance.now() - t0)})()" % fnc_call
+
+    return fnc_call
+
+  def refresh(self):
+    """
+    Description:
+    -----------
+    Component refresh function. Javascript function which can be called in any Javascript event.
+
+    Usage:
+    -----
+
+    """
+    return self.build(self.val, None)
 
   @property
   def editorId(self):
@@ -425,6 +452,7 @@ class Code(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self._report.body.onReady('window["%s"].refresh()' % self.editorId)
     return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
