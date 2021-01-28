@@ -248,10 +248,74 @@ class OptionCMAddons:
     return OptionPanels(self._report)
 
 
+class OptionsHints(Options):
+
+  def hint(self, mappings, jsFncs=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://codemirror.net/demo/complete.html
+      https://www.codegrepper.com/code-examples/whatever/codemirror+hint+on+every+key
+
+    Attributes:
+    ----------
+    :param mappings: List of List.
+    :param jsFncs: List | String. Optional. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    mappings = JsUtils.jsConvertData(mappings, None)
+    self._config('''
+      function(cm, option){
+        return new Promise(function(accept) { 
+          setTimeout(function() {
+            var cursor = cm.getCursor(), line = cm.getLine(cursor.line);  
+            var start = cursor.ch, end = cursor.ch;
+            while (start && /\w/.test(line.charAt(start - 1))) --start
+            while (end < line.length && /\w/.test(line.charAt(end))) ++end
+            var word = line.slice(start, end).toLowerCase(); var comp = %s; %s;
+            for (var i = 0; i < comp.length; i++) if (comp[i].indexOf(word) != -1)
+            return accept({list: comp[i], from: CodeMirror.Pos(cursor.line, start), to: CodeMirror.Pos(cursor.line, end)})
+          }) 
+        })
+      }''' % (mappings, JsUtils.jsConvertFncs(jsFncs, toStr=True)), js_type=True)
+
+  def autocomplete(self):
+    """
+    Description:
+    ------------
+
+    """
+    return '''
+      '''
+
+  def snipet(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://codepen.io/_kkeisuke/embed/BJGpqG?height=450&slug-hash=BJGpqG&default-tab=js%2Cresult&embed-version=2&user=_kkeisuke&name=cp_embed_1
+    """
+
+
 class OptionsCode(Options):
 
   @property
   def addons(self):
+    """
+    Description:
+    ------------
+    The addon directory in the distribution contains a number of reusable components that implement extra editor functionality.
+    
+    Related Pages:
+
+      https://codemirror.net/doc/manual.html#addons
+    """
     return OptionCMAddons(self)
 
   @property
@@ -882,3 +946,14 @@ class OptionsCode(Options):
     Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-active-line')
     self._config(value)
+
+  @property
+  def hintOptions(self):
+    """
+
+    https://codemirror.net/demo/complete.html
+
+    :rtype: OptionsHints
+    """
+    self.addons.hint()
+    return self._config_sub_data("hintOptions", OptionsHints)
