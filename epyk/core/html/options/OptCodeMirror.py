@@ -311,7 +311,7 @@ class OptionsCode(Options):
     Description:
     ------------
     The addon directory in the distribution contains a number of reusable components that implement extra editor functionality.
-    
+
     Related Pages:
 
       https://codemirror.net/doc/manual.html#addons
