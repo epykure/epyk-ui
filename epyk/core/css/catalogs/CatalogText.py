@@ -1,7 +1,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles.classes import CssStylesDivComms, CssStylesText
+from epyk.core.css.styles.classes import CssStylesDivComms, CssStylesText, CssStylesCode
 
 
 class CatalogText(Catalog.CatalogGroup):
@@ -143,3 +143,34 @@ class CatalogComments(Catalog.CatalogGroup):
     ------------
     """
     return self._set_class(CssStylesDivComms.CssContentEditable)
+
+
+class CatalogEditor(Catalog.CatalogGroup):
+
+  def cm(self):
+    """
+    Description:
+    ------------
+    Group for the CSS Class for the codemirror container.
+    """
+    return self._set_class(CssStylesCode.CMEditor)
+
+  def cm_gutter(self):
+    """
+    Description:
+    ------------
+    Group for the CSS Class for the gutter panel.
+
+    :return:
+    """
+    return self._set_class(CssStylesCode.CMEditorGutters)
+
+  def cm_activeline(self):
+    """
+    Description:
+    ------------
+    Group for he CSS Class for the active line background.
+
+    :return:
+    """
+    return self._set_class(CssStylesCode.CMEditorActiveLine)

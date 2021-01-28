@@ -63,6 +63,66 @@ class OptionExtraKeys(Options):
     self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'Ctrl-Q'", js_type=True)
 
 
+class OptionPanels:
+
+  def __init__(self, component):
+    self._component = component
+
+  def add(self, content, htmlCode, position="top"):
+    """
+    Description:
+    ------------
+    Add a panel to the codemirror component.
+
+    Related Pages:
+
+      https://codemirror.net/demo/panel.html
+
+    Attributes:
+    ----------
+    :param content: String. The panel content.
+    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    :param position: String. Optional. The position of the panel on the component.
+    """
+    htmlCode = JsUtils.jsConvertData(htmlCode, None)
+    content = JsUtils.jsConvertData(content, None)
+    position = JsUtils.jsConvertData(position, None)
+    return '''
+      if ((typeof window.editor_panels === 'undefined') || !(%(htmlCode)s in window.editor_panels)){
+        var node = document.createElement("div");
+        var widget, close, label;
+        node.id = %(htmlCode)s;
+        node.className = "panel " + %(position)s;
+        close = node.appendChild(document.createElement("a"));
+        close.setAttribute("class", "remove-panel");
+        close.textContent = "✖";
+        CodeMirror.on(close, "mousedown", function(e) {
+          e.preventDefault(); window.editor_panels[node.id].clear()
+          delete window.editor_panels[node.id]});
+        label = node.appendChild(document.createElement("span"));
+        label.textContent = %(content)s;
+        if (typeof window.editor_panels === 'undefined'){window.editor_panels = {}}
+        window.editor_panels[node.id] = %(editorId)s.addPanel(node, {position: %(position)s, stable: true});
+      }''' % {"htmlCode": htmlCode, "position": position, "content": content, "editorId": self._component.editorId}
+
+  def remove(self, htmlCode):
+    """
+    Description:
+    ------------
+    Remove a panel visible on the codemirror component.
+
+    Related Pages:
+
+      https://codemirror.net/demo/panel.html
+
+    Attributes:
+    ----------
+    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    """
+    htmlCode = JsUtils.jsConvertData(htmlCode, None)
+    return '''window.editor_panels[%(htmlCode)s].clear(); delete window.editor_panels[%(htmlCode)s]''' % {"htmlCode": htmlCode}
+
+
 class OptionCMAddons:
 
   def __init__(self, options):
@@ -104,6 +164,15 @@ class OptionCMAddons:
 
   @packageImport('codemirror-fold', 'codemirror-fold')
   def foldcode(self):
+    """
+    Description:
+    ------------
+    Provides an option foldGutter, which can be used to create a gutter with markers indicating the blocks that can be folded.
+
+    Related Pages:
+
+      https://codemirror.net/demo/folding.html
+    """
     self.__option._config(True, "foldGutter")
     self.__option._config(True, "lineWrapping")
     extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
@@ -126,6 +195,15 @@ class OptionCMAddons:
 
   @packageImport('codemirror-hint', 'codemirror-hint')
   def hint(self):
+    """
+    Description:
+    ------------
+    Provides a framework for showing autocompletion hints.
+
+    Related Pages:
+
+      https://codemirror.net/demo/complete.html
+    """
     extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
     extra_keys.ctrl_space('autocomplete')
     return self._report
@@ -135,6 +213,7 @@ class OptionCMAddons:
     """
     Description:
     ------------
+    Defines an option fullScreen that, when set to true, will make the editor full-screen (as in, taking up the whole browser window).
 
     Related Pages:
 
@@ -158,9 +237,15 @@ class OptionCMAddons:
     """
     return self.__option
 
+  @property
   @packageImport('codemirror-panel')
   def panel(self):
-    pass
+    """
+    Description:
+    ------------
+    Property to the panel add-on features.
+    """
+    return OptionPanels(self._report)
 
 
 class OptionsCode(Options):

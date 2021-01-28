@@ -11,6 +11,9 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptCodeMirror
 from epyk.core.html.options import OptText
 
+# The list of CSS classes
+from epyk.core.css.styles import GrpClsCodeMirror
+
 
 class Console(Html.Html):
   name = 'Console'
@@ -306,13 +309,26 @@ class Cell(Html.Html):
 
 class Code(Html.Html):
   name = 'Code'
-  requirements = ('codemirror',)
+  requirements = ('codemirror', )
 
   def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
     super(Code, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
     self.__options = OptCodeMirror.OptionsCode(self, options)
     self.css({'display': 'block', 'margin': '5px 0'})
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the Style property of the component.
+
+    :rtype: GrpClsCodeMirror.Code
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsCodeMirror.Code(self)
+    return self._styleObj
 
   @property
   def options(self):

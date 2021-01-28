@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from epyk.core import html
 from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
@@ -907,7 +909,8 @@ class Banners(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - 2020, Epyk studio")
+    now = datetime.datetime.now()
+    copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - %s, Epyk studio" % now.year)
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if links is not None:
       for link in links:
