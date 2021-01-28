@@ -107,7 +107,7 @@ class PivotTable(Html.Html):
 class PivotUITable(PivotTable):
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
-    super(PivotUITable, self).__init__(report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile)
+    super(PivotUITable, self).__init__(report, recordSet or [], rows, cols, width, height, htmlCode, helper, options, profile)
     self.__options = OptTable.OptionsPivotUI(self, options)
     # to add all the columns in the table if nothing defined
     self._jsStyles.update({'cols': cols or [], 'rows': rows or []})

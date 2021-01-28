@@ -58,6 +58,15 @@ class Tabulators(object):
     :param options:
     :param profile:
     """
+    self.parent.context.rptObj.jsImports.add('tabulator-numbers')
+    self.parent.context.rptObj.jsImports.add('tabulator-icons')
+    self.parent.context.rptObj.jsImports.add('tabulator-inputs')
+    self.parent.context.rptObj.jsImports.add('tabulator-drop')
+    self.parent.context.rptObj.jsImports.add('tabulator-mutators-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-inputs')
+    self.parent.context.rptObj.jsImports.add('editors-dates')
+    self.parent.context.rptObj.jsImports.add('editors-selects')
+
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:
@@ -76,6 +85,11 @@ class Tabulators(object):
     table.config.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
+    table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams':
+      {"css": {"background": self.parent.context.rptObj.theme.colors[0]}}})
+    table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams':
+      {'colors': [self.parent.context.rptObj.theme.danger[1], self.parent.context.rptObj.theme.greys[-1]],
+       'css': {"background": "white"}, "symbol": "", "format": "%v"}})
     return table
 
   def multi(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
@@ -220,8 +234,14 @@ class Tabulators(object):
     if options is not None:
       table_options_dflts.update(options)
 
+    json = {}
+    if 'json' in table_options_dflts:
+      json = table_options_dflts["json"].fromConfig(htmlCode, {}, page=self.parent.context.rptObj)
+      del table_options_dflts["json"]
+
     table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode,
                                                  table_options_dflts, profile)
+    table._json_config = json
     for c in rows:
       table.add_column(c)
       table.get_column(c).exts.formatters.style(css={"background": self.parent.context.rptObj.theme.colors[0]})
