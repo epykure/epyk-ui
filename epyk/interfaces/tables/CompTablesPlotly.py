@@ -11,9 +11,10 @@ class Plotly(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
       https://plot.ly/javascript/table-subplots/
 
@@ -23,11 +24,11 @@ class Plotly(object):
     :param cols:
     :param rows:
     :param header:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile: 
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     data_rows, _header = [], []
     cols = cols or []

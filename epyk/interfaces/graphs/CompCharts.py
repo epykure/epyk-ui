@@ -28,7 +28,7 @@ class Graphs(object):
     """
     Description:
     ------------
-    Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS
+    Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
 
     Usage:
     -----
@@ -37,7 +37,7 @@ class Graphs(object):
         {"label": 'python', 'value': 12},
         {"label": 'Java', 'value': 5},
         {"label": 'Javascript', 'value': 80}]
-      rptObj.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
+      page.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
 
     Related Pages:
 
@@ -49,8 +49,8 @@ class Graphs(object):
     :param y_column:
     :param x_axis:
     :param title:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     :param profile:
     """
@@ -70,8 +70,8 @@ class Graphs(object):
     Usage:
     -----
 
-      rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
-      rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
+      page.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
+      page.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Related Pages:
 
@@ -82,7 +82,10 @@ class Graphs(object):
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
     :param data: A list of values
     :param options: The chart options
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param column:
+    :param title:
 
     :return: A python Sparkline object
     """
@@ -98,7 +101,8 @@ class Graphs(object):
     """
     Description:
     ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     Usage:
     -----
@@ -172,10 +176,10 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface to the Javascript Billboard module
+    Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
-    This project has been forked from C3.js
+    This project has been forked from C3.js.
 
     Usage:
     -----
@@ -211,7 +215,7 @@ class Graphs(object):
     """
     Description:
     ------------
-    Interface to the Javascript NVD3 library
+    Interface to the Javascript NVD3 library.
 
     Usage:
     -----
@@ -229,7 +233,8 @@ class Graphs(object):
     """
     Description:
     ------------
-    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
+    dc.js is a javascript charting library with native crossfilter support,
+    allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
 
     Usage:
     -----
@@ -261,7 +266,8 @@ class Graphs(object):
     """
     Description:
     ------------
-    Google chart tools are powerful, simple to use, and free. Try out our rich gallery of interactive charts and data tools.
+    Google chart tools are powerful, simple to use, and free.
+    Try out our rich gallery of interactive charts and data tools.
 
     Usage:
     -----
@@ -280,7 +286,7 @@ class Graphs(object):
     """
     Description:
     ------------
-    SVG defines vector-based graphics in XML format
+    SVG defines vector-based graphics in XML format.
 
     Usage:
     -----
@@ -321,7 +327,8 @@ class Chart2d(object):
     """
     Description:
     ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     Usage:
     -----
@@ -339,7 +346,8 @@ class Chart2d(object):
     """
     Description:
     ------------
-    This project is an attempt to build re-usable charts and chart components for d3.js without taking away the power that d3.js gives you.
+    This project is an attempt to build re-usable charts and chart components for d3.js
+    without taking away the power that d3.js gives you.
 
     Usage:
     -----
@@ -357,7 +365,8 @@ class Chart2d(object):
     """
     Description:
     ------------
-    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
+    dc.js is a javascript charting library with native crossfilter support, allowing highly
+    efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
 
     Usage:
     -----
@@ -480,10 +489,10 @@ class Chart2d(object):
     """
     Description:
     ------------
-    Interface to the Javascript Billboard module
+    Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
-    This project has been forked from C3.js
+    This project has been forked from Billboard.js.
 
     Usage:
     -----
@@ -501,7 +510,7 @@ class Chart2d(object):
     """
     Description:
     ------------
-    Interface for the Vis library
+    Interface for the Vis library.
 
     Usage:
     -----
@@ -525,7 +534,8 @@ class Chart3d(object):
     """
     Description:
     ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library. plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     Usage:
     -----
@@ -543,7 +553,7 @@ class Chart3d(object):
     """
     Description:
     ------------
-    Interface for the Vis library
+    Interface for the Vis library.
 
     Usage:
     -----

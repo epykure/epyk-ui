@@ -19,16 +19,19 @@ class ChartGoogle(object):
 
       https://developers.google.com/chart/interactive/docs/gallery/linechart
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'LineChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -47,16 +50,19 @@ class ChartGoogle(object):
 
       https://developers.google.com/chart/interactive/docs/gallery/columnchart
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'ColumnChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts,
@@ -73,20 +79,23 @@ class ChartGoogle(object):
     Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
     Like all Google charts, bar charts display tooltips when the user hovers over the data. For a vertical version of this chart, see the column chart.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/barchart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'BarChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -102,20 +111,23 @@ class ChartGoogle(object):
 
     Google scatter charts are rendered within the browser using SVG or VML depending on browser capabilities.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/scatterchart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'ScatterChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -134,20 +146,23 @@ class ChartGoogle(object):
     All bins are equal width and have a height proportional to the number of data points in the bin.
     In other respects, histograms are similar to column charts.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/histogram
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'Histogram'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -161,20 +176,23 @@ class ChartGoogle(object):
     ------------
     An area chart that is rendered within the browser using SVG or VML. Displays tips when hovering over points.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/areachart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'AreaChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -191,20 +209,23 @@ class ChartGoogle(object):
     A bubble chart is used to visualize a data set with two to four dimensions.
     The first two dimensions are visualized as coordinates, the third as color and the fourth as size.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/bubblechart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'BubbleChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -218,20 +239,23 @@ class ChartGoogle(object):
     ------------
     A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/piechart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'PieChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -244,20 +268,23 @@ class ChartGoogle(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/treemap
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'TreeMap'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -272,20 +299,23 @@ class ChartGoogle(object):
     A candlestick chart is used to show an opening and closing value overlaid on top of a total variance. Candlestick charts are often used to show stock value behavior.
     In this chart, items where the opening value is less than the closing value (a gain) are drawn as filled boxes, and items where the opening value is more than the closing value (a loss) are drawn as hollow boxes.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/candlestickchart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'CandlestickChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -300,20 +330,23 @@ class ChartGoogle(object):
     ------------
     A gauge with a dial, rendered within the browser using SVG or VML.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/gauge
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'Gauge'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
@@ -331,20 +364,23 @@ class ChartGoogle(object):
       The markers mode uses circles to designate regions that are scaled according to a value that you specify.
       The text mode labels the regions with identifiers (e.g., "Russia" or "Asia").
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://developers.google.com/chart/interactive/docs/gallery/geochart
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'GeoChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})

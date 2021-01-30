@@ -9,7 +9,14 @@ class AgGrid(object):
 
   def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(300, 'px'), htmlCode=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param records:
     :param cols:
     :param rows:

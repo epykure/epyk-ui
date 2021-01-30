@@ -26,6 +26,9 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param recordSet:
@@ -50,14 +53,15 @@ class Lists(object):
     """
     Description:
     ------------
-    HTML Select component
+    HTML Select component.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
+      page.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
                       options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
       s.selected = "B"
-      s.change(rptObj.js.console.log(s.dom.val))
+      s.change(page.js.console.log(s.dom.val))
 
     Underlying HTML Objects:
 
@@ -66,8 +70,8 @@ class Lists(object):
     Related Pages:
 
       https://silviomoreto.github.io/bootstrap-select/examples/
-    https://www.npmjs.com/package/bootstrap-select-v4
-    https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
+      https://www.npmjs.com/package/bootstrap-select-v4
+      https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
     Attributes:
     ----------
@@ -124,7 +128,10 @@ class Lists(object):
     """
     Description:
     ------------
-    HTML Select component
+    HTML Select component.
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -133,8 +140,8 @@ class Lists(object):
     Related Pages:
 
       https://silviomoreto.github.io/bootstrap-select/examples/
-    https://www.npmjs.com/package/bootstrap-select-v4
-    https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
+      https://www.npmjs.com/package/bootstrap-select-v4
+      https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
     Attributes:
     ----------
@@ -161,9 +168,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -172,7 +180,7 @@ class Lists(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    http://astronautweb.co/snippet/font-awesome/
+      http://astronautweb.co/snippet/font-awesome/
     """
     html_item = html.HtmlList.Li(self.context.rptObj, text)
     return html_item
@@ -183,9 +191,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -194,7 +203,7 @@ class Lists(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    http://astronautweb.co/snippet/font-awesome/
+      http://astronautweb.co/snippet/font-awesome/
 
     Templates:
 
@@ -223,6 +232,9 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
@@ -245,6 +257,9 @@ class Lists(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -277,7 +292,14 @@ class Lists(object):
   def pills(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None,
             profile=None, helper=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param records:
     :param width:
     :param height:
@@ -298,6 +320,9 @@ class Lists(object):
     Description:
     ------------
     Special list configuration for a list of box with a title with a text and a list of icons
+
+    Usage:
+    -----
 
     Templates:
 
@@ -331,9 +356,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.lists.numbers(["A", "B"])
+      page.ui.lists.numbers(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -342,7 +368,7 @@ class Lists(object):
     Related Pages:
 
       https://www.w3schools.com/html/html_lists.asp
-    https://www.w3.org/wiki/CSS/Properties/list-style-type
+      https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -355,10 +381,15 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlList.List`
 
+    Attributes:
+    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -383,6 +414,11 @@ class Lists(object):
 
       - :class:`epyk.core.html.HtmlList.List`
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -402,6 +438,9 @@ class Lists(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -437,6 +476,9 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlList.List`
@@ -471,9 +513,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.lists.squares(["A", "B"])
+      page.ui.lists.squares(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -506,9 +549,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      l = rptObj.ui.lists.groups(["AWW", "B"])
+      l = page.ui.lists.groups(["AWW", "B"])
       l.add_list(["D", "E"], category="Test")
 
     Underlying HTML Objects:
@@ -517,8 +561,8 @@ class Lists(object):
 
     Related Pages:
 
-    http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
-    http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
+      http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
+      http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
 
     Attributes:
     ----------
@@ -550,10 +594,11 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-      rptObj.ui.lists.tree(data)
+      page.ui.lists.tree(data)
 
     Underlying HTML Objects:
 
@@ -618,10 +663,11 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
-      checks = rptObj.ui.lists.checklist(data)
+      checks = page.ui.lists.checklist(data)
 
     Underlying HTML Objects:
 
@@ -663,9 +709,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+      page.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Underlying HTML Objects:
 
@@ -712,9 +759,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+      page.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Underlying HTML Objects:
 
@@ -757,6 +805,9 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
@@ -792,6 +843,9 @@ class Lists(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param recordSet:
@@ -810,9 +864,10 @@ class Lists(object):
     ------------
     Add a chip (filter) html component
 
-    Usage::
+    Usage:
+    -----
 
-      chips = rptObj.ui.chips([])
+      chips = page.ui.chips([])
 
     Underlying HTML Objects:
 

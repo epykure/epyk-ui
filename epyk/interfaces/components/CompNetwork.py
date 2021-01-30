@@ -13,7 +13,7 @@ class Network(object):
   def __init__(self, context):
     self.context = context
 
-  def comments(self, htmlCode, recordSet=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
+  def comments(self, htmlCode, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
     Description:
     ------------
@@ -37,10 +37,10 @@ class Network(object):
     Attributes:
     ----------
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param recordSet:
+    :param record: List of dict. The Python list of dictionaries.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
@@ -48,9 +48,9 @@ class Network(object):
     dflt_options = {'readonly': True, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
-    return html.HtmlNetwork.Comments(self.context.rptObj, recordSet, width, height, htmlCode, dflt_options, profile)
+    return html.HtmlNetwork.Comments(self.context.rptObj, record, width, height, htmlCode, dflt_options, profile)
 
-  def chat(self, htmlCode, recordSet=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
+  def chat(self, htmlCode, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
     Description:
     ------------
@@ -69,10 +69,10 @@ class Network(object):
     Attributes:
     ----------
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param recordSet:
+    :param record: List of dict. The Python list of dictionaries.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
@@ -80,7 +80,7 @@ class Network(object):
     dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
-    return html.HtmlNetwork.Chat(self.context.rptObj, recordSet, width, height, htmlCode, dflt_options, profile)
+    return html.HtmlNetwork.Chat(self.context.rptObj, record, width, height, htmlCode, dflt_options, profile)
 
   def bot(self, htmlCode, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
@@ -101,10 +101,9 @@ class Network(object):
     Attributes:
     ----------
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param width:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
@@ -129,7 +128,7 @@ class Network(object):
     Usage:
     -----
 
-      report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
+      page.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
     Underlying HTML Objects:
 
@@ -151,7 +150,7 @@ class Network(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -181,7 +180,7 @@ class Network(object):
     Usage:
     -----
 
-      rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
+      page.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
     Underlying HTML Objects:
 
@@ -198,7 +197,7 @@ class Network(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('danger', value, width, height, htmlCode, options, profile)
 
@@ -213,7 +212,7 @@ class Network(object):
     Usage:
     -----
 
-      rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
+      page.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
     Underlying HTML Objects:
 
@@ -230,7 +229,7 @@ class Network(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('info', value, width, height, htmlCode, options, profile)
 
@@ -245,7 +244,7 @@ class Network(object):
     Usage:
     -----
 
-      rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
+      page.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
     Underlying HTML Objects:
 
@@ -277,7 +276,7 @@ class Network(object):
     Usage:
     -----
 
-      rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
+      page.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
     Underlying HTML Objects:
 
@@ -294,7 +293,7 @@ class Network(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     return self.alert('warning', value, width, height, htmlCode, options, profile)
 
@@ -306,15 +305,15 @@ class Network(object):
     Usage:
     -----
 
-      b = rptObj.ui.button("Display")
-      n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
+      b = page.ui.button("Display")
+      n = page.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
       b.click(n.jsGenerate("Updated content", isPyData=True))
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlMessaging.News`
 
-    Temapltes:
+    Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/st_news.py
 
@@ -325,7 +324,7 @@ class Network(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -339,6 +338,10 @@ class Network(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param img: String. The image path on the server or locally to be used
@@ -346,7 +349,7 @@ class Network(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -355,7 +358,8 @@ class Network(object):
       dflt_options.update(options)
     return html.HtmlNetwork.Room(self.context.rptObj, img, width, height, htmlCode, dflt_options, profile)
 
-  def dropfile(self, placeholder='', delimiter="\t", width=(100, '%'), height=('auto', ''), tooltip=None, htmlCode=None, options=None, profile=None):
+  def dropfile(self, placeholder='', delimiter="\t", width=(100, '%'), height=('auto', ''), tooltip=None, htmlCode=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -370,19 +374,19 @@ class Network(object):
     Usage:
     -----
 
-      rptObj.ui.network.dropfile()
+      page.ui.network.dropfile()
 
     Related Pages:
 
 
     Attributes:
     ----------
-    :param placeholder:
-    :param delimiter: String. Teh column delimiter
-    :param width:
-    :param height:
+    :param placeholder: String. Optional. The placeholder text when input empty.
+    :param delimiter: String. Optional. The column delimiter.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param tooltip: String. Optional. A string with the value of the tooltip
-    :param htmlCode:
+    :param htmlCode: String. Optional. The id for this component
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
@@ -404,14 +408,15 @@ class Network(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. The id for this component
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if icon is None:
       icon = "fas fa-file-upload"
     file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, options=options, profile=profile)
     return file
 
-  def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+  def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None,
+               profile=None):
     """
     Description:
     ------------
@@ -423,12 +428,12 @@ class Network(object):
     ----------
     :param name:
     :param icon: String. Optional. The component icon content from font-awesome references
-    :param path:
+    :param path: String. Optional. String. The image file path.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. The id for this component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     mapped_file = {"excel": 'far fa-file-excel', 'pdf': 'far fa-file-pdf', 'code': 'far fa-file-code', 'csv': 'fas fa-file-csv',
                    'word': 'fa-file-word'}
@@ -461,9 +466,12 @@ class Network(object):
 
     Attributes:
     ----------
+    :param image:
+    :param name:
+    :param path:
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param size: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param options: Dictionary. Optional. Specific Python options available for this component
     """
     dflt_options = {'readonly': False, 'markdown': True, 'dated': True}

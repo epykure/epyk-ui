@@ -28,14 +28,15 @@ class Calendar(object):
 
     Attributes:
     ----------
-    :param month:
+    :param month: Integer. Optional. The month number.
     :param content:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param htmlCode:
-    :param profile:
+    :param year:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. The text-align property within this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -92,9 +93,9 @@ class Calendar(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. The text-align property within this component
-    :param options: Dictionary. Optional. Specific Python options available for this component
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -117,11 +118,11 @@ class Calendar(object):
     ----------
     :param year:
     :param content:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     content = content or {}
@@ -146,7 +147,7 @@ class Calendar(object):
     row[today.month-1].style.css.border = "1px solid %s" % self.context.rptObj.theme.success[0]
     return row
 
-  def legend(self, records, width=(None, "%"), height=(None, "px"), align=None, options=None, profile=None):
+  def legend(self, record, width=(None, "%"), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -161,22 +162,22 @@ class Calendar(object):
 
     Attributes:
     ----------
-    :param records:
+    :param record: List of dict. The Python list of dictionaries.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. The text-align property within this component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     data = []
-    if isinstance(records, dict):
-      for k, v in records.items():
+    if isinstance(record, dict):
+      for k, v in record.items():
         data.append({"name": k, "color": v})
     else:
-      for i, rec in enumerate(records):
+      for i, rec in enumerate(record):
         if isinstance(rec, dict):
           row = dict(rec)
-          row['color'] = self.context.rptObj.theme.charts[i] if not 'color' in rec else rec['color']
+          row['color'] = self.context.rptObj.theme.charts[i] if 'color' not in rec else rec['color']
         else:
           row = {"name": rec, "color": self.context.rptObj.theme.charts[i]}
         data.append(row)
@@ -204,13 +205,13 @@ class Calendar(object):
 
     Attributes:
     ----------
-    :param month_period: Integer. Number of months of forecast
+    :param month_period: Integer. Number of months of forecast.
     :param content:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param position:
-    :param options:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     year = today.year
@@ -242,7 +243,7 @@ class Calendar(object):
     Related Pages:
 
       https://stackoverflow.com/questions/5179760/add-events-to-google-calendar-yahoo-calendar-outlook-and-ical
-    https://codepen.io/vlemoine/pen/MLwygX
+      https://codepen.io/vlemoine/pen/MLwygX
 
     TODO: improve the time management in this component
 
@@ -255,8 +256,8 @@ class Calendar(object):
     :param location:
     :param icon:
     :param text:
-    :param options:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     icon = self.context.rptObj.ui.icons.awesome(icon)
     icon.icon.style.css.font_factor(5)
@@ -286,7 +287,7 @@ class Calendar(object):
     Related Pages:
 
       https://stackoverflow.com/questions/5179760/add-events-to-google-calendar-yahoo-calendar-outlook-and-ical
-    https://codepen.io/vlemoine/pen/MLwygX
+      https://codepen.io/vlemoine/pen/MLwygX
 
     TODO: improve the time management in this component
 
@@ -299,8 +300,8 @@ class Calendar(object):
     :param location:
     :param icon:
     :param text:
-    :param options:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     # Default options
     calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}
@@ -334,12 +335,12 @@ class Calendar(object):
     :param text:
     :param value:
     :param group:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param tooltip:
-    :param profile:
-    :param options:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
                                       profile=profile, options=options)

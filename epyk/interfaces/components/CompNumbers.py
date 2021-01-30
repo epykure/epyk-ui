@@ -25,9 +25,10 @@ class Numbers(object):
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.span("Test")
+      page.ui.texts.span("Test")
 
     Underlying HTML Objects:
 
@@ -49,7 +50,8 @@ class Numbers(object):
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
     """
     if width is None:
@@ -68,9 +70,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -85,7 +88,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -106,9 +109,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.percent(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.percent(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -123,7 +127,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -139,9 +143,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.pound(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.pound(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -156,7 +161,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -172,9 +177,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.euro(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.euro(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -189,7 +195,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -205,9 +211,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.dollar(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.dollar(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -222,7 +229,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -238,9 +245,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.money(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.money(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -255,7 +263,7 @@ class Numbers(object):
     :param color:
     :param tooltip:
     :param htmlCode:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
@@ -271,6 +279,9 @@ class Numbers(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
@@ -279,7 +290,7 @@ class Numbers(object):
     ----------
     :param value:
     :param profile:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width:
     :param height:
     :param htmlCode:
@@ -294,6 +305,10 @@ class Numbers(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
@@ -302,7 +317,7 @@ class Numbers(object):
     ----------
     :param value:
     :param profile:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width:
     :param height:
     :param htmlCode:
@@ -316,9 +331,10 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+      page.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
     Underlying HTML Objects:
 
@@ -330,7 +346,7 @@ class Numbers(object):
     :param previous:
     :param color:
     :param label:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param profile:
     """

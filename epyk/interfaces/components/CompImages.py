@@ -25,7 +25,6 @@ class Images(object):
 
       page.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
-
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlImage.Image`
@@ -41,15 +40,15 @@ class Images(object):
 
     Attributes:
     ----------
-    :param image: String. The image file name
-    :param path: Optional. String. The image file path
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param options: Optional. Specific Python options available for this component
+    :param image: String. Optional. The image file name.
+    :param path: String. Optional. Optional. TString. The image file path.
+    :param width: Tuple. Optional. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Optional. Tuple. The component height in pixel or percentage.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -82,14 +81,14 @@ class Images(object):
     ----------
     :param image:
     :param caption:
-    :param path: Optional. String. The image file path
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param path: String. Optional. String. The image file path.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -104,7 +103,7 @@ class Images(object):
       container.style.css.display = "inline-block"
     return container
 
-  def container(self, component, max_width=(900, 'px'), align="center", profile=None, options=None):
+  def container(self, components, max_width=(900, 'px'), align="center", profile=None, options=None):
     """
     Description:
     ------------
@@ -116,14 +115,14 @@ class Images(object):
 
     Attributes:
     ----------
-    :param component: List of HTML Component. internal components
-    :param max_width: Integer or tuple. The maximum width for this container
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param components: List of HTML Component. internal components.
+    :param max_width: Integer | tuple. The maximum width for this container.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     max_width = Arguments.size(max_width, unit="%")
-    container = self.context.rptObj.ui.div(component, profile=profile, options=options)
+    container = self.context.rptObj.ui.div(components, profile=profile, options=options)
     container.style.css.max_width = max_width[0]
     container.style.css.text_align = align
     if align == 'center':
@@ -142,15 +141,15 @@ class Images(object):
 
     Attributes:
     ----------
-    :param url:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param url: String. Optional. The link to the gallery.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param size:
     :param margin: Integer. Optional. The CSS margin properties are used to create space around elements, outside of any defined borders.
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param position: String. Optional. A string with the vertical position of the component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param position: String. Optional. A string with the vertical position of the component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width), htmlCode=htmlCode, options=options, profile=profile)
     div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
@@ -174,15 +173,15 @@ class Images(object):
 
     Attributes:
     ----------
-    :param url:
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param url: String. Optional. The link to the gallery.
+    :param width: Optional. Tuple. The component width in pixel or percentage.
+    :param height: Optional. Tuple. The component height in pixel or percentage.
     :param size:
     :param margin:
     :param align:
     :param position:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     # report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
     #                helper, options, profile
@@ -210,13 +209,13 @@ class Images(object):
 
     Attributes:
     ----------
-    :param url:
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param url: String. Optional. The link to the gallery.
+    :param width: Optional. Tuple. The component width in pixel or percentage.
+    :param height: Optional. Tuple. The component height in pixel or percentage.
     :param top:
     :param left:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     top = Arguments.size(top, 'px')
     left = Arguments.size(left, 'px')
@@ -243,13 +242,13 @@ class Images(object):
 
     Attributes:
     ----------
-    :param video_id:
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param video_id: String. Optional. The youtube video ID.
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width), Arguments.size(height, 'px'), align, htmlCode, profile, options)
 
@@ -274,7 +273,7 @@ class Images(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
-    https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+      https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
     Templates:
 
@@ -282,14 +281,14 @@ class Images(object):
 
     Attributes:
     ----------
-    :param image: String. The image file name
-    :param path: Optional. String. The image file path
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param image: String. Optional. The image file name.
+    :param path: String. Optional. String. The image file path.
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -307,7 +306,7 @@ class Images(object):
     """
     Description:
     ------------
-    Generate or load an avatar
+    Generate or load an avatar.
 
     Usage:
     -----
@@ -328,14 +327,14 @@ class Images(object):
     ----------
     :param text:
     :param image:
-    :param path:
+    :param path: String. Optional. String. The image file path.
     :param status:
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -388,7 +387,8 @@ class Images(object):
       div.style.css.display = "block"
     return div
 
-  def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):
+  def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px"), htmlCode=None,
+               profile=None, options=None):
     """
     Description:
     ------------
@@ -412,18 +412,21 @@ class Images(object):
     :param name:
     :param title:
     :param text:
-    :param url:
-    :param path:
-    :param width:
-    :param height:
+    :param url: String. Optional. The link to the gallery.
+    :param path: String. Optional. String. The image file path.
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-    img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path)
+    img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path, profile=profile)
     title = self.context.rptObj.ui.title(title, level=2)
-    highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'))
+    highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'), profile=profile)
     paragraph = self.context.rptObj.ui.texts.paragraph(text)
-    div = self.context.rptObj.ui.layouts.div([highlight, img, title, paragraph], width=width, height=height)
+    div = self.context.rptObj.ui.layouts.div([highlight, img, title, paragraph], width=width, height=height, profile=profile)
     highlight.css({"position": "absolute", 'left': 0, "background-color": self.context.rptObj.theme.colors[-1],
                    "color": self.context.rptObj.theme.greys[0], 'padding': "0 2px"})
     div.style.css.margin = 2
@@ -438,7 +441,7 @@ class Images(object):
     Description:
     ------------
     Advance image with mask and gallery link.
-    This will display some details when the mouse is on the container
+    This will display some details when the mouse is on the container.
 
     Usage:
     -----
@@ -456,15 +459,15 @@ class Images(object):
 
     Attributes:
     ----------
-    :param image: String. The image file name
-    :param text: Optional. String. The image file path
-    :param title: String. The image title displayed in to the mask on mouse hover the container
-    :param url: String. The link to the gallery
-    :param path: Optional. String. The image file path
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel or percentage
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param image: String. Optional. The image file name.
+    :param text: String. Optional. String. The image file path.
+    :param title: String. Optional. The image title displayed in to the mask on mouse hover the container.
+    :param url: String. Optional. The link to the gallery.
+    :param path: String. Optional. String. The image file path.
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -498,13 +501,13 @@ class Images(object):
 
     Attributes:
     ----------
-    :param images: List. With the different picture file names
-    :param path: String. The common path for the pictures
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel
-    :param selected: Integer. The selected item index
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param images: List. With the different picture file names.
+    :param path: String. Optional. The common path for the pictures.
+    :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Tuple. Optional. Tuple. The component height in pixel.
+    :param selected: Integer. Optional. The selected item index.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
@@ -514,7 +517,7 @@ class Images(object):
     html_i = html.HtmlImage.ImgCarousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
     return html_i
 
-  def emoji(self, symbole=None, top=(20, 'px'), options=None, profile=None):
+  def emoji(self, symbol=None, top=(20, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -538,13 +541,13 @@ class Images(object):
 
     Attributes:
     ----------
-    :param symbole:
-    :param top:
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param symbol: String. Optional.
+    :param top: Tuple. Optional.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     top = Arguments.size(top, "px")
-    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, options, profile)
+    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbol, top, options, profile)
     return html_emoji
 
   def icon(self, icon=None, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
@@ -569,14 +572,14 @@ class Images(object):
     ----------
     :param icon: String. Optional. The component icon content from font-awesome references
     :param family:
-    :param htmlCode:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param align: String. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -591,7 +594,7 @@ class Images(object):
     """
     Description:
     ------------
-    Display a badge component using Bootstrap
+    Display a badge component using Bootstrap.
 
     Usage:
     -----
@@ -618,17 +621,17 @@ class Images(object):
 
     Attributes:
     ----------
-    :param text: The content of the badge
-    :param label: Optional, The label to display close to the badge
-    :param icon: Optional, A String with the icon to display from font-awesome
-    :param background_color: Optional, The background color of the badge
-    :param color: Optional, The text color of the badge
-    :param url:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param tooltip: Optional, The text to display in the tooltip
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary, A boolean to store the performances for each components
+    :param text: String. Optional. The content of the badge.
+    :param label: String. Optional. The label to display close to the badge.
+    :param icon: String. Optional. A String with the icon to display from font-awesome.
+    :param background_color: String. Optional. The background color of the badge.
+    :param color: String. Optional. The text color of the badge.
+    :param url: String. Optional. The underlying url link for the badge.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param tooltip: String. Optional, The text to display in the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary, A boolean to store the performances for each components.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -644,7 +647,7 @@ class Images(object):
     """
     Description:
     ------------
-    Simple vignette to display a color with it is code
+    Simple vignette to display a color with it is code.
 
     TODO: Return the hex code of the color when dom.content used
 
@@ -659,13 +662,13 @@ class Images(object):
 
     Attributes:
     ----------
-    :param code: String. The color code
-    :param color: String. The font color
-    :param width: Tuple. The size with its unit
-    :param height: Tuple. The size with its unit
-    :param options: Dictionary. The object options
-    :param helper: String. Optional. A tooltip helper
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param code: String. The color code.
+    :param color: String. Optional. The font color.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")

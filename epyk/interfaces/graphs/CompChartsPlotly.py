@@ -12,21 +12,24 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plot.ly/javascript/
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+      https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     Attributes:
     ----------
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': 'lines+markers'})
@@ -42,6 +45,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/bar-charts/
@@ -51,11 +57,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
@@ -70,6 +76,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/bar-charts/
@@ -79,11 +88,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None, 'attrs': {'orientation': 'h'}})
@@ -100,6 +109,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/text-and-annotations/
@@ -109,11 +121,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'text_column': text_column, 'type': 'scatter',
@@ -133,21 +145,24 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plot.ly/javascript/
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+      https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     Attributes:
     ----------
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
@@ -162,6 +177,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/line-and-scatter/
@@ -171,11 +189,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
@@ -187,19 +205,25 @@ class Plotly2D(object):
 
   def histogram(self, record, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
+      https://plot.ly/javascript/
 
     :param record:
-    :param profile:
-    :param width:
-    :param height:
-    :param htmlCode:
-
-    :return:
+    :param y_columns:
+    :param x_columns:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
 
     :rtype: graph.GraphPlotly.Chart
     """
@@ -221,6 +245,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/pie-charts/
@@ -230,11 +257,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'pie', 'marker': {'colors': self.parent.context.rptObj.theme.charts}, 'mode': None, 'attrs': {'orientation': 'h'}})
@@ -249,7 +276,11 @@ class Plotly2D(object):
     """
     Description:
     ------------
-    How to make a D3.js-based filled area plot in javascript. An area chart displays a solid color between the traces of a graph.
+    How to make a D3.js-based filled area plot in javascript.
+    An area chart displays a solid color between the traces of a graph.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -260,11 +291,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter", 'attrs': {'fill': "tozeroy"}})
@@ -280,7 +311,11 @@ class Plotly2D(object):
     """
     Description:
     ------------
-    How to make a D3.js-based filled area plot in javascript. An area chart displays a solid color between the traces of a graph.
+    How to make a D3.js-based filled area plot in javascript.
+    An area chart displays a solid color between the traces of a graph.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -291,11 +326,11 @@ class Plotly2D(object):
     :param record: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
@@ -310,6 +345,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/indicator/
@@ -317,11 +355,11 @@ class Plotly2D(object):
     Attributes:
     ----------
     :param value:
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'type': 'indicator', 'mode': "number"})
@@ -334,6 +372,9 @@ class Plotly2D(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://plotly.com/javascript/indicator/
@@ -341,11 +382,12 @@ class Plotly2D(object):
     Attributes:
     ----------
     :param value:
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param delta:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'type': 'indicator', 'mode': "number+delta", "delta": {'reference': delta}})
@@ -360,9 +402,11 @@ class Plotly2D(object):
     ------------
     How to make a D3.js-based gauge chart in javascript.
 
+    Usage:
+    -----
 
-    gauge = rptObj.ui.charts.plotly.gauge(2000)
-    gauge.data.gauge.axis.range = [0, 5000]
+      gauge = page.ui.charts.plotly.gauge(2000)
+      gauge.data.gauge.axis.range = [0, 5000]
 
     Related Pages:
 
@@ -371,11 +415,11 @@ class Plotly2D(object):
     Attributes:
     ----------
     :param value:
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'type': 'indicator', 'mode': "gauge+number"})
@@ -384,6 +428,24 @@ class Plotly2D(object):
     return gau
 
   def scatterpolar(self, records, r_columns=None, theta_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param records:
+    :param r_columns:
+    :param theta_axis:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     all_series = []
     for c in r_columns:
       series = {"r": [], "theta": []}
@@ -398,7 +460,24 @@ class Plotly2D(object):
     return spolar_chart
 
   def box(self, records, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param records:
+    :param y_columns:
+    :param x_columns:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     axis, cols = ('y', y_columns) if y_columns is not None else ('x', x_columns)
     series = []
     for c in cols:
@@ -410,16 +489,26 @@ class Plotly2D(object):
 
   def group_box(self, records, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
-    https://plot.ly/javascript/box-plots/
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://plot.ly/javascript/box-plots/
+
+    Attributes:
+    ----------
     :param records:
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     series, x = [[] for _ in range(len(y_columns))], []
     for rec in records:
@@ -431,24 +520,31 @@ class Plotly2D(object):
       box_chart.add_trace({'y': s, 'x': x})
     return box_chart
 
-  def candlestick(self, records, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
+                  height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-    data = rptObj.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
-    sc = rptObj.ui.charts.plotly.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
+    Usage:
+    -----
 
+      data = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+      sc = page.ui.charts.plotly.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
+
+    Attributes:
+    ----------
     :param records:
     :param closes:
     :param highs:
     :param lows:
     :param opens:
     :param x_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :return:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     all_series = []
     for i, c in enumerate(closes):
@@ -476,18 +572,24 @@ class Plotly3D(object):
   def scatter(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/3d-line-plots/
+    Related Pages:
 
+      https://plot.ly/javascript/3d-line-plots/
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'markers'})
@@ -501,18 +603,24 @@ class Plotly3D(object):
   def line(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/3d-line-plots/
+    Related Pages:
 
+      https://plot.ly/javascript/3d-line-plots/
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines'})
@@ -526,18 +634,24 @@ class Plotly3D(object):
   def marker(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/3d-line-plots/
+    Related Pages:
 
+      https://plot.ly/javascript/3d-line-plots/
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines+markers'})
@@ -553,23 +667,23 @@ class Plotly3D(object):
     """
     Description:
     ------------
-    Create ribbons on the x axis
+    Create ribbons on the x axis.
 
     Related Pages:
 
       https://plot.ly/javascript/ribbon-plots/
 
-    ttributes:
+    Attributes:
     ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'delta': {"x": 1, 'y': 1, 'z': 0}}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines+markers'})
@@ -584,9 +698,15 @@ class Plotly3D(object):
   def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"),
              height=(500, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/3d-mesh/
+    Related Pages:
 
+      https://plot.ly/javascript/3d-mesh/
+
+    Attributes:
+    ----------
     :param records:
     :param intensity:
     :param x:
@@ -595,11 +715,11 @@ class Plotly3D(object):
     :param i:
     :param j:
     :param k:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = {"intensity": [], 'x': [], 'y': [], 'z': []}
     if i is not None:
@@ -626,16 +746,20 @@ class Plotly3D(object):
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'type': 'surface', 'mode': ''})
@@ -647,7 +771,19 @@ class Plotly3D(object):
     return surf_chart
 
   def maps(self, records, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
+    :param records:
+    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     options = options or {}
     options.update({'type': 'surface', 'mode': ''})
     surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options, htmlCode, profile)

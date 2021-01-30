@@ -410,11 +410,13 @@ class Code(Html.Html):
     self.attr["placeholder"] = text
     return self
 
-  # extraKeys: { "Ctrl-Space": "autocomplete" }
   _js__builder__ = ''' 
-       window["editor_"+ htmlObj.id] = CodeMirror.fromTextArea(htmlObj, options);
-       window["editor_"+ htmlObj.id].setValue(data); Object.keys(options).forEach(
-          function(key){ window["editor_"+ htmlObj.id].setOption(key, options[key])})
+       var editor_alias = "editor_"+ htmlObj.id;
+       if (typeof window[editor_alias] === 'undefined'){
+          window[editor_alias] = CodeMirror.fromTextArea(htmlObj, options)}
+       window[editor_alias].setValue(data); 
+       Object.keys(options).forEach(
+          function(key){ window[editor_alias].setOption(key, options[key])})
        '''
 
   def build(self, data=None, options=None, profile=False):

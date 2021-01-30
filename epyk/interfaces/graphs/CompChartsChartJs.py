@@ -20,9 +20,10 @@ class ChartJs(object):
     """
     Description:
     ------------
-    Display a line chart from ChartJs
+    Display a line chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -30,12 +31,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%').
-    :param height: Tuple. The height of the component in the page, default (330, "px").
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -59,9 +60,10 @@ class ChartJs(object):
     """
     Description:
     ------------
-    Display a line chart from ChartJs
+    Display a line chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -69,12 +71,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%').
-    :param height: Tuple. The height of the component in the page, default (330, "px").
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -87,9 +89,10 @@ class ChartJs(object):
     """
     Description:
     ------------
-    Display a pie chart from ChartJs
+    Display a pie chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -97,12 +100,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile: Boolean. To set the profiling.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean. Optional. To set the profiling.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -126,7 +129,8 @@ class ChartJs(object):
     ------------
     Display a donut chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -134,12 +138,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -165,7 +169,8 @@ class ChartJs(object):
     ------------
     Display a area chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -173,12 +178,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -204,7 +209,8 @@ class ChartJs(object):
     ------------
     Display a step chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -212,12 +218,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -244,7 +250,8 @@ class ChartJs(object):
     ------------
     Display a bar chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -252,12 +259,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -286,7 +293,8 @@ class ChartJs(object):
     ------------
     Display a bar chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -294,12 +302,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -361,7 +369,8 @@ class ChartJs(object):
     ------------
     Display a horizontal bar chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -369,12 +378,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -400,7 +409,8 @@ class ChartJs(object):
     ------------
     Display a multi chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -408,12 +418,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%').
-    :param height: Tuple. The height of the component in the page, default (330, "px").
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -440,7 +450,8 @@ class ChartJs(object):
     ------------
     Display a scatter chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -448,12 +459,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -478,7 +489,8 @@ class ChartJs(object):
     ------------
     Display a bubble chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -486,12 +498,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -516,7 +528,8 @@ class ChartJs(object):
     ------------
     Display a bubble chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -524,12 +537,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -554,7 +567,8 @@ class ChartJs(object):
     ------------
     Display a bubble chart from ChartJs.
 
-    Example
+    Usage:
+    -----
 
     Related Pages:
 
@@ -562,12 +576,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
@@ -590,6 +604,9 @@ class ChartJs(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

@@ -31,6 +31,9 @@ class Tags(object):
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param text: String with the content to be added to the component

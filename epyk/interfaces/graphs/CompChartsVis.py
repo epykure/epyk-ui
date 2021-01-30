@@ -16,6 +16,9 @@ class Vis2D(object):
 
     Graph2d uses HTML DOM and SVG for rendering. This allows for flexible customization using css styling.
 
+    Usage:
+    -----
+
     Related Pages:
     --------------
     http://www.chartjs.org/
@@ -26,9 +29,11 @@ class Vis2D(object):
     :param record:
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xy(record, y_columns, x_axis)
     line_chart = graph.GraphVis.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -43,18 +48,24 @@ class Vis2D(object):
     Description:
     -----------
 
-    elated Pages:
+    Usage:
+    -----
+
+    Related Pages:
     --------------
-    http://www.chartjs.org/
+
+      http://www.chartjs.org/
 
     Attributes:
     ----------
     :param record:
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xy(record, y_columns, x_axis)
     line_chart = graph.GraphVis.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -70,18 +81,24 @@ class Vis2D(object):
     Description:
     -----------
 
-    elated Pages:
+    Usage:
+    -----
+
+    Related Pages:
     --------------
-    http://www.chartjs.org/
+
+      http://www.chartjs.org/
 
     Attributes:
     ----------
     :param record:
     :param y_columns:
     :param x_axis:
-    :param profile:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xy(record, y_columns, x_axis)
     line_chart = graph.GraphVis.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -96,8 +113,13 @@ class Vis2D(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
-http://www.chartjs.org/
+    --------------
+
+      http://www.chartjs.org/
 
     Attributes:
     ----------
@@ -107,12 +129,12 @@ http://www.chartjs.org/
     :param end:
     :param type:
     :param group:
-    :param profile:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-
     data = self.parent.context.rptObj.data.vis.timeline(record, start, content, end, type, group, options)
     line_chart = graph.GraphVis.ChartTimeline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.options.height = height[0]
@@ -123,6 +145,21 @@ http://www.chartjs.org/
     return line_chart
 
   def network(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     line_chart = graph.GraphVis.ChartNetwork(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.options.height = height[0]
     return line_chart
@@ -139,15 +176,20 @@ class Vis3D(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xyz(record, y_columns, x_axis, z_axis)
     line_chart = graph.GraphVis.Chart3DLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -160,15 +202,20 @@ class Vis3D(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xyz(record, y_columns, x_axis, z_axis)
     line_chart = graph.GraphVis.Chart3DBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -181,15 +228,20 @@ class Vis3D(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xyz(record, y_columns, x_axis, z_axis)
     line_chart = graph.GraphVis.Chart3D(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -202,15 +254,20 @@ class Vis3D(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     data = self.parent.context.rptObj.data.vis.xyz(record, y_columns, x_axis, z_axis)
     line_chart = graph.GraphVis.Chart3DScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
@@ -226,13 +283,89 @@ class Vis(Vis2D):
     self._3d = Vis3D(context)
 
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     return self._3d.surface(record, y_columns, x_axis, z_axis, profile, width, height, options, htmlCode)
 
   def bar3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     return self._3d.bar(record, y_columns, x_axis, z_axis, profile, width, height, options, htmlCode)
 
   def scatter3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     return self._3d.scatter(record, y_columns, x_axis, z_axis, profile, width, height, options, htmlCode)
 
   def line3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     return self._3d.line(record, y_columns, x_axis, z_axis, profile, width, height, options, htmlCode)

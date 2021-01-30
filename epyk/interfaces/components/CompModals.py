@@ -10,18 +10,19 @@ class Modals(object):
   def __init__(self, context):
     self.context = context
 
-  def forms(self, html_objs, action, method, header=None, footer=None, helper=None):
+  def forms(self, components, action, method, header=None, footer=None, helper=None):
     """
     Description:
     ------------
     Simple interface to create an html form within a modal
 
-    Usage::
+    Usage:
+    -----
 
-      d = rptObj.ui.fields.today('test')
-      i = rptObj.ui.fields.input(placeholder='test2', label='test1')
-      i2 = rptObj.ui.fields.input('test3', label='test2')
-      form_modal = rptObj.ui.modals.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
+      d = page.ui.fields.today('test')
+      i = page.ui.fields.input(placeholder='test2', label='test1')
+      i2 = page.ui.fields.input('test3', label='test2')
+      form_modal = page.ui.modals.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
 
     Underlying HTML Objects:
 
@@ -34,13 +35,13 @@ class Modals(object):
 
     Attributes:
     ----------
-    :param html_objs list:
+    :param html_objs components:
     :param method:
     :param helper:
     """
-    if not type(html_objs) == list:
-      html_objs = [html_objs]
-    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, helper)
+    if not type(components) == list:
+      components = [components]
+    form = html.HtmlContainer.Form(self.context.rptObj, components, helper)
     form.submit(method, action)
     modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, False, helper)
     modal += form
@@ -51,13 +52,14 @@ class Modals(object):
     """
     Description:
     ------------
-    Disclaimer that will appear as a modal
+    Disclaimer that will appear as a modal.
 
-    Usage::
+    Usage:
+    -----
 
-      privacy_title = rptObj.ui.texts.title('A privacy reminder', 2)
-      p1 = rptObj.ui.texts.paragraph('''Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.''' % rptObj.ui.tags.strong('''I agree''', options={'managed': False}))
-      disc = rptObj.ui.modals.disclaimer([privacy_title, p1])
+      privacy_title = page.ui.texts.title('A privacy reminder', 2)
+      p1 = page.ui.texts.paragraph('''Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.''' % rptObj.ui.tags.strong('''I agree''', options={'managed': False}))
+      disc = page.ui.modals.disclaimer([privacy_title, p1])
 
     Underlying HTML Objects:
 
@@ -65,6 +67,8 @@ class Modals(object):
       - :class:`epyk.core.html.HtmlContainer.Row`
       - :class:`epyk.core.html.HtmlButton.Button`
 
+    Attributes:
+    ----------
     :param disc_list:
     :param header:
     :param footer:
@@ -74,7 +78,6 @@ class Modals(object):
     :param add_buttons:
     :param to_html:
     :param helper:
-    :return:
     """
     for obj in disc_list:
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
@@ -97,7 +100,7 @@ class Modals(object):
     """
     Description:
     ------------
-    Simple Jquery UI modal with a text
+    Simple Jquery UI modal with a text.
 
     Underlying HTML Objects:
 
@@ -106,6 +109,10 @@ class Modals(object):
     Related Pages:
 
       https://jqueryui.com/dialog/
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------

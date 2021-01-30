@@ -16,9 +16,10 @@ class Steppers(object):
     ------------
     Entry point for the stepper object
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.stepper([
+      page.ui.stepper([
         {"value": 'test 1', "status": 'success', 'label': 'test'},
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
@@ -49,6 +50,9 @@ class Steppers(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param records:
@@ -67,6 +71,9 @@ class Steppers(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param records:
@@ -84,6 +91,9 @@ class Steppers(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -104,9 +114,10 @@ class Steppers(object):
     ------------
     Entry point for the stepper object
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.stepper([
+      page.ui.stepper([
         {"value": 'test 1', "status": 'success', 'label': 'test'},
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])

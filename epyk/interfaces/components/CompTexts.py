@@ -17,11 +17,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Add the HTML text component to the page
+    Add the HTML text component to the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.text("this is a test")
+      page.ui.text("this is a test")
 
     Underlying HTML Objects:
 
@@ -71,11 +72,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Add the HTML text component to the page
+    Add the HTML text component to the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.text("this is a test")
+      page.ui.text("this is a test")
 
     Underlying HTML Objects:
 
@@ -116,6 +118,9 @@ class Texts(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -163,10 +168,11 @@ class Texts(object):
 
     The for attribute of the <label> tag should be equal to the id attribute of the related element to bind them together.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.label("Test")
-      rptObj.ui.texts.label("this is a test", color="red")
+      page.ui.texts.label("Test")
+      page.ui.texts.label("this is a test", color="red")
 
     Underlying HTML Objects:
 
@@ -208,9 +214,10 @@ class Texts(object):
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.span("Test")
+      page.ui.texts.span("Test")
 
     Underlying HTML Objects:
 
@@ -243,9 +250,10 @@ class Texts(object):
     ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+      page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
       page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
 
     Underlying HTML Objects:
@@ -285,9 +293,10 @@ class Texts(object):
     ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+      page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
     Underlying HTML Objects:
 
@@ -332,11 +341,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Interface to the mathjax Formulas object
+    Interface to the mathjax Formulas object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
+      page.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
     Underlying HTML Objects:
 
@@ -345,7 +355,6 @@ class Texts(object):
     Related Pages:
 
       https://mathjax.org/docs/index.html
-
 
     Attributes:
     ----------
@@ -364,11 +373,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Python Wrapper to the Bootstrap CODE Tag
+    Python Wrapper to the Bootstrap CODE Tag.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.code("This is a code")
+      page.ui.texts.code("This is a code")
 
     Underlying HTML Objects:
 
@@ -403,11 +413,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Python Wrapper to the HTML P Tag
+    Python Wrapper to the HTML P Tag.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+      page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
 
     Underlying HTML Objects:
 
@@ -456,9 +467,10 @@ class Texts(object):
     The <pre> tag defines preformatted text.
     Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.preformat("This is a pre formatted text")
+      page.ui.texts.preformat("This is a pre formatted text")
 
     Underlying HTML Objects:
 
@@ -498,9 +510,10 @@ class Texts(object):
     The <blockquote> tag specifies a section that is quoted from another source.
     Browsers usually indent <blockquote> elements.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.blockquote("This is a code")
+      page.ui.texts.blockquote("This is a code")
 
     Underlying HTML Objects:
 
@@ -532,11 +545,12 @@ class Texts(object):
     """
     Description:
     ------------
-    Up and down Text component
+    Up and down Text component.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
+      page.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
     Underlying HTML Objects:
 
@@ -569,9 +583,10 @@ class Texts(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      page.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -612,10 +627,11 @@ class Texts(object):
     ------------
     Add a title
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.title("Test")
-      rptObj.ui.title("Test", level=2)
+      page.ui.title("Test")
+      page.ui.title("Test", level=2)
 
     Underlying HTML Objects:
 
@@ -659,9 +675,10 @@ class Texts(object):
     The <fieldset> tag is used to group related elements in a form.
     The <fieldset> tag draws a box around the related elements.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.fieldset("legend")
+      page.ui.texts.fieldset("legend")
 
     Underlying HTML Objects:
 
@@ -687,6 +704,24 @@ class Texts(object):
     return html_fieldset
 
   def col(self, text, label, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text:
+    :param label:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
     div.label.style.css.display = 'block'
@@ -709,9 +744,10 @@ class Texts(object):
     ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+      page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
       page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
 
     Underlying HTML Objects:
@@ -758,7 +794,7 @@ class Texts(object):
     """
     Description:
     ------------
-    More custom toggles icons
+    More custom toggles icons.
     """
     return TextReferences(self.context)
 
@@ -773,6 +809,9 @@ class TextReferences(object):
     Description:
     ------------
     Shortcut to quote an extra from a book.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -795,6 +834,9 @@ class TextReferences(object):
     Description:
     ------------
     Shortcut to data reference from another website.
+
+    Usage:
+    -----
 
     Related Pages:
 

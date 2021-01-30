@@ -14,7 +14,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a line chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -22,14 +25,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -45,7 +48,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a line range chart from Billboard
+    Display a line range chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -53,14 +59,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -77,7 +83,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a bubble chart from Billboard
+    Display a bubble chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -85,14 +94,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -109,7 +118,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a radar chart from Billboard
+    Display a radar chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -117,14 +129,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -141,7 +153,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a spline chart from Billboard
+    Display a spline chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -149,14 +164,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -172,7 +187,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a step chart from Billboard
+    Display a step chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -180,14 +198,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -204,7 +222,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a area chart from Billboard
+    Display a area chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -212,14 +233,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -235,7 +256,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a area step chart from Billboard
+    Display a area step chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -243,14 +267,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -267,7 +291,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a timeseries chart from Billboard
+    Display a timeseries chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -275,14 +302,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     line.axis.x.type = "timeseries"
@@ -294,7 +321,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a bar chart from Billboard
+    Display a bar chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -302,14 +332,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -325,7 +355,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a stacked bar chart from Billboard
+    Display a stacked bar chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -333,14 +366,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -357,7 +390,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a horizontal bar chart from Billboard
+    Display a horizontal bar chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -365,14 +401,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     h_bar.axis.rotated = True
@@ -383,7 +419,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a scatter chart from Billboard
+    Display a scatter chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -391,14 +430,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -414,7 +453,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a pie chart from Billboard
+    Display a pie chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -422,14 +464,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -445,7 +487,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a donut chart from Billboard
+    Display a donut chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -453,14 +498,14 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -475,7 +520,10 @@ class Billboard(object):
     """
     Description:
     ------------
-    Display a gauge chart from Billboard
+    Display a gauge chart from Billboard.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -483,13 +531,13 @@ class Billboard(object):
 
     Attributes:
     ----------
-    :param value: List of dict. The Python recordset
-    :param text: List. The columns corresponding to keys in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param value: Integer. Optional. The gauge chart value.
+    :param text: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     g_chart = graph.GraphBillboard.ChartGauge(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     g_chart.add_dataset(text, value)

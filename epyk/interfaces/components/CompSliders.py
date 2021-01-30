@@ -28,10 +28,11 @@ class Sliders(object):
     ------------
     Add a Jquery UI slider object to the page
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.slider(40)
-      rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
+      page.ui.slider(40)
+      page.ui.slider([1, 2, 3, 4, 5, 6, 7])
 
     Underlying HTML Objects:
 
@@ -65,11 +66,18 @@ class Sliders(object):
   def date(self, value=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.SliderDate`
 
+    Attributes:
+    ----------
     :param value:
     :param min:
     :param max:
@@ -93,6 +101,11 @@ class Sliders(object):
   def date_range(self, value1=None, value2=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                  helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -125,6 +138,11 @@ class Sliders(object):
   def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -156,9 +174,10 @@ class Sliders(object):
     ------------
     Add a progress bar component to the page
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.sliders.progressbar(300)
+      page.ui.sliders.progressbar(300)
 
     Underlying HTML Objects:
 
@@ -190,6 +209,9 @@ class Sliders(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

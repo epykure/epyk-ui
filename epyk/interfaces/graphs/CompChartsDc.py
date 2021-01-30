@@ -13,9 +13,12 @@ class DC(object):
     -----------
     Set a crossfilter object and add the dimensions which will be added to a chart.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     """
@@ -46,21 +49,25 @@ class DC(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
+      https://dc-js.github.io/dc.js/
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if isinstance(y_columns, list):
       line_chart = self.series(record, y_columns, x_axis, 'line', title, profile, options, width, height, htmlCode)
@@ -79,20 +86,23 @@ class DC(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
+      https://dc-js.github.io/dc.js/
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     pivot_rec = []
@@ -126,20 +136,23 @@ class DC(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
+      https://dc-js.github.io/dc.js/
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     if isinstance(y_columns, list):
@@ -158,16 +171,20 @@ class DC(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
-Attributes:
+
+    Attributes:
     ----------
-    :param record:
-    :param y_column:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
 
@@ -187,16 +204,20 @@ Attributes:
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
-Attributes:
+
+    Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     if isinstance(y_columns, list):
@@ -215,16 +236,20 @@ Attributes:
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
-Attributes:
+
+    Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_column:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     bar_chart = GraphDC.ChartRow(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
@@ -241,20 +266,23 @@ Attributes:
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
+      https://dc-js.github.io/dc.js/
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_column:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     pie_chart = GraphDC.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
@@ -267,21 +295,28 @@ Attributes:
   def sunburst(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
     """
+    Description:
+    -----------
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
+      https://dc-js.github.io/dc.js/
 
+    Attributes:
+    ----------
     :param data:
     :param seriesNames:
     :param xAxis:
     :param otherDims:
     :param title:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param xAxisOrder:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     pie_chart = GraphDC.ChartSunburst(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
@@ -296,21 +331,24 @@ Attributes:
     Description:
     -----------
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://square.github.io/crossfilter/
-    https://dc-js.github.io/dc.js/
-    https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
+      https://dc-js.github.io/dc.js/
+      https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
     """
     options = options or {}

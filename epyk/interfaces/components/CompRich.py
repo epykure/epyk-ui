@@ -17,9 +17,10 @@ class Rich(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+      page.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
     Underlying HTML Objects:
 
@@ -49,10 +50,11 @@ class Rich(object):
     ------------
     Entry point for the Stars component
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
-      stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+      page.ui.rich.stars(3, label="test", helper="This is a helper")
+      stars = page.ui.rich.stars(3, label="test", helper="This is a helper")
       stars.click()
 
     Underlying HTML Objects:
@@ -66,12 +68,12 @@ class Rich(object):
     Attributes:
     ----------
     :param val:
-    :param label: Optional. The text of label to be added to the component
-    :param color: Optional. The font color in the component. Default inherit
-    :param align:
+    :param label: String. Optional. The text of label to be added to the component
+    :param color: String. Optional. The font color in the component. Default inherit
+    :param align: String. Optional. A string with the horizontal position of the component
     :param best: Optional. The max number of stars. Default 5
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     html_star = html.HtmlOthers.Stars(self.context.rptObj, val, label, color, align, best, htmlCode, helper, profile)
     return html_star
@@ -82,10 +84,11 @@ class Rich(object):
     ------------
     Add a traffic light component to give a visual status of a given process
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
-      rptObj.ui.rich.light(True)
+      page.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
+      page.ui.rich.light(True)
 
     Underlying HTML Objects:
 
@@ -98,7 +101,7 @@ class Rich(object):
     :param label: Optional. The text of label to be added to the component
     :param tooltip: Optional. A string with the value of the tooltip
     :param helper: Optional. The filtering properties for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary.Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     if height is None or height[0] is None:
@@ -114,9 +117,10 @@ class Rich(object):
     ------------
     Display an info icon with a tooltip
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.info("Test")
+      page.ui.info("Test")
 
     Underlying HTML Objects:
 
@@ -129,8 +133,8 @@ class Rich(object):
 
     Attributes:
     ----------
-    :param text: The content of the tooltip
-    :param profile: Optional, A boolean to store the performances for each components
+    :param text: String. Optional. The content of the tooltip
+    :param profile: Boolean | Dictionary.Optional, A boolean to store the performances for each components
     """
     html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
     return html_help
@@ -142,9 +146,10 @@ class Rich(object):
     ------------
     Add a countdown to the page and remove the content if the page has expired.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.countdown("2050-09-24")
+      page.ui.rich.countdown("2050-09-24")
 
     Underlying HTML Objects:
 
@@ -166,7 +171,7 @@ class Rich(object):
     :param height: Optional. Integer for the component height
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param helper: Optional. A tooltip helper
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -177,11 +182,12 @@ class Rich(object):
     """
     Description:
     ------------
-    Last Update time component
+    Last Update time component.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.rich.update("Last update: ")
+      page.ui.rich.update("Last update: ")
 
     Underlying HTML Objects:
 
@@ -198,7 +204,7 @@ class Rich(object):
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -209,6 +215,9 @@ class Rich(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -225,7 +234,7 @@ class Rich(object):
     :param height:
     :param htmlCode:
     :param options:
-    :param profile:
+    :param profile: Boolean | Dictionary.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -243,9 +252,10 @@ class Rich(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.search()
+      page.ui.inputs.search()
 
     Underlying HTML Objects:
 
@@ -281,6 +291,9 @@ class Rich(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTextComp.SearchResult`
@@ -300,14 +313,16 @@ class Rich(object):
     ------------
     Composite bespoke object.
 
-    This obhect will be built based on its schema. No specific CSS Style and class will be added to this object.
+    This object will be built based on its schema. No specific CSS Style and class will be added to this object.
     The full definition will be done in the nested dictionary schema.
 
-    Example
-    schema = {'type': 'div', 'css': {}, 'class': , 'attrs': {} 'arias': {},  'children': [
-        {'type': : {...}}
-        ...
-    ]}
+    Usage:
+    -----
+
+      schema = {'type': 'div', 'css': {}, 'class': , 'attrs': {} 'arias': {},  'children': [
+          {'type': : {...}}
+          ...
+      ]}
 
     Attributes:
     ----------
@@ -328,6 +343,9 @@ class Rich(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -351,9 +369,10 @@ class Rich(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.editor()
+      page.ui.inputs.editor()
 
     Underlying HTML Objects:
 
@@ -388,12 +407,14 @@ class Rich(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param section:
     :param title:
     :param content:
-    :return:
     """
     container = self.context.rptObj.ui.div()
     if section is not None:
@@ -433,6 +454,9 @@ class Rich(object):
     ------------
     Color component
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param code: Tuple or String. The color code
@@ -459,7 +483,14 @@ class Rich(object):
   def elapsed(self, day=None, month=None, year=None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
               htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param day:
     :param month:
     :param year:

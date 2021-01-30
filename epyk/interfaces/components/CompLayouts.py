@@ -33,8 +33,8 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param count: Optional, The number of empty line to put. Default 1
-    :param profile: Optional, Activate the profiler
+    :param count: Integer. Optional. The number of empty line to put. Default 1.
+    :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
     html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
     return html_new_line
@@ -67,8 +67,8 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param count: Optional, The number of empty line to put. Default 1
-    :param profile: Optional, Activate the profiler
+    :param count: Integer. Optional. The number of empty line to put. Default 1.
+    :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
     return self.br(count, profile)
 
@@ -95,14 +95,14 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param count: The number of HR tag to be added
-    :param background_color: Optional. The component background color
-    :param margins: Optional. Integer. Optional. The margin top and bottom in pixels.
+    :param count: Integer. Optional. The number of HR tag to be added.
+    :param background_color: String. Optional. The component background color.
+    :param margins: Integer. Optional. The margin top and bottom in pixels.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -123,7 +123,7 @@ class Layouts(object):
     """
     Description:
     ------------
-    Python wrapper for a column of HTML elements from Bootstrap
+    Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.

@@ -23,13 +23,16 @@ class Canvas(object):
 
       https://www.w3schools.com/tags/ref_canvas.asp
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param height:
-    :param width:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if not isinstance(width, tuple):
       width = (width, "px")

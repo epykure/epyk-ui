@@ -551,7 +551,7 @@ class Components:
     ------------
     Group all the other tags available in HTML.
 
-    Those tags can be considered as normal HTML component, which means Js and CSS features are also available
+    Those tags can be considered as normal HTML component, which means Js and CSS features are also available.
     """
     return CompTags.Tags(self)
 
@@ -844,8 +844,8 @@ class Components:
     Attributes:
     ----------
     :param text:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options:
     :param profile:
     """
@@ -925,9 +925,9 @@ class Components:
     ----------
     :param tooltip:
     :param family:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode:
-    :param height:
     :param color:
     :param align:
     :param options:
@@ -990,7 +990,7 @@ class WebComponents:
 
     Usage:
     -----
-    
+
     Related Pages:
 
       https://material.io/develop/web/

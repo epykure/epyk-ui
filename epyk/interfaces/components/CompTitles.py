@@ -16,6 +16,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
@@ -52,6 +55,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
@@ -85,6 +91,9 @@ class Titles(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -121,6 +130,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param text:
@@ -151,6 +163,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
@@ -180,6 +195,9 @@ class Titles(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -212,6 +230,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
@@ -240,6 +261,9 @@ class Titles(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -270,6 +294,9 @@ class Titles(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 
@@ -304,6 +331,9 @@ class Titles(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param text:
@@ -332,6 +362,9 @@ class Titles(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Templates:
 

@@ -14,7 +14,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a line chart from C3
+    Display a line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -22,14 +25,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -44,7 +47,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a spline line chart from C3
+    Display a spline line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -52,14 +58,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -74,7 +80,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a step line chart from C3
+    Display a step line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -82,14 +91,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -105,7 +114,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a area line chart from C3
+    Display a area line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -113,14 +125,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -135,7 +147,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a area step line chart from C3
+    Display a area step line chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -143,14 +158,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -166,7 +181,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a timeseries chart from C3
+    Display a timeseries chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -174,14 +192,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param options:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     line.axis.x.type = "timeseries"
@@ -192,7 +210,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a bar chart from C3
+    Display a bar chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -200,14 +221,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -222,7 +243,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a horizontal bar chart from C3
+    Display a horizontal bar chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -230,14 +254,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     h_bar.axis.rotated = True
@@ -247,7 +271,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a Scatter chart from C3
+    Display a Scatter chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -255,14 +282,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -277,23 +304,26 @@ class C3(object):
     """
     Description:
     ------------
-    Display a pie chart from C3
+    Display a pie chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
       https://c3js.org/samples/chart_pie.html
-  https://c3js.org/reference.html#pie-label-show
+      https://c3js.org/reference.html#pie-label-show
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -307,7 +337,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a donut chart from C3
+    Display a donut chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -315,14 +348,14 @@ class C3(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the recor
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
@@ -336,7 +369,10 @@ class C3(object):
     """
     Description:
     ------------
-    Display a gauge chart from C3
+    Display a gauge chart from C3.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -346,11 +382,11 @@ class C3(object):
     ----------
     :param value:
     :param text:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     g_chart = graph.GraphC3.ChartGauge(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     g_chart.add_dataset(text, value)
@@ -358,16 +394,23 @@ class C3(object):
 
   def stanford(self, record=None, y_columns=None, x_axis=None, epoch_col=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
 
-    :param record:
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns:
     :param x_axis:
     :param epoch_col:
-    :param profile:
-    :param width:
-    :param height:
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     epoch, labels, series = [], [], []
     for rec in record:

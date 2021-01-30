@@ -35,7 +35,7 @@ class Menus(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    http://astronautweb.co/snippet/font-awesome/
+      http://astronautweb.co/snippet/font-awesome/
 
     Attributes:
     ----------
@@ -103,7 +103,7 @@ class Menus(object):
     Description:
     ------------
     Add a menu item at the bottom of the page.
-    The menu will be fixed on the page, always visible
+    The menu will be fixed on the page, always visible.
 
     Usage:
     -----
@@ -121,7 +121,7 @@ class Menus(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    http://astronautweb.co/snippet/font-awesome/
+      http://astronautweb.co/snippet/font-awesome/
 
     Attributes:
     ----------
@@ -132,7 +132,7 @@ class Menus(object):
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -193,7 +193,7 @@ class Menus(object):
     Usage:
     -----
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -211,14 +211,13 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param position: String. Optional.
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     menu_li, menu_title, menu_items, menu_divs = [], [], [], []
     records = []
@@ -269,7 +268,7 @@ class Menus(object):
     Usage:
     -----
 
-      l = rptObj.ui.lists.list(["A", "B"])
+      l = page.ui.lists.list(["A", "B"])
 
     Underlying HTML Objects:
 
@@ -282,18 +281,18 @@ class Menus(object):
     Related Pages:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    http://astronautweb.co/snippet/font-awesome/
+      http://astronautweb.co/snippet/font-awesome/
 
     Attributes:
     ----------
     :param data:
     :param align: String. Optional. A string with the horizontal position of the component
-    :param position: tring. Optional. A string with the vertical position of the component
+    :param position: String. Optional. A string with the vertical position of the component
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     records = []
     dflt_options = {"target": '_self'}
@@ -339,7 +338,7 @@ class Menus(object):
     """
     Description:
     ------------
-    Add a menu bar with font awesome icons
+    Add a menu bar with font awesome icons.
 
     Usage:
     -----
@@ -352,7 +351,7 @@ class Menus(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. Optional. A string with the horizontal position of the component
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"margin-right": 5}
     if options is not None:
@@ -371,9 +370,9 @@ class Menus(object):
     Usage:
     -----
 
-      bs = rptObj.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
+      bs = page.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
       bs[2].click([
-      rptObj.js.alert(bs[2].dom.content)
+        page.js.alert(bs[2].dom.content)
       ])
 
     Underlying HTML Objects:
@@ -389,7 +388,7 @@ class Menus(object):
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -415,11 +414,11 @@ class Menus(object):
     ----------
     :param path:
     :param data:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"margin-left": 20, "margin-right": 20, 'image-width': 50}
     if options is not None:
@@ -457,12 +456,12 @@ class Menus(object):
     ----------
     :param data:
     :param color:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -522,7 +521,7 @@ class Menus(object):
     Description:
     ------------
     Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
-    The components will be based on Links
+    The components will be based on Links.
 
     Usage:
     -----
@@ -537,11 +536,11 @@ class Menus(object):
 
     Attributes:
     ----------
-    :param divider: symbols.shape or String. The symbol between the links
+    :param divider: symbols.shape | String. The symbol between the links.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if divider is None:
       divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
@@ -579,10 +578,10 @@ class Menus(object):
     :param value:
     :param components:
     :param symbol:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.items = components if isinstance(components, list) else [components]
@@ -626,10 +625,10 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     options = options or {}
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
@@ -682,9 +681,9 @@ class Menus(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
+    :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -697,18 +696,18 @@ class Menus(object):
     html_pr = html.HtmlEvent.Menu(self.context.rptObj, new_data, width, height, helper, options or {}, htmlCode, profile)
     return html_pr
 
-  def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
+  def contextual(self, record=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
     """
     Description:
     ------------
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
-    This component is generic is need to be added to a component to work
+    This component is generic is need to be added to a component to work.
 
     Usage:
     -----
 
-      menu = rptObj.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
-      rptObj.ui.title("Test").attach_menu(menu)
+      menu = page.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
+      page.ui.title("Test").attach_menu(menu)
 
     Templates:
 
@@ -716,15 +715,16 @@ class Menus(object):
 
     Attributes:
     ----------
-    :param records: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param visible: Optional.
-    :param profile: Optional. A flag to set the component performance storage
+    :param record: Optional.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param visible: Boolean. Optional.
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, records or [], width, height, visible, options or {}, profile)
+    html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, record or [], width, height, visible, options or {}, profile)
     return html_menu
 
   def pills(self, data, width=(100, '%'), height=(50, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -739,12 +739,12 @@ class Menus(object):
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     container = self.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, options=options, helper=helper, profile=profile)
     for d in data:

@@ -15,10 +15,11 @@ class Trees(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-      rptObj.ui.lists.tree(data)
+      page.ui.lists.tree(data)
 
     Underlying HTML Objects:
 
@@ -47,6 +48,9 @@ class Trees(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTrees.TreeInput`
@@ -69,6 +73,9 @@ class Trees(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -95,6 +102,9 @@ class Trees(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 

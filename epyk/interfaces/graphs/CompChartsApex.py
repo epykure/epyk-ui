@@ -16,7 +16,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a line chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -24,14 +27,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -52,7 +55,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a scatter chart from Apexchart.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -60,14 +66,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -88,7 +94,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a bar chart from Apexcharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -96,14 +105,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -124,7 +133,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a horizontal bars chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -132,14 +144,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -161,7 +173,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display an area chart from Apexcharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -169,14 +184,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -197,7 +212,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a radar chart from Apexcharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -205,14 +223,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -229,7 +247,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a polar chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -237,14 +258,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -261,7 +282,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a pie chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -269,7 +293,7 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset.
+    :param record: List of dict. The Python list of dictionaries.
     :param y_column: String. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -296,7 +320,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a donut chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -304,14 +331,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_column: String. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -331,7 +358,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a radial chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -339,14 +369,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -361,7 +391,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a bubble chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -369,14 +402,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -391,7 +424,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a heatmap chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -399,14 +435,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -421,7 +457,10 @@ class ApexChart(object):
     """
     Description:
     ------------
-    Display a line chart from Billboard
+    Display a treemap chart from ApexCharts.
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -429,14 +468,14 @@ class ApexChart(object):
 
     Attributes:
     ----------
-    :param record: List of dict. The Python recordset
+    :param record: List of dict. The Python list of dictionaries.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param profile:
-    :param width: Tuple. The width of the component in the page, default (100, '%')
-    :param height: Tuple. The height of the component in the page, default (330, "px")
-    :param options:
-    :param htmlCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

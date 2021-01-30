@@ -15,12 +15,16 @@ class D3(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param name:
     :param scripts:
     :param d3_version:
     :param dependencies:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if scripts is not None:
       scripts = [os.path.split(script) for script in scripts]
@@ -45,14 +49,18 @@ class D3(object):
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param data:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     scripts = ["https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"]
     chart = self.script('cloud', scripts, None, profile=profile, options=options, width=width, height=height, htmlCode=htmlCode)

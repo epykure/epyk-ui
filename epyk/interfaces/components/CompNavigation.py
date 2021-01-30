@@ -22,7 +22,7 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.up()
+      page.ui.navigation.up()
 
     Attributes:
     ----------
@@ -66,7 +66,7 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.down()
+      page.ui.navigation.down()
 
     Attributes:
     ----------
@@ -109,12 +109,12 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.to(100, tooltip="test")
+      page.ui.navigation.to(100, tooltip="test")
 
     Attributes:
     ----------
-    :param y: Integer. The y position on the page
-    :param x: Integer. Optional. The x position on the page
+    :param y: Integer. The y position on the page.
+    :param x: Integer. Optional. The x position on the page.
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
     :param top: Integer. Optional. The top property affects the vertical position of a positioned element
     :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
@@ -154,12 +154,12 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
+      page.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
     Attributes:
     ----------
-    :param text: String. The shortcut name
-    :param url: String. Optional. The anchor name
+    :param text: String. The shortcut name.
+    :param url: String. Optional. The anchor name.
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
     :param top: Integer. Optional. The top property affects the vertical position of a positioned element
     :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
@@ -197,14 +197,14 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.scroll()
+      page.ui.navigation.scroll()
 
     Attributes:
     ----------
     :param progress: Integer. Optional. The progression on the page.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     p = self.context.rptObj.ui.sliders.progressbar(progress, height=height, options=options, profile=profile)
@@ -221,7 +221,7 @@ class Navigation(object):
     Usage:
     -----
 
-      rptObj.ui.navigation.indices(10)
+      page.ui.navigation.indices(10)
 
     Attributes:
     ----------
@@ -230,7 +230,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -247,7 +247,7 @@ class Navigation(object):
     Usage:
     -----
 
-      p = rptObj.ui.navigation.points(10)
+      p = page.ui.navigation.points(10)
       for i, _ in enumerate(p):
         p.click_item(i, [])
 
@@ -258,7 +258,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -276,7 +276,7 @@ class Navigation(object):
     Usage:
     -----
 
-      d = rptObj.ui.navigation.dots(10)
+      d = page.ui.navigation.dots(10)
 
     Attributes:
     ----------
@@ -286,7 +286,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -295,19 +295,20 @@ class Navigation(object):
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
     return html_points
 
-  def path(self, records, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def path(self, record, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
-      rptObj.ui.navigation.path(record)
+      page.ui.navigation.path(record)
 
     Attributes:
     ----------
-    :param records:
+    :param record:
     :param divider:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -317,10 +318,10 @@ class Navigation(object):
     if divider is None:
       divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
-    for rec in records[:-1]:
+    for rec in record[:-1]:
       div += self.context.rptObj.ui.link(rec['text'], url=rec.get('url', '#')).css({"display": 'inline-block'})
       div += self.context.rptObj.ui.text(divider).css({"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
-    div +=self.context.rptObj.ui.link(records[-1]['text'], url=records[-1].get('url', '#')).css({"display": 'inline-block'})
+    div += self.context.rptObj.ui.link(record[-1]['text'], url=record[-1].get('url', '#')).css({"display": 'inline-block'})
     return div
 
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
@@ -331,14 +332,13 @@ class Navigation(object):
     Usage:
     -----
 
-      nav = rptObj.ui.navigation.bar(title="test")
+      nav = page.ui.navigation.bar(title="test")
       nav.add_text("Test text")
-      nav + rptObj.ui.button("Click")
+      nav + page.ui.button("Click")
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlMenu.HtmlNavBar`
-
 
     Attributes:
     ----------
@@ -347,7 +347,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -417,7 +417,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     h_image = self.context.rptObj.ui.img(image)
@@ -454,7 +454,7 @@ class Navigation(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param fixed:
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -485,7 +485,7 @@ class Navigation(object):
     :param size:
     :param position: String. Optional. A string with the vertical position of the component
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     d = self.context.rptObj.ui.div(components)
     d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
@@ -520,7 +520,11 @@ class Navigation(object):
     """
     Description:
     ------------
-    Add an anchor on the page and move to this when it is clicked
+    Add an anchor on the page and move to this when it is clicked.
+
+    Attributes:
+    ----------
+    :param text: String. Optional.
     """
     p = self.context.rptObj.ui.div("%s&#182" % text)
     p.style.css.font_size = Defaults_css.font(5)
@@ -545,7 +549,7 @@ class Navigation(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param helper: String. Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
@@ -570,7 +574,7 @@ class Navigation(object):
     :param logo:
     :param size:
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     :param htmlCode:
     """
     size = Arguments.size(size, unit="px")
@@ -615,7 +619,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
@@ -644,12 +648,12 @@ class Banners(object):
     Attributes:
     ----------
     :param data:
-    :param background:
-    :param align:
+    :param background: String. Optional.
+    :param align: String. Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.greys[1]
@@ -718,7 +722,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
@@ -754,7 +758,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     if not hasattr(data, 'options'):
@@ -790,7 +794,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
@@ -825,7 +829,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     options = options or {}
@@ -907,7 +911,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     now = datetime.datetime.now()
     copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - %s, Epyk studio" % now.year)
@@ -944,13 +948,13 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param youtube:
-    :param twitter:
-    :param facebook:
-    :param twitch:
-    :param instagram:
-    :param linkedIn:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param youtube: Boolean. Optional. Add the icon to the follow bar. Default True.
+    :param twitter: Boolean. Optional. Add the icon to the follow bar. Default True.
+    :param facebook: Boolean. Optional. Add the icon to the follow bar. Default True.
+    :param twitch: Boolean. Optional. Add the icon to the follow bar. Default True.
+    :param instagram: Boolean. Optional. Add the icon to the follow bar. Default True.
+    :param linkedIn: Boolean. Optional. Add the icon to the follow bar. Default True.
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = "10px 0"
@@ -1013,7 +1017,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     row = []
@@ -1051,7 +1055,7 @@ class Banners(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = 5
@@ -1090,7 +1094,7 @@ class Banners(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(title, 'options'):
@@ -1144,10 +1148,10 @@ class NavBars(object):
     ----------
     :param logo:
     :param title:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
     return bar
@@ -1164,10 +1168,10 @@ class NavBars(object):
     ----------
     :param logo:
     :param title:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
     bar.style.css.position = False
@@ -1185,10 +1189,10 @@ class NavBars(object):
     ----------
     :param logo:
     :param title:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
     bar.style.css.position = "absolute"
@@ -1208,10 +1212,10 @@ class NavBars(object):
     ----------
     :param logo:
     :param title:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     bar = self.context.rptObj.ui.navbar(logo, title, width, height, options, profile)
     bar.style.css.position = "absolute"

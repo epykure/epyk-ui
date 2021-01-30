@@ -52,7 +52,7 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param text: The string value to be displayed in the component
+    :param text: String. Optional. The string value to be displayed in the component
     :param label: Optional. The text of label to be added to the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -60,9 +60,9 @@ class Fields(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param options: Optional. The component options
-    :param helper:
-    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. The component options
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     if width[0] is None:
@@ -132,8 +132,8 @@ class Fields(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="px")
@@ -182,8 +182,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param color: Optional. The font color in the component. Default inherit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="px")
@@ -227,8 +227,8 @@ class Fields(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="px")
@@ -266,12 +266,13 @@ class Fields(object):
 
     Attributes:
     ----------
+    :param deltatime: Integer. Optional.
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: Optional. A tooltip helper
     """
     date = datetime.datetime.now() + datetime.timedelta(minutes=deltatime)
@@ -310,9 +311,9 @@ class Fields(object):
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
-    :param helper: Optional. A tooltip helper
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. A tooltip helper.
     """
     options = options or {}
     html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options, helper)
@@ -347,8 +348,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: Optional. A tooltip helper
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -384,8 +385,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -421,8 +422,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -461,8 +462,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -500,8 +501,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -537,8 +538,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -574,8 +575,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -612,8 +613,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -749,8 +750,8 @@ class Fields(object):
     :param height:
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -782,11 +783,13 @@ class Fields(object):
     :param value: Boolean. Optional. The value to be displayed to the component. Default False
     :param label: String. Optional. The text of label to be added to the component
     :param icon: String. Optional. The component icon content from font-awesome references
+    :param selected:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
+    :param multiple:
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
@@ -832,8 +835,8 @@ class Fields(object):
     :param height:
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     import calendar
 
@@ -879,8 +882,8 @@ class Fields(object):
     :param height:
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -929,8 +932,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -974,8 +977,8 @@ class Fields(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper:
-    :param options:
-    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     import calendar
 
@@ -1009,8 +1012,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
@@ -1044,8 +1047,8 @@ class Fields(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
@@ -1088,7 +1091,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     if not isinstance(start_date, datetime.datetime):
       start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
@@ -1129,7 +1132,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(start_date, datetime.datetime):
@@ -1139,7 +1142,7 @@ class Timelines(object):
       if end_date >= today:
         remaining_days += 1
       if end_date.weekday() == 4:
-        # akip weekends
+        # skip weekends
         end_date += datetime.timedelta(days=3)
       else:
         end_date += datetime.timedelta(days=1)
@@ -1171,7 +1174,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(start_date, datetime.datetime):
@@ -1214,7 +1217,7 @@ class Timelines(object):
     :param htmlCode:
     :param helper:
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1241,7 +1244,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(completion_date, datetime.datetime):
@@ -1281,7 +1284,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"working_hours": 8}
     if options is not None:
@@ -1307,7 +1310,7 @@ class Timelines(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"working_hours": 8}
     if options is not None:

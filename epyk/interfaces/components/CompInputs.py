@@ -13,9 +13,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.d_text()
+      page.ui.inputs.d_text()
 
     Underlying HTML Objects:
 
@@ -41,14 +42,15 @@ class Inputs(object):
     return html_input
 
   def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
-            options=None, attrs=None, profile=None):
+              options=None, attrs=None, profile=None):
     """
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.d_radio()
+      page.ui.inputs.d_radio()
 
     Underlying HTML Objects:
 
@@ -77,9 +79,10 @@ class Inputs(object):
     ------------
     One of the new types of inputs in HTML5 is search
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.d_search("")
+      page.ui.inputs.d_search("")
 
     Underlying HTML Objects:
 
@@ -114,9 +117,10 @@ class Inputs(object):
     ------------
     Input field that will hide characters typed in
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.password(placeholder="Password")
+      page.ui.inputs.password(placeholder="Password")
 
     Underlying HTML Objects:
 
@@ -130,7 +134,6 @@ class Inputs(object):
     :param options:
     :param attrs:
     :param profile:
-    :return:
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
@@ -144,9 +147,10 @@ class Inputs(object):
     ------------
     Input field that will hide characters typed in
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.file()
+      page.ui.inputs.file()
 
     Underlying HTML Objects:
 
@@ -160,7 +164,6 @@ class Inputs(object):
     :param options:
     :param attrs:
     :param profile:
-    :return:
     """
     attrs = attrs or {}
     attrs.update({"type": 'file'})
@@ -171,9 +174,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      date = rptObj.ui.inputs.d_time()
+      date = page.ui.inputs.d_time()
 
     Underlying HTML Objects:
 
@@ -200,9 +204,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      date = rptObj.ui.inputs.d_date()
+      date = page.ui.inputs.d_date()
 
     Underlying HTML Objects:
 
@@ -224,18 +229,20 @@ class Inputs(object):
 
   def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
-
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      date = rptObj.ui.inputs.d_int()
+      date = page.ui.inputs.d_int()
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlInput.InputInteger`
 
+    Attributes:
+    ----------
     :param value:
     :param placeholder:
     :param width:
@@ -252,6 +259,27 @@ class Inputs(object):
 
   def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
               options=None, attrs=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param value:
+    :param min:
+    :param max:
+    :param step:
+    :param placeholder:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param attrs:
+    :param profile:
+    """
     attrs = attrs or {}
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
@@ -264,9 +292,10 @@ class Inputs(object):
     ------------
     Create a HTML output object
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs._output("test output")
+      page.ui.inputs._output("test output")
 
     Underlying HTML Objects:
 
@@ -287,9 +316,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.textarea("Test")
+      page.ui.inputs.textarea("Test")
 
     Underlying HTML Objects:
 
@@ -320,9 +350,10 @@ class Inputs(object):
     ------------
     Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching and filtering.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.autocomplete("Test")
+      page.ui.inputs.autocomplete("Test")
 
     Underlying HTML Objects:
 
@@ -357,9 +388,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.input("Test")
+      page.ui.inputs.input("Test")
 
     Underlying HTML Objects:
 
@@ -419,9 +451,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.checkbox(False)
+      page.ui.inputs.checkbox(False)
 
     Underlying HTML Objects:
 
@@ -456,7 +489,8 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       page.ui.radio(['Single', 'Multiple'], htmlCode="type", checked="Multiple")
 
@@ -493,9 +527,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.editor()
+      page.ui.inputs.editor()
 
     Underlying HTML Objects:
 
@@ -522,9 +557,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.cell()
+      page.ui.inputs.cell()
 
     Underlying HTML Objects:
 
@@ -550,9 +586,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.search()
+      page.ui.inputs.search()
 
     Underlying HTML Objects:
 
@@ -594,9 +631,10 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.label()
+      page.ui.inputs.label()
 
     Underlying HTML Objects:
 
@@ -610,7 +648,7 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :return:
+
     """
     label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',
                                                            "position": "absolute", "z-index": '20px', "font-size": '14px'})

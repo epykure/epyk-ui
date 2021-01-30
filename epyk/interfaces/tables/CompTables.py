@@ -28,6 +28,9 @@ class Tables(object):
     ag-Grid is the industry standard for JavaScript Enterprise Applications.
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
+    Usage:
+    -----
+
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid/
@@ -39,10 +42,14 @@ class Tables(object):
     """
     Description:
     -----------
-    Interface to the different Tabulator configurations
+    Interface to the different Tabulator configurations.
+
+    Usage:
+    -----
 
     Related Pages:
-http://tabulator.info/
+
+      http://tabulator.info/
     """
     return CompTabulator.Tabulators(self)
 
@@ -62,10 +69,11 @@ http://tabulator.info/
     """
     Description:
     -----------
-    Interface to the different Pivot Table configurations
+    Interface to the different Pivot Table configurations.
 
     Related Pages:
-https://pivottable.js.org/examples/
+
+      https://pivottable.js.org/examples/
     """
     return CompPivot.Pivottable(self)
 
@@ -74,7 +82,7 @@ https://pivottable.js.org/examples/
     """
     Description:
     -----------
-    Interface to the different Tabulator configurations
+    Interface to the different Tabulator configurations.
 
     Related Pages:
 
@@ -87,10 +95,11 @@ https://pivottable.js.org/examples/
   @property
   def plotlys(self):
     """
-    Interface to the different Tabulator configurations
+    Interface to the different Tabulator configurations.
 
     Related Pages:
-http://tabulator.info/
+
+      http://tabulator.info/
 
     :rtype: CompTabulator.Tabulators
     """
@@ -101,7 +110,7 @@ http://tabulator.info/
     """
     Description:
     -----------
-    Interface to the different Datatable configurations
+    Interface to the different Datatable configurations.
 
     Related Pages:
 
@@ -131,8 +140,8 @@ http://tabulator.info/
 
     Usage::
 
-      simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
-    simple_table.add({"COL1": "Value"})
+      simple_table = page.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
+      simple_table.add({"COL1": "Value"})
 
     Attributes:
     ----------

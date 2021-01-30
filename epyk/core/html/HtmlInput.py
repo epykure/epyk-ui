@@ -169,6 +169,28 @@ class Input(Html.Html):
     self.keydown.enter(js_funcs, profile, source_event=source_event)
     return self
 
+  def change(self, js_funcs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
+
+    Usage:
+    -----
+
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger("input")])
+    return self.on("input", js_funcs, profile, source_event)
+
   def readonly(self, flag=True):
     """
     Description:
@@ -1092,6 +1114,28 @@ class TextArea(Html.Html):
     if self._dom is None:
       self._dom = JsHtmlField.Textarea(self, report=self._report)
     return self._dom
+
+  def change(self, js_funcs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
+
+    Usage:
+    -----
+
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger("input")])
+    return self.on("input", js_funcs, profile, source_event)
 
   _js__builder__ = 'htmlObj.innerHTML = data'
 

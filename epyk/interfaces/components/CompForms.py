@@ -22,7 +22,7 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param helper: String. Optional. A tooltip helper
+    :param helper: String. Optional. A tooltip helper.
     """
     form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
     return form
@@ -46,10 +46,10 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     date = self.context.rptObj.ui.fields.today(label=htmlCode, profile=profile, options=options)
     date.input.set_attrs({"name": htmlCode.upper()})
@@ -79,10 +79,10 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for the prefix of the date components (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
-    :param helper: String. Optional. A tooltip helper
+    :param htmlCode: String. An identifier for the prefix of the date components (on both Python and Javascript side)
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. A tooltip helper.
     """
     date1 = self.context.rptObj.ui.fields.today(label="%s_current" % htmlCode, profile=profile, options=options)
     date1.input.set_attrs({"name": date1.htmlCode.upper()})
@@ -110,21 +110,21 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param value: String. Optional. The value to be displayed to this component. Default empty
-    :param label: String. Optional. The text of label to be added to the component
-    :param placeholder: String. Optional. The text to be displayed when the input is empty
-    :param icon: String. Optional. The component icon content from font-awesome references
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
-    :param helper: String. Optional. A tooltip helper
+    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    :param value: String. Optional. The value to be displayed to this component. Default empty.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional. The text to be displayed when the input is empty.
+    :param icon: String. Optional. The component icon content from font-awesome references.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. A tooltip helper.
     """
     inp = self.context.rptObj.ui.fields.input(value=value, label=label, placeholder=placeholder, icon=icon, profile=profile, options=options)
     inp.input.set_attrs({"name": htmlCode})
     form = html.HtmlContainer.Form(self.context.rptObj, [inp], helper)
     return form
 
-  def inputs(self, records, helper=None):
+  def inputs(self, record, helper=None):
     """
     Description:
     ------------
@@ -145,16 +145,16 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param records:
-    :param helper: String. Optional. A tooltip helper
+    :param record: List of dict. The Python list of dictionaries.
+    :param helper: String. Optional. A tooltip helper.
     """
-    html_objs = []
-    for rec in records:
+    components = []
+    for rec in record:
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])
       inp.input.set_attrs({"name": rec["htmlCode"]})
-      html_objs.append(inp)
-    col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
-                                   "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+      components.append(inp)
+    col = self.context.rptObj.ui.col(components).css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
+                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
     form._has_container = True
     return form
@@ -170,13 +170,13 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty
-    :param placeholder: String. Optional. The text to be displayed when the input is empty
+    :param value: Optional. The value to be displayed to this component. Default empty.
+    :param placeholder: String. Optional. The text to be displayed when the input is empty.
     :param button:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     input = self.context.rptObj.ui.input(text=value, placeholder=placeholder)
     input.attr["class"].add("form-control")
