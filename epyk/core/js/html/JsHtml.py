@@ -291,7 +291,7 @@ class ContentFormatters(object):
     Usage:
     -----
     """
-    return JsObjects.JsString.JsString("String(%s)" % self.selector)
+    return JsObjects.JsString.JsString("String(%s)" % self.selector, isPyData=False)
 
   @property
   def date(self):

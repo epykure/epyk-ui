@@ -22,9 +22,10 @@ class Icons(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.awesome(icon="fas fa-align-center")
+      page.ui.icons.awesome(icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -39,20 +40,20 @@ class Icons(object):
     ----------
     :param icon: String. The font awesome icon reference
     :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param position: String. Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
     html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
     html_edit.style.css.float = position
-    html_edit.style.css.display = "inline"
+    html_edit.style.css.display = "inline-block"
     return html_edit
 
   def fluent(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
@@ -60,9 +61,10 @@ class Icons(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.awesome(icon="fas fa-align-center")
+      page.ui.icons.awesome(icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -77,9 +79,9 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -89,17 +91,19 @@ class Icons(object):
     html_edit.style.css.display = "inline-block"
     return html_edit
 
-  def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
+  def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), htmlCode=None,
+           options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-edit <https://fontawesome.com/icons/edit>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.edit()
-      rptObj.ui.icons.edit().color("red")
+      page.ui.icons.edit()
+      page.ui.icons.edit().color("red")
 
     Underlying HTML Objects:
 
@@ -116,23 +120,25 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('far fa-edit', text, tooltip, position, width, height, htmlCode, profile)
 
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
-            htmlCode=None, profile=None):
+            htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-clock <https://fontawesome.com/icons/clock>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.clock()
-      rptObj.ui.icons.clock().color("red")
+      page.ui.icons.clock()
+      page.ui.icons.clock().color("red")
 
     Underlying HTML Objects:
 
@@ -149,16 +155,20 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-clock', text, tooltip, position, width, height, htmlCode, profile)
 
   def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -167,18 +177,22 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome('fas fa-caret-right', text, tooltip, position, width, height, htmlCode, profile)
     components.icon.style.css.font_factor(10)
     return components
 
   def previous(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -187,18 +201,22 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, htmlCode, profile)
     components.icon.style.css.font_factor(10)
     return components
 
   def zoom_out(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -207,18 +225,23 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome('fas fa-search-minus', text, tooltip, position, width, height, htmlCode, profile)
     components.style.css.color = self.context.rptObj.theme.greys[-6]
     return components
 
   def zoom_in(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -227,18 +250,23 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
     components.style.css.color = self.context.rptObj.theme.greys[-6]
     return components
 
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -247,23 +275,25 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome("fas fa-save", text, tooltip, position, width, height, htmlCode, profile)
 
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-sync-alt <https://fontawesome.com/icons/sync-alt>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.refresh()
-      rptObj.ui.icons.refresh().color("red")
+      page.ui.icons.refresh()
+      page.ui.icons.refresh().color("red")
 
     Underlying HTML Objects:
 
@@ -276,22 +306,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-sync-alt', text, tooltip, position, width, height, htmlCode, profile)
 
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
-          htmlCode=None,  profile=None):
+          htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/file-pdf>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.pdf(tooltip="helper")
+      page.ui.icons.pdf(tooltip="helper")
 
     Underlying HTML Objects:
 
@@ -304,22 +336,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('far fa-file-pdf', text, tooltip, position, width, height, htmlCode, profile)
 
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
-           htmlCode=None, profile=None):
+           htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/plus-square>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.plus()
+      page.ui.icons.plus()
 
     Underlying HTML Objects:
 
@@ -332,22 +366,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-plus-square', text, tooltip, position, width, height, htmlCode, profile)
 
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
-            htmlCode=None, profile=None):
+            htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-excel <https://fontawesome.com/icons/file-excel>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.excel()
+      page.ui.icons.excel()
 
     Underlying HTML Objects:
 
@@ -360,22 +396,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('far fa-file-excel', text, tooltip, position, width, height, htmlCode, profile)
 
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
-               htmlCode=None, profile=None):
+               htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-download <https://fontawesome.com/icons/download>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.download()
+      page.ui.icons.download()
 
     Underlying HTML Objects:
 
@@ -388,22 +426,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-download', text, tooltip, position, width, height, htmlCode, profile)
 
   def delete(self, text=None, position=None, align='left', tooltip="Delete Component on the page", width=(None, 'px'),
-             height=(None, 'px'), htmlCode=None, profile=None):
+             height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-trash-alt <https://fontawesome.com/icons/trash-alt>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.delete()
+      page.ui.icons.delete()
 
     Underlying HTML Objects:
 
@@ -416,8 +456,9 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
     component.hover_color = 'danger'
@@ -425,16 +466,18 @@ class Icons(object):
     component.style.css.margin = align
     return component
 
-  def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
+  def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'),
+           htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-search-plus <https://fontawesome.com/icons/search-plus>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.zoom()
+      page.ui.icons.zoom()
 
     Underlying HTML Objects:
 
@@ -447,22 +490,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
 
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-clipboard <https://fontawesome.com/icons/clipboard>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.capture()
+      page.ui.icons.capture()
 
     Underlying HTML Objects:
 
@@ -475,22 +520,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
     """
     return self.awesome('far fa-clipboard', text, tooltip, position, width, height, htmlCode, profile)
 
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
-             htmlCode=None, profile=None):
+             htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/times-circle>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.remove()
+      page.ui.icons.remove()
 
     Underlying HTML Objects:
 
@@ -503,24 +550,27 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     component = self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     return component
 
-  def clear(self, text=None, align='left', position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
+  def clear(self, text=None, align='left', position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+            htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/fas fa-eraser>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.clear()
+      page.ui.icons.clear()
 
     Underlying HTML Objects:
 
@@ -534,8 +584,9 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, htmlCode, profile)
     component.hover_color = 'danger'
@@ -544,16 +595,17 @@ class Icons(object):
     return component
 
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
-            htmlCode=None, profile=None):
+            htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-table <https://fontawesome.com/icons/table>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.table(tooltip="helper")
+      page.ui.icons.table(tooltip="helper")
 
     Underlying HTML Objects:
 
@@ -565,22 +617,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-table', text, tooltip, position, width, height, htmlCode, profile)
 
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
-             htmlCode=None, profile=None):
+             htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-wrench <https://fontawesome.com/icons/wrench>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.wrench()
+      page.ui.icons.wrench()
 
     Underlying HTML Objects:
 
@@ -593,22 +647,24 @@ class Icons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.awesome('fas fa-wrench', text, tooltip, position, width, height, htmlCode, profile)
 
   def rss(self, text="RSS", position=None, align="left", tooltip="", width=('auto', ''), height=(25, 'px'),
-             htmlCode=None, profile=None):
+             htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-wrench <https://fontawesome.com/icons/rss-square?style=solid>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.rss()
+      page.ui.icons.rss()
 
     Underlying HTML Objects:
 
@@ -622,8 +678,9 @@ class Icons(object):
     :param align: String. Optional. A string with the horizontal position of the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, htmlCode, profile)
     icon.style.css.color = "#cc9547"
@@ -638,16 +695,17 @@ class Icons(object):
     return icon
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
-               htmlCode=None, profile=None):
+               htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-facebook-f <https://fontawesome.com/icons/facebook-f>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.facebook()
+      page.ui.icons.facebook()
 
     Underlying HTML Objects:
 
@@ -660,8 +718,9 @@ class Icons(object):
     :param position:
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -671,16 +730,17 @@ class Icons(object):
     return icon
 
   def messenger(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
-                htmlCode=None, profile=None):
+                htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-facebook-f <https://fontawesome.com/icons/facebook-f>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.facebook()
+      page.ui.icons.facebook()
 
     Underlying HTML Objects:
 
@@ -693,8 +753,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -704,16 +765,17 @@ class Icons(object):
     return icon
 
   def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="", width=(25, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-twitter <https://fontawesome.com/icons/twitter>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.twitter()
+      page.ui.icons.twitter()
 
     Underlying HTML Objects:
 
@@ -726,27 +788,29 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2', 'padding': '3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def twitch(self, text=None, url="https://www.twitch.tv/", position=None, tooltip="Twitter", width=(25, 'px'),
-              htmlCode=None, profile=None):
+  def twitch(self, text=None, url="https://www.twitch.tv/", position=None, tooltip="", width=(25, 'px'),
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-twitch <https://fontawesome.com/icons/twitch?style=brands`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.twitter()
+      page.ui.icons.twitter()
 
     Underlying HTML Objects:
 
@@ -759,8 +823,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-twitch', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -770,16 +835,17 @@ class Icons(object):
     return icon
 
   def instagram(self, text=None, url="https://www.instagram.com/?hl=en", position=None, tooltip="Twitter", width=(25, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-instagram-square <https://fontawesome.com/icons/instagram-square?style=brands
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.twitter()
+      page.ui.icons.twitter()
 
     Underlying HTML Objects:
 
@@ -792,8 +858,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-instagram-square', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -803,16 +870,17 @@ class Icons(object):
     return icon
 
   def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="",
-               width=(25, 'px'), htmlCode=None, profile=None):
+               width=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-linkedin-in <https://fontawesome.com/icons/linkedin-in>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.linkedIn()
+      page.ui.icons.linkedIn()
 
     Underlying HTML Objects:
 
@@ -825,8 +893,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -836,16 +905,17 @@ class Icons(object):
     return icon
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
-              width=(25, 'px'), htmlCode=None, profile=None):
+              width=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-youtube <https://fontawesome.com/icons/youtube>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.youtube()
+      page.ui.icons.youtube()
 
     Underlying HTML Objects:
 
@@ -858,8 +928,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -869,16 +940,17 @@ class Icons(object):
     return icon
 
   def github(self, text=None, url="https://github.com/", position=False, tooltip="Go the the Github project",
-             width=(25, 'px'), htmlCode=None, profile=None):
+             width=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-github <https://fontawesome.com/icons/github>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.github()
+      page.ui.icons.github()
 
     Underlying HTML Objects:
 
@@ -891,8 +963,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome('fab fa-github', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -902,16 +975,17 @@ class Icons(object):
     return icon
 
   def python(self, text=None, url="https://pypi.org/", position=None, tooltip="Like or package",
-             width=(25, 'px'), htmlCode=None, profile=None):
+             width=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-python <https://fontawesome.com/icons/python>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.python()
+      page.ui.icons.python()
 
     Underlying HTML Objects:
 
@@ -924,8 +998,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome("fab fa-python", text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -935,16 +1010,17 @@ class Icons(object):
     return icon
 
   def stackoverflow(self, text=None, url="https://stackoverflow.com/", position=None, tooltip="Share your comments",
-                    width=(25, 'px'), htmlCode=None, profile=None):
+                    width=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.stackoverflow()
+      page.ui.icons.stackoverflow()
 
     Underlying HTML Objects:
 
@@ -957,8 +1033,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome("fab fa-stack-overflow", text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -967,16 +1044,18 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def mail(self, text=None, url="", position=None, tooltip="Share by mail", width=(25, 'px'), htmlCode=None, profile=None):
+  def mail(self, text=None, url="", position=None, tooltip="Share by mail", width=(25, 'px'), htmlCode=None,
+           options=None, profile=None):
     """
     Description:
     ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.mail()
+      page.ui.icons.mail()
 
     Underlying HTML Objects:
 
@@ -989,8 +1068,9 @@ class Icons(object):
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome("far fa-envelope", text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
@@ -1005,9 +1085,10 @@ class Icons(object):
     ------------
     Display a tick box component
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.tick()
+      page.ui.icons.tick()
 
     Underlying HTML Objects:
 
@@ -1022,7 +1103,7 @@ class Icons(object):
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Specific Python options available for this component
+    :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
@@ -1041,11 +1122,12 @@ class Icons(object):
     """
     Description:
     ------------
-    Add the Epyk Icon
+    Add the Epyk Icon.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.epyk()
+      page.ui.icons.epyk()
 
     Underlying HTML Objects:
 
@@ -1058,7 +1140,7 @@ class Icons(object):
     Attributes:
     ----------
     :param align: String. Optional. A string with the horizontal position of the component
-    :param format: String. optional. The type of component (logo, small...)
+    :param format: String. Optional. The type of component (logo, small...)
     """
     if format == 'logo':
       img, width, height = "epyklogo.ico", (32, 'px'), (32, 'px')
@@ -1077,9 +1159,10 @@ class Icons(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.signin("test")
+      page.ui.icons.signin("test")
 
     Underlying HTML Objects:
 
@@ -1105,9 +1188,10 @@ class Icons(object):
     ------------
     Add a bespoke options / actions bar with icons
 
-    Usage::
+    Usage:
+    -----
 
-      Related Pages:
+    Related Pages:
 
     Templates:
 
@@ -1120,7 +1204,7 @@ class Icons(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -1133,7 +1217,11 @@ class Icons(object):
     """
     Description:
     ------------
-    Display an avatar component
+    Display an avatar component.
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -1142,7 +1230,7 @@ class Icons(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     img = img.replace("\\", "/")
     if height[0] is None:
@@ -1162,11 +1250,12 @@ class Icons(object):
     ------------
     Display a badge component using Bootstrap
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
-      rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
-      rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
+      page.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+      page.ui.images.badge("This is a badge", background_color="red", color="white")
+      page.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 
       b = rptObj.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
       b.options.badge_css = {"background": 'green'}
@@ -1188,9 +1277,9 @@ class Icons(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param url:
-    :param tooltip: Optional, The text to display in the tooltip
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional, A boolean to store the performances for each components
+    :param tooltip: String. Optional. The text to display in the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -1209,9 +1298,10 @@ class Icons(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
     Underlying HTML Objects:
 
@@ -1243,20 +1333,24 @@ class Icons(object):
     html_dt.input.style.css.width = 0
     return html_dt
 
-  def timer(self, time, jsFncs, icon="far fa-clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
+  def timer(self, time, js_funcs, icon="far fa-clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
     """
     Description:
     ------------
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param time: Integer. Interval time in second
-    :param jsFncs: String or List. The Javascript functions
+    :param js_funcs: String | List. The Javascript functions
     :param icon: String. The font awesome icon reference
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {"started": True}
     if options is not None:
@@ -1264,7 +1358,7 @@ class Icons(object):
     t = self.awesome(icon, width=width, height=height, profile=profile)
     if dflt_options["started"]:
       t.spin().attr["data-active"] = 1
-      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % t.htmlCode, time * 1000)])
+      self.context.rptObj.body.onReady([self.context.rptObj.js.window.setInterval(js_funcs, "%s_timer" % t.htmlCode, time * 1000)])
     else:
       t.attr["data-active"] = 0
     t.click([
@@ -1273,28 +1367,32 @@ class Icons(object):
         self.context.rptObj.js.window.clearInterval("%s_timer" % t.htmlCode)
       ]).else_([
         t.icon.dom.addClass("fa-spin"), t.dom.setAttribute("data-active", 1),
-        self.context.rptObj.js.window.setInterval(jsFncs, "%s_timer" % t.htmlCode, time)
+        self.context.rptObj.js.window.setInterval(js_funcs, "%s_timer" % t.htmlCode, time)
       ]),
     ])
     return t
 
-  def large(self, icon=None, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
+  def large(self, icon=None, family=None, width=(None, 'px'), height=(None, "px"), htmlCode=None, color=None, tooltip=None, align="left", options=None, profile=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
     :param icon:
     :param family:
     :param width:
-    :param htmlCode:
     :param height:
+    :param htmlCode:
     :param color:
     :param tooltip:
     :param align:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.context.rptObj.ui.icon(icon, family, width, htmlCode, height, color, tooltip, align, options, profile)
     icon.style.css.font_factor(30)
@@ -1313,7 +1411,7 @@ class Icons(object):
     """
     Description:
     ------------
-    More custom toggles icons
+    More custom toggles icons.
     """
     return Toggles(self.context)
 
@@ -1329,9 +1427,10 @@ class Toggles(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.icon("fab fa-angellist")
+      page.ui.images.icon("fab fa-angellist")
 
     Underlying HTML Objects:
 
@@ -1343,16 +1442,17 @@ class Toggles(object):
 
     Attributes:
     ----------
-    :param icon: String. Optional. The component icon content from font-awesome references
+    :param icon_on: String. Optional. The component icon content from font-awesome references
+    :param icon_off: String. Optional. The component icon content from font-awesome references
     :param family:
-    :param htmlCode:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: String. Optional. The font color in the component. Default inherit
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param align: String. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -1371,9 +1471,10 @@ class Toggles(object):
     ------------
     Add a lock toggle button.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.icons.toggles.lock()
+      page.ui.icons.toggles.lock()
 
     Underlying HTML Objects:
 
@@ -1388,14 +1489,14 @@ class Toggles(object):
     :param icon_on: String. Optional. The component icon content from font-awesome references
     :param icon_off: String. Optional. The component icon content from font-awesome references
     :param family:
-    :param htmlCode:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: String. Optional. The font color in the component. Default inherit
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param align: String. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
