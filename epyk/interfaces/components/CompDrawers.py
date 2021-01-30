@@ -16,7 +16,8 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the right.
 
-    Usage::
+    Usage:
+    -----
 
     Templates:
 
@@ -42,7 +43,9 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the left.
 
-    Usage::
+    Usage:
+    -----
+
 
 
     Attributes:
@@ -67,7 +70,10 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the left.
 
-    Usage::
+    Usage:
+    -----
+
+
 
 
     Attributes:
@@ -91,7 +97,8 @@ class Drawers(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
     Temapltes:
 
@@ -121,7 +128,8 @@ class Drawers(object):
     Bespoke drawer without handle.
     The event to display the panel will be attached to the component.
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:

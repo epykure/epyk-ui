@@ -27,11 +27,12 @@ class Fields(object):
     """
     Description:
     ------------
-    Add the HTML text component to the page
+    Add the HTML text component to the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.text("this is a test")
+      page.ui.text("this is a test")
 
     Underlying HTML Objects:
 
@@ -104,9 +105,10 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
     Underlying HTML Objects:
 
@@ -151,9 +153,10 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
+      page.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
 
     Underlying HTML Objects:
 
@@ -199,9 +202,10 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.cob(label="COB Date")
+      page.ui.fields.cob(label="COB Date")
 
     Underlying HTML Objects:
 
@@ -242,10 +246,11 @@ class Fields(object):
     ------------
     This component is based on the Jquery Time Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
-      rptObj.ui.fields.now(label="Time field")
+      page.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
+      page.ui.fields.now(label="Time field")
 
     Underlying HTML Objects:
 
@@ -280,10 +285,11 @@ class Fields(object):
     ------------
     This component is based on the Jquery Time Picker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
-      rptObj.ui.fields.time(label="Time field")
+      page.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
+      page.ui.fields.time(label="Time field")
 
     Underlying HTML Objects:
 
@@ -318,9 +324,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+      page.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
     Underlying HTML Objects:
 
@@ -354,7 +361,8 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       page.ui.fields.autocomplete("", label="Range Example", icon="fas fa-unlock-alt")
 
@@ -390,9 +398,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.static(label="readonly field")
+      page.ui.fields.static(label="readonly field")
 
     Underlying HTML Objects:
 
@@ -429,9 +438,10 @@ class Fields(object):
     Create a hidden HTML component.
     This is used to store values which are not visible on the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.hidden(label="readonly field")
+      page.ui.fields.hidden(label="readonly field")
 
     Underlying HTML Objects:
 
@@ -467,9 +477,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.integer(label="test")
+      page.ui.fields.integer(label="test")
 
     Underlying HTML Objects:
 
@@ -503,9 +514,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.integer(label="test")
+      page.ui.fields.integer(label="test")
 
     Underlying HTML Objects:
 
@@ -539,9 +551,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.password(label="password")
+      page.ui.fields.password(label="password")
 
     Underlying HTML Objects:
 
@@ -576,9 +589,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.textarea(label="Date")
+      page.ui.fields.textarea(label="Date")
 
     Underlying HTML Objects:
 
@@ -613,9 +627,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.checkbox(True, label="Check")
+      page.ui.fields.checkbox(True, label="Check")
 
     Underlying HTML Objects:
 
@@ -655,9 +670,10 @@ class Fields(object):
     Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of related options).
     Only one radio button in a group can be selected at the same time.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.inputs.radio(False, label="radio")
+      page.ui.inputs.radio(False, label="radio")
 
     Underlying HTML Objects:
 
@@ -703,9 +719,10 @@ class Fields(object):
     - step - specifies the legal number intervals
     - value - Specifies the default value
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
+      page.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
 
     Underlying HTML Objects:
 
@@ -747,9 +764,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+      page.ui.fields.select(["a", "b"], label="Check")
 
     Underlying HTML Objects:
 
@@ -792,9 +810,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+      page.ui.fields.select(["a", "b"], label="Check")
 
     Underlying HTML Objects:
 
@@ -838,9 +857,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+      page.ui.fields.select(["a", "b"], label="Check")
 
     Underlying HTML Objects:
 
@@ -887,9 +907,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+      page.ui.fields.select(["a", "b"], label="Check")
 
     Underlying HTML Objects:
 
@@ -931,9 +952,10 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+      page.ui.fields.select(["a", "b"], label="Check")
 
     Underlying HTML Objects:
 
@@ -972,6 +994,24 @@ class Fields(object):
     return html_input
 
   def column_text(self, label, text="", align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param label:
+    :param text:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
     div.label.style.css.display = 'block'
@@ -989,6 +1029,24 @@ class Fields(object):
     return div
 
   def column_date(self, label, value="T", align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param label:
+    :param value:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
     div.label.style.css.display = 'block'
@@ -1019,7 +1077,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1059,7 +1118,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1101,7 +1161,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1139,7 +1200,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1168,7 +1230,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1207,7 +1270,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -1233,7 +1297,8 @@ class Timelines(object):
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:

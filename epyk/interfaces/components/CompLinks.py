@@ -16,9 +16,10 @@ class Links(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
+      page.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
 
     Underlying HTML Objects:
 
@@ -52,9 +53,6 @@ class Links(object):
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
     if align == "center":
       self.context.rptObj.ui.div(html_link, align=align)
-      html_link.style.css.width = "auto"
-      html_link.style.css.margin = "0 auto"
-      html_link.style.css.display = "inline-block"
     return html_link
 
   def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
@@ -65,6 +63,9 @@ class Links(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
+
+    Usage:
+    -----
 
     Templates:
 
@@ -94,13 +95,14 @@ class Links(object):
     """
     Description:
     ------------
-    Python interface to the common Hyperlink
+    Python interface to the common Hyperlink.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.link({"text": "Profiling results", "url": '#'})
-      l = rptObj.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
-      b = rptObj.ui.images.badge("new")
+      page.ui.link({"text": "Profiling results", "url": '#'})
+      l = page.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
+      b = page.ui.images.badge("new")
       l.append_child(b)
 
     Underlying HTML Objects:
@@ -127,10 +129,7 @@ class Links(object):
     if tooltip is not None:
       html_link.tooltip(tooltip)
     if align == "center":
-      self.context.rptObj.ui.div(html_link)
-      html_link.style.css.width = "auto"
-      html_link.style.css.margin = "0 auto"
-      html_link.style.css.display = "inline-block"
+      self.context.rptObj.ui.div(html_link, align=align)
     return html_link
 
   def data(self, text, value, width=(None, '%'), height=(None, 'px'), format='txt', profile=None):
@@ -139,9 +138,10 @@ class Links(object):
     ------------
     Python interface to the Hyperlink to retrieve data
 
-    Usage::
+    Usage:
+    -----
 
-      data_link = rptObj.ui.links.data("link", "test#data")
+      data_link = page.ui.links.data("link", "test#data")
       data_link.build({"text": 'new link Name', 'data': "new content"})
 
     Underlying HTML Objects:
@@ -165,11 +165,15 @@ class Links(object):
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
     return html_data
 
-  def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False,
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
     Display a link with the same layout than a buttons.colored HTML component
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -193,7 +197,8 @@ class Links(object):
     html_link.style.css.padding = "0 10px"
     html_link.style.css.background = color or self.context.rptObj.theme.colors[-1]
     html_link.style.css.border = "1px solid %s" % (color or self.context.rptObj.theme.colors[-1])
-    html_link.icon.style.css.color = self.context.rptObj.theme.colors[0]
+    if icon is not None:
+      html_link.icon.style.css.color = self.context.rptObj.theme.colors[0]
     html_link.style.css.color = self.context.rptObj.theme.colors[0]
     html_link.style.css.margin_top = 5
     html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
@@ -205,6 +210,9 @@ class Links(object):
     Description:
     ------------
     HTML component to upload files.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -244,6 +252,9 @@ class Links(object):
     Description:
     ------------
     HTML component to upload files.
+
+    Usage:
+    -----
 
     Attributes:
     ----------

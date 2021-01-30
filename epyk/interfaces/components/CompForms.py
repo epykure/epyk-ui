@@ -13,11 +13,12 @@ class Forms(object):
     """
     Description:
     ------------
-    Creates an new empty form
+    Creates an new empty form.
 
-    Usage::
+    Usage:
+    -----
 
-      f = rptObj.ui.form()
+      f = page.ui.form()
 
     Attributes:
     ----------
@@ -30,11 +31,12 @@ class Forms(object):
     """
     Description:
     ------------
-    Create a datepicker object
+    Create a datepicker object.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
+      page.ui.forms.date("http://127.0.0.1:5000", "POST")
 
     Underlying HTML Objects:
 
@@ -64,9 +66,10 @@ class Forms(object):
     ------------
     Create two datepicker objects for current and previous.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
+      page.ui.forms.dates("http://127.0.0.1:5000", "POST")
 
     Underlying HTML Objects:
 
@@ -97,6 +100,9 @@ class Forms(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Form`
@@ -123,11 +129,12 @@ class Forms(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.forms.inputs([
-      {"label": "name", "htmlCode": "input"},
-      {"label": "name 2", "htmlCode": "input2"},
+      page.ui.forms.inputs([
+        {"label": "name", "htmlCode": "input"},
+        {"label": "name 2", "htmlCode": "input2"},
       ])
 
     Underlying HTML Objects:
@@ -157,6 +164,9 @@ class Forms(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------

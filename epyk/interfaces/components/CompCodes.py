@@ -24,7 +24,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -60,7 +61,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -96,7 +98,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -132,7 +135,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -168,7 +172,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -205,7 +210,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -241,7 +247,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -277,7 +284,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -313,7 +321,8 @@ class Code(object):
 
       https://codemirror.net/index.html
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:

@@ -55,12 +55,12 @@ class Buttons(object):
     """
     Description:
     ------------
-    Standard button
+    Standard button.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.button("Test")
-
+      page.ui.button("Test")
 
     Underlying HTML Objects:
 
@@ -109,10 +109,10 @@ class Buttons(object):
     ------------
     Standard button
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.button("Test")
-
+      page.ui.button("Test")
 
     Underlying HTML Objects:
 
@@ -157,10 +157,10 @@ class Buttons(object):
     ------------
     Standard button
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.button("Test")
-
+      page.ui.button("Test")
 
     Underlying HTML Objects:
 
@@ -206,10 +206,10 @@ class Buttons(object):
     ------------
     Standard button
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.button("Test")
-
+      page.ui.button("Test")
 
     Underlying HTML Objects:
 
@@ -256,9 +256,10 @@ class Buttons(object):
     Display a button on the page regardless the current layoyt of components
     By default the button will be center on the page.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.absolute("Test")
+      page.ui.buttons.absolute("Test")
 
     Templates:
 
@@ -304,9 +305,10 @@ class Buttons(object):
     ------------
     Standard button with a small layout
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.small("Small button")
+      page.ui.buttons.small("Small button")
 
     Templates:
 
@@ -338,9 +340,10 @@ class Buttons(object):
     ------------
     Standard button with a standard layout
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.small("Small button")
+      page.ui.buttons.small("Small button")
 
     Templates:
 
@@ -371,9 +374,10 @@ class Buttons(object):
     ------------
     Same as Standard button but used to attract user attention
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.important("Important")
+      page.ui.buttons.important("Important")
 
     Underlying HTML Objects:
 
@@ -413,9 +417,10 @@ class Buttons(object):
     -----------
     Add a validate button with a predefined icon from font awesome
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.validate()
+      page.ui.buttons.validate()
 
     Underlying HTML Objects:
 
@@ -424,7 +429,7 @@ class Buttons(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_button.asp
-        http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Templates:
 
@@ -453,9 +458,10 @@ class Buttons(object):
     -----------
     Button with cross icon
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.remove()
+      page.ui.buttons.remove()
 
     Underlying HTML Objects:
 
@@ -464,7 +470,7 @@ class Buttons(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Templates:
 
@@ -493,9 +499,10 @@ class Buttons(object):
     -----------
     Add a phone button with a predefined icon from font-awesome
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.phone()
+      page.ui.buttons.phone()
 
     Underlying HTML Objects:
 
@@ -504,7 +511,7 @@ class Buttons(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Templates:
 
@@ -533,9 +540,10 @@ class Buttons(object):
     ------------
     Add a mail button with a predefined icon from font-awesome
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.mail()
+      page.ui.buttons.mail()
 
     Underlying HTML Objects:
 
@@ -574,9 +582,10 @@ class Buttons(object):
     ------------
     Creates a radio HTML component
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
+      page.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
 
     Underlying HTML Objects:
 
@@ -628,17 +637,19 @@ class Buttons(object):
     ------------
     Add a toggle component
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.toggle({'on': "true", 'off': 'false'})
+      page.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlRadio.Switch`
 
     Related Pages:
-http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
-    https://codepen.io/mburnette/pen/LxNxNg
+
+      http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
+      https://codepen.io/mburnette/pen/LxNxNg
 
     Templates:
 
@@ -722,11 +733,12 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     ------------
     Wrapper to the check box button object
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.buttons.check(label="Label")
-      rptObj.ui.buttons.check(True, label="Label")
-      rptObj.ui.buttons.check(True, label="Label", icon="fas fa-align-center")
+      page.ui.buttons.check(label="Label")
+      page.ui.buttons.check(True, label="Label")
+      page.ui.buttons.check(True, label="Label", icon="fas fa-align-center")
 
     Underlying HTML Objects:
 
@@ -762,9 +774,10 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     -----------
     Button with an underlying items menu
 
-    Usage::
+    Usage:
+    -----
 
-      tree5 = rptObj.ui.buttons.menu(["A", "B", "C"], 'Menu')
+      tree5 = page.ui.buttons.menu(["A", "B", "C"], 'Menu')
 
     Underlying HTML Objects:
 
@@ -803,8 +816,11 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     """
     Description:
     -----------
-    Button for a badge whihc point to the various application stores (Google and Apple)
+    Button for a badge which point to the various application stores (Google and Apple)
     The badge must be issued from teh Google play store
+
+    Usage:
+    -----
 
     Related Pages:
 
@@ -842,6 +858,9 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     -----------
     Live component which will trigger event every x second.
     This will then allow other components to be refreshed in the page.
+
+    Usage:
+    -----
 
     Templates:
 
@@ -900,6 +919,9 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     Description:
     -----------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param text:
@@ -922,6 +944,9 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     Description:
     ------------
     Button with the font awesome icon far fa-thumbs-up
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -946,6 +971,9 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     ------------
     Button with the font awesome icon far fa-thumbs-down
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param width:
@@ -964,6 +992,26 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
   @html.Html.css_skin()
   def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text:
+    :param value:
+    :param group:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    :return:
+    """
     but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
                                       profile=profile, options=options)
     but.style.css.background = self.context.rptObj.theme.greys[3]

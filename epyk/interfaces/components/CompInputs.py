@@ -544,7 +544,7 @@ class Inputs(object):
     html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
     return html_cell
 
-  def search(self, text='', placeholder='Search..', color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+  def search(self, text='', placeholder='Search..', align="left", color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              tooltip='', extensible=False, options=None, profile=None):
     """
     Description:
@@ -583,6 +583,9 @@ class Inputs(object):
     if options is not None:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, width, height, htmlCode, tooltip, extensible, dflt_options, profile)
+    if align == "center":
+      html_s.style.css.margin = "auto"
+      html_s.style.css.display = "block"
     return html_s
 
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,

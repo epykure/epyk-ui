@@ -20,9 +20,10 @@ class Images(object):
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+      page.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
 
     Underlying HTML Objects:
@@ -72,7 +73,8 @@ class Images(object):
 
       https://www.w3schools.com/tags/tag_figcaption.asp
 
-    Usage::
+    Usage:
+    -----
 
       page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption", path=picture_path, width=(100, 'px'))
 
@@ -106,7 +108,11 @@ class Images(object):
     """
     Description:
     ------------
-    Empty container for images
+    Empty container for images.
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -129,6 +135,10 @@ class Images(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -157,6 +167,10 @@ class Images(object):
     ------------
 
     tags: Background
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -190,6 +204,10 @@ class Images(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param url:
@@ -217,7 +235,11 @@ class Images(object):
     """
     Description:
     ------------
-    Get teh picture used by youtube
+    Get teh picture used by youtube.
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -240,9 +262,10 @@ class Images(object):
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+      page.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
     Underlying HTML Objects:
 
@@ -286,10 +309,11 @@ class Images(object):
     ------------
     Generate or load an avatar
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.avatar("Epyk", status='out')
-      rptObj.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
+      page.ui.images.avatar("Epyk", status='out')
+      page.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
 
     Underlying HTML Objects:
 
@@ -369,9 +393,10 @@ class Images(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
+      page.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
 
     Underlying HTML Objects:
 
@@ -415,9 +440,10 @@ class Images(object):
     Advance image with mask and gallery link.
     This will display some details when the mouse is on the container
 
-    Usage::
+    Usage:
+    -----
 
-      c = rptObj.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
+      c = page.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
       c.style.css.borders()
 
     Underlying HTML Objects:
@@ -449,13 +475,14 @@ class Images(object):
     """
     Description:
     ------------
-    Carousel component for pictures
+    Carousel component for pictures.
 
     Usage:
+    -----
 
-      car = rptObj.ui.images.carousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
+      car = page.ui.images.carousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
                                  path=r"../../../static/images", height=(200, 'px'))
-      car.click([rptObj.js.console.log('data', skip_data_convert=True)])
+      car.click([page.js.console.log('data', skip_data_convert=True)])
 
     Underlying HTML Objects:
 
@@ -492,9 +519,10 @@ class Images(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)
+      page.ui.images.emoji(page.symbols.smileys.DISAPPOINTED_FACE)
 
     Underlying HTML Objects:
 
@@ -524,9 +552,10 @@ class Images(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.icon("fab fa-angellist")
+      page.ui.images.icon("fab fa-angellist")
 
     Underlying HTML Objects:
 
@@ -564,13 +593,14 @@ class Images(object):
     ------------
     Display a badge component using Bootstrap
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
-      rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
-      rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
+      page.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+      page.ui.images.badge("This is a badge", background_color="red", color="white")
+      page.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 
-      b = rptObj.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
+      b = page.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
       b.options.badge_css = {"background": 'green'}
 
     Underlying HTML Objects:
@@ -618,9 +648,10 @@ class Images(object):
 
     TODO: Return the hex code of the color when dom.content used
 
-     Usage::
+    Usage:
+    -----
 
-      rptObj.ui.images.color("FFFFFF")
+      page.ui.images.color("FFFFFF")
 
     Underlying HTML Objects:
 

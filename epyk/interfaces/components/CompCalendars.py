@@ -18,7 +18,8 @@ class Calendar(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
 
     Related Pages:
@@ -80,7 +81,8 @@ class Calendar(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
 
     Attributes:
@@ -104,7 +106,8 @@ class Calendar(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -148,7 +151,8 @@ class Calendar(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
 
     Related Pages:
@@ -190,7 +194,8 @@ class Calendar(object):
     ------------
     Display a forecast based on a dictionary containing the values for several months
 
-    Usage::
+    Usage:
+    -----
 
 
     Related Pages:
@@ -229,7 +234,8 @@ class Calendar(object):
     ------------
     Add link to the google calendar. Will add the event to the Calendar.
 
-    Usage::
+    Usage:
+    -----
 
       page.ui.calendars.google("hrehr", "Test", "20200801T153000Z", "20200802T163000Z")
 
@@ -273,7 +279,8 @@ class Calendar(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
 
     Related Pages:
@@ -315,6 +322,25 @@ class Calendar(object):
     return link
 
   def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text:
+    :param value:
+    :param group:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
     but = self.context.rptObj.ui.text(text, width=width, height=height, htmlCode=htmlCode, tooltip=tooltip,
                                       profile=profile, options=options)
     but.style.css.background = self.context.rptObj.theme.greys[3]

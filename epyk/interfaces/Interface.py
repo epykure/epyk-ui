@@ -98,11 +98,14 @@ class Components:
     """
     Description:
     ------------
-    Change the CSS Style of the main container in the page
+    Change the CSS Style of the main container in the page.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param cssAttrs: Dictionary. The CSS attributes to be applied
+    :param cssAttrs: Dictionary. The CSS attributes to be applied.
     """
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
     return self
@@ -116,10 +119,11 @@ class Components:
 
     This function can be also used to display Python function. Inspect module will be used in this case to get the source code.
 
-    Usage::
+    Usage:
+    -----
 
       import pandas
-    page.ui.print('pandas: {}'.format(pandas.__version__))
+      page.ui.print('pandas: {}'.format(pandas.__version__))
 
     Attributes:
     ----------
@@ -151,9 +155,13 @@ class Components:
     """
     Description:
     ------------
-    Group all the UI Components dedicated to display code fragments
+    Group all the UI Components dedicated to display code fragments.
 
-    This will wrap the Javascript module codemirror
+    This will wrap the Javascript module codemirror.
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -170,6 +178,11 @@ class Components:
 
     This category will group (chat, RSS streams, forum, bot ...).
     Those components are interactive and they would require underlying services and databases in order to fully work
+
+    Usage:
+    -----
+
+
     """
     return CompNetwork.Network(self)
 
@@ -181,7 +194,12 @@ class Components:
     Group all the UI components dedicated to produce slider items.
 
     Those components are interactive and can be used to filter the data on other items in the dashboard.
-    Those components are mainly relying on Jquery and JqueryUi
+    Those components are mainly relying on Jquery and JqueryUi.
+
+    Usage:
+    -----
+
+
     """
     return CompSliders.Sliders(self)
 
@@ -190,7 +208,10 @@ class Components:
     """
     Description:
     ------------
-    Group all the 3D charts
+    Group all the 3D charts.
+
+    Usage:
+    -----
     """
     return CompCharts.Chart3d(self)
 
@@ -199,7 +220,11 @@ class Components:
     """
     Description:
     ------------
-    Group all the 2D charts
+    Group all the 2D charts.
+
+    Usage:
+    -----
+
     """
     return CompCharts.Chart2d(self)
 
@@ -208,7 +233,12 @@ class Components:
     """
     Description:
     ------------
-    Group all the UI components dedicated to produce titles
+    Group all the UI components dedicated to produce titles.
+
+    Usage:
+    -----
+
+
     """
     return CompTitles.Titles(self)
 
@@ -217,7 +247,11 @@ class Components:
     """
     Description:
     ------------
-    Group all the UI components dedicated to produce links to another page or website.
+    Group all the UI components dedicated to produce links to another page or website..
+
+    Usage:
+    -----
+
     """
     return CompLinks.Links(self)
 
@@ -227,6 +261,10 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce navigation components such as navigation bar, footer, banner...
+
+    Usage:
+    -----
+
     """
     return CompNavigation.Navigation(self)
 
@@ -544,7 +582,11 @@ class Components:
     """
     Description:
     ------------
-    Add a content table to the page
+    Add a content table to the page.
+
+    Usage:
+    -----
+
 
     Templates:
 
@@ -585,6 +627,10 @@ class Components:
 
     Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param htmlCls: Class. The bespoke HTML component
@@ -597,6 +643,10 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Attributes:
     ----------
@@ -620,6 +670,10 @@ class Components:
       - label component for the text
       - icon component for the loading icon
 
+    Usage:
+    -----
+
+
     Attributes:
     ----------
     :param text: String. The text in the component (during the loading)
@@ -634,9 +688,10 @@ class Components:
     """
     Description:
     ------------
-    Add Breadcrum information to the page
+    Add Breadcrum information to the page.
 
-    Usage::
+    Usage:
+    -----
 
         page.ui.breadcrumb([
           {"text": 'part 1', 'url': 'part1'},
@@ -672,11 +727,12 @@ class Components:
     """
     Description:
     ------------
-    Creates an new empty form
+    Creates an new empty form.
 
-    Usage::
+    Usage:
+    -----
 
-      f = rptObj.ui.form()
+      f = page.ui.form()
 
     Attributes:
     ----------
@@ -691,7 +747,11 @@ class Components:
     """
     Description:
     ------------
-    HTML component to display a Json
+    HTML component to display a Json.
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -720,7 +780,8 @@ class Components:
     SlideShow component for pictures from the tiny-slider library.
     More details regarding this library here: https://github.com/ganlanyuan/tiny-slider
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -744,7 +805,11 @@ class Components:
     """
     Description:
     ------------
-    HTML component to display a QR Code from a string
+    HTML component to display a QR Code from a string.
+
+    Usage:
+    -----
+
 
     Related Pages:
 
@@ -769,6 +834,21 @@ class Components:
     return h_qrcode
 
   def captcha(self, text="Submit", width=(None, 'px'), height=(None, 'px'), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     captcha = html.HtmlOthers.HtmlCaptcha(self.rptObj, text, width, height, options or {}, profile)
@@ -778,6 +858,10 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Templates:
 
@@ -813,7 +897,10 @@ class Components:
     """
     Description:
     ------------
-    Add an extension base on it is name
+    Add an extension base on it is name.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -830,6 +917,9 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -861,6 +951,9 @@ class WebComponents:
     Description:
     ------------
 
+    Usage:
+    -----
+
     :rtype: Components
     """
     if 'ui' not in self.fwks:
@@ -872,6 +965,9 @@ class WebComponents:
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     :rtype: Bs.Bootstrap
     """
@@ -892,6 +988,9 @@ class WebComponents:
     Set the material components entry point.
     This will be available in the same way than ui is available for anything else in the core framework.
 
+    Usage:
+    -----
+    
     Related Pages:
 
       https://material.io/develop/web/

@@ -18,9 +18,10 @@ class Layouts(object):
 
     The <br> tag inserts a single line break.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.layouts.new_line(10)
+      page.ui.layouts.new_line(10)
 
     Underlying HTML Objects:
 
@@ -46,9 +47,10 @@ class Layouts(object):
 
     The <br> tag inserts a single line break.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.layouts.new_line(10)
+      page.ui.layouts.new_line(10)
 
     Underlying HTML Objects:
 
@@ -78,9 +80,10 @@ class Layouts(object):
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.layouts.hr(10)
+      page.ui.layouts.hr(10)
 
     Underlying HTML Objects:
 
@@ -116,7 +119,7 @@ class Layouts(object):
       hr_html.style.css.margin_bottom = margins
     return hr_html
 
-  def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
+  def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -125,11 +128,12 @@ class Layouts(object):
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.layouts.col([
-      rptObj.ui.text("test C"),
-      rptObj.ui.text("test D"),
+      page.ui.layouts.col([
+        page.ui.text("test C"),
+        page.ui.text("test D"),
       ])
 
     Underlying HTML Objects:
@@ -139,11 +143,11 @@ class Layouts(object):
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/layout/grid/
-    https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
+      https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param position:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -155,24 +159,25 @@ class Layouts(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, options, profile)
+    html_col = html.HtmlContainer.Col(self.context.rptObj, components, position, width, height, align, helper, options, profile)
     return html_col
 
-  def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
+  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    Python wrapper for a column of HTML elements from Bootstrap
+    Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Usage::
+    Usage:
+    -----
 
-      row = rptObj.ui.layouts.row()
-      row += rptObj.ui.layouts.col([
-      rptObj.ui.text("test A"),
-      rptObj.ui.text("test B"),
+      row = page.ui.layouts.row()
+      row += page.ui.layouts.col([
+        page.ui.text("test A"),
+        page.ui.text("test B"),
       ])
 
     Underlying HTML Objects:
@@ -182,11 +187,11 @@ class Layouts(object):
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/layout/grid/
-    https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
+      https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param position:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -200,18 +205,19 @@ class Layouts(object):
     dft_option = {"autoSize": True}
     if options is not None:
       dft_option.update(options)
-    html_col = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, position, width, height, align, helper, dft_option, profile)
+    html_col = html.HtmlContainer.Row(self.context.rptObj, components, position, width, height, align, helper, dft_option, profile)
     return html_col
 
-  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
+  def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    table layout for HTML components
+    table layout for HTML components.
 
-    Usage::
+    Usage:
+    -----
 
-      row = rptObj.ui.layouts.table()
+      row = page.ui.layouts.table()
 
     Underlying HTML Objects:
 
@@ -219,7 +225,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper: String. Optional. A tooltip helper
@@ -228,19 +234,20 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, helper, options, profile)
+    html_row = html.HtmlContainer.Table(self.context.rptObj, components, width, height, helper, options, profile)
     return html_row
 
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
     """
     Description:
     ------------
-    Python wrapper to the HTML Bootstrap Grid
+    Python wrapper to the HTML Bootstrap Grid.
 
-    Usage::
+    Usage:
+    -----
 
-      gr = rptObj.ui.layouts.grid()
-      gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
+      gr = page.ui.layouts.grid()
+      gr += [page.ui.text("test %s" % i) for i in range(5)]
 
     Underlying HTML Objects:
 
@@ -265,7 +272,7 @@ class Layouts(object):
     html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, position, options, profile)
     return html_grid
 
-  def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+  def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
             helper=None, options=None, profile=False):
     """
     Description:
@@ -275,9 +282,12 @@ class Layouts(object):
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param title:
     :param color:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -289,20 +299,21 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs or [], title, color, width, height, htmlCode, helper, options, profile)
+    if components is not None and not isinstance(components, list):
+      components = [components]
+    html_panel = html.HtmlContainer.Panel(self.context.rptObj, components or [], title, color, width, height, htmlCode, helper, options, profile)
     return html_panel
 
-  def div(self, htmlObjs=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
+  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, options=None, profile=None):
     """
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      div = rptObj.ui.div([html])
+      div = page.ui.div([html])
       div += html_2
 
     Underlying HTML Objects:
@@ -319,7 +330,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param label:
     :param color:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -335,10 +346,10 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
+    if components is not None and not isinstance(components, list):
+      components = [components]
 
-    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, width, icon, height,
+    html_div = html.HtmlContainer.Div(self.context.rptObj, components or [], label, color, width, icon, height,
                                       editable, align, padding, htmlCode, tag, helper, options or {}, profile)
     if width[0] == 'auto':
       html_div.style.css.display = "inline-block"
@@ -349,9 +360,12 @@ class Layouts(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param components:
+    :param components: List. The different HTML objects to be added to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. Optional. A string with the horizontal position of the component
@@ -359,7 +373,7 @@ class Layouts(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    html_comp = self.div(htmlObjs=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
+    html_comp = self.div(components=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
                          profile=profile)
     html_comp.style.css.display = "inline-block"
     return html_comp
@@ -369,10 +383,11 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      popup = report.popup(report.title('Test'), color="red")
-      popup + report.paragraph('Test')
+      popup = page.popup(page.ui.title('Test'), color="red")
+      popup + page.paragraph('Test')
 
     Underlying HTML Objects:
 
@@ -384,7 +399,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param components:
+    :param components: List. The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
@@ -404,9 +419,10 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.layouts.iframe("http://www.google.com")
+      page.ui.layouts.iframe("http://www.google.com")
 
     Underlying HTML Objects:
 
@@ -414,7 +430,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param url:
+    :param url: String. Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper: String. Optional. A tooltip helper
@@ -429,6 +445,10 @@ class Layouts(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
 
     Underlying HTML Objects:
 
@@ -452,9 +472,10 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
+      menu = page.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
       menu.icon.click([menu.icon.dom.css({"color": 'red'})])
       menu[0].click([menu[0].dom.css({"color": 'red'})])
 
@@ -484,10 +505,13 @@ class Layouts(object):
     html_icon = html.HtmlContainer.IconsMenu(icon_names, self.context.rptObj, width, height, htmlCode, helper, profile)
     return html_icon
 
-  def form(self, htmlObj=None, helper=None):
+  def form(self, components=None, helper=None):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Underlying HTML Objects:
 
@@ -495,22 +519,23 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObj:
+    :param components: List. The different HTML objects to be added to the component.
     :param helper: String. Optional. A tooltip helper
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, components, helper)
     return form
 
-  def header(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def header(self, components=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
     The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
     It may contain some heading elements but also a logo, a search form, an author name, and other elements
 
-    Usage::
+    Usage:
+    -----
 
-      div = rptObj.ui.header([html])
+      div = page.ui.header([html])
       div += html_2
 
     Underlying HTML Objects:
@@ -523,7 +548,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
@@ -532,20 +557,21 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+    if components is not None and not isinstance(components, list):
+      components = [components]
+    html_obj = html.HtmlContainer.Header(self.context.rptObj, components or [], width, height, htmlCode, helper, options or {}, profile)
     return html_obj
 
-  def section(self, htmlObjs=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def section(self, components=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
     The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections of the document.
 
-    Usage::
+    Usage:
+    -----
 
-      div = rptObj.ui.header([html])
+      div = page.ui.header([html])
       div += html_2
 
     Underlying HTML Objects:
@@ -558,7 +584,7 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObjs:
+    :param components: List. The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
@@ -568,9 +594,9 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+    if components is not None and not isinstance(components, list):
+      components = [components]
+    html_obj = html.HtmlContainer.Section(self.context.rptObj, components or [], width, height, htmlCode, helper, options or {}, profile)
     return html_obj
 
   def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
@@ -578,9 +604,12 @@ class Layouts(object):
     Description:
     ------------
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param components:
+    :param components: List. The different HTML objects to be added to the component.
     :param cols:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -615,6 +644,9 @@ class Delimiter(object):
     ------------
     Wrapper around the HT html tag.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param count: The number of HR tag to be added
@@ -633,6 +665,9 @@ class Delimiter(object):
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -653,6 +688,9 @@ class Delimiter(object):
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -675,6 +713,9 @@ class Delimiter(object):
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
