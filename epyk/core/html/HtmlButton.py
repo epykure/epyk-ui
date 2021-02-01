@@ -542,9 +542,9 @@ class IconEdit(Html.Html):
     # Add the internal components icons and helper
     self.add_span(text)
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-7, width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-7)}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.hover_color = True
 
   def spin(self):

@@ -612,6 +612,7 @@ class Inputs(object):
     :param htmlCode:
     :param tooltip:
     :param extensible:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="px")

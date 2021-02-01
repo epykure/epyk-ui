@@ -1157,14 +1157,15 @@ class Search(Html.Html):
     else:
       self.style.add_classes.layout.search_extension()
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
-    self.add_icon(options["icon"], htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+    self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
     self.style.css.position = "relative"
     self.style.css.border_bottom_width = options["border"]
     self.style.css.border_bottom_style = "solid"
 
     if options.get("position", 'left') == 'left':
       self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute', 'vertical-align': 'top'})
+      self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
+                     'vertical-align': 'top'})
     else:
       self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
       self.icon.css({"margin": '6px 5px 6px 0px', 'cursor': 'pointer', "right": 0,

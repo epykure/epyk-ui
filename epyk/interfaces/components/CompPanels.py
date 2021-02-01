@@ -270,6 +270,7 @@ class Panels(object):
     :param components:
     :param title:
     :param color: String. Optional. The font color in the component. Default inherit.
+    :param align:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -280,10 +281,9 @@ class Panels(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
-      components = [components]
-    else:
-      components = []
-    for component in components:
+      _components = [components]
+    components = []
+    for component in _components:
       if not hasattr(component, 'options'):
         components.append(self.context.rptObj.ui.texts.paragraph(component, options={"markdown": True}))
       else:
@@ -407,7 +407,8 @@ class Panels(object):
     """
     Description:
     ------------
-    More custom sliding panels
+    More custom sliding panels.
+
     """
     return Slidings(self.context)
 
