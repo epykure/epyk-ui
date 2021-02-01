@@ -11,7 +11,8 @@ class Titles(object):
   def __init__(self, context):
     self.context = context
 
-  def head(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def head(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+           htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -39,7 +40,8 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     # html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_size = Defaults_css.font(10)
@@ -50,7 +52,8 @@ class Titles(object):
     html_title.style.css.bold()
     return html_title
 
-  def headline(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def headline(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+               htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -79,7 +82,8 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(6)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 5
@@ -87,7 +91,8 @@ class Titles(object):
     html_title.style.css.font_style = 'italic'
     return html_title
 
-  def title(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def title(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+            htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -116,7 +121,8 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
@@ -125,7 +131,8 @@ class Titles(object):
       self.context.rptObj._content_table.add_title(html_title, level=1)
     return html_title
 
-  def section(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def section(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+              htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -149,7 +156,8 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 20
@@ -158,7 +166,8 @@ class Titles(object):
       self.context.rptObj._content_table.add_title(html_title, level=4)
     return html_title
 
-  def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+             profile=False):
     """
     Description:
     ------------
@@ -185,13 +194,15 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.border_left = '3px solid %s' % self.context.rptObj.theme.colors[2]
     html_title.style.css.padding_left = 5
     html_title.style.css.font_size = Defaults_css.font(2)
     return html_title
 
-  def category(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def category(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+               profile=False):
     """
     Description:
     ------------
@@ -218,14 +229,16 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.border_bottom = '3px solid %s' % self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_size = Defaults_css.font(5)
     html_title.style.css.margin_bottom = 5
     html_title.style.css.text_transform = "uppercase"
     return html_title
 
-  def caption(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def caption(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+              profile=False):
     """
     Description:
     ------------
@@ -252,12 +265,14 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(2)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def underline(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def underline(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+                profile=False):
     """
     Description:
     ------------
@@ -290,7 +305,8 @@ class Titles(object):
     html_title.style.css.border_bottom = '2px solid %s' % self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def bold(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def bold(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+           profile=False):
     """
     Description:
     ------------
@@ -325,8 +341,8 @@ class Titles(object):
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def subtitle(self, text=None, name=None, contents=None, color=None, picture=None, icon=None, marginTop=5, htmlCode=None,
-               width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
+  def subtitle(self, text=None, name=None, contents=None, color=None, picture=None, icon=None, marginTop=5,
+               htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -358,7 +374,8 @@ class Titles(object):
     title.style.css.bold()
     return title
 
-  def upper(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def upper(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+            htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -387,7 +404,8 @@ class Titles(object):
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip,
+                                           dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10

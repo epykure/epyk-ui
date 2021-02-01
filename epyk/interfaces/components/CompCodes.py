@@ -178,7 +178,7 @@ class Code(object):
 
     Attributes:
     ----------
-    :param text: String. Optional. The text
+    :param text: String. Optional. The text.
     :param color: String. Optional. The color code
     :param width: Tuple. Optional. The with details in the format(value, unit)
     :param height: Tuple. Optional. The height details in the format(value, unit)
@@ -290,14 +290,14 @@ class Code(object):
 
     Attributes:
     ----------
-    :param text: String. Optional. The text
-    :param color: String. Optional. The color code
-    :param width: Tuple. Optional. The with details in the format(value, unit)
-    :param height: Tuple. Optional. The height details in the format(value, unit)
-    :param htmlCode: String. Optional. The unique component ID
-    :param options: Dictionary. Optional. The object properties
-    :param helper: String. Optional. The helper message
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param text: String. Optional. The text.
+    :param color: String. Optional. The color code.
+    :param width: Tuple. Optional. The with details in the format(value, unit).
+    :param height: Tuple. Optional. The height details in the format(value, unit).
+    :param htmlCode: String. Optional. The unique component ID.
+    :param options: Dictionary. Optional. The object properties.
+    :param helper: String. Optional. The helper message.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -327,15 +327,15 @@ class Code(object):
 
     Attributes:
     ----------
-    :param language: String. The language
-    :param text: String. Optional. The text
-    :param color: String. Optional. The color code
-    :param width: Tuple. Optional. The with details in the format(value, unit)
-    :param height: Tuple. Optional. The height details in the format(value, unit)
-    :param htmlCode: String. Optional. The unique component ID
-    :param options: Dictionary. Optional. The object properties
-    :param helper: String. Optional. The helper message
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param language: String. The language.
+    :param text: String. Optional. The text.
+    :param color: String. Optional. The color code.
+    :param width: Tuple. Optional. The with details in the format(value, unit).
+    :param height: Tuple. Optional. The height details in the format(value, unit).
+    :param htmlCode: String. Optional. The unique component ID.
+    :param options: Dictionary. Optional. The object properties.
+    :param helper: String. Optional. The helper message.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

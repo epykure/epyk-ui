@@ -255,7 +255,7 @@ class Calendar(object):
     :param details:
     :param location:
     :param icon:
-    :param text:
+    :param text: String. Optional. The value to be displayed to the button.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -299,7 +299,7 @@ class Calendar(object):
     :param details:
     :param location:
     :param icon:
-    :param text:
+    :param text: String. Optional. The value to be displayed to the button.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -332,7 +332,7 @@ class Calendar(object):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the button.
     :param value:
     :param group:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit

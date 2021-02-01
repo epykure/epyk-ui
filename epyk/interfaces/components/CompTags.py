@@ -36,13 +36,14 @@ class Tags(object):
 
     Attributes:
     ----------
-    :param text: String with the content to be added to the component
-    :param url: String. Specifies the URL of the page the link goes to
-    :param width: Tuple with the width value and its unit
-    :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
-    :param tooltip: String. The tooltip to be display on the component
-    :param profile: Boolean flag to set the profiling mode for the component
+    :param text: String with the content to be added to the component.
+    :param url: String. Specifies the URL of the page the link goes to.
+    :param width: Tuple with the width value and its unit.
+    :param height: Tuple with the height value and its unit.
+    :param htmlCode: String. The code reference of the component.
+    :param tooltip: String. The tooltip to be display on the component.
+    :param options:
+    :param profile: Boolean flag to set the profiling mode for the component.
     """
     html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                             height, htmlCode, tooltip, options, profile)
@@ -69,12 +70,12 @@ class Tags(object):
 
     Attributes:
     ----------
-    :param text: String with the content to be added to the component
-    :param width: Tuple with the width value and its unit
-    :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
-    :param tooltip: String. The tooltip to be display on the component
-    :param profile: Boolean flag to set the profiling mode for the component
+    :param text: String with the content to be added to the component.
+    :param width: Tuple with the width value and its unit.
+    :param height: Tuple with the height value and its unit.
+    :param htmlCode: String. The code reference of the component.
+    :param tooltip: String. The tooltip to be display on the component.
+    :param profile: Boolean flag to set the profiling mode for the component.
     """
     html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                            height, htmlCode, tooltip, options, profile)

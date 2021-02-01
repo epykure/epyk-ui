@@ -136,7 +136,7 @@ class Buttons(object):
     ----------
     :param text: String. Optional. The value to be displayed to the button.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param color: String. Optional.
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -185,7 +185,7 @@ class Buttons(object):
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
-    :param color: String. Optional.
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -275,7 +275,7 @@ class Buttons(object):
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
-    :param size_notch:
+    :param size_notch: Integer. Optional. A value to be added to the number font size.
     :param bottom: Integer. Optional. The position of the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param top: Tuple. Optional. A tuple with the integer for the component's distance to the top of the page.
@@ -619,7 +619,7 @@ class Buttons(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param align:
+    :param align: String. Optional. A string with the horizontal position of the component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -672,7 +672,7 @@ class Buttons(object):
     ----------
     :param record: List. Optional. The list of dictionaries with the data.
     :param label: String. Optional. The toggle static label displayed.
-    :param color: String. Optional.
+    :param color: String. Optional. String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param height: Tuple. Optional. Integer for the component height.
@@ -808,7 +808,7 @@ class Buttons(object):
     Attributes:
     ----------
     :param record: List. Optional. The list of dictionaries with the data.
-    :param text: String. Optional.
+    :param text: String. Optional. The value to be displayed to the button.
     :param icon: String. Optional. The icon to be used in the check component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -941,8 +941,8 @@ class Buttons(object):
 
     Attributes:
     ----------
-    :param text:
-    :param tooltip:
+    :param text: String. Optional. The value to be displayed to the button.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -1020,7 +1020,7 @@ class Buttons(object):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the button.
     :param value:
     :param group:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

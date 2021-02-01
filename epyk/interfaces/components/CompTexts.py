@@ -42,16 +42,16 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text: The string value to be displayed in the component
-    :param color: Optional. The color of the text
-    :param align: Optional. The position of the icon in the line (left, right, center)
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param options: Optional. The component options
-    :param helper:
-    :param profile: Optional. A flag to set the component performance storage
+    :param text: String. The string value to be displayed in the component.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. The component options.
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -97,16 +97,16 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text: The string value to be displayed in the component
-    :param color: Optional. The color of the text
-    :param align: Optional. The position of the icon in the line (left, right, center)
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param options: Optional. The component options
-    :param helper:
-    :param profile: Optional. A flag to set the component performance storage
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param color: Optional. The color of the text.
+    :param align: Optional. The position of the icon in the line (left, right, center).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param options: Optional. The component options.
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     text_comp = self.text(text, color, align, width, height, htmlCode, tooltip, options, helper, profile)
     text_comp.style.css.display = "inline-block"
@@ -236,6 +236,7 @@ class Texts(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
+    :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
@@ -275,7 +276,7 @@ class Texts(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
+    :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
