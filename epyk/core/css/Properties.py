@@ -2889,3 +2889,43 @@ class CssMixin(object):
     self.background_repeat = "no-repeat"
     self.background_size = "cover"
     return self
+
+  def inline_block(self):
+    """
+    Description:
+    -----------
+    Shortcut for the display CSS attribute and the value inline-block.
+    This will also remove the with property set to the component.
+
+    Related Pages:
+
+      https://www.w3schools.com/css/css_inline-block.asp
+
+    Usage:
+
+      mode_switch = page.ui.fields.toggle({"off": 'No', "on": "Yes"}, is_on=True, label="Switch", htmlCode="switch")
+      mode_switch.style.css.inline_block()
+
+    """
+    self.width = None
+    self.display = "inline-block"
+    return self
+
+  def hide(self):
+    """
+    Description:
+    -----------
+    Shortcut for the display None CSS property.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_class_display.asp
+      
+    Usage:
+
+      warning = page.ui.icons.warning()
+      warning.style.css.hide()
+
+    """
+    self.display = None
+    return self
