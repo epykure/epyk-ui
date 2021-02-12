@@ -5,6 +5,7 @@ from epyk.core.html import Html
 from epyk.core.html import Defaults
 
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlTree
 from epyk.core.js.packages import JsQuery
 
 from epyk.core.html.options import OptTrees
@@ -24,6 +25,23 @@ class Tree(Html.Html):
     self.__options = OptTrees.OptionsTree(self, option)
     self.css(option['style'])
     self._jsStyles['click_node'] = None
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlTree.JsHtmlTree
+    """
+    if self._dom is None:
+      self._dom = JsHtmlTree.JsHtmlTree(self, report=self._report)
+    return self._dom
 
   @property
   def options(self):
@@ -52,13 +70,22 @@ class Tree(Html.Html):
             if(ulDisplay == 'none'){ this.parentNode.querySelector('ul').style.display = 'block'}
             else{this.parentNode.querySelector('ul').style.display = 'none'}
           };
-
+          icon.style.cursor = "pointer";
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
           var span = document.createElement("span"); 
           span.innerHTML = item.value;
+          var badge = document.createElement("span"); 
+          badge.setAttribute("class", "badge badge-pill");
+          badge.innerHTML = item.items.length;
+          badge.style.padding = 0;
+          badge.style.verticalAlign = "top";
+          icon.appendChild(badge);
           a.appendChild(icon); a.appendChild(span); a.appendChild(ul);
         } else {
           a.innerHTML = item.value;
+          if (typeof item.url !== "undefined"){
+            a.setAttribute("target", item.target || "_blank");
+            a.href = item.url}
           a.style.paddingLeft = '18px';
         }
         li.appendChild(a);

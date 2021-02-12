@@ -32,9 +32,11 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
+    :param color:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -58,9 +60,11 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
+    :param color:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
     :param options:
     :param profile:
     """
@@ -84,20 +88,22 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
+    :param color:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
     :param options:
     :param profile:
 
-    #TODO Ask if this module is still maintained
+    #TODO Ask if this module is still maintained.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
-  def dropdown(self, recordSet=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
+  def dropdown(self, record=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
                helper=None, options=None, profile=None):
     """
     Description:
@@ -122,16 +128,19 @@ class Trees(object):
 
     Attributes:
     ----------
-    :param recordSet:
+    :param record:
+    :param text:
     :param width:
     :param height:
     :param htmlCode:
+    :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dftl_options = {"width": 70}
     dftl_options.update(options or {})
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper,
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, record, text, width, height, htmlCode, helper,
                                      dftl_options, profile)
     return html_d
