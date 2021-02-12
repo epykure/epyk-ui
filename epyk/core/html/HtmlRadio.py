@@ -145,18 +145,21 @@ class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, report, records, label, color, width, height, htmlCode, profile):
+  def __init__(self, report, records, label, color, width, height, htmlCode, options, profile):
     self.width, self.jsChange = width[0], ''
-    super(Switch, self).__init__(report, records, htmlCode=htmlCode, profile=profile,
+    super(Switch, self).__init__(report, records, htmlCode=htmlCode, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
     self.add_label(label, htmlCode=self.htmlCode) # add for
     # self.label.style.add_classes.radio.switch_label()
     self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': []}
     #
-    self.checkbox = report.ui.inputs.checkbox("", width=(None, "%"))
+    is_on = options.get("is_on", False)
+    self.checkbox = report.ui.inputs.checkbox(is_on, width=(None, "%"))
     self.checkbox.style.add_classes.radio.switch_checkbox()
     self.checkbox.options.managed = False
+    if is_on:
+      self.checkbox.attr["checked"] = is_on
     #
     self.switch_label = report.ui.texts.label(report.entities.non_breaking_space, width=(50, "px"))
     self.switch_label.style.clear()
@@ -164,7 +167,7 @@ class Switch(Html.Html):
     self.switch_label.options.managed = False
     self.switch_label.style.css.line_height = "10px"
 
-    self.switch_text = report.ui.tags.p(self.val['off'])
+    self.switch_text = report.ui.tags.p(self.val['on'] if is_on else self.val['off'])
     self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
     self.switch_text.tooltip(self.val.get('text', ''))
     self.switch_text.options.managed = False
@@ -212,17 +215,18 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
-  def click(self, on_funcs=None, off_funcs=None, profile=False, source_event=None, onReady=False):
+  def toggle(self, on_funcs=None, off_funcs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
     ------------
     Set the click property for the Switch.
+    The toggle event allow to specify different Javascript functions for each states of the component.
 
     Usage:
     -----
 
       sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
-      sw.click([
+      sw.toggle([
         page.js.console.log(sw.content)
       ])
 
