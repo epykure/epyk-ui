@@ -124,15 +124,28 @@ class Switch(JsPackage):
     """
     Description:
     -----------
-    Simulate a click event on the component
+    Simulate a click event on the component.
     """
     return JsObjects.JsObjects.get(self._src.switch.click())
+
+  def val(self, jsData):
+    """
+    Description:
+    -----------
+    Set the value for the switch.
+
+    :param jsData: Boolean. Flag to specify the state for the switch.
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
+        if(%(flag)s) {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.on}
+        else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {"varName": self.varName, "flag": jsData, "htmlCode": self.htmlCode})
 
   def false(self):
     """
     Description:
     -----------
-    Set the switch component to False
+    Set the switch component to False.
     """
     return JsObjects.JsObjects.get("%s.querySelector('input').checked = false; %s.querySelector('p').innerHTML = %s_data.off" % (self.varName, self.varName, self.htmlCode))
 
@@ -140,7 +153,7 @@ class Switch(JsPackage):
     """
     Description:
     -----------
-    Set the switch component to True
+    Set the switch component to True.
     """
     return JsObjects.JsObjects.get("%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (self.varName, self.varName, self.htmlCode))
 
