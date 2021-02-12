@@ -228,7 +228,9 @@ class Vignets(object):
           else:
             container.image = image
         if title is not None:
-          container.add(self.context.rptObj.ui.col([title, content]))
+          col = self.context.rptObj.ui.col([title, content])
+          col.style.css.padding = 0
+          container.add(col)
         else:
           container.add(content)
       else:
@@ -367,7 +369,8 @@ class Vignets(object):
       div.style.css.display = "block"
     return div
 
-  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None, profile=None):
+  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -388,7 +391,7 @@ class Vignets(object):
     """
     options = options or {"position": 'left'}
     if render == "col":
-      container = self.context.rptObj.ui.div(align=align, width=width, profile=profile)
+      container = self.context.rptObj.ui.div(align=align, width=width, profile=profile, options=options)
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):
         title = self.context.rptObj.ui.titles.title(title)
@@ -406,7 +409,7 @@ class Vignets(object):
       container.add(title)
       container.add(content)
     else:
-      container = self.context.rptObj.ui.row(align=align, width=width, position="top", profile=profile)
+      container = self.context.rptObj.ui.row(align=align, width=width, position="top", profile=profile, options=options)
       container.options.autoSize = False
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):

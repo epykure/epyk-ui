@@ -7,6 +7,8 @@ from epyk.interfaces.bs import BsInputs
 from epyk.interfaces.bs import BsCarousel
 from epyk.interfaces.bs import BsModals
 from epyk.interfaces.bs import BsDates
+from epyk.interfaces.bs import BsChecks
+
 
 from epyk.fwk.bs.html import BsHtml
 
@@ -30,6 +32,18 @@ class Bootstrap(object):
       https://getbootstrap.com/docs/4.4/components/buttons/
     """
     return BsButtons.Buttons(self)
+
+  @property
+  def checks(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/forms/checks-radios/#switches
+    """
+    return BsDates.Dates(self)
 
   @property
   def dates(self):

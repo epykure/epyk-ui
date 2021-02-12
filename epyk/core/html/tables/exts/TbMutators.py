@@ -22,8 +22,8 @@ class ExtsMutators(DataGroup):
     else:
       self._attrs["mutatorParams"] = cssMapping
     self._attrs["mutatorParams"]['threshold'] = threshold
-    self._attrs["mutatorParams"][False]['color'] = red or self._report.theme.danger[0]
-    self._attrs["mutatorParams"][True]['color'] = green or self._report.theme.success[0]
+    self._attrs["mutatorParams"][False]['color'] = red or self._report._report.theme.danger[0]
+    self._attrs["mutatorParams"][True]['color'] = green or self._report._report.theme.success[0]
     if kwargs:
       self._attrs["mutatorParams"].update(kwargs)
     return self

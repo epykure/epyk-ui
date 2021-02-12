@@ -615,6 +615,7 @@ class Buttons(object):
     ----------
     :param record: List of dict. The Python list of dictionaries.
     :param checked:
+    :param group_name:
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -630,10 +631,10 @@ class Buttons(object):
     if column is not None:
       record = self._recordSet(record, column)
     if isinstance(record, list) and record and not isinstance(record[0], dict):
-      tmpVals = [{'value': str(v), 'checked': True if v == checked else False} for v in record]
+      tmp_vals = [{'value': str(v), 'checked': True if v == checked else False} for v in record]
       if checked is None:
-        tmpVals[0]['checked'] = True
-      record = tmpVals
+        tmp_vals[0]['checked'] = True
+      record = tmp_vals
     html_radio = html.HtmlRadio.Radio(self.context.rptObj, record, htmlCode, group_name, width, height, options or {}, profile)
     for c in html_radio:
       c.style.css.display = "inline-block"
@@ -643,7 +644,7 @@ class Buttons(object):
     return html_radio
 
   @html.Html.css_skin()
-  def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, profile=None):
+  def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -677,11 +678,13 @@ class Buttons(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param height: Tuple. Optional. Integer for the component height.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_toggle = html.HtmlRadio.Switch(self.context.rptObj, record, label, color, width, height, htmlCode, profile)
+    html_toggle = html.HtmlRadio.Switch(self.context.rptObj, record, label, color, width, height, htmlCode, options, profile)
     return html_toggle
 
   @html.Html.css_skin()
@@ -939,6 +942,8 @@ class Buttons(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
@@ -966,6 +971,8 @@ class Buttons(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -992,6 +999,8 @@ class Buttons(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -1017,6 +1026,8 @@ class Buttons(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------

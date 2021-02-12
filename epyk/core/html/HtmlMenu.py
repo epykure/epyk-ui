@@ -17,8 +17,8 @@ from epyk.core.html.options import OptList
 class HtmlNavBar(Html.Html):
   name = 'Nav Bar'
 
-  def __init__(self, report, components, width, height, options, profile):
-    super(HtmlNavBar, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, components, width, height, options, htmlCode, profile):
+    super(HtmlNavBar, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.scroll, self.background = None, True
     if components is not None:
       if not isinstance(components, list):

@@ -419,14 +419,31 @@ class ContentsTable(Html.Html):
   def __init__(self, report, title, width, height, htmlCode, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
     super(ContentsTable, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptText.OptContents(self, options)
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px', 'font-size': Defaults_css.font(-5)})
+    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px',
+                                                      'font-size': Defaults_css.font(-5)})
     self.title[0].style.css.font_size = Defaults_css.font(6)
     self.title[0].style.css.font_weight = "bold"
     self.title.options.managed = False
-    self.menu = self._report.ui.div(htmlCode="content_page")
+    self.title.style.css.white_space = "nowrap"
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for the content menu on the page.
+    This object can be defined only once on the page.
+
+    Usage:
+    -----
+
+    :rtype: OptText.OptContents
+    """
+    return self.__options
 
   @property
   def style(self):
@@ -447,17 +464,17 @@ class ContentsTable(Html.Html):
   _js__builder__ = '''
       var menu = htmlObj.querySelector("div[name=menu]");
       menu.innerHTML = "";
-      if ((data == null) || (data.length == 0)){ htmlObj.style.display = 'none'}
+      if ((data == null) || (data.length == 0)){htmlObj.style.display = 'none'}
       else{ 
         data.forEach(function(rec){
           var link = document.createElement("a");  
-          link.innerHTML = rec.text ; link.href = rec.anchor;
+          link.innerHTML = rec.text; link.href = rec.anchor;
           link.style.display = 'block'; link.style.width = '100%';
           link.style.paddingLeft = Math.max(0, (rec.level - 1) * 5) + "px";
           menu.appendChild(link)
       })} '''
 
-  def anchor(self, text, level=0, anchor='#'):
+  def anchor(self, text, level=0, anchor='#', options=None):
     """
     Description:
     ------------
@@ -466,22 +483,58 @@ class ContentsTable(Html.Html):
     Usage:
     -----
 
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_a.asp
+
     Attributes:
     ----------
-    :param text: String.
-    :param level: Integer. Optional.
-    :param anchor: String. Optional.
+    :param text: String. The link label.
+    :param level: Integer. Optional. The depth of the link in the document tree.
+    :param anchor: String. Optional. The internal reference to another component in the page.
+    :param options: String. Optional. The component options for the link.
     """
-    href = self._report.ui.link(text, url=anchor)
+    if anchor is not None:
+      href = self._report.ui.link(text, url=anchor, options=options)
+      href.style.css.font_size = Defaults_css.font(2)
+      href.style.add_classes.link.no_decoration()
+    else:
+      min_links = self._report.ui.text("-")
+      min_links.style.css.margin_left = 10
+      min_links.click([
+        '''
+        var components = %(dom)s.querySelectorAll("[data-group='%(group)s']");
+        var puceIcon = %(icon)s.innerText;
+        if (puceIcon == "-"){
+          components.forEach(function(comp){comp.style.display = "none"})
+          %(icon)s.innerText = "+";
+        }
+        else {
+          components.forEach(function(comp){comp.style.display = "block"})
+          %(icon)s.innerText = "-";
+        }
+        ''' % {'icon': min_links.dom.varName, 'dom': self.dom.varName, 'group': "%s_%s" % (text, level)}
+      ])
+      if options is not None and options.get("hidden", False):
+        self._report.body.onReady(min_links.dom.events.trigger("click"))
+      href = self._report.ui.div([
+        self._report.ui.text(text, options=options),
+        min_links
+      ])
+      href.attr["name"] = "%s_%s" % (text, level)
+      href.attr["data-level"] = level
+    if level is not None:
+      href.style.css.padding_left = (level - 1) * 5
     href.options.managed = False
-    href.style.css.font_size = Defaults_css.font(2)
-    href.style.add_classes.link.no_decoration()
+    for item in self.val[::-1]:
+      if item.attr.get("name") is not None and item.attr.get("data-level", 0) < level:
+        href.attr["data-group"] = item.attr["name"]
+        break
+
     self.val.append(href)
     href.style.css.display = 'block'
     href.style.css.width = '100%'
-    if level is not None:
-      href.style.css.padding_left = (level - 1) * 5
-    return self
+    return href
 
   def move(self):
     """
@@ -496,7 +549,34 @@ class ContentsTable(Html.Html):
     self.style.css.position = None
     self.style.css.margin = 5
 
+  def add_category(self, text, level=None, options=None):
+    """
+    Description:
+    ------------
+    Add a bespoke title to the page without click event.
+
+    Attributes:
+    ----------
+    :param text: String. The text visible on the page.
+    :param level: Integer. Optional. The depth for the title in the document.
+    :param options: Dictionary. Optional. The options for the title component.
+    """
+    return self._report._content_table.anchor(text, level or 4, None, options=options)
+
   def add_title(self, component, level=None, css=None, position="before", options=None):
+    """
+    Description:
+    ------------
+    Add a bespoke title to the page.
+
+    Attributes:
+    ----------
+    :param component: HTML. An HTML component.
+    :param level: Integer. Optional. The depth for the title in the document.
+    :param css: Dictionary. Optional. The CSS style for the link.
+    :param position: String. Optional. The position in the content table (append or prepend).
+    :param options: Dictionary. Optional. The options for the title component.
+    """
     # Special attribute set in the base component interface
     div = self._report.ui.div(htmlCode="%s_anchor" % component.htmlCode)
     if self._report.body.css('padding-top') is None:
@@ -505,9 +585,41 @@ class ContentsTable(Html.Html):
       div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
     div.style.css.position = "absolute"
     div.style.css.z_index = -1
-    self._report._content_table.anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
+    link = self._report._content_table.anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
     self._report._content_table[-1].click([
       component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
+    return link
+
+  def add_url(self, component, url, level=None, options=None):
+    """
+    Description:
+    ------------
+    Add a bespoke link to the content table.
+    Those links can redirect to external pages.
+
+    Attributes:
+    ----------
+    :param component: HTML. An HTML component.
+    :param url: String. The url link with component clicked.
+    :param level: Integer. Optional. The depth for the title in the document.
+    :param options: Dictionary. Optional. The options for the title component.
+    """
+    component.options.managed = False
+    div = self._report.ui.div(htmlCode="%s_anchor" % component.htmlCode)
+    if self._report.body.css('padding-top') is None:
+      div.style.css.margin_top = - 10
+    else:
+      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+    div.style.css.position = "absolute"
+    div.style.css.z_index = -1
+    dflt_options = {"target": '_blank'}
+    if options is not None:
+      dflt_options.update(options)
+    link = self._report._content_table.anchor(component.val, level or 4, url, options=dflt_options)
+    self._report._content_table[-1].click([
+      component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5],
+                               reverse=True)])
+    return link
 
   def __str__(self):
     self.menu._vals = self.val

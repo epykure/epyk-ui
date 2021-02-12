@@ -14,7 +14,7 @@ def packageImport(jsPackage=None, cssPackage=None):
 
     import epyk.core.js.packages
     @packageImport('myJsPackage', 'myCssPackage')
-    def myHtmlComponent()
+    def myHtmlComponent():
       pass
   """
   def wrap(func):

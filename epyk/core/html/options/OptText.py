@@ -423,3 +423,20 @@ class OptionsStatus(Options):
   @background.setter
   def background(self, color):
     self.set(color)
+
+
+class OptContents(Options):
+
+  @property
+  def manual(self):
+    """
+    Description:
+    ------------
+    Define the way the content table is updated.
+    """
+    return self.get("manual", False)
+
+  @manual.setter
+  def manual(self, bool):
+    self.set(bool)
+

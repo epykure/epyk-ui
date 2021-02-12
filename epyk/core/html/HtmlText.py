@@ -709,7 +709,7 @@ class Title(Html.Html):
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': align})
     else:
       self.css({'display': 'block', "margin-right": "10px"})
-    if hasattr(report, '_content_table') and self.__options.content_table:
+    if hasattr(report, '_content_table') and not report._content_table.options.manual and self.__options.content_table:
       report._content_table.add_title(self, level=level)
 
   @property

@@ -312,6 +312,11 @@ class ContentFormatters(object):
   def dict(self):
     return JsObjects.JsObject.JsObject.get("%s" % self.selector)
 
+  @property
+  def toJson(self):
+    """ Cast the Javascript object to a Json object """
+    return JsObjects.JsObject.JsObject.get("JSON.parse(%s)" % self.selector)
+
 
 class JsHtml(JsNodeDom.JsDoms):
   display_value = "inline-block"

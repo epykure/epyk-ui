@@ -149,6 +149,10 @@ class Table(Html.Html):
 
     return None
 
+  def get_columns(self):
+    for c in self.config._attrs.get('columns', []):
+      yield c
+
   def headers(self, colsDef):
     """
     Description:
@@ -276,7 +280,7 @@ class EnumLayout(DataEnum):
     """
     return self.set()
 
-  def fitDataFill(self):
+  def fitDataFill(self, inline=True):
     """
     Description:
     -----------
@@ -285,10 +289,15 @@ class EnumLayout(DataEnum):
     Related Pages:
 
       http://tabulator.info/docs/4.5/layout
+
+    Attributes:
+    ----------
+    :param inline: Boolean. Optional. Force the CSS display to be inline-block.
     """
     self._report.style.css.width = "auto"
     self._report.style.css.border = "none !IMPORTANT"
-    self._report.style.css.display = "inline-block"
+    if inline:
+      self._report.style.css.display = "inline-block"
     return self.set()
 
 
@@ -663,7 +672,8 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
       self._attrs["editorParams"]['min'] = min
     if max is not None:
       self._attrs["editorParams"]['max'] = max
-    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    if kwargs:
+      self._attrs["editorParams"].update(kwargs)
     return self
 
   def range(self, min=None, max=None, step=1, elementAttributes=None, **kwargs):
@@ -809,7 +819,7 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     if fncDef is None:
       self._attrs["editor"] = JsObjects.JsObjects.get(fncName)
     else:
-      self._report.extendModule("edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParam){%s}" % fncDef)
+      self._report._report.extendModule("edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParams){%s}" % fncDef)
       self._attrs["editor"] = fncName
     return self
 
@@ -1078,7 +1088,7 @@ http://tabulator.info/docs/4.1/format
       self._attrs["formatter"] = JsObjects.JsObjects.get(fncName)
       self._attrs["formatterParams"] = formatterParams or {}
     else:
-      self._report.extendModule("format", "formatters", fncName, "function(cell, formatterParam){%s}" % fncDef)
+      self._report._report.extendModule("format", "formatters", fncName, "function(cell, formatterParams){%s}" % fncDef)
       self._attrs["formatter"] = fncName
       self._attrs["formatterParams"] = formatterParams or {}
     return self
@@ -1134,7 +1144,7 @@ class Mutators(DataGroup):
     if fncDef is None:
       self._attrs["mutator"] = JsObjects.JsObjects.get(fncName)
     else:
-      self._report.extendModule("mutator", "mutators", fncName, "function(value, data, type, params, component){%s}" % fncDef)
+      self._report._report.extendModule("mutator", "mutators", fncName, "function(value, data, type, mutatorParams, component){%s}" % fncDef)
       self._attrs["mutator"] = fncName
     return self
 

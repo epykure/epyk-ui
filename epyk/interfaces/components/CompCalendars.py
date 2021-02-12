@@ -21,6 +21,7 @@ class Calendar(object):
     Usage:
     -----
 
+    Templates:
 
     Related Pages:
 
@@ -85,6 +86,7 @@ class Calendar(object):
     Usage:
     -----
 
+    Templates:
 
     Attributes:
     ----------
@@ -109,6 +111,8 @@ class Calendar(object):
 
     Usage:
     -----
+
+    Templates:
 
     Related Pages:
 
@@ -155,6 +159,7 @@ class Calendar(object):
     Usage:
     -----
 
+    Templates:
 
     Related Pages:
 
@@ -198,6 +203,7 @@ class Calendar(object):
     Usage:
     -----
 
+    Templates:
 
     Related Pages:
 
@@ -239,6 +245,8 @@ class Calendar(object):
     -----
 
       page.ui.calendars.google("hrehr", "Test", "20200801T153000Z", "20200802T163000Z")
+
+    Templates:
 
     Related Pages:
 
@@ -283,6 +291,7 @@ class Calendar(object):
     Usage:
     -----
 
+    Templates:
 
     Related Pages:
 
@@ -329,6 +338,8 @@ class Calendar(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------

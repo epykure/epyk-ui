@@ -72,18 +72,19 @@ class Msg(object):
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
       })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None))
 
-  def text(self, content, timer=3000, fixed=True, cssAttrs=None):
+  def text(self, content, timer=3000, fixed=True, cssAttrs=None, options=None):
     """
     Description:
     ------------
-
+    Display a text message from a Javascript event for a specific period of time.
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param timer: Number. Optional. The time the popup will be displayed
+    :param content: String. The content of the popup.
+    :param timer: Number. Optional. The time the popup will be displayed.
     :param fixed: Boolean. Optional.
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
@@ -93,12 +94,17 @@ class Msg(object):
         del dflt_attrs["bottom"]
       if 'left' in cssAttrs:
         del dflt_attrs["right"]
+    options = options or {}
+    if options.get("markdown", False) or options.get("showdown", False):
+      self._src.jsImports.add("showdown")
+      options["showdown"] = {}
     return '''
-      (function(event, content){
-        var popup = document.createElement("div"); %s
+      (function(event, content, options){
+        var popup = document.createElement("div"); %s;
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(content)};
         popup.innerHTML = content; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
-      })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None))
+      })(event, %s, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None),  JsUtils.jsConvertData(options, None))
 
   def count(self, value, content=None, cssAttrs=None):
     """

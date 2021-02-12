@@ -334,7 +334,10 @@ class Html(object):
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
 
       if htmlCode in self._report.components:
-        raise Exception("Duplicated Html code %s in the script !" % htmlCode)
+        if htmlCode in ["content", "content_page", "page_nav_bar"]:
+          raise Exception("Duplicated Html code '%s', this is used internally in the framework !" % htmlCode)
+
+        raise Exception("Duplicated Html code '%s' in the script !" % htmlCode)
 
       self.__htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)

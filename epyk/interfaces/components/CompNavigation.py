@@ -324,7 +324,28 @@ class Navigation(object):
     div += self.context.rptObj.ui.link(record[-1]['text'], url=record[-1].get('url', '#')).css({"display": 'inline-block'})
     return div
 
-  def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def nav(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logo:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    comp_id = 'page_nav_bar'
+    if comp_id not in self.context.rptObj.components:
+      nav_bar = self.bar(logo, title, width, height, options, htmlCode=comp_id, profile=profile)
+    else:
+      nav_bar = self.context.rptObj.components[comp_id]
+    return nav_bar
+
+  def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -381,7 +402,8 @@ class Navigation(object):
       scroll.style.css.display = "block"
       scroll.options.managed = False
       scroll.style.css.height = scroll_height
-    html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
+    html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options,
+                                        htmlCode=htmlCode, profile=profile)
     if options.get('status', False):
       html_nav.scroll = scroll
     html_nav.logo = logo
@@ -629,7 +651,8 @@ class Banners(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def bottom(self, data, background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def bottom(self, data, background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
+             profile=False):
     """
     Description:
     ------------
@@ -698,7 +721,8 @@ class Banners(object):
     container.link = link
     return container
 
-  def corner(self, data, background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None, profile=False):
+  def corner(self, data, background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
+             profile=False):
     """
     Description:
     ------------
@@ -742,7 +766,8 @@ class Banners(object):
       div.style.css.margin = "20px -45px 0 0"
     return div
 
-  def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None,
+           profile=False):
     """
     Description:
     ------------
@@ -777,7 +802,8 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, htmlCode=None, profile=False):
+  def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
+           options=None, htmlCode=None, profile=False):
     """
     Description:
     ------------

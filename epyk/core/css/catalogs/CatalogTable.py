@@ -170,8 +170,16 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorFooterPagination)
 
+  def tabulator_editing(self):
+    """ Change the style when cell are editable """
+    return self._set_class(CssStylesTabulator.CssTabulatorEditing)
+
+  def tabulator_cell_editing(self):
+    """ Change the style when cell are editable """
+    return self._set_class(CssStylesTabulator.CssTabulatorCellEditing)
+
   def tabulator_header(self):
-    """  """
+    """ Change the style for the header and filter inputs """
     return self._set_class(CssStylesTabulator.CssTabulatorHeader)
 
   def tabulator_headers(self):

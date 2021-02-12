@@ -26,8 +26,8 @@ class Panels(object):
 
     Attributes:
     ----------
-    :param components:
-    :param title:
+    :param components: List. Optional. The different HTML objects to be added to the component.
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -130,7 +130,8 @@ class Panels(object):
                                         dflt_options, profile)
     return html_tabs
 
-  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
+  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None,
+                profile=False):
     """
     Description:
     ------------
@@ -202,7 +203,7 @@ class Panels(object):
     height = Arguments.size(height, unit="px")
     dflt_options = {
       "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 "border-bottom": "2px solid %s" % self.context.rptObj.theme.greys[0]}}
+                  "border-bottom": "2px solid %s" % self.context.rptObj.theme.greys[0]}}
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.TabsArrowsDown(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
@@ -243,7 +244,7 @@ class Panels(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '10px 10px 0 0'}}
+                    'border-radius': '10px 10px 0 0'}}
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
@@ -267,10 +268,10 @@ class Panels(object):
 
     Attributes:
     ----------
-    :param components:
-    :param title:
+    :param components: List. Optional. The different HTML objects to be added to the component.
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param align:
+    :param align: String. Optional. The text-align property within this component (Default center).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -282,6 +283,8 @@ class Panels(object):
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       _components = [components]
+    else:
+      _components = components
     components = []
     for component in _components:
       if not hasattr(component, 'options'):

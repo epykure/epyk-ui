@@ -7,6 +7,7 @@ from epyk.core.html.options import OptText
 from epyk.core.html.options import OptQrCode
 
 from epyk.core.js.html import JsHtmlStars
+from epyk.core.js.html import JsHtmlJson
 from epyk.core.js.packages import JsJsonFormatter
 from epyk.core.js.packages import JsQrCode
 from epyk.core.js.primitives import JsObjects
@@ -254,6 +255,22 @@ class HtmlJson(Html.Html):
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
     self.__options = OptJsonFormatter.OptionsJsonFmt(self, options)
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    DOM object specific options.
+
+    Usage:
+    -----
+
+    :rtype: JsHtmlJson.JsonFormatter
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJson.JsonFormatter(self, report=self._report)
+    return self._dom
 
   @property
   def jsonId(self):

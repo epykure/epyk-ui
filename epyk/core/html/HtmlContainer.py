@@ -1075,17 +1075,17 @@ class Row(Html.Html):
   def __len__(self):
     return len(self.val)
 
-  def add(self, htmlObj):
+  def add(self, components):
     """ Add items to a container """
-    if not isinstance(htmlObj, Col):
-      if not isinstance(htmlObj, list):
-        htmlObj = [htmlObj]
+    if not isinstance(components, Col):
+      if not isinstance(components, list):
+        components = [components]
       # hack to propagate the height of the row to the underlying columns
-      htmlObj = self._report.ui.layouts.col(htmlObj, align=self.align, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
-      htmlObj.style.css.margin_left = "auto"
-      htmlObj.style.css.margin_right = "auto"
-      htmlObj.options.managed = False
-    super(Row, self).__add__(htmlObj)
+      components = self._report.ui.layouts.col(components, align=self.align, height=(self.css("height"), ''), position=self.position, options=self.options._attrs)
+      components.style.css.margin_left = "auto"
+      components.style.css.margin_right = "auto"
+      components.options.managed = False
+    super(Row, self).__add__(components)
     return self
 
   def __str__(self):

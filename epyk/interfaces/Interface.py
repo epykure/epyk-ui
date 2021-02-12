@@ -3,6 +3,9 @@
 
 
 from epyk.core import html
+
+from epyk.core.css import Defaults_css
+
 from epyk.core.js import Imports
 
 from epyk.interfaces.components import CompLayouts
@@ -73,7 +76,7 @@ class Components:
     self.tree = self.lists.tree #: shortcut for tree :func:`epyk.interfaces.components.CompLists.Lists.tree`
     self.info = self.rich.info #: shortcut for info :func:`epyk.interfaces.components.CompRich.Rich.input`
     self.radio = self.buttons.radio #: shortcut for radio :func:`epyk.interfaces.components.CompButtons.Buttons.radio`
-    self.navbar = self.navigation.bar #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
+    self.navbar = self.navigation.nav #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
     self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
@@ -127,12 +130,12 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. The content to be displayed
-    :param sep: String. sep. not used
-    :param end: String. The end of line
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param text: String. Optional. The content to be displayed.
+    :param sep: String. Optional. sep. not used.
+    :param end: String. Optional. The end of line.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if callable(text):
       import inspect
@@ -177,7 +180,7 @@ class Components:
     Group all the UI Components dedicated to display messaging services.
 
     This category will group (chat, RSS streams, forum, bot ...).
-    Those components are interactive and they would require underlying services and databases in order to fully work
+    Those components are interactive and they would require underlying services and databases in order to fully work.
 
     Usage:
     -----
@@ -225,6 +228,8 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
     """
     return CompCharts.Chart2d(self)
 
@@ -247,10 +252,12 @@ class Components:
     """
     Description:
     ------------
-    Group all the UI components dedicated to produce links to another page or website..
+    Group all the UI components dedicated to produce links to another page or website.
 
     Usage:
     -----
+
+    Templates:
 
     """
     return CompLinks.Links(self)
@@ -265,6 +272,8 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
     """
     return CompNavigation.Navigation(self)
 
@@ -274,6 +283,12 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce Navigation bar components such as navigation bar, footer, banner...
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompNavigation.NavBars(self)
 
@@ -282,7 +297,13 @@ class Components:
     """
     Description:
     ------------
-    Group all the available banners
+    Group all the available banners.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompNavigation.Banners(self)
 
@@ -291,7 +312,7 @@ class Components:
     """
     Description:
     ------------
-    Group all the built in pictogram
+    Group all the built in pictogram.
     """
     return CompPictos.Pictogram(self)
 
@@ -324,7 +345,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce Numbers components.
 
-    The items in this category will not be editable and they will only provide nice number renderings
+    The items in this category will not be editable and they will only provide nice number renderings.
     """
     return CompNumbers.Numbers(self)
 
@@ -356,7 +377,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce list or selection items.
 
-    Simple list, trees or dropdown boxes will be part of this category of items
+    Simple list, trees or dropdown boxes will be part of this category of items.
     """
     return CompLists.Lists(self)
 
@@ -366,6 +387,11 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce Trees or selection items.
+
+    Usage:
+    -----
+
+    Templates:
 
     """
     return CompTrees.Trees(self)
@@ -377,6 +403,11 @@ class Components:
     ------------
     Group all the UI components dedicated to produce Trees or selection items.
 
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompGeo.Geo(self)
 
@@ -386,6 +417,12 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce button or checkbox.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompButtons.Buttons(self)
 
@@ -398,6 +435,12 @@ class Components:
 
     Different kind of tables are available in the framework (Tabulator, Datatable, PivotTable or even a bespoke
     implementation).
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompTables.Tables(self)
 
@@ -407,6 +450,12 @@ class Components:
     Description:
     ------------
     Group all the UI steps components.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompSteps.Steppers(self)
 
@@ -416,6 +465,12 @@ class Components:
     Description:
     ------------
     Group all the UI drawers components.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompDrawers.Drawers(self)
 
@@ -425,6 +480,12 @@ class Components:
     Description:
     ------------
     Group all the UI steppers components.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompSteppers.Steppers(self)
 
@@ -435,7 +496,13 @@ class Components:
     ------------
     Group all the UI components dedicated to produce media (video and audio) items.
 
-    Plain Vanilla HTML5 components
+    Plain Vanilla HTML5 components.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompMedia.Media(self)
 
@@ -448,6 +515,12 @@ class Components:
 
     Those components are editable items which need to be updated by the user of the dashboard.
     This category will take into account textarea, input text...
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompInputs.Inputs(self)
 
@@ -460,6 +533,12 @@ class Components:
 
     Those components are editable items which need to be updated by the user of the dashboard.
     This category will take into account textarea, input text...
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompFields.Fields(self)
 
@@ -468,6 +547,12 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompFields.Timelines(self)
 
@@ -479,6 +564,12 @@ class Components:
     Group all the UI components dedicated to produce icon items.
 
     This category of component will rely on the font-awesome library for the final display.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompIcons.Icons(self)
 
@@ -487,6 +578,12 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompMenus.Menus(self)
 
@@ -495,6 +592,12 @@ class Components:
     """
     Description:
     ------------
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompPanels.Panels(self)
 
@@ -508,6 +611,12 @@ class Components:
     All the items in this category are dedicated for the structure of the dashboard and they
     are mainly holder of other components.
     This will mainly rely on bootstrap for the display of the different objects in the page.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompLayouts.Layouts(self)
 
@@ -521,6 +630,12 @@ class Components:
     Related Pages:
 
       https://www.w3schools.com/html/html_forms.asp
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompForms.Forms(self)
 
@@ -530,6 +645,12 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce modal components.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompModals.Modals(self)
 
@@ -541,6 +662,12 @@ class Components:
     Group all the UI components dedicated to produce charts.
 
     Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis or even D3).
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompCharts.Graphs(self)
 
@@ -552,6 +679,12 @@ class Components:
     Group all the other tags available in HTML.
 
     Those tags can be considered as normal HTML component, which means Js and CSS features are also available.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompTags.Tags(self)
 
@@ -560,7 +693,13 @@ class Components:
     """
     Description:
     ------------
-    Group all the component related to the time and calendar management
+    Group all the component related to the time and calendar management.
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompCalendars.Calendar(self)
 
@@ -569,11 +708,17 @@ class Components:
     """
     Description:
     ------------
-    Shortcut property to the various delimiters styles
+    Shortcut property to the various delimiters styles.
 
     Related Pages:
 
       https://codepen.io/ibrahimjabbari/pen/ozinB
+
+    Usage:
+    -----
+
+    Templates:
+
     """
     return CompLayouts.Delimiter(self)
 
@@ -587,6 +732,7 @@ class Components:
     Usage:
     -----
 
+        contents = page.ui.contents()
 
     Templates:
 
@@ -595,27 +741,38 @@ class Components:
 
     Attributes:
     ----------
-    :param title: String. Optional. The title for the content table
+    :param title: String. Optional. The title for the content table.
     :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param right: Integer. Optional. The right property affects the horizontal position of a positioned elemen
+    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
     :param left: Integer. Optional. The left property affects the horizontal position of a positioned element.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode:
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, htmlCode, options, profile)
-    html_contents.style.css.top = top
-    if left is not None:
-      html_contents.style.css.left = left
+    htmlCode = htmlCode or "content"
+    if htmlCode not in self.rptObj.components:
+      html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, htmlCode, options, profile)
+      html_contents.menu = self.rptObj.ui.div(htmlCode="%s_page" % htmlCode)
+      html_contents.style.css.max_height = "60%"
+      if Defaults_css.BODY_CONTAINER is not None and "page_nav_bar" in self.rptObj.components:
+        html_contents.style.css.top = Defaults_css.BODY_CONTAINER.get('padding-top', 0) + top
+      else:
+        html_contents.style.css.top = top
+      if left is not None:
+        html_contents.style.css.left = left
+      else:
+        html_contents.style.css.right = right
+      # Attach the table content to the main report object
+      self.rptObj._content_table = html_contents
+      html_contents.style.css.z_index = 500
+      if self.rptObj.body.style.css.padding_top is not None:
+        html_contents.style.css.top = self.rptObj.body.style.css.padding_top
     else:
-      html_contents.style.css.right = right
-    # Attach the table content to the main report object
-    self.rptObj._content_table = html_contents
-    html_contents.style.css.z_index = 110
-    if self.rptObj.body.style.css.padding_top is not None:
-      html_contents.style.css.top = self.rptObj.body.style.css.padding_top
+      html_contents = self.rptObj.components[htmlCode]
+      title_link = html_contents.add_category(title, level=1)
+      title_link.style.css.margin_top = 10
     return html_contents
 
   def bespoke(self, htmlCls, *args, **kwargs):
@@ -623,19 +780,21 @@ class Components:
     Description:
     ------------
     Hook to allow the creation of bespoke component using specific configurations.
-    Components can be self contained in a module and rely on external packages
+    Components can be self contained in a module and rely on external packages.
 
-    Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment
+    Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment.
 
     Usage:
     -----
 
+    Templates:
+
 
     Attributes:
     ----------
-    :param htmlCls: Class. The bespoke HTML component
-    :param args: The python attributes used in the HTML component contructor
-    :param kwargs: The python attributes used in the HTML component contructor
+    :param htmlCls: Class. The bespoke HTML component.
+    :param args: The python attributes used in the HTML component constructor.
+    :param kwargs: The python attributes used in the HTML component constructor.
     """
     return htmlCls(self.rptObj, *args, **kwargs)
 
@@ -647,16 +806,19 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
+
 
     Attributes:
     ----------
     :param vals: Optional.
-    :param title: String. Optional. Teh title for teh tag component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
+    :param title: String. Optional. Teh title for teh tag component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile)
 
@@ -664,7 +826,7 @@ class Components:
     """
     Description:
     ------------
-    Entry point to the loading component
+    Entry point to the loading component.
 
     This component will create a
       - label component for the text
@@ -673,18 +835,22 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
+
 
     Attributes:
     ----------
-    :param text: String. The text in the component (during the loading)
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param text: String. Optional. The text in the component (during the loading).
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {}, profile)
     return html_loading
 
-  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), htmlCode=None, options=None, profile=None):
+  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), htmlCode=None, options=None,
+                 profile=None):
     """
     Description:
     ------------
@@ -705,13 +871,13 @@ class Components:
 
     Attributes:
     ----------
-    :param values:
-    :param selected: Integer. The selected item index
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param values: List. Optional. The breadcrum record definition.
+    :param selected: Integer. Optional. The selected item index.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {"delimiter": ' / '}
     if options is not None:
@@ -734,6 +900,8 @@ class Components:
 
       f = page.ui.form()
 
+    Templates:
+
     Attributes:
     ----------
     :param action:
@@ -752,6 +920,8 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
 
     Related Pages:
 
@@ -759,11 +929,11 @@ class Components:
 
     Attributes:
     ----------
-    :param data: Dictionary. The Json object to be display
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param data: Dictionary. Optional. The Json object to be display.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     data = data or {}
     width = Arguments.size(width, unit="%")
@@ -778,10 +948,13 @@ class Components:
     Description:
     ------------
     SlideShow component for pictures from the tiny-slider library.
-    More details regarding this library here: https://github.com/ganlanyuan/tiny-slider
+    More details regarding this library here: https://github.com/ganlanyuan/tiny-slider.
 
     Usage:
     -----
+
+    Templates:
+
 
     Related Pages:
 
@@ -790,11 +963,11 @@ class Components:
 
     Attributes:
     ----------
-    :param components: List. With the different components
-    :param width: Optional. Tuple. The component width in pixel or percentage
-    :param height: Optional. Tuple. The component height in pixel
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param components: List. Optional. With the different components.
+    :param width: Tuple. Optional. The component width in pixel or percentage.
+    :param height: Tuple. Optional. The component height in pixel.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
@@ -810,6 +983,8 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
 
     Related Pages:
 
@@ -819,11 +994,11 @@ class Components:
 
     Attributes:
     ----------
-    :param data: String. The value to be converted to QR Code
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param data: String. Optional. The value to be converted to QR Code.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     data = data or {}
     width = Arguments.size(width, unit="px")
@@ -841,9 +1016,12 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
+
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The button content for the captcha validation.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options:
@@ -862,7 +1040,6 @@ class Components:
     Usage:
     -----
 
-
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
@@ -871,8 +1048,8 @@ class Components:
     ----------
     :param components: Components. Optional.
     :param anchor: Component. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     postit = self.rptObj.ui.div(options=options, profile=profile)
     if anchor is None:
@@ -902,10 +1079,12 @@ class Components:
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
-    :param package_name: String. The package name
-    :param alias: String. The alias for the link in report.ui
+    :param package_name: String. The package name.
+    :param alias: String. The alias for the link in report.ui.
     """
     mod = __import__(package_name)
     __import__("%s.components" % package_name)
@@ -913,13 +1092,17 @@ class Components:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
 
-  def asterix(self, tooltip, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, align="left", options=None, profile=None):
+  def asterix(self, tooltip, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None,
+              align="left", options=None, profile=None):
     """
     Description:
     ------------
 
     Usage:
     -----
+
+    Templates:
+
 
     Attributes:
     ----------
@@ -954,6 +1137,8 @@ class WebComponents:
     Usage:
     -----
 
+    Templates:
+
     :rtype: Components
     """
     if 'ui' not in self.fwks:
@@ -968,6 +1153,8 @@ class WebComponents:
 
     Usage:
     -----
+
+    Templates:
 
     :rtype: Bs.Bootstrap
     """
@@ -990,6 +1177,9 @@ class WebComponents:
 
     Usage:
     -----
+
+    Templates:
+
 
     Related Pages:
 

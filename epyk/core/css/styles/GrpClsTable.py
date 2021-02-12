@@ -181,7 +181,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tabulator_col, self._css_tabulator_col_content, self._css_tabulator_selected = None, None, None
     self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer, self._css_tabulator_menu_item = 4 * [None]
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp, self._css_tabulator_menu = 4 * [None]
-    self._css_tabulator_even_row_no_strip = None
+    self._css_tabulator_even_row_no_strip, self._css_tabulator_editing, self._css_tabulator_cell_editing = 3 * [None]
     self.__strip = False
     self.classList['main'].add(self.cls_tabulator)
     self.classList['other'].add(self.cls_tabulator_row)
@@ -199,6 +199,8 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_tb_tree_exp)
     self.classList['other'].add(self.cls_tabulator_menu)
     self.classList['other'].add(self.cls_tabulator_menu_item)
+    self.classList['other'].add(self.cls_tabulator_editing)
+    self.classList['other'].add(self.cls_tabulator_cell_editing)
 
   def strip(self):
     self.__strip = True
@@ -379,6 +381,28 @@ class Tabulator(GrpCls.ClassHtml):
     if self._css_tabulator_header is None:
       self._css_tabulator_header = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_header()
     return self._css_tabulator_header
+
+  @property
+  def cls_tabulator_editing(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_editing is None:
+      self._css_tabulator_editing = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                     self.classList['other']).tabulator_editing()
+    return self._css_tabulator_editing
+
+  @property
+  def cls_tabulator_cell_editing(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_cell_editing is None:
+      self._css_tabulator_cell_editing = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                      self.classList['other']).tabulator_cell_editing()
+    return self._css_tabulator_cell_editing
 
   @property
   def cls_tabulator_headers(self):

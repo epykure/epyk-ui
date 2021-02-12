@@ -1069,6 +1069,61 @@ class Fields(object):
     div.add(div.text)
     return div
 
+  def toggle(self, record=None, label=None, is_on=False, color=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add a toggle component
+
+    Usage:
+    -----
+
+      page.ui.buttons.toggle({'on': "true", 'off': 'false'})
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlRadio.Switch`
+
+    Related Pages:
+
+      http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
+      https://codepen.io/mburnette/pen/LxNxNg
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The list of dictionaries with the data.
+    :param label: String. Optional. The toggle static label displayed.
+    :param color: String. Optional. String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param height: Tuple. Optional. Integer for the component height.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    record = record or {"off": "Off", "on": "On"}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {"is_on": is_on}
+    if options is not None:
+      dfl_options.update(options)
+    div = self.context.rptObj.ui.div(width=width, height=height, options=dfl_options, profile=profile)
+    div.input = html.HtmlRadio.Switch(self.context.rptObj, record, None, color, ("auto", ''), height, htmlCode, dfl_options, profile)
+    if label is not None:
+      div.input.style.css.display = 'inline-block'
+      div.label = self.context.rptObj.ui.text(label, options=options,
+                                              htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode,
+                                              profile=profile)
+      div.label.style.css.display = 'inline-block'
+      div.label.style.css.margin = '0 5px'
+      div.label.style.css.width = '%spx' % Defaults.TEXTS_SPAN_WIDTH
+      div.extend([div.label, div.input])
+    return div
+
 
 class Timelines(object):
 

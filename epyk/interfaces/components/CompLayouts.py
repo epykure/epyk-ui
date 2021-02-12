@@ -343,6 +343,7 @@ class Layouts(object):
     :param tag:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param helper: String. Optional.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -376,6 +377,29 @@ class Layouts(object):
     html_comp = self.div(components=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
                          profile=profile)
     html_comp.style.css.display = "inline-block"
+    return html_comp
+
+  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param components: List. The different HTML objects to be added to the component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    """
+    html_comp = self.div(components=components, width=width, height=height, align=align, options=options,
+                         profile=profile)
+    self.div(html_comp, align="center")
     return html_comp
 
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):

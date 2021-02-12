@@ -18,7 +18,7 @@ class Trees(object):
     Usage:
     -----
 
-      data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
+      data = [{"value": 'test', 'items': [{"value": 'child 1', 'color': 'red'}]}]
       page.ui.lists.tree(data)
 
     Underlying HTML Objects:

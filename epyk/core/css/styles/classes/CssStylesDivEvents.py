@@ -33,7 +33,8 @@ class CssDivOnHoverBackgroundLight(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"background-color": self.rptObj.theme.greys[2], "text-decoration": 'underline'})
+    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[0]})
+    self.hover.css({'border': "1px solid %s" % self.rptObj.theme.colors[1], "background-color": self.rptObj.theme.colors[0], "text-decoration": 'underline'})
     self.hover.css('color', self.rptObj.theme.greys[-1], important=True)
 
 
