@@ -2920,7 +2920,7 @@ class CssMixin(object):
     Related Pages:
 
       https://www.w3schools.com/cssref/pr_class_display.asp
-      
+
     Usage:
 
       warning = page.ui.icons.warning()
