@@ -3,6 +3,7 @@ from epyk.core.html.options import Options
 
 
 class OptionsTree(Options):
+  component_properties = ("icon_close", )
 
   @property
   def is_root(self):

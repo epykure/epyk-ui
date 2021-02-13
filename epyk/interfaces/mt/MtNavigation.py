@@ -182,7 +182,7 @@ class Navigation(object):
     :param text:
     :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
     """
-    schema = {"type": 'div', 'class': 'mdc-drawer-scrim', 'args': {"htmlObjs": text}}
+    schema = {"type": 'div', 'class': 'mdc-drawer-scrim', 'args': {"components": text}}
     html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
     #html_t.dom = dom_obj
     return html_t

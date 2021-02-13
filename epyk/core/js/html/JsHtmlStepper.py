@@ -159,10 +159,12 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param colors: List.
-    :param status: String. Optional.
-    :param clear_gradient: Boolean. Optional.
+    :param colors: List. The list of colors to be used.
+    :param status: String. Optional. The status code for the step item.
+    :param clear_gradient: Boolean. Optional. Specify if the color need a gradient.
     """
+    if not isinstance(colors, list):
+      colors = [colors]
     clear_gradient = JsUtils.jsConvertData(clear_gradient, None)
     if not isinstance(colors[0], dict):
       s = 100 / (len(colors) - 1)

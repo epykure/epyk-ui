@@ -76,7 +76,7 @@ class Text(object):
     :param label:
     :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
     """
-    schema = {"type": 'div', 'class': None, 'css': None, 'args': {"htmlObjs": label}}
+    schema = {"type": 'div', 'class': None, 'css': None, 'args': {"components": label}}
     span = self.context.rptObj.web.mt.composite(schema)
     dom_obj = JsMdcComponents.Line(span)
     span.style.builder(span.style.varName, dom_obj.instantiate("#%s" % span.htmlCode))
@@ -181,7 +181,7 @@ class Text(object):
     if dismiss:
       schema = {"type": 'div', 'class': display_map.get(type.upper(), 'mdc-snackbar'), 'css': False, 'children': [
         {"type": 'div', "class": "mdc-snackbar__surface", 'css': False, 'children': [
-          {'type': 'div', 'class': 'mdc-snackbar__label', 'css': False, 'attrs': {'role': 'status'}, 'arias': {'live': 'polite'}, 'args': {'htmlObjs': text}},
+          {'type': 'div', 'class': 'mdc-snackbar__label', 'css': False, 'attrs': {'role': 'status'}, 'arias': {'live': 'polite'}, 'args': {'components': text}},
           {'type': 'div', 'class': 'mdc-snackbar__actions', 'css': False, 'children': [
             {'type': 'button', 'class': 'mdc-button mdc-snackbar__action', 'css': False, 'attrs': {'type': 'button'}, 'children': [
               {'type': 'div', 'class': 'mdc-button__ripple', 'css': False},
@@ -194,7 +194,7 @@ class Text(object):
     else:
       schema = {"type": 'div', 'class': display_map.get(type.upper(), 'mdc-snackbar'), 'css': False, 'children': [
         {"type": 'div', "class": "mdc-snackbar__surface", 'css': False, 'children': [
-          {'type': 'div', 'class': 'mdc-snackbar__label', 'css': False, 'attrs': {'role': 'status'}, 'arias': {'live': 'polite'}, 'args': {'htmlObjs': text}},
+          {'type': 'div', 'class': 'mdc-snackbar__label', 'css': False, 'attrs': {'role': 'status'}, 'arias': {'live': 'polite'}, 'args': {'components': text}},
           {'type': 'div', 'class': 'mdc-snackbar__actions', 'css': False, 'children': [
             {'type': 'button', 'class': 'mdc-button mdc-snackbar__action', 'css': False, 'attrs': {'type': 'button'}, 'children': [
               {'type': 'div', 'class': 'mdc-button__ripple', 'css': False},

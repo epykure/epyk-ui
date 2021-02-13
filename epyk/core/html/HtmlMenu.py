@@ -97,6 +97,10 @@ class HtmlNavBar(Html.Html):
       self._report.body.style.css.padding_top = 0
     return self
 
+  def set_theme(self):
+    self.style.css.background_color = self._report.theme.colors[0]
+    self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
+
   def add_right(self, component, css=None):
     """
     Description:
@@ -122,13 +126,13 @@ class HtmlNavBar(Html.Html):
       if css is not None:
         component.css(css)
 
-    if self.background and component.htmlCode == 'theme':
-      # hack for the theme compoent
-      # TODO move this component to the core
-      self.style.css.background_color = self._report.theme.colors[0]
-      self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
-      for c in self.buttons:
-        c.style.css.background_color = self._report.theme.colors[0]
+    # if self.background and component.htmlCode == 'theme':
+    #   # hack for the theme compoent
+    #   # TODO move this component to the core
+    #   self.style.css.background_color = self._report.theme.colors[0]
+    #   self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
+    #   for c in self.buttons:
+    #     c.style.css.background_color = self._report.theme.colors[0]
 
     if not hasattr(self, '_right'):
       self._right = self._report.ui.div(width=("auto", ''))

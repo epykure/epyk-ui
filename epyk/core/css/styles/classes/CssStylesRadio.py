@@ -34,7 +34,7 @@ class CssRadioSwitchLabel(CssStyle.Style):
 
   def customize(self):
     self.css({'background': self.rptObj.theme.greys[3]})
-    self.after.css({'background-color': self.rptObj.theme.success[1]})
+    self.after.css({'background-color': self.rptObj.theme.colors[-1]})
 
 
 class CssRadioSwitchChecked(CssStyle.Style):

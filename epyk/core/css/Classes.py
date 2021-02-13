@@ -19,6 +19,7 @@ from epyk.core.css.catalogs import CatalogTable
 from epyk.core.css.catalogs import CatalogText
 from epyk.core.css.catalogs import CatalogMedia
 from epyk.core.css.catalogs import CatalogImg
+from epyk.core.css.catalogs import CatalogStd
 
 
 class Catalog(object):
@@ -71,6 +72,29 @@ class Catalog(object):
     """
     self.__class_list_type = self.__class_list[type]
     return self
+
+  @property
+  def std(self):
+    """
+    Description:
+    ------------
+    Shortcut to standard CSS classes (for layout purposes like margin, padding...).
+
+    Usage:
+    -----
+
+      t1 = page.ui.title("Templates structure")
+      t1.style.add_classes.std.margin(7)
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/4.0/utilities/spacing/
+
+    :rtype: CatalogStd.CatalogSt
+    """
+    if "std" not in self.__ctx:
+      self.__ctx['std'] = CatalogStd.CatalogStd(self.__rptObj, self.__class_list)
+    return self.__ctx['std']
 
   @property
   def button(self):

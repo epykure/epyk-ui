@@ -589,7 +589,7 @@ class Lists(object):
     html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, options, profile)
     return html_obj
 
-  def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -616,7 +616,7 @@ class Lists(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options, profile)
+    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], width, height, htmlCode, helper, options, profile)
     return html_tree
 
   def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None, helper=None, options=None, profile=None):

@@ -588,7 +588,9 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-    Display the component.
+    Show the component.
+
+    This will use the display attribute of the component.
 
     Usage:
     -----
@@ -601,7 +603,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param inline: String. Optional.
+    :param inline: String. Optional. Set the CSS display attribute to inline-block instead of block.
     :param duration: Integer. Optional. A time in second for the component display.
     :param display_value: String. Optional. The display value. Default inline-block.
     """
@@ -611,22 +613,79 @@ class JsHtml(JsNodeDom.JsDoms):
 
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
-  def visible(self, data, inline=None, display_value=None):
+  def display(self, data, inline=None, display_value=None):
     """
     Description:
     -----------
+    Change the CSS display attribute.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_class_display.asp
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param data: Boolean.
-    :param inline: String. Optional.
-    :param display_value: String. Optional.
+    :param data: Boolean. A flag to specify the display type show or None.
+    :param inline: String. Optional. Set the CSS display attribute to inline-block instead of block.
+    :param display_value: String. Optional. The default CSS attribute for this component.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
+
+  def visible(self, data=True):
+    """
+    Description:
+    -----------
+    The visibility property specifies whether or not an element is visible.
+
+    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from the document layout!
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_class_visibility.asp
+
+    Usage:
+    -----
+
+      mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
+      mode_switch.input.click([
+        icon.dom.visible(mode_switch.input.dom.content)
+      ])
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    if data is False:
+      data = "hidden"
+    if data is True:
+      data = "visible"
+    data = JsUtils.jsConvertData(data, None)
+    return self.css("visibility", JsObjects.JsVoid("(function(flag){console.log(flag); if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
+
+  def invisible(self):
+    """
+    Description:
+    -----------
+    The visibility property specifies whether or not an element is visible.
+
+    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from the document layout!
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_class_visibility.asp
+
+    Usage:
+    -----
+
+      icon = page.web.bs.icons.danger()
+      icon.style.css.invisble()
+
+    """
+    return self.css("visibility", "hidden").r
 
   def select(self):
     """

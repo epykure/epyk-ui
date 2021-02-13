@@ -4,7 +4,7 @@ from . import ThemeGreen as greens
 from . import ThemeBlue as blues
 
 
-DIV_STYLE = '<div style="display:block;background-color:%s;width:20px;height:20px;border:1px solid black;margin:auto;vertical-align:middle">&nbsp;</div>'
+DIV_STYLE = '<div style="display:block;background-color:%s;width:20px;height:18px;margin-top:3px !IMPORTANT;border:1px solid black;margin:auto;vertical-align:middle">&nbsp;</div>'
 
 REGISTERED_THEMES = [
   {"value": 'Theme.ThemeDefault', 'name': '', 'content': DIV_STYLE % '#1b5e20'},

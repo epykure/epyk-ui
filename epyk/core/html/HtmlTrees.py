@@ -17,7 +17,7 @@ class Tree(Html.Html):
   name = 'List Expandable'
   requirements = ('font-awesome', )
 
-  def __init__(self, report, records, color, width, height, htmlCode, helper, option, profile):
+  def __init__(self, report, records, width, height, htmlCode, helper, option, profile):
     super(Tree, self).__init__(report, records, css_attrs={"width": width, 'height': height})
     option['is_root'] = True
     option['icon_open'] = "fas fa-folder-open"
@@ -67,8 +67,13 @@ class Tree(Html.Html):
           var icon = document.createElement("i"); icon.style.marginRight = '5px';
           icon.onclick = function(){ 
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
-            if(ulDisplay == 'none'){ this.parentNode.querySelector('ul').style.display = 'block'}
-            else{this.parentNode.querySelector('ul').style.display = 'none'}
+            if(ulDisplay == 'none'){ 
+              this.parentNode.querySelector('ul').style.display = 'block';
+              icon.setAttribute("class", options.icon_open);
+              }
+            else{
+              this.parentNode.querySelector('ul').style.display = 'none';
+              icon.setAttribute("class", options.icon_close);}
           };
           icon.style.cursor = "pointer";
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});

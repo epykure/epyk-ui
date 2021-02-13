@@ -2895,7 +2895,7 @@ class CssMixin(object):
     Description:
     -----------
     Shortcut for the display CSS attribute and the value inline-block.
-    This will also remove the with property set to the component.
+    This will also remove the with property set to the component if in percentage.
 
     Related Pages:
 
@@ -2907,7 +2907,8 @@ class CssMixin(object):
       mode_switch.style.css.inline_block()
 
     """
-    self.width = None
+    if self.width is not None and self.width.endswith("%"):
+      self.width = None
     self.display = "inline-block"
     return self
 
@@ -2929,3 +2930,15 @@ class CssMixin(object):
     """
     self.display = None
     return self
+
+  def invisble(self):
+    """
+    Description:
+    -----------
+    The visibility property specifies whether or not an element is visible.
+    
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_class_visibility.asp
+    """
+    self.visibility = "hidden"

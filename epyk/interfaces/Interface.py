@@ -1150,11 +1150,16 @@ class WebComponents:
     """
     Description:
     ------------
+    Add the entire Bootstrap framework as a dependency to the framework.
+    This will enable more components to the framework.
 
     Usage:
     -----
 
+      icon = page.web.bs.icons.danger()
+
     Templates:
+
 
     :rtype: Bs.Bootstrap
     """

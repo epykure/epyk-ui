@@ -648,7 +648,7 @@ class Buttons(object):
     """
     Description:
     ------------
-    Add a toggle component
+    Add a toggle component.
 
     Usage:
     -----
@@ -684,7 +684,7 @@ class Buttons(object):
     record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_toggle = html.HtmlRadio.Switch(self.context.rptObj, record, label, color, width, height, htmlCode, options, profile)
+    html_toggle = html.HtmlRadio.Switch(self.context.rptObj, record, label, color, width, height, htmlCode, options or {}, profile)
     return html_toggle
 
   @html.Html.css_skin()

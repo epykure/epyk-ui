@@ -29,7 +29,7 @@ class Buttons(object):
       schema = {"type": 'button', 'class': None, 'css': None, 'arias': {"pressed": False}, 'children': [
         {"type": 'div', 'class': 'mdc-button__ripple', 'css': None},
         {"type": 'span', 'class': 'mdc-button__label', 'css': None, 'args': {"text": label}},
-        {"type": 'div', 'class': 'material-icons mdc-button__icon', 'css': None, 'args': {"htmlObjs": icon}}
+        {"type": 'div', 'class': 'material-icons mdc-button__icon', 'css': None, 'args': {"components": icon}}
       ]}
     else:
       schema = {"type": 'button', 'class': None, 'css': None, 'arias': {"pressed": False}, 'children': [

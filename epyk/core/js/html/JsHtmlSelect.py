@@ -10,6 +10,26 @@ from epyk.core.js.objects import JsNodeDom
 class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
   @property
+  def val(self):
+    """
+    Description:
+    -----------
+    Return the val object.
+
+    Usage:
+    -----
+
+      mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
+      mode_switch.input.click([
+        page.js.console.log(mode_switch.input.dom.val)
+      ])
+    """
+    values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
+    values.append("'%s_values': %s" % (self._src.htmlCode, self._src._vals))
+    return JsObjects.JsObjects.get(
+      "{%s, offset: new Date().getTimezoneOffset()}" % ", ".join(values))
+
+  @property
   def content(self):
     """
     Description:
@@ -19,6 +39,23 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     -----
     """
     return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.checkbox.dom.varName)
+
+  @property
+  def label(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+      mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
+      mode_switch.input.click([
+        page.js.console.log(mode_switch.input.dom.label),
+        icon.dom.visible(mode_switch.input.dom.content)
+      ])
+    """
+    return JsHtml.ContentFormatters(self._report, self._src.switch_text.dom.innerText())
 
   def set_text(self, value, is_on_val=True):
     """
@@ -39,7 +76,7 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     :param is_on_val: Boolean. Optional. Change either the on or the off value displayed.
     """
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get(''' if(%(text)s == %(htmlCode)s_data.%(switch_type)s){ %(htmlObj)s };
+    return JsObjects.JsObjects.get('''if(%(text)s == %(htmlCode)s_data.%(switch_type)s){%(htmlObj)s};
        %(htmlCode)s_data.%(switch_type)s = %(value)s
        ''' % {'htmlCode': self._src.htmlCode, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
               'text': self._src.switch_text.dom.content.toStr(), 'htmlObj': self._src.switch_text.build(value)})

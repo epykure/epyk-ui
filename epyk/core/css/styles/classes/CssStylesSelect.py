@@ -68,22 +68,22 @@ class CssSelectOptionItems(CssStyle.Style):
 
   def customize(self):
     self.css({"z-index": 210, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
-    self.hover.css({'color': self.rptObj.theme.success[1]}, important=True)
-    self.active.css({"background-color": self.rptObj.theme.success[1], "color": self.rptObj.theme.greys[-1]}, important=True)
+    self.hover.css({'color': self.rptObj.theme.colors[0], "background-color": self.rptObj.theme.colors[7]}, important=True)
+    self.active.css({"background-color": self.rptObj.theme.colors[-1], "color": self.rptObj.theme.greys[0]}, important=True)
 
 
 class CssSelectOptionActive(CssStyle.Style):
   classname = "active"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]}, important=True)
+    self.css({'background': self.rptObj.theme.colors[4], "color": self.rptObj.theme.colors[-1]}, important=True)
 
 
 class CssSelectOptionSelected(CssStyle.Style):
   classname = "selected"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]}, important=True)
+    self.css({'background': self.rptObj.theme.colors[4], "color": self.rptObj.theme.colors[-1]}, important=True)
 
 
 class CssSelectFilterOption(CssStyle.Style):

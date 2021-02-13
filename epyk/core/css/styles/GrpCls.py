@@ -17,11 +17,6 @@ class ClassPage(object):
     self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection, self.__moz_selection = 5 * [None]
     self.__contenteditable = None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
-    self.classList['other'].add(self.scrollbar_webkit)
-    self.classList['other'].add(self.scrollbar_webkit_thumb)
-    self.classList['other'].add(self.scrollbar_webkit_track)
-    self.classList['other'].add(self.selection)
-    self.classList['other'].add(self.moz_selection)
 
   @property
   def css(self):
@@ -204,6 +199,12 @@ class ClassPage(object):
     ------------
 
     """
+    self.classList['other'].add(self.scrollbar_webkit)
+    self.classList['other'].add(self.scrollbar_webkit_thumb)
+    self.classList['other'].add(self.scrollbar_webkit_track)
+    self.classList['other'].add(self.selection)
+    self.classList['other'].add(self.moz_selection)
+
     css_frgs = {}
     for css_cls in self.classList.values():
       for c in css_cls:

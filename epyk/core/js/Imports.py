@@ -1643,6 +1643,14 @@ BOOTSTRAP = {
       {'script': 'bootstrap-datetimepicker.min.js', 'path': 'bootstrap-datetimepicker/%(version)s/js/'},
       {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
     ]},
+  'bootstrap-icons': {
+    'version': '1.3.0',
+    'website': 'https://icons.getbootstrap.com/',
+    'modules': [
+      {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/', 'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
+    ]
+
+  }
 }
 
 

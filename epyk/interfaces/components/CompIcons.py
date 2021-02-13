@@ -51,7 +51,8 @@ class Icons(object):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
-    html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
+    #html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
+    html_edit.css({"margin": 0, 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
     return html_edit
@@ -256,6 +257,54 @@ class Icons(object):
     """
     components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
     components.style.css.color = self.context.rptObj.theme.greys[-6]
+    return components
+
+  def warning(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome('fas fa-exclamation-triangle', text, tooltip, position, width, height, htmlCode, profile)
+    components.style.css.color = self.context.rptObj.theme.warning[1]
+    return components
+
+  def danger(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome('fas fa-stop-circle', text, tooltip, position, width, height, htmlCode, profile)
+    components.style.css.color = self.context.rptObj.theme.danger[1]
     return components
 
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),

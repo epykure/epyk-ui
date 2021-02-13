@@ -215,6 +215,31 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
+  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+    """
+    Description:
+    ------------
+    Add click event to the switch component.
+
+    Usage:
+    -----
+
+      mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
+      mode_switch.input.click([
+        page.js.console.log(mode_switch.input.dom.val)
+      ])
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    if onReady:
+      self._report.body.onReady([self.dom.events.trigger("click")])
+    return self.on("click", js_funcs, profile, self.switch.toStr())
+
   def toggle(self, on_funcs=None, off_funcs=None, profile=False, source_event=None, onReady=False):
     """
     Description:
