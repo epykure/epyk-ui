@@ -2936,7 +2936,7 @@ class CssMixin(object):
     Description:
     -----------
     The visibility property specifies whether or not an element is visible.
-    
+
     Related Pages:
 
       https://www.w3schools.com/cssref/pr_class_visibility.asp
