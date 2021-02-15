@@ -8,6 +8,7 @@ from epyk.interfaces.bs import BsCarousel
 from epyk.interfaces.bs import BsModals
 from epyk.interfaces.bs import BsDates
 from epyk.interfaces.bs import BsChecks
+from epyk.interfaces.bs import BsIcons
 
 
 from epyk.fwk.bs.html import BsHtml
@@ -32,6 +33,20 @@ class Bootstrap(object):
       https://getbootstrap.com/docs/4.4/components/buttons/
     """
     return BsButtons.Buttons(self)
+
+  @property
+  def icons(self):
+    """
+    Description:
+    ------------
+    Free, high quality, open source icon library with nearly 1,200 icons.
+
+    Related Pages:
+
+      https://icons.getbootstrap.com/
+    """
+    self.rptObj.cssImport.add("bootstrap-icons")
+    return BsIcons.Icons(self)
 
   @property
   def checks(self):
