@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,7 +12,7 @@ class Trees(object):
   def __init__(self, context):
     self.context = context
 
-  def tree(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def tree(self, data=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -32,7 +34,6 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
     :param htmlCode:
@@ -41,7 +42,7 @@ class Trees(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
   def inputs(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
@@ -144,3 +145,27 @@ class Trees(object):
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, record, text, width, height, htmlCode, helper,
                                      dftl_options, profile)
     return html_d
+
+  def folder(self, folder, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None,
+           profile=None):
+    data = [
+      {"value": 'ok'}
+    ]
+    excluded_folders = ["outs", "static"]
+
+    def add_level(path, tree):
+      for fp in os.listdir(path):
+        if fp.startswith(".") or fp.startswith("__") or fp in excluded_folders:
+          continue
+
+        fp_path = os.path.join(path, fp)
+        if os.path.isdir(fp_path):
+          tree.append({"value": fp, "items": []})
+          add_level(fp_path, tree[-1]["items"])
+        elif fp.endswith(".py"):
+          tree.append({"value": fp, "url": "/code_frame?classpath=%s&script=%s" % (folder, fp_path)})
+
+    data = []
+    add_level(folder, data)
+    tree = self.tree(data, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
+    return tree

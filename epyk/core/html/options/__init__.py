@@ -252,6 +252,27 @@ class Options(DataClass):
     self.js_type["builder"] = True
     self._config(value)
 
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Change some CSS attributes to the internal HTML component.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/
+
+    Attributes:
+    ----------
+    :prop values: Dictionary. The CSS attributes.
+    """
+    return self._config_get({})
+
+  @style.setter
+  def style(self, values):
+    self._config(values)
+
   def details(self):
     """
     Description:

@@ -879,7 +879,7 @@ class Components:
     :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    dflt_options = {"delimiter": ' / '}
+    dflt_options = {"style": {}}
     if options is not None:
       dflt_options.update(options)
     width = Arguments.size(width, unit="%")

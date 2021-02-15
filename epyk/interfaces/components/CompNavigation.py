@@ -411,7 +411,7 @@ class Navigation(object):
     html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
     Defaults_css.BODY_CONTAINER = {"padding-top": height[0] + scroll_height}
-    self.context.rptObj.body.style.custom_class({"padding-top": '%spx' % (height[0] + scroll_height)}, "body", is_class=False)
+    self.context.rptObj.body.style.custom_class({"padding-top": '%spx' % (height[0] + 10 + scroll_height)}, "body", is_class=False)
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):

@@ -440,3 +440,90 @@ class OptContents(Options):
   def manual(self, bool):
     self.set(bool)
 
+
+class OptBreadCrumb(Options):
+  component_properties = ("delimiter", "style_selected")
+
+  def set_style(self, name):
+    """
+    Description:
+    ------------
+    Set the breadcrumb to a predefined style.
+    Do not hesitate to share on Github if you think that a new configuration should be promoted to the package.
+
+    Attributes:
+    ----------
+    :param name: String. The predefined style.
+    """
+    defined_styles = {
+      'pills': {
+        "delimiter": '',
+        "style": {"border-radius": "10px", "border": "1px solid %s" % self._report._report.theme.greys[4],
+                  "background": self._report._report.theme.greys[0],
+                  "margin": "0 2px", "width": '80px', "display": 'inline-block', "text-align": "center"},
+        'selected': {"color": self._report._report.theme.greys[0], "background": self._report._report.theme.colors[-1]}},
+      'tabs': {
+        "delimiter": '',
+        "style": {"border-bottom": "5px solid inherit", "margin": "0 2px", "width": '80px', "display": 'inline-block', "text-align": "center"},
+        'selected': {"color": self._report._report.theme.success[1], "border-bottom": "5px solid %s" % self._report._report.theme.success[1]}},
+
+    }
+    self.style = defined_styles[name]["style"]
+    self.delimiter = defined_styles[name]["delimiter"]
+    self.style_selected = defined_styles[name]["selected"]
+
+  @property
+  def delimiter(self):
+    """
+    Description:
+    ------------
+    Set the delimiter for the breadcrumb categories.
+
+    Attributes:
+    ----------
+    :prop value: String. The delimiter. Default /.
+    """
+    return self._config_get(' / ')
+
+  @delimiter.setter
+  def delimiter(self, value):
+    self._config(value)
+
+  @property
+  def height(self):
+    """
+    Description:
+    ------------
+    Set the height for the breadcrumb items.
+
+    Attributes:
+    ----------
+    :prop number: Integer. The height in pixel. Default 0.
+    """
+    return self._config_get(0)
+
+  @height.setter
+  def height(self, number):
+    self._config(number)
+
+  @property
+  def style_selected(self):
+    """
+    Description:
+    ------------
+    Set the style for the selected item.
+    This style will be added on top of the common CSS style.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/
+
+    Attributes:
+    ----------
+    :prop values: Dictionary. The CSS styles.
+    """
+    return self._config_get({})
+
+  @style_selected.setter
+  def style_selected(self, values):
+    self._config(values)

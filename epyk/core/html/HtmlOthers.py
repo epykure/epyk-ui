@@ -331,12 +331,11 @@ class Breadcrumb(Html.Html):
   name = 'Breadcrumb'
 
   def __init__(self, report, data, width, height, htmlCode, options, profile):
-    super(Breadcrumb, self).__init__(report, [], profile=profile, htmlCode=htmlCode, css_attrs={"height": height, "width": width})
+    super(Breadcrumb, self).__init__(report, [], profile=profile, options=options, htmlCode=htmlCode, css_attrs={"height": height, "width": width})
+    self.__options = OptText.OptBreadCrumb(self, options)
     self.style.css.line_height = height[0]
     self.style.css.vertical_align = 'middle'
-    self.delimiter = options['delimiter']
-    self._jsStyles['delimiter'] = options['delimiter']
-    self._jsStyles['height'] = height[0]
+    self.options.height = height[0]
     if data is not None:
       for rec in data:
         if not hasattr(rec, 'options'):
@@ -350,23 +349,46 @@ class Breadcrumb(Html.Html):
         self.add(data)
     self.style.background = report.theme.greys[1]
 
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a breadcrumb definition.
+
+    Usage:
+    -----
+
+    :rtype: OptText.OptBreadCrumb
+    """
+    return self.__options
+
   _js__builder__ = '''
       htmlObj.innerHTML = "";
-      if(data.length == 0){htmlObj.style["height"] = 0}
-      else{ 
-        htmlObj.style["height"] = options.height + "px";
-        var text = document.createTextNode(options.delimiter); htmlObj.appendChild(text)
-        data.forEach(function(rec, i){
-          if(typeof rec.type !== 'undefined'){
-            if(rec.type == "dots"){var text = document.createTextNode("... "); htmlObj.appendChild(text)}}
-          else{
-            if (rec.selected){var aHref = document.createTextNode(rec.text)}
+      if(typeof data === "undefined"){htmlObj.style["height"] = 0;}
+      else{
+        if(data.length == 0){htmlObj.style["height"] = 0}
+        else{ 
+          htmlObj.style["height"] = options.height + "px";
+          var text = document.createTextNode(options.delimiter); htmlObj.appendChild(text)
+          data.forEach(function(rec, i){
+            if(typeof rec.type !== 'undefined'){
+              if(rec.type == "dots"){var text = document.createTextNode("... "); htmlObj.appendChild(text)}}
             else{
-              var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
-            htmlObj.appendChild(aHref)}
-          var text = document.createTextNode(options.delimiter);
-          if (i < data.length-1){htmlObj.appendChild(text)}
-      })}'''
+              if (rec.selected){
+                var aHref = document.createElement("span"); aHref.innerHTML = rec.text}
+              else{
+                var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); aHref.innerHTML = rec.text}
+              
+              Object.keys(options.style).forEach(function(key){aHref.style[key] = options.style[key]});
+              
+              if (rec.selected){
+                Object.keys(options.style_selected).forEach(function(key){aHref.style[key] = options.style_selected[key]});
+              }
+              htmlObj.appendChild(aHref)}
+            var text = document.createTextNode(options.delimiter);
+            if (i < data.length-1){htmlObj.appendChild(text)}
+      })}}'''
 
   def __add__(self, component):
     """ Add items to a container """
@@ -377,7 +399,7 @@ class Breadcrumb(Html.Html):
 
   def __str__(self):
     rows = [htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for htmlObj in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.delimiter.join(rows))
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.options.delimiter.join(rows))
 
 
 class Legend(Html.Html):

@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import logging
+
 from epyk.core.py import OrderedSet
 
 
@@ -453,7 +455,30 @@ class Vis(object):
 class ChartJs(object):
 
   @staticmethod
-  def y(data, y_columns, x_axis):
+  def copy(records, empty=False):
+    """
+    Description:
+    ------------
+    Create a copy of the ChartJs dataset.
+
+    Attributes:
+    ----------
+    :param records: Dictionary. A ChartJs data structure object.
+    :param empty: Boolean. Optional. Specify of the data need to be removed.
+    """
+    result = {"labels": list(records["labels"]), 'datasets': [], 'series': list(records["series"]), 'python': records["python"]}
+    for d in records['datasets']:
+      result['datasets'].append({"data": list(d["data"]), 'label': d["label"]})
+    if empty:
+      result["labels"] = []
+      for d in result['datasets']:
+        d["data"] = []
+      return result
+
+    return result
+
+  @staticmethod
+  def y(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -463,11 +488,12 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': False}
     if data is None or y_columns is None:
       return is_data
 
@@ -480,11 +506,13 @@ class ChartJs(object):
           else:
             if hasattr(rec[y], "toStr"):
               agg_data.setdefault(y, {})[rec[x_axis]] = rec[y]
-            else:
+            elif rec[y]:
               try:
                 agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-              except:
-                pass
+              except Exception as err:
+                if options is not None and options.get("verbose", False):
+                  logging.warning(err)
+                  logging.warning("Error summing rec: %s" % rec)
     labels, data = OrderedSet(), []
     for c in y_columns:
       for x, y in agg_data.get(c, {}).items():
@@ -495,12 +523,13 @@ class ChartJs(object):
       for x in is_data["labels"]:
         value = agg_data.get(y, {}).get(x)
         series.append(value)
-      is_data["datasets"].append(series)
-      is_data["series"].append(y)
+      is_data["datasets"].append({"data": series, 'label': y})
+      #is_data["datasets"].append(series)
+      #is_data["series"].append(y)
     return is_data
 
   @staticmethod
-  def xy(data, y_columns, x_axis):
+  def xy(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -510,15 +539,22 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     agg_data = {}
     for rec in data:
       for y in y_columns:
         if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+          if rec[y]:
+            try:
+              agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+            except Exception as err:
+              if options is not None and options.get("verbose", False):
+                logging.warning(err)
+                logging.warning("Error summing rec: %s" % rec)
     labels, data = set(), []
     for c in y_columns:
       series = []
@@ -534,7 +570,7 @@ class ChartJs(object):
     return is_data
 
   @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis=None):
+  def xyz(data, y_columns, x_axis, z_axis=None, options=None):
     """
     Description:
     ------------
@@ -544,10 +580,11 @@ class ChartJs(object):
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param z_axis:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if y_columns is None:
@@ -576,16 +613,17 @@ class ChartJs(object):
 class C3(object):
 
   @staticmethod
-  def y(data, y_columns, x_axis):
+  def y(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python records.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -609,7 +647,7 @@ class C3(object):
 class NVD3(object):
 
   @staticmethod
-  def xy(data, y_columns, x_axis):
+  def xy(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -619,9 +657,10 @@ class NVD3(object):
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -645,7 +684,7 @@ class NVD3(object):
     return is_data
 
   @staticmethod
-  def labely(data, y_columns, x_axis):
+  def labely(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -655,9 +694,10 @@ class NVD3(object):
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:

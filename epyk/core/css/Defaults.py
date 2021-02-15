@@ -1,6 +1,6 @@
 
 class Font(object):
-  size, header_size, unit = 12, 14, "px"
+  size, header_size, unit = 14, 16, "px"
   family = "Calibri"
 
 
