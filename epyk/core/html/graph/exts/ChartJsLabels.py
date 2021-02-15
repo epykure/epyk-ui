@@ -49,6 +49,20 @@ class EnumRender(DataEnum):
     return self.set()
 
   @packageImport("accounting")
+  def details(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    ------------
+    Display both the label and its value.
+
+    Attributes:
+    ----------
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    """
+    return self.set(JsObjects.JsVoid("function (args) { return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s') }" % (digit, thousand_sep)))
+
+  @packageImport("accounting")
   def labelNumber(self, digit=0, thousand_sep="."):
     """
     Description:

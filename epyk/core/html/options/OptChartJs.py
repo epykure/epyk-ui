@@ -67,6 +67,24 @@ class OptionAxesTicks(DataClass):
     self._attrs["min"] = val
 
   @property
+  def mirror(self):
+    """
+    Description:
+    ------------
+    Flips tick labels around axis, displaying the labels inside the chart instead of outside.
+    Note: Only applicable to vertical scales.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs["mirror"]
+
+  @mirror.setter
+  def mirror(self, val):
+    self._attrs["mirror"] = val
+
+  @property
   def suggestedMin(self):
     """
     https://www.chartjs.org/docs/latest/charts/line.html
