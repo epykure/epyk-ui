@@ -2931,7 +2931,7 @@ class CssMixin(object):
     self.display = None
     return self
 
-  def invisble(self):
+  def invisible(self):
     """
     Description:
     -----------
