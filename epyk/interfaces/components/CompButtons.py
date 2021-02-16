@@ -934,7 +934,7 @@ class Buttons(object):
     return live
 
   @html.Html.css_skin()
-  def text(self, text, width=('auto', ""), tooltip=None, height=(None, "px"), htmlCode=None, profile=None, options=None):
+  def text(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), htmlCode=None, profile=None, options=None):
     """
     Description:
     -----------
@@ -947,6 +947,7 @@ class Buttons(object):
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
+    :param icon: String. Optional.
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -955,10 +956,7 @@ class Buttons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     c = self.context.rptObj.ui.text(text, tooltip=tooltip, width=width, htmlCode=htmlCode, height=height, profile=profile, options=options)
-    c.style.add_classes.div.background_hover()
-    c.style.css.border_radius = 5
-    c.style.css.font_size = Defaults_css.font(-2)
-    c.style.css.padding = '1px 2px'
+    c.add_icon(icon, htmlCode=c.htmlCode)
     return c
 
   @html.Html.css_skin()

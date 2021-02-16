@@ -98,11 +98,11 @@ class Layouts(object):
     :param count: Integer. Optional. The number of HR tag to be added.
     :param background_color: String. Optional. The component background color.
     :param margins: Integer. Optional. The margin top and bottom in pixels.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -119,7 +119,46 @@ class Layouts(object):
       hr_html.style.css.margin_bottom = margins
     return hr_html
 
-  def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
+  def underline(self, width=(10, '%'), height=(3, 'px'), align=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    hr = self.hr(1, self.context.rptObj.theme.colors[-1], 0, width=width, height=height, align=align, options=options, profile=profile)
+    hr.style.css.margin_top = -5
+    hr.style.css.border_radius = 10
+    hr.style.css.margin_bottom = 10
+    return hr
+
+  def accentuate(self, width=(10, '%'), height=(1, 'px'), align=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    hr = self.hr(1, self.context.rptObj.theme.colors[6], 0, width=width, height=height, align=align, options=options, profile=profile)
+    hr.style.css.margin_top = -5
+    hr.style.css.border_radius = 10
+    hr.style.css.margin_bottom = 10
+    return hr
+
+  def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
+          options=None, profile=None):
     """
     Description:
     ------------
@@ -148,13 +187,13 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param position:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param position: String. Optional.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -162,7 +201,8 @@ class Layouts(object):
     html_col = html.HtmlContainer.Col(self.context.rptObj, components, position, width, height, align, helper, options, profile)
     return html_col
 
-  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
+  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
+          options=None, profile=None):
     """
     Description:
     ------------
@@ -192,13 +232,13 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param position:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param position: String. Optional.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -226,11 +266,11 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -260,12 +300,12 @@ class Layouts(object):
     Attributes:
     ----------
     :param rows:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param position: String. Optional. A string with the vertical position of the component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param position: String. Optional. A string with the vertical position of the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -289,13 +329,13 @@ class Layouts(object):
     ----------
     :param components: List. The different HTML objects to be added to the component.
     :param title:
-    :param color:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -356,7 +396,8 @@ class Layouts(object):
       html_div.style.css.display = "inline-block"
     return html_div
 
-  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', htmlCode=None, options=None, profile=None):
+  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', htmlCode=None, options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -424,10 +465,10 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -455,10 +496,10 @@ class Layouts(object):
     Attributes:
     ----------
     :param url: String. Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper: String. Optional. A tooltip helper
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -481,10 +522,10 @@ class Layouts(object):
     Attributes:
     ----------
     :param record:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper: String. Optional. A tooltip helper
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -515,11 +556,11 @@ class Layouts(object):
     Attributes:
     ----------
     :param icon_names:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -573,11 +614,11 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -609,12 +650,12 @@ class Layouts(object):
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -635,12 +676,12 @@ class Layouts(object):
     ----------
     :param components: List. The different HTML objects to be added to the component.
     :param cols:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param position: String. Optional. A string with the vertical position of the component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param position: String. Optional. A string with the vertical position of the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     rows, row = [], []
     dflt_options = {"responsive": False}
@@ -673,11 +714,11 @@ class Delimiter(object):
 
     Attributes:
     ----------
-    :param count: The number of HR tag to be added
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param count: Integer. Optional. The number of HR tag to be added.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -695,11 +736,11 @@ class Delimiter(object):
 
     Attributes:
     ----------
-    :param count: The number of HR tag to be added
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param count: Integer. Optional. The number of HR tag to be added.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -718,11 +759,11 @@ class Delimiter(object):
 
     Attributes:
     ----------
-    :param count: The number of HR tag to be added
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param count: Integer. Optional. The number of HR tag to be added.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -743,11 +784,11 @@ class Delimiter(object):
 
     Attributes:
     ----------
-    :param count: The number of HR tag to be added
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param align: Optional. The content position. Values (left, right, center). Default center
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
+    :param count: Integer. Optional. The number of HR tag to be added.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
+    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)

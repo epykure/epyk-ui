@@ -192,6 +192,7 @@ class Texts(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
+    :param options:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -798,6 +799,37 @@ class Texts(object):
     More custom toggles icons.
     """
     return TextReferences(self.context)
+
+  def button(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), htmlCode=None, profile=None,
+           options=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Templates:
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button.
+    :param icon:
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    c = self.context.rptObj.ui.text(text, tooltip=tooltip, width=width, htmlCode=htmlCode, height=height,
+                                    profile=profile, options=options)
+    c.add_icon(icon, htmlCode=c.htmlCode)
+    c.style.add_classes.div.background_hover()
+    c.style.css.border_radius = 5
+    c.style.css.font_size = Defaults_css.font(-2)
+    c.style.css.padding = '1px 2px'
+    return c
 
 
 class TextReferences(object):

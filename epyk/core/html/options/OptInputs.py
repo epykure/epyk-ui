@@ -706,6 +706,27 @@ class OptionAutoComplete(OptionsInput):
   def source(self, value):
     self._config(value)
 
+  def startswith(self, values):
+    """
+    Description:
+    ------------
+    Defines the data to use, must be specified.
+    Only display the values starting with the input text.
+
+    Related Pages:
+
+      https://api.jqueryui.com/autocomplete/#entry-examples
+
+    Attributes:
+    ----------
+    :param values: List. The predefined values.
+    """
+    values = JsUtils.jsConvertData(values, None)
+    self._config('''function(request, response) {
+        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+        response($.grep(%s, function(item){return matcher.test(item);}) );
+    }''' % values, "source")
+
 
 class OptionsDatePicker(OptionsInput):
 

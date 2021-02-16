@@ -14,7 +14,7 @@ class EnumFormatters(DataEnum):
     -----------
 
     """
-    return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label + '\\n\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (digit, thousand_sep)))
+    return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (digit, thousand_sep)))
 
   def label(self):
     """

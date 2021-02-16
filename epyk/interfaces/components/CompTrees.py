@@ -168,4 +168,6 @@ class Trees(object):
     data = []
     add_level(folder, data)
     tree = self.tree(data, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
+    if height[0] is not None:
+      tree.style.css.overflow = "auto"
     return tree

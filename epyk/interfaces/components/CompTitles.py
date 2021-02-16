@@ -11,7 +11,7 @@ class Titles(object):
   def __init__(self, context):
     self.context = context
 
-  def head(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+  def head(self, text="", options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
            htmlCode=None, profile=False):
     """
     Description:
@@ -52,7 +52,7 @@ class Titles(object):
     html_title.style.css.bold()
     return html_title
 
-  def headline(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+  def headline(self, text="", options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
                htmlCode=None, profile=False):
     """
     Description:
@@ -131,7 +131,7 @@ class Titles(object):
       self.context.rptObj._content_table.add_title(html_title, level=1)
     return html_title
 
-  def section(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+  def section(self, text="", options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
               htmlCode=None, profile=False):
     """
     Description:
@@ -166,7 +166,7 @@ class Titles(object):
       self.context.rptObj._content_table.add_title(html_title, level=4)
     return html_title
 
-  def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+  def rubric(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
              profile=False):
     """
     Description:
@@ -201,7 +201,7 @@ class Titles(object):
     html_title.style.css.font_size = Defaults_css.font(2)
     return html_title
 
-  def category(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+  def category(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
                profile=False):
     """
     Description:
@@ -237,7 +237,7 @@ class Titles(object):
     html_title.style.css.text_transform = "uppercase"
     return html_title
 
-  def caption(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+  def caption(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
               profile=False):
     """
     Description:
@@ -271,7 +271,7 @@ class Titles(object):
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def underline(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+  def underline(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
                 profile=False):
     """
     Description:
@@ -305,7 +305,7 @@ class Titles(object):
     html_title.style.css.border_bottom = '2px solid %s' % self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def bold(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
+  def bold(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None,
            profile=False):
     """
     Description:
@@ -341,7 +341,7 @@ class Titles(object):
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
-  def subtitle(self, text=None, name=None, contents=None, color=None, picture=None, icon=None, marginTop=5,
+  def subtitle(self, text="", name=None, contents=None, color=None, picture=None, icon=None, marginTop=5,
                htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
@@ -374,7 +374,7 @@ class Titles(object):
     title.style.css.bold()
     return title
 
-  def upper(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
+  def upper(self, text="", options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""),
             htmlCode=None, profile=False):
     """
     Description:

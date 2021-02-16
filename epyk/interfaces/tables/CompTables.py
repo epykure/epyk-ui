@@ -184,3 +184,38 @@ class Tables(object):
     table.style.add_classes.table.grid_vals()
     # table.style.add_classes.table.grid_no_header()
     return table
+
+  def menu(self, table=None, options=None):
+    """
+    Description:
+    -----------
+    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+
+    Attributes:
+    ----------
+    :param table:
+    :param options:
+    """
+    options = options or {}
+    copy_file = self.context.rptObj.ui.icons.awesome("fas fa-copy", text="Copy", width=(32, 'px'))
+    copy_file.icon.style.css.font_factor(-5)
+    copy_file.style.css.font_factor(-5)
+    copy_file.span.style.css.margin = "0 0 -3px -3px"
+    copy_file.click([table.js.copyToClipboard()])
+    csv_file = self.context.rptObj.ui.icons.awesome("fas fa-file-csv", text="Csv", width=(32, 'px'))
+    csv_file.icon.style.css.font_factor(-5)
+    csv_file.style.css.font_factor(-5)
+    csv_file.span.style.css.margin = "0 0 -3px -3px"
+    csv_file.click([table.js.download("csv", "data.csv")])
+    add_row = self.context.rptObj.ui.icons.awesome("fas fa-plus", text="New", width=(35, 'px'))
+    add_row.icon.style.css.font_factor(-5)
+    add_row.style.css.font_factor(-5)
+    add_row.span.style.css.margin = "0 3px -3px -3px"
+    add_row.click([table.js.addRow(options.get("add", {}), True)])
+    del_row = self.context.rptObj.ui.icons.awesome("fas fa-trash-alt", text="Delete", width=(37, 'px'))
+    del_row.icon.style.css.font_factor(-5)
+    del_row.style.css.font_factor(-5)
+    del_row.span.style.css.margin = "0 0 -3px -3px"
+    del_row.click([table.js.clearData()])
+    container = self.context.rptObj.ui.div([copy_file, csv_file, add_row, del_row], align="right")
+    return container

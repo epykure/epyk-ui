@@ -659,10 +659,10 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param data:
     """
-    if data is False:
-      data = "hidden"
-    if data is True:
-      data = "visible"
+    if data == "hidden":
+      data = False
+    if data == "visible":
+      data = True
     data = JsUtils.jsConvertData(data, None)
     return self.css("visibility", JsObjects.JsVoid("(function(flag){console.log(flag); if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
 
