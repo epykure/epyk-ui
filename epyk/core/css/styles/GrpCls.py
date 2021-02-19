@@ -15,7 +15,7 @@ class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection, self.__moz_selection = 5 * [None]
-    self.__contenteditable = None
+    self.__contenteditable, self.__global_styles = None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
 
   @property
@@ -23,9 +23,9 @@ class ClassPage(object):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
-    :rtype: Commons
+    :rtype: Body
     """
     if self._css_struct is None:
       self._css_struct = Body(self.htmlObj)
@@ -37,7 +37,7 @@ class ClassPage(object):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
@@ -54,11 +54,15 @@ class ClassPage(object):
     Reference for all the global setting in the page.
     This should be changed in order to be the proxy to the Default CSS settings in the framework.
 
-    Changing this should only impact the report default settings
+    Changing this should only impact the report default settings.
 
     TODO: Extend to more than the font
+
+    :rtype: Defaults_css.GlobalStyle
     """
-    return Defaults_css.Font
+    if self.__global_styles is None:
+      self.__global_styles = Defaults_css.GlobalStyle(self.htmlObj._report)
+    return self.__global_styles
 
   @property
   def scrollbar_webkit(self):
@@ -150,7 +154,7 @@ class ClassPage(object):
     """
     Description:
     ------------
-    The Default CSS Attributes in the framework
+    The Default CSS Attributes in the framework.
     """
     return Defaults_css
 
@@ -159,7 +163,7 @@ class ClassPage(object):
     """
     Description:
     ------------
-    Property to get access to the catalog of CSS classes to be added to the HTML class tag component
+    Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
 
     :rtype: Classes.Catalog
     """
@@ -172,8 +176,8 @@ class ClassPage(object):
     """
     Description:
     ------------
-    Property to get access to the catalog of CSS classes to be loaded in the page
-    Those classes will not be automatically added to any HTML tag and they need to be added manually
+    Property to get access to the catalog of CSS classes to be loaded in the page.
+    Those classes will not be automatically added to any HTML tag and they need to be added manually.
 
     :rtype: Classes.Catalog
     """
@@ -185,7 +189,7 @@ class ClassPage(object):
     """
     Description:
     ------------
-    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component
+    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
     """
     for css_cls in self.classList.values():
       for c in css_cls:
@@ -219,17 +223,17 @@ class ClassPage(object):
     This will create dynamic CSS class which will not be added to any component.
     The class definition can then be reused in mutiple components.
 
-    The CSS style of the body can only be done using predefined classes or inline CSS
+    The CSS style of the body can only be done using predefined classes or inline CSS.
 
-    Usage::
+    Usage:
 
       rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
     Attributes:
     ----------
-    :param css_attrs: Nested dictionary with the different attributes
-    :param classname: Optional. String. The classname in the CSS definition
-    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition)
+    :param css_attrs: Dictionary. Nested dictionary with the different attributes.
+    :param classname: Optional. String. The classname in the CSS definition.
+    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition).
     :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a .
     """
     if classname is None:
@@ -258,7 +262,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Unique identifier for the CSS object on the Javascript side
+    Unique identifier for the CSS object on the Javascript side.
     """
     return "%s_css" % self.htmlObj.htmlCode
 
@@ -267,7 +271,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: Commons
     """
@@ -281,7 +285,7 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
@@ -294,7 +298,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    The Default CSS Attributes in the framework
+    The Default CSS Attributes in the framework.
     """
     return Defaults_css
 
@@ -316,7 +320,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Property to get access to the catalog of CSS classes to be added to the HTML class tag component
+    Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
 
     :rtype: Classes.Catalog
     """
@@ -329,8 +333,8 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Property to get access to the catalog of CSS classes to be loaded in the page
-    Those classes will not be automatically added to any HTML tag and they need to be added manually
+    Property to get access to the catalog of CSS classes to be loaded in the page.
+    Those classes will not be automatically added to any HTML tag and they need to be added manually.
 
     :rtype: Classes.Catalog
     """
@@ -352,6 +356,7 @@ class ClassHtml(Properties.CssMixin):
     ----------
     :param key:
     :param name:
+    :param dflt:
     :param suffix:
     """
     key_selector = "_%s" % suffix
@@ -367,7 +372,7 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     Use of the attr function for the before content value.
-    This is the unique valid use of this CSS function in most of the browser
+    This is the unique valid use of this CSS function in most of the browser.
 
     Related Pages:
 
@@ -397,8 +402,8 @@ class ClassHtml(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param percent: Integer. Optional. The percentage of space on the left and right
-    :param width_adj: Boolean. Optional. Adjust the width of the component considering this space
+    :param percent: Integer. Optional. The percentage of space on the left and right.
+    :param width_adj: Boolean. Optional. Adjust the width of the component considering this space.
     """
     if width_adj:
       self.css.margins(left=(percent, '%'), right=(percent, '%'))
@@ -428,9 +433,9 @@ class ClassHtml(Properties.CssMixin):
     This will create dynamic CSS class which will not be added to any component.
     The class definition can then be reused in mutiple components.
 
-    The CSS style of the body can only be done using predefined classes or inline CSS
+    The CSS style of the body can only be done using predefined classes or inline CSS.
 
-    Usage::
+    Usage:
 
       rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
@@ -459,7 +464,7 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     Clear all the Style, Classes and CSS attrubites for the HTML component.
-    Once this function is called it is possible to add new CSS attributes or classes using the different catalog
+    Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
     :return: self to allow the chaining
     """
@@ -471,7 +476,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Clear all the inline CSS styles defined for the component
+    Clear all the inline CSS styles defined for the component.
 
     :return: self to allow the chaining
     """
@@ -483,7 +488,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Remove the predefined class and set the default one for the div components
+    Remove the predefined class and set the default one for the div components.
 
     Attributes:
     ----------
@@ -507,8 +512,8 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     Clear all the Style, Classes and CSS attrubites for the HTML component.
-    Once this function is called it is possible to add new CSS attributes or classes using the different catalog
-    Set the default style to no marging and no padding
+    Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
+    Set the default style to no margin and no padding.
 
     Attributes:
     ----------
@@ -525,12 +530,12 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     Attach a Javascript Builder to a CSS style.
-    It will be triggered only once for all the HTML components using this style
+    It will be triggered only once for all the HTML components using this style.
 
     Attributes:
     ----------
-    :param name: String. The Javascript variable name
-    :param js_frg: String. The Javascript framework corresponding to the Js builder
+    :param name: String. The Javascript variable name.
+    :param js_frg: String. The Javascript framework corresponding to the Js builder.
     """
     self.htmlObj._report._props.setdefault('js', {}).setdefault("builders_css", OrderedSet()).add("const %s = %s" % (name, js_frg))
     return self
@@ -539,7 +544,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component
+    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
     """
     if self.__css_virtual and not '_attrs' in self.__css_virtual:
       self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
@@ -577,9 +582,9 @@ class ClassHtmlEmpty(ClassHtml):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
-    :rtype: Commons
+    :rtype: Empty
     """
     if self._css_struct is None:
       self._css_struct = Empty(self.htmlObj)

@@ -15,6 +15,7 @@ class EnumDisplays(DataEnum):
 
     Usage:
     -----
+
     """
     return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] !== 0}"))
 
@@ -65,7 +66,15 @@ class EnumFormatters(DataEnum):
     """
     Description:
     -----------
+    Display the label and its corresponding value.
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param digit: Integer. Optional. The number of digits.
+    :param thousand_sep: String. Optional. The separator for the thousand.
     """
     return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (digit, thousand_sep)))
 
@@ -73,6 +82,9 @@ class EnumFormatters(DataEnum):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     """
     return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label}"))
@@ -87,6 +99,9 @@ class Datalabels(DataClass):
     Description:
     -----------
     The align option defines the position of the label relative to the anchor point position and orientation.
+
+    Usage:
+    -----
 
     Related Pages:
 

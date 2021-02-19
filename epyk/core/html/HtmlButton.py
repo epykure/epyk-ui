@@ -25,13 +25,13 @@ class Button(Html.Html):
     for obj in text:
       if hasattr(obj, 'options'):
         obj.options.managed = False
+    self.__options = options
     super(Button, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon, htmlCode=self.htmlCode)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
     if icon is not None:
       self.icon.style.css.color = "inherit"
-    self.__options = OptButton.OptionsButton(self, options or {})
     self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
 
@@ -158,6 +158,7 @@ class Button(Html.Html):
     :rtype: GrpClsButton.ClassButton
     """
     if self._styleObj is None:
+      self.__options = OptButton.OptionsButton(self, self.__options or {})
       self._styleObj = GrpClsButton.ClassButton(self)
     return self._styleObj
 
@@ -541,10 +542,11 @@ class IconEdit(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text)
+    notches = options.get("font-factor", 0)# 7
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-7, width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-7)}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-notches)}, htmlCode=self.htmlCode, family=options.get("icon_family"))
     self.hover_color = True
 
   def spin(self):

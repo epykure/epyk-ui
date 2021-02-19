@@ -280,6 +280,18 @@ class EnumLayout(DataEnum):
     """
     return self.set()
 
+  def fitDataTable(self):
+    """
+    Description:
+    -----------
+    Tables will automatically resize container and columns to fit the data.
+
+    Related Pages:
+
+      http://tabulator.info/examples/4.9
+    """
+    return self.set()
+
   def fitDataFill(self, inline=True):
     """
     Description:
@@ -1896,6 +1908,8 @@ class RowContextMenu(DataClass):
 
   def duplicate(self, label="Duplicate", icon=None, disabled=False):
     """
+    Description:
+    -----------
     Add a duplicate entry to the context menu
     """
     self._attrs[label] = "row.getTable().addRow(row.getData(), false, row.getPosition())"
@@ -1903,13 +1917,28 @@ class RowContextMenu(DataClass):
 
   def delete(self, label="Delete", icon=None, disabled=False):
     """
+    Description:
+    -----------
     Add a delete entry to the context menu
     """
     self._attrs[label] = "row.delete()"
     return self
 
+  def ajax(self, label, url, icon=None, disabled=False):
+    """
+    Description:
+    -----------
+    Add a delete entry to the context menu
+    """
+    self._attrs[label] = self._report._report.js.post(url, {"label": label, "data": JsObjects.JsObject.JsObject.get("row.getData()")}).onSuccess([
+      self._report._report.js.msg.status()
+    ]).toStr()
+    return self
+
   def custom(self, label, strFnc, icon=None, disabled=False):
     """
+    Description:
+    -----------
     Add a delete entry to the context menu
     """
     self._attrs[label] = strFnc
