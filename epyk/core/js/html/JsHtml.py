@@ -635,7 +635,7 @@ class JsHtml(JsNodeDom.JsDoms):
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
 
-  def visible(self, data=True):
+  def visible(self, data=True, inverse=False):
     """
     Description:
     -----------
@@ -657,14 +657,14 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param data:
+    :param data: Boolean. Optional. specify the state of the component. Default True.
+    :param inverse: Boolean. Optional. To specify the effect of the data flag.
     """
-    if data == "hidden":
-      data = False
-    if data == "visible":
-      data = True
     data = JsUtils.jsConvertData(data, None)
-    return self.css("visibility", JsObjects.JsVoid("(function(flag){console.log(flag); if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
+    if inverse:
+      return self.css("visibility", JsObjects.JsVoid("(function(flag){if(flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
+
+    return self.css("visibility", JsObjects.JsVoid("(function(flag){if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
 
   def invisible(self):
     """

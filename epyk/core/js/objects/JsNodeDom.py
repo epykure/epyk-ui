@@ -1492,6 +1492,18 @@ class JsDoms(JsObject.JsObject):
     self.css("transition-property", "initial")
     return self
 
+  def invisible(self):
+    """
+    Description:
+    ------------
+    Component not visible by setting the CSS property visibility to hidden.
+
+    Usage:
+
+      input.dom.invisible()
+    """
+    return self.css("visibility", "hidden")
+
   def hide(self):
     """
     Description:

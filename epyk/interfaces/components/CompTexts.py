@@ -668,6 +668,7 @@ class Texts(object):
     text = self.context.rptObj.py.encode_html(text)
     html_title = html.HtmlText.Title(self.context.rptObj, text, level, name, contents, color, picture, icon,
                                      marginTop, htmlCode, width, height, align, dflt_options, profile)
+    html_title.style.css.text_transform = "uppercase"
     return html_title
 
   def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, options=None, profile=None):

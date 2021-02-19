@@ -32,7 +32,10 @@ class ClassButton(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).basic()
+      if self.htmlObj.name == 'button' and self.htmlObj.options.category in ["delete"]:
+        self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).reset()
+      else:
+        self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).basic()
     return self._css_class
 
 

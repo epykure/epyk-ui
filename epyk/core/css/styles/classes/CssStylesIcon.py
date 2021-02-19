@@ -11,8 +11,8 @@ class CssIcon(CssStyle.Style):
   _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.success[1]})
-    self.hover.css({"color": self.rptObj.theme.colors[-1]})
+    self.css({"color": self.rptObj.theme.colors[-1]})
+    self.hover.css({"color": self.rptObj.theme.success[1]})
 
 
 class CssStdIcon(CssStyle.Style):

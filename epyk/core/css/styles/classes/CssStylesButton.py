@@ -18,7 +18,7 @@ class CssButtonBasic(CssStyle.Style):
   def customize(self):
     self.css({'border': '1px solid %s' % self.rptObj.theme.greys[4], 'color': 'inherit',
               'background-color': self.rptObj.theme.greys[0]})
-    self.hover.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]}, important=True)
+    self.hover.css({'background-color': self.rptObj.theme.colors[-1], 'color': "white"}, important=True)
     self.disabled.css({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[6],
                        'font-style': 'italic'})
 
@@ -45,11 +45,12 @@ class CssButtonReset(CssStyle.Style):
   _attrs = {'font-weight': 'bold', 'padding': '5px 10px 5px 10px', 'margin-top': '5px', 'text-decoration': 'none',
             'border-radius': '5px', 'display': 'inline-block', 'text-transform': 'uppercase'}
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
+  _focus = {'outline': 0}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.danger[1], 'color': self.rptObj.theme.danger[1],
-              'background-color': self.rptObj.theme.greys[0]})
-    self.hover.css({'background-color': self.rptObj.theme.danger[1], 'color': self.rptObj.theme.greys[0]})
+    self.css({'border': '1px solid %s' % self.rptObj.theme.danger[-1], 'color': self.rptObj.theme.danger[-1],
+              'background-color': "white"})
+    self.hover.css({'background-color': self.rptObj.theme.danger[-1], 'color': "white"})
 
 
 class CssButtonSuccess(CssStyle.Style):

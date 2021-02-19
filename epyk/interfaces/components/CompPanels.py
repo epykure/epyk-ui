@@ -89,6 +89,53 @@ class Panels(object):
     html_tabs.style.css.white_space = "nowrap"
     return html_tabs
 
+  def boxes(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", htmlCode=None, helper=None,
+            options=None, profile=False):
+    """
+    Description:
+    ------------
+    Python wrapper to the Bootstrap rectangle boxes interface.
+
+    Usage:
+    -----
+
+      tab = page.ui.panels.boxes()
+      for i in range(5):
+        tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Tabs`
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/4.0/components/navs/
+
+    Attributes:
+    ----------
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                                'color': self.context.rptObj.theme.greys[-1]}}
+    if options is not None:
+      dflt_options.update(options)
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.colors[-1]}
+    html_tabs.style.css.overflow_x = "auto"
+    html_tabs.tabs_container.style.css.text_align = align
+    html_tabs.tabs_container.style.css.border_bottom = "1px solid %s" % html_tabs._report.theme.colors[-1]
+    html_tabs.style.css.white_space = "nowrap"
+    return html_tabs
+
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:

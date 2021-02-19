@@ -1676,7 +1676,7 @@ class Form(Html.Html):
 class Modal(Html.Html):
   name = 'Modal Popup'
 
-  def __init__(self, report, htmlObjs, header, footer, submit, helper):
+  def __init__(self, report, components, header, footer, submit, helper):
     """
     Description:
     -----------
@@ -1716,8 +1716,8 @@ class Modal(Html.Html):
     self.col.options.managed = False
     self.val.append(self.col)
     self.__outOfScopeClose = True
-    for htmlObj in htmlObjs:
-      self.__add__(htmlObj)
+    for component in components:
+      self.__add__(component)
 
   @property
   def outOfScopeClose(self):

@@ -1,5 +1,6 @@
 
 from epyk.core import html
+from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 
 
@@ -381,6 +382,9 @@ class Inputs(object):
     html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
     html_input.style.css.text_align = "left"
     html_input.style.css.padding_left = 5
+    # Take into account the padding left in the width size.
+    # TODO: Think about a more flexible way to do this.
+    html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
     return html_input
 
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):

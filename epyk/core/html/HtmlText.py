@@ -685,12 +685,12 @@ class Title(Html.Html):
   def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
                height, align, options, profile):
 
-    cssStyles = re.search(" css\{(.*)\}", text)
-    if cssStyles is not None:
-      text = text.replace(cssStyles.group(0), '')
-      for cssAttr in cssStyles.group(1).split(","):
-        cssKey, cssVal = cssAttr.split(":")
-        options[cssKey.strip()] = cssVal.strip()
+    css_styles = re.search(" css\{(.*)\}", text)
+    if css_styles is not None:
+      text = text.replace(css_styles.group(0), '')
+      for cssAttr in css_styles.group(1).split(","):
+        css_key, css_val = cssAttr.split(":")
+        options[css_key.strip()] = css_val.strip()
     super(Title, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptText.OptionsTitle(self, options)
     self._name, self.level, self.picture = name, level, picture
@@ -702,7 +702,7 @@ class Title(Html.Html):
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop, 'font-size': Default_css.font({1: 8, 2: 6, 3: 4, 4: 2}[level])})
     else:
       self.style.add_classes.text.title()
-      self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': Default_css.font(6)})
+      self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': Default_css.font(5)})
     if align == 'center':
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': 'center'})
     elif align is not None:
@@ -971,7 +971,7 @@ class Highlights(Html.Html):
   def __init__(self, report, text, title, icon, type, color, width, height, htmlCode, helper, options, profile):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
-    self.color = color if color is not None else self._report.theme.greys[9]
+    self.color = color if color is not None else self._report.theme.greys[-1]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0}, options={'content_table': False})
     self.add_icon(icon, {"float": "left", 'padding-top': '3px', "color": 'inherit'}, htmlCode=self.htmlCode, family=options.get("icon_family"))

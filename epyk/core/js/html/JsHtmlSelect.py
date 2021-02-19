@@ -187,6 +187,30 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("(function(){var result = []; %s.find('option').each(function(i, dom){result.push(dom.innerText)}); return result})()" % self.jquery.varId)
 
+  def hide(self):
+    """
+    Description:
+    ------------
+    Hide the select component.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/#selectpickerhide
+    """
+    return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self.jquery.varId)
+
+  def show(self):
+    """
+    Description:
+    ------------
+    Show the select component.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/#selectpickershow
+    """
+    return JsObjects.JsObjects.get("%s.selectpicker('show')" % self.jquery.varId)
+
 
 class Radio(JsHtml.JsHtmlRich):
 

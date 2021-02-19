@@ -319,7 +319,7 @@ class Menus(object):
         items = self.context.rptObj.ui.list()
         for child in k.get("children", []):
           if isinstance(child, dict):
-            if not 'target' in child:
+            if 'target' not in child:
               child['options'] = {'target': dflt_options['target']}
             else:
               child['options'] = {'target': child['target']}

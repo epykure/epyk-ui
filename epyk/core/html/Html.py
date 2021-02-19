@@ -910,7 +910,7 @@ class Html(object):
     :rtype: KeyCodes.KeyCode
     """
     if self._browser_data.get('keys', {}).get('keypress') is None:
-      self._browser_data['keys']['keypress'] = keypress = KeyCodes.KeyCode(component=self)
+      self._browser_data['keys']['keypress'] = KeyCodes.KeyCode(component=self)
     return self._browser_data['keys']['keypress']
 
   @property
@@ -1896,28 +1896,34 @@ class Body(Html):
     self.style.css.background_repeat = "no-repeat"
     self.style.css.background_color = self._report.theme.colors[2]
 
-  def loading(self, status=True):
+  def loading(self, status=True, z_index=500):
     """
     Description:
     -----------
+    Display a loading page.
 
     Usage:
     -----
 
+    page.body.loading(),
+    ...
+    page.body.loading(False)
+
     Attributes:
     ----------
     :param status: Boolean. Optional. A flag to specify the status of the loading event.
+    :param z_index: Integer. Optional. Specifies the stack order of an element.
     """
     if status:
       return ''' 
         if (typeof window['popup_loading_body'] === 'undefined'){
           window['popup_loading_body'] = document.createElement("div"); 
-          window['popup_loading_body'].style.width = '100%'; window['popup_loading_body'].style.height = '100%'; window['popup_loading_body'].style.opacity = 0.3;
-          window['popup_loading_body'].style.position = 'fixed'; window['popup_loading_body'].style.top = 0; window['popup_loading_body'].style.left = 0; window['popup_loading_body'].style.zIndex = 410;
+          window['popup_loading_body'].style.width = '100%%'; window['popup_loading_body'].style.height = '100%%'; window['popup_loading_body'].style.opacity = 0.3;
+          window['popup_loading_body'].style.position = 'fixed'; window['popup_loading_body'].style.top = 0; window['popup_loading_body'].style.left = 0; window['popup_loading_body'].style.zIndex = %s;
           window['popup_loading_body'].style.background = 'green'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
           window['popup_loading_body'].innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
           document.body.appendChild(window['popup_loading_body'])
-        } '''
+        } ''' % z_index
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
@@ -1925,7 +1931,7 @@ class Body(Html):
     """
     Description:
     ------------
-    Add an extra layer
+    Add an extra layer.
 
     Usage:
     -----

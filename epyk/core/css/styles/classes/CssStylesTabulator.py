@@ -7,9 +7,7 @@ from epyk.core.css import Defaults as Defaults_css
 class CssTabulator(CssStyle.Style):
 
   def customize(self):
-    self.css({'border': '1px solid %s !IMPORTANT' % self.rptObj.theme.greys[3],
-              #'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
-              'background-color': self.rptObj.theme.greys[0], 'font-family': Defaults_css.Font.family})
+    self.css({'background-color': self.rptObj.theme.greys[0], 'font-family': Defaults_css.Font.family})
 
 
 class CssTabulatorFooter(CssStyle.Style):
@@ -59,16 +57,18 @@ class CssTabulatorCol(CssStyle.Style):
   classname = 'tabulator-col'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': '1px solid %s' % self.rptObj.theme.greys[2],
-              'background': self.rptObj.theme.greys[2], 'padding': '1px 0', "text-align": 'center'}, important=True)
+    self.css({'color': self.rptObj.body.style.globals.table.header_color,
+              'border': '1px solid %s' % self.rptObj.body.style.globals.table.header_background,
+              'background': self.rptObj.body.style.globals.table.header_background, 'padding': '1px 0', "text-align": 'center'}, important=True)
 
 
 class CssTabulatorColContent(CssStyle.Style):
   classname = 'tabulator-col-content'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': '1px solid %s' % self.rptObj.theme.greys[2],
-              'background': self.rptObj.theme.greys[2]})
+    self.css({'color': self.rptObj.body.style.globals.table.header_color,
+              'border': '1px solid %s' % self.rptObj.body.style.globals.table.header_background,
+              'background': self.rptObj.body.style.globals.table.header_background})
 
 
 class CssTabulatorMenu(CssStyle.Style):

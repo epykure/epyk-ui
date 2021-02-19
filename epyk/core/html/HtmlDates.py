@@ -27,7 +27,7 @@ class DatePicker(Html.Html):
     self.prepend_child(self.input)
     if not self.input.options.inline:
       self.add_icon(icon, htmlCode=self.htmlCode, css={"margin-top": '-4px', "margin-left": '5px',
-                                                       'color': self._report.theme.success[1]},
+                                                       'color': self._report.theme.colors[-1]},
                     position="after", family=options.get("icon_family"))
     else:
       self.icon = None

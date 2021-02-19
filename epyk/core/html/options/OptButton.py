@@ -6,6 +6,27 @@ from epyk.core.html.options import Options
 
 
 class OptionsButton(Options):
+  component_properties = ("category", )
+
+  @property
+  def category(self):
+    """
+    Description:
+    ------------
+    Button category to specify the style.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :prop value: String. The category of button.
+    """
+    return self.get("validate")
+
+  @category.setter
+  def category(self, value):
+    self.set(value)
 
   @property
   def multiple(self):

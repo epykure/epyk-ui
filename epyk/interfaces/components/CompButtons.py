@@ -458,9 +458,59 @@ class Buttons(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
+    options = options or {}
+    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options)
-    return html_but
+    return component
+
+  @html.Html.css_skin()
+  def run(self, text="", width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None,
+               options=None):
+    """
+    Description:
+    -----------
+    Add a run button with a predefined icon from font awesome.
+
+    Usage:
+    -----
+
+      page.ui.buttons.run()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
+    Attributes:
+    ----------
+    :param text: Optional. The value to be displayed to the button.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-play', width, height,
+                                       htmlCode=htmlCode,
+                                       tooltip=tooltip, profile=profile, options=options)
+
+    if align == "center":
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
+    return component
 
   @html.Html.css_skin()
   def remove(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None,
@@ -500,9 +550,57 @@ class Buttons(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options)
-    return html_but
+    dflt_options = {"category": "delete"}
+    if options is not None:
+      dflt_options.update(options)
+    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', width, height, htmlCode=htmlCode,
+                                       tooltip=tooltip, profile=profile, options=dflt_options)
+    return component
+
+  @html.Html.css_skin()
+  def cancel(self, text="Cancel", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None,
+             options=None):
+    """
+    Description:
+    -----------
+    Button with cross icon.
+
+    Usage:
+    -----
+
+      page.ui.buttons.remove()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"category": "delete"}
+    if options is not None:
+      dflt_options.update(options)
+    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-window-close', width, height, htmlCode=htmlCode,
+                                       tooltip=tooltip, profile=profile, options=dflt_options)
+    return component
 
   @html.Html.css_skin()
   def phone(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):

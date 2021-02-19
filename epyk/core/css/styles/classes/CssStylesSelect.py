@@ -83,7 +83,7 @@ class CssSelectOptionSelected(CssStyle.Style):
   classname = "selected"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.colors[4], "color": self.rptObj.theme.colors[-1]}, important=True)
+    self.css({'background': self.rptObj.theme.colors[-1], "color": self.rptObj.theme.greys[0]}, important=True)
 
 
 class CssSelectFilterOption(CssStyle.Style):

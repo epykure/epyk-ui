@@ -4,6 +4,59 @@ from epyk.core.data.DataClass import DataClass, DataEnum
 from epyk.core.js.primitives import JsObjects
 
 
+class EnumDisplays(DataEnum):
+  js_conversion = True
+
+  def withoutZeros(self):
+    """
+    Description:
+    ------------
+    Do not display the label for series with zero values.
+
+    Usage:
+    -----
+    """
+    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] !== 0}"))
+
+  def aboveThreshold(self, value, included=True):
+    """
+    Description:
+    ------------
+    Display only the labels above a specific threshold.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param value: Float. The threshold value.
+    :param included: Boolean. Optional. Specify if the value should be included.
+    """
+    if included:
+      return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] >= %s}" % value))
+
+    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] > %s}" % value))
+
+  def belowThreshold(self, value, included=True):
+    """
+    Description:
+    ------------
+    Display only the labels below a specific threshold.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param value: Float. The threshold value.
+    :param included: Boolean. Optional. Specify if the value should be included.
+    """
+    if included:
+      return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] <= %s}" % value))
+
+    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] < %s}" % value))
+
+
 class EnumFormatters(DataEnum):
 
   js_conversion = True
@@ -196,6 +249,10 @@ class Datalabels(DataClass):
   @color.setter
   def color(self, color):
     self.set(color)
+
+  @property
+  def displays(self):
+    return self.sub_data("display", EnumDisplays)
 
   @property
   def formatters(self):

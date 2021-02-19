@@ -51,6 +51,20 @@ class KeyCode(object):
     self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(js_funcs)
     self.__events_per_source[source_event][tag]['profile'] = profile
 
+  def any(self, js_funcs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+    Trigger event for any keycodes.
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source component for the event
+    """
+    self.custom("true", js_funcs, profile, source_event)
+
   def enter(self, js_funcs, profile=False, reset=False, source_event=None):
     """
     Description:
