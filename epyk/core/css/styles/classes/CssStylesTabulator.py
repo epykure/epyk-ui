@@ -58,7 +58,7 @@ class CssTabulatorCol(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.body.style.globals.table.header_color,
-              'border': '1px solid %s' % self.rptObj.body.style.globals.table.header_background,
+              'border': self.rptObj.body.style.globals.table.header_border,
               'background': self.rptObj.body.style.globals.table.header_background, 'padding': '1px 0', "text-align": 'center'}, important=True)
 
 
