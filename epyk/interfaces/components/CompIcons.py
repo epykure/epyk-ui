@@ -160,7 +160,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-clock', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-clock', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, options=None, profile=None):
@@ -182,7 +182,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-caret-right', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-caret-right', text, tooltip, position, width, height, htmlCode, options, profile)
     components.icon.style.css.font_factor(10)
     return components
 
@@ -206,7 +206,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, htmlCode, options, profile)
     components.icon.style.css.font_factor(10)
     return components
 
@@ -230,7 +230,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-search-minus', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-search-minus', text, tooltip, position, width, height, htmlCode, options, profile)
     components.style.css.color = self.context.rptObj.theme.greys[-6]
     return components
 
@@ -255,7 +255,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, options, profile)
     components.style.css.color = self.context.rptObj.theme.greys[-6]
     return components
 
@@ -279,7 +279,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-exclamation-triangle', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-exclamation-triangle', text, tooltip, position, width, height, htmlCode, options, profile)
     components.style.css.color = self.context.rptObj.theme.warning[1]
     return components
 
@@ -303,8 +303,55 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-stop-circle', text, tooltip, position, width, height, htmlCode, profile)
+    components = self.awesome('fas fa-stop-circle', text, tooltip, position, width, height, htmlCode, options, profile)
     components.style.css.color = self.context.rptObj.theme.danger[1]
+    return components
+
+  def error(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome('fas fa-exclamation-triangle', text, tooltip, position, width, height, htmlCode, options, profile)
+    components.style.css.color = self.context.rptObj.theme.danger[1]
+    return components
+
+  def info(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome('fas fa-question-circle', text, tooltip, position, width, height, htmlCode, options, profile)
     return components
 
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
@@ -328,7 +375,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome("fas fa-save", text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome("fas fa-save", text, tooltip, position, width, height, htmlCode, options, profile)
 
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, options=None, profile=None):
@@ -359,7 +406,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-sync-alt', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-sync-alt', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
           htmlCode=None, options=None, profile=None):
@@ -389,7 +436,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('far fa-file-pdf', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-pdf', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
            htmlCode=None, options=None, profile=None):
@@ -419,7 +466,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-plus-square', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-plus-square', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, options=None, profile=None):
@@ -449,7 +496,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('far fa-file-excel', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-excel', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, options=None, profile=None):
@@ -479,7 +526,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-download', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-download', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def delete(self, text=None, position=None, align='left', tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), htmlCode=None, options=None, profile=None):
@@ -509,7 +556,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
+    component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
@@ -543,7 +590,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, options=None, profile=None):
@@ -573,7 +620,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-clipboard', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('far fa-clipboard', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, options=None, profile=None):
@@ -603,7 +650,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
+    component = self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     return component
@@ -637,7 +684,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, htmlCode, profile)
+    component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, htmlCode, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
@@ -670,7 +717,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-table', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-table', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, options=None, profile=None):
@@ -700,7 +747,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-wrench', text, tooltip, position, width, height, htmlCode, profile)
+    return self.awesome('fas fa-wrench', text, tooltip, position, width, height, htmlCode, options, profile)
 
   def rss(self, text="RSS", position=None, align="left", tooltip="", width=('auto', ''), height=(25, 'px'),
              htmlCode=None, options=None, profile=None):
@@ -731,7 +778,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, htmlCode, profile)
+    icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, htmlCode, options, profile)
     icon.style.css.color = "#cc9547"
     icon.style.css.display = "inline-block"
     icon.icon.style.css.font_size = Defaults_css.font(5)
@@ -771,7 +818,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -806,7 +853,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0078FF', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -841,7 +888,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2'})
     icon.style.add_classes.div.background_hover()
@@ -876,7 +923,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-twitch', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-twitch', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#6441a5', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -911,7 +958,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-instagram-square', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-instagram-square', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -946,7 +993,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -981,7 +1028,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()# addCls("CssDivOnHoverBackgroundLight")
@@ -1016,7 +1063,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-github', text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-github', text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1051,7 +1098,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("fab fa-python", text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome("fab fa-python", text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1086,7 +1133,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("fab fa-stack-overflow", text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome("fab fa-stack-overflow", text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1121,7 +1168,7 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("far fa-envelope", text, tooltip, position, width, width, htmlCode, profile)
+    icon = self.awesome("far fa-envelope", text, tooltip, position, width, width, htmlCode, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
     icon.style.add_classes.div.background_hover()

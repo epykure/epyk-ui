@@ -561,7 +561,7 @@ class Buttons(object):
     return component
 
   @html.Html.css_skin()
-  def cancel(self, text="Cancel", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None,
+  def cancel(self, text="Cancel", width=(None, "%"), height=(None, "px"), htmlCode=None, align="left", tooltip=None, profile=None,
              options=None):
     """
     Description:
@@ -603,6 +603,9 @@ class Buttons(object):
       dflt_options.update(options)
     component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-window-close', width, height, htmlCode=htmlCode,
                                        tooltip=tooltip, profile=profile, options=dflt_options)
+    if align == "center":
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
     return component
 
   @html.Html.css_skin()
