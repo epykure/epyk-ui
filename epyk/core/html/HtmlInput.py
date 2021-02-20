@@ -59,6 +59,24 @@ class Input(Html.Html):
     return self.__options
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Specific Javascript function for the input object.
+
+    Usage:
+    -----
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlField.InputText
+    """
+    if self._js is None:
+      self._js = JsHtmlField.InputText(self, self._report)
+    return self._js
+
+  @property
   def style(self):
     """
     Description:
