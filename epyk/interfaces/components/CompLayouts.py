@@ -93,6 +93,8 @@ class Layouts(object):
 
       https://www.w3schools.com/tags/tag_hr.asp
 
+    Templates:
+
     Attributes:
     ----------
     :param count: Integer. Optional. The number of HR tag to be added.
@@ -123,6 +125,15 @@ class Layouts(object):
     """
     Description:
     ------------
+    Add a styles hr component to underline another component.
+
+    Usage:
+    -----
+
+      page.ui.layouts.underline()
+
+    Templates:
+
 
     Attributes:
     ----------
@@ -142,6 +153,14 @@ class Layouts(object):
     """
     Description:
     ------------
+    Add a styles hr component to lightly underline another component.
+
+    Usage:
+    -----
+
+      page.ui.layouts.accentuate()
+
+    Templates:
 
     Attributes:
     ----------
@@ -184,6 +203,9 @@ class Layouts(object):
       https://getbootstrap.com/docs/4.0/layout/grid/
       https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
+    Templates:
+
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -224,6 +246,8 @@ class Layouts(object):
 
       - :class:`epyk.core.html.HtmlContainer.Row`
 
+    Templates:
+
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/layout/grid/
@@ -263,6 +287,9 @@ class Layouts(object):
 
       - :class:`epyk.core.html.HtmlContainer.Table`
 
+    Templates:
+
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -297,6 +324,8 @@ class Layouts(object):
 
       https://getbootstrap.com/docs/4.0/layout/grid/
 
+    Templates:
+
     Attributes:
     ----------
     :param rows:
@@ -324,6 +353,9 @@ class Layouts(object):
 
     Usage:
     -----
+
+    Templates:
+
 
     Attributes:
     ----------
@@ -405,6 +437,8 @@ class Layouts(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -428,6 +462,8 @@ class Layouts(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -439,7 +475,7 @@ class Layouts(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     html_comp = self.div(components=components, width=width, height=height, align=align, options=options,
-                         profile=profile)
+                         htmlCode=htmlCode, profile=profile)
     self.div(html_comp, align="center")
     return html_comp
 
@@ -447,6 +483,7 @@ class Layouts(object):
     """
     Description:
     ------------
+    Add a generic popup component to the page.
 
     Usage:
     -----
@@ -461,6 +498,8 @@ class Layouts(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_div.asp
+
+    Templates:
 
     Attributes:
     ----------
@@ -481,6 +520,7 @@ class Layouts(object):
     """
     Description:
     ------------
+    Add a iframe component to the page.
 
     Usage:
     -----
@@ -491,9 +531,11 @@ class Layouts(object):
 
       - :class:`epyk.core.html.HtmlContainer.IFrame`
 
+    Templates:
+
     Attributes:
     ----------
-    :param url: String. Optional.
+    :param url: String. Optional. The link to the underlying page.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param helper: String. Optional. A tooltip helper.
@@ -516,6 +558,8 @@ class Layouts(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Dialog`
+
+    Templates:
 
     Attributes:
     ----------
@@ -580,10 +624,12 @@ class Layouts(object):
 
       - :class:`epyk.core.html.HtmlContainer.Form`
 
+    Templates:
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param helper: String. Optional. A tooltip helper
+    :param helper: String. Optional. A tooltip helper.
     """
     form = html.HtmlContainer.Form(self.context.rptObj, components, helper)
     return form
@@ -593,7 +639,7 @@ class Layouts(object):
     Description:
     ------------
     The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
-    It may contain some heading elements but also a logo, a search form, an author name, and other elements
+    It may contain some heading elements but also a logo, a search form, an author name, and other elements.
 
     Usage:
     -----
@@ -607,7 +653,9 @@ class Layouts(object):
 
     Related Pages:
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+
+    Templates:
 
     Attributes:
     ----------
@@ -643,7 +691,9 @@ class Layouts(object):
 
     Related Pages:
 
-    https://www.w3schools.com/tags/tag_section.asp
+      https://www.w3schools.com/tags/tag_section.asp
+
+    Templates:
 
     Attributes:
     ----------
@@ -669,6 +719,8 @@ class Layouts(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------
@@ -710,6 +762,8 @@ class Delimiter(object):
     Usage:
     -----
 
+    Templates:
+
     Attributes:
     ----------
     :param count: Integer. Optional. The number of HR tag to be added.
@@ -731,6 +785,8 @@ class Delimiter(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------
@@ -754,6 +810,8 @@ class Delimiter(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------
@@ -779,6 +837,8 @@ class Delimiter(object):
 
     Usage:
     -----
+
+    Templates:
 
     Attributes:
     ----------
