@@ -451,8 +451,8 @@ class Layouts(object):
     Usage:
     -----
 
-      popup = page.popup(page.ui.title('Test'), color="red")
-      popup + page.paragraph('Test')
+      popup = page.ui.layouts.popup(page.ui.title('Test'), color="red")
+      popup.add(page.ui.texts.paragraph('Test'))
 
     Underlying HTML Objects:
 

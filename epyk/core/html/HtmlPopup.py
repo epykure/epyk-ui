@@ -37,6 +37,44 @@ class Popup(Html.Html):
     if not self.options.background and self.options.draggable:
       report.body.onReady([self.window.dom.jquery_ui.draggable()])
 
+  def add(self, component):
+    """
+    Description:
+    ------------
+    Add a component to the popup.
+    If this is a list then they will be added in a row.
+
+    Attributes:
+    ----------
+    :param component: HTML Component | List. The component to be added to the underlying list.
+    """
+    return self.container.add(component)
+
+  def extend(self, components):
+    """
+    Description:
+    ------------
+    Append list of component to the popup.
+
+    Attributes:
+    ----------
+    :param components: HTML Component | List. The component to be added to the underlying list.
+    """
+    return self.container.extend(components)
+
+  def insert(self, n, component):
+    """
+    Description:
+    ------------
+    Insert a component to the popup at a specific place.
+
+    Attributes:
+    ----------
+    :param n: Integer. The position in the popup.
+    :param component: HTML Component | List. The component to be added to the underlying list.
+    """
+    return self.container.insert(n, component)
+
   @property
   def options(self):
     """
