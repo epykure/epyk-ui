@@ -535,17 +535,35 @@ class OptionGrid(Options):
 
 class OptionPopup(Options):
 
+  component_properties = ("z_index", "draggable", "background", "escape")
+
   @property
   def background(self):
     """
     Description:
     ------------
-    Boolean to mention if the popup should have a grey background
+    Boolean to mention if the popup should have a grey background.
     """
     return self.get(True)
 
   @background.setter
   def background(self, bool):
+    self.set(bool)
+
+  @property
+  def draggable(self):
+    """
+    Description:
+    ------------
+    Specify if the popup window is draggable.
+    If True this will set the background flag to False.
+    """
+    return self.get(False)
+
+  @draggable.setter
+  def draggable(self, bool):
+    if bool:
+      self.background = False
     self.set(bool)
 
   @property
@@ -558,6 +576,8 @@ class OptionPopup(Options):
 
   @closure.setter
   def closure(self, icon):
+    if icon:
+      self._report.close = self._report._report.ui.icon(icon)
     self.set(icon)
 
   @property
@@ -573,17 +593,18 @@ class OptionPopup(Options):
     self.set(value)
 
   @property
-  def draggable(self):
+  def escape(self):
     """
     Description:
     ------------
-    Boolean to set the popup draggable.
     """
     return self.get(True)
 
-  @draggable.setter
-  def draggable(self, bool):
-    self.set(bool)
+  @escape.setter
+  def escape(self, flag):
+    if flag:
+      self._report.keyup.escape(self._report.dom.hide().r, source_event="document")
+    self.set(flag)
 
   @property
   def margin(self):
@@ -600,3 +621,15 @@ class OptionPopup(Options):
       self.set("%s%%" % num)
     else:
       self.set(num)
+
+  @property
+  def z_index(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(800)
+
+  @z_index.setter
+  def z_index(self, value):
+    self.set(value)

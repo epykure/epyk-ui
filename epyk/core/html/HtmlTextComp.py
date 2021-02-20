@@ -840,6 +840,7 @@ class Composite(Html.Html):
     if self.options.reset_class and not schema_child.get('class-keep', False):
       new_comp.style.clear()
     if 'class' in schema_child:
+      new_comp.style.clear(True)
       if schema_child['class'] is None:
         new_comp.set_attrs({'class': schema_child['class']})
       else:
@@ -850,7 +851,10 @@ class Composite(Html.Html):
         schema_child['arias']['describedby'] = schema_child['arias']['describedby'] % ref_map
       new_comp.aria.set(schema_child['arias'])
     if 'css' in schema_child:
-      new_comp.css(schema_child['css'], reset=True)
+      if schema_child['css'] is None:
+        new_comp.style.clear_style()
+      else:
+        new_comp.css(schema_child['css'], reset=True)
     if 'attrs' in schema_child:
       if 'data-target' in schema_child['attrs']:
         schema_child['attrs']['data-target'] = schema_child['attrs']['data-target'] % ref_map

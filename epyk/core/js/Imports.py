@@ -1306,11 +1306,11 @@ CSS_IMPORTS = {
   # material design icons
   'material-design-icons': {
     'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons', 'npm_path': 'iconfont'},
-    'modules': [{'script': 'material-icons.css', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
+    'modules': [{'script': 'material-icons.css', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
     'assets': [
-        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://google.github.io/material-design-icons/'},
 
@@ -1616,12 +1616,13 @@ MATERIAL_DESIGN_COMPONENTS = {
   'material-icons': {
     'website': 'https://material.io/resources/icons/?style=baseline',
     'services': [
-      {'type': 'css', 'url': 'https://fonts.googleapis.com/icon', 'values': {'family': 'Material+Icons'}},
+      {'type': 'css', 'url': 'https://fonts.googleapis.com/icon',
+       'values': {'family': 'Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp'}},
     ]
   },
 
   'material-components-web': {
-    'version': '9.0.0',
+    'version': '10.0.0',
     'website': 'https://material.io/components',
     'register': {'alias': 'mdc', 'module': 'material-components-web.min', 'npm': 'mdc'},
     'modules': [
@@ -2733,7 +2734,7 @@ class ImportManager:
     """
     css = []
     # Import hierarchy will rely on the JS_IMPORT definition.
-    css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in CSS_IMPORTS]
+    css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in CSS_IMPORTS or c in _SERVICES]
     for css_alias in css_aliases:
       if excluded is not None and css_alias in excluded:
         continue

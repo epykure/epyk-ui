@@ -238,6 +238,18 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorTreeControlExpand)
 
+  def tabulator_sorter_asc(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorSortAsc)
+
+  def tabulator_sorter_desc(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorSortDesc)
+
+  def tabulator_sorter_none(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorSortNone)
+
   def table_content(self):
     """ """
     return self._set_class(CssStylesDiv.CssDivTableContent)

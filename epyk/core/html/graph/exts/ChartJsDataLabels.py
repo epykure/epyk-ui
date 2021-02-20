@@ -19,7 +19,7 @@ class EnumDisplays(DataEnum):
     """
     return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] !== 0}"))
 
-  def aboveThreshold(self, value, included=True):
+  def aboveThreshold(self, value, included=True, absolute=False):
     """
     Description:
     ------------
@@ -32,13 +32,18 @@ class EnumDisplays(DataEnum):
     ----------
     :param value: Float. The threshold value.
     :param included: Boolean. Optional. Specify if the value should be included.
+    :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
     """
+    if absolute:
+      expr = "Math.abs(context.dataset.data[context.dataIndex])"
+    else:
+      expr = "context.dataset.data[context.dataIndex]"
     if included:
-      return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] >= %s}" % value))
+      return self.set(JsObjects.JsVoid("function(context) {return %s >= %s}" % (expr, value)))
 
-    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] > %s}" % value))
+    return self.set(JsObjects.JsVoid("function(context) {return %s > %s}" % (expr, value)))
 
-  def belowThreshold(self, value, included=True):
+  def belowThreshold(self, value, included=True, absolute=False):
     """
     Description:
     ------------
@@ -51,11 +56,16 @@ class EnumDisplays(DataEnum):
     ----------
     :param value: Float. The threshold value.
     :param included: Boolean. Optional. Specify if the value should be included.
+    :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
     """
+    if absolute:
+      expr = "Math.abs(context.dataset.data[context.dataIndex])"
+    else:
+      expr = "context.dataset.data[context.dataIndex]"
     if included:
-      return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] <= %s}" % value))
+      return self.set(JsObjects.JsVoid("function(context) {return %s <= %s}" % (expr, value)))
 
-    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] < %s}" % value))
+    return self.set(JsObjects.JsVoid("function(context) {return %s < %s}" % (expr, value)))
 
 
 class EnumFormatters(DataEnum):

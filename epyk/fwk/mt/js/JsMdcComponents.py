@@ -984,6 +984,7 @@ class CheckBox(JsMdcHtml):
     bool = JsUtils.jsConvertData(bool, None)
     return "%s.%s = %s" % (self.varName, status, bool)
 
+
 class SnackBar(JsMdcHtml):
   css_class = "mdc-snackbar"
 

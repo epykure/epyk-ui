@@ -172,6 +172,10 @@ class GlobalStyle:
         header_background = self._report.theme.colors[-1]
         header_color = "white"
         header_border = '1px solid white'
+        cell_border_bottom = "1px solid %s" % self._report.theme.colors[4]
+        cell_border_right = None
+        sorter_arrow_selected = self._report.theme.success[1]
+        sorter_arrow = "white"
       self._table = GlobalTable()
     return self._table
 

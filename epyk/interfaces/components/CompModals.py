@@ -130,3 +130,90 @@ class Modals(object):
     html_pr = html.HtmlEvent.Dialog(self.context.rptObj, text, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
     return html_pr
+
+  def validation(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+      popup = page.popup(page.ui.title('Test'), color="red")
+      popup + page.paragraph('Test')
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlPopup.Popup`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_div.asp
+
+    Attributes:
+    ----------
+    :param components: List. The different HTML objects to be added to the component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
+    if options is not None:
+      dfl_options.update(options)
+    if not isinstance(components, list):
+      components = [components]
+    validate = self.context.rptObj.ui.buttons.validate("Validate")
+    cancel = self.context.rptObj.ui.buttons.cancel()
+    row = self.context.rptObj.ui.row([validate, cancel], position="top", align="center")
+    components.append(row)
+
+    popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    popup.validate = validate
+    popup.cancel = cancel
+    cancel.click([popup.dom.hide()])
+    return popup
+
+  def acknowledge(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+      popup = page.popup(page.ui.title('Test'), color="red")
+      popup + page.paragraph('Test')
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlPopup.Popup`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_div.asp
+
+    Attributes:
+    ----------
+    :param components: List. The different HTML objects to be added to the component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {'margin': 10, 'closure': False, 'top': 100, 'escape': False}
+    if options is not None:
+      dfl_options.update(options)
+    if not isinstance(components, list):
+      components = [components]
+    acknowledgement = self.context.rptObj.ui.button("Ok", align="center")
+    components.append(acknowledgement)
+
+    popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    popup.acknowledgement = acknowledgement
+    acknowledgement.click([popup.dom.hide()])
+    return popup

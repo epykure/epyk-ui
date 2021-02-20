@@ -182,6 +182,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer, self._css_tabulator_menu_item = 4 * [None]
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp, self._css_tabulator_menu = 4 * [None]
     self._css_tabulator_even_row_no_strip, self._css_tabulator_editing, self._css_tabulator_cell_editing = 3 * [None]
+    self._css_sorter_asc, self._css_sorter_desc, self._css_sorter_none = 3 * [None]
     self.__strip = False
     self.classList['main'].add(self.cls_tabulator)
     self.classList['other'].add(self.cls_tabulator_row)
@@ -201,11 +202,13 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_tabulator_menu_item)
     self.classList['other'].add(self.cls_tabulator_editing)
     self.classList['other'].add(self.cls_tabulator_cell_editing)
+    self.classList['other'].add(self.cls_sorter_asc)
+    self.classList['other'].add(self.cls_sorter_desc)
+    self.classList['other'].add(self.cls_sorter_none)
 
   def strip(self):
     self.__strip = True
     self.classList['main'].add(self.cls_tabulator_even_row)
-
 
   @property
   def cls_tabulator(self):
@@ -217,6 +220,39 @@ class Tabulator(GrpCls.ClassHtml):
       self._css_tabulator = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
                                                                   self.classList['main']).tabulator()
     return self._css_tabulator
+
+  @property
+  def cls_sorter_asc(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_sorter_asc is None:
+      self._css_sorter_asc = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                              self.classList['main']).tabulator_sorter_asc()
+    return self._css_sorter_asc
+
+  @property
+  def cls_sorter_desc(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_sorter_desc is None:
+      self._css_sorter_desc = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                               self.classList['main']).tabulator_sorter_desc()
+    return self._css_sorter_desc
+
+  @property
+  def cls_sorter_none(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_sorter_none is None:
+      self._css_sorter_none = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                self.classList['main']).tabulator_sorter_none()
+    return self._css_sorter_none
 
   @property
   def cls_tabulator_row(self):

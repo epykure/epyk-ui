@@ -472,11 +472,9 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"background": True, 'draggable': False, 'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
+    dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
     if options is not None:
       dfl_options.update(options)
-    if not dfl_options["background"] and width[0] == 100:
-      width = (None, '%')
     return html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
 
   def iframe(self, url="", width=(100, "%"), height=(100, "%"), helper=None, profile=None):

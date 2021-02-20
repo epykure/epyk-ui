@@ -59,7 +59,8 @@ class CssTabulatorCol(CssStyle.Style):
   def customize(self):
     self.css({'color': self.rptObj.body.style.globals.table.header_color,
               'border': self.rptObj.body.style.globals.table.header_border,
-              'background': self.rptObj.body.style.globals.table.header_background, 'padding': '1px 0', "text-align": 'center'}, important=True)
+              'background': self.rptObj.body.style.globals.table.header_background, 'padding': '1px 0',
+              "text-align": 'center'}, important=True)
 
 
 class CssTabulatorColContent(CssStyle.Style):
@@ -135,7 +136,6 @@ class CssTabulatorRow(CssStyle.Style):
 
   def customize(self):
     self.hover.css({'color': self.rptObj.theme.greys[-1],
-                    #"padding": 0, "margin": 0,
                     'border-bottom': "1px solid %s" % self.rptObj.theme.colors[1],
                     'border-top': "1px solid %s" % self.rptObj.theme.colors[1],
                     'background-color': self.rptObj.theme.colors[1]
@@ -147,7 +147,11 @@ class CssTabulatorCell(CssStyle.Style):
   classname = 'tabulator-cell'
 
   def customize(self):
-    self.css({"margin": 0, "padding": "0 4px", 'border-right': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
+    self.css({
+      'padding': 0,
+      'border-right': self.rptObj.body.style.globals.table.cell_border_right,
+      'border-bottom': self.rptObj.body.style.globals.table.cell_border_bottom #% self.rptObj.theme.greys[3]
+              }, important=True)
 
 
 class CssTabulatorTreeControl(CssStyle.Style):
@@ -162,3 +166,24 @@ class CssTabulatorTreeControlExpand(CssStyle.Style):
 
   def customize(self):
     self.css({'background': self.rptObj.theme.greys[-1]}, important=True)
+
+
+class CssTabulatorSortAsc(CssStyle.Style):
+  classname = 'tabulator-col.tabulator-sortable[aria-sort=asc] .tabulator-arrow'
+
+  def customize(self):
+    self.css({'border-bottom': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow_selected}, important=True)
+
+
+class CssTabulatorSortDesc(CssStyle.Style):
+  classname = 'tabulator-col.tabulator-sortable[aria-sort=desc] .tabulator-arrow'
+
+  def customize(self):
+    self.css({'border-top': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow_selected}, important=True)
+
+
+class CssTabulatorSortNone(CssStyle.Style):
+  classname = 'tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-arrow'
+
+  def customize(self):
+    self.css({'border-bottom': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow}, important=True)

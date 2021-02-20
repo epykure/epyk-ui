@@ -429,18 +429,44 @@ class Div(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    if isinstance(htmlObj, list):
-      htmlObj = self._report.ui.row(htmlObj)
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
+    if isinstance(component, list):
+      component = self._report.ui.row(component)
+    component.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
-      htmlObj.style.css.display = 'inline-block'
-      htmlObj.style.css.font_weight = 900
+      component.style.css.display = 'inline-block'
+      component.style.css.font_weight = 900
     if not isinstance(self.val, list):
       self._vals = [self.val]
-    self.val.append(htmlObj)
-    self.components[htmlObj.htmlCode] = htmlObj
+    if component.htmlCode not in self.components:
+      # Avoid having duplicated entries
+      # This could happen in the __str__ method of the HTML Components (example Popup)
+      self.val.append(component)
+      self.components[component.htmlCode] = component
+    return self
+
+  def insert(self, n, component):
+    """
+    Description:
+    ------------
+    Insert a component to a div.
+
+    Attributes:
+    ----------
+    :param n: Integer. The expected position of the component in the list.
+    :param component: HTML Component | List. The component to be added to the underlying list.
+    """
+    if isinstance(component, list):
+      component = self._report.ui.row(component)
+    component.options.managed = False # Has to be defined here otherwise it is set to late
+    if self.options.inline:
+      component.style.css.display = 'inline-block'
+      component.style.css.font_weight = 900
+    if not isinstance(self.val, list):
+      self._vals = [self.val]
+    self.val.insert(n, component)
+    self.components[component.htmlCode] = component
     return self
 
   def extend(self, components):

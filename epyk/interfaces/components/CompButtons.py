@@ -421,7 +421,7 @@ class Buttons(object):
     return html_button
 
   @html.Html.css_skin()
-  def validate(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None,
+  def validate(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, align="left", tooltip=None, profile=None,
                options=None):
     """
     Description:
@@ -460,7 +460,10 @@ class Buttons(object):
     height = Arguments.size(height, unit="px")
     options = options or {}
     component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
-                                      tooltip=tooltip, profile=profile, options=options)
+                                       tooltip=tooltip, profile=profile, options=options)
+    if align == "center":
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
     return component
 
   @html.Html.css_skin()

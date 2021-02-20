@@ -360,7 +360,7 @@ class ClassHtml(Properties.CssMixin):
     :param suffix:
     """
     key_selector = "_%s" % suffix
-    if not key_selector in self.__css_virtual:
+    if key_selector not in self.__css_virtual:
       self.__css_virtual[key_selector] = {}
     if dflt is not None:
       self.__css_virtual[key_selector].update({key: "attr(%s, %s)" % (name, dflt)})
@@ -422,7 +422,7 @@ class ClassHtml(Properties.CssMixin):
     :param attrs:
     """
     key_selector = "_%s" % suffix
-    if not key_selector in self.__css_virtual:
+    if key_selector not in self.__css_virtual:
       self.__css_virtual[key_selector] = {}
     self.__css_virtual[key_selector].update(attrs)
 
@@ -431,7 +431,7 @@ class ClassHtml(Properties.CssMixin):
     Description:
     -----------
     This will create dynamic CSS class which will not be added to any component.
-    The class definition can then be reused in mutiple components.
+    The class definition can then be reused in multiple components.
 
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
@@ -450,7 +450,7 @@ class ClassHtml(Properties.CssMixin):
       cls_def = {"classname": False, '_selector': selector}
     else:
       cls_def = {"classname": classname}
-    if not '_attrs' in css_attrs and not '_hover' in css_attrs:
+    if '_attrs' not in css_attrs and '_hover' not in css_attrs:
       css_attrs = {"_attrs": css_attrs}
     css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
@@ -463,7 +463,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Clear all the Style, Classes and CSS attrubites for the HTML component.
+    Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
     :return: self to allow the chaining
@@ -478,7 +478,7 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Clear all the inline CSS styles defined for the component.
 
-    :return: self to allow the chaining
+    :return: self to allow the chaining.
     """
     self.htmlObj.attr['css'] = {}
     self.css.attrs = self.htmlObj.attr['css']
@@ -492,7 +492,7 @@ class ClassHtml(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param no_default: Boolean. Remove the default class
+    :param no_default: Boolean. Remove the default class.
 
     :return: self to allow the chaining
     """
@@ -511,7 +511,7 @@ class ClassHtml(Properties.CssMixin):
     """
     Description:
     ------------
-    Clear all the Style, Classes and CSS attrubites for the HTML component.
+    Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
     Set the default style to no margin and no padding.
 
