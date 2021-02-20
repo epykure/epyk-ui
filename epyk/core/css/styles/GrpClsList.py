@@ -54,6 +54,14 @@ class AttrSelect(Attrs):
     self.orign_htmlObj.attr["data-color"] = val
     self.htmlObj.css({"color": val})
 
+  def hide(self):
+    """
+    Description:
+    ------------
+    Hide the select Picker object.
+    """
+    self.orign_htmlObj._report.body.onReady([self.orign_htmlObj.dom.hide()])
+
 
 class ClassSelect(GrpCls.ClassHtml):
 

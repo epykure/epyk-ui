@@ -11,6 +11,9 @@ class CssDivNoMargin(CssStyle.Style):
 class CssDivNoBorder(CssStyle.Style):
   _attrs = {'margin': 0, 'clear': 'both', 'padding': 0, 'border': 0}
 
+  def customize(self):
+    self.focus.css({"outline": '1px solid %s' % self.rptObj.theme.greys[4]})
+
 
 class CssDivBottomBorder(CssStyle.Style):
   def customize(self):

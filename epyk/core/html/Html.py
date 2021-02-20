@@ -1387,6 +1387,35 @@ class Html(object):
       self._report.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, source_event)
 
+  def focusout(self, js_funcs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+    The onfocusout event occurs when the user select an element.
+
+    Usage:
+    -----
+
+      div = page.ui.div()
+      div.focusout([
+        page.js.alert("This is a test")
+      ])
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_onfocusout.asp
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.insert(0, '''if(%(dom)s.contains(event.relatedTarget)) {return ;}; ''' % {"dom": source_event or self.dom.varId})
+    return self.on("focusout", js_funcs, profile, source_event)
+
   def dblclick(self, js_funcs, profile=False, source_event=None, onReady=False):
     """
     Description:
