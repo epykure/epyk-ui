@@ -151,6 +151,10 @@ class Modals(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -204,6 +208,10 @@ class Modals(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -250,6 +258,10 @@ class Modals(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -293,6 +305,10 @@ class Modals(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -327,6 +343,10 @@ class Modals(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_div.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
 
     Attributes:
     ----------
@@ -365,6 +385,10 @@ class Modals(object):
 
       https://www.w3schools.com/tags/tag_div.asp
 
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
+
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
@@ -396,6 +420,10 @@ class Modals(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_div.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
 
     Attributes:
     ----------
@@ -429,6 +457,10 @@ class Modals(object):
     Related Pages:
 
       https://www.w3schools.com/tags/tag_div.asp
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
 
     Attributes:
     ----------
