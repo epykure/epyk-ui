@@ -3,7 +3,6 @@
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
-from epyk.core.js.packages import JsQuery
 
 
 class Popup(Html.Html):
