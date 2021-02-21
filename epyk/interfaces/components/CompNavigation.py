@@ -748,10 +748,11 @@ class Banners(object):
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
+    options = options or {}
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
-    div.style.css.z_index = 401
+    div.style.css.z_index = options.get("z_index", 860)
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"
     div.style.css.text_align = "center"
