@@ -83,8 +83,7 @@ class CssTabulatorMenuItem(CssStyle.Style):
   classname = 'tabulator-menu-item'
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.greys[2], 'color': self.rptObj.theme.greys[-1], 'padding': '2px 10px',
-              'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit)}, important=True)
+    self.css({'background': self.rptObj.theme.greys[1], 'color': self.rptObj.theme.greys[-1], 'padding': '2px 10px'}, important=True)
     self.hover.css({'color': self.rptObj.theme.colors[-1]}, important=True)
 
 

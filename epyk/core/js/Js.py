@@ -1080,7 +1080,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    Property to the predefined Javascript functions
+    Property to the predefined Javascript functions.
 
     :rtype: JsFncs.JsRegisteredFunctions
 

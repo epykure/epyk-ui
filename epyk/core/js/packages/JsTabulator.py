@@ -737,6 +737,55 @@ class RowComponent(JsPackage):
     return self.fnc_closure("unfreeze()")
 
 
+class TabRowContextMenu(JsPackage):
+  lib_set_var = False
+
+  def add(self, name, url, icon=None):
+    """
+    Description:
+    ------------
+    Add an item to a table context menu.
+
+    TODO: Improve this interface.
+
+    Usage:
+    -----
+
+      table.js.rowContextMenu.add("Test", "/test")
+
+    Attributes:
+    ----------
+    :param name: String. The name of the item in the context menu.
+    :param url: String. The service URL. (This service will only return a message).
+    :param icon: String. The icon class name.
+    """
+    js_service = self.src.js.fncs.service()
+    if icon is not None:
+      return JsObjects.JsVoid("%s.options.rowContextMenu.push({label: '<i class=\"%s\" style=\"margin-right:5px\"></i>%s', action: function(e, row){var data = {row: row.getData(), label: '%s'}; %s('%s', data)} })" % (self.toStr(), icon, name, name, js_service, url))
+
+    return JsObjects.JsVoid("%s.options.rowContextMenu.push({label: '%s', action: function(e, row){var data = {row: row.getData(), label: '%s'}; %s('%s', data)} })" % (self.toStr(), name, name, js_service, url))
+
+  def fromConfig(self, services):
+    """
+    Description:
+    ------------
+    Extend the context menu of a table from a configuration object.
+
+    Attributes:
+    ----------
+    :param services: List. A list of services to be added to the context menu
+    """
+    js_service = self.src.js.fncs.service()
+    services = JsUtils.jsConvertData(services, None)
+    return JsObjects.JsVoid('''
+      %(menu)s.forEach(function(item){
+        var label = item.label;
+        if(typeof item.icon !== "undefined"){label = '<i class="'+ item.icon +'" style="margin-right:5px"></i>' + label}
+        %(tableId)s.options.rowContextMenu.push({label: label, 
+          action: function(e, row){var data = {row: row.getData(), label: item.label}; %(serviceName)s(item.url, data)} })
+      })''' % {"menu": services, 'tableId': self.toStr(), 'serviceName': js_service})
+
+
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
 
@@ -1403,6 +1452,10 @@ class Tabulator(JsPackage):
     You can retrieve the data stored in the table using the getData function.
     """
     return JsObjects.JsArray.JsArray("%s.getData()" % self.varId)
+
+  @property
+  def rowContextMenu(self):
+    return TabRowContextMenu(self.src, selector=self.varId)
 
 
 class _Export(object):

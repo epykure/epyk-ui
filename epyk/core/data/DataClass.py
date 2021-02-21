@@ -6,7 +6,7 @@ import sys
 from epyk.core.js import JsUtils
 
 
-class DataClass(object):
+class DataClass:
 
   def __init__(self, report, attrs=None, options=None):
     self._report, self.options, self._attrs = report, options, dict(attrs or {})
@@ -199,7 +199,7 @@ class DataClass(object):
     return "{%s}" % ", ".join(result)
 
 
-class DataEnum(object):
+class DataEnum:
 
   dflt = None
   js_conversion = False
@@ -246,13 +246,13 @@ class DataEnum(object):
     return self.__value
 
 
-class DataGroup(object):
+class DataGroup:
 
   def __init__(self, report, attrs, parent=None):
     self._attrs, self._report, self._parent = attrs, report, parent
 
 
-class DataEnumMulti(object):
+class DataEnumMulti:
 
   dflt = None
   js_conversion = False

@@ -11,6 +11,7 @@ import json
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
+from epyk.core.js.statements import JsIf
 
 
 class JQueryUI(JsPackage):
@@ -1010,6 +1011,21 @@ class Autocomplete(JQueryUI):
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.autocomplete("option", "source", %s)' % (self._src.dom.jquery.varId, jsData))
+
+  def if_(self, jsRule, jsFncs):
+    """
+    Description:
+    ------------
+    Generic if statement for an input component.
+
+    Attributes:
+    ----------
+    :param jsRule: String.
+    :param jsFncs: List | String. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return JsIf.JsIf(jsRule, jsFncs)
 
 
 class Datepicker(JQueryUI):

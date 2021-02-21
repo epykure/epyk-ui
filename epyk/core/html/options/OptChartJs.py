@@ -1266,17 +1266,20 @@ class OptionChartJsTooltipsCallbacks(DataClass):
     self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) { return '%s' }" % val)
 
   @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep="."):
+  def labelNumber(self, digit=0, thousand_sep=".", decimal_sep=","):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
+    :param digit: String. Optional. Decimal point separator.
+    :param thousand_sep: String. Optional. thousands separator.
+    :param decimal_sep: String. Optional. Decimal point separator.
     """
-    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return accounting.formatNumber(tooltipItem.yLabel, %s, '%s') }" % (digit, thousand_sep))
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
 
   @packageImport("accounting")
   def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -1286,16 +1289,16 @@ class OptionChartJsTooltipsCallbacks(DataClass):
 
     Attributes:
     ----------
-    :param symbol: String. Optional. Default currency symbol is ''
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
-    :param decimal_sep: String. Optional. Decimal point separator
+    :param symbol: String. Optional. Default currency symbol is ''.
+    :param digit: String. Optional. Decimal point separator.
+    :param thousand_sep: String. Optional. thousands separator.
+    :param decimal_sep: String. Optional. Decimal point separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     self._attrs["label"] = JsObjects.JsVoid(
-      "function(tooltipItem, data) { return accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
+      "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
 
   @property
   def value(self):

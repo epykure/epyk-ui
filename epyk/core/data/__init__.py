@@ -30,6 +30,8 @@ google = DataPy.Google()
 
 datatable = DataPy.Datatable()
 
+tree = DataPy.Tree()
+
 events = DataEvent.DataEvents()
 
 configs = DataEvent.DataConfig()
