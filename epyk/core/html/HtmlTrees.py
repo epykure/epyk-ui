@@ -79,15 +79,30 @@ class Tree(Html.Html):
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
           var span = document.createElement("span"); 
           span.innerHTML = item.value;
+          span.style.whiteSpace = 'nowrap';
+          if (typeof item.tooltip !== "undefined"){span.setAttribute('title', item.tooltip);};
           var badge = document.createElement("span"); 
-          badge.setAttribute("class", "badge badge-pill");
-          badge.innerHTML = item.items.length;
-          badge.style.padding = 0;
-          badge.style.verticalAlign = "top";
-          icon.appendChild(badge);
+          if(options.with_badge){
+            badge.setAttribute("class", "badge badge-pill");
+            badge.innerHTML = item.items.length;
+            badge.style.padding = 0;
+            badge.style.verticalAlign = "top";
+            icon.appendChild(badge);
+          };
           a.appendChild(icon); a.appendChild(span); a.appendChild(ul);
         } else {
           a.innerHTML = item.value;
+          a.style.whiteSpace = 'nowrap';
+          if(item.draggable != false){ 
+            a.setAttribute('draggable', true);
+            if (typeof item._path !== "undefined"){a.setAttribute("data-path", item._path)};
+            if (typeof item.tooltip !== "undefined"){a.setAttribute('title', item.tooltip);};
+            a.style.cursor = 'grab';
+            a.ondragstart = function(event){var value = this.innerHTML; 
+              var file_path = this.getAttribute("data-path");
+              if (file_path === null){event.dataTransfer.setData("text", value)}
+              else{ event.dataTransfer.setData("text", file_path)}}
+          }
           if (typeof item.url !== "undefined"){
             a.setAttribute("target", item.target || "_blank");
             a.href = item.url}
