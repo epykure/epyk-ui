@@ -111,6 +111,63 @@ class Tick(JsHtml.JsHtmlRich):
     return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
 
 
+class SelectOption(JsHtml.JsHtmlRich):
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+    Get the value of the selected option.
+    This will not return the text displayed in the UI.
+    """
+    return self.value()
+
+  def text(self, value=None):
+    """
+    Description:
+    ------------
+    Change the text of the selected option.
+
+    Refresh of the selectPicker object is needed to make the changes visible.
+
+    Attributes:
+    ----------
+    :param value: String. Optional. The value to be set to the option text.
+    """
+    if value is None:
+      return JsObjects.JsVoid("%(varId)s.innerText" % {"varId": self.varId})
+
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsVoid("%(varId)s.innerText = %(value)s" % {"varId": self.varId, "value": value})
+
+  def value(self, value=None):
+    """
+    Description:
+    ------------
+    Set the value tag of the selected items in the selection box.
+    This will not change the display but only the value tag in the selected option.
+
+    Attributes:
+    ----------
+    :param value: String. Optional. The value to be added to the tag.
+    """
+    if value is None:
+      return JsObjects.JsVoid("%(varId)s.getAttribute()" % {"varId": self.varId})
+
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsVoid("%(varId)s.setAttribute('value', %(value)s)" % {"varId": self.varId, "value": value})
+
+  @property
+  def index(self):
+    """
+    Description:
+    ------------
+    Get the index of the selected option.
+    """
+    return JsObjects.JsVoid("%(varId)s.index" % {"varId": self.varId})
+
+
 class DomSelect(JsHtml.JsHtmlRich):
 
   @property
@@ -164,18 +221,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.find('option:selected').index()" % self.jquery.varId)
 
   @property
-  def options_text(self):
-    """
-    Description:
-    ------------
-    Get the selected content from the Select component.
-
-    Usage:
-    -----
-    """
-    return JsObjects.JsObjects.get("%s.text()" % self.jquery.varId)
-
-  @property
   def all(self):
     """
     Description:
@@ -210,6 +255,31 @@ class DomSelect(JsHtml.JsHtmlRich):
       https://developer.snapappointments.com/bootstrap-select/methods/#selectpickershow
     """
     return JsObjects.JsObjects.get("%s.selectpicker('show')" % self.jquery.varId)
+
+  @property
+  def selected(self):
+    """
+    Description:
+    ------------
+    Get the selected option DOM.
+    """
+    select_opt = SelectOption(self._src, report=self._report, setVar=False)
+    select_opt.varName = "%s.querySelector('option:checked')" % self.varId
+    return select_opt
+
+  def option(self, i):
+    """
+    Description:
+    ------------
+    Get a specific option HTML object in the select.
+
+    Attributes:
+    ----------
+    :param i: Integer. The index of the option in the select component.
+    """
+    select_opt = SelectOption(self._src, report=self._report, setVar=False)
+    select_opt.varName = "%s.querySelectorAll('option')[%s]" % (self.varId, i)
+    return select_opt
 
 
 class Radio(JsHtml.JsHtmlRich):

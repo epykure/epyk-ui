@@ -286,6 +286,8 @@ class Links(object):
     html_link.style.css.margin_top = 5
     html_link.style.css.line_height = False
     html_link.style.css.margin_bottom = 5
+    if icon is not None:
+      html_link.icon.style.css.margin_top = -3
     if align == "center":
       html_link.style.css.margin = "auto"
       html_link.style.css.display = "block"

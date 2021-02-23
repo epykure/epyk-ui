@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
 import logging
 
 from epyk.core.py import OrderedSet
 
 
-class Plotly(object):
+class Plotly:
 
   @staticmethod
   def surface(data, y_columns, x_axis, z_axis):
@@ -349,7 +350,7 @@ class Plotly(object):
     return result
 
 
-class Vis(object):
+class Vis:
 
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
@@ -452,7 +453,7 @@ class Vis(object):
     return is_data
 
 
-class ChartJs(object):
+class ChartJs:
 
   @staticmethod
   def copy(records, empty=False):
@@ -610,7 +611,7 @@ class ChartJs(object):
     return is_data
 
 
-class C3(object):
+class C3:
 
   @staticmethod
   def y(data, y_columns, x_axis, options=None):
@@ -644,7 +645,7 @@ class C3(object):
     return is_data
 
 
-class NVD3(object):
+class NVD3:
 
   @staticmethod
   def xy(data, y_columns, x_axis, options=None):
@@ -721,7 +722,7 @@ class NVD3(object):
     return is_data
 
 
-class Datatable(object):
+class Datatable:
 
   @staticmethod
   def table(data, columns, dflt=''):
@@ -745,7 +746,7 @@ class Datatable(object):
     return records
 
 
-class Google(object):
+class Google:
 
   @staticmethod
   def y(data, y_columns, x_axis):
@@ -806,7 +807,7 @@ class Google(object):
     return is_data
 
 
-class HtmlComponents(object):
+class HtmlComponents:
 
   def markdown(self, content, tooltips=None, case_sensitive=False):
     """
@@ -844,3 +845,63 @@ class HtmlComponents(object):
             line = insensitive_replace.sub(tooltip, line)
         new_content.append(line)
     return "\n".join(new_content)
+
+
+class Tree:
+
+  def __add_level(self, path, tree, root, excluded_folders, make_url=None, options=None):
+    """
+    Description:
+    ------------
+    Internal function to do the nesting for the folders definition.
+    This is used in the folder method.
+
+    Attributes:
+    ----------
+    :param path: String. The path.
+    :param tree: List. The current tree pointer.
+    :param root: String. The root path.
+    :param excluded_folders: Tuple. The excluded folders.
+    :param make_url: Function. Optional. A make url function to build this in the leaves.
+    :param options: Dictionary. Optional. All the options added to this function (styles...).
+    """
+    for fp in os.listdir(path):
+      if fp.startswith(".") or fp.startswith("__") or (excluded_folders is not None and fp in excluded_folders):
+        continue
+
+      fp_path = os.path.join(path, fp)
+      if os.path.isdir(fp_path):
+        tree.append({"value": fp, "_path": fp_path, "items": []})
+        if options.get("styles", {}).get("node") is not None:
+          tree[-1]["css"] = options["styles"]["node"]
+        self.__add_level(fp_path, tree[-1]["items"], root, excluded_folders, make_url=make_url, options=options)
+      elif fp.endswith(".py"):
+        tree.append({"value": fp, "_path": fp_path}) # "url": "/code_frame?classpath=%s&script=%s" % (root, fp_path)
+        if options.get("styles", {}).get("leaf") is not None:
+          tree[-1]["css"] = options["styles"]["leaf"]
+        if make_url is not None:
+          tree[-1]["url"] = make_url({"path": fp_path, "root": root, "file": fp})
+
+  def folders(self, path, excluded_folders=None, make_url=None, style_leaf=None, style_node=None):
+    """
+    Description:
+    ------------
+    Get a tree structure from a path.
+    This will get all the files and sub folders.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param path: String. The path.
+    :param excluded_folders: List | Tuple. Optional.
+    :param make_url: Function. Optional.
+    :param style_leaf: Dictionary. Optional. The style to be used for the nodes.
+    :param style_node: Dictionary. Optional. The style to be used for the children.
+    """
+    _, root_folder = os.path.split(path)
+    result = [{"value": root_folder, "items": [], "_path": path}]
+    if path is not None:
+      self.__add_level(path, result[0]["items"], path, excluded_folders, make_url, options={"styles": {"leaf": style_leaf, "node": style_node}})
+    return result

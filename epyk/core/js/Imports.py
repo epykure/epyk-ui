@@ -672,7 +672,7 @@ JS_IMPORTS = {
   # Javascript packages for the PDF transformation width CDN links
   'pdfmake': {
     'website': '',
-    'version': '0.1.68',
+    'version': '0.1.70',
     'modules': [
       {'reqAlias': 'pdfmake', 'node_path': 'build/', 'script': 'pdfmake.min.js', 'path': 'pdfmake/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'reqAlias': 'vfs_fonts', 'node_path': 'build/', 'script': 'vfs_fonts.js', 'path': 'pdfmake/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -682,14 +682,39 @@ JS_IMPORTS = {
     ]
   },
 
+  # The script allows you to take "screenshots" of webpages or parts of it, directly on the users browser.
+  'html2canvas': {
+    'version': '0.4.1',
+    'website': 'https://html2canvas.hertzen.com/',
+    'repository': 'https://github.com/niklasvh/html2canvas',
+    'modules': [
+      {'node_path': 'dist/', 'script': 'html2canvas.min.js', 'path': 'html2canvas/%(version)s/', 'cdnjs': CDNJS_REPO},
+
+    ]
+  },
+
+  # DOMPurify is a DOM-only, super-fast, uber-tolerant XSS sanitizer for HTML, MathML and SVG.
+  'dompurify': {
+    'website': 'https://github.com/cure53/DOMPurify',
+    'repository': 'https://github.com/cure53/DOMPurify',
+    'version': '2.2.6',
+    'modules': [
+      {'node_path': 'dist/', 'script': 'purify.min.js', 'path': 'dompurify/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ]
+  },
+
   # Javascript packages for the PDF transformation width CDN links (Tabulator)
   'jspdf': {
+    'req': [
+      {'alias': 'dompurify'},
+      {'alias': 'html2canvas'},
+    ],
     'website': 'https://github.com/mrrio/jspdf',
     'repository': 'https://github.com/mrrio/jspdf',
-    'version': '2.2.0',
+    'version': '2.3.0',
     'modules': [
-      {'reqAlias': 'jspdf', 'node_path': 'dist/',  'script': 'jspdf.min.js',  'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
-      {'reqAlias': 'autotable', 'script': 'jspdf.plugin.autotable.min.js', 'version': '3.1.1', 'path': 'jspdf-autotable/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'jspdf', 'node_path': 'dist/',  'script': 'jspdf.umd.min.js',  'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'polyfills.umd.min.js', 'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
 
   # Clipboard features width CDN links

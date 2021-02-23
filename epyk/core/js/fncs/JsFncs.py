@@ -430,10 +430,10 @@ class JsRegisteredFunctions(object):
     _props = {}
 
   def __init__(self, src=None):
-    src = src or self.__internal()
-    if 'js' not in src._props:
-      src._props['js'] = {}
-    self._js_src = src._props['js']
+    self.src = src or self.__internal()
+    if 'js' not in self.src._props:
+      self.src._props['js'] = {}
+    self._js_src = self.src._props['js']
 
   def cssStyle(self, params):
     """
@@ -451,6 +451,24 @@ class JsRegisteredFunctions(object):
       'content': 'cssParams = []; for(var i in params){cssParams.push(i +":"+ params[i])}; return cssParams.join(";")',
       'pmt': ["params"]}
     return "cssStyle"
+
+  def service(self):
+    """
+    Description:
+    ------------
+    Create and store a function to do simple services calls and return a temporary message.
+
+    TODO: To be improved and extended.
+    Usage:
+    -----
+
+    """
+    self._js_src.setdefault('functions', {})["serviceCall"] = {
+      'content': self.src.js.post(JsUtils.jsWrap("url"), {"data": JsUtils.jsWrap("data")}).onSuccess([
+        self.src.js.msg.status()
+      ]).toStr(),
+      'pmt': ["url", "data"]}
+    return "serviceCall"
 
   def anonymous(self, jsFnc, pmts=None):
     """

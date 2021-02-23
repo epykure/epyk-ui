@@ -1,9 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-
 from epyk.core import html
+from epyk.core.data import tree as data_tree
 from epyk.interfaces import Arguments
 
 
@@ -38,6 +37,7 @@ class Trees(object):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
@@ -71,10 +71,10 @@ class Trees(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.TreeInput(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlTrees.TreeInput(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
-  def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def menu(self, data=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -101,7 +101,7 @@ class Trees(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
     return html_tree
 
   def dropdown(self, record=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
@@ -146,27 +146,13 @@ class Trees(object):
                                      dftl_options, profile)
     return html_d
 
-  def folder(self, folder, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None,
-           profile=None):
-    data = [
-      {"value": 'ok'}
-    ]
-    excluded_folders = ["outs", "static"]
-
-    def add_level(path, tree):
-      for fp in os.listdir(path):
-        if fp.startswith(".") or fp.startswith("__") or fp in excluded_folders:
-          continue
-
-        fp_path = os.path.join(path, fp)
-        if os.path.isdir(fp_path):
-          tree.append({"value": fp, "items": []})
-          add_level(fp_path, tree[-1]["items"])
-        elif fp.endswith(".py"):
-          tree.append({"value": fp, "url": "/code_frame?classpath=%s&script=%s" % (folder, fp_path)})
-
-    data = []
-    add_level(folder, data)
+  def folder(self, folder=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None,
+             profile=None):
+    options = options or {}
+    if folder is not None:
+      data = data_tree.folders(folder, excluded_folders=options.get("excluded_folders", ["outs", "static"]), make_url=options.get("make_url"))
+    else:
+      data = []
     tree = self.tree(data, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
     if height[0] is not None:
       tree.style.css.overflow = "auto"

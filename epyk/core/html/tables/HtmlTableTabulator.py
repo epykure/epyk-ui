@@ -617,21 +617,45 @@ class ColumnsGroup(DataClass):
     return self.sub_data_enum("columns", Column)
 
 
+class EditorAutocomplete(DataGroup):
+
+  def startswith(self, values, showListOnEmpty=True, freetext=True, allowEmpty=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param values:
+    :param showListOnEmpty:
+    :param freetext:
+    :param allowEmpty:
+    """
+    showListOnEmpty = JsUtils.jsConvertData(showListOnEmpty, None)
+    freetext = JsUtils.jsConvertData(freetext, None)
+    allowEmpty = JsUtils.jsConvertData(allowEmpty, None)
+    self._attrs["editorParams"] = JsObjects.JsObjects.get('''{values: %s, searchFunc: function(term, values){ var matches = [];
+if (term == ""){return matches}; values.forEach(function(item){if(item.startsWith(term)){matches.push(item);}});
+return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (values, showListOnEmpty, freetext, allowEmpty))
+    return self
+
+
 class Editor(DataGroup):
 
   def input(self, search=True, elementAttributes=None, **kwargs):
     """
     Description:
     -----------
-    The input editor allows entering of a single line of plain text
+    The input editor allows entering of a single line of plain text.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
-    :param search: use search type input element with clear button
-    :param elementAttributes: set attributes directly on the input element
+    :param search: use search type input element with clear button.
+    :param elementAttributes: set attributes directly on the input element.
     """
     self._attrs["editor"] = 'input'
     self._attrs["editorParams"] = {'search': search}
@@ -645,14 +669,15 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     """
     Description:
     -----------
-    The textarea editor allows entering of multiple lines of plain text
+    The textarea editor allows entering of multiple lines of plain text.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
-    :param verticalNavigation: set attributes directly on the textarea element
+    :param verticalNavigation: set attributes directly on the textarea element.
     :param elementAttributes: determine how use of the up/down arrow keys will affect the editor,
     """
     self._attrs["editor"] = 'textarea'
@@ -667,7 +692,8 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     The number editor allows for numeric entry with a number type input element with increment and decrement buttons.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
@@ -695,7 +721,8 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     The range editor allows for numeric entry with a range type input element.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
@@ -721,7 +748,8 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     The tick editor allows for boolean values using a checkbox type input element.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
@@ -785,16 +813,32 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def autocomplete(self, values, showListOnEmpty=None, freetext=None, allowEmpty=None, searchFunc=None,
-                          listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
-                          verticalNavigation=None, **kwargs):
+  @property
+  def autocompletes(self):
+    """
+    Description:
+    -----------
+    Predefined autocomplete configurations.
+
+    """
+    self._attrs["editor"] = 'autocomplete'
+    return EditorAutocomplete(self._report, self._attrs)
+
+  def autocomplete(self, values, showListOnEmpty=False, freetext=False, allowEmpty=False, searchFunc=None,
+                   listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
+                   verticalNavigation=None, **kwargs):
     """
     Description:
     -----------
     The autocomplete editor allows users to search a list of predefined options passed into the values property of the editorParams option.
 
+    Usage:
+    -----
+
+
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
@@ -810,8 +854,16 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
     """
     self._attrs["editor"] = 'autocomplete'
-    self._attrs["editorParams"] = {k: v for k, v in locals().items() if k != 'self'}
-    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    editorParams = {k: v for k, v in locals().items() if (k != 'self' and v is not None)}
+    editorParams.update(editorParams.pop('kwargs'))
+
+    params = []
+    for k, v in editorParams.items():
+      if k in ("searchFunc", ):
+        params.append("%s: %s" % (k, v))
+      else:
+        params.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    self._attrs["editorParams"] = JsObjects.JsObjects.get("{%s}" % ", ".join(params))
     return self
 
   def custom(self, fncName, fncDef=None):
@@ -1928,7 +1980,14 @@ class RowContextMenu(DataClass):
     """
     Description:
     -----------
-    Add a delete entry to the context menu
+    Add a delete entry to the context menu.
+
+    Attributes:
+    ----------
+    :param label: String. The label to be display.
+    :param url: String. The url of the underlying service.
+    :param icon: String. Optional. The font-awesome icon.
+    :param disabled: Boolean. Optional. The status of the link.
     """
     self._attrs[label] = self._report._report.js.post(url, {"label": label, "data": JsObjects.JsObject.JsObject.get("row.getData()")}).onSuccess([
       self._report._report.js.msg.status()

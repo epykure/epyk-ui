@@ -8,6 +8,7 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.statements import JsIf
 
 
 class JsSelectItem:
@@ -383,6 +384,21 @@ class JSelect(JsPackage):
       else:
         opts.append("%s: %s" % (k, json.dumps(v)))
     return "%s.selectpicker().ajaxSelectPicker({%s})" % (self.jquery.varId, ", ".join(opts))
+
+  def if_(self, jsRule, jsFncs):
+    """
+    Description:
+    ------------
+    Generic if statement for an select component.
+
+    Attributes:
+    ----------
+    :param jsRule: String.
+    :param jsFncs: List | String. Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return JsIf.JsIf(jsRule, jsFncs)
 
   def __str__(self):
     """
