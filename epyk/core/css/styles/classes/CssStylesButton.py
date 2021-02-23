@@ -18,7 +18,7 @@ class CssButtonBasic(CssStyle.Style):
   def customize(self):
     self.css({'border': '1px solid %s' % self.rptObj.theme.greys[4], 'color': 'inherit',
               'background-color': self.rptObj.theme.greys[0]})
-    self.hover.css({'background-color': self.rptObj.theme.colors[1]}, important=True)
+    self.hover.css({'background-color': self.rptObj.theme.colors[1], 'color': self.rptObj.theme.colors[-1]}, important=True)
     self.disabled.css({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[6],
                        'font-style': 'italic'})
 
