@@ -32,7 +32,6 @@ class JsShapes(object):
         var svg = document.createElementNS(svgns, 'svg');
         var defs = document.createElementNS(svgns, 'defs');
         var gradient = document.createElementNS(svgns, 'linearGradient');
-        
         for (var i = 0, length = options.colors[step.status].length; i < length; i++) {
           var stop = document.createElementNS(svgns, 'stop');
           stop.setAttribute('offset', options.colors[step.status][i].offset);
@@ -60,6 +59,18 @@ class JsShapes(object):
           svg.appendChild(line);
         }
         svg.appendChild(defs); svg.appendChild(shape); htmlObj.insertBefore(svg, htmlObj.firstChild);
+        
+        if(typeof step.label !== "undefined"){
+          const number = document.createElementNS(svg.namespaceURI, 'text');
+          number.setAttributeNS(null, 'x', (width/2) +'px');
+          number.setAttributeNS(null, 'y', (height/2) + 5 +'px');
+          number.textContent = step.label;
+          number.setAttributeNS(null, 'text-anchor', 'middle');
+          number.setAttributeNS(null, 'stroke', 'black');
+          number.setAttributeNS(null, 'stroke-width', '1px');
+          svg.appendChild(number);
+        }
+        
         htmlObj.setAttribute('data-status', step.status);
       ''' % {'shape_def': shape_def, 'svgns': Defaults.SVGNS}
 
@@ -107,9 +118,9 @@ class JsShapes(object):
       var shape = document.createElementNS(svgns, 'circle');
       shape.setAttribute('stroke', options.backgrounds[step.status]);
       shape.setAttribute('stroke-width', 1);
-      shape.setAttribute('cx', width / options.circle_factor );
-      shape.setAttribute('cy', height / options.circle_factor );
-      shape.setAttribute('r', height / options.circle_factor );
+      shape.setAttribute('cx', width / options.circle_factor);
+      shape.setAttribute('cy', height / options.circle_factor);
+      shape.setAttribute('r', height / options.circle_factor);
     '''
     return self._svg(shape_def)
 

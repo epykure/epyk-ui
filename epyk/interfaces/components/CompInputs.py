@@ -384,7 +384,7 @@ class Inputs(object):
     html_input.style.css.padding_left = 5
     # Take into account the padding left in the width size.
     # TODO: Think about a more flexible way to do this.
-    html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
+    #html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
     return html_input
 
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -625,6 +625,7 @@ class Inputs(object):
     if options is not None:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, width, height, htmlCode, tooltip, extensible, dflt_options, profile)
+    html_s.style.css.height = Defaults.LINE_HEIGHT + 5
     if align == "center":
       html_s.style.css.margin = "auto"
       html_s.style.css.display = "block"

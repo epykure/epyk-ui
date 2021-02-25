@@ -1033,12 +1033,12 @@ class Row(Html.Html):
   name = 'Column'
   requirements = ('bootstrap', )
 
-  def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
+  def __init__(self, report, components, position, width, height, align, helper, options, profile):
     self.position, self.align = position, align
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionGrid(self, options)
-    if htmlObjs is not None:
-      for htmlObj in htmlObjs:
+    if components is not None:
+      for htmlObj in components:
         self.add(htmlObj)
     self.attr["class"].add('row')
     self.style.css.justify_content = self.position
@@ -1121,7 +1121,7 @@ class Row(Html.Html):
     for i, htmlObj in enumerate(self.val):
       if hasattr(htmlObj, 'set_size') and self.options.autoSize:
         htmlObj.set_size(12.0 / len(self.val))
-      cols.append(htmlObj.html() if hasattr(htmlObj, 'htmlObj') else str(htmlObj))
+      cols.append(htmlObj.html() if hasattr(htmlObj, 'options') else str(htmlObj))
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
 

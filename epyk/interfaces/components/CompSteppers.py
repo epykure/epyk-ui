@@ -103,12 +103,12 @@ class Steppers(object):
     :param color:
     :param options:
     """
-    dft_options = {"shape": 'rectangle'}
+    dft_options = {"shape": 'triangle'}
     if options is not None:
       dft_options.update(options)
     return self.stepper(records, width, height, color, dft_options)
 
-  def vertical(self, records, shape='circle',  width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def vertical(self, records, shape='circle', width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
     ------------

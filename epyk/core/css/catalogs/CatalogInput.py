@@ -141,3 +141,27 @@ class CatalogDate(Catalog.CatalogGroup):
     This will by default change the background of the item
     """
     return self._set_class(CssStylesDates.CssDatesTimePickerState)
+
+  def autocomplete(self):
+    """
+    Description:
+    ------------
+    CSS class to change the style of the Jquery UI autocomplete input box.
+    """
+    return self._set_class(CssStylesInput.CssAutocomplete)
+
+  def autocomplete_menu(self):
+    """
+    Description:
+    ------------
+    CSS class to change the style of the Jquery UI autocomplete dropdown menu.
+    """
+    return self._set_class(CssStylesInput.CssAutocompleteMenu)
+
+  def autocomplete_item_active(self):
+    """
+    Description:
+    ------------
+    CSS class to change the style of the Jquery UI autocomplete active item.
+    """
+    return self._set_class(CssStylesInput.CssAutocompleteItemActive)

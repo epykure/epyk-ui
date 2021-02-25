@@ -95,7 +95,7 @@ class Options(DataClass):
     """
     if group not in self.js_tree:
       self.js_tree[group] = {}
-      self.js_tree[group][name or sys._getframe().f_back.f_code.co_name] = value
+    self.js_tree[group][name or sys._getframe().f_back.f_code.co_name] = value
 
   def _config_sub_data(self, name, clsObj):
     """

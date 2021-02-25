@@ -652,17 +652,29 @@ class OptionAutoComplete(OptionsInput):
   def minLength(self, value):
     self._config(value)
 
-  def position(self, my="center", at="center", of="window"):
+  def position(self, my="left top", at="left bottom", of=None, collision=None):
     """
     Description:
     ------------
-    Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
+    Specifies where the dialog should be displayed when opened.
+    The dialog will handle collisions such that as much of the dialog is visible as possible.
 
     Related Pages:
 
       https://api.jqueryui.com/dialog/#option-position
+      https://api.jqueryui.com/position/
+
+    Attributes:
+    ----------
+    :param my:
+    :param at:
+    :param of:
+    :param collision:
     """
-    self._config({"my": my, "at": at, "of": of})
+    props = {"my": my, "at": at, "collision": collision or "flip"}
+    if of is not None:
+      props["of"] = of
+    self._config(props)
     return self
 
   @property

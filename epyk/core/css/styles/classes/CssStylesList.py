@@ -78,12 +78,14 @@ class CssListItemsBorder(CssStyle.Style):
 
   def customize(self):
     self.css({"border": "1px solid %s" % self.rptObj.theme.greys[0], "padding-left": '5px'})
-    self.hover.css({"border-bottom": "1px solid %s" % self.rptObj.theme.colors[4]})
+    self.hover.css({
+      "border-bottom": "1px solid %s" % self.rptObj.theme.colors[2],
+      "border-top": "1px solid %s" % self.rptObj.theme.colors[2],
+    })
 
 
 class CssListItemsBackground(CssStyle.Style):
-  _attrs = {}
   _selectors = {'child': 'li'}
 
   def customize(self):
-    self.hover.css({"background": self.rptObj.theme.colors[0]})
+    self.hover.css({"background": self.rptObj.theme.colors[0], "color": "%s !IMPORTANT" % self.rptObj.theme.colors[-1]})

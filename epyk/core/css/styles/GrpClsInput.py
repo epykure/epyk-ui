@@ -8,7 +8,10 @@ class ClassInput(GrpCls.ClassHtml):
   @property
   def css(self):
     """
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Description:
+    ------------
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+
     :rtype: AttrInput.AttrInput
     """
     if self._css_struct is None:
@@ -18,8 +21,11 @@ class ClassInput(GrpCls.ClassHtml):
   @property
   def css_class(self):
     """
+    Description:
+    ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
+
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class is None:
@@ -29,8 +35,8 @@ class ClassInput(GrpCls.ClassHtml):
 
 class ClassInputDate(ClassInput):
 
-  def __init__(self, htmlObj):
-    super(ClassInputDate, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(ClassInputDate, self).__init__(component)
     self._css_class_dt, self._css_class_dt_ui, self._css_time_picker_header = None, None, None
     self.classList['main'].add(self.cls_datepicker)
     self.classList['main'].add(self.cls_datepicker_ui)
@@ -39,6 +45,8 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -49,6 +57,8 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker_ui(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -59,6 +69,8 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker_header(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -69,8 +81,8 @@ class ClassInputDate(ClassInput):
 
 class ClassInputTime(ClassInput):
 
-  def __init__(self, htmlObj):
-    super(ClassInputTime, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(ClassInputTime, self).__init__(component)
     self._css_class_tm, self._css_class_tm_it = None, None
     self.classList['main'].add(self.cls_timepicker)
     self.classList['main'].add(self.cls_timepicker_items)
@@ -78,6 +90,8 @@ class ClassInputTime(ClassInput):
   @property
   def cls_timepicker(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -88,6 +102,8 @@ class ClassInputTime(ClassInput):
   @property
   def cls_timepicker_items(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -98,8 +114,8 @@ class ClassInputTime(ClassInput):
 
 class ClassInputRange(GrpCls.ClassHtml):
 
-  def __init__(self, htmlObj):
-    super(ClassInputRange, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(ClassInputRange, self).__init__(component)
     self._css_class_rg, self._css_class_rg_tb = None, None
     self.classList['main'].add(self.cls_range)
     self.classList['main'].add(self.cls_range_thumb)
@@ -107,6 +123,8 @@ class ClassInputRange(GrpCls.ClassHtml):
   @property
   def cls_range(self):
     """
+    Description:
+    ------------
 
     :rtype: Classes.CatalogInput.CatalogInput
     """
@@ -117,9 +135,73 @@ class ClassInputRange(GrpCls.ClassHtml):
   @property
   def cls_range_thumb(self):
     """
+    Description:
+    ------------
 
     :rtype:Classes.CatalogInput.CatalogInput
     """
     if self._css_class_rg_tb is None:
       self._css_class_rg_tb = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).range_thumb()
     return self._css_class_rg_tb
+
+
+class ClassInputAutocomplete(ClassInput):
+
+  def __init__(self, component):
+    super(ClassInputAutocomplete, self).__init__(component)
+    self._css_autocomplete, self._css_menu_item, self._css_class, self._css_item_active = 4 * [None]
+    self.classList['main'].add(self.cls_input)
+    self.classList['main'].add(self.cls_autocomplete)
+    self.classList['main'].add(self.cls_menu_item)
+    self.classList['main'].add(self.cls_item_active)
+
+  @property
+  def cls_autocomplete(self):
+    """
+    Description:
+    ------------
+
+    :rtype: Classes.CatalogInput.CatalogDate
+    """
+    if self._css_autocomplete is None:
+      self._css_autocomplete = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).autocomplete()
+    return self._css_autocomplete
+
+  @property
+  def cls_item_active(self):
+    """
+    Description:
+    ------------
+
+    :rtype: Classes.CatalogInput.CatalogDate
+    """
+    if self._css_item_active is None:
+      self._css_item_active = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).autocomplete_item_active()
+    return self._css_item_active
+
+  @property
+  def cls_menu_item(self):
+    """
+    Description:
+    ------------
+
+    :rtype: Classes.CatalogInput.CatalogDate
+    """
+    if self._css_menu_item is None:
+      self._css_menu_item = Classes.CatalogInput.CatalogDate(self.htmlObj._report,
+                                                                self.classList['main']).autocomplete_menu()
+    return self._css_menu_item
+
+  @property
+  def cls_input(self):
+    """
+    Description:
+    ------------
+    The internal class used to put a custom Style to this object.
+    Only 1 CSS class can be added to an HTML object.
+
+    :rtype: Classes.CatalogInput.CatalogInput
+    """
+    if self._css_class is None:
+      self._css_class = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).basic()
+    return self._css_class

@@ -888,9 +888,9 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, options, profile)
+    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, options or {"font-factor": 8}, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
@@ -966,7 +966,7 @@ class Icons(object):
     return icon
 
   def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="",
-               width=(25, 'px'), htmlCode=None, options=None, profile=None):
+               width=(30, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -993,15 +993,15 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, options, profile)
+    icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, options or {"font-factor": 14}, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
-              width=(25, 'px'), htmlCode=None, options=None, profile=None):
+              width=(30, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -1028,9 +1028,9 @@ class Icons(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, options, profile)
+    icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, options or {"font-factor": 14}, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()# addCls("CssDivOnHoverBackgroundLight")
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon

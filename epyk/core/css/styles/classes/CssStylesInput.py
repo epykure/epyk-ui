@@ -110,3 +110,25 @@ class CssUIMenuActive(CssStyle.Style):
   def customize(self):
     self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
     self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]})
+
+
+class CssAutocomplete(CssStyle.Style):
+  classname = "ui-autocomplete"
+
+  def customize(self):
+    self.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.greys[5]}, important=True)
+
+
+class CssAutocompleteMenu(CssStyle.Style):
+  classname = "ui-menu"
+
+  def customize(self):
+    self.css({'border': self.rptObj.theme.greys[0]}, important=True)
+
+
+class CssAutocompleteItemActive(CssStyle.Style):
+  classname = "ui-menu .ui-state-active"
+
+  def customize(self):
+    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[4], 'background': self.rptObj.theme.colors[7], "color":  self.rptObj.theme.greys[0]}, important=True)
+    #self.css({'border': self.rptObj.theme.greys[0]}, important=True)

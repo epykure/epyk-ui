@@ -234,7 +234,7 @@ class JsItemsDef(object):
     """
     item_def = '''
     var item = document.createElement("div"); var link = document.createElement("a");
-    link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
+    link.style.color = "inherit"; link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
     link.innerHTML = data.text; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
     if(typeof data.icon !== 'undefined'){ 
       var iconItem = document.createElement("i"); iconItem.setAttribute("class", data.icon);

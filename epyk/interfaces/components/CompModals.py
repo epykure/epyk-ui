@@ -230,6 +230,7 @@ class Modals(object):
     validate = self.context.rptObj.ui.buttons.validate("Validate")
     cancel = self.context.rptObj.ui.buttons.cancel()
     row = self.context.rptObj.ui.row([validate, cancel], position="top", align="center")
+    row.options.autoSize = False
     components.append(row)
 
     popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
@@ -482,3 +483,36 @@ class Modals(object):
     popup.build = build_text
     return popup
 
+  def stepper(self, records=None, components=None, shape="arrow", title=None, width=(100, '%'), height=(None, 'px'),
+              options=None, profile=None):
+    """
+
+    :param records:
+    :param components:
+    :param shape:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    if components is not None:
+      if not isinstance(components, list):
+        components = [components]
+    else:
+      components = []
+    stepper = getattr(self.context.rptObj.ui.steppers, shape)(records)
+    stepper.style.css.inline_block()
+    stepper.style.css.margin = "auto"
+    stepper.style.css.width = "auto"
+    stepper.options.line = False
+    components.insert(0, self.context.rptObj.ui.div([stepper], align="center"))
+    if title is not None:
+      title = self.context.rptObj.ui.title(title)
+      components.insert(0, title)
+    popup = self.popup(components=components, width=width, height=height, options=options, profile=profile)
+    popup.title = title
+    popup.window.style.css.min_width = "auto"
+    popup.window.style.css.width = "auto"
+    popup.stepper = stepper
+    return popup

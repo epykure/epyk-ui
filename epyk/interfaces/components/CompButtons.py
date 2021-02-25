@@ -506,13 +506,23 @@ class Buttons(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-play', width, height,
-                                       htmlCode=htmlCode,
+    component = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-play', width, height, htmlCode=htmlCode,
                                        tooltip=tooltip, profile=profile, options=options)
+    if options.get("colored"):
+      component.style.css.background = self.context.rptObj.theme.colors[-1]
+      component.style.css.border = "1px solid %s" %  self.context.rptObj.theme.colors[-1]
+      component.style.css.color = self.context.rptObj.theme.colors[0]
+      component.style.css.margin_top = 5
+      component.style.css.margin_bottom = 5
 
     if align == "center":
       component.style.css.margin = "auto"
       component.style.css.display = "block"
+    else:
+      component.style.css.margin = 0
+      component.style.css.padding = "0 20px"
+      component.style.css.display = "inline-block"
+      component.style.css.line_height = Defaults_html.LINE_HEIGHT
     return component
 
   @html.Html.css_skin()

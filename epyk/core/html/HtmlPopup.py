@@ -21,7 +21,7 @@ class Popup(Html.Html):
     self.window.options.managed = False
     self.window.style.css.padding = 10
     self.window.style.css.border = "3px solid %s" % report.theme.greys[3]
-    self.window.style.css.top = "100px"
+    self.window.style.css.top = "200px"
     self.window.style.css.min_width = "300px"
     self.window.style.css.left = "50%"
     self.window.style.css.transform = "translate(-50%, -50%)"

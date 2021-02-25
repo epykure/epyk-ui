@@ -41,7 +41,7 @@ class Stepper(Html.Html):
   def __init__(self, report, records, width, height, color, options):
     super(Stepper, self).__init__(report, records, css_attrs={"list-style-type": 'none', "width": width})
     self.color = self._report.theme.greys[-1] if color is None else color
-    self.css({'color': self.color, "margin": '0', 'display': 'block'})
+    self.css({'color': self.color, "margin": 0, 'display': 'block', 'padding': 0})
     dflt_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0]-20}, 'circle_factor': 2,
                     'text_style': {'display': 'block', 'text-align': 'center'},
                     'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0', 'pending': '#FF9200'},
@@ -103,7 +103,7 @@ class Stepper(Html.Html):
         div.setAttribute('title', step.tooltip);
         div.setAttribute('name', 'svg_holder');
         
-        for (var key in options.text_style){ span.style[key] = options.text_style[key] }
+        for (var key in options.text_style){span.style[key] = options.text_style[key]}
         span.style.width = width +"px";
 
         div.appendChild(span); li.appendChild(div);

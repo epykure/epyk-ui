@@ -260,7 +260,9 @@ class AutoComplete(Input):
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
 
-  _js__builder__ = "if(typeof data === 'object'){jQuery(htmlObj).autocomplete(Object.assign(data, options))} else{jQuery(htmlObj).autocomplete(options)}"
+  _js__builder__ = ''' console.log(options);
+    if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))} else{%(jqId)s.autocomplete(options)};
+    ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def options(self):
@@ -312,6 +314,22 @@ class AutoComplete(Input):
     if self.options.select:
       js_funcs.append(self.dom.select())
     return self.on("focus", js_funcs, profile, source_event, onReady)
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
+
+    :rtype: GrpClsInput.ClassInputAutocomplete
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsInput.ClassInputAutocomplete(self)
+    return self._styleObj
 
   @property
   def js(self):
@@ -1176,17 +1194,18 @@ class Search(Html.Html):
       self.style.add_classes.layout.search_extension()
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+    self.icon.style.css.z_index = 10
     self.style.css.position = "relative"
     self.style.css.border_bottom_width = options["border"]
     self.style.css.border_bottom_style = "solid"
 
     if options.get("position", 'left') == 'left':
       self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
+      self.icon.css({"margin": '2px 5px 10px 0px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
                      'vertical-align': 'top'})
     else:
       self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '6px 5px 6px 0px', 'cursor': 'pointer', "right": 0,
+      self.icon.css({"margin": '2px 5px 10px 0px', 'cursor': 'pointer', "right": 0,
                      'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
 

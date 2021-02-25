@@ -808,7 +808,17 @@ class Html(object):
     """
     self.input = ""
     if text is not None:
-      self.input = self._report.ui.inputs.input(text, options=options)
+      if options is not None and options.get("autocomplete"):
+        input_options = dict(options)
+        if 'position' in input_options:
+          del input_options['position']
+        del input_options['autocomplete']
+
+        self.input = self._report.ui.inputs.autocomplete(text, width=(100, '%'), options=input_options)
+        self.input.options.appendTo = "#%s" % self.htmlCode
+        self.input.options.position()
+      else:
+        self.input = self._report.ui.inputs.input(text, options=options)
       if position == "before":
         self.prepend_child(self.input)
       else:
