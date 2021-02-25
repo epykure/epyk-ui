@@ -6,13 +6,15 @@ import json
 
 
 RULES = {
-  '\!\[(.*)\]\((.*)\)': {'cls': 'page.ui.img', 'attrs': ["tooltip", "text"], 'pattern': "![%s](%s)"},
-  '\[(.*)\]\((.*)\)': {'cls': 'page.ui.link', 'attrs': ["text", "url"], 'pattern': "[%s](%s)"},
-  '\*\*\((.*)\)\*\*': {'cls': 'page.ui.tags.i', 'attrs': ["text"], 'pattern': "**%s**"},
-  '\_\_\((.*)\)\_\_': {'cls': 'page.ui.tags.b', 'attrs': ["text"], 'pattern': "__%s__"},
-  '^## (.*)(.*)$': {'cls': 'page.ui.subtitle', 'attrs': ["text"], 'pattern': "## %s%s"},
-  '^# (.*)(.*)$': {'cls': 'page.ui.title', 'attrs': ["text"], 'pattern': "# %s%s"},
-  '^___$': {'cls': 'page.ui.layouts.hr', 'attrs': [], 'pattern': "___"},
+  '\!\[(.*)\]\((.*)\)': {'cls': 'ui.img', 'attrs': ["tooltip", "text"], 'pattern': "![%s](%s)"},
+  '\[(.*)\]\((.*)\)': {'cls': 'ui.link', 'attrs': ["text", "url"], 'pattern': "[%s](%s)"},
+  '\*\*(.*)\*\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "**%s**"},
+  '\_\_(.*)\_\_': {'cls': 'ui.tags.b', 'attrs': ["text"], 'pattern': "__%s__"},
+  '^## (.*)$': {'cls': 'ui.subtitle', 'attrs': ["text"], 'pattern': "## %s"},
+  '^=======': {'cls': 'ui.layouts.underline', 'attrs': None, 'pattern': "======="},
+  '^------': {'cls': 'ui.layouts.accentuate', 'attrs': None, 'pattern': "------"},
+  '^# (.*)$': {'cls': 'ui.title', 'attrs': ["text"], 'pattern': "# %s"},
+  '^___$': {'cls': 'ui.layouts.hr', 'attrs': [], 'pattern': "___"},
 }
 
 
@@ -113,46 +115,51 @@ class MarkDown(object):
     """
     Description:
     -----------
+    Convert a string to a markdown file.
 
     Attributes:
     ----------
-    :param data:
-    :param css_attrs:
+    :param data: String. Data to be converted.
+    :param css_attrs: Dictionary. Optional. The CSS Style to be applied to the component.
     """
-    CLS_MAPPING = {
-      '\[(.*)\]\((.*)\)': self.page.ui.link,
-      '^## (.*)(.*)$': self.page.ui.subtitle,
-      '^# (.*)(.*)$': self.page.ui.title,
-    }
-    convert_data = data
-    count, map_objs = 0, {}
-    for r, cls in RULES.items():
-      m = re.findall(r, data, re.MULTILINE)
-      if m is not None:
-        for g in m:
-          attrs = dict(zip(cls['attrs'], g))
-          interface = CLS_MAPPING[r]
-          map_objs["%s_%s" % (interface.__name__, count)] = interface(**attrs)
-          if css_attrs is not None and map_objs["%s_%s" % (interface.__name__, count)].name in css_attrs:
-            map_objs["%s_%s" % (interface.__name__, count)].css(css_attrs[map_objs["%s_%s" % (interface.__name__, count)].name])
-          convert_data = convert_data.replace(cls['pattern'] % g, "||%s_%s||" % (interface.__name__, count))
-          count += 1
-    resolved_data = []
-    for rec in convert_data.split("||"):
-      resolved_data.append(map_objs.get(rec, rec))
-    return resolved_data
+    components, css = [], css_attrs
+    for line in data.split("\n"):
+      if line.startswith("$STYLE|"):
+        css = {}
+        for attr in line.split("|")[-1].strip().split(";"):
+          k, v = attr.split(":")
+          css[k] = v
+        continue
 
+      if line == "$STYLE":
+        css = css_attrs
+        continue
 
-# if __name__ == '__main__':
-#   data = '''
-# ![rgrhr](rhrhr)
-# [rgrhr](rhrhr)
-# # This is a title
-# ___
-# This is a text **with an extra** on this
-#
-# [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
-# '''
-#
-#   trans_data = MarkDown.translate(data)
-#   print(trans_data)
+      for r, cls in RULES.items():
+        m = re.findall(r, line, re.MULTILINE)
+        if m:
+          comp_cls = self.page
+          for sub in cls['cls'].split("."):
+            comp_cls = getattr(comp_cls, sub)
+          attrs = cls['attrs']
+          if attrs is not None:
+            if len(attrs) > 1:
+              attrs = dict(zip(cls['attrs'], m[0]))
+            else:
+              attrs = dict(zip(cls['attrs'], m))
+            components.append(comp_cls(**attrs))
+          else:
+            components.append(comp_cls())
+          if css is not None:
+            components[-1].css(css)
+          break
+
+      else:
+        if line:
+          print(line)
+          components.append(self.page.ui.texts.paragraph(line, options={"markdown": True}))
+          if css_attrs is not None:
+            components[-1].css(css_attrs)
+        else:
+          components.append(self.page.ui.layouts.br())
+    return components

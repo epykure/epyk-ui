@@ -260,7 +260,7 @@ class AutoComplete(Input):
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
 
-  _js__builder__ = ''' console.log(options);
+  _js__builder__ = '''
     if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))} else{%(jqId)s.autocomplete(options)};
     ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 

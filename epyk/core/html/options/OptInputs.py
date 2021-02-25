@@ -652,7 +652,7 @@ class OptionAutoComplete(OptionsInput):
   def minLength(self, value):
     self._config(value)
 
-  def position(self, my="left top", at="left bottom", of=None, collision=None):
+  def position(self, my="left top", at="left bottom", of=None, using=None, within=None, collision=None):
     """
     Description:
     ------------
@@ -666,14 +666,20 @@ class OptionAutoComplete(OptionsInput):
 
     Attributes:
     ----------
-    :param my:
-    :param at:
-    :param of:
-    :param collision:
+    :param my: String. Optional. Defines which position on the element being positioned to align with the target element.
+    :param at: String. Optional. Defines which position on the target element to align the positioned element against.
+    :param of: String. Optional. Which element to position against. If you provide a selector or jQuery object, the first matching element will be used.
+    :param using: String. Optional. When specified, the actual property setting is delegated to this callback. Receives two parameters:
+    :param within: String. Optional. Element to position within, affecting collision detection
+    :param collision: String. Optional. When the positioned element overflows the window in some direction, move it to an alternative position.
     """
     props = {"my": my, "at": at, "collision": collision or "flip"}
     if of is not None:
       props["of"] = of
+    if using is not None:
+      props["using"] = using
+    if within is not None:
+      props["within"] = within
     self._config(props)
     return self
 
