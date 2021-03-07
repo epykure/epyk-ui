@@ -55,8 +55,8 @@ class ZoomAttrs(DataClass):
     return self._attrs["enabled"]
 
   @enabled.setter
-  def enabled(self, bool):
-    self._attrs["enabled"] = bool
+  def enabled(self, flag):
+    self._attrs["enabled"] = flag
 
   @property
   def mode(self):
@@ -117,29 +117,37 @@ class ZoomAttrs(DataClass):
 
 class ZoomPan(ZoomAttrs):
 
-  def onPan(self, jsFncs):
+  def onPan(self, js_funcs, profile=None):
     """
     Description:
     -----------
     Function called while the user is zooming
 
-    :param jsFnc:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onPan"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onPan"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
-  def onPanComplete(self, jsFncs):
+  def onPanComplete(self, js_funcs, profile=None):
     """
     Description:
     -----------
     Function called while the user is zooming
 
-    :param jsFnc:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onPanComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onPanComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
 
 class ZoomZoom(ZoomAttrs):
@@ -154,8 +162,8 @@ class ZoomZoom(ZoomAttrs):
     return self._attrs["drag"]
 
   @drag.setter
-  def drag(self, bool):
-    self._attrs["drag"] = bool
+  def drag(self, flag):
+    self._attrs["drag"] = flag
 
   @property
   def sensitivity(self):
@@ -170,29 +178,37 @@ class ZoomZoom(ZoomAttrs):
   def sensitivity(self, num):
     self._attrs["sensitivity"] = num
 
-  def onZoom(self, jsFncs):
+  def onZoom(self, js_funcs, profile=None):
     """
-    Function called while the user is zooming
+    Description:
+    -----------
+    Function called while the user is zooming.
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onZoom"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onZoom"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
-  def onZoomComplete(self, jsFncs):
+  def onZoomComplete(self, js_funcs, profile=None):
     """
-    Function called once zooming is completed
+    Description:
+    -----------
+    Function called once zooming is completed.
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onZoomComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onZoomComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
 
 class Zoom(DataClass):

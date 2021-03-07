@@ -361,4 +361,5 @@ class JsNumber(JsObject.JsObject):
       ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
     from epyk.core.js.primitives import JsString
 
-    return JsString.JsString("%s.formatMoney(%s, '%s', '%s')" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
+    return JsString.JsString("%s.formatMoney(%s, '%s', '%s')" % (
+      self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)

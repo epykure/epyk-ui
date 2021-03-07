@@ -23,9 +23,10 @@ class Table(Html.Html):
   requirements = ('tabulator-tables', )
   name = 'Tabulator Table'
 
-  def __init__(self, report, records, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, width, height, html_code, options, profile):
     data, columns, self.__config, self._json_config = [], [], None, {}
-    super(Table, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Table, self).__init__(report, [], html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     self.__config = TableConfig(self, options)
     if records is not None:
       self.config.data = records
@@ -45,6 +46,7 @@ class Table(Html.Html):
     """
     Description:
     ------------
+    Property to the CSS Style of the component.
 
     :rtype: GrpClsTable.Tabulator
     """
@@ -114,12 +116,12 @@ class Table(Html.Html):
     """
     Description:
     ------------
-    Add new column to the underlying Tabulator object
+    Add new column to the underlying Tabulator object.
 
     Attributes:
     ----------
-    :param field: String. Mandatory. The key in the row
-    :param title: String. Optional. The title for the column. Default to the field
+    :param field: String. Mandatory. The key in the row.
+    :param title: String. Optional. The title for the column. Default to the field.
     """
     col_def = self.config.columns
     col_def.field = field
@@ -135,8 +137,8 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param by_field: String. Optional. The field reference for the column
-    :param by_title: String. Optional. The title reference for the column
+    :param by_field: String. Optional. The field reference for the column.
+    :param by_title: String. Optional. The title reference for the column.
 
     :rtype: Column
     """
@@ -166,47 +168,52 @@ class Table(Html.Html):
       if c._attrs['field'] in colsDef:
         c._attrs.update(colsDef[c._attrs['field']])
 
-  def click(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
     Use a rowClick event as underlying click event.
 
-    Use the function row.getData() to make the data available
+    Use the function row.getData() to make the data available.
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param profile:
+    :param js_funcs:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event:
-    :param onReady:
+    :param on_ready:
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.config.rowClick(["var data = row.getData()"] + jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.config.rowClick(["var data = row.getData()"] + js_funcs)
     return self
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
     ------------
 
-    :param data:
-    :param options:
-    :param profile:
+    Attributes:
+    ----------
+    :param data: String. A String corresponding to a JavaScript object.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data:
       return self.js.setData(data)
 
-    return 'var %s = new Tabulator("#%s", Object.assign(%s, %s))' % (self.tableId, self.htmlCode, self._json_config, self.config)
+    return 'var %s = new Tabulator("#%s", Object.assign(%s, %s))' % (
+      self.tableId, self.htmlCode, self._json_config, self.config)
 
-  def extendModule(self, category, type, fncName, fncDef):
+  def extendModule(self, category, type, func_name, func_def):
     """
     Description:
     ------------
-    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a series of modules that provide all of its wonderfull features.
+    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
+    series of modules that provide all of its wonderfull features.
 
-    All of the available modules are installed by default to ensure that you can provide your users with the richest experience possible with minimal setup.
+    All of the available modules are installed by default to ensure that you can provide your users with the richest
+    experience possible with minimal setup.
 
     Related Pages:
       http://tabulator.info/docs/4.0/modules
@@ -214,12 +221,13 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param category: String. The name of the module. e.g format
-    :param type: String. The name of the property you want to extend. e.g. formatters
-    :param fncName: String. The alias of teh function to be added to the registery
-    :param fncDef: String. The function definition to be attached to this fncName
+    :param category: String. The name of the module. e.g format.
+    :param type: String. The name of the property you want to extend. e.g. formatters.
+    :param func_name: String. The alias of teh function to be added to the registery.
+    :param func_def: String. The function definition to be attached to this fncName.
     """
-    self._report._props["js"]['builders'].add('Tabulator.prototype.extendModule("%s", "%s", {"%s": %s});' % (category, type, fncName, fncDef))
+    self.page.properties.js.add_builders('Tabulator.prototype.extendModule("%s", "%s", {"%s": %s});' % (
+      category, type, func_name, func_def))
     return self
 
   def loading(self, status=True):
@@ -249,7 +257,7 @@ class Table(Html.Html):
         window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
@@ -260,7 +268,8 @@ class EnumLayout(DataEnum):
     """
     Description:
     -----------
-    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
+    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the
+    empty row to fill the table it stretches the last visible column.
 
     Related Pages:
 
@@ -272,7 +281,8 @@ class EnumLayout(DataEnum):
     """
     Description:
     -----------
-    As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize columns so they fit perfectly in the available table width.
+    As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize
+    columns so they fit perfectly in the available table width.
 
     Related Pages:
 
@@ -296,7 +306,8 @@ class EnumLayout(DataEnum):
     """
     Description:
     -----------
-    The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at least the full width of the table.
+    The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at
+    least the full width of the table.
 
     Related Pages:
 
@@ -334,7 +345,8 @@ class EnumSorter(DataEnum):
     Sorts column as numbers (integer or float, will also handle numbers using "," separators)
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
     """
     return self.set("number")
 
@@ -342,10 +354,11 @@ http://tabulator.info/examples/4.5#sorters
     """
     Description:
     -----------
-    Sorts column as alpha numeric code
+    Sorts column as alpha numeric code.
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
     """
     return self.set("alphanum")
 
@@ -353,10 +366,11 @@ http://tabulator.info/examples/4.5#sorters
     """
     Description:
     -----------
-    Sorts column as booleans
+    Sorts column as booleans.
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
     """
     return self.set("boolean")
 
@@ -364,10 +378,11 @@ http://tabulator.info/examples/4.5#sorters
     """
     Description:
     -----------
-    Sorts column as dates
+    Sorts column as dates.
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
     """
     return self.set("date")
 
@@ -378,7 +393,8 @@ http://tabulator.info/examples/4.5#sorters
     Sorts column as dates
 
     Related Pages:
-sorts column as times
+
+      sorts column as times
     """
     return self.set("time")
 
@@ -391,7 +407,7 @@ class EnumColCss(DataEnumMulti):
     """
     Description:
     -----------
-    CSS Class to center the results
+    CSS Class to center the results.
     """
     self._report.body.style.custom_class({'_attrs': {'text-align': 'center'}}, classname="tb-center")
     return self.set("tb-center")
@@ -400,11 +416,11 @@ class EnumColCss(DataEnumMulti):
     """
     Description:
     -----------
-    CSS Class to change the font color
+    CSS Class to change the font color.
 
     Attributes:
     ----------
-    :param color: String. The CSS Color
+    :param color: String. The CSS Color.
     """
     self._report.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self.set("tb-color-%s" % color)
@@ -413,11 +429,11 @@ class EnumColCss(DataEnumMulti):
     """
     Description:
     -----------
-    CSS Class to change the background color
+    CSS Class to change the background color.
 
     Attributes:
     ----------
-    :param color: String. The CSS Color
+    :param color: String. The CSS Color.
     """
     self._report.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
     return self.set("tb-background-%s" % color)
@@ -426,17 +442,18 @@ class EnumColCss(DataEnumMulti):
     """
     Description:
     -----------
-    CSS class for bespoke style
+    CSS class for bespoke style.
 
     col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. The CSS attributes for the class
-    :param css_attrs_hover: Dictionary. The CSS Hover attributes for the class
+    :param css_attrs: Dictionary. The CSS attributes for the class.
+    :param css_attrs_hover: Dictionary. Optional. The CSS Hover attributes for the class.
     """
     has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
-    self._report.body.style.custom_class({'_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
+    self._report.body.style.custom_class({
+      '_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
     return self.set("tb-style-%s" % has_style)
 
 
@@ -445,9 +462,7 @@ class PersistenceGroup(DataClass):
   @property
   def groupBy(self):
     """
-    persist only the groupBy setting
-
-    :return:
+    persist only the groupBy setting.
     """
     return self._attrs["groupBy"]
 
@@ -479,10 +494,11 @@ class PersistencePage(DataClass):
     """
     Description:
     -----------
-    persist the current page size
+    persist the current page size.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["size"]
 
@@ -495,10 +511,11 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    do not persist the current page
+    do not persist the current page.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["page"]
 
@@ -514,10 +531,12 @@ class Persistence(DataClass):
     """
     Description:
     -----------
-    You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence option to true
+    You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence
+    option to true.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["sort"]
 
@@ -530,10 +549,12 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    You can ensure the data filtering is stored for the next page load by setting the filter property of the persistence option to true
+    You can ensure the data filtering is stored for the next page load by setting the filter property of the
+    persistence option to true.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["filter"]
 
@@ -546,10 +567,12 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    You can ensure the row grouping settings are stored for the next page load by setting the group property of the persistence option to true
+    You can ensure the row grouping settings are stored for the next page load by setting the group property of the
+    persistence option to true.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: PersistenceGroup
     """
@@ -560,10 +583,12 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    You can ensure the pagination settings are stored for the next page load by setting the page property of the persistence option to true
+    You can ensure the pagination settings are stored for the next page load by setting the page property of the
+    persistence option to true.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: PersistencePage
     """
@@ -574,10 +599,12 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    You can ensure the layout of columns is stored for the next page load by setting the columns property of the persistence option to true
+    You can ensure the layout of columns is stored for the next page load by setting the columns property of the
+    persistence option to true.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["columns"]
 
@@ -591,9 +618,12 @@ class BottomCalcParams(DataClass):
   @property
   def precision(self):
     """
-    the number of decimals to display (default is 2), setting this value to false will display however many decimals are provided with the number
+    the number of decimals to display (default is 2), setting this value to false will display however many decimals
+    are provided with the number.
 
-    http://tabulator.info/docs/4.5/column-calcs#func-builtin
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/column-calcs#func-builtin
     """
     return self._attrs["precision"]
 
@@ -636,7 +666,8 @@ class EditorAutocomplete(DataGroup):
     allowEmpty = JsUtils.jsConvertData(allowEmpty, None)
     self._attrs["editorParams"] = JsObjects.JsObjects.get('''{values: %s, searchFunc: function(term, values){ var matches = [];
 if (term == ""){return matches}; values.forEach(function(item){if(item.startsWith(term)){matches.push(item);}});
-return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (values, showListOnEmpty, freetext, allowEmpty))
+return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (
+      values, showListOnEmpty, freetext, allowEmpty))
     return self
 
 
@@ -654,8 +685,8 @@ class Editor(DataGroup):
 
     Attributes:
     ----------
-    :param search: use search type input element with clear button.
-    :param elementAttributes: set attributes directly on the input element.
+    :param search: Boolean. Optional. Use search type input element with clear button.
+    :param elementAttributes: String. Optional. set attributes directly on the input element.
     """
     self._attrs["editor"] = 'input'
     self._attrs["editorParams"] = {'search': search}
@@ -677,8 +708,8 @@ class Editor(DataGroup):
 
     Attributes:
     ----------
-    :param verticalNavigation: set attributes directly on the textarea element.
-    :param elementAttributes: determine how use of the up/down arrow keys will affect the editor,
+    :param verticalNavigation: String. Optional. set attributes directly on the textarea element.
+    :param elementAttributes: String. Optional. determine how use of the up/down arrow keys will affect the editor,
     """
     self._attrs["editor"] = 'textarea'
     self._attrs["editorParams"] = {'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
@@ -697,15 +728,16 @@ class Editor(DataGroup):
 
     Attributes:
     ----------
-    :param min: the maximum allowed value
-    :param max: the minimum allowed value
-    :param step: the step size when incrementing/decrementingthe value (default 1)
-    :param elementAttributes: set attributes directly on the input element
-    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
+    :param min: Number. Optional. the maximum allowed value.
+    :param max: Number. Optional. the minimum allowed value.
+    :param step: String. Optional. the step size when incrementing/decrementingthe value (default 1).
+    :param elementAttributes: String. Optional. set attributes directly on the input element.
+    :param verticalNavigation: String. Optional. determine how use of the up/down arrow keys will affect the editor,
     :param kwargs:
     """
     self._attrs["editor"] = 'number'
-    self._attrs["editorParams"] = {'step': step, 'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
+    self._attrs["editorParams"] = {'step': step, 'verticalNavigation': verticalNavigation,
+                                   "elementAttributes": elementAttributes}
     if min is not None:
       self._attrs["editorParams"]['min'] = min
     if max is not None:
@@ -726,10 +758,10 @@ class Editor(DataGroup):
 
     Attributes:
     ----------
-    :param min: the maximum allowed value
-    :param max: the minimum allowed value
-    :param step: the step size when incrementing/decrementingthe value (default 1)
-    :param elementAttributes: set attributes directly on the input element
+    :param min: Number. Optional. the maximum allowed value.
+    :param max: Number. Optional. the minimum allowed value.
+    :param step: Number. Optional. the step size when incrementing/decrementingthe value (default 1).
+    :param elementAttributes: String. Optional. set attributes directly on the input element.
     :param kwargs:
     """
     self._attrs["editor"] = 'range'
@@ -753,9 +785,9 @@ class Editor(DataGroup):
 
     Attributes:
     ----------
-    :param tristate: allow tristate tickbox (default false)
-    :param indeterminateValue:  when using tristate tickbox what value should the third indeterminate state have (default null)
-    :param elementAttributes: set attributes directly on the input element
+    :param tristate: Boolean. Optional. allow tristate tickbox (default false).
+    :param indeterminateValue: String. Optional. when using tristate tickbox what value should the third indeterminate state have (default null)
+    :param elementAttributes: String. Optional. set attributes directly on the input element
     :param kwargs:
     """
     self._attrs["editor"] = 'tick'
@@ -771,14 +803,16 @@ class Editor(DataGroup):
     -----------
     The star editor allows entering of numeric value using a star rating indicator.
 
-    This editor will automatically detect the correct number of stars to use if it is used on the same column as the star formatter.
+    This editor will automatically detect the correct number of stars to use if it is used on the same column as the
+    star formatter.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
-    :param elementAttributes: set attributes directly on the star holder elemen
+    :param elementAttributes: String. Optional set attributes directly on the star holder element.
     :param kwargs:
     """
     self._attrs["editor"] = 'star'
@@ -793,10 +827,12 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     """
     Description:
     -----------
-    The select editor creates a dropdown select box to allow the user to select from some predefined options passed into the values property of the editorParams option.
+    The select editor creates a dropdown select box to allow the user to select from some predefined options passed
+    into the values property of the editorParams option.
 
     Related Pages:
-http://tabulator.info/docs/4.5/edit#edit-builtin
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
@@ -830,7 +866,8 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
     """
     Description:
     -----------
-    The autocomplete editor allows users to search a list of predefined options passed into the values property of the editorParams option.
+    The autocomplete editor allows users to search a list of predefined options passed into the values property of
+    the editorParams option.
 
     Usage:
     -----
@@ -877,13 +914,14 @@ http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
     ----------
-    :param fncName:
-    :param fncDef:
+    :param fncName: String. The function name.
+    :param fncDef: String. Optinoal. The function definition.
     """
     if fncDef is None:
       self._attrs["editor"] = JsObjects.JsObjects.get(fncName)
     else:
-      self._report._report.extendModule("edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParams){%s}" % fncDef)
+      self._report._report.extendModule(
+        "edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParams){%s}" % fncDef)
       self._attrs["editor"] = fncName
     return self
 
@@ -894,10 +932,11 @@ class Formattors(DataGroup):
     """
     Description:
     -----------
-    The plaintext formater is the default formatter for all cells and will simply dispay the value of the cell as text.
+    The plaintext formater is the default formatter for all cells and will simply display the value of the cell as text.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -912,10 +951,12 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The textarea formater shows text with carriage returns intact (great for multiline text), this formatter will also adjust the height of rows to fit the cells contents when columns are resized.
+    The textarea formater shows text with carriage returns intact (great for multiline text), this formatter will also
+    adjust the height of rows to fit the cells contents when columns are resized.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -933,7 +974,8 @@ http://tabulator.info/docs/4.1/format
     The html formater displays un-sanitized html.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -951,7 +993,8 @@ http://tabulator.info/docs/4.1/format
     The money formater formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -971,15 +1014,17 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The image formater creates an img element with the src set as the value. (triggers the normalizeHeight function on the row on image load).
+    The image formater creates an img element with the src set as the value. (triggers the normalizeHeight function on
+    the row on image load).
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
-    :param height: a CSS value for the height of the image
-    :param width: a CSS value for the width of the image
+    :param height: Tuple. Optional. A CSS value for the height of the image.
+    :param width: Tuple. Optional. A CSS value for the width of the image.
     :param kwargs:
     """
     self._attrs["formatter"] = 'image'
@@ -997,10 +1042,12 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The link formater renders data as an anchor with a link to the given value (by default the value will be used as both the url and the label of the tag).
+    The link formater renders data as an anchor with a link to the given value (by default the value will be used as
+    both the url and the label of the tag).
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -1021,10 +1068,11 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The datetime formater transforms on format of date or time into another.
+    The datetime formatter transforms on format of date or time into another.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -1034,20 +1082,22 @@ http://tabulator.info/docs/4.1/format
     :param kwargs:
     """
     self._attrs["formatter"] = 'datetime'
-    self._attrs["formatterParams"] = {"inputFormat": inputFormat, "outputFormat": outputFormat, "invalidPlaceholder": invalidPlaceholder}
+    self._attrs["formatterParams"] = {"inputFormat": inputFormat, "outputFormat": outputFormat,
+                                      "invalidPlaceholder": invalidPlaceholder}
     if kwargs:
       self._attrs["formatterParams"].update(kwargs)
     return self
 
   def tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
-                          crossElement="<i class='fa fa-times'></i>", **kwargs):
+                crossElement="<i class='fa fa-times'></i>", **kwargs):
     """
     Description:
     -----------
     The tickCross formatter displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
@@ -1068,10 +1118,12 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The color formater sets the background colour of the cell to the value. The cell's value can be any valid CSS color eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
+    The color formater sets the background colour of the cell to the value. The cell's value can be any valid
+    CSS color eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'color'
     if kwargs:
@@ -1085,11 +1137,12 @@ http://tabulator.info/docs/4.1/format
     The star formater displays a graphical star rating based on integer values.
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
-    :param starts: maximum number of stars to be displayed (default 5)
+    :param starts: Number. maximum number of stars to be displayed (default 5).
     """
     self._attrs["formatter"] = 'star'
     formatParams = {"starts": starts}
@@ -1100,7 +1153,11 @@ http://tabulator.info/docs/4.1/format
 
   def progress(self, min=0, max=100, color=None, legend=None, legendColor=None, legendAlign=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param min:
     :param max:
     :param color:
@@ -1118,14 +1175,16 @@ http://tabulator.info/docs/4.1/format
     """
     Description:
     -----------
-    The lookup formater looks up the value to display from a object passed into the formatterParams property, if not present it displays the current cell value
+    The lookup formater looks up the value to display from a object passed into the formatterParams property,
+    if not present it displays the current cell value
 
     Related Pages:
-http://tabulator.info/docs/4.1/format
+
+      http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------
-    :param data: Dictionary for the lookup
+    :param data: Dictionary for the lookup.
     """
     self._attrs["formatter"] = 'lookup'
     self._attrs['formatterParams'] = data
@@ -1208,7 +1267,8 @@ class Mutators(DataGroup):
     if fncDef is None:
       self._attrs["mutator"] = JsObjects.JsObjects.get(fncName)
     else:
-      self._report._report.extendModule("mutator", "mutators", fncName, "function(value, data, type, mutatorParams, component){%s}" % fncDef)
+      self._report._report.extendModule(
+        "mutator", "mutators", fncName, "function(value, data, type, mutatorParams, component){%s}" % fncDef)
       self._attrs["mutator"] = fncName
     return self
 
@@ -1223,7 +1283,8 @@ class Accessors(DataGroup):
 
     You can set accessors on a per column basis using the accessor option in the column definition object.
 
-    You can pass an optional additional parameter with accessor, accessorParams that should contain an object with additional information for configuring the accessor.
+    You can pass an optional additional parameter with accessor, accessorParams that should contain an object with
+    additional information for configuring the accessor.
 
     Related Pages:
 
@@ -1239,7 +1300,8 @@ class Accessors(DataGroup):
       self._attrs["accessor"] = JsObjects.JsObjects.get(fncName)
       self._attrs["accessorParams"] = accessorParams or {}
     else:
-      self._report.extendModule("accessor", "accessors", fncName, "function(value, data, type, params, column, row){%s}" % fncDef)
+      self._report.extendModule(
+        "accessor", "accessors", fncName, "function(value, data, type, params, column, row){%s}" % fncDef)
       self._attrs["accessor"] = fncName
       self._attrs["accessorParams"] = accessorParams or {}
     return self
@@ -1254,7 +1316,8 @@ class Validators(DataGroup):
     The required validator allows values that are not null or an empty string
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('required')
     return self
@@ -1266,7 +1329,8 @@ http://tabulator.info/docs/4.5/validate
     The unique validator allows values that do not match the value of any other cell in this column
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('unique')
     return self
@@ -1278,7 +1342,8 @@ http://tabulator.info/docs/4.5/validate
     The integer validator allows values that are valid integers
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('integer')
     return self
@@ -1287,10 +1352,11 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The float validator allows values that are valid floats
+    The float validator allows values that are valid floats.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('float')
     return self
@@ -1299,10 +1365,11 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The float validator allows values that are valid floats
+    The float validator allows values that are valid floats.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('numeric')
     return self
@@ -1311,10 +1378,11 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The min validator allows numeric values that are greater than or equal to parameter
+    The min validator allows numeric values that are greater than or equal to parameter.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('min:%s' % val)
     return self
@@ -1323,10 +1391,11 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The max validator allows numeric values that are less than or equal to parameter
+    The max validator allows numeric values that are less than or equal to parameter.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('max:%s' % val)
     return self
@@ -1335,10 +1404,11 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The maxLength validator allows string values that have a length less than or equal to parameter
+    The maxLength validator allows string values that have a length less than or equal to parameter.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('maxLength:%s' % val)
     return self
@@ -1347,22 +1417,24 @@ http://tabulator.info/docs/4.5/validate
     """
     Description:
     -----------
-    The in validator allows that values that match a value from the | delimieted string in the parameter
+    The in validator allows that values that match a value from the | delimieted string in the parameter.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["validator"].append('in:%s' % "".join(map(lambda  x: str(), vals)))
+    self._attrs["validator"].append('in:%s' % "".join(map(lambda x: str(), vals)))
     return self
 
   def regex(self, val):
     """
     Description:
     -----------
-    The regex validator allows values that match the supplied regex
+    The regex validator allows values that match the supplied regex.
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('regex:%s' % val)
     return self
@@ -1380,7 +1452,8 @@ class Extensions(DataGroup):
     More information on these functions can be found in the Editing Data Documentation.
 
     Related Pages:
-http://tabulator.info/docs/4.0/modules
+
+      http://tabulator.info/docs/4.0/modules
     """
     from epyk.core.html.tables.exts import TbEditors
 
@@ -1393,10 +1466,12 @@ http://tabulator.info/docs/4.0/modules
     -----------
     You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
-    You can pass an optional additional parameter with the formatter, formatterParams that should contain an object with additional information for configuring the formatter.
+    You can pass an optional additional parameter with the formatter, formatterParams that should contain an object
+    with additional information for configuring the formatter.
 
     Related Pages:
-http://tabulator.info/docs/4.0/format
+
+      http://tabulator.info/docs/4.0/format
     """
     from epyk.core.html.tables.exts import TbFormatters
 
@@ -1408,10 +1483,12 @@ http://tabulator.info/docs/4.0/format
     Description:
     -----------
     Mutators are used to alter data as it is parsed into Tabulator.
-    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used to build the table.
+    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used
+    to build the table.
 
     Related Pages:
-http://tabulator.info/docs/4.0/mutators
+
+      http://tabulator.info/docs/4.0/mutators
     """
     from epyk.core.html.tables.exts import TbMutators
 
@@ -1427,7 +1504,8 @@ http://tabulator.info/docs/4.0/mutators
     This can be extended to add custom validator functions to the default list:
 
     Related Pages:
-http://tabulator.info/docs/4.0/modules
+
+      http://tabulator.info/docs/4.0/modules
     """
     from epyk.core.html.tables.exts import TbValidators
 
@@ -1444,7 +1522,8 @@ class Column(DataClass):
     sets the text alignment for this column (left|center|right)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["align"]
 
@@ -1475,7 +1554,8 @@ http://tabulator.info/docs/4.5/columns
     the column calculation to be displayed at the bottom of this column(see Column Calculations for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["bottomCalc"]
 
@@ -1491,7 +1571,8 @@ http://tabulator.info/docs/4.5/columns
     additional parameters you can pass to the bottomCalc calculation function(see Column Calculations for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
 
     :rtype: BottomCalcParams
     """
@@ -1501,12 +1582,12 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     ------------
-    Add new column to the underlying Tabulator object
+    Add new column to the underlying Tabulator object.
 
     Attributes:
     ----------
-    :param field: String. Mandatory. The key in the row
-    :param title: String. Optional. The title for the column. Default to the field
+    :param field: String. Mandatory. The key in the row.
+    :param title: String. Optional. The title for the column. Default to the field.
     """
     col_def = self.sub_data_enum("columns", Column)
     col_def.field = field
@@ -1516,6 +1597,8 @@ http://tabulator.info/docs/4.5/columns
   @property
   def cssClass(self):
     """
+    Description:
+    -----------
 
     :rtype: EnumColCss
     """
@@ -1529,7 +1612,8 @@ http://tabulator.info/docs/4.5/columns
     callback to check if the cell is editable (see Manipulating Data for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["editable"]
 
@@ -1542,10 +1626,12 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a series of modules that provide all of its wonderfull features.
+    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
+    series of modules that provide all of its wonderfull features.
 
     Related Pages:
-http://tabulator.info/docs/4.0/modules
+
+      http://tabulator.info/docs/4.0/modules
     """
     return Extensions(self._report, self._attrs, parent=self)
 
@@ -1567,10 +1653,11 @@ http://tabulator.info/docs/4.0/modules
     """
     Description:
     -----------
-    Required (not required in icon/button columns) this is the key for this column in the data array
+    Required (not required in icon/button columns) this is the key for this column in the data array.
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["field"]
 
@@ -1596,7 +1683,7 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    freezes the column in place when scrolling (see Frozen Columns for more details)
+    freezes the column in place when scrolling (see Frozen Columns for more details).
 
     Related Pages:
 
@@ -1613,7 +1700,7 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    Shortcut prperty to the headermenu items.
+    Shortcut property to the headermenu items.
 
     Related Pages:
 
@@ -1626,10 +1713,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    User can sort by clicking on the header (see Sorting Data for more detail
+    User can sort by clicking on the header (see Sorting Data for more detail.
 
     Related Pages:
-http://tabulator.info/docs/4.1/columns
+
+      http://tabulator.info/docs/4.1/columns
     """
     return self._attrs["headerFilter"]
 
@@ -1642,10 +1730,11 @@ http://tabulator.info/docs/4.1/columns
     """
     Description:
     -----------
-    change the orientation of the column header to vertical (see Vertical Column Headers for more details)
+    change the orientation of the column header to vertical (see Vertical Column Headers for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerVertical"]
 
@@ -1658,10 +1747,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    user can sort by clicking on the header (see Sorting Data for more details)
+    user can sort by clicking on the header (see Sorting Data for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerSort"]
 
@@ -1674,10 +1764,12 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    By setting the headerVisible option to false you can hide the column headers and present the table as a simple list if needed.
+    By setting the headerVisible option to false you can hide the column headers and present
+    the table as a simple list if needed.
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerVisible"]
 
@@ -1690,10 +1782,12 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained in the first row.
+    By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained
+    in the first row.
 
     Related Pages:
-http://tabulator.info/examples/4.5#sorters
+
+      http://tabulator.info/examples/4.5#sorters
 
     :rtype: EnumSorter
     """
@@ -1704,10 +1798,12 @@ http://tabulator.info/examples/4.5#sorters
     """
     Description:
     -----------
-    sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the system will determine the best)
+    sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the
+    system will determine the best)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["width"]
 
@@ -1720,10 +1816,12 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    sets the minimum width of this column, this should be set in pixels (this takes priority over the global option of columnMinWidth)
+    sets the minimum width of this column, this should be set in pixels (this takes priority over the global option
+    of columnMinWidth)
 
     Related Pages:
-http://tabulator.info/docs/4.1/columns
+
+      http://tabulator.info/docs/4.1/columns
     """
     return self._attrs["minwidth"]
 
@@ -1738,7 +1836,8 @@ http://tabulator.info/docs/4.1/columns
     -----------
     Mutators are used to alter data as it is parsed into Tabulator.
 
-    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used to build the table
+    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used
+    to build the table.
 
     Related Pages:
 
@@ -1751,10 +1850,12 @@ http://tabulator.info/docs/4.1/columns
     """
     Description:
     -----------
-    when using fitColumns layout mode, determines how much the column should grow to fill available space (see Table Layout for more details)
+    when using fitColumns layout mode, determines how much the column should grow to fill available
+    space (see Table Layout for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["widthGrow"]
 
@@ -1770,7 +1871,8 @@ http://tabulator.info/docs/4.5/columns
     an integer to determine when the column should be hidden in responsive mode (see Responsive Layout for more details)
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["responsive"]
 
@@ -1783,10 +1885,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    set whether column can be resized by user dragging its edges (see Table Layout for more details)
+    set whether column can be resized by user dragging its edges (see Table Layout for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["resizable"]
 
@@ -1799,10 +1902,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    Required This is the title that will be displayed in the header for this column
+    Required This is the title that will be displayed in the header for this column.
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["title"]
 
@@ -1815,26 +1919,28 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    Required This is the title that will be displayed in the header for this column
+    Required This is the title that will be displayed in the header for this column.
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["tooltip"]
 
   @tooltip.setter
-  def tooltip(self, bool):
-    self._attrs["tooltip"] = bool
+  def tooltip(self, flag):
+    self._attrs["tooltip"] = flag
 
   @property
   def titleFormatter(self):
     """
     Description:
     -----------
-    formatter function for header title (see Formatting Data for more details)
+    formatter function for header title (see Formatting Data for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["titleFormatter"]
 
@@ -1849,6 +1955,7 @@ http://tabulator.info/docs/4.5/columns
     -----------
 
     Related Pages:
+
       http://tabulator.info/docs/4.0/format
     """
     return self._attrs["titleFormatterParams"]
@@ -1862,10 +1969,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    the column calculation to be displayed at the top of this column(see Column Calculations for more details)
+    the column calculation to be displayed at the top of this column(see Column Calculations for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/columns
+
+      http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["topCalc"]
 
@@ -1878,10 +1986,11 @@ http://tabulator.info/docs/4.5/columns
     """
     Description:
     -----------
-    set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details)
+    set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details).
 
     Related Pages:
-http://tabulator.info/docs/4.5/validate
+
+      http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"] = []
     return Validators(self, self._attrs)
@@ -1893,9 +2002,7 @@ class Keybindings(DataClass):
     """
     Description:
     -----------
-    Add a keyboard shortcut event on the table to
-
-    Keycodes can be found using the function ord()
+    Add a keyboard shortcut event on the table to Keycodes can be found using the function ord().
 
     Related Pages:
 
@@ -1903,9 +2010,10 @@ class Keybindings(DataClass):
 
     Attributes:
     ----------
-    :param keys: String. The keys to trigger the event
+    :param keys: String. The keys to trigger the event.
     """
-    self._report.extendModule("keybindings", "actions", "addRow", "function(event){event.preventDefault(); this.table.addRow()}")
+    self._report.extendModule(
+      "keybindings", "actions", "addRow", "function(event){event.preventDefault(); this.table.addRow()}")
     self._attrs["addRow"] = keys
     return self
 
@@ -1923,9 +2031,11 @@ class Keybindings(DataClass):
 
     Attributes:
     ----------
-    :param keys: String. The keys to trigger the event
+    :param keys: String. The keys to trigger the event.
     """
-    self._report.extendModule("keybindings", "actions", "addRow", "function(){var rows = this.table.getSelectedRows(); rows.forEach(function(row){row.delete()})}")
+    self._report.extendModule(
+      "keybindings", "actions", "addRow",
+      "function(){var rows = this.table.getSelectedRows(); rows.forEach(function(row){row.delete()})}")
     self._attrs["deleteSelectedRows"] = keys
     return self
 
@@ -1933,7 +2043,7 @@ class Keybindings(DataClass):
     """
     Description:
     -----------
-    Add a keyboard shortcut custom event on the table
+    Add a keyboard shortcut custom event on the table.
 
     Keycodes can be found using the function ord()
 
@@ -1943,8 +2053,8 @@ class Keybindings(DataClass):
 
     Attributes:
     ----------
-    :param keys: String. The keys to trigger the event
-    :param fncName: String. The function name / alias for this event
+    :param keys: String. The keys to trigger the event.
+    :param fncName: String. The function name / alias for this event.
     :param fncDef: String. The function definition of this event.
     :param prevent_default: Boolean. Stop the event and do not change the cell in editable.
     """
@@ -1962,7 +2072,7 @@ class RowContextMenu(DataClass):
     """
     Description:
     -----------
-    Add a duplicate entry to the context menu
+    Add a duplicate entry to the context menu.
     """
     self._attrs[label] = "row.getTable().addRow(row.getData(), false, row.getPosition())"
     return self
@@ -1971,7 +2081,7 @@ class RowContextMenu(DataClass):
     """
     Description:
     -----------
-    Add a delete entry to the context menu
+    Add a delete entry to the context menu.
     """
     self._attrs[label] = "row.delete()"
     return self
@@ -1989,7 +2099,8 @@ class RowContextMenu(DataClass):
     :param icon: String. Optional. The font-awesome icon.
     :param disabled: Boolean. Optional. The status of the link.
     """
-    self._attrs[label] = self._report._report.js.post(url, {"label": label, "data": JsObjects.JsObject.JsObject.get("row.getData()")}).onSuccess([
+    self._attrs[label] = self._report._report.js.post(
+      url, {"label": label, "data": JsObjects.JsObject.JsObject.get("row.getData()")}).onSuccess([
       self._report._report.js.msg.status()
     ]).toStr()
     return self
@@ -1998,7 +2109,7 @@ class RowContextMenu(DataClass):
     """
     Description:
     -----------
-    Add a delete entry to the context menu
+    Add a delete entry to the context menu.
     """
     self._attrs[label] = strFnc
     return self
@@ -2012,7 +2123,7 @@ class HeaderMenu(DataClass):
 
   def hide(self, label="Hide Column", icon="fas fa-eye-slash", disabled=False):
     """
-    Hide the selected column
+    Hide the selected column.
     """
     if icon is not None:
       self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = "column.hide()"
@@ -2053,7 +2164,8 @@ class TableConfig(DataClass):
     -----------
 
     Related Pages:
-http://tabulator.info/docs/4.0/data
+
+      http://tabulator.info/docs/4.0/data
     """
     return self._attrs["ajaxURL"]
 
@@ -2068,7 +2180,8 @@ http://tabulator.info/docs/4.0/data
     -----------
 
     Related Pages:
-http://tabulator.info/docs/4.0/data
+
+      http://tabulator.info/docs/4.0/data
     """
     return self._attrs["ajaxProgressiveLoad"]
 
@@ -2081,10 +2194,12 @@ http://tabulator.info/docs/4.0/data
     """
     Description:
     -----------
-    If you set the autoColumns option to true, every time data is loaded into the table through the data option or through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
+    If you set the autoColumns option to true, every time data is loaded into the table through the data option or
+    through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
 
     Related Pages:
-http://tabulator.info/docs/4.2/columns
+
+      http://tabulator.info/docs/4.2/columns
     """
     return self._attrs["autoColumns"]
 
@@ -2097,10 +2212,11 @@ http://tabulator.info/docs/4.2/columns
     """
     Description:
     -----------
-    The position in the table for new rows to be added, "bottom" or "top"
+    The position in the table for new rows to be added, "bottom" or "top".
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["addRowPos"]
 
@@ -2113,10 +2229,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Enable clipboard module
+    Enable clipboard module.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["clipboard"]
 
@@ -2124,11 +2241,12 @@ http://tabulator.info/docs/4.2/options
   def clipboard(self, val):
     self._attrs["clipboard"] = val
 
-  def cellClick(self, jsFncs):
+  def cellClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using the option in the columns definition object.
+    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using
+    the option in the columns definition object.
 
     Related Pages:
 
@@ -2137,14 +2255,16 @@ http://tabulator.info/docs/4.2/options
     Attributes:
     ----------
     :param jsFncs:
+    :param profile:
 
     :return:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["cellClick"] = JsObjects.JsVoid("function(event, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["cellClick"] = JsObjects.JsVoid("function(event, cell){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile))
 
-  def clipboardPasted(self, jsFncs):
+  def clipboardPasted(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2160,13 +2280,15 @@ http://tabulator.info/docs/4.2/options
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["clipboardPasted"] = JsObjects.JsVoid("function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["clipboardPasted"] = JsObjects.JsVoid(
+      "function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def cellDblClick(self, jsFncs):
+  def cellDblClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis using the option in the columns definition object
+    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis
+    using the option in the columns definition object.
 
     Related Pages:
 
@@ -2180,13 +2302,15 @@ http://tabulator.info/docs/4.2/options
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["cellDblClick"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["cellDblClick"] = JsObjects.JsVoid(
+      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def cellContext(self, jsFncs):
+  def cellContext(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using the option in the columns definition object.
+    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using
+    the option in the columns definition object.
 
     Related Pages:
 
@@ -2194,35 +2318,15 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["cellContext"] = JsObjects.JsVoid("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["cellContext"] = JsObjects.JsVoid(
+      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def cellEditCancelled(self, jsFncs):
-    """
-    Description:
-    -----------
-    The cellEdited callback is triggered when data in an editable cell is changed.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs:
-
-    :return:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellEditCancelled"] = JsObjects.JsVoid("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
-
-  def cellEdited(self, jsFncs):
+  def cellEditCancelled(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2234,23 +2338,44 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["cellEdited"] = JsObjects.JsVoid("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["cellEditCancelled"] = JsObjects.JsVoid(
+      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def cellEdited(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellEdited callback is triggered when data in an editable cell is changed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellEdited"] = JsObjects.JsVoid(
+      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
   @property
   def clipboardPasteAction(self):
     """
     Description:
     -----------
-    Clipboard paste action function
+    Clipboard paste action function.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["clipboardPasteAction"]
 
@@ -2263,10 +2388,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Holder for column definition array
+    Holder for column definition array.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
 
     :rtype: Column
     """
@@ -2277,7 +2403,8 @@ http://tabulator.info/docs/4.2/options
     """
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
 
     :rtype: ColumnsGroup
     """
@@ -2288,10 +2415,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Vertical alignment for contents of column header (used in column grouping)
+    Vertical alignment for contents of column header (used in column grouping).
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["columnVertAlign"]
 
@@ -2304,10 +2432,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Array to hold data that should be loaded on table creation
+    Array to hold data that should be loaded on table creation.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["data"]
 
@@ -2322,6 +2451,7 @@ http://tabulator.info/docs/4.2/options
     -----------
 
     Related Pages:
+
       http://tabulator.info/examples/3.2
     """
     return self._attrs["fitColumns"]
@@ -2335,10 +2465,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    String/function to select field to group rows by
+    String/function to select field to group rows by.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["groupBy"]
 
@@ -2351,10 +2482,13 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose a different option:
+    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of
+    the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose
+    a different option:
 
     Related Pages:
-http://tabulator.info/docs/4.0/group
+
+      http://tabulator.info/docs/4.0/group
 
     :param val:
     """
@@ -2372,7 +2506,8 @@ http://tabulator.info/docs/4.0/group
     You can set the default open state of groups using the groupStartOpen property.
 
     Related Pages:
-http://tabulator.info/docs/4.0/group
+
+      http://tabulator.info/docs/4.0/group
     """
     return self._attrs["groupStartOpen"]
 
@@ -2385,10 +2520,11 @@ http://tabulator.info/docs/4.0/group
     """
     Description:
     -----------
-    Array of values for groups
+    Array of values for groups.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["groupValues"]
 
@@ -2396,11 +2532,12 @@ http://tabulator.info/docs/4.2/options
   def groupValues(self, val):
     self._attrs["groupValues"] = val
 
-  def headerClick(self, jsFncs):
+  def headerClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per
+    column basis using the option in the columns definition object.
 
     Related Pages:
 
@@ -2408,19 +2545,20 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["headerClick"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["headerClick"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def headerDblClick(self, jsFncs):
+  def headerDblClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a
+    per column basis using the option in the columns definition object.
 
     Related Pages:
 
@@ -2428,19 +2566,20 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["headerDblClick"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["headerDblClick"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def headerContext(self, jsFncs):
+  def headerContext(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The headerContext callback is triggered when a user right clicks on a column or group header, it can be set on a per column basis using the option in the columns definition object.
+    The headerContext callback is triggered when a user right clicks on a column or group header,
+    it can be set on a per column basis using the option in the columns definition object.
 
     Related Pages:
 
@@ -2448,19 +2587,20 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["headerContext"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["headerContext"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def headerTap(self, jsFncs):
+  def headerTap(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a per column basis using the option in the columns definition object.
+    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a
+    per column basis using the option in the columns definition object.
 
     Related Pages:
 
@@ -2468,19 +2608,20 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["headerTap"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["headerTap"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def headerDblTap(self, jsFncs):
+  def headerDblTap(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under 300ms, it can be set on a per column basis using the option in the columns definition object.
+    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under
+    300ms, it can be set on a per column basis using the option in the columns definition object.
 
     Related Pages:
 
@@ -2488,13 +2629,13 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["headerDblTap"] = JsObjects.JsVoid("function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["headerDblTap"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
   @property
   def height(self):
@@ -2505,7 +2646,8 @@ http://tabulator.info/docs/4.2/options
     If set to false (the default), the height of the table will resize to fit the table data.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["height"]
 
@@ -2520,10 +2662,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Enable user interaction history functionality
+    Enable user interaction history functionality.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["history"]
 
@@ -2538,6 +2681,7 @@ http://tabulator.info/docs/4.2/options
     -----------
 
     Related Pages:
+
       http://tabulator.info/docs/4.2/modules#module-keybindings
     """
     return self.sub_data("keybindings", Keybindings)
@@ -2547,10 +2691,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    hold localization templates
+    hold localization templates.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["lang"]
 
@@ -2563,10 +2708,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Layout mode for the table columns
+    Layout mode for the table columns.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
 
     :rtype: EnumLayout
     """
@@ -2577,10 +2723,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Allow users to move and reorder columns
+    Allow users to move and reorder columns.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableColumns"]
 
@@ -2593,10 +2740,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Allow users to move and reorder rows
+    Allow users to move and reorder rows.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRows"]
 
@@ -2609,10 +2757,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Connection selector for receving tables
+    Connection selector for receiving tables.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsConnectedTables"]
 
@@ -2637,10 +2786,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Sender function to be executed when row has been received
+    Sender function to be executed when row has been received.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsReceiver"]
 
@@ -2653,10 +2803,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Sender function to be executed when row has been sent
+    Sender function to be executed when row has been sent.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsSender"]
 
@@ -2669,10 +2820,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Choose pagination method, "local" or "remote"
+    Choose pagination method, "local" or "remote".
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["pagination"]
 
@@ -2685,10 +2837,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Set the number of rows in each page
+    Set the number of rows in each page.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["paginationSize"]
 
@@ -2696,7 +2849,7 @@ http://tabulator.info/docs/4.2/options
   def paginationSize(self, val):
     if val is not None:
       #
-      self._attrs["pagination"]= 'local'
+      self._attrs["pagination"] = 'local'
     self._attrs["paginationSize"] = val
 
   @property
@@ -2704,10 +2857,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Add page size selection select element to the table footer
+    Add page size selection select element to the table footer.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["paginationSizeSelector"]
 
@@ -2720,10 +2874,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    ID tag used to identify persistent storage information
+    ID tag used to identify persistent storage information.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["persistenceID"]
 
@@ -2736,10 +2891,12 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    The persistence system has received an overhaul in this release, providing a more consistent way to configure table persistence and allow even more table options to be persisted between sessions.
+    The persistence system has received an overhaul in this release, providing a more consistent way to configure
+    table persistence and allow even more table options to be persisted between sessions.
 
     Related Pages:
-http://tabulator.info/docs/4.5/release#persistence
+
+      http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: Persistence
     """
@@ -2750,10 +2907,11 @@ http://tabulator.info/docs/4.5/release#persistence
     """
     Description:
     -----------
-    placeholder element to display on empty table
+    placeholder element to display on empty table.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["placeholder"]
 
@@ -2790,10 +2948,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    enable data reactivity
+    enable data reactivity.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["reactiveData"]
 
@@ -2806,10 +2965,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Automatically hide/show columns to fit the width of the Tabulator element
+    Automatically hide/show columns to fit the width of the Tabulator element.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["responsiveLayout"]
 
@@ -2822,10 +2982,11 @@ http://tabulator.info/docs/4.2/options
     """
     Description:
     -----------
-    Allow user to resize columns (via handles on the left and right edges of the column header)
+    Allow user to resize columns (via handles on the left and right edges of the column header).
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["resizableColumns"]
 
@@ -2866,7 +3027,7 @@ http://tabulator.info/docs/4.2/options
     """
     return self.sub_data_enum("rowContextMenu", RowContextMenu)
 
-  def rowClick(self, jsFncs):
+  def rowClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2878,15 +3039,15 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile))
 
-  def rowDblClick(self, jsFncs):
+  def rowDblClick(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2898,15 +3059,15 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowDblClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowDblClick"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowDelete(self, jsFncs):
+  def rowDelete(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2918,21 +3079,22 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowDelete"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowDelete"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowContext(self, jsFncs):
+  def rowContext(self, jsFncs, profile=None):
     """
     Description:
     -----------
     The rowContext callback is triggered when a user right clicks on a row.
 
-    If you want to prevent the browsers context menu being triggered in this event you will need to include the preventDefault() function in your callback.
+    If you want to prevent the browsers context menu being triggered in this event you will need to include the
+    preventDefault() function in your callback.
 
     Related Pages:
 
@@ -2940,30 +3102,36 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowContext"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowContext"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowFormatter(self, jsFncs):
+  def rowFormatter(self, jsFncs, profile=None):
     """
+    Description:
+    -----------
     Tabulator also allows you to define a row level formatter using the rowFormatter option.
     this lets you alter each row of the table based on the data it contains.
 
-    http://tabulator.info/docs/4.0/format
+    Related Pages:
 
-    :param jsFncs:
+      http://tabulator.info/docs/4.0/format
 
-    :return:
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowFormatter"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowFormatter"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowMove(self, jsFncs):
+  def rowMove(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2975,15 +3143,16 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :return:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowMove"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowMove"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowTap(self, jsFncs):
+  def rowTap(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -2995,19 +3164,20 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowTap"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowTap"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
-  def rowUpdated(self, jsFncs):
+  def rowUpdated(self, jsFncs, profile=None):
     """
     Description:
     -----------
-    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or updateOrAddData, functions.
+    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or
+    updateOrAddData, functions.
 
     Related Pages:
 
@@ -3015,23 +3185,24 @@ http://tabulator.info/docs/4.2/options
 
     Attributes:
     ----------
-    :param jsFncs:
-
-    :return:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._attrs["rowUpdated"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._attrs["rowUpdated"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
   @property
   def selectable(self):
     """
     Description:
     -----------
-    Enable/Disable row selection
+    Enable/Disable row selection.
 
     Related Pages:
-http://tabulator.info/docs/4.2/options
+
+      http://tabulator.info/docs/4.2/options
     """
     return self._attrs["selectable"]
 
@@ -3047,6 +3218,7 @@ http://tabulator.info/docs/4.2/options
     You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
 
     Related Pages:
+
       http://tabulator.info/docs/4.0/format#tooltips
     """
     return self._attrs["tooltips"]

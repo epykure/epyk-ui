@@ -1,9 +1,9 @@
 
 
-class Inputs(object):
+class Inputs:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def input(self, value, label=None):
     """
@@ -26,7 +26,7 @@ class Inputs(object):
         ]},
         {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'}, 'args': {'text': value}}]}
 
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def inputs(self, values, label=None):
@@ -47,7 +47,7 @@ class Inputs(object):
 
     for v in values:
       schema['children'].append({"type": 'input', 'class': 'form-control', 'css': None, 'args': {'text': v}})
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def button(self, text, label="", category='secondary'):
@@ -71,7 +71,7 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
        'args': {'text': text}}]}
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def select(self, values, label="", category='secondary'):
@@ -91,7 +91,7 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
        'args': {'text': values}}]}
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def segment(self, values, label="", category='secondary'):
@@ -120,11 +120,11 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'}}
     ]}
-    self.context.rptObj.jsImports.add("@popperjs/core")
+    self.page.jsImports.add("@popperjs/core")
     for v in values:
       schema['children'][0]['children'][2]['children'].append(
         {"type": 'link', 'class': 'dropdown-item', 'css': None, 'args': {"text": v, 'url': '#'}},)
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def dropdown(self, values, label="", category='secondary'):
@@ -149,8 +149,8 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
        'args': {'text': values}}]}
-    self.context.rptObj.jsImports.add("@popperjs/core")
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    self.page.jsImports.add("@popperjs/core")
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def custom(self, values, label="", category='secondary'):
@@ -175,7 +175,7 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
        'args': {'text': values}}]}
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
   def radio(self, text, flag=False):
@@ -200,10 +200,10 @@ class Inputs(object):
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
        'args': {'text': text}}]}
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp
 
-  def checkbox(self, text, flag=False):
+  def checkbox(self, text, flag=False, width=(None, "%"), height=(None, "px")):
     """
     Description:
     ------------
@@ -217,14 +217,14 @@ class Inputs(object):
     :param flag:
     :param flag:
     """
-    schema = {"type": 'div', 'class': 'input-group mb-3', 'css': None, 'children': [
-      {"type": 'div', 'class': 'input-group-prepend', 'css': None, 'children': [
+    schema = {"type": 'div', 'class': 'input-group mb-3', 'css': None, 'args': {"width": width, "height": height}, 'children': [
+      {"type": 'div', 'class': 'input-group-prepend', 'args': {"width": width, "height": height}, 'css': None, 'children': [
         {"type": 'div', 'class': 'input-group-text', 'css': None, 'children': [
           {"type": 'checkbox', 'ref': 'basic-addon1', 'css': None, 'args': {'flag': flag}}
         ]}
       ]},
       {"type": 'input', 'class': 'form-control', 'css': None, 'arias': {"describedby": 'basic-addon1'},
-       'args': {'text': text}}]}
+       'args': {'text': text, "width": width, "height": height}}]}
 
-    comp = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    comp = self.page.web.bs.composite(schema, options={"reset_class": True})
     return comp

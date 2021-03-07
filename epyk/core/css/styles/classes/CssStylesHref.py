@@ -6,15 +6,15 @@ class CssHrefNoDecoration(CssStyle.Style):
   _attrs = {'text-decoration': 'none', 'color': 'inherit'}
 
   def customize(self):
-    self.hover.css({'color': self.rptObj.theme.colors[4]})
+    self.hover.css({'color': self.page.theme.colors[4]})
 
 
 class CssLabelDates(CssStyle.Style):
   _selectors = {'child': 'a'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[5], 'background-image': 'none',
-              'color': self.rptObj.theme.greys[0]}, important=True)
+    self.css({'background-color': self.page.theme.colors[5], 'background-image': 'none',
+              'color': self.page.theme.greys[0]}, important=True)
 
 
 class CssHreftMenu(CssStyle.Style):
@@ -23,7 +23,7 @@ class CssHreftMenu(CssStyle.Style):
   _selectors = {'child': 'a'}
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.colors[5], 'color': self.rptObj.theme.colors[4]})
+    self.css({'background': self.page.theme.colors[5], 'color': self.page.theme.colors[4]})
 
 
 class CssHrefSubMenu(CssStyle.Style):
@@ -31,8 +31,8 @@ class CssHrefSubMenu(CssStyle.Style):
   _selectors = {'child': 'a'}
   
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1]})
-    self.hover.css({'color': self.rptObj.theme.colors[7]})
+    self.css({'color': self.page.theme.greys[-1]})
+    self.hover.css({'color': self.page.theme.colors[7]})
 
 
 class CssSideBarLinks(CssStyle.Style):
@@ -40,7 +40,7 @@ class CssSideBarLinks(CssStyle.Style):
   _hover = {'text-decoration': 'none'}
 
   def customize(self):
-    self.hover.css({'background-color': self.rptObj.theme.greys[2]})
+    self.hover.css({'background-color': self.page.theme.greys[2]})
 
 
 class CssHrefContentLevel1(CssStyle.Style):
@@ -65,13 +65,13 @@ class CssFeedbackLink(CssStyle.Style):
   _hover = {'text-decoration': 'underline'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.greys[2]})
+    self.css({'background-color': self.page.theme.greys[2]})
 
 
 class CssStandardLinks(CssStyle.Style):
   _hover = {'text-decoration': 'underline'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.colors[-1]})
-    self.hover.css({'color': self.rptObj.theme.colors[-1]})
+    self.css({'color': self.page.theme.colors[-1]})
+    self.hover.css({'color': self.page.theme.colors[-1]})
 

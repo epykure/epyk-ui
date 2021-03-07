@@ -8,11 +8,12 @@ from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
 
 
-class Vignets(object):
+class Vignets:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
+  @html.Html.css_skin()
   def bubble(self, records=None, width=(50, "px"), height=(110, 'px'), color=None, background_color=None,
              helper=None, profile=None):
     """
@@ -52,21 +53,21 @@ class Vignets(object):
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    div = self.context.rptObj.ui.div(width=width, height=height, profile=profile, helper=helper)
-    bubble = self.context.rptObj.ui.div(width=width, height=(height[0]-60, height[1]), profile=profile)
-    div.number = self.context.rptObj.ui.text(records["value"], width=width)
+    div = self.page.ui.div(width=width, height=height, profile=profile, helper=helper)
+    bubble = self.page.ui.div(width=width, height=(height[0]-60, height[1]), profile=profile)
+    div.number = self.page.ui.text(records["value"], width=width)
     if records.get("url") is not None:
-      div.title = self.context.rptObj.ui.link(records["title"], url=records['url'], profile=profile)
+      div.title = self.page.ui.link(records["title"], url=records['url'], profile=profile)
       div.title.no_decoration()
     else:
-      div.title = self.context.rptObj.ui.text(records["title"])
+      div.title = self.page.ui.text(records["title"])
     div.title.style.css.bold()
     div.number.style.css.line_height = height[0]-60
     div.number.style.css.text_align = "center"
     div.number.style.css.font_size = height[0]-90
     bubble += div.number
-    bubble.style.css.background_color = background_color or self.context.rptObj.theme.success[1]
-    bubble.style.css.color = color or self.context.rptObj.theme.greys[0]
+    bubble.style.css.background_color = background_color or self.page.theme.success[1]
+    bubble.style.css.color = color or self.page.theme.greys[0]
     bubble.style.css.borders_light()
     bubble.style.css.border_radius = height[0]-60
     bubble.style.css.middle()
@@ -75,6 +76,7 @@ class Vignets(object):
     div += div.title
     return div
 
+  @html.Html.css_skin()
   def number(self, number, label="", width=('auto', ""), height=(None, "px"), profile=None, options=None):
     """
     Description:
@@ -117,12 +119,14 @@ class Vignets(object):
       dflt_options.update(options)
     if 'symbol' in dflt_options:
       dflt_options['type_number'] = 'money'
-      number = self.context.rptObj.py.format_money(number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
+      number = self.page.py.format_money(
+        number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
     else:
-      number = self.context.rptObj.py.format_number(number, digits=dflt_options.get('digits', 0))
-    html_number = html.HtmlTextComp.Number(self.context.rptObj, number, label, width, height, profile, dflt_options)
+      number = self.page.py.format_number(number, digits=dflt_options.get('digits', 0))
+    html_number = html.HtmlTextComp.Number(self.page, number, label, width, height, profile, dflt_options)
     return html_number
 
+  @html.Html.css_skin()
   def block(self, records=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
             helper=None, options=None, profile=None):
     """
@@ -156,10 +160,13 @@ class Vignets(object):
     :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, records, color, border, width, height, helper, options, profile)
+    html_blocktext = html.HtmlTextComp.BlockText(
+      self.page, records, color, border, width, height, helper, options, profile)
     return html_blocktext
 
-  def text(self, records=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def text(self, records=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -184,11 +191,12 @@ class Vignets(object):
     :param options:
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, records, width, height, align, helper, options, profile)
+    html_text = html.HtmlTextComp.TextWithBorder(self.page, records, width, height, align, helper, options, profile)
     return html_text
 
-  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
-            options=None, profile=None):
+  @html.Html.css_skin()
+  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'),
+            height=(None, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -210,59 +218,60 @@ class Vignets(object):
     """
     options = options or {}
     if render == "row":
-      container = self.context.rptObj.ui.row(align=align, width=width, height=height, options=options, profile=profile)
+      container = self.page.ui.row(align=align, width=width, height=height, options=options, profile=profile)
       container.options.responsive = False
       container.style.css.margin = "20px auto"
       if title is not None and not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
       if options.get('picture', 'left') == 'left':
         if image is not None:
           if not hasattr(image, 'options'):
             split_url = os.path.split(image)
-            container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0], profile=profile)
+            container.image = self.page.ui.img(split_url[1], path=split_url[0], profile=profile)
             container.add(container.image)
           else:
             container.image = image
         if title is not None:
-          col = self.context.rptObj.ui.col([title, content])
+          col = self.page.ui.col([title, content])
           col.style.css.padding = 0
           container.add(col)
         else:
           container.add(content)
       else:
         if title is not None:
-          container.add(self.context.rptObj.ui.col([title, content]))
+          container.add(self.page.ui.col([title, content]))
         else:
           container.add(content)
         if image is not None:
           if not hasattr(image, 'options'):
             split_url = os.path.split(image)
-            container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0], profile=profile)
+            container.image = self.page.ui.img(split_url[1], path=split_url[0], profile=profile)
             container.add(container.image)
     else:
-      container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top", profile=profile)
+      container = self.page.ui.col(align=align, width=width, height=height, position="top", profile=profile)
       container.style.css.margin = "20px auto"
       if title is not None and not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
       if image is not None:
         if not hasattr(image, 'options'):
           split_url = os.path.split(image)
-          container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0], profile=profile)
+          container.image = self.page.ui.img(split_url[1], path=split_url[0], profile=profile)
           container.add(container.image)
       if title is not None:
-        container.add(self.context.rptObj.ui.col([title, content]))
+        container.add(self.page.ui.col([title, content]))
       else:
         container.add(content)
     return container
 
+  @html.Html.css_skin()
   def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
             options=None, profile=None):
     """
@@ -293,50 +302,54 @@ class Vignets(object):
     :param options:
     :param profile:
     """
-    def get_video(context, video):
-      if video is not None:
-        if not hasattr(video, 'options'):
-          if not video.startswith('http'):
-            split_url = os.path.split(video)
-            return context.rptObj.ui.media.video(split_url[1], path=split_url[0])
+    def get_video(page, video_link):
+      if video_link is not None:
+        if not hasattr(video_link, 'options'):
+          if not video_link.startswith('http'):
+            split_url = os.path.split(video_link)
+            return page.ui.media.video(split_url[1], path=split_url[0])
 
-          elif 'www.youtube' in video:
-            return context.rptObj.ui.media.youtube(html.HtmlMedia.Youtube.get_embed_link(video))
+          elif 'www.youtube' in video_link:
+            return page.ui.media.youtube(html.HtmlMedia.Youtube.get_embed_link(video_link))
+
       return None
 
     options = options or {}
     if render == "row":
-      container = self.context.rptObj.ui.row(align=align, width=width, height=height, profile=profile)
+      video_content = False
+      container = self.page.ui.row(align=align, width=width, height=height, profile=profile)
       container.style.css.margin = "20px auto"
       if not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
       if options.get('picture', 'left') == 'left':
-        video_content = get_video(self.context, video)
+        video_content = get_video(self.page, video)
+        video_content.style.css.width = None
+        video_content.style.css.height = "100%"
       if video_content:
         container.video = video_content
         container.add(container.video)
-        container.add(self.context.rptObj.ui.col([title, content]))
+        container.add(self.page.ui.col([title, content]))
     else:
-      container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top", profile=profile)
+      container = self.page.ui.col(align=align, width=width, height=height, position="top", profile=profile)
       container.style.css.margin = "20px auto"
       if not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
-
-      video_content = get_video(self.context, video)
+      video_content = get_video(self.page, video)
       if video_content:
         container.video = video_content
         container.add(container.video)
-      container.add(self.context.rptObj.ui.col([title, content]))
+      container.add(self.page.ui.col([title, content]))
     return container
 
+  @html.Html.css_skin()
   def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center",
                  position="middle", options=None, profile=None):
     """
@@ -358,7 +371,7 @@ class Vignets(object):
     :param options:
     :param profile:
     """
-    div = self.context.rptObj.ui.div(height=height, width=width, options=options, profile=profile)
+    div = self.page.ui.div(height=height, width=width, options=options, profile=profile)
     div.style.css.background_url(url, size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
@@ -369,6 +382,7 @@ class Vignets(object):
       div.style.css.display = "block"
     return div
 
+  @html.Html.css_skin()
   def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None,
              profile=None):
     """
@@ -391,48 +405,49 @@ class Vignets(object):
     """
     options = options or {"position": 'left'}
     if render == "col":
-      container = self.context.rptObj.ui.div(align=align, width=width, profile=profile, options=options)
+      container = self.page.ui.div(align=align, width=width, profile=profile, options=options)
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
         title.style.css.text_align = align
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
         content.style.css.text_align = align
       if icon is not None:
         if not hasattr(icon, 'options'):
-          container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px"), profile=profile))
+          container.add(self.page.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px"), profile=profile))
         else:
           container.add(icon)
       container.add(title)
       container.add(content)
     else:
-      container = self.context.rptObj.ui.row(align=align, width=width, position="top", profile=profile, options=options)
+      container = self.page.ui.row(align=align, width=width, position="top", profile=profile, options=options)
       container.options.autoSize = False
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):
-        title = self.context.rptObj.ui.titles.title(title)
+        title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
         title.style.css.text_align = align
       if not hasattr(content, 'options'):
-        content = self.context.rptObj.ui.text(content)
+        content = self.page.ui.text(content)
         content.style.css.display = "block"
         content.style.css.text_align = align
       if icon is not None:
         if not hasattr(icon, 'options'):
-          icon_obj  = self.context.rptObj.ui.icons.awesome(icon, width=(25, "px"), height=(25, "px"), profile=profile)
+          icon_obj = self.page.ui.icons.awesome(icon, width=(25, "px"), height=(25, "px"), profile=profile)
           icon_obj.style.css.margin_top = 20
           icon_obj.style.css.display = "block"
           container.add(icon_obj)
           container[0].attr["class"].add("col-3")
         else:
           container.add(icon)
-      container.add(self.context.rptObj.ui.col([title, content]))
-      container[-1].style.css.border_left = "1px solid %s" % self.context.rptObj.theme.greys[3]
+      container.add(self.page.ui.col([title, content]))
+      container[-1].style.css.border_left = "1px solid %s" % self.page.theme.greys[3]
     return container
 
+  @html.Html.css_skin()
   def price(self, value, title, items, url=None, align="center", width=(250, 'px'), currency="£", options=None,
             profile=None):
     """
@@ -456,32 +471,33 @@ class Vignets(object):
     :param options:
     :param profile:
     """
-    container = self.context.rptObj.ui.div(align=align, width=width, options=options, profile=profile)
-    container.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
+    container = self.page.ui.div(align=align, width=width, options=options, profile=profile)
+    container.style.css.border = "1px solid %s" % self.page.theme.greys[3]
     container.style.css.margin = "auto"
     if not hasattr(title, 'options'):
-      title = self.context.rptObj.ui.titles.title(title)
+      title = self.page.ui.titles.title(title)
       title.style.css.display = "block"
       title.style.css.text_align = align
     container.add(title)
     if not hasattr(value, 'options'):
-      value = self.context.rptObj.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency}, profile=profile)
+      value = self.page.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency}, profile=profile)
       value.style.css.font_size = Defaults_css.font(30)
     container.add(value)
     if url is not None:
-      button = self.context.rptObj.ui.button("Subscribe", align="center", profile=profile)
-      button.style.css.background_color = self.context.rptObj.theme.success[1]
+      button = self.page.ui.button("Subscribe", align="center", profile=profile)
+      button.style.css.background_color = self.page.theme.success[1]
       button.style.css.color = 'white'
       button.style.css.margin_top = 10
       button.style.css.margin_bottom = 10
       container.add(button)
     if not hasattr(items, 'options'):
-      items = self.context.rptObj.ui.lists.icons(items, profile=profile)
+      items = self.page.ui.lists.icons(items, profile=profile)
       items.style.css.margin = "auto 20%"
       items.style.css.text_align = "left"
     container.add(items)
     return container
 
+  @html.Html.css_skin()
   def slides(self, start=0, width=(100, '%'), height=(100, "%"), options=None, profile=None):
     """
     Description:
@@ -503,5 +519,5 @@ class Vignets(object):
     dflt_options = {'markdown': True}
     if options is not None:
       dflt_options.update(options)
-    html_slides = html.HtmlOthers.Slides(self.context.rptObj, start, width, height, dflt_options, profile)
+    html_slides = html.HtmlOthers.Slides(self.page, start, width, height, dflt_options, profile)
     return html_slides

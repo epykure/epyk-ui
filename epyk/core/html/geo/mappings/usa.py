@@ -1,6 +1,4 @@
 
-import json
-
 r = {'Alabama': 'al',
  'Alaska': 'ak',
  'Arizona': 'az',

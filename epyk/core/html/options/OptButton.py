@@ -49,8 +49,8 @@ class OptionsButton(Options):
     return self.get(False)
 
   @multiple.setter
-  def multiple(self, bool):
-    self.set(bool)
+  def multiple(self, flag):
+    self.set(flag)
 
   @property
   def group(self):
@@ -149,8 +149,8 @@ class OptMedia(Options):
     return self.get(True)
 
   @controls.setter
-  def controls(self, bool=True):
-    self.set(bool)
+  def controls(self, flag):
+    self.set(flag)
 
   @property
   def loop(self):
@@ -174,8 +174,8 @@ class OptMedia(Options):
     return self.get(False)
 
   @loop.setter
-  def loop(self, bool=False):
-    self.set(bool)
+  def loop(self, flag):
+    self.set(flag)
 
   @property
   def preload(self):
@@ -231,8 +231,8 @@ class OptMedia(Options):
     return self.get(False)
 
   @muted.setter
-  def muted(self, bool=False):
-    self.set(bool)
+  def muted(self, flag):
+    self.set(flag)
 
   @property
   def poster(self):
@@ -281,8 +281,8 @@ class OptMedia(Options):
     return self.get(True)
 
   @autoplay.setter
-  def autoplay(self, bool=True):
-    self.set(bool)
+  def autoplay(self, flag):
+    self.set(flag)
 
 
 class OptCheckboxes(Options):
@@ -312,8 +312,8 @@ class OptCheckboxes(Options):
     return self._config_get(False)
 
   @all_selected.setter
-  def all_selected(self, bool):
-    self._config(bool)
+  def all_selected(self, flag):
+    self._config(flag)
 
   @property
   def tooltip(self):
@@ -361,8 +361,8 @@ class OptCheck(Options):
     return self._config_get(False)
 
   @disable.setter
-  def disable(self, bool):
-    self._config(bool)
+  def disable(self, flag):
+    self._config(flag)
 
   @property
   def green(self):

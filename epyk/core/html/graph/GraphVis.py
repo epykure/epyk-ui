@@ -12,12 +12,13 @@ from epyk.core.js.packages import JsVis
 class Chart(Html.Html):
   name = 'Vis'
   requirements = ('vis', )
+  _option_cls = OptVis.Options2D
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
+  def __init__(self, report, width, height, html_code, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                css_attrs={"width": width, "height": height})
     self._d3, self._datasets, self._options, self._data_attrs, self._attrs = None, [], None, {}, {}
-    self._options_init = options
     self.style.css.margin_top = 10
     self.style.css.display = "inline-block"
 
@@ -30,6 +31,7 @@ class Chart(Html.Html):
 
     Usage:
     -----
+
     """
     return "%s_obj" % self.htmlCode
 
@@ -44,9 +46,7 @@ class Chart(Html.Html):
 
     :rtype: OptVis.Options2D
     """
-    if self._options is None:
-      self._options = OptVis.Options2D(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
   @property
   def js(self):
@@ -67,7 +67,7 @@ class Chart(Html.Html):
       self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, src=self)
     return self._js
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     """
     Description:
     -----------
@@ -77,14 +77,16 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param data:
-    :param options:
-    :param profile:
+    :param data: String. A String corresponding to a JavaScript object.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
     if data:
-      return JsUtils.jsConvertFncs([self.js.setItems(data[0]), self.js.redraw()], toStr=True)
+      return JsUtils.jsConvertFncs([self.js.setItems(data[0]), self.js.redraw()], toStr=True, profile=profile)
 
-    return '%s; var %s = %s' % (self.groups.toStr(), self.chartId, self.getCtx())
+    return JsUtils.jsConvertFncs(
+      [self.groups.toStr(), "var %s = %s" % (self.chartId, self.getCtx())], toStr=True, profile=profile)
 
   def getCtx(self):
     """
@@ -94,14 +96,14 @@ class Chart(Html.Html):
     raise Exception("Cannot create an object from the Vis base class directly")
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class ChartLine(Chart):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartLine, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps = [], None
     self.options.style = "line"
 
@@ -188,23 +190,24 @@ class ChartLine(Chart):
 
 class ChartBar(ChartLine):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartBar, self).__init__(report, width, height, html_code, options, profile)
     self.options.style = "bar"
 
 
 class ChartScatter(ChartLine):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartScatter, self).__init__(report, width, height, html_code, options, profile)
     self.options.style = "points"
     self.options.drawPoints.style.circle()
 
 
 class Chart3D(Chart):
+  _option_cls = OptVis.Options3D
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Chart3D, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Chart3D, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps = [], None
     self.options.style.surface()
     self.options.showPerspective = True
@@ -223,12 +226,10 @@ class Chart3D(Chart):
     Usage:
     -----
 
-    :return: A Javascript object
-
     :rtype: JsVis.VisGraph3D
     """
     if self._js is None:
-      self._js = JsVis.VisGraph3D(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsVis.VisGraph3D(self._report, varName=self.chartId)
     return self._js
 
   @property
@@ -236,15 +237,17 @@ class Chart3D(Chart):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptVis.Options3D
     """
-    if self._options is None:
-      self._options = OptVis.Options3D(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
   @property
   def groups(self):
@@ -260,21 +263,6 @@ class Chart3D(Chart):
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
     return self.__grps
-
-  @property
-  def js(self):
-    """
-    Description:
-    -----------
-
-    Usage:
-    -----
-
-    :rtype: JsVis.VisGraph3D
-    """
-    if self._js is None:
-      self._js = JsVis.VisGraph3D(self._report, varName=self.chartId)
-    return self._js
 
   def add_items(self, records):
     """
@@ -311,7 +299,7 @@ class Chart3D(Chart):
     self.items.append({"x": x, "y": y, "z": z, 'group': group})
     return self
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     """
     Description:
     -----------
@@ -344,32 +332,33 @@ class Chart3D(Chart):
 
 class Chart3DScatter(Chart3D):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Chart3DScatter, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Chart3DScatter, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps = [], None
     self.options.style.dot()
 
 
 class Chart3DLine(Chart3D):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Chart3DLine, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Chart3DLine, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps = [], None
     self.options.style.line()
 
 
 class Chart3DBar(Chart3D):
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Chart3DBar, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Chart3DBar, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps = [], None
     self.options.style.bar()
 
 
 class ChartNetwork(Chart):
+  _option_cls = OptVis.OptionsNetwork
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartNetwork, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartNetwork, self).__init__(report, width, height, html_code, options, profile)
     self._nodes, self._edges, self.__grps = [], [], None
 
   @property
@@ -383,9 +372,7 @@ class ChartNetwork(Chart):
 
     :rtype: OptVis.OptionsNetwork
     """
-    if self._options is None:
-      self._options = OptVis.OptionsNetwork(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
   @property
   def js(self):
@@ -398,7 +385,7 @@ class ChartNetwork(Chart):
     Usage:
     -----
 
-    :return: A Javascript object
+    :return: A Javascript object.
 
     :rtype: JsVis.VisNetwork
     """
@@ -421,7 +408,7 @@ class ChartNetwork(Chart):
       self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
     return self.__grps
 
-  def add_node(self, label, id=None, group=0):
+  def add_node(self, label, node_id=None, group=0):
     """
     Description:
     ------------
@@ -432,13 +419,13 @@ class ChartNetwork(Chart):
     Attributes:
     ----------
     :param label:
-    :param id:
+    :param node_id:
     :param group:
     """
-    self._nodes.append({'label': label, 'group': group, 'id': id or len(self._nodes)})
+    self._nodes.append({'label': label, 'group': group, 'id': node_id or len(self._nodes)})
     return self
 
-  def add_edge(self, fromId, toId, title=None, relation=None):
+  def add_edge(self, from_Id, to_Id, title=None, relation=None):
     """
     Description:
     -----------
@@ -448,12 +435,12 @@ class ChartNetwork(Chart):
 
     Attributes:
     ----------
-    :param fromId:
-    :param toId:
+    :param from_Id:
+    :param to_Id:
     :param title:
     :param relation:
     """
-    self._edges.append({'from': fromId, 'to': toId})
+    self._edges.append({'from': from_Id, 'to': to_Id})
     return self
 
   def getCtx(self):
@@ -464,17 +451,19 @@ class ChartNetwork(Chart):
     Usage:
     -----
     """
-    return "new vis.Network(%s, %s, %s, %s)" % (self.dom.varId, {"nodes": self._nodes, 'edges': self._edges}, self.groups.varId, self.options)
+    return "new vis.Network(%s, %s, %s, %s)" % (
+      self.dom.varId, {"nodes": self._nodes, 'edges': self._edges}, self.groups.varId, self.options)
 
 
 class ChartTimeline(Chart):
   requirements = ('vis-timeline', )
+  _option_cls = OptVis.OptionsTimeline
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartTimeline, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartTimeline, self).__init__(report, width, height, html_code, options, profile)
     self.items, self.__grps, self.__cats = [], None, None
 
-  def addClassName(self, id, css, css_hover=None):
+  def addClassName(self, name, css, css_hover=None):
     """
     Description:
     ------------
@@ -484,7 +473,7 @@ class ChartTimeline(Chart):
 
     Attributes:
     ----------
-    :param id:
+    :param name:
     :param css:
     :param css_hover:
     """
@@ -493,7 +482,7 @@ class ChartTimeline(Chart):
     class CssHoverColor(CssStyle.Style):
       _attrs = css
       _hover = css_hover or []
-      classname = 'vis-item.%s .vis-item-overflow' % id
+      classname = 'vis-item.%s .vis-item-overflow' % name
 
     self.style.add_classes.custom(CssHoverColor)
     return self
@@ -503,6 +492,7 @@ class ChartTimeline(Chart):
     """
     Description:
     ------------
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -518,15 +508,17 @@ class ChartTimeline(Chart):
     """
     Description:
     ------------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptVis.OptionsTimeline
     """
-    if self._options is None:
-      self._options = OptVis.OptionsTimeline(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
   @property
   def js(self):
@@ -601,8 +593,10 @@ class ChartTimeline(Chart):
     Usage:
     -----
     """
+    # Remove the managed parameter to avoid issue with the library
     if self.__cats is not None:
-      # Remove the managed parameter to avoid issue with the library
-      return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ); %s" % (self.dom.varId, self.items, self.options, self.__cats)
+      return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ); %s" % (
+        self.dom.varId, self.items, self.options, self.__cats)
 
-    return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ))" % (self.dom.varId, self.items, self.options)
+    return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ))" % (
+      self.dom.varId, self.items, self.options)

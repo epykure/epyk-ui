@@ -25,8 +25,8 @@ class DC(JsPackage):
   def x(self):
     return self.fnc("x(d3.scaleLinear().domain([0,20]))")
 
-  def chartGroup(self, group_name):
-    return self.fnc("chartGroup(%s)" % JsUtils.jsConvertFncs(group_name, toStr=True))
+  def chartGroup(self, group_name, profile=False):
+    return self.fnc("chartGroup(%s)" % JsUtils.jsConvertFncs(group_name, toStr=True, profile=profile))
 
   def redrawGroup(self):
     """
@@ -288,12 +288,12 @@ class Series(DC):
     self._sub_chart._selector = "new dc.barChart(c)"
     return self
 
-  def seriesAccessor(self, jsFncs):
+  def seriesAccessor(self, jsFncs, profile=False):
     """
 
     :param jsFncs:
     """
-    return self.fnc("seriesAccessor(function(d) {%s; })" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self.fnc("seriesAccessor(function(d) {%s; })" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
   def seriesAccessorByKey(self, index=None, str_format=None):
     """

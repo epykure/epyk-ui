@@ -4,13 +4,14 @@
 from epyk.core.html import graph
 
 
-class Billboard(object):
-  def __init__(self, context):
-    self.parent = context
+class Billboard:
+  
+  def __init__(self, ui):
+    self.page = ui.page
     self.chartFamily = "BB"
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, htmlCode=None):
+           options=None, html_code=None):
     """
     Description:
     ------------
@@ -32,19 +33,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
-                 height=(330, "px"), options=None, htmlCode=None):
+                 height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -66,20 +67,20 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart._type = "area-line-range"
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
+    line_chart.options.type = "area-line-range"
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, htmlCode=None):
+             options=None, html_code=None):
     """
     Description:
     ------------
@@ -101,12 +102,12 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    bubble_chart = graph.GraphBillboard.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    bubble_chart = graph.GraphBillboard.ChartBubble(self.page, width, height, html_code, options, profile)
     bubble_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       bubble_chart.add_dataset(data['series'][i], d)
@@ -114,7 +115,7 @@ class Billboard(object):
     return bubble_chart
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, htmlCode=None):
+            options=None, html_code=None):
     """
     Description:
     ------------
@@ -136,12 +137,12 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    radar_chart = graph.GraphBillboard.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    radar_chart = graph.GraphBillboard.ChartRadar(self.page, width, height, html_code, options, profile)
     radar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(data['series'][i], d)
@@ -149,7 +150,7 @@ class Billboard(object):
     return radar_chart
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, htmlCode=None):
+             options=None, html_code=None):
     """
     Description:
     ------------
@@ -171,19 +172,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, htmlCode=None):
+           options=None, html_code=None):
     """
     Description:
     ------------
@@ -205,20 +206,20 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart._type = 'step'
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
+    line_chart.options.type = 'step'
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, htmlCode=None):
+           options=None, html_code=None):
     """
     Description:
     ------------
@@ -240,19 +241,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-                options=None, htmlCode=None):
+                options=None, html_code=None):
     """
     Description:
     ------------
@@ -274,20 +275,20 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart._type = "area-step"
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
+    line_chart.options.type = "area-step"
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-                 height=(330, "px"), htmlCode=None):
+                 height=(330, "px"), html_code=None):
     """
     Description:
     ------------
@@ -309,15 +310,15 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
+    line = self.line(record, y_columns, x_axis, profile, width, height, options, html_code)
     line.axis.x.type = "timeseries"
     line.axis.x.tick.format = "%Y-%m-%d"
     return line
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, htmlCode=None):
+          options=None, html_code=None):
     """
     Description:
     ------------
@@ -339,19 +340,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, htmlCode=None):
+              options=None, html_code=None):
     """
     Description:
     ------------
@@ -373,12 +374,12 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.data.groups = [data['series']]
     for i, d in enumerate(data['datasets']):
@@ -386,7 +387,7 @@ class Billboard(object):
     return line_chart
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, htmlCode=None):
+           options=None, html_code=None):
     """
     Description:
     ------------
@@ -408,14 +409,14 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, htmlCode)
+    h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, html_code)
     h_bar.axis.rotated = True
     return h_bar
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, htmlCode=None):
+              options=None, html_code=None):
     """
     Description:
     ------------
@@ -437,19 +438,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    line_chart = graph.GraphBillboard.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    line_chart = graph.GraphBillboard.ChartScatter(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, htmlCode=None):
+          options=None, html_code=None):
     """
     Description:
     ------------
@@ -471,19 +472,19 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    pie_chart = graph.GraphBillboard.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    pie_chart = graph.GraphBillboard.ChartPie(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, htmlCode=None):
+            options=None, html_code=None):
     """
     Description:
     ------------
@@ -505,18 +506,18 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.bb.y(record or [], y_columns, x_axis)
-    pie_chart = graph.GraphBillboard.ChartDonut(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    data = self.page.data.bb.y(record or [], y_columns, x_axis)
+    pie_chart = graph.GraphBillboard.ChartDonut(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
 
-  def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
     """
     Description:
     ------------
@@ -537,8 +538,8 @@ class Billboard(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    g_chart = graph.GraphBillboard.ChartGauge(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    g_chart = graph.GraphBillboard.ChartGauge(self.page, width, height, html_code, options, profile)
     g_chart.add_dataset(text, value)
     return g_chart

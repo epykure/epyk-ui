@@ -7,21 +7,27 @@ from epyk.core.css import Defaults as Defaults_css
 class CssTabulator(CssStyle.Style):
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.greys[0], 'font-family': Defaults_css.Font.family})
+    self.css({
+      'background-color': self.page.theme.greys[0], 'font-family': Defaults_css.Font.family})
 
 
 class CssTabulatorFooter(CssStyle.Style):
   classname = "tabulator-footer"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none', 'background': self.rptObj.theme.greys[0]}, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1],
+      'border': 'none',
+      'background': self.page.theme.greys[0]}, important=True)
 
 
 class CssTabulatorEditing(CssStyle.Style):
   classname = "tabulator-editing input"
 
   def customize(self):
-    self.css({'font-family': Defaults_css.Font.family, 'font-size': "inherit", 'background': 'none', 'border': 'none'}, important=True)
+    self.css({
+      'font-family': Defaults_css.Font.family,
+      'font-size': "inherit", 'background': 'none', 'border': 'none'}, important=True)
 
 
 class CssTabulatorCellEditing(CssStyle.Style):
@@ -49,17 +55,18 @@ class CssTabulatorSelected(CssStyle.Style):
   classname = 'tabulator-selected'
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.success[1], 'color': 'black',
-              'background': self.rptObj.theme.success[0]}, important=True)
+    self.css({
+      'border': '1px solid %s' % self.page.theme.success[1], 'color': 'black',
+      'background': self.page.theme.success[0]}, important=True)
 
 
 class CssTabulatorCol(CssStyle.Style):
   classname = 'tabulator-col'
 
   def customize(self):
-    self.css({'color': self.rptObj.body.style.globals.table.header_color,
-              'border': self.rptObj.body.style.globals.table.header_border,
-              'background': self.rptObj.body.style.globals.table.header_background, 'padding': '1px 0',
+    self.css({'color': self.page.body.style.globals.table.header_color,
+              'border': self.page.body.style.globals.table.header_border,
+              'background': self.page.body.style.globals.table.header_background, 'padding': '1px 0',
               "text-align": 'center'}, important=True)
 
 
@@ -67,32 +74,39 @@ class CssTabulatorColContent(CssStyle.Style):
   classname = 'tabulator-col-content'
 
   def customize(self):
-    self.css({'color': self.rptObj.body.style.globals.table.header_color,
-              'border': '1px solid %s' % self.rptObj.body.style.globals.table.header_background,
-              'background': self.rptObj.body.style.globals.table.header_background})
+    self.css({
+      'color': self.page.body.style.globals.table.header_color,
+      'border': '1px solid %s' % self.page.body.style.globals.table.header_background,
+      'background': self.page.body.style.globals.table.header_background})
 
 
 class CssTabulatorMenu(CssStyle.Style):
   classname = 'tabulator-menu'
 
   def customize(self):
-    self.hover.css({'color': self.rptObj.theme.colors[-1]}, important=True)
+    self.hover.css({'color': self.page.theme.colors[-1]}, important=True)
 
 
 class CssTabulatorMenuItem(CssStyle.Style):
   classname = 'tabulator-menu-item'
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.greys[1], 'color': self.rptObj.theme.greys[-1], 'padding': '2px 10px'}, important=True)
-    self.hover.css({'color': self.rptObj.theme.colors[-1]}, important=True)
+    self.css({
+      'background': self.page.theme.greys[1],
+      'color': self.page.theme.greys[-1], 'padding': '2px 10px'}, important=True)
+    self.hover.css({'color': self.page.theme.colors[-1]}, important=True)
 
 
 class CssTabulatorFooterPagination(CssStyle.Style):
   classname = 'tabulator-page:not(.disabled)'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none', 'background': self.rptObj.theme.greys[0]}, important=True)
-    self.hover.css({'color': self.rptObj.theme.colors[0], 'background': self.rptObj.theme.colors[-1]}, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1], 'border': 'none',
+      'background': self.page.theme.greys[0]}, important=True)
+    self.hover.css({
+      'color': self.page.theme.colors[0],
+      'background': self.page.theme.colors[-1]}, important=True)
 
 
 class CssTabulatorGroups(CssStyle.Style):
@@ -104,18 +118,21 @@ class CssTabulatorEvenRow(CssStyle.Style):
   _selectors = {'child': '.tabulator-row-even'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], #'border': "1px solid %s" % self.rptObj.theme.colors[1],
-              'background-color': self.rptObj.theme.colors[1]}, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1], #'border': "1px solid %s" % self.rptObj.theme.colors[1],
+      'background-color': self.page.theme.colors[1]}, important=True)
 
 
 class CssTabulatorEvenRowNoStrip(CssStyle.Style):
   _selectors = {'child': '.tabulator-row-even'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': "1px solid %s" % self.rptObj.theme.greys[0],
-              'background-color': self.rptObj.theme.greys[0]}, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1],
+      'border': "1px solid %s" % self.page.theme.greys[0],
+      'background-color': self.page.theme.greys[0]}, important=True)
     self.hover.css({#'color': self.rptObj.theme.greys[-1],
-                    'border': "1px solid %s" % self.rptObj.theme.success[1],
+                    'border': "1px solid %s" % self.page.theme.success[1],
                     #'background-color': self.rptObj.theme.colors[1]
     })
 
@@ -124,9 +141,9 @@ class CssTabulatorOddRow(CssStyle.Style):
   classname = 'tabulator-row-odd'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1],
-              'border': "1px solid %s" % self.rptObj.theme.greys[0],
-              'background-color': self.rptObj.theme.greys[0]
+    self.css({'color': self.page.theme.greys[-1],
+              'border': "1px solid %s" % self.page.theme.greys[0],
+              'background-color': self.page.theme.greys[0]
               })
 
 
@@ -134,10 +151,10 @@ class CssTabulatorRow(CssStyle.Style):
   classname = 'tabulator-row'
 
   def customize(self):
-    self.hover.css({'color': self.rptObj.theme.greys[-1],
-                    'border-bottom': "1px solid %s" % self.rptObj.theme.colors[1],
-                    'border-top': "1px solid %s" % self.rptObj.theme.colors[1],
-                    'background-color': self.rptObj.theme.colors[1]
+    self.hover.css({'color': self.page.theme.greys[-1],
+                    'border-bottom': "1px solid %s" % self.page.theme.colors[1],
+                    'border-top': "1px solid %s" % self.page.theme.colors[1],
+                    'background-color': self.page.theme.colors[1]
                     },
                    important=True)
 
@@ -148,8 +165,8 @@ class CssTabulatorCell(CssStyle.Style):
   def customize(self):
     self.css({
       'padding': 0,
-      'border-right': self.rptObj.body.style.globals.table.cell_border_right,
-      'border-bottom': self.rptObj.body.style.globals.table.cell_border_bottom #% self.rptObj.theme.greys[3]
+      'border-right': self.page.body.style.globals.table.cell_border_right,
+      'border-bottom': self.page.body.style.globals.table.cell_border_bottom #% self.rptObj.theme.greys[3]
               }, important=True)
 
 
@@ -157,32 +174,35 @@ class CssTabulatorTreeControl(CssStyle.Style):
   classname = 'tabulator-data-tree-control'
 
   def customize(self):
-    self.css({'border-color': self.rptObj.theme.greys[-1]}, important=True)
+    self.css({'border-color': self.page.theme.greys[-1]}, important=True)
 
 
 class CssTabulatorTreeControlExpand(CssStyle.Style):
   classname = 'tabulator-data-tree-control-expand'
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.greys[-1]}, important=True)
+    self.css({'background': self.page.theme.greys[-1]}, important=True)
 
 
 class CssTabulatorSortAsc(CssStyle.Style):
   classname = 'tabulator-col.tabulator-sortable[aria-sort=asc] .tabulator-arrow'
 
   def customize(self):
-    self.css({'border-bottom': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow_selected}, important=True)
+    self.css({
+      'border-bottom': "6px solid %s" % self.page.body.style.globals.table.sorter_arrow_selected}, important=True)
 
 
 class CssTabulatorSortDesc(CssStyle.Style):
   classname = 'tabulator-col.tabulator-sortable[aria-sort=desc] .tabulator-arrow'
 
   def customize(self):
-    self.css({'border-top': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow_selected}, important=True)
+    self.css({
+      'border-top': "6px solid %s" % self.page.body.style.globals.table.sorter_arrow_selected}, important=True)
 
 
 class CssTabulatorSortNone(CssStyle.Style):
   classname = 'tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-arrow'
 
   def customize(self):
-    self.css({'border-bottom': "6px solid %s" % self.rptObj.body.style.globals.table.sorter_arrow}, important=True)
+    self.css({
+      'border-bottom': "6px solid %s" % self.page.body.style.globals.table.sorter_arrow}, important=True)

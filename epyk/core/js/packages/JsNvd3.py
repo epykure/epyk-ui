@@ -273,22 +273,22 @@ class JsNvd3(JsPackage):
 class JsNvd3Area(JsNvd3):
   chartFnc = "stackedAreaChart"
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       return self.fnc("x(function(d){return d.%s})" % column)
 
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
+      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
       return self.fnc("x(%s)" % jsFnc)
 
     return self
 
-  def y(self, column=None, jsFnc=None):
+  def y(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       return self.fnc("y(function(d){return d.%s})" % column)
 
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
+      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
       return self.fnc("y(%s)" % jsFnc)
 
     return self
@@ -368,36 +368,42 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 class JsNvd3CandlestickBar(JsNvd3):
   chartFnc = "candlestickBarChart"
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None):
+  def y(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
 
 class JsNvd3OhlcBar(JsNvd3):
   chartFnc = "ohlcBarChart"
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None):
+  def y(self, column=None, jsFnc=None, profile=False):
+    """
+
+    :param column:
+    :param jsFnc:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
 
@@ -408,11 +414,11 @@ class JsNvd3Sunburst(JsNvd3):
 class JsNvd3BoxPlot(JsNvd3):
   chartFnc = "boxPlotChart"
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
   def staggerLabels(self, flag):
@@ -543,18 +549,18 @@ class JsNvd3BoxPlot(JsNvd3):
 class JsNvd3Bar(JsNvd3):
   chartFnc = "discreteBarChart"
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None):
+  def y(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
   def color(self, colors):
@@ -833,18 +839,18 @@ class JsNvd3Pie(JsNvd3):
 
     return self.fnc_enum('arcsRadius', JsDataArcRadius)
 
-  def x(self, column=None, jsFnc=None):
+  def x(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None):
+  def y(self, column=None, jsFnc=None, profile=False):
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
   def showLabels(self, flag):

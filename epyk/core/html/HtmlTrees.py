@@ -16,14 +16,16 @@ from epyk.core.css.styles import GrpClsList
 class Tree(Html.Html):
   name = 'List Expandable'
   requirements = ('font-awesome', )
+  _option_cls = OptTrees.OptionsTree
 
-  def __init__(self, report, records, width, height, htmlCode, helper, option, profile):
-    super(Tree, self).__init__(report, records, css_attrs={"width": width, 'height': height})
-    option['is_root'] = True
-    option['icon_open'] = "fas fa-folder-open"
-    option['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
-    self.__options = OptTrees.OptionsTree(self, option)
-    self.css(option['style'])
+  def __init__(self, report, records, width, height, html_code, helper, options, profile):
+    options['is_root'] = True
+    options['icon_open'] = "fas fa-folder-open"
+    options['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
+    super(Tree, self).__init__(report, records, profile=profile, options=options,
+                               css_attrs={"width": width, 'height': height})
+    self.add_helper(helper)
+    self.css(options['style'])
     self._jsStyles['click_node'] = None
 
   @property
@@ -31,6 +33,8 @@ class Tree(Html.Html):
     """
     Description:
     ------------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
     Usage:
     -----
@@ -48,13 +52,17 @@ class Tree(Html.Html):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptTrees.OptionsTree
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = ''' if(options){htmlObj.innerHTML = ''; options.is_root = false};
       data.forEach(function(item, i){
@@ -112,7 +120,7 @@ class Tree(Html.Html):
         htmlObj.appendChild(li)
       })'''
 
-  def click_node(self, js_funcs, profile=False):
+  def click_node(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -127,10 +135,11 @@ class Tree(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile)
     return self
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -143,7 +152,7 @@ class Tree(Html.Html):
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -151,8 +160,8 @@ class Tree(Html.Html):
     return self
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    self.page.properties.js.add_builders(self.refresh())
+    return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class TreeInput(Tree):
@@ -174,7 +183,7 @@ class TreeInput(Tree):
       if l.get('items') is not None:
         sub_l = self._report.ui.list()
         sub_l.options.managed = False
-        ul.add_item(sub_l)[-1].no_decoration
+        ul.add_item(sub_l)[-1].no_decoration()
         ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
         ul[-1].add_icon(self.options.icon_open if self.options.expanded else self.options.icon_close)
         if not self.options.expanded:
@@ -184,28 +193,35 @@ class TreeInput(Tree):
           ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
         self.set(sub_l, l.get('items'))
       else:
-        ul.add_item(self._report.ui.text(l['label']).editable().css({"width": 'none', 'min-width': 'none'}))[-1].no_decoration
+        ul.add_item(self._report.ui.text(l['label']).editable().css(
+          {"width": 'none', 'min-width': 'none'}))[-1].no_decoration()
         ul[-1].css({"color": l.get('color', 'none')})
     return self
 
 
 class DropDown(Html.Html):
-  requirements = ('bootstrap', 'jquery')
+  requirements = ('bootstrap', )
   name = 'DropDown Select'
+  _option_cls = OptTrees.OptDropDown
 
-  def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
-    super(DropDown, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+  def __init__(self, report, data, text, width, height, html_code, helper, options, profile):
+    super(DropDown, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+                                   css_attrs={"width": width, "height": height})
+    self.add_helper(helper)
     self._vals, self.text = data, text
-    self.css({'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
-    self._jsStyles = {"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT, 'padding': '0 10px', "width": '%spx' % options.get("width")},
+    self.css(
+      {'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
+    self._jsStyles = {"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT,
+                            'padding': '0 10px', "width": '%spx' % options.get("width")},
                       "ul": {"left": "%spx" % options.get("width")}}
-    self.__options = OptTrees.OptDropDown(self, options)
 
   @property
   def style(self):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
@@ -221,19 +237,20 @@ class DropDown(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a dropdown.
+    Property to set all the possible object for a DropDown.
 
     Usage:
     -----
 
     :rtype: OptTrees.OptDropDown
     """
-    return self.__options
+    return super().options
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
+    The onclick event occurs when the user clicks on an element.
 
     Usage:
     -----
@@ -241,29 +258,42 @@ class DropDown(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. A Javascript Python function
-    :param profile: Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles['click'] = "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   _js__builder__ = '''
-      var jqHtmlObj = %(jqId)s; if(options.clearDropDown){jqHtmlObj.empty()};
+      if(options.clearDropDown){htmlObj.innerHTML = ""};
       data.forEach(function(rec){
         if (rec.items != undefined) {
-          var li = $('<li class="dropdown" style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); var a = $('<a tabindex=-1>'+ rec.value +'<span class="caret"></span></a>');
-          li.append(a); var ul = $('<ul class="submenu"></ul>'); ul.css(options.ul); options.clearDropDown = false; a.css(options.a);
-          options.builder(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
+          var li = document.createElement("li"); li.classList.add("dropdown"); li.style.listStyleType = 'none'; 
+          li.style.display = 'list-item'; li.style.textAlign = '-webkit-match-parent'; 
+          var a = document.createElement("a"); a.setAttribute('tabindex', -1); 
+          a.appendChild(document.createTextNode(rec.value)); options.clearDropDown = false;
+          var span = document.createElement("span"); span.classList.add("caret"); a.appendChild(span); 
+          li.appendChild(a); 
+          var ul = document.createElement("ul"); ul.classList.add("submenu");
+          if(typeof options.ul !== "undefined"){
+            Object.keys(options.ul).forEach(function(key){ul.style[key] = options.ul[key]})}
+          if(typeof options.a !== "undefined"){
+            Object.keys(options.a).forEach(function(key){a.style[key] = options.a[key]})}
+          options.builder(ul, rec.items, options); li.appendChild(ul); htmlObj.appendChild(li);
         } else {
-          if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
-          else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}; a.css(options.a);
-          a.click(function(event){const value = a.html(); options.click(event, value)} );
-          var li = $('<li style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); li.append(a); jqHtmlObj.append(li)}
-      })''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+          var a = document.createElement("a"); a.innerHTML = rec.value;
+          if(typeof rec.url !== "undefined"){a.href= rec.url}; 
+          if(typeof options.a !== "undefined"){
+            Object.keys(options.a).forEach(function(key){a.style[key] = options.a[key]})}
+          if(typeof options.click !== "undefined"){
+            a.onclick = function(event){const value = a.html(); options.click(event, value)}};
+          var li = document.createElement("li"); li.style.listStyleType = 'none'; li.style.display = 'list-item';
+          li.style.textAlign = '-webkit-match-parent'; li.appendChild(a); htmlObj.appendChild(li)}
+      })'''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return "<ul %s></ul>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    self.page.properties.js.add_builders(self.refresh())
+    return "<ul %s></ul>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)

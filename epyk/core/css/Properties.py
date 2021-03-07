@@ -57,39 +57,39 @@ def autoPrefixer(prop):
     yield "%s%s" % (pref, prop)
 
 
-class CssMixin(object):
+class CssMixin:
 
   @property
-  def align_content(self): return self.htmlObj.css("align-content")
+  def align_content(self): return self.css("align-content")
 
   @align_content.setter
   def align_content(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"align-content": val})
+    self.css({"align-content": val})
 
   @property
-  def align_items(self): return self.htmlObj.css("align-items")
+  def align_items(self): return self.css("align-items")
 
   @align_items.setter
   def align_items(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"align-items": val})
+    self.css({"align-items": val})
 
   @property
-  def align_self(self): return self.htmlObj.css("align-self")
+  def align_self(self): return self.css("align-self")
 
   @align_self.setter
   def align_self(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"align-self": val})
+    self.css({"align-self": val})
 
   @property
-  def all(self): return self.htmlObj.css("all")
+  def all(self): return self.css("all")
 
   @all.setter
   def all(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"all": val})
+    self.css({"all": val})
 
   @property
   def animation(self):
@@ -102,22 +102,22 @@ class CssMixin(object):
 
       https://www.w3schools.com/css/css3_animations.asp
     """
-    return self.htmlObj.css("animation")
+    return self.css("animation")
 
   @animation.setter
   def animation(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation": val})
+      self.css({m_val: val})
+    self.css({"animation": val})
 
   @property
-  def animation_delay(self): return self.htmlObj.css("animation-delay")
+  def animation_delay(self): return self.css("animation-delay")
 
   @animation_delay.setter
   def animation_delay(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"animation-delay": val})
+    self.css({"animation-delay": val})
 
   @property
   def animation_direction(self):
@@ -130,14 +130,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
     """
-    return self.htmlObj.css("animation-direction")
+    return self.css("animation-direction")
 
   @animation_direction.setter
   def animation_direction(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-direction"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation-direction": val})
+      self.css({m_val: val})
+    self.css({"animation-direction": val})
 
   @property
   def animation_duration(self):
@@ -150,14 +150,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
     """
-    return self.htmlObj.css("animation-duration")
+    return self.css("animation-duration")
 
   @animation_duration.setter
   def animation_duration(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-duration"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation-duration": val})
+      self.css({m_val: val})
+    self.css({"animation-duration": val})
 
   @property
   def animation_fill_mode(self):
@@ -176,12 +176,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-fill-mode.asp
     """
-    return self.htmlObj.css("animation-fill-mode")
+    return self.css("animation-fill-mode")
 
   @animation_fill_mode.setter
   def animation_fill_mode(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"animation-fill-mode": val})
+    self.css({"animation-fill-mode": val})
 
   @property
   def animation_iteration_count(self):
@@ -194,14 +194,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
     """
-    return self.htmlObj.css("animation-iteration-count")
+    return self.css("animation-iteration-count")
 
   @animation_iteration_count.setter
   def animation_iteration_count(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-iteration-count"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation-iteration-count": val})
+      self.css({m_val: val})
+    self.css({"animation-iteration-count": val})
 
   @property
   def animation_name(self):
@@ -214,22 +214,22 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-name.asp
     """
-    return self.htmlObj.css("animation-name")
+    return self.css("animation-name")
 
   @animation_name.setter
   def animation_name(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-name"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation-name": val})
+      self.css({m_val: val})
+    self.css({"animation-name": val})
 
   @property
-  def animation_play_state(self): return self.htmlObj.css("animation-play-state")
+  def animation_play_state(self): return self.css("animation-play-state")
 
   @animation_play_state.setter
   def animation_play_state(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"animation-play-state": val})
+    self.css({"animation-play-state": val})
 
   @property
   def animation_timing_function(self):
@@ -242,14 +242,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
     """
-    return self.htmlObj.css("animation-timing-function")
+    return self.css("animation-timing-function")
 
   @animation_timing_function.setter
   def animation_timing_function(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-timing-function"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"animation-timing-function": val})
+      self.css({m_val: val})
+    self.css({"animation-timing-function": val})
 
   @property
   def appearance(self):
@@ -263,13 +263,13 @@ class CssMixin(object):
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
     """
-    return self.htmlObj.css(autoPrefixer("appearance")[0])
+    return self.css(autoPrefixer("appearance")[0])
 
   @appearance.setter
   def appearance(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("appearance"):
-      self.htmlObj.css({m_val: val})
+      self.css({m_val: val})
 
   @property
   def backface_visibility(self):
@@ -282,14 +282,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
     """
-    return self.htmlObj.css("backface-visibility")
+    return self.css("backface-visibility")
 
   @backface_visibility.setter
   def backface_visibility(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("backface-visibility"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"backface-visibility": val})
+      self.css({m_val: val})
+    self.css({"backface-visibility": val})
 
   @property
   def background(self):
@@ -302,36 +302,36 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_background.asp
     """
-    return self.htmlObj.css("background")
+    return self.css("background")
 
   @background.setter
   def background(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background": val})
+    self.css({"background": val})
 
   @property
-  def background_attachment(self): return self.htmlObj.css("background-attachment")
+  def background_attachment(self): return self.css("background-attachment")
 
   @background_attachment.setter
   def background_attachment(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-attachment": val})
+    self.css({"background-attachment": val})
 
   @property
-  def background_blend_mode(self): return self.htmlObj.css("background-blend-mode")
+  def background_blend_mode(self): return self.css("background-blend-mode")
 
   @background_blend_mode.setter
   def background_blend_mode(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-blend-mode": val})
+    self.css({"background-blend-mode": val})
 
   @property
-  def background_clip(self): return self.htmlObj.css("background-clip")
+  def background_clip(self): return self.css("background-clip")
 
   @background_clip.setter
   def background_clip(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-clip": val})
+    self.css({"background-clip": val})
 
   @property
   def background_color(self):
@@ -346,22 +346,23 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_background-color.asp
     """
-    return self.htmlObj.css("background-color")
+    return self.css("background-color")
 
   @background_color.setter
   def background_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-color": val})
+    self.css({"background-color": val})
 
   @property
-  def background_image(self): return self.htmlObj.css("background-image")
+  def background_image(self): return self.css("background-image")
 
   @background_image.setter
   def background_image(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-image": val})
+    self.css({"background-image": val})
 
-  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto", background_position="center"):
+  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto",
+                     background_position="center"):
     """
     Description:
     ------------
@@ -370,26 +371,29 @@ class CssMixin(object):
 
     Attributes:
     ----------
-    :param val: String. The picture url
-    :param size: String. The background size property
-    :param repeat: String. The repeat property
+    :param val: String. Optional. The picture CSS url.
+    :param size: String. Optional. The CSS background size property.
+    :param repeat: String. Optional. The CSS repeat property.
+    :param position: String. Optional. The CSS position.
+    :param margin: String. Optional. The CSS margin.
+    :param background_position: String. Optional. The CSS background position.
     """
     if val is not None:
-      self.htmlObj.css({"background-image": "url(%a)" % val})
-    self.htmlObj.css({"background-size": size})
-    self.htmlObj.css({"background-position": background_position})
-    #self.htmlObj.css({"background-attachment": "fixed"})
-    self.htmlObj.css({"background-repeat": repeat})
-    self.htmlObj.css({"position": position})
-    self.htmlObj.css({"margin": margin})
+      self.css({"background-image": "url(%a)" % val})
+    self.css({"background-size": size})
+    self.css({"background-position": background_position})
+    #self.css({"background-attachment": "fixed"})
+    self.css({"background-repeat": repeat})
+    self.css({"position": position})
+    self.css({"margin": margin})
 
   @property
-  def background_origin(self): return self.htmlObj.css("background-origin")
+  def background_origin(self): return self.css("background-origin")
 
   @background_origin.setter
   def background_origin(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-origin": val})
+    self.css({"background-origin": val})
 
   @property
   def background_position(self):
@@ -402,12 +406,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_background-position.asp
     """
-    return self.htmlObj.css("background-position")
+    return self.css("background-position")
 
   @background_position.setter
   def background_position(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-position": val})
+    self.css({"background-position": val})
 
   @property
   def background_repeat(self):
@@ -420,20 +424,20 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_background-repeat.asp
     """
-    return self.htmlObj.css("background-repeat")
+    return self.css("background-repeat")
 
   @background_repeat.setter
   def background_repeat(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-repeat": val})
+    self.css({"background-repeat": val})
 
   @property
-  def background_size(self): return self.htmlObj.css("background-size")
+  def background_size(self): return self.css("background-size")
 
   @background_size.setter
   def background_size(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"background-size": val})
+    self.css({"background-size": val})
 
   @property
   def border(self):
@@ -453,64 +457,64 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_border.asp
     """
-    return self.htmlObj.css("border")
+    return self.css("border")
 
   @border.setter
   def border(self, val):
     val = val if val is not None else 'None'
     if val is True:
-      val = "1px solid %s" % self.htmlObj._report.theme.greys[3]
-    self.htmlObj.css({"border": val})
+      val = "1px solid %s" % self.component.page.theme.greys[3]
+    self.css({"border": val})
 
   @property
-  def border_bottom(self): return self.htmlObj.css("border-bottom")
+  def border_bottom(self): return self.css("border-bottom")
 
   @border_bottom.setter
   def border_bottom(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-bottom": val})
+    self.css({"border-bottom": val})
 
   @property
-  def border_bottom_color(self): return self.htmlObj.css("border-bottom-color")
+  def border_bottom_color(self): return self.css("border-bottom-color")
 
   @border_bottom_color.setter
   def border_bottom_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-bottom-color": val})
+    self.css({"border-bottom-color": val})
 
   @property
-  def border_bottom_left_radius(self): return self.htmlObj.css("border-bottom-left-radius")
+  def border_bottom_left_radius(self): return self.css("border-bottom-left-radius")
 
   @border_bottom_left_radius.setter
   def border_bottom_left_radius(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-bottom-left-radius": val})
+    self.css({"border-bottom-left-radius": val})
 
   @property
-  def border_bottom_right_radius(self): return self.htmlObj.css("border-bottom-right-radius")
+  def border_bottom_right_radius(self): return self.css("border-bottom-right-radius")
 
   @border_bottom_right_radius.setter
   def border_bottom_right_radius(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-bottom-right-radius": val})
+    self.css({"border-bottom-right-radius": val})
 
   @property
-  def border_bottom_style(self): return self.htmlObj.css("border-bottom-style")
+  def border_bottom_style(self): return self.css("border-bottom-style")
 
   @border_bottom_style.setter
   def border_bottom_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-bottom-style": val})
+    self.css({"border-bottom-style": val})
 
   @property
-  def border_bottom_width(self): return self.htmlObj.css("border-bottom-width")
+  def border_bottom_width(self): return self.css("border-bottom-width")
 
   @border_bottom_width.setter
   def border_bottom_width(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-bottom-width": val})
+    self.css({"border-bottom-width": val})
 
   @property
   def border_collapse(self):
@@ -523,103 +527,103 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_border-collapse.asp
     """
-    return self.htmlObj.css("border-collapse")
+    return self.css("border-collapse")
 
   @border_collapse.setter
   def border_collapse(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-collapse": val})
+    self.css({"border-collapse": val})
 
   @property
-  def border_color(self): return self.htmlObj.css("border-color")
+  def border_color(self): return self.css("border-color")
 
   @border_color.setter
   def border_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-color": val})
+    self.css({"border-color": val})
 
   @property
-  def border_image(self): return self.htmlObj.css("border-image")
+  def border_image(self): return self.css("border-image")
 
   @border_image.setter
   def border_image(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image": val})
+    self.css({"border-image": val})
 
   @property
-  def border_image_outset(self): return self.htmlObj.css("border-image-outset")
+  def border_image_outset(self): return self.css("border-image-outset")
 
   @border_image_outset.setter
   def border_image_outset(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image-outset": val})
+    self.css({"border-image-outset": val})
 
   @property
-  def border_image_repeat(self): return self.htmlObj.css("border-image-repeat")
+  def border_image_repeat(self): return self.css("border-image-repeat")
 
   @border_image_repeat.setter
   def border_image_repeat(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image-repeat": val})
+    self.css({"border-image-repeat": val})
 
   @property
-  def border_image_slice(self): return self.htmlObj.css("border-image-slice")
+  def border_image_slice(self): return self.css("border-image-slice")
 
   @border_image_slice.setter
   def border_image_slice(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image-slice": val})
+    self.css({"border-image-slice": val})
 
   @property
-  def border_image_source(self): return self.htmlObj.css("border-image-source")
+  def border_image_source(self): return self.css("border-image-source")
 
   @border_image_source.setter
   def border_image_source(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image-source": val})
+    self.css({"border-image-source": val})
 
   @property
-  def border_image_width(self): return self.htmlObj.css("border-image-width")
+  def border_image_width(self): return self.css("border-image-width")
 
   @border_image_width.setter
   def border_image_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-image-width": val})
+    self.css({"border-image-width": val})
 
   @property
-  def border_left(self): return self.htmlObj.css("border-left")
+  def border_left(self): return self.css("border-left")
 
   @border_left.setter
   def border_left(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
-      self.htmlObj.css({"border-left": "%spx" % val})
+      self.css({"border-left": "%spx" % val})
     else:
-      self.htmlObj.css({"border-left": val})
+      self.css({"border-left": val})
 
   @property
-  def border_left_color(self): return self.htmlObj.css("border-left-color")
+  def border_left_color(self): return self.css("border-left-color")
 
   @border_left_color.setter
   def border_left_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-left-color": val})
+    self.css({"border-left-color": val})
 
   @property
-  def border_left_style(self): return self.htmlObj.css("border-left-style")
+  def border_left_style(self): return self.css("border-left-style")
 
   @border_left_style.setter
   def border_left_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-left-style": val})
+    self.css({"border-left-style": val})
 
   @property
-  def border_left_width(self): return self.htmlObj.css("border-left-width")
+  def border_left_width(self): return self.css("border-left-width")
 
   @border_left_width.setter
   def border_left_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-left-width": val})
+    self.css({"border-left-width": val})
 
   @property
   def border_radius(self):
@@ -632,46 +636,46 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_border-radius.asp
     """
-    return self.htmlObj.css("border-radius")
+    return self.css("border-radius")
 
   @border_radius.setter
   def border_radius(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-radius": val})
+    self.css({"border-radius": val})
 
   @property
-  def border_right(self): return self.htmlObj.css("border-right")
+  def border_right(self): return self.css("border-right")
 
   @border_right.setter
   def border_right(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-right": val})
+    self.css({"border-right": val})
 
   @property
-  def border_right_color(self): return self.htmlObj.css("border-right-color")
+  def border_right_color(self): return self.css("border-right-color")
 
   @border_right_color.setter
   def border_right_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-right-color": val})
+    self.css({"border-right-color": val})
 
   @property
-  def border_right_style(self): return self.htmlObj.css("border-right-style")
+  def border_right_style(self): return self.css("border-right-style")
 
   @border_right_style.setter
   def border_right_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-right-style": val})
+    self.css({"border-right-style": val})
 
   @property
-  def border_right_width(self): return self.htmlObj.css("border-right-width")
+  def border_right_width(self): return self.css("border-right-width")
 
   @border_right_width.setter
   def border_right_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-right-width": val})
+    self.css({"border-right-width": val})
 
   @property
   def border_spacing(self):
@@ -684,84 +688,84 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_border-spacing.asp
     """
-    return self.htmlObj.css("border-spacing")
+    return self.css("border-spacing")
 
   @border_spacing.setter
   def border_spacing(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-spacing": val})
+    self.css({"border-spacing": val})
 
   @property
-  def border_style(self): return self.htmlObj.css("border-style")
+  def border_style(self): return self.css("border-style")
 
   @border_style.setter
   def border_style(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-style": val})
+    self.css({"border-style": val})
 
   @property
-  def border_top(self): return self.htmlObj.css("border-top")
+  def border_top(self): return self.css("border-top")
 
   @border_top.setter
   def border_top(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-top": val})
+    self.css({"border-top": val})
 
   @property
-  def border_top_color(self): return self.htmlObj.css("border-top-color")
+  def border_top_color(self): return self.css("border-top-color")
 
   @border_top_color.setter
   def border_top_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-top-color": val})
+    self.css({"border-top-color": val})
 
   @property
-  def border_top_left_radius(self): return self.htmlObj.css("border-top-left-radius")
+  def border_top_left_radius(self): return self.css("border-top-left-radius")
 
   @border_top_left_radius.setter
   def border_top_left_radius(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-top-left-radius": val})
+    self.css({"border-top-left-radius": val})
 
   @property
-  def border_top_right_radius(self): return self.htmlObj.css("border-top-right-radius")
+  def border_top_right_radius(self): return self.css("border-top-right-radius")
 
   @border_top_right_radius.setter
   def border_top_right_radius(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-top-right-radius": val})
+    self.css({"border-top-right-radius": val})
 
   @property
-  def border_top_style(self): return self.htmlObj.css("border-top-style")
+  def border_top_style(self): return self.css("border-top-style")
 
   @border_top_style.setter
   def border_top_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"border-top-style": val})
+    self.css({"border-top-style": val})
 
   @property
-  def border_top_width(self): return self.htmlObj.css("border-top-width")
+  def border_top_width(self): return self.css("border-top-width")
 
   @border_top_width.setter
   def border_top_width(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-top-width": val})
+    self.css({"border-top-width": val})
 
   @property
-  def border_width(self): return self.htmlObj.css("border-width")
+  def border_width(self): return self.css("border-width")
 
   @border_width.setter
   def border_width(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"border-width": val})
+    self.css({"border-width": val})
 
   @property
   def bottom(self):
@@ -774,14 +778,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_bottom.asp
     """
-    return self.htmlObj.css("bottom")
+    return self.css("bottom")
 
   @bottom.setter
   def bottom(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"bottom": val})
+    self.css({"bottom": val})
 
   @property
   def box_decoration_break(self):
@@ -794,12 +798,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_box-decoration-break.asp
     """
-    return self.htmlObj.css("box-decoration-break")
+    return self.css("box-decoration-break")
 
   @box_decoration_break.setter
   def box_decoration_break(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"box-decoration-break": val})
+    self.css({"box-decoration-break": val})
 
   @property
   def box_shadow(self):
@@ -812,44 +816,44 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
     """
-    return self.htmlObj.css("box-shadow")
+    return self.css("box-shadow")
 
   @box_shadow.setter
   def box_shadow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"box-shadow": val})
+    self.css({"box-shadow": val})
 
   @property
-  def box_sizing(self): return self.htmlObj.css("box-sizing")
+  def box_sizing(self): return self.css("box-sizing")
 
   @box_sizing.setter
   def box_sizing(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"box-sizing": val})
+    self.css({"box-sizing": val})
 
   @property
-  def caption_side(self): return self.htmlObj.css("caption-side")
+  def caption_side(self): return self.css("caption-side")
 
   @caption_side.setter
   def caption_side(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"caption-side": val})
+    self.css({"caption-side": val})
 
   @property
-  def caret_color(self): return self.htmlObj.css("caret-color")
+  def caret_color(self): return self.css("caret-color")
 
   @caret_color.setter
   def caret_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"caret-color": val})
+    self.css({"caret-color": val})
 
   @property
-  def clear(self): return self.htmlObj.css("clear")
+  def clear(self): return self.css("clear")
 
   @clear.setter
   def clear(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"clear": val})
+    self.css({"clear": val})
 
   @property
   def clip(self):
@@ -864,20 +868,20 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_clip.asp
     """
-    return self.htmlObj.css("clip")
+    return self.css("clip")
 
   @clip.setter
   def clip(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"clip": val})
+    self.css({"clip": val})
 
   @property
-  def clip_path(self): return self.htmlObj.css("clip-path")
+  def clip_path(self): return self.css("clip-path")
 
   @clip_path.setter
   def clip_path(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"clip-path": val})
+    self.css({"clip-path": val})
 
   @property
   def color(self):
@@ -892,116 +896,116 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_text_color.asp
     """
-    return self.htmlObj.css("color")
+    return self.css("color")
 
   @color.setter
   def color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"color": val})
+    self.css({"color": val})
 
   @property
-  def column_count(self): return self.htmlObj.css("column-count")
+  def column_count(self): return self.css("column-count")
 
   @column_count.setter
   def column_count(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-count": val})
+    self.css({"column-count": val})
 
   @property
-  def column_fill(self): return self.htmlObj.css("column-fill")
+  def column_fill(self): return self.css("column-fill")
 
   @column_fill.setter
   def column_fill(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-fill": val})
+    self.css({"column-fill": val})
 
   @property
-  def column_gap(self): return self.htmlObj.css("column-gap")
+  def column_gap(self): return self.css("column-gap")
 
   @column_gap.setter
   def column_gap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-gap": val})
+    self.css({"column-gap": val})
 
   @property
-  def column_rule(self): return self.htmlObj.css("column-rule")
+  def column_rule(self): return self.css("column-rule")
 
   @column_rule.setter
   def column_rule(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-rule": val})
+    self.css({"column-rule": val})
 
   @property
-  def column_rule_color(self): return self.htmlObj.css("column-rule-color")
+  def column_rule_color(self): return self.css("column-rule-color")
 
   @column_rule_color.setter
   def column_rule_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-rule-color": val})
+    self.css({"column-rule-color": val})
 
   @property
-  def column_rule_style(self): return self.htmlObj.css("column-rule-style")
+  def column_rule_style(self): return self.css("column-rule-style")
 
   @column_rule_style.setter
   def column_rule_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-rule-style": val})
+    self.css({"column-rule-style": val})
 
   @property
-  def column_rule_width(self): return self.htmlObj.css("column-rule-width")
+  def column_rule_width(self): return self.css("column-rule-width")
 
   @column_rule_width.setter
   def column_rule_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-rule-width": val})
+    self.css({"column-rule-width": val})
 
   @property
-  def column_span(self): return self.htmlObj.css("column-span")
+  def column_span(self): return self.css("column-span")
 
   @column_span.setter
   def column_span(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-span": val})
+    self.css({"column-span": val})
 
   @property
-  def column_width(self): return self.htmlObj.css("column-width")
+  def column_width(self): return self.css("column-width")
 
   @column_width.setter
   def column_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"column-width": val})
+    self.css({"column-width": val})
 
   @property
-  def columns(self): return self.htmlObj.css("columns")
+  def columns(self): return self.css("columns")
 
   @columns.setter
   def columns(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"columns": val})
+    self.css({"columns": val})
 
   @property
-  def content(self): return self.htmlObj.css("content")
+  def content(self): return self.css("content")
 
   @content.setter
   def content(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"content": val})
+    self.css({"content": val})
 
   @property
-  def counter_increment(self): return self.htmlObj.css("counter-increment")
+  def counter_increment(self): return self.css("counter-increment")
 
   @counter_increment.setter
   def counter_increment(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"counter-increment": val})
+    self.css({"counter-increment": val})
 
   @property
-  def counter_reset(self): return self.htmlObj.css("counter-reset")
+  def counter_reset(self): return self.css("counter-reset")
 
   @counter_reset.setter
   def counter_reset(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"counter-reset": val})
+    self.css({"counter-reset": val})
 
   @property
   def cursor(self):
@@ -1014,20 +1018,20 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_class_cursor.asp
     """
-    return self.htmlObj.css("cursor")
+    return self.css("cursor")
 
   @cursor.setter
   def cursor(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"cursor": val})
+    self.css({"cursor": val})
 
   @property
-  def direction(self): return self.htmlObj.css("direction")
+  def direction(self): return self.css("direction")
 
   @direction.setter
   def direction(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"direction": val})
+    self.css({"direction": val})
 
   @property
   def display(self):
@@ -1042,86 +1046,86 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_class_display.asp
     """
-    return self.htmlObj.css("display")
+    return self.css("display")
 
   @display.setter
   def display(self, val):
     val = val if val is not None else 'None'
     if val is False:
       val = 'None'
-    self.htmlObj.css({"display": val})
+    self.css({"display": val})
 
   @property
-  def empty_cells(self): return self.htmlObj.css("empty-cells")
+  def empty_cells(self): return self.css("empty-cells")
 
   @empty_cells.setter
   def empty_cells(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"empty-cells": val})
+    self.css({"empty-cells": val})
 
   @property
-  def filter(self): return self.htmlObj.css("filter")
+  def filter(self): return self.css("filter")
 
   @filter.setter
   def filter(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"filter": val})
+    self.css({"filter": val})
 
   @property
-  def flex(self): return self.htmlObj.css("flex")
+  def flex(self): return self.css("flex")
 
   @flex.setter
   def flex(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex": val})
+    self.css({"flex": val})
 
   @property
-  def flex_basis(self): return self.htmlObj.css("flex-basis")
+  def flex_basis(self): return self.css("flex-basis")
 
   @flex_basis.setter
   def flex_basis(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-basis": val})
+    self.css({"flex-basis": val})
 
   @property
-  def flex_direction(self): return self.htmlObj.css("flex-direction")
+  def flex_direction(self): return self.css("flex-direction")
 
   @flex_direction.setter
   def flex_direction(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-direction": val})
+    self.css({"flex-direction": val})
 
   @property
-  def flex_flow(self): return self.htmlObj.css("flex-flow")
+  def flex_flow(self): return self.css("flex-flow")
 
   @flex_flow.setter
   def flex_flow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-flow": val})
+    self.css({"flex-flow": val})
 
   @property
-  def flex_grow(self): return self.htmlObj.css("flex-grow")
+  def flex_grow(self): return self.css("flex-grow")
 
   @flex_grow.setter
   def flex_grow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-grow": val})
+    self.css({"flex-grow": val})
 
   @property
-  def flex_shrink(self): return self.htmlObj.css("flex-shrink")
+  def flex_shrink(self): return self.css("flex-shrink")
 
   @flex_shrink.setter
   def flex_shrink(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-shrink": val})
+    self.css({"flex-shrink": val})
 
   @property
-  def flex_wrap(self): return self.htmlObj.css("flex-wrap")
+  def flex_wrap(self): return self.css("flex-wrap")
 
   @flex_wrap.setter
   def flex_wrap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"flex-wrap": val})
+    self.css({"flex-wrap": val})
 
   @property
   def float(self):
@@ -1134,7 +1138,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_class_float.asp
     """
-    return self.htmlObj.css("float")
+    return self.css("float")
 
   @float.setter
   def float(self, val):
@@ -1143,15 +1147,15 @@ class CssMixin(object):
     if Defaults_css.CSS_EXCEPTIONS and val not in defined_vals:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))
 
-    self.htmlObj.css({"float": val})
+    self.css({"float": val})
 
   @property
-  def font(self): return self.htmlObj.css("font")
+  def font(self): return self.css("font")
 
   @font.setter
   def font(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font": val})
+    self.css({"font": val})
 
   @property
   def font_family(self):
@@ -1164,22 +1168,22 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_font_font-family.asp
     """
-    return self.htmlObj.css("font-family")
+    return self.css("font-family")
 
   @font_family.setter
   def font_family(self, val):
     val = val if val is not None else 'None'
-    if val not in self.htmlObj._report._props['css']["font-face"] and val in FontFamily.GoogleFonts.fonts:
-      self.htmlObj._report.headers.links.stylesheet(FontFamily.GoogleFonts.href % val)
-    self.htmlObj.css({"font-family": val})
+    if val not in self.component.page._props['css']["font-face"] and val in FontFamily.GoogleFonts.fonts:
+      self.component.page.headers.links.stylesheet(FontFamily.GoogleFonts.href % val)
+    self.css({"font-family": val})
 
   @property
-  def font_kerning(self): return self.htmlObj.css("font-kerning")
+  def font_kerning(self): return self.css("font-kerning")
 
   @font_kerning.setter
   def font_kerning(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-kerning": val})
+    self.css({"font-kerning": val})
 
   @property
   def font_size(self):
@@ -1192,46 +1196,46 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_font_font-size.asp
     """
-    return self.htmlObj.css("font-size")
+    return self.css("font-size")
 
   @font_size.setter
   def font_size(self, val):
     if isinstance(val, int):
       val = "%spx" % val
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-size": val})
+    self.css({"font-size": val})
 
   @property
-  def font_size_adjust(self): return self.htmlObj.css("font-size-adjust")
+  def font_size_adjust(self): return self.css("font-size-adjust")
 
   @font_size_adjust.setter
   def font_size_adjust(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-size-adjust": val})
+    self.css({"font-size-adjust": val})
 
   @property
-  def font_stretch(self): return self.htmlObj.css("font-stretch")
+  def font_stretch(self): return self.css("font-stretch")
 
   @font_stretch.setter
   def font_stretch(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-stretch": val})
+    self.css({"font-stretch": val})
 
   @property
-  def font_style(self): return self.htmlObj.css("font-style")
+  def font_style(self): return self.css("font-style")
 
   @font_style.setter
   def font_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-style": val})
+    self.css({"font-style": val})
 
   @property
-  def font_variant(self): return self.htmlObj.css("font-variant")
+  def font_variant(self): return self.css("font-variant")
 
   @font_variant.setter
   def font_variant(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-variant": val})
+    self.css({"font-variant": val})
 
   @property
   def font_weight(self):
@@ -1244,164 +1248,164 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_font_weight.asp
     """
-    return self.htmlObj.css("font-weight")
+    return self.css("font-weight")
 
   @font_weight.setter
   def font_weight(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"font-weight": val})
+    self.css({"font-weight": val})
 
   @property
-  def grid(self): return self.htmlObj.css("grid")
+  def grid(self): return self.css("grid")
 
   @grid.setter
   def grid(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid": val})
+    self.css({"grid": val})
 
   @property
-  def grid_area(self): return self.htmlObj.css("grid-area")
+  def grid_area(self): return self.css("grid-area")
 
   @grid_area.setter
   def grid_area(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-area": val})
+    self.css({"grid-area": val})
 
   @property
-  def grid_auto_columns(self): return self.htmlObj.css("grid-auto-columns")
+  def grid_auto_columns(self): return self.css("grid-auto-columns")
 
   @grid_auto_columns.setter
   def grid_auto_columns(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-auto-columns": val})
+    self.css({"grid-auto-columns": val})
 
   @property
-  def grid_auto_flow(self): return self.htmlObj.css("grid-auto-flow")
+  def grid_auto_flow(self): return self.css("grid-auto-flow")
 
   @grid_auto_flow.setter
   def grid_auto_flow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-auto-flow": val})
+    self.css({"grid-auto-flow": val})
 
   @property
-  def grid_auto_rows(self): return self.htmlObj.css("grid-auto-rows")
+  def grid_auto_rows(self): return self.css("grid-auto-rows")
 
   @grid_auto_rows.setter
   def grid_auto_rows(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-auto-rows": val})
+    self.css({"grid-auto-rows": val})
 
   @property
-  def grid_column(self): return self.htmlObj.css("grid-column")
+  def grid_column(self): return self.css("grid-column")
 
   @grid_column.setter
   def grid_column(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-column": val})
+    self.css({"grid-column": val})
 
   @property
-  def grid_column_end(self): return self.htmlObj.css("grid-column-end")
+  def grid_column_end(self): return self.css("grid-column-end")
 
   @grid_column_end.setter
   def grid_column_end(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-column-end": val})
+    self.css({"grid-column-end": val})
 
   @property
-  def grid_column_gap(self): return self.htmlObj.css("grid-column-gap")
+  def grid_column_gap(self): return self.css("grid-column-gap")
 
   @grid_column_gap.setter
   def grid_column_gap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-column-gap": val})
+    self.css({"grid-column-gap": val})
 
   @property
-  def grid_column_start(self): return self.htmlObj.css("grid-column-start")
+  def grid_column_start(self): return self.css("grid-column-start")
 
   @grid_column_start.setter
   def grid_column_start(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-column-start": val})
+    self.css({"grid-column-start": val})
 
   @property
-  def grid_gap(self): return self.htmlObj.css("grid-gap")
+  def grid_gap(self): return self.css("grid-gap")
 
   @grid_gap.setter
   def grid_gap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-gap": val})
+    self.css({"grid-gap": val})
 
   @property
-  def grid_row(self): return self.htmlObj.css("grid-row")
+  def grid_row(self): return self.css("grid-row")
 
   @grid_row.setter
   def grid_row(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-row": val})
+    self.css({"grid-row": val})
 
   @property
-  def grid_row_end(self): return self.htmlObj.css("grid-row-end")
+  def grid_row_end(self): return self.css("grid-row-end")
 
   @grid_row_end.setter
   def grid_row_end(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-row-end": val})
+    self.css({"grid-row-end": val})
 
   @property
-  def grid_row_gap(self): return self.htmlObj.css("grid-row-gap")
+  def grid_row_gap(self): return self.css("grid-row-gap")
 
   @grid_row_gap.setter
   def grid_row_gap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-row-gap": val})
+    self.css({"grid-row-gap": val})
 
   @property
-  def grid_row_start(self): return self.htmlObj.css("grid-row-start")
+  def grid_row_start(self): return self.css("grid-row-start")
 
   @grid_row_start.setter
   def grid_row_start(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-row-start": val})
+    self.css({"grid-row-start": val})
 
   @property
-  def grid_template(self): return self.htmlObj.css("grid-template")
+  def grid_template(self): return self.css("grid-template")
 
   @grid_template.setter
   def grid_template(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-template": val})
+    self.css({"grid-template": val})
 
   @property
-  def grid_template_areas(self): return self.htmlObj.css("grid-template-areas")
+  def grid_template_areas(self): return self.css("grid-template-areas")
 
   @grid_template_areas.setter
   def grid_template_areas(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-template-areas": val})
+    self.css({"grid-template-areas": val})
 
   @property
-  def grid_template_columns(self): return self.htmlObj.css("grid-template-columns")
+  def grid_template_columns(self): return self.css("grid-template-columns")
 
   @grid_template_columns.setter
   def grid_template_columns(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-template-columns": val})
+    self.css({"grid-template-columns": val})
 
   @property
-  def grid_template_rows(self): return self.htmlObj.css("grid-template-rows")
+  def grid_template_rows(self): return self.css("grid-template-rows")
 
   @grid_template_rows.setter
   def grid_template_rows(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"grid-template-rows": val})
+    self.css({"grid-template-rows": val})
 
   @property
-  def hanging_punctuation(self): return self.htmlObj.css("hanging-punctuation")
+  def hanging_punctuation(self): return self.css("hanging-punctuation")
 
   @hanging_punctuation.setter
   def hanging_punctuation(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"hanging-punctuation": val})
+    self.css({"hanging-punctuation": val})
 
   @property
   def height(self):
@@ -1416,36 +1420,36 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_dim_height.asp
     """
-    return self.htmlObj.css("height")
+    return self.css("height")
 
   @height.setter
   def height(self, val):
     if val is False:
-      if "height" in self.htmlObj.attrs:
-        del self.htmlObj.attrs['height']
-      if "height" in self.htmlObj.orign_htmlObj.attr["css"]:
-        del self.htmlObj.orign_htmlObj.attr["css"]["height"]
+      if "height" in self.attrs:
+        del self.attrs['height']
+      if "height" in self.component.attr["css"]:
+        del self.component.attr["css"]["height"]
     else:
       val = val if val is not None else 'None'
       if isinstance(val, int):
         val = "%spx" % val
-      self.htmlObj.css({"height": val})
+      self.css({"height": val})
 
   @property
-  def hyphens(self): return self.htmlObj.css("hyphens")
+  def hyphens(self): return self.css("hyphens")
 
   @hyphens.setter
   def hyphens(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"hyphens": val})
+    self.css({"hyphens": val})
 
   @property
-  def isolation(self): return self.htmlObj.css("isolation")
+  def isolation(self): return self.css("isolation")
 
   @isolation.setter
   def isolation(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"isolation": val})
+    self.css({"isolation": val})
 
   @property
   def justify_content(self):
@@ -1459,13 +1463,13 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_justify-content.asp
     """
-    return self.htmlObj.css("justify-content")
+    return self.css("justify-content")
 
   @justify_content.setter
   def justify_content(self, val):
     vals = set(["flex-start", "flex-end", "center", "space-between", "space-around", "initial", "inherit"])
     val = val if val is not None else 'None'
-    self.htmlObj.css({"justify-content": val})
+    self.css({"justify-content": val})
 
   @property
   def left(self):
@@ -1478,24 +1482,24 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_left.asp
     """
-    return self.htmlObj.css("left")
+    return self.css("left")
 
   @left.setter
   def left(self, val):
     if isinstance(val, int):
       val = "%spx" % val
     val = val if val is not None else 'None'
-    self.htmlObj.css({"left": val})
+    self.css({"left": val})
 
   @property
-  def letter_spacing(self): return self.htmlObj.css("letter-spacing")
+  def letter_spacing(self): return self.css("letter-spacing")
 
   @letter_spacing.setter
   def letter_spacing(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"letter-spacing": val})
+    self.css({"letter-spacing": val})
 
   @property
   def line_height(self):
@@ -1510,7 +1514,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_dim_line-height.asp
     """
-    return self.htmlObj.css("line-height")
+    return self.css("line-height")
 
   @line_height.setter
   def line_height(self, val):
@@ -1520,39 +1524,39 @@ class CssMixin(object):
       if isinstance(val, int):
         val = "%spx" % val
       val = val if val is not None else 'None'
-      self.htmlObj.css({"line-height": val})
+      self.css({"line-height": val})
 
   @property
-  def list_style(self): return self.htmlObj.css("list-style")
+  def list_style(self): return self.css("list-style")
 
   @list_style.setter
   def list_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"list-style": val})
+    self.css({"list-style": val})
 
   @property
-  def list_style_image(self): return self.htmlObj.css("list-style-image")
+  def list_style_image(self): return self.css("list-style-image")
 
   @list_style_image.setter
   def list_style_image(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"list-style-image": val})
+    self.css({"list-style-image": val})
 
   @property
-  def list_style_position(self): return self.htmlObj.css("list-style-position")
+  def list_style_position(self): return self.css("list-style-position")
 
   @list_style_position.setter
   def list_style_position(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"list-style-position": val})
+    self.css({"list-style-position": val})
 
   @property
-  def list_style_type(self): return self.htmlObj.css("list-style-type")
+  def list_style_type(self): return self.css("list-style-type")
 
   @list_style_type.setter
   def list_style_type(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"list-style-type": val})
+    self.css({"list-style-type": val})
 
   @property
   def margin(self):
@@ -1569,7 +1573,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_margin.asp
     """
-    return self.htmlObj.css("margin")
+    return self.css("margin")
 
   @margin.setter
   def margin(self, val):
@@ -1579,7 +1583,7 @@ class CssMixin(object):
       if isinstance(val, int):
         val = "%spx" % val
       val = val if val is not None else 'None'
-      self.htmlObj.css({"margin": val})
+      self.css({"margin": val})
 
   @property
   def margin_bottom(self):
@@ -1594,14 +1598,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_margin-bottom.asp
     """
-    return self.htmlObj.css("margin-bottom")
+    return self.css("margin-bottom")
 
   @margin_bottom.setter
   def margin_bottom(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"margin-bottom": val})
+    self.css({"margin-bottom": val})
 
   @property
   def margin_left(self):
@@ -1616,14 +1620,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_margin-left.asp
     """
-    return self.htmlObj.css("margin-left")
+    return self.css("margin-left")
 
   @margin_left.setter
   def margin_left(self, val):
     if isinstance(val, int):
       val = "%spx" % val
     val = val if val is not None else 'None'
-    self.htmlObj.css({"margin-left": val})
+    self.css({"margin-left": val})
 
   @property
   def margin_right(self):
@@ -1638,14 +1642,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_margin-right.asp
     """
-    return self.htmlObj.css("margin-right")
+    return self.css("margin-right")
 
   @margin_right.setter
   def margin_right(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"margin-right": val})
+    self.css({"margin-right": val})
 
   @property
   def margin_top(self):
@@ -1660,17 +1664,17 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_margin-top.asp
     """
-    return self.htmlObj.css("margin-top")
+    return self.css("margin-top")
 
   @margin_top.setter
   def margin_top(self, val):
     if isinstance(val, int):
       val = "%spx" % val
     val = val if val is not None else 'None'
-    self.htmlObj.css({"margin-top": val})
+    self.css({"margin-top": val})
 
   @property
-  def max_height(self): return self.htmlObj.css("max-height")
+  def max_height(self): return self.css("max-height")
 
   @max_height.setter
   def max_height(self, val):
@@ -1678,17 +1682,17 @@ class CssMixin(object):
     if isinstance(val, int):
       val = "%spx" % val
     self.overflow_y = "auto"
-    self.htmlObj.css({"max-height": val})
+    self.css({"max-height": val})
 
   @property
-  def max_width(self): return self.htmlObj.css("max-width")
+  def max_width(self): return self.css("max-width")
 
   @max_width.setter
   def max_width(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"max-width": val})
+    self.css({"max-width": val})
 
   @property
   def min_height(self):
@@ -1701,48 +1705,48 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_dim_min-height.asp
     """
-    return self.htmlObj.css("min-height")
+    return self.css("min-height")
 
   @min_height.setter
   def min_height(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"min-height": val})
+    self.css({"min-height": val})
 
   @property
-  def min_width(self): return self.htmlObj.css("min-width")
+  def min_width(self): return self.css("min-width")
 
   @min_width.setter
   def min_width(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"min-width": val})
+    self.css({"min-width": val})
 
   @property
-  def mix_blend_mode(self): return self.htmlObj.css("mix-blend-mode")
+  def mix_blend_mode(self): return self.css("mix-blend-mode")
 
   @mix_blend_mode.setter
   def mix_blend_mode(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"mix-blend-mode": val})
+    self.css({"mix-blend-mode": val})
 
   @property
-  def object_fit(self): return self.htmlObj.css("object-fit")
+  def object_fit(self): return self.css("object-fit")
 
   @object_fit.setter
   def object_fit(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"object-fit": val})
+    self.css({"object-fit": val})
 
   @property
-  def object_position(self): return self.htmlObj.css("object-position")
+  def object_position(self): return self.css("object-position")
 
   @object_position.setter
   def object_position(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"object-position": val})
+    self.css({"object-position": val})
 
   @property
   def opacity(self):
@@ -1757,60 +1761,60 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_opacity.asp
     """
-    return self.htmlObj.css("opacity")
+    return self.css("opacity")
 
   @opacity.setter
   def opacity(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"opacity": val})
+    self.css({"opacity": val})
 
   @property
-  def order(self): return self.htmlObj.css("order")
+  def order(self): return self.css("order")
 
   @order.setter
   def order(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"order": val})
+    self.css({"order": val})
 
   @property
-  def outline(self): return self.htmlObj.css("outline")
+  def outline(self): return self.css("outline")
 
   @outline.setter
   def outline(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"outline": val})
+    self.css({"outline": val})
 
   @property
-  def outline_color(self): return self.htmlObj.css("outline-color")
+  def outline_color(self): return self.css("outline-color")
 
   @outline_color.setter
   def outline_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"outline-color": val})
+    self.css({"outline-color": val})
 
   @property
-  def outline_offset(self): return self.htmlObj.css("outline-offset")
+  def outline_offset(self): return self.css("outline-offset")
 
   @outline_offset.setter
   def outline_offset(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"outline-offset": val})
+    self.css({"outline-offset": val})
 
   @property
-  def outline_style(self): return self.htmlObj.css("outline-style")
+  def outline_style(self): return self.css("outline-style")
 
   @outline_style.setter
   def outline_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"outline-style": val})
+    self.css({"outline-style": val})
 
   @property
-  def outline_width(self): return self.htmlObj.css("outline-width")
+  def outline_width(self): return self.css("outline-width")
 
   @outline_width.setter
   def outline_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"outline-width": val})
+    self.css({"outline-width": val})
 
   @property
   def overflow(self):
@@ -1829,12 +1833,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_overflow.asp
     """
-    return self.htmlObj.css("overflow")
+    return self.css("overflow")
 
   @overflow.setter
   def overflow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"overflow": val})
+    self.css({"overflow": val})
 
   @property
   def overflow_x(self):
@@ -1847,12 +1851,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_overflow-x.asp
     """
-    return self.htmlObj.css("overflow-x")
+    return self.css("overflow-x")
 
   @overflow_x.setter
   def overflow_x(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"overflow-x": val})
+    self.css({"overflow-x": val})
 
   @property
   def overflow_y(self):
@@ -1865,12 +1869,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_overflow-y.asp
     """
-    return self.htmlObj.css("overflow-y")
+    return self.css("overflow-y")
 
   @overflow_y.setter
   def overflow_y(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"overflow-y": val})
+    self.css({"overflow-y": val})
 
   @property
   def padding(self):
@@ -1883,14 +1887,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/css/css_padding.asp
     """
-    return self.htmlObj.css("padding")
+    return self.css("padding")
 
   @padding.setter
   def padding(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"padding": val})
+    self.css({"padding": val})
 
   @property
   def padding_bottom(self):
@@ -1905,14 +1909,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_padding-bottom.asp
     """
-    return self.htmlObj.css("padding-bottom")
+    return self.css("padding-bottom")
 
   @padding_bottom.setter
   def padding_bottom(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"padding-bottom": val})
+    self.css({"padding-bottom": val})
 
   @property
   def padding_left(self):
@@ -1927,14 +1931,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_padding-left.asp
     """
-    return self.htmlObj.css("padding-left")
+    return self.css("padding-left")
 
   @padding_left.setter
   def padding_left(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"padding-left": val})
+    self.css({"padding-left": val})
 
   @property
   def padding_right(self):
@@ -1947,14 +1951,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_padding-right.asp
     """
-    return self.htmlObj.css("padding-right")
+    return self.css("padding-right")
 
   @padding_right.setter
   def padding_right(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"padding-right": val})
+    self.css({"padding-right": val})
 
   @property
   def padding_top(self):
@@ -1969,64 +1973,64 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_padding-top.asp
     """
-    return self.htmlObj.css("padding-top")
+    return self.css("padding-top")
 
   @padding_top.setter
   def padding_top(self, val):
     if isinstance(val, int):
       val = "%spx" % val
     val = val if val is not None else 'None'
-    self.htmlObj.css({"padding-top": val})
+    self.css({"padding-top": val})
 
   @property
-  def page_break_after(self): return self.htmlObj.css("page-break-after")
+  def page_break_after(self): return self.css("page-break-after")
 
   @page_break_after.setter
   def page_break_after(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"page-break-after": val})
+    self.css({"page-break-after": val})
 
   @property
-  def page_break_before(self): return self.htmlObj.css("page-break-before")
+  def page_break_before(self): return self.css("page-break-before")
 
   @page_break_before.setter
   def page_break_before(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"page-break-before": val})
+    self.css({"page-break-before": val})
 
   @property
-  def page_break_inside(self): return self.htmlObj.css("page-break-inside")
+  def page_break_inside(self): return self.css("page-break-inside")
 
   @page_break_inside.setter
   def page_break_inside(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"page-break-inside": val})
+    self.css({"page-break-inside": val})
 
   @property
-  def perspective(self): return self.htmlObj.css("perspective")
+  def perspective(self): return self.css("perspective")
 
   @perspective.setter
   def perspective(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"perspective": val})
+    self.css({"perspective": val})
 
   @property
-  def perspective_origin(self): return self.htmlObj.css("perspective-origin")
+  def perspective_origin(self): return self.css("perspective-origin")
 
   @perspective_origin.setter
   def perspective_origin(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"perspective-origin": val})
+    self.css({"perspective-origin": val})
 
   @property
-  def pointer_events(self): return self.htmlObj.css("pointer-events")
+  def pointer_events(self): return self.css("pointer-events")
 
   @pointer_events.setter
   def pointer_events(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"pointer-events": val})
+    self.css({"pointer-events": val})
 
   @property
   def position(self):
@@ -2039,30 +2043,30 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_class_position.asp
     """
-    return self.htmlObj.css("position")
+    return self.css("position")
 
   @position.setter
   def position(self, val):
     val = val if val is not None else 'None'
     if val in ["sticky"]:
-      self.htmlObj.css({"position": "-webkit-%s" % val})
-    self.htmlObj.css({"position": val})
+      self.css({"position": "-webkit-%s" % val})
+    self.css({"position": val})
 
   @property
-  def quotes(self): return self.htmlObj.css("quotes")
+  def quotes(self): return self.css("quotes")
 
   @quotes.setter
   def quotes(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"quotes": val})
+    self.css({"quotes": val})
 
   @property
-  def resize(self): return self.htmlObj.css("resize")
+  def resize(self): return self.css("resize")
 
   @resize.setter
   def resize(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"resize": val})
+    self.css({"resize": val})
 
   @property
   def right(self):
@@ -2076,38 +2080,38 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_right.asp
     """
-    return self.htmlObj.css("right")
+    return self.css("right")
 
   @right.setter
   def right(self, val):
     val = val if val is not None else 'None'
     if isinstance(val , int):
       val = "%spx" % val
-    self.htmlObj.css({"right": val})
+    self.css({"right": val})
 
   @property
-  def scroll_behavior(self): return self.htmlObj.css("scroll-behavior")
+  def scroll_behavior(self): return self.css("scroll-behavior")
 
   @scroll_behavior.setter
   def scroll_behavior(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"scroll-behavior": val})
+    self.css({"scroll-behavior": val})
 
   @property
-  def tab_size(self): return self.htmlObj.css("tab-size")
+  def tab_size(self): return self.css("tab-size")
 
   @tab_size.setter
   def tab_size(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"tab-size": val})
+    self.css({"tab-size": val})
 
   @property
-  def table_layout(self): return self.htmlObj.css("table-layout")
+  def table_layout(self): return self.css("table-layout")
 
   @table_layout.setter
   def table_layout(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"table-layout": val})
+    self.css({"table-layout": val})
 
   @property
   def text_align(self):
@@ -2120,7 +2124,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_text_text-align.ASP
     """
-    return self.htmlObj.css("text-align")
+    return self.css("text-align")
 
   @text_align.setter
   def text_align(self, val):
@@ -2128,71 +2132,71 @@ class CssMixin(object):
     if Defaults_css.CSS_EXCEPTIONS and val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
 
-    self.htmlObj.css({"text-align": val})
+    self.css({"text-align": val})
 
   @property
-  def text_align_last(self): return self.htmlObj.css("text-align-last")
+  def text_align_last(self): return self.css("text-align-last")
 
   @text_align_last.setter
   def text_align_last(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-align-last": val})
+    self.css({"text-align-last": val})
 
   @property
-  def text_decoration(self): return self.htmlObj.css("text-decoration")
+  def text_decoration(self): return self.css("text-decoration")
 
   @text_decoration.setter
   def text_decoration(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-decoration": val})
+    self.css({"text-decoration": val})
 
   @property
-  def text_decoration_color(self): return self.htmlObj.css("text-decoration-color")
+  def text_decoration_color(self): return self.css("text-decoration-color")
 
   @text_decoration_color.setter
   def text_decoration_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-decoration-color": val})
+    self.css({"text-decoration-color": val})
 
   @property
-  def text_decoration_line(self): return self.htmlObj.css("text-decoration-line")
+  def text_decoration_line(self): return self.css("text-decoration-line")
 
   @text_decoration_line.setter
   def text_decoration_line(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-decoration-line": val})
+    self.css({"text-decoration-line": val})
 
   @property
-  def text_decoration_style(self): return self.htmlObj.css("text-decoration-style")
+  def text_decoration_style(self): return self.css("text-decoration-style")
 
   @text_decoration_style.setter
   def text_decoration_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-decoration-style": val})
+    self.css({"text-decoration-style": val})
 
   @property
-  def text_indent(self): return self.htmlObj.css("text-indent")
+  def text_indent(self): return self.css("text-indent")
 
   @text_indent.setter
   def text_indent(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-indent": val})
+    self.css({"text-indent": val})
 
   @property
-  def text_justify(self): return self.htmlObj.css("text-justify")
+  def text_justify(self): return self.css("text-justify")
 
   @text_justify.setter
   def text_justify(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-justify": val})
+    self.css({"text-justify": val})
 
   @property
-  def text_overflow(self): return self.htmlObj.css("text-overflow")
+  def text_overflow(self): return self.css("text-overflow")
 
   @text_overflow.setter
   def text_overflow(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-overflow": val})
+    self.css({"text-overflow": val})
 
   @property
   def text_shadow(self):
@@ -2207,14 +2211,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
     """
-    return self.htmlObj.css("text-shadow")
+    return self.css("text-shadow")
 
   @text_shadow.setter
   def text_shadow(self, val):
     val = val if val is not None else 'None'
     if isinstance(val, list):
       val = ",".join(val)
-    self.htmlObj.css({"text-shadow": val})
+    self.css({"text-shadow": val})
 
   @property
   def text_transform(self):
@@ -2227,12 +2231,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_text_text-transform.asp
     """
-    return self.htmlObj.css("text-transform")
+    return self.css("text-transform")
 
   @text_transform.setter
   def text_transform(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"text-transform": val})
+    self.css({"text-transform": val})
 
   @property
   def text_stoke(self):
@@ -2245,12 +2249,12 @@ class CssMixin(object):
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke
     """
-    return self.htmlObj.css("-webkit-text-stroke")
+    return self.css("-webkit-text-stroke")
 
   @text_stoke.setter
   def text_stoke(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"-webkit-text-stroke": val})
+    self.css({"-webkit-text-stroke": val})
 
   @property
   def text_stoke_width(self):
@@ -2263,12 +2267,12 @@ class CssMixin(object):
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
     """
-    return self.htmlObj.css("-webkit-text-stroke-width")
+    return self.css("-webkit-text-stroke-width")
 
   @text_stoke_width.setter
   def text_stoke_width(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"-webkit-text-stroke-width": val})
+    self.css({"-webkit-text-stroke-width": val})
 
   @property
   def text_stoke_color(self):
@@ -2281,12 +2285,12 @@ class CssMixin(object):
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-color
     """
-    return self.htmlObj.css("-webkit-text-stroke-color")
+    return self.css("-webkit-text-stroke-color")
 
   @text_stoke_color.setter
   def text_stoke_color(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"-webkit-text-stroke-color": val})
+    self.css({"-webkit-text-stroke-color": val})
 
   @property
   def top(self):
@@ -2300,7 +2304,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_top.asp
     """
-    return self.htmlObj.css("top")
+    return self.css("top")
 
   @top.setter
   def top(self, val):
@@ -2308,7 +2312,7 @@ class CssMixin(object):
       val = 'None'
     if isinstance(val, int):
       val = "%spx" % val
-    self.htmlObj.css({"top": val})
+    self.css({"top": val})
 
   @property
   def transform(self):
@@ -2321,79 +2325,79 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_transform.asp
     """
-    return self.htmlObj.css("transform")
+    return self.css("transform")
 
   @transform.setter
   def transform(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transform": val})
+    self.css({"transform": val})
 
   @property
-  def transform_origin(self): return self.htmlObj.css("transform-origin")
+  def transform_origin(self): return self.css("transform-origin")
 
   @transform_origin.setter
   def transform_origin(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transform-origin": val})
+    self.css({"transform-origin": val})
 
   @property
-  def transform_style(self): return self.htmlObj.css("transform-style")
+  def transform_style(self): return self.css("transform-style")
 
   @transform_style.setter
   def transform_style(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transform-style": val})
+    self.css({"transform-style": val})
 
   @property
-  def transition(self): return self.htmlObj.css("transition")
+  def transition(self): return self.css("transition")
 
   @transition.setter
   def transition(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transition": val})
+    self.css({"transition": val})
 
   @property
-  def transition_delay(self): return self.htmlObj.css("transition-delay")
+  def transition_delay(self): return self.css("transition-delay")
 
   @transition_delay.setter
   def transition_delay(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transition-delay": val})
+    self.css({"transition-delay": val})
 
   @property
-  def transition_duration(self): return self.htmlObj.css("transition-duration")
+  def transition_duration(self): return self.css("transition-duration")
 
   @transition_duration.setter
   def transition_duration(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transition-duration": val})
+    self.css({"transition-duration": val})
 
   @property
-  def transition_property(self): return self.htmlObj.css("transition-property")
+  def transition_property(self): return self.css("transition-property")
 
   @transition_property.setter
   def transition_property(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("transition-property"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"transition-property": val})
+      self.css({m_val: val})
+    self.css({"transition-property": val})
 
   @property
   def transition_timing_function(self):
-    return self.htmlObj.css("transition-timing-function")
+    return self.css("transition-timing-function")
 
   @transition_timing_function.setter
   def transition_timing_function(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"transition-timing-function": val})
+    self.css({"transition-timing-function": val})
 
   @property
-  def unicode_bidi(self): return self.htmlObj.css("unicode-bidi")
+  def unicode_bidi(self): return self.css("unicode-bidi")
 
   @unicode_bidi.setter
   def unicode_bidi(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"unicode-bidi": val})
+    self.css({"unicode-bidi": val})
 
   @property
   def user_select(self):
@@ -2408,14 +2412,14 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/css3_pr_user-select.asp
     """
-    return self.htmlObj.css("user-select")
+    return self.css("user-select")
 
   @user_select.setter
   def user_select(self, val):
     val = val if val is not None else 'None'
     for m_val in autoPrefixer("user-select"):
-      self.htmlObj.css({m_val: val})
-    self.htmlObj.css({"user-select": val})
+      self.css({m_val: val})
+    self.css({"user-select": val})
 
   @property
   def vertical_align(self):
@@ -2428,7 +2432,7 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
     """
-    return self.htmlObj.css("vertical-align")
+    return self.css("vertical-align")
 
   @vertical_align.setter
   def vertical_align(self, val):
@@ -2437,23 +2441,23 @@ class CssMixin(object):
                                                    "bottom", "text-bottom", "initial", "inherit", 'None']:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("vertical_align", val))
 
-    self.htmlObj.css({"vertical-align": val})
+    self.css({"vertical-align": val})
 
   @property
-  def visibility(self): return self.htmlObj.css("visibility")
+  def visibility(self): return self.css("visibility")
 
   @visibility.setter
   def visibility(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"visibility": val})
+    self.css({"visibility": val})
 
   @property
-  def white_space(self): return self.htmlObj.css("white-space")
+  def white_space(self): return self.css("white-space")
 
   @white_space.setter
   def white_space(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"white-space": val})
+    self.css({"white-space": val})
 
   @property
   def width(self):
@@ -2468,52 +2472,52 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_dim_width.asp
     """
-    return self.htmlObj.css("width")
+    return self.css("width")
 
   @width.setter
   def width(self, val):
     if val is False:
       if "width" in self.htmlObj.attrs:
         del self.htmlObj.attrs['width']
-      if "width" in self.htmlObj.orign_htmlObj.attr["css"]:
-        del self.htmlObj.orign_htmlObj.attr["css"]["width"]
+      if "width" in self.component.attr["css"]:
+        del self.component.attr["css"]["width"]
     else:
       val = val if val is not None else 'None'
       if isinstance(val, int):
         val = "%spx" % val
-      self.htmlObj.css({"width": val})
+      self.css({"width": val})
 
   @property
-  def word_break(self): return self.htmlObj.css("word-break")
+  def word_break(self): return self.css("word-break")
 
   @word_break.setter
   def word_break(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"word-break": val})
+    self.css({"word-break": val})
 
   @property
-  def word_spacing(self): return self.htmlObj.css("word-spacing")
+  def word_spacing(self): return self.css("word-spacing")
 
   @word_spacing.setter
   def word_spacing(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"word-spacing": val})
+    self.css({"word-spacing": val})
 
   @property
-  def word_wrap(self): return self.htmlObj.css("word-wrap")
+  def word_wrap(self): return self.css("word-wrap")
 
   @word_wrap.setter
   def word_wrap(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"word-wrap": val})
+    self.css({"word-wrap": val})
 
   @property
-  def writing_mode(self): return self.htmlObj.css("writing-mode")
+  def writing_mode(self): return self.css("writing-mode")
 
   @writing_mode.setter
   def writing_mode(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"writing-mode": val})
+    self.css({"writing-mode": val})
 
   @property
   def z_index(self):
@@ -2530,12 +2534,12 @@ class CssMixin(object):
 
       https://www.w3schools.com/cssref/pr_pos_z-index.asp
     """
-    return self.htmlObj.css("z-index")
+    return self.css("z-index")
 
   @z_index.setter
   def z_index(self, val):
     val = val if val is not None else 'None'
-    self.htmlObj.css({"z-index": val})
+    self.css({"z-index": val})
 
   def middle(self):
     self.vertical_align = "middle"
@@ -2562,7 +2566,7 @@ class CssMixin(object):
     :param bottom:
     :param left:
     :param right:
-    :param z_index:
+    :param z_index: Integer. Optional. The CSS level of the component.
 
     :return: The CSS object to allow the chaining
     """
@@ -2598,7 +2602,7 @@ class CssMixin(object):
     :param size: Number. The size for the shadow
     """
     if color is None:
-      color = self.orign_htmlObj._report.theme.colors[2]
+      color = self.component.page.theme.colors[2]
     self.css({"box-shadow": "%(size)spx %(size)spx %(size)spx %(color)s" % {'color': color, 'size': size}})
     return self
 
@@ -2623,7 +2627,7 @@ class CssMixin(object):
 
     :return: The CSS object to allow the functions chaining
     """
-    rgb = Colors.getHexToRgb(self.orign_htmlObj._report.theme.greys[-1] if hexa_color is None else hexa_color)
+    rgb = Colors.getHexToRgb(self.component.page.theme.greys[-1] if hexa_color is None else hexa_color)
     #self.box_shadow = "0 2px 4px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 3px 10px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
     if position == 'right':
       self.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
@@ -2701,7 +2705,7 @@ class CssMixin(object):
     :param style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
-      color = self.orign_htmlObj._report.theme.greys[-1]
+      color = self.component.page.theme.greys[-1]
     self.border = "%spx %s %s" % (size, style, color)
     return self
 
@@ -2722,7 +2726,7 @@ class CssMixin(object):
     :param style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
-      color = self.orign_htmlObj._report.theme.greys[3]
+      color = self.component.page.theme.greys[3]
     return self.borders(color, size, style)
 
   def bold(self):
@@ -2826,7 +2830,7 @@ class CssMixin(object):
     :param factor:
     """
     self.font_size = Defaults_css.font(factor)
-    return self.orign_htmlObj
+    return self.component
 
   def margins(self, top=None, right=None, bottom=None, left=None):
     """

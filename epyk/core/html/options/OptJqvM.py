@@ -361,4 +361,5 @@ class OptionsJqVM(Options):
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self.js_type["onRegionClick"] = True
-    self._config("function(element, code, region){var data = region; %s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), "onRegionClick")
+    self._config("function(element, code, region){var data = region; %s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), "onRegionClick")

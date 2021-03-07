@@ -17,12 +17,13 @@ from epyk.core.css.styles import GrpClsCodeMirror
 
 class Console(Html.Html):
   name = 'Console'
+  _option_cls = OptText.OptionsConsole
 
-  def __init__(self, report, data, width, height, htmlCode, helper, options, profile):
-    super(Console, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, data, width, height, html_code, helper, options, profile):
+    super(Console, self).__init__(report, data, html_code=html_code, options=options,
+                                  css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self._report.theme.greys[-1],
               'background': self._report.theme.colors[0]})
-    self.__options = OptText.OptionsConsole(self, options)
     self.add_helper(helper)
 
   @property
@@ -49,14 +50,17 @@ class Console(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button.
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptText.OptionsConsole
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = ''' 
       if(options.showdown){var converter = new showdown.Converter(options.showdown);
@@ -66,7 +70,7 @@ class Console(Html.Html):
       htmlObj.innerHTML = data +'<br/>' '''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
@@ -74,9 +78,10 @@ class Editor(Html.Html):
   name = 'Code Editor'
   requirements = ('codemirror', 'font-awesome')
 
-  def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
-    super(Editor, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height,
-            'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
+  def __init__(self, report, vals, language, width, height, html_code, options, profile):
+    super(Editor, self).__init__(report, vals, html_code=html_code, profile=profile,
+                                 css_attrs={"width": width, "height": height, 'box-sizing': 'border-box',
+                                            'margin': '5px 0'})
     self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
     self.textarea.options.managed = False
     self.actions = []
@@ -231,10 +236,12 @@ class Cell(Html.Html):
   name = 'Python Cell Runner'
   requirements = ('codemirror', )
 
-  def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
-    super(Cell, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
+  def __init__(self, report, vals, language, width, height, html_code, options, profile):
+    super(Cell, self).__init__(report, vals, html_code=html_code, options=options,
+                               css_attrs={"width": width, "height": height}, profile=profile)
+    self.textarea = self._report.ui.texts.code(vals, language, height=height, options=options)
     self.textarea.options.managed = False
+    self.textarea.style.add_classes.input.textarea()
     self.textarea.style.add_classes.input.textarea()
     self._jsRun, self._jsSave = '', ''
     self.css({'padding': '10px', "min-height": "30px", 'box-sizing': 'border-box', 'display': 'inline-block'})
@@ -304,17 +311,19 @@ class Cell(Html.Html):
             In [ <span data=count=0 style="display:inline-block;margin-bottom:5px">0</span> ]<br/>%(actions)s
           </div>
           %(textarea)s
-      </div>''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'actions': actions, "textarea": self.textarea.html()}
+      </div>''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+                   'actions': actions, "textarea": self.textarea.html()}
 
 
 class Code(Html.Html):
   name = 'Code'
   requirements = ('codemirror', )
+  _option_cls = OptCodeMirror.OptionsCode
 
-  def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
-    super(Code, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+  def __init__(self, report, vals, color, width, height, html_code, options, helper, profile):
+    super(Code, self).__init__(report, vals, html_code=html_code, options=options,
+                               css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
-    self.__options = OptCodeMirror.OptionsCode(self, options)
     self.css({'display': 'block', 'margin': '5px 0'})
 
   @property
@@ -323,6 +332,9 @@ class Code(Html.Html):
     Description:
     ------------
     Property to the Style property of the component.
+
+    Usage:
+    -----
 
     :rtype: GrpClsCodeMirror.Code
     """
@@ -342,14 +354,15 @@ class Code(Html.Html):
 
     :rtype: OptCodeMirror.OptionsCode
     """
-    return self.__options
+    return super().options
 
   @property
   def js(self):
     """
     Description:
     -----------
-    A lot of CodeMirror features are only available through its API. Thus, you need to write code (or use addons) if you want to expose them to your users.
+    A lot of CodeMirror features are only available through its API.
+    Thus, you need to write code (or use add-ons) if you want to expose them to your users.
 
     Usage:
     -----
@@ -388,7 +401,8 @@ class Code(Html.Html):
     """
     Description:
     ------------
-    The addon directory in the distribution contains a number of reusable components that implement extra editor functionality.
+    The add-on directory in the distribution contains a number of reusable components that implement extra
+    editor functionality.
 
     Related Pages:
 
@@ -410,6 +424,43 @@ class Code(Html.Html):
     self.attr["placeholder"] = text
     return self
 
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    """
+    Description:
+    ------------
+    This is a specific version of the common build as the function is not applied to the dom ID but
+    the HTML code set as a proper global variable on the JavaScript side.
+
+    Attributes:
+    ----------
+    :param data: String. Optional. The component input data.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id:
+    """
+    return super().build(data, options, profile, component_id=self.htmlCode)
+
+    # if not self.builder_name or self._js__builder__ is None:
+    #   raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
+    #
+    # self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
+    #   self.builder_name, self._js__builder__))
+    # self.options.builder = self.builder_name
+    #
+    # # check if there is no nested HTML components in the data
+    # if isinstance(data, dict):
+    #   tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+    #   js_data = "{%s}" % ",".join(tmp_data)
+    # else:
+    #   js_data = JsUtils.jsConvertData(data, None)
+    # fnc_call = "%s(%s, %s, %s)" % (self.builder_name, self.htmlCode, js_data, self.options.config_js(options))
+    # profile = self.with_profile(profile, event="Builder")
+    # if profile:
+    #   fnc_call = JsUtils.jsConvertFncs(
+    #     ["var result = %s(htmlObj, data, options)" % fnc_call], toStr=True, profile=profile)
+    #   fnc_call = "(function(htmlObj, data, options){%s; return result})" % fnc_call
+    # return fnc_call
+
   _js__builder__ = ''' 
        var editor_alias = "editor_"+ htmlObj.id;
        if (typeof window[editor_alias] === 'undefined'){
@@ -418,42 +469,6 @@ class Code(Html.Html):
        Object.keys(options).forEach(
           function(key){ window[editor_alias].setOption(key, options[key])})
        '''
-
-  def build(self, data=None, options=None, profile=False):
-    if not self.builder_name or self._js__builder__ is None:
-      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
-
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
-    self.options.builder = self.builder_name
-
-    if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
-    else:
-      js_data = JsUtils.jsConvertData(data, None)
-    fnc_call = "%s(document.getElementById('%s'), %s, %s)" % (self.builder_name, self.htmlCode, js_data, self.options.config_js(options))
-    if profile:
-      if isinstance(profile, dict):
-        return "(function(){var t0 = performance.now(); %s; console.log('%s: ' + (performance.now() - t0) + ' ms' )})()" % (
-        fnc_call, profile['name'])
-
-      return "(function(){var t0 = performance.now(); %s; console.log(performance.now() - t0)})()" % fnc_call
-
-    return fnc_call
-
-  def refresh(self):
-    """
-    Description:
-    -----------
-    Component refresh function. Javascript function which can be called in any Javascript event.
-
-    Usage:
-    -----
-
-    """
-    return self.build(self.val, None)
 
   @property
   def editorId(self):
@@ -469,19 +484,22 @@ class Code(Html.Html):
     return "editor_%s" % self.htmlCode
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    self._report.body.onReady('window["%s"].refresh()' % self.editorId)
+    self.page.properties.js.add_builders(self.refresh())
+    self.page.body.onReady(
+      'window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()' % {
+        "editor": self.editorId, "width": self.css("width"), "height": self.css("width")})
     return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Tags(Html.Html):
   name = 'Tags'
 
-  def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
+  def __init__(self, report, vals, title, icon, size, width, height, html_code, profile):
     super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
-                               htmlCode=htmlCode, profile=profile)
+                               html_code=html_code, profile=profile)
     self.title, self.icon = title, icon
-    self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
+    self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]),
+              "font-family": report.style.defaults.font.family})
 
   @property
   def val(self):
@@ -493,7 +511,8 @@ class Tags(Html.Html):
     -----
 
     """
-    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {
+      "htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsEmpty(self):
     """
@@ -504,7 +523,8 @@ class Tags(Html.Html):
     -----
 
     """
-    return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+    return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {
+      "htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsAdd(self, jsData):
 
@@ -513,7 +533,8 @@ class Tags(Html.Html):
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
       $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
-      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self._report.theme.greys[0], "baseColor": self._report.theme.colors[9]}
+      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self._report.theme.greys[0],
+             "baseColor": self._report.theme.colors[9]}
 
   def __str__(self):
     return '''
@@ -521,18 +542,37 @@ class Tags(Html.Html):
         <div style='margin:0;display:inline-block;vertical-align:middle;width:90px;float:left;padding:2px 5px 0 5px;height:30px;border:1px solid %(greyColor)s'>
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlCode)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
-      </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title, 'icon': self.icon,
-                   'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}
+      </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title,
+                   'icon': self.icon, 'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}
 
 
 class MarkdownReader(Html.Html):
   name = 'markdown'
   requirements = ('highlight.js', 'showdown')
+  _option_cls = OptText.OptionsText
 
-  def __init__(self, report, vals, width, height, htmlCode, options, profile):
-    super(MarkdownReader, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
+  def __init__(self, report, vals, width, height, html_code, options, profile):
+    super(MarkdownReader, self).__init__(report, vals, html_code=html_code, profile=profile, options=options,
+                                         css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.actions = []
-    self.__options = OptText.OptionsText(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input TimePicker component properties.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://timepicker.co/options/
+
+    :rtype: OptText.OptionsText
+    """
+    return super().options
 
   def tooltips(self, data):
     """
@@ -550,7 +590,7 @@ class MarkdownReader(Html.Html):
     from epyk.core.data import components
 
     if "markdown_tooltip" not in self._report.components:
-      div = self._report.ui.div(htmlCode="markdown_tooltip", width=("auto", ""))
+      div = self._report.ui.div(html_code="markdown_tooltip", width=("auto", ""))
       div.style.css.display = False
       div.style.css.position = "absolute"
       div.style.css.background = self._report.theme.greys[0]
@@ -575,5 +615,5 @@ class MarkdownReader(Html.Html):
       }'''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '''<div %(attr)s></div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes())}

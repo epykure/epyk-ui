@@ -11,7 +11,7 @@ from epyk.core.css import Defaults
 from epyk.core.js.primitives import JsObjects
 
 
-class JsItemsDef(object):
+class JsItemsDef:
 
   def __init__(self, component):
     self._src = component
@@ -158,7 +158,9 @@ class JsItemsDef(object):
     var span = document.createElement("span"); span.style.marginLeft = '5px'; 
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', false); 
     
-    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    if(typeof data === 'object'){ 
+      if(typeof data.text !== 'undefined'){ span.innerHTML = data.text} else { span.innerHTML = data.value } } 
+    else { span.innerHTML = data };
     if(options.checked){ input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked) };
     if(data.checked){ input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked) };
     
@@ -236,6 +238,7 @@ class JsItemsDef(object):
     var item = document.createElement("div"); var link = document.createElement("a");
     link.style.color = "inherit"; link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
     link.innerHTML = data.text; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
+    if(typeof data.target !== "undefined"){link.target = data.target}
     if(typeof data.icon !== 'undefined'){ 
       var iconItem = document.createElement("i"); iconItem.setAttribute("class", data.icon);
       iconItem.style.marginRight = "5px"; iconItem.style.color = "#0056B3"; item.appendChild(iconItem)}
@@ -457,10 +460,10 @@ class JsItem(JsHtml.JsHtmlRich):
     ----------
     :param with_input_box: Boolean. If the items have a dedicated input box for the check
     """
-    if self._src._jsStyles['items_type'] == "radio":
+    if self._src.options.items_type == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src._jsStyles['items_type'] == "check" or with_input_box:
+    if self._src.options.items_type == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
@@ -473,7 +476,7 @@ class JsItem(JsHtml.JsHtmlRich):
       %s.childNodes.forEach( function(dom, k){ 
         dom.querySelector('[name=value]').classList.add('list_%s_selected'); 
         dom.querySelector('[name=value]').setAttribute("data-valid", true);
-      })''' % (self.varName, self._src._jsStyles['items_type']))
+      })''' % (self.varName, self._src.options.items_type))
 
   def unSelectAll(self, with_input_box=False):
     """
@@ -485,10 +488,10 @@ class JsItem(JsHtml.JsHtmlRich):
     ----------
     :param with_input_box: Boolean. If the items have a dedicated input box for the check
     """
-    if self._src._jsStyles['items_type'] == "radio":
+    if self._src.options.items_type == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src._jsStyles['items_type'] == "check" or with_input_box:
+    if self._src.options.items_type == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach(function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
@@ -501,7 +504,7 @@ class JsItem(JsHtml.JsHtmlRich):
       %s.childNodes.forEach( function(dom, k){  
         dom.querySelector('[name=value]').classList.remove('list_%s_selected');
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
-      })''' % (self.varName, self._src._jsStyles['items_type']))
+      })''' % (self.varName, self._src.options.items_type))
 
   def add(self, value, css_attrs=None, css_cls=None, before=False):
     """
@@ -543,8 +546,9 @@ class JsItem(JsHtml.JsHtmlRich):
         li.lastChild.style.display = 'inline-block'; li.appendChild(close);
         const cls = %(cls)s;
         if (cls != null){li.classList.add(cls)}
-      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value, 'event': "prepend" if before else 'appendChild',
-             'cls': JsUtils.jsConvertData(css_cls, None), 'shape': "%s%s" % (self._src._jsStyles['prefix'], self._src._jsStyles['items_type'])})
+      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value,
+               'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
+               'shape': "%s%s" % (self._src.options.prefix, self._src.options.items_type)})
 
   def tags(self, values, css_attrs=None, css_cls=None):
     """
@@ -607,15 +611,16 @@ class JsItem(JsHtml.JsHtmlRich):
           self._report.js.objects.mouseEvent.preventDefault()]
     return JsObjects.JsVoid('''
       %s.lastChild.addEventListener("contextmenu", function(event){%s});
-      ''' % (self.varName, JsUtils.jsConvertFncs(new_js_fncs, toStr=True)))
+      ''' % (self.varName, JsUtils.jsConvertFncs(new_js_fncs, toStr=True, profile=profile)))
 
   def clear(self):
     """
     Description:
     ------------
-    Clear all the items in the list
+    Clear all the items in the list.
     """
-    return JsObjects.JsVoid("while(%(comp)s.firstChild){%(comp)s.removeChild(%(comp)s.firstChild)}" % {'comp': self.varName})
+    return JsObjects.JsVoid(
+      "while(%(comp)s.firstChild){%(comp)s.removeChild(%(comp)s.firstChild)}" % {'comp': self.varName})
 
   def select_item(self, value):
     """
@@ -632,7 +637,7 @@ class JsItem(JsHtml.JsHtmlRich):
       %(varName)s.childNodes.forEach( function(dom, k){ 
         var value = dom.querySelector('[name=value]').innerHTML;
         if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
-      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self._src._jsStyles['items_type']})
+      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self._src.options.items_type})
 
 
 class Tags(JsHtml.JsHtmlRich):

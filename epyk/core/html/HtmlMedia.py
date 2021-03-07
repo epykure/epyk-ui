@@ -29,7 +29,7 @@ class Source(Html.Html):
 
 class Media(Html.Html):
   name = 'Video'
-
+  _option_cls = OptButton.OptMedia
   mime_mapping = {
     ".avi": "video/x-msvideo",
     ".mpeg": "video/mpeg",
@@ -37,14 +37,14 @@ class Media(Html.Html):
     ".webm": "video/webm",
     ".3gp": "video/3gpp",
     ".3g2": "video/3gpp2",
+    ".mp4": "video/mp4",
   }
 
-  def __init__(self, report, video, path, width, height, htmlCode, profile, options):
+  def __init__(self, report, video, path, width, height, html_code, profile, options):
     if path is None:
       path = Defaults.SERVER_PATH or os.path.split(video)[0]
-    super(Media, self).__init__(report, {'path': path, 'video': video}, htmlCode=htmlCode,
+    super(Media, self).__init__(report, {'path': path, 'video': video}, html_code=html_code, options=options,
                                 css_attrs={"width": width, 'height': height}, profile=profile)
-    self.__options = OptButton.OptMedia(self, options or {})
     extension = video.split(".")[-1].lower()
     self._vals = Source(report, path, video)
     if ".%s" % extension in self.mime_mapping:
@@ -69,7 +69,7 @@ class Media(Html.Html):
 
     :rtype: OptButton.OptMedia
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
     var source = document.createElement("source"); htmlObj.innerHTML = "";
@@ -83,7 +83,9 @@ class Media(Html.Html):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
     self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
-    return '<video %s></video>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    if self.options.controls:
+      self.attr["controls"] = True
+    return '<video %s>%s</video>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str(self._vals))
 
 
 class Audio(Media):
@@ -113,22 +115,24 @@ class Audio(Media):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
     self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
-    return '<audio %(attrs)s>%(source)s</audio>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "source": self.val}
+    return '<audio %(attrs)s>%(source)s</audio>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+                                                    "source": self.val}
 
 
 class Youtube(Html.Html):
   name = 'Youtube Video'
 
-  def __init__(self, report, link, width, height, htmlCode, profile, options):
-    super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, link, width, height, html_code, profile, options):
+    super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, html_code=html_code,
+                                  profile=profile)
     self._jsStyles = options
     self._jsStyles['src'] = link
 
   def __str__(self):
-    opts = ["%s='%s'" % (k, v) for k, v in self._jsStyles.items()]
+    opts = " ".join(["%s='%s'" % (k, v) for k, v in self._jsStyles.items()])
     return '''
       <div %(attrs)s><iframe %(options)s></iframe></div>
-      ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'link': self.val, 'options': " ".join(opts)}
+      ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'link': self.val, 'options': opts}
 
   @staticmethod
   def get_embed_link(youtube_link):
@@ -151,11 +155,11 @@ class Youtube(Html.Html):
 
 class Camera(Html.Html):
   name = 'Camera'
+  _option_cls = OptButton.OptMedia
 
-  def __init__(self, report, width, height, htmlCode, profile, options):
-    super(Camera, self).__init__(report, "", htmlCode=htmlCode,
-                        css_attrs={"width": width, 'height': height}, profile=profile)
-    self.__options = OptButton.OptMedia(self, options or {})
+  def __init__(self, report, width, height, html_code, profile, options):
+    super(Camera, self).__init__(report, "", html_code=html_code, css_attrs={"width": width, 'height': height},
+                                 profile=profile, options=options)
     self.options.controls = True
     self.options.autoplay = True
 
@@ -171,7 +175,7 @@ class Camera(Html.Html):
 
     :rtype: OptButton.OptMedia
     """
-    return self.__options
+    return super().options
 
   @property
   def dom(self):
@@ -183,7 +187,7 @@ class Camera(Html.Html):
     Usage:
     -----
 
-    :rtype: JsHtml.Media
+    :rtype: JsHtml.JsMedia
     """
     if self._dom is None:
       self._dom = JsHtml.JsMedia(self, report=self._report)
@@ -192,4 +196,4 @@ class Camera(Html.Html):
   def __str__(self):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
-    return '<video %s></video><img src="" id="photo" alt="photo">' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<video %s></video><img src="">' % self.get_attrs(pyClassNames=self.style.get_classes())

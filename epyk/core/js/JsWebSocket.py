@@ -5,14 +5,14 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 
-class SocketState(object):
+class SocketState:
   CONNECTING = 0
   OPEN = 1
   CLOSING = 2
   CLOSED = 2
 
 
-class HttpCode(object):
+class HttpCode:
   NORMAL_CLOSURE = 1000
   SHUTDOWN_SERVER = 1001
   LOST_CONNECTION = 1006
@@ -24,7 +24,7 @@ class HttpCode(object):
   UNEXPECTED_ERROR = 1011
 
 
-class WebSocket(object):
+class WebSocket:
 
   def __init__(self, htmlCode=None, src=None, secured=False):
     """
@@ -122,7 +122,7 @@ class WebSocket(object):
     self.__connect = "new WebSocket('%s://%s:%s', %s)" % (prefix, url, port, protocol)
     return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
 
-  def onopen(self, jsFncs):
+  def onopen(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -133,14 +133,17 @@ class WebSocket(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onopen = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady(
+      "%s.onopen = function (event) {%s}" % (
+        self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def onmessage(self, jsFncs):
+  def onmessage(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -151,14 +154,16 @@ class WebSocket(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onmessage = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onmessage = function (event) {%s}" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def onerror(self, jsFncs):
+  def onerror(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -169,14 +174,16 @@ class WebSocket(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onerror = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onerror = function (event) {%s}" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def onclose(self, jsFncs):
+  def onclose(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -187,23 +194,27 @@ class WebSocket(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onclose = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onclose = function (event) {%s}" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def receive(self, jsFncs):
+  def receive(self, jsFncs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
 
   def send(self, data):
     """
@@ -220,7 +231,8 @@ class WebSocket(object):
     :param data: String. The message to be sent
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsVoid("%(varName)s.send(%(data)s)" % {"varName": self._selector, "connect": self.__connect, "data": data})
+    return JsObjects.JsVoid("%(varName)s.send(%(data)s)" % {
+      "varName": self._selector, "connect": self.__connect, "data": data})
 
   def sendText(self, components, attrs=None):
     """
@@ -235,7 +247,7 @@ class WebSocket(object):
     Attributes:
     ----------
     :param components: List. The list of HTML components (it will get the dom.content automatically)
-    :param attrs: Dictionary. Attach some static attributes to the request
+    :param attrs: Dictionary. Optional. Attach some static attributes to the request
     """
     from epyk.core.data import primitives
     from epyk.core.data import datamap
@@ -244,7 +256,8 @@ class WebSocket(object):
     if attrs is not None:
       dftl_attrs.update(attrs)
     data = JsUtils.jsConvertData(datamap(components, attrs=dftl_attrs), None)
-    return JsObjects.JsVoid("%(varName)s.send(JSON.stringify(%(data)s))" % {"varName": self._selector, "connect": self.__connect, "data": data})
+    return JsObjects.JsVoid("%(varName)s.send(JSON.stringify(%(data)s))" % {
+      "varName": self._selector, "connect": self.__connect, "data": data})
 
   def close(self, code=1000, reason=None):
     """
@@ -258,8 +271,8 @@ class WebSocket(object):
 
     Attributes:
     ----------
-    :param code: Integer. The HTTP code to be sent to the server for the closure
-    :param reason: String. The message to be sent to the server for the closure
+    :param code: Integer. Optional. The HTTP code to be sent to the server for the closure
+    :param reason: String. Optional. The message to be sent to the server for the closure
     """
     if reason is None:
       return JsObjects.JsVoid("%s.close(%s)" % (self._selector, code))
@@ -267,7 +280,7 @@ class WebSocket(object):
     return JsObjects.JsVoid("%s.close(%s, '%s')" % (self._selector, code, reason))
 
 
-class Worker(object):
+class Worker:
 
   def __init__(self, htmlCode=None, src=None, server=False):
     """
@@ -276,6 +289,9 @@ class Worker(object):
 
     Attributes:
     ----------
+    :param htmlCode:
+    :param src:
+    :param server:
     """
     self._src, self.__server = src, server
     self._selector = htmlCode or "worker_%s" % id(self)
@@ -335,46 +351,53 @@ class Worker(object):
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
-  def on(self, eventType, jsFncs):
+  def on(self, eventType, jsFncs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType:
-    :param jsFncs:
+    :param eventType: String. The event type.
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._src.js.onReady(self.addEventListener(eventType, jsFncs))
+    self._src.js.onReady(self.addEventListener(eventType, jsFncs, profile))
 
-  def addEventListener(self, eventType, jsFncs):
+  def addEventListener(self, eventType, jsFncs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType:
-    :param jsFncs:
+    :param eventType: String. The event type.
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {"varName": self._selector, 'eventType': eventType, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
+      "varName": self._selector, 'eventType': eventType, "data":
+        JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
 
-  def receive(self, jsFncs):
+  def receive(self, jsFncs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) {%(data)s}" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) {%(data)s}" % {
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
 
   def terminate(self):
     """
     Description:
     ------------
-    When a web worker object is created, it will continue to listen for messages (even after the external script is finished) until it is terminated.
+    When a web worker object is created, it will continue to listen for messages (even after the external script is
+    finished) until it is terminated.
 
     Related Pages:
 
@@ -391,7 +414,7 @@ class Worker(object):
     return self.terminate()
 
 
-class ServerSentEvent(object):
+class ServerSentEvent:
 
   def __init__(self, htmlCode=None, src=None, server=False):
     """
@@ -441,7 +464,7 @@ class ServerSentEvent(object):
     self.__connect = "new EventSource('%s:%s')" % (url, port)
     return JsObjects.JsVoid("%s = new EventSource('%s:%s')" % (self._selector, url, port))
 
-  def onmessage(self, jsFncs):
+  def onmessage(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -453,14 +476,16 @@ class ServerSentEvent(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onmessage = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onmessage = function (event) { %s }" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def onerror(self, jsFncs):
+  def onerror(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -472,14 +497,16 @@ class ServerSentEvent(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onerror = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onerror = function (event) {%s}" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def onopen(self, jsFncs):
+  def onopen(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -491,29 +518,44 @@ class ServerSentEvent(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._src.js.onReady("%s.onopen = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.onopen = function (event) { %s }" % (
+      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
-  def addEventListener(self, eventType, jsFncs):
+  def addEventListener(self, eventType, jsFncs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType:
-    :param jsFncs:
+    :param eventType: String. The event type.
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {"varName": self._selector, 'eventType': eventType, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
+      "varName": self._selector, 'eventType': eventType,
+      "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
 
-  def on(self, eventType, jsFncs):
-    self._src.js.onReady(self.addEventListener(eventType, jsFncs))
+  def on(self, eventType, jsFncs, profile=None):
+    """
+    Description:
+    ------------
 
-  def receive(self, jsFncs):
+    Attributes:
+    ----------
+    :param eventType: String. The event type.
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._src.js.onReady(self.addEventListener(eventType, jsFncs, profile))
+
+  def receive(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -525,9 +567,11 @@ class ServerSentEvent(object):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
 
   def close(self):
     """

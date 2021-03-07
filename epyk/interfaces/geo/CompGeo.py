@@ -6,9 +6,10 @@ from epyk.interfaces.geo import CompGeoChartJs
 from epyk.interfaces.geo import CompGeoGoogle
 
 
-class Geo(object):
-  def __init__(self, context):
-    self.context = context
+class Geo:
+
+  def __init__(self, ui):
+    self.page = ui.page
 
   @property
   def plotly_map(self):
@@ -86,7 +87,7 @@ class Geo(object):
 
       https://developers.google.com/chart
     """
-    if not getattr(self.context.rptObj, '_with_google_imports', False):
+    if not getattr(self.page, '_with_google_imports', False):
       raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
 
     return CompGeoGoogle.GeoGoogle(self)

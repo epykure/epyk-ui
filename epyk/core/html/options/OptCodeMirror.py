@@ -23,7 +23,7 @@ class OptionExtraKeys(Options):
   def ctrl_space(self, value):
     self._config(value, "'Ctrl-Space'")
 
-  def f_11(self, jsFncs):
+  def f_11(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -31,12 +31,14 @@ class OptionExtraKeys(Options):
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'F11'", js_type=True)
+    self._config(
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'F11'", js_type=True)
 
-  def esc(self, jsFncs):
+  def esc(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -44,12 +46,14 @@ class OptionExtraKeys(Options):
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'Esc'", js_type=True)
+    self._config(
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'Esc'", js_type=True)
 
-  def ctrl_q(self, jsFncs):
+  def ctrl_q(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -57,10 +61,12 @@ class OptionExtraKeys(Options):
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._config('function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True), "'Ctrl-Q'", js_type=True)
+    self._config(
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'Ctrl-Q'", js_type=True)
 
 
 class OptionPanels:
@@ -120,7 +126,8 @@ class OptionPanels:
     :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
     """
     htmlCode = JsUtils.jsConvertData(htmlCode, None)
-    return '''window.editor_panels[%(htmlCode)s].clear(); delete window.editor_panels[%(htmlCode)s]''' % {"htmlCode": htmlCode}
+    return '''window.editor_panels[%(htmlCode)s].clear(); delete window.editor_panels[%(htmlCode)s]''' % {
+      "htmlCode": htmlCode}
 
 
 class OptionCMAddons:
@@ -353,7 +360,8 @@ class OptionsCode(Options):
 
   @mode.setter
   def mode(self, value):
-    Imports.extend('codemirror-%s' % value, [('%s.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
+    Imports.extend('codemirror-%s' % value, [
+      ('%s.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
     self._report.jsImports.add('codemirror-%s' % value)
     self._config(value)
 

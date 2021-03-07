@@ -8,8 +8,8 @@ from epyk.core.js.objects import JsCanvas
 class Canvas(Html.Html):
   name = 'Canvas'
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Canvas, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Canvas, self).__init__(report, "", html_code=html_code, css_attrs={"width": width, "height": height},
                                  options=options, profile=profile)
     self.__ctx = None
 
@@ -48,4 +48,5 @@ class Canvas(Html.Html):
     return self.__ctx
 
   def __str__(self):
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+      self.get_attrs(pyClassNames=self.style.get_classes()))

@@ -8,14 +8,14 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name = 'NVD3 Chart'
+  name = 'NVD3'
   requirements = ('nvd3', )
 
-  def __init__(self,  report, width, height, options, htmlCode, profile):
+  def __init__(self,  report, width, height, options, html_code, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                css_attrs={"width": width, "height": height})
     self._d3, self.html_items, self._datasets = None, [], []
-    self._options_init = options
 
   @property
   def chartId(self):
@@ -60,7 +60,7 @@ class Chart(Html.Html):
 
     return self._datasets[i]
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -72,9 +72,9 @@ class Chart(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Required. Javascript functions.
-    :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
-    :param source_event: String. Required. The source target for the event.
-    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     raise Exception("Not implemented for this chart !")
 
@@ -113,43 +113,7 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
-  def convert(self, data, options, profile=False):
-    """
-    Description:
-    ------------
-
-    Usage:
-    -----
-
-    Attributes:
-    ----------
-    :param data:
-    :param options:
-    :param profile:
-    """
-    mod_name = __name__.split(".")[-1]
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
-      mod_name, self.builder_name, self._js__convertor__)
-    if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
-    else:
-      js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or self._options_init, []
-    for k, v in options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
-
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
     ------------
@@ -161,17 +125,29 @@ class Chart(Html.Html):
     Attributes:
     ----------
     :param data:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if data:
-      return "d3.select('#%(htmlCode)s').datum(%(data)s).transition().duration(500).call(%(chart)s); nv.utils.windowResize(%(chart)s.update)" % {'htmlCode': self.htmlCode, 'data': self.convert(data, options, profile), 'chart': self.dom.var}
+    if data is not None:
+      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      self.page.properties.js.add_constructor(
+        js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
+      profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
+      if profile:
+        js_func_builder = JsUtils.jsConvertFncs(
+          ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
+        js_convertor = "(function(data, options){%s; return result})" % js_func_builder
+      return '''
+        d3.select('#%(htmlCode)s').datum(%(chartFnc)s(%(data)s, %(options)s)).transition().duration(500).call(%(chart)s); 
+        nv.utils.windowResize(%(chart)s.update)''' % {
+        'htmlCode': self.htmlCode, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
+        "options":  self.options.config_js(options), 'chart': self.dom.var}
 
     return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis, self.d3.datum(self._datasets).call(self.dom.var),
                 "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.build())
     str_items = "".join([h.html() for h in self.html_items])
     return '%s<svg %s></svg>' % (str_items, self.get_attrs(pyClassNames=self.style.get_classes()))
 
@@ -193,9 +169,7 @@ class ChartLine(Chart):
       self._dom = JsNvd3.JsNvd3Line(self._report, varName=self.chartId)
     return self._dom
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
         result = [];
         data.datasets.forEach(function(rec, i){
@@ -206,9 +180,10 @@ class ChartLine(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              if (!(rec[options.x_axis] in uniqLabels)){
+                labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
               temp[name][rec[options.x_axis]] = rec[name]}})
-        }); result = []; console.log(temp);
+        }); result = []; 
         options.y_columns.forEach(function(series){
           dataSet = {key: series, values: [], labels: labels};
           labels.forEach(function(x, i){
@@ -216,7 +191,7 @@ class ChartLine(Chart):
             if (isNaN(value)) {value = null};
             if (value !== undefined) {dataSet.values.push({y: value, x: i, label: x})}
           }); result.push(dataSet)})
-      }'''
+      }; return result'''
 
 
 class ChartScatter(ChartLine):
@@ -236,7 +211,7 @@ class ChartScatter(ChartLine):
       self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -249,9 +224,10 @@ class ChartScatter(ChartLine):
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
-    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
 
@@ -308,7 +284,7 @@ class ChartBar(Chart):
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -321,14 +297,13 @@ class ChartBar(Chart):
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
-    :param onReady: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Required. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.selectAll('.nv-bar').on('click', function(event){ %s })" % (self.d3.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self.onReady("%s.selectAll('.nv-bar').on('click', function(event){%s})" % (
+      self.d3.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
         result = [];
         data.datasets.forEach(function(rec, i){
@@ -339,7 +314,8 @@ class ChartBar(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
+              if (!(rec[options.x_axis] in uniqLabels)){
+                labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
               temp[name][rec[options.x_axis]] = rec[name]}})
         }); var result = [];
         options.y_columns.forEach(function(series){
@@ -349,7 +325,7 @@ class ChartBar(Chart):
             if (isNaN(value)) { value = null};
             if (value !== undefined) {dataSet.values.push({y: value, x: i, label: x})}
           }); result.push(dataSet)})
-      }'''
+      }; return result'''
 
 
 class ChartHorizontalBar(ChartBar):
@@ -405,19 +381,19 @@ class ChartPie(Chart):
       self._dom = JsNvd3.JsNvd3Pie(self._report, varName=self.chartId)
     return self._dom
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
-        data.datasets.forEach(function(dataset, i){console.log(dataset);
+        data.datasets.forEach(function(dataset, i){
           result = dataset;  
-        }); console.log(result)
+        });
       } else {
         var temp = {}; var labels = {};
         data.forEach(function(rec){ 
           if(!(rec[options.x_axis] in temp)){temp[rec[options.x_axis]] = {}};
           options.y_columns.forEach(function(name){
-            labels[name] = true; if(rec[name] !== undefined) {if (!(name in temp[rec[options.x_axis]])){temp[rec[options.x_axis]][name] = rec[name]} else {temp[rec[options.x_axis]][name] += rec[name]}}  }) ;
+            labels[name] = true; if(rec[name] !== undefined) {
+              if (!(name in temp[rec[options.x_axis]])){temp[rec[options.x_axis]][name] = rec[name]} 
+              else {temp[rec[options.x_axis]][name] += rec[name]}}  }) ;
         });
         var labels = Object.keys(labels); result = [];
         for(var series in temp){
@@ -425,9 +401,9 @@ class ChartPie(Chart):
           labels.forEach(function(label){
             if(temp[series][label] !== undefined){values.y = temp[series][label]}});
           result.push(values)}
-      }'''
+      }; return result'''
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -440,9 +416,10 @@ class ChartPie(Chart):
     :param js_funcs:
     :param profile:
     :param source_event:
-    :param onReady:
+    :param on_ready:
     """
-    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
   def add_trace(self, data, name=""):
@@ -603,9 +580,7 @@ class ChartSunbrust(Chart):
     self._datasets = [{'name': name, 'children': data, 'color': self._report.theme.colors[0]}]
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       var result = [{name: options.x_axis, children: []}]; var sizeTree = options.y_columns.length-1;
       data.forEach(function(rec){
         var path = []; var tmpResultLevel = result[0].children; var branchVal = 0;
@@ -614,12 +589,13 @@ class ChartSunbrust(Chart):
           tmpResultLevel.forEach(function(l, j){if(l.name == rec[s]){treeLevel = j}});
           if(i == sizeTree){
             if(treeLevel >= 0){
-              tmpResultLevel[treeLevel].size += rec[options.x_axis]}else{tmpResultLevel.push({name: rec[s], size: rec[options.x_axis]})}
+              tmpResultLevel[treeLevel].size += rec[options.x_axis]}
+            else{tmpResultLevel.push({name: rec[s], size: rec[options.x_axis]})}
           }else{
             if(treeLevel < 0 ){
               tmpResultLevel.push({name: rec[s], children: []}); treeLevel = tmpResultLevel.length - 1};
               tmpResultLevel = tmpResultLevel[treeLevel].children}
-        })})'''
+        })}); return result'''
 
 
 class ChartBoxPlot(Chart):

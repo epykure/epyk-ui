@@ -4,13 +4,14 @@ import os
 from epyk.core.html.graph import GraphD3
 
 
-class D3(object):
+class D3:
 
-  def __init__(self, context):
-    self.parent = context
+  def __init__(self, ui):
+    self.page = ui.page
     self.chartFamily = "D3"
 
-  def script(self, name, scripts=None, data=None, d3_version=None, dependencies=None, profile=None, options=None, width=(400, "px"), height=(330, "px"), htmlCode=None):
+  def script(self, name, scripts=None, data=None, d3_version=None, dependencies=None, profile=None, options=None,
+             width=(400, "px"), height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -30,21 +31,21 @@ class D3(object):
       scripts = [os.path.split(script) for script in scripts]
 
       dependencies = dependencies or []
-      self.parent.context.rptObj.ext_packages = self.parent.context.rptObj.ext_packages or {}
+      self.page.ext_packages = self.page.ext_packages or {}
       dependencies.append({'alias': 'd3', 'version': d3_version} if d3_version is not None else "d3")
 
-      self.parent.context.rptObj.ext_packages[name] = {
+      self.page.ext_packages[name] = {
           'version': '', 'req': [{'alias': d} if not isinstance(d, dict) else d for d in dependencies],
           'register': {'alias': name, 'module': scripts[0][1][:-3]},
           'modules': [{'script': split_url[1], 'path': '', 'cdnjs': split_url[0]} for split_url in scripts]}
-      self.parent.context.rptObj.jsImports.add(name)
+      self.page.jsImports.add(name)
     else:
-      self.parent.context.rptObj.jsImports.add("d3")
-    d3_chart = GraphD3.Script(self.parent.context.rptObj, data or [], width, height, htmlCode, options or {}, profile)
+      self.page.jsImports.add("d3")
+    d3_chart = GraphD3.Script(self.page, data or [], width, height, html_code, options or {}, profile)
     d3_chart.builder_name = "%s%s" % (d3_chart.builder_name, name)
     return d3_chart
 
-  def cloud(self, data, width=(300, "px"), height=(330, "px"), htmlCode=None, options=None, profile=None):
+  def cloud(self, data, width=(300, "px"), height=(330, "px"), html_code=None, options=None, profile=None):
     """
     Description:
     -----------
@@ -57,13 +58,13 @@ class D3(object):
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     scripts = ["https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"]
-    chart = self.script('cloud', scripts, None, profile=profile, options=options, width=width, height=height, htmlCode=htmlCode)
+    chart = self.script('cloud', scripts, None, profile=profile, options=options, width=width, height=height, html_code=html_code)
     chart.loader('''
     var layout = d3.layout.cloud().size([options.wdith, options.height])
         .words(data.map(function(d) { return {text: d, size: 10 + Math.random() * 90}; }))

@@ -2,13 +2,14 @@
 from epyk.core.html import geo
 
 
-class Dc(object):
-  def __init__(self, context):
-    self.parent = context
+class Dc:
+
+  def __init__(self, ui):
+    self.page = ui.page
     self.chartFamily = "DC"
 
   def usa(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -31,10 +32,10 @@ class Dc(object):
     :param profile:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     """
-    geo_chart = geo.GeoDc.ChartGeoChoropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    line_id = geo_chart.htmlCode
-    self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return +d['%(x)s'];})" % {'cId': line_id, 'data': record, 'x': x_axis}
+    geo_chart = geo.GeoDc.ChartGeoChoropleth(self.page, width, height, title, options or {}, html_code, profile)
+    line_id = geo_chart.html_code
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return +d['%(x)s'];})" % {'cId': line_id, 'data': record, 'x': x_axis}
     geo_chart.dom.height(height[0]).dimension("%s_dim" % line_id).group("%(cId)s_dim.group().reduceSum(function(d) {return d['%(y)s'] ;})" % {'cId': line_id, 'y': y_columns})
     return geo_chart

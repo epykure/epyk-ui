@@ -52,20 +52,20 @@ class Select(Html.Html):
   requirements = ('bootstrap-select', )
   name = 'Select'
   builder_name = "SelectPicker"
+  _option_cls = OptSelect.OptionsSelectJs
 
-  def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
-    super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
-                                 profile=profile)
+  def __init__(self, report, records, html_code, width, height, filter, profile, multiple, options):
+    super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
+                                 profile=profile, options=options)
     self._vals = records
-    if htmlCode in self._report.inputs:
+    if html_code in self._report.inputs:
       for v in self._vals:
-        if v['value'] == self._report.inputs[htmlCode]:
+        if v['value'] == self._report.inputs[html_code]:
           options['selected'] = v['value']
     if width[1] == 'px':
       self.attr["data-width"] = "%spx" % width[0]
     if multiple:
       self.attr['multiple'] = None
-    self.__options = OptSelect.OptionsSelectJs(self, options)
     if options.get('button-bg', True):
       self.style.add_classes.select.toggle()
 
@@ -81,7 +81,7 @@ class Select(Html.Html):
 
     :rtype: OptSelect.OptionsSelectJs
     """
-    return self.__options
+    return super().options
 
   @property
   def style(self):
@@ -116,7 +116,7 @@ class Select(Html.Html):
     :rtype: JsHtmlSelect.DomSelect
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.DomSelect(self, report=self._report)
+      self._dom = JsHtmlSelect.DomSelect(self, report=self.page)
     return self._dom
 
   @property
@@ -141,7 +141,7 @@ class Select(Html.Html):
     :rtype: JsSelect.JSelect
     """
     if self._js is None:
-      self._js = JsSelect.JSelect(self, report=self._report)
+      self._js = JsSelect.JSelect(self, report=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -160,7 +160,7 @@ class Select(Html.Html):
       selectObj.selectpicker(options).selectpicker('refresh');
       selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, js_funcs, empty_funcs=None, profile=False, source_event=None, onReady=False):
+  def change(self, js_funcs, empty_funcs=None, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -175,7 +175,7 @@ class Select(Html.Html):
     :param empty_funcs: List | String. Set of Js function to trigger if the value is empty
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -183,9 +183,9 @@ class Select(Html.Html):
       if not isinstance(empty_funcs, list):
         empty_funcs = [empty_funcs]
       js_funcs.append("if (%s === ''){%s}" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(empty_funcs, toStr=True)))
-    return self.on("change", js_funcs, profile, source_event, onReady)
+    return self.on("change", js_funcs, profile, source_event, on_ready)
 
-  def ajax(self, url, jsData="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
+  def ajax(self, url, js_data="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
     """
     Description:
     -----------
@@ -201,7 +201,7 @@ class Select(Html.Html):
     Attributes:
     ----------
     :param url: String. The request URL for the ajax call.
-    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param js_data: String | Js Object. The value of the item to be removed from the list.
     :param is_json: Boolean. Optional. A flag to specific if the data are json (default True).
     :param method: String. Optional. The HTTP request method. Default Post
     :param options: Dictionary. Optional. The specific properties for the ajax request.
@@ -212,7 +212,7 @@ class Select(Html.Html):
       options['ajax'] = {}
     options['ajax']['type'] = method
     options['ajax']['url'] = url
-    options['ajax']['data'] = jsData
+    options['ajax']['data'] = js_data
     if is_json:
       options['ajax']['dataType'] = 'json'
     return self.onReady(self.js.ajaxSelectPicker(options))
@@ -220,7 +220,9 @@ class Select(Html.Html):
   def __str__(self):
     options, opt_groups = [], {}
     for val in self.val:
-      opt = Option(self._report, val['value'], val['name'], None, self.options.selected is not None and self.options.selected == val['value'], options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
+      opt = Option(self._report, val['value'], val['name'], None,
+                   self.options.selected is not None and self.options.selected == val['value'],
+                   options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
       if 'group' in val:
         opt_groups.setdefault(val['group'], []).append(opt)
@@ -231,15 +233,18 @@ class Select(Html.Html):
       opt_rp = Optgroup(self._report, opt_groups[k], k)
       opt_rp.options.managed = False
       data.append(opt_rp.html())
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (self.dom.jquery.varId, json.dumps(self._jsStyles)))
+    self.page.properties.js.add_builders(
+      "%s.selectpicker(%s).selectpicker('refresh')" % (self.dom.jquery.varId, json.dumps(self._jsStyles)))
     if self.attr.get("data-width") is not None:
-      self._report.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-width")))
+      self.page.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-width")))
       self.attr['class'].add("%s_width" % self.htmlCode)
     if self.attr.get("data-background") is not None:
       if self.attr.get("data-color") is not None:
-        self._report.css.customText('.%s_background {background: %s !IMPORTANT; color: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-background"), self.attr.get("data-color")))
+        self.page.css.customText('.%s_background {background: %s !IMPORTANT; color: %s !IMPORTANT}' % (
+          self.htmlCode, self.attr.get("data-background"), self.attr.get("data-color")))
       else:
-        self._report.css.customText('.%s_background {background: %s !IMPORTANT}' % (self.htmlCode, self.attr.get("data-background")))
+        self.page.css.customText('.%s_background {background: %s !IMPORTANT}' % (
+          self.htmlCode, self.attr.get("data-background")))
       self.attr['class'].add("%s_background" % self.htmlCode)
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
@@ -248,20 +253,22 @@ class Select(Html.Html):
 class Lookup(Select):
   requirements = ('bootstrap-select', )
 
-  def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
-    super(Lookup, self).__init__(report, records, htmlCode, width, height, filter, profile, multiple, options)
+  def __init__(self, report, records, html_code, width, height, filter, profile, multiple, options):
+    super(Lookup, self).__init__(report, records, html_code, width, height, filter, profile, multiple, options)
     self._jsStyles['lookups'] = records
 
   _js__builder__ = '''
-        var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
-        if (typeof lookupData !== 'undefined') {
-          for (var idx in lookupData) {
-              const text = (typeof lookupData[idx].text !== 'undefined')? lookupData[idx].text : lookupData[idx].value;
-              selectObj.append('<option value=' + lookupData[idx].value + '>' + text + '</option>'); }
-          selectObj.selectpicker(options).val(lookupData).selectpicker('refresh')}
-        else {selectObj.selectpicker(options).selectpicker('refresh')} ''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+    var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
+    if (typeof lookupData !== 'undefined') {
+      for (var idx in lookupData) {
+          const text = (typeof lookupData[idx].text !== 'undefined')? lookupData[idx].text : lookupData[idx].value;
+          selectObj.append('<option value=' + lookupData[idx].value + '>' + text + '</option>'); }
+      selectObj.selectpicker(options).val(lookupData).selectpicker('refresh')}
+    else {
+      selectObj.selectpicker(options).selectpicker('refresh')}''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
+    self.page.properties.js.add_builders(
+      "%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s></select>" % data_cls

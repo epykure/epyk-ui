@@ -3,13 +3,14 @@
 from epyk.core.html import graph
 
 
-class ChartGoogle(object):
+class ChartGoogle:
 
-  def __init__(self, context):
-    self.parent = context
+  def __init__(self, ui):
+    self.page = ui.page
     self.chartFamily = "Google"
 
-  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
+           html_code=None):
     """
     Description:
     ------------
@@ -31,15 +32,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'LineChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def column(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def column(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -62,17 +63,17 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'ColumnChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts,
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts,
                     'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options,
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options,
                                              profile)
     return line_chart
 
-  def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -95,15 +96,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'BarChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -127,15 +128,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'ScatterChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def histogram(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def histogram(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -162,15 +163,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'Histogram'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -192,15 +193,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'AreaChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -225,15 +226,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'BubbleChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -255,15 +256,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'PieChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def treemap(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def treemap(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -284,15 +285,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'TreeMap'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def candlestick(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def candlestick(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -315,16 +316,16 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'CandlestickChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
 
     return line_chart
 
-  def gauge(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def gauge(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -346,15 +347,15 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'Gauge'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def geo(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def geo(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------
@@ -380,10 +381,10 @@ class ChartGoogle(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'GeoChart'}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
-    line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart

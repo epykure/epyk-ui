@@ -10,9 +10,10 @@ class Table(Html.Html):
   name = 'Google Table'
   requirements = ('google-tables', )
 
-  def __init__(self, report, records, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Table, self).__init__(report, records, html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     self.__options = options
 
   @property
@@ -30,7 +31,7 @@ class Table(Html.Html):
   def add_column(self, c):
     pass
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     return '''
       %(chartId)s = google.charts.setOnLoadCallback( (function(){
         var data = new google.visualization.DataTable();
@@ -45,9 +46,9 @@ class Table(Html.Html):
         chart.draw(data, {});
         return chart
       }));
-      ''' % {'chartId': self.tableId, 'varId': self.dom.varId, 'data': JsUtils.jsConvertData(data, None),
-             'type': self.__options["type"]}
+      ''' % {'chartId': self.tableId, 'varId': component_id or self.dom.varId,
+             'data': JsUtils.jsConvertData(data, None), 'type': self.__options["type"]}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())

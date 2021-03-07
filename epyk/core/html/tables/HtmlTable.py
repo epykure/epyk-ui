@@ -72,12 +72,13 @@ class Bespoke(Html.Html):
   name = 'Basic Table'
   # _grpCls = CssGrpClsTable.CssClassTableBespoke
 
-  def __init__(self, report, recordSet, cols, rows, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, cols, rows, width, height, html_code, options, profile):
     data = []
     self._fields = rows + cols
-    for rec in recordSet:
+    for rec in records:
       data.append([rec[c] for c in self._fields])
-    super(Bespoke, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Bespoke, self).__init__(report, data, html_code=html_code, profile=profile,
+                                  css_attrs={"width": width, "height": height})
     self.items = None
     self.style.add_classes.table.table()
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
@@ -89,7 +90,7 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the bespoke
+    Return the Javascript variable of the bespoke.
 
     Usage:
     -----
@@ -138,11 +139,13 @@ class Bespoke(Html.Html):
     if self.items is None:
       self.items = []
     if self._fields is not None:
-      self._header = Row(self._report, [Cell(self._report, d, is_header=True, options={"managed": False}) for d in self._fields])
+      self._header = Row(self._report, [Cell(self._report, d, is_header=True,
+                                             options={"managed": False}) for d in self._fields])
       self.items.append(self._header)
       self.items[-1].options.managed = False
     for rec in self.val:
-      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False, options={"managed": False}) for r in rec]))
+      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False,
+                                                options={"managed": False}) for r in rec]))
       self.items[-1].options.managed = False
       self.items[-1].style.add_classes.table.row_hover()
     return self
@@ -227,7 +230,8 @@ class Bespoke(Html.Html):
     else:
       data = row
     self.val.append(data)
-    self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header, options={"managed": False}) for d in data]))
+    self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header,
+                                              options={"managed": False}) for d in data]))
     self.items[-1].options.managed = False
     self.items[-1].style.add_classes.table.row_hover()
     return self
@@ -241,10 +245,10 @@ class Excel(Html.Html):
   name = 'Excel'
   # _grpCls = CssGrpClsTable.CssClassTableExcel
 
-  def __init__(self, report, recordSet, cols, rows, title, width, height, cellwidth, delimiter, htmlCode):
-    self.recordSet, self.delimiter = recordSet, delimiter
-    super(Excel, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height})
-    self._jsStyles = {'header': rows + cols, 'cellwidth': cellwidth}
+  def __init__(self, report, records, cols, rows, title, width, height, cell_width, delimiter, html_code):
+    self.recordSet, self.delimiter = records, delimiter
+    super(Excel, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height})
+    self._jsStyles = {'header': rows + cols, 'cellwidth': cell_width}
     self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
     self.add_title(title, options={'content_table': False})
 
@@ -282,7 +286,8 @@ class Excel(Html.Html):
           line.split(lineDelimiter).forEach(function(rec){tr.append("<td><input type='text'  value='"+ rec +"'/></td>")
         }); tbody.append(tr)}}) ''')
     if self.delimiter is None:
-      delimiter = '<input id="%s_delimiter" type="text" value="%s" placeholder="Line delimiter"/>' % (self.htmlCode, self.delimiter)
+      delimiter = '<input id="%s_delimiter" type="text" value="%s" placeholder="Line delimiter"/>' % (
+        self.htmlCode, self.delimiter)
     else:
       delimiter = '<input id="%s_delimiter" type="text" value="%s" style="display:none" placeholder="Line delimiter"/>' % (
           self.htmlCode, self.delimiter)

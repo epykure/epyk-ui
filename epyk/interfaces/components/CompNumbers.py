@@ -9,13 +9,14 @@ from epyk.core.css import Defaults as defaults_css
 from epyk.interfaces import Arguments
 
 
-class Numbers(object):
+class Numbers:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def digits(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
-           tooltip=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def digits(self, text=None, color=None, align='center', width=None, height=None, html_code=None, tooltip=None,
+             options=None, profile=None):
     """
     Description:
     ------------
@@ -49,7 +50,7 @@ class Numbers(object):
     :param align: Optional. The position of the icon in the line (left, right, center)
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: String. Optional. A string with the value of the tooltip
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
@@ -58,13 +59,15 @@ class Numbers(object):
       width = (defaults_html.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
       height = (defaults_html.LINE_HEIGHT, 'px')
-    html_label = html.HtmlText.Position(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
+    html_label = html.HtmlText.Position(self.page, text, color, align, width, height, html_code, tooltip,
+                                        options, profile)
     html_label.position(3, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.position(4, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.digits(True)
     return html_label
 
-  def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+  @html.Html.css_skin()
+  def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
              options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
@@ -87,7 +90,7 @@ class Numbers(object):
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
@@ -97,14 +100,15 @@ class Numbers(object):
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
       dflt_options.update(options)
-    html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
+    html_number = html.HtmlText.Numeric(self.page, number, title, label, icon, color, tooltip, html_code,
                                         dflt_options, helper, width, profile)
     html_number.style.css.text_align = align
     html_number.style.css.font_factor(5)
     return html_number
 
-  def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  @html.Html.css_skin()
+  def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
+              helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -126,19 +130,21 @@ class Numbers(object):
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
-    html_number.money("%", format="%v%s")
+    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
+                              profile)
+    html_number.money("%", fmt="%v%s")
     return html_number
 
-  def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  @html.Html.css_skin()
+  def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
+            options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -160,19 +166,21 @@ class Numbers(object):
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
+    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
+                              profile)
     html_number.money("£")
     return html_number
 
-  def euro(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  @html.Html.css_skin()
+  def euro(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
+           helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -194,18 +202,20 @@ class Numbers(object):
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
-    html_number.money("€", format="%v %s")
+    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
+                              profile)
+    html_number.money("€", fmt="%v %s")
     return html_number
 
-  def dollar(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+  @html.Html.css_skin()
+  def dollar(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
              options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
@@ -228,19 +238,21 @@ class Numbers(object):
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
-    html_number.money("$", format="%v %s")
+    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
+                              profile)
+    html_number.money("$", fmt="%v %s")
     return html_number
 
-  def money(self, symbol, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  @html.Html.css_skin()
+  def money(self, symbol, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
+            options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
     Description:
     ------------
@@ -256,25 +268,28 @@ class Numbers(object):
 
     Attributes:
     ----------
+    :param symbol:
     :param number: Optional. The value to be displayed to the component. Default now
     :param title:
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color:
     :param tooltip:
-    :param htmlCode:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper:
     :param width:
     :param align:
     :param profile:
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, align, profile)
-    html_number.money(symbol, format="%v %s")
+    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
+                              profile)
+    html_number.money(symbol, fmt="%v %s")
     return html_number
 
+  @html.Html.css_skin()
   def plotly(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"),
-             htmlCode=None):
+             html_code=None):
     """
     Description:
     ------------
@@ -293,14 +308,15 @@ class Numbers(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     """
-    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
+    ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number")
     return ind
 
+  @html.Html.css_skin()
   def plotly_with_delta(self, value, profile=None, options=None, width=(100, "%"),
-                        height=(330, "px"), htmlCode=None):
+                        height=(330, "px"), html_code=None):
     """
     Description:
     ------------
@@ -320,12 +336,13 @@ class Numbers(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     """
-    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
+    ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number+delta")
     return ind
 
+  @html.Html.css_skin()
   def move(self, current, previous, color=None, label=None, options=None, helper=None, profile=None):
     """
     Description:
@@ -351,9 +368,10 @@ class Numbers(object):
     :param profile:
     """
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
-                    'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
-                    'orange': self.context.rptObj.theme.warning[1]}
+                    'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
+                    'orange': self.page.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
-    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, {"value": current, 'previous': previous}, color, label, dflt_options, helper, profile)
+    html_up_down = html.HtmlTextComp.UpDown(self.page, {"value": current, 'previous': previous}, color, label,
+                                            dflt_options, helper, profile)
     return html_up_down

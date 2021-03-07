@@ -1,6 +1,6 @@
 
 
-class Collapse(object):
+class Collapse:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page

@@ -6,12 +6,14 @@ from epyk.core.data import tree as data_tree
 from epyk.interfaces import Arguments
 
 
-class Trees(object):
+class Trees:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def tree(self, data=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def tree(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -35,18 +37,19 @@ class Trees(object):
     :param data:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options or {}, profile)
     return html_tree
 
-  def inputs(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def inputs(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -61,20 +64,22 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.TreeInput(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlTrees.TreeInput(
+      self.page, data or [], width, height, html_code, helper, options or {}, profile)
     return html_tree
 
-  def menu(self, data=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def menu(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -89,10 +94,9 @@ class Trees(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
@@ -101,11 +105,12 @@ class Trees(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], width, height, htmlCode, helper, options or {}, profile)
+    html_tree = html.HtmlEvent.Menu(self.page, data or [], width, height, html_code, helper, options or {}, profile)
     return html_tree
 
-  def dropdown(self, record=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
-               helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def dropdown(self, record=None, text="", width=(100, "%"), height=(32, 'px'), html_code=None, helper=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -133,27 +138,30 @@ class Trees(object):
     :param text:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dftl_options = {"width": 70}
-    dftl_options.update(options or {})
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, record, text, width, height, htmlCode, helper,
-                                     dftl_options, profile)
+    dflt_options = {"width": 70}
+    dflt_options.update(options or {})
+    html_d = html.HtmlTrees.DropDown(
+      self.page, record, text, width, height, html_code, helper, dflt_options, profile)
     return html_d
 
-  def folder(self, folder=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None,
+  @html.Html.css_skin()
+  def folder(self, folder=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
              profile=None):
     options = options or {}
     if folder is not None:
-      data = data_tree.folders(folder, excluded_folders=options.get("excluded_folders", ["outs", "static"]), make_url=options.get("make_url"))
+      data = data_tree.folders(
+        folder, excluded_folders=options.get("excluded_folders", ["outs", "static"]), make_url=options.get("make_url"))
     else:
       data = []
-    tree = self.tree(data, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
+    tree = self.tree(
+      data, width=width, height=height, html_code=html_code, helper=helper, options=options, profile=profile)
     if height[0] is not None:
       tree.style.css.overflow = "auto"
     return tree

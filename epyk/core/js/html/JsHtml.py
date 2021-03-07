@@ -371,7 +371,8 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return: A Javascript boolean
     """
-    bool = JsBoolean.JsBoolean("!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True, isPyData=False)
+    bool = JsBoolean.JsBoolean(
+      "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True, isPyData=False)
     bool._js.insert(0, self._report.js.viewHeight.setVar('viewHeight'))
     bool._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(bool.r).return_("visibleFlag").call()
@@ -543,7 +544,7 @@ class JsHtml(JsNodeDom.JsDoms):
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return ";".join(styles)
 
-  def registerFunction(self, fnc_name, js_funcs, pmts=None):
+  def registerFunction(self, fnc_name, js_funcs, pmts=None, profile=None):
     """
     Description:
     -----------
@@ -563,8 +564,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return: The JsObject
     """
-    js_funcs = JsUtils.jsConvertFncs(js_funcs)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': ";".join(js_funcs), 'pmt': pmts}
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
+      'content': js_funcs, 'pmt': pmts}
     return self
 
   def hide(self):
@@ -766,7 +768,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return '''%s; setTimeout(function(){%s}, %s)
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, components, append=False):
+  def loadHtml(self, components, append=False, profile=None):
     """
     Description:
     ------------
@@ -778,17 +780,18 @@ class JsHtml(JsNodeDom.JsDoms):
     Usage:
     -----
 
-      d = rptObj.ui.div().css({"border": "1px solid black"})
-      b = rptObj.ui.button("test")
+      d = page.ui.div().css({"border": "1px solid black"})
+      b = page.ui.button("test")
       b.click([
-        rptObj.js.console.debugger,
-        d.dom.loadHtml(rptObj.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
+        page.js.console.debugger,
+        d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
       ])
 
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
     :param append: Boolean. Mention if the component should replace or append the data.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The Javascript string to be added to the page
     """
@@ -800,7 +803,7 @@ class JsHtml(JsNodeDom.JsDoms):
       h.options.managed = False
       js_funcs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
       js_funcs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
-    return JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
   def options(self, options=None):
     """
@@ -853,7 +856,7 @@ class JsHtmlRich(JsHtml):
     """
     return ContentFormatters(self._report, "(function(domObl){if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} else {return domObl.innerHTML}})(%(varName)s)" % {"varName": self.varName})
 
-  def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None):
+  def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None, profile=None):
     """
     Description:
     -----------
@@ -864,10 +867,11 @@ class JsHtmlRich(JsHtml):
 
     Attributes:
     ----------
-    :param currentVal: String. The content of the HTML component
-    :param newVal: String. The new content of the HTML component
-    :param currentJsFncs: List. Optional. The functions to be triggered when currentVal is visible
-    :param newJsFncs2: List. Optional. The functions to be triggered when newVal is visible
+    :param currentVal: String. The content of the HTML component.
+    :param newVal: String. The new content of the HTML component.
+    :param currentJsFncs: List. Optional. The functions to be triggered when currentVal is visible.
+    :param newJsFncs2: List. Optional. The functions to be triggered when newVal is visible.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     content = JsUtils.jsConvertData(currentVal, None)
     content2 = JsUtils.jsConvertData(newVal, None)
@@ -875,8 +879,8 @@ class JsHtmlRich(JsHtml):
       if(%(varName)s.innerHTML == %(content)s){%(varName)s.innerHTML = %(content2)s; %(jsFncs)s}
       else {%(varName)s.innerHTML = %(content)s; %(jsFncs2)s}
       ''' % {'varName': self.varName, 'content2': content2, 'content': content,
-             'jsFncs': JsUtils.jsConvertFncs(currentJsFncs, toStr=True),
-             'jsFncs2': JsUtils.jsConvertFncs(newJsFncs2, toStr=True)
+             'jsFncs': JsUtils.jsConvertFncs(currentJsFncs, toStr=True, profile=profile),
+             'jsFncs2': JsUtils.jsConvertFncs(newJsFncs2, toStr=True, profile=profile)
              })
 
   def select(self):
@@ -1492,7 +1496,7 @@ class JsHtmlBackground(JsHtml):
 
 class JsHtmlNumeric(JsHtmlRich):
 
-  def to(self, number, timer=1):
+  def to(self, number, timer=1, profile=None):
     """
     Description:
     ------------
@@ -1504,6 +1508,7 @@ class JsHtmlNumeric(JsHtmlRich):
     ----------
     :param number: Float.
     :param timer: Integer. the ppend of the increase in millisecond.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return JsUtils.jsConvertFncs([
       self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
@@ -1516,7 +1521,7 @@ class JsHtmlNumeric(JsHtmlRich):
             self._src.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
           ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
-    ], toStr=True)
+    ], toStr=True, profile=profile)
 
   def add(self, item):
     """

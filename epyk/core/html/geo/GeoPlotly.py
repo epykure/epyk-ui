@@ -457,9 +457,9 @@ class Choropleth(GraphPlotly.Chart):
   def add_trace(self, data, type='choropleth', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', mode)
+      c_data['mode'] = self.options.mode or mode
     self._traces.append(DataChoropleth(self._report, attrs=c_data))
     return self
 
@@ -509,9 +509,9 @@ class BubbleGeo(GraphPlotly.Chart):
   def add_trace(self, data, type='scattergeo', mode='markers'):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', mode)
+      c_data['mode'] = self.options.mode or mode
     self._traces.append(DataBubble(self._report, attrs=c_data))
     return self
 

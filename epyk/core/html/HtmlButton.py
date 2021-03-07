@@ -17,17 +17,19 @@ from epyk.core.css import Defaults_css
 
 class Button(Html.Html):
   name = 'button'
+  _option_cls = OptButton.OptionsButton
 
-  def __init__(self, report, text=None, icon=None, width=None, height=None, htmlCode=None, tooltip=None, profile=False, options=None):
+  def __init__(self, report, text=None, icon=None, width=None, height=None, html_code=None, tooltip=None, profile=None,
+               options=None):
     text = text or []
     if not isinstance(text, list):
       text = [text]
     for obj in text:
       if hasattr(obj, 'options'):
         obj.options.managed = False
-    self.__options = options
-    super(Button, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
-    self.add_icon(icon, htmlCode=self.htmlCode)
+    super(Button, self).__init__(report, text, html_code=html_code, options=options, profile=profile,
+                                 css_attrs={"width": width, "height": height})
+    self.add_icon(icon, html_code=self.htmlCode)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
     if icon is not None:
@@ -50,14 +52,15 @@ class Button(Html.Html):
 
     :rtype: OptButton.OptionsButton
     """
-    return self.__options
+    return super().options
 
   @property
   def dom(self):
     """
     Description:
     -----------
-    HTML Dom object.
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
 
     Usage:
     -----
@@ -103,7 +106,7 @@ class Button(Html.Html):
     """
     Description:
     -----------
-    remove the default button background and remove the padding.
+    Remove the default button background and remove the padding.
 
     Usage:
     -----
@@ -112,11 +115,10 @@ class Button(Html.Html):
       but.no_background()
 
     """
-    self.background = False
     self.style.css.background_color = "#11ffee00"
     return self
 
-  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
     """
     Description:
     -----------
@@ -133,13 +135,13 @@ class Button(Html.Html):
     :param url: String. The destination path.
     :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param name: String. Optional. The type of link to the next page.
+    :param target: String. Optional. The type of link to the next page.
     :param source_event: String. Optional. The event source.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    js_funcs.append(self.js.location.open_new_tab(url, name))
+    js_funcs.append(self.js.location.open_new_tab(url, target))
     return self.click(js_funcs, profile, source_event)
 
   @property
@@ -158,7 +160,6 @@ class Button(Html.Html):
     :rtype: GrpClsButton.ClassButton
     """
     if self._styleObj is None:
-      self.__options = OptButton.OptionsButton(self, self.__options or {})
       self._styleObj = GrpClsButton.ClassButton(self)
     return self._styleObj
 
@@ -190,7 +191,7 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False, onReady=False):
+  def press(self, js_press_funcs=None, js_release_funcs=None, profile=None, on_ready=False):
     """
     Description:
     -----------
@@ -203,28 +204,28 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param jsPressFncs:
-    :param jsReleaseFncs:
+    :param js_press_funcs: List | String. Optional. Javascript functions.
+    :param js_release_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param onReady: Boolean. Optional.
+    :param on_ready: Boolean. Optional.
     """
     str_fnc = ""
-    if jsPressFncs is not None:
-      if not isinstance(jsPressFncs, list):
-        jsPressFncs = [jsPressFncs]
+    if js_press_funcs is not None:
+      if not isinstance(js_press_funcs, list):
+        js_press_funcs = [js_press_funcs]
       if self.options.group is not None and not self.options.multiple:
-        jsPressFncs.append(self.dom.release(by_name=True))
-      jsPressFncs.append(self.dom.lock(not_allowed=jsReleaseFncs is None))
-      str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(jsPressFncs, toStr=True))
-    if jsReleaseFncs is not None:
-      if jsPressFncs is None:
+        js_press_funcs.append(self.dom.release(by_name=True))
+      js_press_funcs.append(self.dom.lock(not_allowed=js_release_funcs is None))
+      str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
+    if js_release_funcs is not None:
+      if js_press_funcs is None:
         raise Exception("Press Event must be defined")
 
-      if not isinstance(jsReleaseFncs, list):
-        jsReleaseFncs = [jsReleaseFncs]
-      jsReleaseFncs.append(self.dom.release())
-      str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(jsReleaseFncs, toStr=True))
-    return self.on("click", str_fnc, profile, onReady=onReady)
+      if not isinstance(js_release_funcs, list):
+        js_release_funcs = [js_release_funcs]
+      js_release_funcs.append(self.dom.release())
+      str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
+    return self.on("click", str_fnc, profile, on_ready=on_ready)
 
   def color(self, color):
     """
@@ -270,16 +271,17 @@ class Button(Html.Html):
 class Checkbox(Html.Html):
   name = 'Check Box'
   requirements = ('font-awesome', 'bootstrap', 'jquery')
+  _option_cls = OptButton.OptCheckboxes
 
-  def __init__(self, rptObj, records, color, width, height, align, htmlCode, tooltip, options, profile):
-    if rptObj.inputs.get(htmlCode) is not None:
-      selectedVals = set(rptObj.inputs[htmlCode].split(","))
+  def __init__(self, report, records, color, width, height, align, html_code, tooltip, options, profile):
+    if report.inputs.get(html_code) is not None:
+      selected_vals = set(report.inputs[html_code].split(","))
       for rec in records:
-        if rec["value"] in selectedVals:
+        if rec["value"] in selected_vals:
           rec["checked"] = True
-    super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Checkbox, self).__init__(report, records, html_code=html_code, options=options,
+                                   css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
-    self.__options = OptButton.OptCheckboxes(self, options or {})
     if tooltip:
       self.tooltip(tooltip)
 
@@ -296,14 +298,15 @@ class Checkbox(Html.Html):
 
     :rtype: OptButton.OptCheckboxes
     """
-    return self.__options
+    return super().options
 
   @property
   def dom(self):
     """
     Description:
     -----------
-    HTML Dom object.
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
 
     Usage:
     -----
@@ -355,7 +358,7 @@ class Checkbox(Html.Html):
           tip.tooltip(); htmlObj.append($("<div style='width:100%%;text-align:right'></div>").append(tip) )}
       ''' % {"jquery": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def click(self, js_funcs, profile=False, source_event="$(document)", onReady=False):
+  def click(self, js_funcs, profile=None, source_event="$(document)", on_ready=False):
     """
     Description:
     -----------
@@ -367,21 +370,23 @@ class Checkbox(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
-    :param source_event:
-    :param onReady:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     agg_js_fncs = '''
-          if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("class").includes('fas fa-times'))) {return {}};
-          var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
-          if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); 
-          isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')};
-          %(jsFnc)s
-        ''' % {"jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True), "icon": self.options.icon}
-    self._browser_data['mouse'].setdefault("click", {}).setdefault(source_event, {}).setdefault("content", []).extend([agg_js_fncs])
+      if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("class").includes('fas fa-times'))){
+        return {}};
+      var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
+      if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); 
+      isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')};
+      %(jsFnc)s
+    ''' % {"jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True), "icon": self.options.icon}
+    self._browser_data['mouse'].setdefault("click", {}).setdefault(source_event, {}).setdefault("content", []).extend(
+      [agg_js_fncs])
     self._browser_data['mouse']["click"][source_event]['sub_items'] = '#%s label' % self.htmlCode
     self._browser_data['mouse']["click"][source_event]['profile'] = profile
     return self
@@ -389,25 +394,26 @@ class Checkbox(Html.Html):
   def __str__(self):
     if self.options.all_selected:
       self._report.body.onReady([self.dom.check(True)])
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    self.page.properties.js.add_builders(self.refresh())
+    return '<div %(strAttr)s><div name="checks"></div></div>' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class CheckButton(Html.Html):
   name = 'Check Button'
+  _option_cls = OptButton.OptCheck
 
-  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None,
+  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, html_code=None,
                options=None, profile=None):
-    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
+    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptButton.OptCheck(self, options or {})
     self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
       {"width": Defaults_css.font()})
     self.input.style.css.color = self._report.theme.success[1] if flag else self._report.theme.danger[1]
-    self.input.style.middle()
+    self.input.style.css.middle()
     self.input.options.managed = False
-    self.add_label(label, {"width": "none", "float": "none"}, htmlCode=self.htmlCode, position="after")
-    self.add_icon(icon, {"float": 'none'}, htmlCode=self.htmlCode, position="after", family=options.get("icon_family"))
+    self.add_label(label, {"width": "none", "float": "none"}, html_code=self.htmlCode, position="after")
+    self.add_icon(icon, {"float": 'none'}, html_code=self.htmlCode, position="after", family=options.get("icon_family"))
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -424,7 +430,7 @@ class CheckButton(Html.Html):
 
     :rtype: OptButton.OptCheck
     """
-    return self.__options
+    return super().options
 
   @property
   def dom(self):
@@ -447,6 +453,8 @@ class CheckButton(Html.Html):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
@@ -488,7 +496,7 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, js_fnc_true, js_fnc_false=None, with_colors=True, profile=False, onReady=False):
+  def click(self, js_fnc_true, js_fnc_false=None, with_colors=True, profile=None, on_ready=False):
     """
     Description:
     ------------
@@ -506,7 +514,7 @@ class CheckButton(Html.Html):
     :param js_fnc_false: Boolean. Optional. Js function or a list of JsFunction to be triggered when unchecked
     :param with_colors: Boolean. Optional. Add default colors to the icons.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObj to allow the chaining
     """
@@ -526,7 +534,7 @@ class CheckButton(Html.Html):
       self.input.dom.switchClass(self.options.icon_check.split(" ")[-1],
                                  self.options.icon_not_check.split(" ")[-1]),
       JsIf.JsIf(self.input.dom.hasClass(self.options.icon_check.split(" ")[-1]), js_fnc_true).else_(js_fnc_false)]
-    return super(CheckButton, self).click(js_fncs, profile, onReady=onReady)
+    return super(CheckButton, self).click(js_fncs, profile, on_ready=on_ready)
 
   def __str__(self):
     return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html())
@@ -535,18 +543,21 @@ class CheckButton(Html.Html):
 class IconEdit(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, options, profile):
-    super(IconEdit, self).__init__(report, '', htmlCode=htmlCode, profile=profile,
-                                   css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
+  def __init__(self, report, position, icon, text, tooltip, width, height, html_code, options, profile):
+    super(IconEdit, self).__init__(report, '', html_code=html_code, profile=profile,
+                                   css_attrs={"width": width, 'height': height,
+                                              'float': 'left' if position is None else position})
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text)
-    notches = options.get("font-factor", 0)# 7
+    notches = options.get("font-factor", 0)
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])},
+                    html_code=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-notches)}, htmlCode=self.htmlCode, family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-notches)}, html_code=self.htmlCode,
+                    family=options.get("icon_family"))
     self.hover_color = True
 
   def spin(self):
@@ -652,7 +663,7 @@ class IconEdit(Html.Html):
     self.icon.pull(position)
     return self
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -666,20 +677,24 @@ class IconEdit(Html.Html):
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.hover_color:
       if self.hover_color == 'danger':
         self.icon.style.add_classes.div.danger_hover()
       else:
         self.icon.style.add_classes.icon.basic()
-    return super(IconEdit, self).click(js_funcs, profile, source_event, onReady=onReady)
+    return super(IconEdit, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
-  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
     """
     Description:
     -----------
     Create a link to a new page when component is clicked.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_a_target.asp
 
     Usage:
     -----
@@ -687,15 +702,15 @@ class IconEdit(Html.Html):
     Attributes:
     ----------
     :param url: String. The target url.
-    :param js_funcs: List | String. Javascript functions.
-    :param name: String. Optional. The type of link in the browser (new tab or same one).
+    :param js_funcs: List | String. Optional. Javascript functions.
+    :param target: String. Optional. The type of link in the browser (new tab or same one).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The event source reference.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    js_funcs.append(self.js.location.open_new_tab(url, name))
+    js_funcs.append(self.js.location.open_new_tab(url, target))
     return self.click(js_funcs, profile, source_event)
 
   def __str__(self):
@@ -705,20 +720,21 @@ class IconEdit(Html.Html):
 class Buttons(Html.Html):
   name = 'Buttons'
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Buttons, self).__init__(report, [], htmlCode=htmlCode,
+  def __init__(self, report, data, color, width, height, html_code, helper, options, profile):
+    super(Buttons, self).__init__(report, [], html_code=html_code,
                                   css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
       self.__add__(bt)
+    self.add_helper(helper)
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
 
-class ButtonMenuItem(object):
+class ButtonMenuItem:
   name = 'Button Menu Item'
 
   def __init__(self, report, selector, parent):
@@ -743,7 +759,7 @@ class ButtonMenuItem(object):
       self._js = JsComponents.Menu(self._src, varName=self._selector, report=self._report)
     return self._js
 
-  def on(self, event, js_funcs, profile=False, onReady=False):
+  def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -757,14 +773,18 @@ class ButtonMenuItem(object):
     :param event: String. The JavaScript event.
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean. Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param onReady: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param source_event: String. Optional. Override the source component on which the component is defined.
+    :param on_ready: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._events.append("%s.addEventListener('%s', function (event) {%s})" % (self._selector, event, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self._events.append("%s.addEventListener('%s', function (event) {%s})" % (
+      source_event or self._selector, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+    if on_ready:
+      self._report.body.onReady([self._selector.dom.events.trigger(event)])
     return self._src
 
-  def click(self, js_funcs):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -775,20 +795,21 @@ class ButtonMenuItem(object):
 
     Attributes:
     ----------
-    :param js_funcs: List | String: The Javascript fragments.
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean. Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. Override the source component on which the component is defined.
+    :param on_ready: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._events.append("%s.addEventListener('click', function (event) {%s})" % (self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
-    return self._src
+    return self.on("click", js_funcs, profile, source_event, on_ready)
 
 
 class ButtonMenu(Html.Html):
   name = 'Button Menu'
 
-  def __init__(self, report, record, text, icon, width, height, htmlCode, tooltip, profile, options):
-    super(ButtonMenu, self).__init__(report, record, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
-    self.button = report.ui.button(text, icon, width, height, htmlCode, tooltip, profile, options)
+  def __init__(self, report, record, text, icon, width, height, html_code, tooltip, profile, options):
+    super(ButtonMenu, self).__init__(report, record, html_code=html_code, profile=profile,
+                                     css_attrs={"width": width, "height": height})
+    self.button = report.ui.button(text, icon, width, height, html_code, tooltip, profile, options)
     self.button.options.managed = False
     self.set_attrs(name="data-count", value=0)
     self.style.css.position = "relative"
@@ -799,7 +820,8 @@ class ButtonMenu(Html.Html):
 
   def __getitem__(self, i):
     if i not in self.components:
-      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlCode, i), self)
+      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (
+        self.htmlCode, i), self)
     return self.components[i]
 
   _js__builder__ = '''
@@ -828,9 +850,22 @@ class ButtonMenu(Html.Html):
     return self._styleObj
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     events = []
     for comp in self.components.values():
       events.extend(comp._events)
     self.onReady(events)
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.container.html())
+    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(),
+                                   self.container.html())
+
+
+class ButtonFilter(Html.Html):
+  name = 'Button Filter'
+
+  def __str__(self):
+    events = []
+    for comp in self.components.values():
+      events.extend(comp._events)
+    self.onReady(events)
+    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()),
+                                   self.button.html(), self.container.html())

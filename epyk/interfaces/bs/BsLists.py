@@ -1,8 +1,8 @@
 
-class Lists(object):
+class Lists:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def list(self, values):
     """
@@ -14,7 +14,7 @@ class Lists(object):
     :param values:
     :return:
     """
-    container = self.context.rptObj.web.std.list(values)
+    container = self.page.web.std.list(values)
     container.style.clear_all()
     for c in container:
       c.style.clear_all()
@@ -32,7 +32,7 @@ class Lists(object):
     :param values:
     :return:
     """
-    container = self.context.rptObj.web.std.list(values)
+    container = self.page.web.std.list(values)
     container.style.clear_all()
     for c in container:
       c.style.clear_all()

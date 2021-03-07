@@ -1,8 +1,24 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import OptChart
 
 
-class OptionConfig(DataClass):
+class OptionConfig(OptChart.OptionsChart):
+
+  @property
+  def mode(self):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    """
+    return self._config_get(None)
+
+  @mode.setter
+  def mode(self, value):
+    self._config(value)
 
   @property
   def responsive(self):

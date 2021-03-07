@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import logging
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
@@ -20,12 +22,13 @@ from epyk.core.css.styles import GrpClsJqueryUI
 class ProgressBar(Html.Html):
   requirements = ('jqueryui', )
   name = 'Progress Bar'
+  _option_cls = OptSliders.OptionsProgBar
 
-  def __init__(self, report, number, total, width, height, attrs, helper, options, htmlCode, profile):
+  def __init__(self, report, number, total, width, height, helper, options, html_code, profile):
     options['max'] = total
-    super(ProgressBar, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
+    super(ProgressBar, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
+                                      css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.add_helper(helper)
-    self.__options = OptSliders.OptionsProgBar(self, options)
     self.options.background = self._report.theme.success[1]
 
   @property
@@ -45,20 +48,21 @@ class ProgressBar(Html.Html):
 
     :rtype: OptSliders.OptionsProgBar
     """
-    return self.__options
+    return super().options
 
   def to(self, number, timer=10):
     """
     Description:
     ------------
+    Move the progress bar to a defined level in a specific amount of time in millisecond.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param number:
-    :param timer: Integer. Optional. the sppended of the increase in millisecond
+    :param number: Number. The final state for the progress bar.
+    :param timer: Integer. Optional. the appended of the increase in millisecond.
     """
     self._report.body.onReady([
       self._report.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
@@ -122,18 +126,19 @@ class ProgressBar(Html.Html):
     return self._dom
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Menu(Html.Html):
   requirements = ('jqueryui', )
   name = 'Menu'
+  _option_cls = OptSliders.OptionsMenu
 
-  def __init__(self, report, records, width, height, helper, options, htmlCode, profile):
-    super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, records, width, height, helper, options, html_code, profile):
+    super(Menu, self).__init__(report, records, html_code=html_code, profile=profile, options=options,
+                               css_attrs={"width": width, "height": height})
     self.add_helper(helper)
-    self.__options = OptSliders.OptionsMenu(self, options)
     self.style.css.display = 'block'
     self.style.css.position = 'relative'
 
@@ -142,6 +147,7 @@ class Menu(Html.Html):
     """
     Description:
     -----------
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -157,6 +163,10 @@ class Menu(Html.Html):
     """
     Description:
     -----------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
@@ -167,7 +177,7 @@ class Menu(Html.Html):
 
     :rtype: OptSliders.OptionsMenu
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       var jqHtmlObj = jQuery(htmlObj); if (options.clearDropDown) {jqHtmlObj.empty()};
@@ -188,6 +198,8 @@ class Menu(Html.Html):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
@@ -224,26 +236,34 @@ class Menu(Html.Html):
     return self._dom
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Dialog(Html.Html):
   requirements = ('jqueryui', )
   name = 'Menu'
+  _option_cls = OptSliders.OptionDialog
 
-  def __init__(self, report, text, width, height, attrs, helper, options, htmlCode, profile):
-    super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
-                                 profile=profile)
+  def __init__(self, report, text, width, height, helper, options, html_code, profile):
+    super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
+                                 profile=profile, options=options)
     self.add_helper(helper)
-    self.__options = OptSliders.OptionDialog(self, options)
+    if hasattr(text, "options"):
+      self.components[text.htmlCode] = text
+      text.options.managed = False
+      self.options.empty = False
+      self._vals = ""
 
   @property
   def options(self):
     """
     Description:
     -----------
-    Open content in an interactive overlay.
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
@@ -254,9 +274,12 @@ class Dialog(Html.Html):
 
     :rtype: OptSliders.OptionDialog
     """
-    return self.__options
+    return super().options
 
-  _js__builder__ = "jQuery(htmlObj).empty(); jQuery(htmlObj).append('<p>'+ data +'</p>'); jQuery(htmlObj).dialog(options)"
+  _js__builder__ = '''
+    if(options.empty){%(jqId)s.empty()}; 
+    %(jqId)s.append('<p>'+ data +'</p>'); %(jqId)s.dialog(options)''' % {
+    "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def js(self):
@@ -277,7 +300,7 @@ class Dialog(Html.Html):
     :rtype: JsQueryUi.Dialog
     """
     if self._js is None:
-      self._js = JsQueryUi.Dialog(self, report=self._report)
+      self._js = JsQueryUi.Dialog(self, report=self.page)
     return self._js
 
   @property
@@ -300,31 +323,49 @@ class Dialog(Html.Html):
     return self._dom
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    static_content = []
+    for component in self.components.values():
+      static_content.append(str(component))
+    # TODO Find a fix for this
+    if self.options.verbose and "bootstrap" in self.page.jsImports:
+      logging.warning("JqueryUI Dialog:")
+      logging.warning("This component might have some conflicts with Bootstrap")
+      logging.warning(
+        "More details https://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x")
+    self.page.properties.js.add_builders(self.refresh())
+    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(static_content), self.helper)
 
 
 class Slider(Html.Html):
   requirements = ('jqueryui', )
   name = 'Slider'
+  _option_cls = OptSliders.OptionsSlider
 
-  def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
-    options.update({'max': max, 'min': min})
-    super(Slider, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, number, min_val, max_val, width, height, helper, options, html_code, profile):
+    options.update({'max': max_val, 'min': min_val})
+    super(Slider, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
+                                 css_attrs={"width": width, "height": height})
     self._jsStyles = {'css': {"background": self._report.theme.success[0]}}
-    self.__options = OptSliders.OptionsSlider(self, options)
     self.style.css.padding = "0 10px"
     self.style.css.margin = "15px 0"
+    self.add_helper(helper)
 
   @property
   def options(self):
     """
+    Description:
+    ------------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
     Usage:
     -----
 
     :rtype: OptSliders.OptionsSlider
     """
-    return self.__options
+    return super().options
 
   @property
   def style(self):
@@ -365,11 +406,12 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, report=self._report)
     return self._js
 
-  def change(self, js_funcs, profile=None, onReady=False):
+  def change(self, js_funcs, profile=None, on_ready=False):
     """
     Description:
     -----------
-    Triggered after the user slides a handle, if the value has changed; or if the value is changed programmatically via the value method.
+    Triggered after the user slides a handle, if the value has changed;
+    or if the value is changed programmatically via the value method.
 
     Usage:
     -----
@@ -382,11 +424,11 @@ class Slider(Html.Html):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
-    :param onReady: Boolean. Optional. Trigger the change event when page is ready.
+    :param on_ready: Boolean. Optional. Trigger the change event when page is ready.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["change"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["change"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def start(self, js_funcs, profile=None):
@@ -409,7 +451,7 @@ class Slider(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["start"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["start"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def slide(self, js_funcs, profile=None):
@@ -432,7 +474,7 @@ class Slider(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["slide"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["slide"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def stop(self, js_funcs, profile=None):
@@ -455,7 +497,7 @@ class Slider(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["stop"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["stop"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   @property
@@ -474,11 +516,11 @@ class Slider(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
     return self._dom
 
-  _js__builder__ = ''' options.value = data; %(jqId)s.slider(options).css(options.css)
+  _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css)
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '''
       <div %(strAttr)s>
         <div style="width:100%%;height:20px">
@@ -486,8 +528,8 @@ class Slider(Html.Html):
           <span style="float:right;display:inline-block">%(max)s</span>
         </div>
         <div id="%(htmlCode)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min, "htmlCode": self.htmlCode,
-                             "max": self.options.max, "helper": self.helper}
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
+                             "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
 
 
 class Range(Slider):
@@ -500,16 +542,14 @@ class Range(Slider):
 class SliderDate(Slider):
   name = "Slider Date"
 
-  def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
-    super(SliderDate, self).__init__(report, number, min, max, width, height, attrs, helper, options, htmlCode, profile)
-    self.options.min = min
-    self.options.max = max
-    self.options.step = 86400
+  def __init__(self, report, number, min_val, max_val, width, height, helper, options, html_code, profile):
+    super(SliderDate, self).__init__(report, number, min_val, max_val, width, height, helper, options, html_code,
+                                     profile)
+    self.options.min, self.options.max, self.options.step = min_val, max_val, 86400
 
   _js__builder__ = '''
       const minDt = new Date(options.min).getTime() / 1000;
-      const maxDt = new Date(options.max).getTime() / 1000;
-      
+      const maxDt = new Date(options.max).getTime() / 1000;      
       options.min = minDt; options.max = maxDt;
       options.value = new Date(data).getTime() / 1000;
       %(jqId)s.slider(options).css(options.css)
@@ -537,7 +577,6 @@ class SliderDates(SliderDate):
   _js__builder__ = '''
       const minDt = new Date(options.min).getTime() / 1000;
       const maxDt = new Date(options.max).getTime() / 1000;
-
       options.min = minDt; options.max = maxDt;
       options.values = [new Date(data[0]).getTime() / 1000, new Date(data[1]).getTime() / 1000];
       %(jqId)s.slider(options).css(options.css)
@@ -562,14 +601,18 @@ class SliderDates(SliderDate):
 
 class SkillBar(Html.Html):
   name = 'Skill Bars'
+  _option_cls = OptSliders.OptionsSkillbars
 
-  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, options, profile):
-    super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, data, y_column, x_axis, title, width, height, html_code, options, profile):
+    super(SkillBar, self).__init__(report, "", html_code=html_code, profile=profile, options=options,
+                                   css_attrs={"width": width, "height": height})
     self.add_title(title, options={'content_table': False})
-    self.innerPyHTML = report.ui.layouts.table(options={"header": False}) # data, y_column, x_axis)
+    self.innerPyHTML = report.ui.layouts.table(options={"header": False})
     self.innerPyHTML.options.managed = False
     for rec in data:
-      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%s%s' % (rec[y_column], options.get("unit", 'px')), 'margin-left': "2px",  "background": options.get("background", report.theme.success[0])})
+      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css(
+        {"width": '%s%s' % (rec[y_column], options.get("unit", '%')), 'margin-left': "2px",
+         "background": options.get("background", report.theme.success[0])})
       value.options.managed = False
       if options.get("values", False):
         self.innerPyHTML += [rec[x_axis], value, "%s%s" % (int(rec[y_column]), options.get("unit", 'px'))]
@@ -584,31 +627,92 @@ class SkillBar(Html.Html):
         self.innerPyHTML[-1][1][0].style.css.margin_left = 0
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
+    self.options.set_thresholds()
 
-  _js__builder__ = '''
-      htmlObj.empty();
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
+    Usage:
+    -----
+
+    :rtype: OptSliders.OptionsSlider
+    """
+    return super().options
+
+  _js__builder__ = ''' 
+      var table = htmlObj.querySelector("table");
+      table.innerHTML = "";
       data.forEach(function(rec, i){
-        if (options.colTooltip != undefined) {var tooltip = 'title="'+ rec[options.colTooltip] +'"'} else {var tooltip = ''};
-        if (options.colUrl != undefined) {var content = '<a href="'+ rec[options.colUrl] +'" style="color:white">'+ valPerc.toFixed(2) +'%</a>'} 
-        else {var content = rec[options.val].toFixed( 2 ) +"%"};
-        htmlObj.append('<tr '+ tooltip +'><td style="width:100px;"><p style="margin:2px;text-align:center;word-wrap:break-word;cursor:pointer">'+ rec[options.label] +'</p></td><td style="width:100%"><div style="margin:2px;display:block;height:100%;padding-bottom:5px;padding:2px 0 2px 5px;width:'+ parseInt( rec[options.val] ) +'%;background-color:'+ jsStyles.color +';color:'+ options.fontColor +'">' + content + '</div></td></tr>');
-        htmlObj.find('tr').tooltip()})
-      '''
+        var tooltip = "";
+        if (typeof rec.tooltip !== "undefined"){
+          var tooltip = rec.tooltip};
+        if (typeof rec.url !== "undefined") {
+          var content = document.createElement("a"); content.href =  rec.url} 
+        else {
+          var content = document.createElement("span")};
+        content.innerHTML = rec.value.toFixed(2) + "%";
+        content.style.whiteSpace = "nowrap";
+        var tr = document.createElement("tr");
+        tr.style.width = options.width + "px"; tr.title = tooltip;
+        var col = document.createElement("td");
+        col.style.textAlign = "center";
+        col.style.padding = "0 5px";
+        var p = document.createElement("span"); p.innerHTML = rec.label;
+        col.appendChild(p); tr.appendChild(col);
+        var row = document.createElement("td");
+        row.style.paddingLeft = "2px";
+        row.style.width = "100%";
+        var div = document.createElement("div");
+        div.style.width = rec.value.toFixed(2) + "%";
+        if( rec.value.toFixed(2) > options.thresholds[1]){ div.style.backgroundColor = options.success}
+        else if(rec.value.toFixed(2) > options.thresholds[0]) {div.style.backgroundColor = options.warning}
+        else {div.style.backgroundColor = options.danger}
+        div.style.fontSize = "10px";
+        div.style.lineHeight = "20px";
+        div.style.verticalAlign = "middle%";
+        div.style.display = "block";
+        div.style.paddingLeft = "5px";
+        if (options.percentage){ div.appendChild(content)} 
+        else { div.innerHTML = "&nbsp;"; div.title = rec.value.toFixed(2) + "%" }
+        row.appendChild(div); tr.appendChild(row);
+        table.appendChild(tr)
+      })'''
 
   def __str__(self):
+    for row in self.innerPyHTML:
+      percent = int(float(row[1][0].css("width")[:-1]))
+      if percent > self.options.thresholds[1]:
+        row[1][0].style.css.background = self.options.success
+      elif percent > self.options.thresholds[0]:
+        row[1][0].style.css.background = self.options.warning
+      else:
+        row[1][0].style.css.background = self.options.danger
+      row[1][0].style.css.line_height = 20
+      row[1][0].style.css.font_factor(-4)
+      if self.options.percentage:
+        row[1][0]._vals = [row[1][0].css("width")]
+        row[1][0].style.css.padding_left = 5
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
 
 class OptionsBar(Html.Html):
   requirements = ('font-awesome', )
   name = 'Options'
+  _option_cls = OptSliders.OptionBar
 
-  def __init__(self, report, recordset, width, height, color, options, profile):
-    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height}, profile=profile)
-    self.__options = OptSliders.OptionBar(self, options)
+  def __init__(self, report, records, width, height, color, options, profile):
+    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height},
+                                     profile=profile, options=options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
               'background': self._report.theme.greys[0]})
-    for rec in recordset:
+    for rec in records:
       self += rec
     if self.options.draggable:
       self.draggable()
@@ -616,13 +720,19 @@ class OptionsBar(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptSliders.OptionBar
     """
-    return self.__options
+    return super().options
 
   def __add__(self, icon):
     """ Add items to a container """
@@ -633,12 +743,13 @@ class OptionsBar(Html.Html):
 
   def draggable(self, options=None):
     self.css({'border-radius': '5px', "border": "1px dotted %s" % self._report.theme.success[1]})
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable(options).toStr())
+    self.page.properties.js.add_builders(self.dom.jquery_ui.draggable(options).toStr())
     return self
 
   def __str__(self):
     str_html = "".join([v.html() for v in self.val])
-    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'icons': str_html}
+    return '<div %(attrs)s>%(icons)s</div>' % {
+      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'icons': str_html}
 
 
 class SignIn(Html.Html):
@@ -658,7 +769,8 @@ class SignIn(Html.Html):
       self.style.css.font_family = "Font Awesome 5 Free"
       self.style.css.padding = "2px"
       self.style.css.font_size = self.size
-      return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
+      return '<i title="Guest Mode" %(attrs)s></i>' % {
+        'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
     return '''
       <div title="%(user)s" %(attrs)s>
@@ -670,10 +782,11 @@ class SignIn(Html.Html):
 class Filters(Html.Html):
   name = 'Filters'
   requirements = ('font-awesome', )
+  _option_cls = OptList.OptionsTagItems
 
-  def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
-    super(Filters, self).__init__(report, items, css_attrs={"width": width, "min-height": height}, htmlCode=htmlCode, profile=profile)
-    self.__options = OptList.OptionsTagItems(self, options)
+  def __init__(self, report, items, width, height, html_code, helper, options, profile):
+    super(Filters, self).__init__(report, items, html_code=html_code, profile=profile, options=options,
+                                  css_attrs={"width": width, "min-height": height})
     self.input = self._report.ui.input()
     self.input.style.css.text_align = 'left'
     self.input.style.css.padding = '0 5px'
@@ -690,46 +803,53 @@ class Filters(Html.Html):
     """
     Description:
     -----------
-    Shortcut to the Chip options.
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptList.OptionsTagItems
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
       if (typeof data !== 'undefined'){
       data.forEach(function(val){
-        if(typeof val === 'string'){val = {name: options.category, category: options.category, value: val, disabled: false, fixed: false} }
+        if(typeof val === 'string'){
+          val = {name: options.category, category: options.category, value: val, disabled: false, fixed: false} }
         else{
-          if(val.category === undefined){ if(val.name === undefined) {val.category = options.category} else {val.category = val.name}}
+          if(val.category === undefined){ 
+            if(val.name === undefined) {val.category = options.category} else {val.category = val.name}}
           if(val.name === undefined){ val.name = val.category}};
         chipAdd(panel, val, options)})}
         '''
 
-  def enter(self, js_funcs, profile=False):
+  def enter(self, js_funcs, profile=None):
     """
     Description:
     -----------
+    Javascript event triggered by the enter key.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcs: List | String. The JavaScript events
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: List | String. The JavaScript events.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self.__enter_def = True
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.keydown.enter([JsUtils.jsConvertFncs(js_funcs, toStr=True), self.dom.add(self.dom.input)] + js_funcs + [self.input.dom.empty()], profile)
+    self.keydown.enter([JsUtils.jsConvertFncs(js_funcs, toStr=True),
+                        self.dom.add(self.dom.input)] + js_funcs + [self.input.dom.empty()], profile)
     return self
 
-  def drop(self, js_funcs, preventDefault=True, profile=False):
+  def drop(self, js_funcs, prevent_default=True, profile=None):
     """
     Description:
     -----------
@@ -739,15 +859,15 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param preventDefault:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: String | List. The Javascript functions.
+    :param prevent_default:
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     self.style.css.border = "1px dashed black"
     self.tooltip("Drag and drop values here")
-    return super(Filters, self).drop(js_funcs, preventDefault, profile)
+    return super(Filters, self).drop(js_funcs, prevent_default, profile)
 
-  def delete(self, js_funcs, profile=False):
+  def delete(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -757,15 +877,16 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if self.__enter_def:
       raise Exception("delete on chip must be triggered before enter")
 
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles['delete'] = JsUtils.jsConvertFncs(["this.parentNode.remove()"] + js_funcs, toStr=True)
+    self._jsStyles['delete'] = JsUtils.jsConvertFncs(
+      ["this.parentNode.remove()"] + js_funcs, toStr=True, profile=profile)
     return self
 
   def append(self, value, category=None, name=None, disabled=False, fixed=False):
@@ -790,7 +911,7 @@ class Filters(Html.Html):
     rec['name'] = name or rec['category']
     self._vals.append(rec)
 
-  def draggable(self, js_funcs=None, options=None, profile=False, source_event=None):
+  def draggable(self, js_funcs=None, options=None, profile=None, source_event=None):
     """
     Description:
     ------------
@@ -800,16 +921,17 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param options:
-    :param profile:
-    :param source_event:
+    :param js_funcs: List | String. Javascript functions.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     js_funcs.append('event.dataTransfer.setData("text", value)')
-    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile)
     return self
 
   @property
@@ -829,21 +951,25 @@ class Filters(Html.Html):
     return self._dom
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors['ChipAdd'] = '''function chipAdd(panel, record, options){
+    self.page.properties.js.add_builders(self.refresh())
+    self.page.properties.js.add_constructor('ChipAdd', '''function chipAdd(panel, record, options){
         if(typeof(record.category !== "undefined")){options.category = record.category}
-        var div = document.createElement("div"); for (var key in options.item_css){ div.style[key] = options.item_css[key]};
+        var div = document.createElement("div"); 
+        for (var key in options.item_css){div.style[key] = options.item_css[key]};
         div.setAttribute('data-category', record.category);
-        var content = document.createElement("span"); for (var key in options.value_css){ content.style[key] = options.value_css[key]};
+        var content = document.createElement("span"); 
+        for (var key in options.value_css){ content.style[key] = options.value_css[key]};
         content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
         if(options.visible){
-          var p = document.createElement("p"); for (var key in options.category_css){ p.style[key] = options.category_css[key]};
+          var p = document.createElement("p"); 
+          for (var key in options.category_css){p.style[key] = options.category_css[key]};
           p.innerHTML = record.name; div.appendChild(p)}
         div.appendChild(content);
         if(!record.fixed && options.delete){
-          var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
-          icon.classList.add('fas'); icon.classList.add('fa-times'); icon.addEventListener('click', function(){eval(options.delete)});
+          var icon = document.createElement("i"); 
+          for (var key in options.icon_css){icon.style[key] = options.icon_css[key] };
+          icon.classList.add('fas'); icon.classList.add('fa-times'); 
+          icon.addEventListener('click', function(){eval(options.delete)});
           div.appendChild(icon)}
         if(typeof options.draggable !== 'undefined'){
           div.setAttribute('draggable', true);
@@ -857,15 +983,17 @@ class Filters(Html.Html):
           panel.style.maxHeight = ""+ maxHeight + "px";
           panel.style.overflow = "hidden"; panel.style.position = "relative";
           var div = document.createElement("div"); div.style.color = "#3366BB";
-          div.innerHTML = "Show all"; div.style.position = "absolute"; div.style.bottom = 0; div.style.cursor = "pointer";
+          div.innerHTML = "Show all"; div.style.position = "absolute"; 
+          div.style.bottom = 0; div.style.cursor = "pointer";
           div.addEventListener("click", function(event){ 
             var targetElement = event.target || event.srcElement;
             if (targetElement.innerHTML != "reduce"){panel.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
             else {panel.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}});
           div.style.right = "5px"; panel.appendChild(div)
         }
-    }'''
+    }''')
     if not self.options.visible:
       self.input.style.css.display = False
-    return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
-          'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}
+    return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {
+      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+      'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}

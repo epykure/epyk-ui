@@ -250,7 +250,8 @@ class ColumnApi(object):
     Description:
     -----------
     Returns the display name for a column.
-    Useful if you are doing your own header rendering and want the grid to work out if headerValueGetter is used, or if you are doing your own column management GUI, to know what to show as the column name.
+    Useful if you are doing your own header rendering and want the grid to work out if headerValueGetter is used, or
+    if you are doing your own column management GUI, to know what to show as the column name.
 
     Related Pages:
 
@@ -280,7 +281,8 @@ class ColumnApi(object):
     """
     Description:
     -----------
-    Returns all the grid columns, same as getAllColumns(), except a) it has the order of the columns that are presented in the grid and b) it's after the 'pivot' step, so if pivoting, has the value columns for the pivot.
+    Returns all the grid columns, same as getAllColumns(), except a) it has the order of the columns that are presented
+    in the grid and b) it's after the 'pivot' step, so if pivoting, has the value columns for the pivot.
 
     Related Pages:
 
@@ -319,7 +321,8 @@ class ColumnApi(object):
     """
     Description:
     -----------
-    Same as getAllGridColumns(), except only returns rendered columns, i.e. columns that are not within the viewport and therefore not rendered, due to column virtualisation, are not displayed.
+    Same as getAllGridColumns(), except only returns rendered columns, i.e. columns that are not within the viewport
+    and therefore not rendered, due to column virtualisation, are not displayed.
 
     Related Pages:
 
@@ -332,7 +335,8 @@ class ColumnApi(object):
     """
     Description:
     -----------
-    Moves a column to toIndex. The column is first removed, then added at the toIndex location, thus index locations will change to the right of the column after the removal.
+    Moves a column to toIndex. The column is first removed, then added at the toIndex location, thus index locations
+    will change to the right of the column after the removal.
 
     Related Pages:
 
@@ -351,7 +355,8 @@ class ColumnApi(object):
     """
     Description:
     -----------
-    Moves a column to toIndex. The column is first removed, then added at the toIndex location, thus index locations will change to the right of the column after the removal.
+    Moves a column to toIndex. The column is first removed, then added at the toIndex location, thus index locations
+    will change to the right of the column after the removal.
 
     Related Pages:
 
@@ -389,7 +394,8 @@ class ColumnApi(object):
     """
     Description:
     -----------
-    Sets the column width on a single column. The finished flag gets included in the resulting event and not used internally by the grid.
+    Sets the column width on a single column. The finished flag gets included in the resulting event and not used
+    internally by the grid.
 
     Related Pages:
 
@@ -543,7 +549,8 @@ class AgGrid(JsPackage):
     :param transaction:
     :param callback:
     """
-    return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (self.varId, JsUtils.jsConvertData(transaction, None), callback))
+    return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (
+      self.varId, JsUtils.jsConvertData(transaction, None), callback))
 
   def getDisplayedRowCount(self):
     """
@@ -590,7 +597,8 @@ class AgGrid(JsPackage):
     ----------
     :param columns:
     """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def showColumns(self, columns):
     """
@@ -601,7 +609,8 @@ class AgGrid(JsPackage):
     ----------
     :param columns:
     """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, true)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, true)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def hideColumn(self, column):
     """
@@ -616,7 +625,8 @@ class AgGrid(JsPackage):
     ----------
     :param columns:
     """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
 
   def showColumn(self, column):
     """
@@ -631,13 +641,15 @@ class AgGrid(JsPackage):
     ----------
     :param column:
     """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, true)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, true)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
 
   def getRowNode(self, row_id):
     """
     Description:
     -----------
-    Returns the row node with the given ID. The row node ID is the one you provide with the callback getRowNodeId(data), otherwise the ID is a number auto generated by the grid when the row data is set.
+    Returns the row node with the given ID. The row node ID is the one you provide with the callback getRowNodeId(data),
+    otherwise the ID is a number auto generated by the grid when the row data is set.
 
     Related Pages:
 
@@ -719,7 +731,8 @@ class AgGrid(JsPackage):
     """
     Description:
     -----------
-    Returns a list of selected nodes. Getting the underlying node (rather than the data) is useful when working with tree / aggregated data, as the node can be traversed.
+    Returns a list of selected nodes. Getting the underlying node (rather than the data) is useful when working with
+    tree / aggregated data, as the node can be traversed.
 
     Related Pages:
 
@@ -793,7 +806,8 @@ class AgGrid(JsPackage):
     """
     Description:
     -----------
-    Redraws the header. Useful if a column name changes, or something else that changes how the column header is displayed.
+    Redraws the header. Useful if a column name changes, or something else that changes how the column header
+    is displayed.
 
     Related Pages:
 
@@ -914,7 +928,8 @@ class AgGrid(JsPackage):
     """
     Description:
     -----------
-    Returns true when the last page is known; this will always be the case if you are using the Client-Side Row Model for pagination.
+    Returns true when the last page is known; this will always be the case if you are using the Client-Side Row Model
+    for pagination.
     Returns false when the last page is not known; this only happens when using Infinite Scrolling Row Model.
 
     Related Pages:

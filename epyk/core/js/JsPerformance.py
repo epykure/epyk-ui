@@ -2,7 +2,8 @@
 Wrapper to the Javascript Performance Module
 
 The Performance interface provides access to performance-related information for the current page.
-It's part of the High Resolution Time API, but is enhanced by the Performance Timeline API, the Navigation Timing API, the User Timing API, and the Resource Timing API
+It's part of the High Resolution Time API, but is enhanced by the Performance Timeline API, the Navigation Timing API,
+the User Timing API, and the Resource Timing API
 
 Related Pages:
 
@@ -11,14 +12,14 @@ Related Pages:
 """
 
 
-from epyk.core.js import JsUtils # All the predefined variable types
+from epyk.core.js import JsUtils
 from epyk.core.js.fncs import JsFncs
 from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsArray
 
 
-class JsPerformance(object):
+class JsPerformance:
   def __init__(self, src=None):
     self.__src = src
     self.__marks = set([])
@@ -30,8 +31,10 @@ class JsPerformance(object):
     ------------
     Wrap the Javascript functions with function to asset on the execution time.
 
-    Example
-    self._report.js.performance.add_profiling(fncs['content'])
+    Usage:
+    -----
+
+      self._report.js.performance.add_profiling(fncs['content'])
 
     Related Pages:
 
@@ -56,10 +59,13 @@ class JsPerformance(object):
     Description:
     ------------
     The clearMarks() method removes the named mark from the browser's performance entry buffer.
-    If the method is called with no arguments, all performance entries with an entry type of "mark" will be removed from the performance entry buffer.
+    If the method is called with no arguments, all performance entries with an entry type of "mark" will be removed
+    from the performance entry buffer.
 
-    Example
-    performance.clearMarks("a")
+    Usage:
+    -----
+
+      performance.clearMarks("a")
 
     Related Pages:
 
@@ -67,7 +73,7 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param name: String. Optional.
+    :param name: String. Optional. The mark name.
 
     :return: Void, the String for the Javascript side
     """
@@ -84,10 +90,13 @@ class JsPerformance(object):
     Description:
     ------------
     The clearMeasures() method removes the named measure from the browser's performance entry buffer.
-    If the method is called with no arguments, all performance entries with an entry type of "measure" will be removed from the performance entry buffer.
+    If the method is called with no arguments, all performance entries with an entry type of "measure" will be removed
+    from the performance entry buffer.
 
-    Example:
-    performance.clearMeasures("a");
+    Usage:
+    -----
+
+      performance.clearMeasures("a");
 
     Related Pages:
 
@@ -95,7 +104,7 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param name: Optional, The name of the mark to be cleared
+    :param name: String. Optional. The name of the mark to be cleared.
 
     :return: Void, the String for the Javascript side
     """
@@ -109,11 +118,14 @@ class JsPerformance(object):
     """
     Description:
     ------------
-    The clearResourceTimings() method removes all performance entries with an entryType of "resource" from the browser's performance data buffer and sets the size of the performance data buffer to zero.
+    The clearResourceTimings() method removes all performance entries with an entryType of "resource" from
+    the browser's performance data buffer and sets the size of the performance data buffer to zero.
     To set the size of the browser's performance data buffer, use the Performance.setResourceTimingBufferSize() method.
 
-    Example
-    performance.clearResourceTimings()
+    Usage:
+    -----
+
+      performance.clearResourceTimings()
 
     Related Pages:
 
@@ -128,8 +140,10 @@ class JsPerformance(object):
     Description:
     ------------
     The getEntries() method returns a list of all PerformanceEntry objects for the page.
-    The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
-    If you are only interested in performance entries of certain types or that have certain names, see getEntriesByType() and getEntriesByName().
+    The list's members (entries) can be created by making performance marks or
+    measures (for example by calling the mark() method) at explicit points in time.
+    If you are only interested in performance entries of certain types or that have certain names,
+    see getEntriesByType() and getEntriesByName().
 
     Related Pages:
 
@@ -144,10 +158,13 @@ class JsPerformance(object):
     Description:
     ------------
     The getEntriesByName() method returns a list of PerformanceEntry objects for the given name and type.
-    The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
+    The list's members (entries) can be created by making performance marks or
+    measures (for example by calling the mark() method) at explicit points in time.
 
-    Example
-    performance.getEntriesByName("Begin", "mark")
+    Usage:
+    -----
+
+      performance.getEntriesByName("Begin", "mark")
 
     Related Pages:
 
@@ -155,8 +172,8 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param name: The name of the entry to retrieve.
-    :param type: Optional, The type of entry to retrieve such as "mark"
+    :param name: String. The name of the entry to retrieve.
+    :param type: String. Optional. The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified name and type
     """
@@ -174,10 +191,13 @@ class JsPerformance(object):
     Description:
     ------------
     The getEntriesByType() method returns a list of PerformanceEntry objects for a given type.
-    The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
+    The list's members (entries) can be created by making performance marks or
+    measures (for example by calling the mark() method) at explicit points in time.
 
-    Example
-    performance.getEntriesByType("mark")
+    Usage:
+    -----
+
+      performance.getEntriesByType("mark")
 
     Related Pages:
 
@@ -185,9 +205,9 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param type: The type of entry to retrieve such as "mark"
+    :param type: String. The type of entry to retrieve such as "mark".
 
-    :return: A list of PerformanceEntry objects that have the specified type
+    :return: A list of PerformanceEntry objects that have the specified type.
     """
     return JsArray.JsArray("window.performance.getEntriesByType('%s')" % type, isPyData=False)
 
@@ -196,10 +216,13 @@ class JsPerformance(object):
     Description:
     ------------
     The mark() method creates a timestamp in the browser's performance entry buffer with the given name.
-    The application defined timestamp can be retrieved by one of the Performance interface's getEntries*() methods (getEntries(), getEntriesByName() or getEntriesByType()).
+    The application defined timestamp can be retrieved by one of the Performance interface's getEntries*() methods
+    (getEntries(), getEntriesByName() or getEntriesByType()).
 
-    Example:
-    performance.mark("a")
+    Usage:
+    -----
+
+      performance.mark("a")
 
     Related Pages:
 
@@ -207,9 +230,9 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param name: A DOMString representing the name of the mark.
+    :param name: String. A DOMString representing the name of the mark.
 
-    :return: VOid, The String for the Javascript side
+    :return: VOid, The String for the Javascript side.
     """
     self.__marks.add(name)
     name = JsUtils.jsConvertData(name, None)
@@ -219,7 +242,9 @@ class JsPerformance(object):
     """
     Description:
     ------------
-    The measure() method creates a named timestamp in the browser's performance entry buffer between marks, the navigation start time, or the current time.
+    The measure() method creates a named timestamp in the browser's performance entry buffer between marks,
+    the navigation start time, or the current time.
+
     When measuring between two marks, there is a start mark and end mark, respectively.
     The named timestamp is referred to as a measure.
 
@@ -229,19 +254,19 @@ class JsPerformance(object):
 
     Attributes:
     ----------
-    :param name: A DOMString representing the name of the measure
-    :param startMark: Optional, A DOMString representing the name of the measure's starting mark
-    :param endMark: Optional, A DOMString representing the name of the measure's ending mark
+    :param name: String. A DOMString representing the name of the measure.
+    :param startMark: String. Optional. A DOMString representing the name of the measure's starting mark.
+    :param endMark: String. Optional, A DOMString representing the name of the measure's ending mark.
 
     :return: Void, The String for the Javascript side
     """
     name = JsUtils.jsConvertData(name, None)
     if startMark is not None:
-      if not startMark in self.__marks:
+      if startMark not in self.__marks:
         raise Exception("Mark %s not defined in the performances" % startMark)
 
       if endMark is not None:
-        if not startMark in self.__marks:
+        if startMark not in self.__marks:
           raise Exception("Mark %s not defined in the performances" % startMark)
 
         return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, startMark, endMark))
@@ -257,8 +282,10 @@ class JsPerformance(object):
     ------------
     The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
 
-    Example
-    var t0 = performance.now();
+    Usage:
+    -----
+
+      var t0 = performance.now();
 
     Related Pages:
 
@@ -293,10 +320,13 @@ class JsPerformance(object):
     """
     Description:
     ------------
-    The toJSON() method of the Performance interface is a standard serializer: it returns a JSON representation of the performance object's properties.
+    The toJSON() method of the Performance interface is a standard serializer: it returns a JSON representation of
+    the performance object's properties.
 
-    Example
-    performance.toJSON()
+    Usage:
+    -----
+
+      performance.toJSON()
 
     Related Pages:
 

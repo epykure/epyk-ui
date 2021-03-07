@@ -11,10 +11,11 @@ class CssSelectStyle(CssStyle.Style):
   _focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
 
   def customize(self):
-    self.css({"background": 'inherit', "color": self.rptObj.theme.greys[-1],
-              'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-              'font-size': '%spx' % Defaults_css.Font.size, #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
-              })
+    self.css({
+      "background": 'inherit', "color": self.page.theme.greys[-1],
+      'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+      'font-size': '%spx' % Defaults_css.Font.size, #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
+    })
     self.css({'display': 'inline-block', 'margin': 0}, important=True)
 
 
@@ -25,7 +26,7 @@ class CssSelectButton(CssStyle.Style):
   _selectors = {"child": '.btn'}
 
   def customize(self):
-    self.css({"background-color": 'inherit', "border": 'none', 'color': self.rptObj.theme.colors[-1]})
+    self.css({"background-color": 'inherit', "border": 'none', 'color': self.page.theme.colors[-1]})
 
 
 class CssSelectSearchBoxInput(CssStyle.Style):
@@ -36,14 +37,16 @@ class CssSelectSearchBoxInput(CssStyle.Style):
   _selectors = {"child": 'input.form-control'}
 
   def customize(self):
-    self.css({"border-color": self.rptObj.theme.colors[5], "height": "%spx" % Defaults_html.LINE_HEIGHT})
-    self.focus.css({"box-shadow": "0 0 0 0.2em %s" % self.rptObj.theme.colors[0]})
+    self.css({"border-color": self.page.theme.colors[5], "height": "%spx" % Defaults_html.LINE_HEIGHT})
+    self.focus.css({"box-shadow": "0 0 0 0.2em %s" % self.page.theme.colors[0]})
 
 
 class CssSelectToggle(CssStyle.Style):
 
   def customize(self):
-    self.css({"background-color": 'inherit', 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+    self.css({
+      "background-color": 'inherit',
+      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
 
 
 class CssSelectToggleNoBg(CssStyle.Style):
@@ -56,9 +59,9 @@ class CssSelectOption(CssStyle.Style):
   classname = "dropdown-menu"
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
-              'background-color': self.rptObj.theme.greys[0],
-              }, important=True)
+    self.css({
+      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
+      'background-color': self.page.theme.greys[0]}, important=True)
 
 
 class CssSelectOptionItems(CssStyle.Style):
@@ -67,23 +70,34 @@ class CssSelectOptionItems(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({"z-index": 210, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'color': self.rptObj.theme.greys[-1]}, important=True)
-    self.hover.css({'color': self.rptObj.theme.colors[0], "background-color": self.rptObj.theme.colors[7]}, important=True)
-    self.active.css({"background-color": self.rptObj.theme.colors[-1], "color": self.rptObj.theme.greys[0]}, important=True)
+    self.css({
+      "z-index": 210,
+      'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+      'color': self.page.theme.greys[-1]}, important=True)
+    self.hover.css({
+      'color': self.page.theme.colors[0],
+      "background-color": self.page.theme.colors[7]}, important=True)
+    self.active.css({
+      "background-color": self.page.theme.colors[-1],
+      "color": self.page.theme.greys[0]}, important=True)
 
 
 class CssSelectOptionActive(CssStyle.Style):
   classname = "active"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.colors[4], "color": self.rptObj.theme.colors[-1]}, important=True)
+    self.css({
+      'background': self.page.theme.colors[4],
+      "color": self.page.theme.colors[-1]}, important=True)
 
 
 class CssSelectOptionSelected(CssStyle.Style):
   classname = "selected"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.colors[-1], "color": self.rptObj.theme.greys[0]}, important=True)
+    self.css({
+      'background': self.page.theme.colors[-1],
+      "color": self.page.theme.greys[0]}, important=True)
 
 
 class CssSelectFilterOption(CssStyle.Style):
@@ -100,4 +114,6 @@ class CssSelectStatus(CssStyle.Style):
   classnames = ["dropdown-menu", "status"]
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({
+      "background-color": self.page.theme.greys[0],
+      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})

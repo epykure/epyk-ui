@@ -22,10 +22,10 @@ from epyk.core.css.catalogs import CatalogImg
 from epyk.core.css.catalogs import CatalogStd
 
 
-class Catalog(object):
+class Catalog:
 
-  def __init__(self, report, classList):
-    self.__rptObj, self.__class_list = report, classList
+  def __init__(self, page, classList):
+    self.page, self.__class_list = page, classList
     self.__ctx = {}
 
   def font_face(self, font_family, src, stretch="normal", style="normal", weight="normal"):
@@ -34,14 +34,15 @@ class Catalog(object):
     ------------
     With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
 
-    In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to the font file.
+    In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to
+    the font file.
 
     Entry to get a font family from a local file to avoid loading it online.
     This is safer but also improve the speed of the website.
 
-    https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
+    Related Pages:
 
-    TODO: Use the page property self.__rptObj._props['css']["font-face"] in the CSS definition
+      https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
 
     Usage:
     -----
@@ -51,27 +52,53 @@ class Catalog(object):
     :param font_family: String. Required. Defines the name of the font.
     :param src: String. Required. Defines the URL(s) where the font should be downloaded from.
     :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal".
-    :param style: String. Required. Optional. Defines how the font should be styled. Default value is "normal".
-    :param weight: String. Required. Optional. Defines the boldness of the font. Default value is "normal".
+    :param style: String. Optional. Defines how the font should be styled. Default value is "normal".
+    :param weight: String. Optional. Defines the boldness of the font. Default value is "normal".
     """
-    self.__rptObj._props['css']["font-face"][font_family] = {'src': "url(%s)" % src, 'font-stretch': stretch,
-                                                             'font-style': style, 'font-weight': weight}
+    self.page.properties.css.font_face(font_family, src, stretch, style, weight)
     return self
 
-  def _class_type(self, type):
+  def _class_type(self, cls_type):
     """
     Description:
     ------------
+    Change the current class type to the one defined and return the internal class object.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param type:
+    :param cls_type: String. The alias of the class other or main.
     """
-    self.__class_list_type = self.__class_list[type]
+    self.__class_list_type = self.__class_list[cls_type]
     return self
+
+  @property
+  def other(self):
+    """
+    Description:
+    ------------
+    Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
+
+    Usage:
+    -----
+    """
+    self.__class_list_type = self.__class_list['other']
+    return self.__class_list_type
+
+  @property
+  def main(self):
+    """
+    Description:
+    ------------
+    Get the list of CSS Classes added to the component and to the class tag of the component.
+
+    Usage:
+    -----
+    """
+    self.__class_list_type = self.__class_list['main']
+    return self.__class_list_type
 
   @property
   def std(self):
@@ -93,7 +120,7 @@ class Catalog(object):
     :rtype: CatalogStd.CatalogSt
     """
     if "std" not in self.__ctx:
-      self.__ctx['std'] = CatalogStd.CatalogStd(self.__rptObj, self.__class_list)
+      self.__ctx['std'] = CatalogStd.CatalogStd(self.page, self.__class_list)
     return self.__ctx['std']
 
   @property
@@ -109,7 +136,7 @@ class Catalog(object):
     :rtype: CatalogButton.CatalogButton
     """
     if "button" not in self.__ctx:
-      self.__ctx['button'] = CatalogButton.CatalogButton(self.__rptObj, self.__class_list_type)
+      self.__ctx['button'] = CatalogButton.CatalogButton(self.page, self.__class_list_type)
     return self.__ctx['button']
 
   @property
@@ -125,7 +152,7 @@ class Catalog(object):
     :rtype: CatalogMedia.CatalogSelect
     """
     if "select" not in self.__ctx:
-      self.__ctx['select'] = CatalogSelect.CatalogSelect(self.__rptObj, self.__class_list_type)
+      self.__ctx['select'] = CatalogSelect.CatalogSelect(self.page, self.__class_list_type)
     return self.__ctx['select']
 
   @property
@@ -141,7 +168,7 @@ class Catalog(object):
     :rtype: CatalogMedia.CatalogMedia
     """
     if "screens" not in self.__ctx:
-      self.__ctx['screens'] = CatalogMedia.CatalogMedia(self.__rptObj, self.__class_list_type)
+      self.__ctx['screens'] = CatalogMedia.CatalogMedia(self.page, self.__class_list_type)
     return self.__ctx['screens']
 
   @property
@@ -149,7 +176,7 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the Icons components.
+    CSS Classes specific to the Icon components.
 
     Usage:
     -----
@@ -157,7 +184,7 @@ class Catalog(object):
     :rtype: CatalogIcons.CatalogIcon
     """
     if "icon" not in self.__ctx:
-      self.__ctx['icon'] = CatalogIcons.CatalogIcon(self.__rptObj, self.__class_list_type)
+      self.__ctx['icon'] = CatalogIcons.CatalogIcon(self.page, self.__class_list_type)
     return self.__ctx['icon']
 
   @property
@@ -165,6 +192,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Layout / Container components.
 
     Usage:
     -----
@@ -172,7 +200,7 @@ class Catalog(object):
     :rtype: CatalogLayout.CatalogLayout
     """
     if "layout" not in self.__ctx:
-      self.__ctx['layout'] = CatalogLayout.CatalogLayout(self.__rptObj, self.__class_list_type)
+      self.__ctx['layout'] = CatalogLayout.CatalogLayout(self.page, self.__class_list_type)
     return self.__ctx['layout']
 
   @property
@@ -180,7 +208,7 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the dropdown components.
+    CSS Classes specific to the DropDown components.
 
     Usage:
     -----
@@ -188,7 +216,7 @@ class Catalog(object):
     :rtype: CatalogTree.CssStyleDropdown
     """
     if "dropdown" not in self.__ctx:
-      self.__ctx['dropdown'] = CatalogTree.CatalogDropDown(self.__rptObj, self.__class_list_type)
+      self.__ctx['dropdown'] = CatalogTree.CatalogDropDown(self.page, self.__class_list_type)
     return self.__ctx['dropdown']
 
   @property
@@ -204,7 +232,7 @@ class Catalog(object):
     :rtype: CatalogTable.CatalogTable
     """
     if "table" not in self.__ctx:
-      self.__ctx['table'] = CatalogTable.CatalogTable(self.__rptObj, self.__class_list_type)
+      self.__ctx['table'] = CatalogTable.CatalogTable(self.page, self.__class_list_type)
     return self.__ctx['table']
 
   @property
@@ -212,7 +240,7 @@ class Catalog(object):
     """
     Description:
     ------------
-    CSS Classes specific to the buttons components.
+    CSS Classes specific to Chart components.
 
     Usage:
     -----
@@ -220,7 +248,7 @@ class Catalog(object):
     :rtype: CatalogButton.CatalogButton
     """
     if "chart" not in self.__ctx:
-      self.__ctx['chart'] = CatalogChart.CatalogChart(self.__rptObj, self.__class_list_type)
+      self.__ctx['chart'] = CatalogChart.CatalogChart(self.page, self.__class_list_type)
     return self.__ctx['chart']
 
   @property
@@ -228,6 +256,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Link components.
 
     Usage:
     -----
@@ -235,7 +264,7 @@ class Catalog(object):
     :rtype: CatalogLink.CatalogLink
     """
     if "link" not in self.__ctx:
-      self.__ctx['link'] = CatalogLink.CatalogLink(self.__rptObj, self.__class_list_type)
+      self.__ctx['link'] = CatalogLink.CatalogLink(self.page, self.__class_list_type)
     return self.__ctx['link']
 
   @property
@@ -243,6 +272,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Date components.
 
     Usage:
     -----
@@ -250,7 +280,7 @@ class Catalog(object):
     :rtype: CatalogInput.CatalogDate
     """
     if "date" not in self.__ctx:
-      self.__ctx['date'] = CatalogInput.CatalogDate(self.__rptObj, self.__class_list_type)
+      self.__ctx['date'] = CatalogInput.CatalogDate(self.page, self.__class_list_type)
     return self.__ctx['date']
 
   @property
@@ -258,6 +288,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Text components.
 
     Usage:
     -----
@@ -265,7 +296,7 @@ class Catalog(object):
     :rtype: CatalogText.CatalogText
     """
     if "text" not in self.__ctx:
-      self.__ctx['text'] = CatalogText.CatalogText(self.__rptObj, self.__class_list_type)
+      self.__ctx['text'] = CatalogText.CatalogText(self.page, self.__class_list_type)
     return self.__ctx['text']
 
   @property
@@ -273,6 +304,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Input components.
 
     Usage:
     -----
@@ -280,7 +312,7 @@ class Catalog(object):
     :rtype: CatalogInput.CatalogInput
     """
     if "inputs" not in self.__ctx:
-      self.__ctx['inputs'] = CatalogInput.CatalogInput(self.__rptObj, self.__class_list_type)
+      self.__ctx['inputs'] = CatalogInput.CatalogInput(self.page, self.__class_list_type)
     return self.__ctx['inputs']
 
   @property
@@ -288,6 +320,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Image components.
 
     Usage:
     -----
@@ -295,7 +328,7 @@ class Catalog(object):
     :rtype: CatalogImg.CatalogImg
     """
     if "image" not in self.__ctx:
-      self.__ctx['image'] = CatalogImg.CatalogImg(self.__rptObj, self.__class_list_type)
+      self.__ctx['image'] = CatalogImg.CatalogImg(self.page, self.__class_list_type)
     return self.__ctx['image']
 
   @property
@@ -303,6 +336,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Div / Container components.
 
     Usage:
     -----
@@ -310,7 +344,7 @@ class Catalog(object):
     :rtype: CatalogDiv.CatalogDiv
     """
     if "div" not in self.__ctx:
-      self.__ctx['div'] = CatalogDiv.CatalogDiv(self.__rptObj, self.__class_list_type)
+      self.__ctx['div'] = CatalogDiv.CatalogDiv(self.page, self.__class_list_type)
     return self.__ctx['div']
 
   @property
@@ -318,6 +352,7 @@ class Catalog(object):
     """
     Description:
     ------------
+    CSS Classes specific to Radio button components.
 
     Usage:
     -----
@@ -325,10 +360,10 @@ class Catalog(object):
     :rtype: CatalogRadio.CatalogRadio
     """
     if "radio" not in self.__ctx:
-      self.__ctx['radio'] = CatalogRadio.CatalogRadio(self.__rptObj, self.__class_list_type)
+      self.__ctx['radio'] = CatalogRadio.CatalogRadio(self.page, self.__class_list_type)
     return self.__ctx['radio']
 
-  def custom(self, cssClass):
+  def custom(self, css_cls):
     """
     Description:
     ------------
@@ -339,11 +374,11 @@ class Catalog(object):
 
     Attributes:
     ----------
-    :param cssClass:
+    :param css_cls: Class. The python class to be used as a CSS Class in the framework.
     """
-    cssObj = cssClass(self.__rptObj)
-    cssObj.customize()
-    self.__class_list_type.add(cssObj)
+    css_cls_obj = css_cls(self.page)
+    css_cls_obj.customize()
+    self.__class_list_type.add(css_cls_obj)
     return self
 
   def customFile(self, filename, path=None):
@@ -362,9 +397,9 @@ class Catalog(object):
                  will be used.
     """
     if path is None:
-      self.__rptObj.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
+      self.page.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
     else:
-      self.__rptObj.cssLocalImports.add("%s/%s" % (path, filename))
+      self.page.cssLocalImports.add("%s/%s" % (path, filename))
     return self
 
   def customText(self, text):
@@ -378,9 +413,9 @@ class Catalog(object):
 
     Attributes:
     ----------
-    :param text: String. The CSS fragment to be added to the HTML report. THis can be a class or a group of class.
+    :param text: String. The CSS fragment to be added to the HTML report. This can be a class or a group of class.
     """
-    self.__rptObj._cssText.append(text)
+    self.page.properties.css.add_text(text)
     return self
 
   def anonymous_cls(self, attrs):
@@ -388,12 +423,12 @@ class Catalog(object):
     Description:
     ------------
     Create a bespoke class based on the various attributes.
-    This will internal build the class and return it
+    This will internal build the class and return it.
 
     Usage:
     -----
 
-      v_cls = rptObj.css.anonymous_cls({
+      v_cls = page.css.anonymous_cls({
       '_attrs': {'color': 'green', 'cursor': 'pointer'},
       '_hover': {'color': 'red'}})
 
@@ -416,14 +451,14 @@ class Catalog(object):
     """
     Description:
     ------------
-    Add external CSS classes to a component
+    Add external CSS classes to a component.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param classname: String or array.
+    :param classname: String | array.
     """
     if isinstance(classname, list):
       classname = " ".join(classname)

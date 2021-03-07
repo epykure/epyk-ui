@@ -10,9 +10,10 @@ from epyk.core.js import JsUtils
 class Script(Html.Html):
   name = 'D3 Script'
 
-  def __init__(self, report, data, width, height, htmlCode, options, profile):
-    super(Script, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.__loader = ""
+  def __init__(self, report, data, width, height, html_code, options, profile):
+    super(Script, self).__init__(report, data, html_code=html_code, profile=profile,
+                                 css_attrs={"width": width, "height": height})
+    self._js__builder__ = ""
     self._jsStyles.update(options)
     self._jsStyles.update({"wdith": width[0], "height": height[0]})
 
@@ -21,35 +22,21 @@ class Script(Html.Html):
       data = data.split(" ")
     self._vals = data
 
-  def loader(self, str_frg, pretty_format=False):
-    #fgs = [l.lstrip() for l in str_frg.split()]
-    self.__loader = str_frg
+  def loader(self, str_frg):
+    """
+    Description:
+    ------------
 
-  def build(self, data=None, options=None, profile=False):
-    if not self.builder_name:
-      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
+    Attributes:
+    ----------
+    :param str_frg:
+    """
+    self.builder_name = "D3Builder%s" % self.page.py.hash(str_frg)
+    self._js__builder__ = str_frg
 
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (
-    self.builder_name, self.__loader)
-    if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
-    else:
-      js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or self._jsStyles, []
-    for k, v in options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if self.options.isJsContent(k) or str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return "%s(%s, %s, %s)" % (self.builder_name, self.dom.d3.varId, js_data, "{%s}" % ",".join(js_options))
+  def build(self, data=None, options=None, profile=False, component_id=None):
+    return super().build(data, options, profile, component_id=self.dom.d3.varId)
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())

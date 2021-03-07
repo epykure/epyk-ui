@@ -5,7 +5,7 @@ from epyk.core import html
 from epyk.interfaces import Arguments
 
 
-class Sliders(object):
+class Sliders:
   """
   Description:
   ------------
@@ -18,10 +18,11 @@ class Sliders(object):
 
   As this module will return those object, all the properties and changes defined in the documentation can be done.
   """
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), htmlCode=None, attrs=None,
+  @html.Html.css_skin()
+  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), html_code=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -49,7 +50,7 @@ class Sliders(object):
     :param maximum:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
@@ -59,12 +60,13 @@ class Sliders(object):
     if isinstance(number, list):
       minimum, maximum = min(number), max(number)
       number = minimum
-    html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, minimum, maximum, width, height,  attrs or {}, helper,
-                                        options or {}, htmlCode, profile)
+    html_slider = html.HtmlEvent.Slider(
+      self.page, number, minimum, maximum, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
-  def date(self, value=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-             helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def date(self, value=None, min_val=None, max_val=None, width=(100, '%'), height=(20, 'px'), html_code=None,
+           helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -79,12 +81,11 @@ class Sliders(object):
     Attributes:
     ----------
     :param value:
-    :param min:
-    :param max:
+    :param min_val:
+    :param max_val:
     :param width:
     :param height:
-    :param htmlCode:
-    :param attrs:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
@@ -94,12 +95,13 @@ class Sliders(object):
     options = options or {}
     if value is None:
       value = min
-    html_slider = html.HtmlEvent.SliderDate(self.context.rptObj, value, min, max, width, height, attrs or {}, helper,
-                                            options or {}, htmlCode, profile)
+    html_slider = html.HtmlEvent.SliderDate(
+      self.page, value, min_val, max_val, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
-  def date_range(self, value1=None, value2=None, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-                 helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def date_range(self, value1=None, value2=None, min=None, max=None, width=(100, '%'), height=(20, 'px'),
+                 html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -117,8 +119,7 @@ class Sliders(object):
     :param max:
     :param width:
     :param height:
-    :param htmlCode:
-    :param attrs:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
@@ -131,12 +132,13 @@ class Sliders(object):
       value1 = min
     if value2 is None:
       value2 = max
-    html_slider = html.HtmlEvent.SliderDates(self.context.rptObj, [value1, value2], min, max, width, height, attrs or {}, helper,
-                                             options or {}, htmlCode, profile)
+    html_slider = html.HtmlEvent.SliderDates(
+      self.page, [value1, value2], min, max, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
-  def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-             helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+            options=None, profile=None):
     """
     Description:
     ------------
@@ -153,8 +155,7 @@ class Sliders(object):
     :param max:
     :param width:
     :param height:
-    :param htmlCode:
-    :param attrs:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
@@ -163,12 +164,13 @@ class Sliders(object):
     height = Arguments.size(height, unit="px")
     options = options or {}
     options['range'] = True
-    html_slider = html.HtmlEvent.Range(self.context.rptObj, values, min, max, width, height, attrs or {}, helper,
-                                         options or {}, htmlCode, profile)
+    html_slider = html.HtmlEvent.Range(
+      self.page, values, min, max, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
-  def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-                  helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+                  options=None, profile=None):
     """
     Description:
     ------------
@@ -193,19 +195,20 @@ class Sliders(object):
     :param total: A number
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
-    :param htmlCode:
-    :param attrs:
+    :param html_code:
     :param helper:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
-                                         options or {}, htmlCode, profile)
+    html_pr = html.HtmlEvent.ProgressBar(
+      self.page, number, total, width, height, helper, options or {}, html_code, profile)
     return html_pr
 
-  def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-                  helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -219,16 +222,15 @@ class Sliders(object):
     :param total:
     :param width:
     :param height:
-    :param htmlCode:
-    :param attrs:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    progress = self.progressbar(number, total, width, height, htmlCode, attrs, helper, options, profile)
+    progress = self.progressbar(number, total, width, height, html_code, helper, options, profile)
     progress.style.css.border_radius = '50px'
-    progress.style.css.background = self.context.rptObj.theme.greys[4]
-    progress.options.css({"border-radius": "50px", "border-color": self.context.rptObj.theme.greys[5]})
+    progress.style.css.background = self.page.theme.greys[4]
+    progress.options.css({"border-radius": "50px", "border-color": self.page.theme.greys[5]})
     return progress

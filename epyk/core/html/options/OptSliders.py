@@ -35,8 +35,6 @@ class OptionsSlider(Options):
     Related Pages:
 
       https://api.jqueryui.com/slider/#option-classes
-
-		:param classes:
     """
     return self._config_get('classes')
 
@@ -54,8 +52,6 @@ class OptionsSlider(Options):
     Related Pages:
 
       https://api.jqueryui.com/slider/#option-disabled
-
-		:param disabled:
     """
     return self._config_get(False)
 
@@ -73,8 +69,6 @@ class OptionsSlider(Options):
     Related Pages:
 
       https://api.jqueryui.com/slider/#option-max
-
-		:param max:
     """
     return self._config_get(100)
 
@@ -93,7 +87,7 @@ class OptionsSlider(Options):
 
       https://api.jqueryui.com/slider/#option-min
 
-		:param min:
+    :prop value:
     """
     return self._config_get(0)
 
@@ -106,7 +100,8 @@ class OptionsSlider(Options):
     """
     Description:
     ------------
-    Determines whether the slider handles move horizontally (min on left, max on right) or vertically (min on bottom, max on top).
+    Determines whether the slider handles move horizontally (min on left, max on right) or vertically (min on bottom,
+    max on top).
     Possible values: "horizontal", "vertical".
 
     Related Pages:
@@ -321,8 +316,8 @@ class OptionsMenu(Options):
     return self._config_get(False)
 
   @disabled.setter
-  def disabled(self, bool):
-    self._config(bool)
+  def disabled(self, flag):
+    self._config(flag)
 
   @property
   def icons(self):
@@ -338,8 +333,8 @@ class OptionsMenu(Options):
     return self._config_get(None)
 
   @icons.setter
-  def icons(self, bool):
-    self._config(bool)
+  def icons(self, flag):
+    self._config(flag)
 
   @property
   def position(self):
@@ -357,11 +352,12 @@ class OptionsMenu(Options):
     return self._config_get(None)
 
   @position.setter
-  def position(self, bool):
-    self._config(bool)
+  def position(self, flag):
+    self._config(flag)
 
 
 class OptionDialog(Options):
+  component_properties = ("empty", )
 
   @property
   def appendTo(self):
@@ -377,8 +373,8 @@ class OptionDialog(Options):
     return self._config_get('body')
 
   @appendTo.setter
-  def appendTo(self, bool):
-    self._config(bool)
+  def appendTo(self, flag):
+    self._config(flag)
 
   @property
   def autoOpen(self):
@@ -395,8 +391,8 @@ class OptionDialog(Options):
     return self._config_get(True)
 
   @autoOpen.setter
-  def autoOpen(self, bool):
-    self._config(bool)
+  def autoOpen(self, flag):
+    self._config(flag)
 
   @property
   def classes(self):
@@ -649,14 +645,27 @@ class OptionDialog(Options):
     Related Pages:
 
       https://api.jqueryui.com/dialog/#option-title
-
-		:param width:
     """
     return self._config_get(300)
 
   @width.setter
   def width(self, value):
     self._config(value)
+
+  @property
+  def empty(self):
+    """
+    Description:
+    ------------
+    Empty the dialog content first..
+
+    This is the default behaviour in case of content as text.
+    """
+    return self._config_get(True)
+
+  @empty.setter
+  def empty(self, flag):
+    self._config(flag)
 
 
 class OptionBar(Options):
@@ -671,5 +680,77 @@ class OptionBar(Options):
     return self._config_get(False)
 
   @draggable.setter
-  def draggable(self, bool):
-    self._config(bool)
+  def draggable(self, flag):
+    self._config(flag)
+
+
+class OptionsSkillbars(Options):
+  component_properties = ("success", "warning", "danger", "percentage")
+
+  def set_thresholds(self, inf=20, sup=50):
+    self._config([inf, sup], name="thresholds")
+
+  @property
+  def thresholds(self):
+    return self._config_get([20, 50])
+
+  @property
+  def percentage(self):
+    """
+    Description:
+    ------------
+    Flag to display the percentage value on the bars.
+    """
+    return self._config_get(False)
+
+  @percentage.setter
+  def percentage(self, flag):
+    self._config(flag)
+
+  @property
+  def success(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(self.component.page.theme.success[0])
+
+  @success.setter
+  def success(self, color):
+    self._config(color)
+
+  @property
+  def warning(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(self.component.page.theme.warning[0])
+
+  @warning.setter
+  def warning(self, color):
+    self._config(color)
+
+  @property
+  def danger(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(self.component.page.theme.danger[0])
+
+  @danger.setter
+  def danger(self, color):
+    self._config(color)
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(100)
+
+  @width.setter
+  def width(self, num):
+    self._config(num)

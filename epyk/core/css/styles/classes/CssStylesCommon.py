@@ -12,26 +12,26 @@ class CssBody(CssStyle.Style):
 
   def customize(self):
     if isinstance(Defaults.BACKGROUND, tuple):
-      bg_color = self.rptObj.theme.greys[0]
+      bg_color = self.page.theme.greys[0]
       if bg_color != '#000000':
-        bg_color = self.rptObj.theme.greys[2]
+        bg_color = self.page.theme.greys[2]
     else:
       bg_color = Defaults.BACKGROUND
-    self.css({"background-color": bg_color, "color": self.rptObj.theme.greys[9], 'font-family':
+    self.css({"background-color": bg_color, "color": self.page.theme.greys[9], 'font-family':
       Defaults.Font.family, 'font-size': "%s%s" % (Defaults.Font.size, Defaults.Font.unit)})
 
 
 class CssTextSelection(CssStyle.Style):
   def customize(self):
-    self.css({"background": self.rptObj.theme.success[0]})
+    self.css({"background": self.page.theme.success[0]})
 
 
 class CssBodyContent(CssStyle.Style):
   _attrs = {'margin-top': '10px', 'padding': '5px'}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0], "border-radius": "5px",
-              "border": '1px solid %s' % self.rptObj.theme.greys[3]})
+    self.css({"background-color": self.page.theme.greys[0], "border-radius": "5px",
+              "border": '1px solid %s' % self.page.theme.greys[3]})
     if Defaults.BODY_CONTAINER is not None:
       self.css(Defaults.BODY_CONTAINER)
 
@@ -41,7 +41,7 @@ class CssBodyLoadingBack(CssStyle.Style):
             'z-index': 295, 'position': 'fixed', 'opacity': 0.5, 'filter': 'alpha(opacity=50)'}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[5]})
+    self.css({"background-color": self.page.theme.greys[5]})
 
 
 class CssBodyLoading(CssStyle.Style):
@@ -49,7 +49,7 @@ class CssBodyLoading(CssStyle.Style):
             'height': '100%', 'display': 'none', 'z-index': 300}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[9]})
+    self.css({"color": self.page.theme.greys[9]})
 
 
 class CssNotSelect(CssStyle.Style):

@@ -31,7 +31,8 @@ PCK_REPO = ''
 STATIC_PATH = "/static"
 
 
-def requires(name, reason='Missing Package', install=None, package=None, raise_except=False, source_script=None, pip_attrs=None):
+def requires(name, reason='Missing Package', install=None, package=None, raise_except=False, source_script=None,
+             pip_attrs=None):
   """
   Description:
   ------------
@@ -197,7 +198,8 @@ JS_IMPORTS = {
   'promise-polyfill': {
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'polyfill.min.js', 'node_path': 'dist/', 'path': 'promise-polyfill@8/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'},
+      {'script': 'polyfill.min.js', 'node_path': 'dist/', 'path': 'promise-polyfill@8/dist/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm'},
     ],
     'version': '8.2.0',
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
@@ -230,11 +232,12 @@ JS_IMPORTS = {
     'repository': 'https://github.com/twbs/bootstrap',
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.min.js', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
-      #{'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
+      {'script': 'bootstrap.min.js', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/',
+       'cdnjs': CDNJS_REPO},
     ],
     'assets': [
-      {'script': 'bootstrap.min.js.map', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'script': 'bootstrap.min.js.map', 'node_path': 'dist/js/', 'path': 'twitter-bootstrap/%(version)s/js/',
+       'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://getbootstrap.com/'},
 
@@ -262,12 +265,11 @@ JS_IMPORTS = {
   # module for tabulator
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
-    #'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'version': '4.9.3',
     'modules': [
       # core only needed for Jupyter for some reasons
-      #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'node_path': 'tabulator/dist/js', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.js', 'node_path': 'tabulator/dist/js', 'path': 'tabulator/%(version)s/js/',
+       'cdnjs': CDNJS_REPO}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -277,7 +279,8 @@ JS_IMPORTS = {
   'tabulator-inputs': {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
-      {'script': 'formatters-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-inputs.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -285,7 +288,8 @@ JS_IMPORTS = {
   'tabulator-drop': {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
-      {'script': 'formatters-drop.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-drop.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -293,7 +297,8 @@ JS_IMPORTS = {
   'tabulator-mutators-inputs': {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
-      {'script': 'mutators-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'mutators-inputs.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/mutators/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -301,14 +306,16 @@ JS_IMPORTS = {
   'editors-inputs': {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
-      {'script': 'editors-inputs.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
+      {'script': 'editors-inputs.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'}],
     'website': 'http://tabulator.info/'
   },
 
   'editors-dates': {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
-      {'script': 'editors-dates.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'editors-dates.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/editors/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -328,7 +335,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'tabulator-tables'}],
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'formatters-icons.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-icons.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
     ],
     'website': 'http://tabulator.info/'
   },
@@ -341,8 +349,10 @@ JS_IMPORTS = {
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
-        {'script': 'formatters-titles.js', 'version': TABULATOR_EXTENSIONS, 'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-numbers.js', 'version': TABULATOR_EXTENSIONS,
+         'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+        {'script': 'formatters-titles.js', 'version': TABULATOR_EXTENSIONS,
+         'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
       ],
       'website': 'http://tabulator.info/'
     },
@@ -350,10 +360,12 @@ JS_IMPORTS = {
   # module for the awesome icons
   'font-awesome': {
     'version': '5.13.1',
-    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'js'},
+    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
+                 'npm_path': 'js'},
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-    'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+    'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/',
+                 'cdnjs': 'https://use.fontawesome.com'}],
     'website': 'https://fontawesome.com/'},
 
   # Javascript packages to handle DataTables
@@ -362,7 +374,8 @@ JS_IMPORTS = {
     'version': '1.10.19',
     'register': {'alias': 'datatables', 'module': 'jquery.dataTables.min'},
     'modules': [
-      {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'path': 'datatables/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'path': 'datatables/%(version)s/js/',
+       'cdnjs': CDNJS_REPO},
   ]},
 
   # Datatable Buttons
@@ -371,7 +384,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/buttons/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.buttons.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.buttons.min.js', 'path': 'buttons/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Select
   'datatables-select': {
@@ -379,7 +393,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/select/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.select.min.js', 'path': 'select/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.select.min.js', 'path': 'select/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Scroller
   'datatables-scroller': {
@@ -387,7 +402,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/scroller/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.scroller.min.js', 'path': 'scroller/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.scroller.min.js', 'path': 'scroller/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable SearchPanes
   'datatables-searchPanes': {
@@ -395,7 +411,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/searchPanes/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.searchPanes.min.js', 'path': 'searchpanes/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.searchPanes.min.js', 'path': 'searchpanes/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable responsive
   'datatables-responsive': {
@@ -403,7 +420,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/responsive/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.responsive.min.js', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.responsive.min.js', 'path': 'responsive/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable KeyTable
   'datatables-keytable': {
@@ -411,7 +429,8 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/keytable/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.keyTable.min.js', 'path': 'keytable/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.keyTable.min.js', 'path': 'keytable/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable autoFill
   'datatables-autoFill': {
@@ -419,14 +438,16 @@ JS_IMPORTS = {
     'website': 'https://datatables.net/extensions/autofill/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.autoFill.min.js', 'path': 'autofill/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'dataTables.autoFill.min.js', 'path': 'autofill/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable group rows
   'datatables-rows-group': {
     'req': [{'alias': 'datatables'}],
     'version': '1.0.0',
     'modules': [
-      {'script': 'dataTables.rowsGroup.js', 'path': 'datatables-rowsgroup/v%(version)s/', 'cdnjs': 'https://cdn.rawgit.com/ashl1'}
+      {'script': 'dataTables.rowsGroup.js', 'path': 'datatables-rowsgroup/v%(version)s/',
+       'cdnjs': 'https://cdn.rawgit.com/ashl1'}
     ],
     'website': 'https://datatables.net/forums/discussion/29319/new-rowsgroup-plugin-merge-cells-vertically-rowspan'},
 
@@ -435,7 +456,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'datatables'}],
     'version': '1.1.1',
     'modules': [
-      {'script': 'dataTables.rowGroup.min.js', 'path': 'rowgroup/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.rowGroup.min.js', 'path': 'rowgroup/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/rowgroup/'},
 
   # Datatable fixed column
@@ -443,7 +465,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'datatables'}],
     'version': '3.2.2',
     'modules': [
-      {'script': 'dataTables.fixedColumns.min.js', 'path': 'fixedcolumns/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.fixedColumns.min.js', 'path': 'fixedcolumns/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/fixedcolumns/'},
 
   # Datatable Fixed header
@@ -451,7 +474,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'datatables'}],
     'version': '3.1.3',
     'modules': [
-      {'script': 'dataTables.fixedHeader.min.js', 'path': 'fixedheader/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.fixedHeader.min.js', 'path': 'fixedheader/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/fixedheader/'},
 
   # Datatable data export
@@ -478,14 +502,16 @@ JS_IMPORTS = {
     'register': {'alias': 'datatableColOrd', 'module': 'dataTables.colReorder.min'},
     'website': 'https://datatables.net/extensions/colreorder/',
     'modules': [
-      {'reqAlias': 'datatableColOrd', 'script': 'dataTables.colReorder.min.js', 'path': 'colreorder/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'reqAlias': 'datatableColOrd', 'script': 'dataTables.colReorder.min.js', 'path': 'colreorder/%(version)s/js/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   #
   'jszip': {
     'website': 'https://datatables.net/extensions/buttons/',
     'version': '3.5.0',
     'modules': [
-      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'node_path': 'dist/', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'node_path': 'dist/', 'path': 'jszip/%(version)s/',
+       'cdnjs': CDNJS_REPO},
     ]},
 
   #
@@ -493,15 +519,14 @@ JS_IMPORTS = {
     'website': 'https://azimi.me/json-formatter-js/',
     'version': '2.3.4',
     'repository': 'https://github.com/mohsen1/json-formatter-js',
-    #'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min', 'npm': 'json-formatter-js'},
     'modules': [
-      {'script': 'json-formatter.umd.min.js', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+      {'script': 'json-formatter.umd.min.js', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
 
   # Datatable pivot
   'pivottable': {
     'req': [{'alias': 'jqueryui'}],
-    #'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     "repository": 'https://github.com/nicolaskruchten/pivottable',
     'version': '2.23.0',
     'website': 'https://github.com/nicolaskruchten/pivottable',
@@ -526,7 +551,8 @@ JS_IMPORTS = {
     'website': 'http://nagarajanchinnasamy.com/subtotal/examples/',
     'repository': 'https://github.com/nagarajanchinnasamy/subtotal',
     'modules': [
-      {'script': 'subtotal.js', 'node_path': 'dist/', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+      {'script': 'subtotal.js', 'node_path': 'dist/', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm'}
     ]},
 
   # Pivot Table pivot C3 renderer
@@ -536,7 +562,6 @@ JS_IMPORTS = {
       {'alias': 'c3', 'version': '0.4.11'},
       {'alias': 'pivottable'}
     ],
-    #'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'version': '2.23.0',
     'node_folder': 'pivottable',
@@ -555,7 +580,8 @@ JS_IMPORTS = {
     'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   # Pivot Table pivot D3 renderer
@@ -577,7 +603,7 @@ JS_IMPORTS = {
     'website': 'http://jquery.com/',
     'repository': "https://github.com/jquery/jquery",
     'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
-    'version': '3.5.1',
+    'version': '3.6.0',
     'modules': [
       {'script': 'jquery.min.js', 'node_path': 'dist/', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -608,7 +634,6 @@ JS_IMPORTS = {
   'jquery-sparkline': {
     'req': [{'alias': 'jquery'}],
     'version': '2.1.2',
-    #'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
     'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
     'modules': [
       {'script': 'jquery.sparkline.min.js', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -629,10 +654,10 @@ JS_IMPORTS = {
   'jquery-bracket': {
     'website': 'http://www.aropupu.fi/bracket/',
     'version': '0.11.1',
-    #'register': {'alias': 'jQueryBracket', 'module': 'jquery.bracket.min'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'jquery.bracket.min.js', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.bracket.min.js', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # Jquery UI package
   # Attempt to try to solve conflict with Bootstrap
@@ -641,7 +666,6 @@ JS_IMPORTS = {
   # Jquery timepicker width CDN links
   'timepicker': {
     'website': 'https://timepicker.co/',
-    #'register': {'alias': 'jQueryTime', 'module': 'jquery.timepicker.min'},
     'version': '1.13.16',
     'repository': 'https://github.com/jonthornton/jquery-timepicker',
     'req': [
@@ -657,7 +681,8 @@ JS_IMPORTS = {
     'register': {'alias': 'jQueryContext', 'module': 'jquery.contextMenu.min'},
     'req': [{'alias': 'jquery'}, {'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.contextMenu.min.js', 'version': '2.6.4', 'path': 'jquery-contextmenu/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.contextMenu.min.js', 'version': '2.6.4', 'path': 'jquery-contextmenu/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # To customize the scrollbar width CDN links
   # https://github.com/malihu/malihu-custom-scrollbar-plugin
@@ -667,15 +692,18 @@ JS_IMPORTS = {
     'register': {'alias': 'jQueryScrollBar', 'module': 'jquery.mCustomScrollbar.concat.min'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'jquery.mCustomScrollbar.concat.min.js', 'version': '3.1.5', 'path': 'malihu-custom-scrollbar-plugin/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.mCustomScrollbar.concat.min.js', 'version': '3.1.5',
+       'path': 'malihu-custom-scrollbar-plugin/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript packages for the PDF transformation width CDN links
   'pdfmake': {
     'website': '',
     'version': '0.1.70',
     'modules': [
-      {'reqAlias': 'pdfmake', 'node_path': 'build/', 'script': 'pdfmake.min.js', 'path': 'pdfmake/%(version)s/', 'cdnjs': CDNJS_REPO},
-      {'reqAlias': 'vfs_fonts', 'node_path': 'build/', 'script': 'vfs_fonts.js', 'path': 'pdfmake/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'reqAlias': 'pdfmake', 'node_path': 'build/', 'script': 'pdfmake.min.js', 'path': 'pdfmake/%(version)s/',
+       'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'vfs_fonts', 'node_path': 'build/', 'script': 'vfs_fonts.js', 'path': 'pdfmake/%(version)s/',
+       'cdnjs': CDNJS_REPO}
     ],
     'assets': [
       {'node_path': 'build/', 'script': 'pdfmake.min.js.map', 'path': 'pdfmake/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -904,7 +932,7 @@ JS_IMPORTS = {
   'c3': {
     'website': 'https://c3js.org/',
     'repository': 'https://github.com/c3js/c3',
-    'req': [{'alias': 'd3'}],
+    'req': [{'alias': 'd3', 'version': '5.0.0'}],
     'version': '0.7.20',
     'modules': [
       {'script': 'c3.min.js', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -947,8 +975,7 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    #'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'billboard.js', 'var': 'bb', 'init_fnc': 'var bb = billboard.bb'},
-    'req': [{'alias': 'd3'}],
+    'req': [{'alias': 'd3', 'version': '5.0.0'}],
     'version': '2.1.4',
     'modules': [
       {'script': 'billboard.min.js', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -975,7 +1002,8 @@ JS_IMPORTS = {
     'version': 'latest',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-dragdata.min.js', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+      {'script': 'chartjs-plugin-dragdata.min.js', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-annotation': {
@@ -1112,10 +1140,12 @@ JS_IMPORTS = {
     'repository': 'https://github.com/mathjax/MathJax',
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
-      {'script': 'MathJax.js', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      #{'script': 'MathJax.js', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'tex-mml-chtml.js', 'path': 'mathjax/%(version)s/es5/', 'cdnjs': CDNJS_REPO}],
     # To use the full module online
     #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
-    'config': "config=TeX-AMS-MML_HTMLorMML"},
+    #'config': "config=TeX-AMS-MML_HTMLorMML"
+  },
 
   # Socket IO
   'socket.io': {
@@ -3399,3 +3429,18 @@ class ImportManager:
     This can be used in the script in order to change the path of the version of any external modules used.
     """
     return ImportPackages(self.jsImports, self.cssImports)
+
+  def website(self, alias):
+    """
+    Description:
+    ------------
+    Get the official website for a JavaScript library.
+
+    Attributes:
+    ----------
+    :param alias: String. The JavaScript module alias (usually the one used by npm).
+    """
+    if alias not in JS_IMPORTS:
+      return ""
+
+    return JS_IMPORTS[alias].get('website', "")

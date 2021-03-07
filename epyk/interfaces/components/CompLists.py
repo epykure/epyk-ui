@@ -16,12 +16,12 @@ from epyk.core.css import Defaults
 from epyk.interfaces import Arguments
 
 
-class Lists(object):
+class Lists:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def _recordSet(self, recordSet, column):
+  def _recordSet(self, records, column):
     """
     Description:
     ------------
@@ -37,18 +37,18 @@ class Lists(object):
     data = None
     is_converted = False
     if has_pandas:
-      if isinstance(recordSet, pd.DataFrame):
-        data = [{'name': r, 'value': r} for r in recordSet[column].unique().tolist()]
+      if isinstance(records, pd.DataFrame):
+        data = [{'name': r, 'value': r} for r in records[column].unique().tolist()]
         is_converted = True
 
     if not is_converted:
       result = {}
-      for rec in recordSet:
+      for rec in records:
         result[rec[column]] = {'name': rec[column], 'value': rec[column]}
       data = [result[k] for k in sorted(result.keys())]
     return data
 
-  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+  def select(self, records=None, html_code=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
              column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
@@ -76,7 +76,7 @@ class Lists(object):
     Attributes:
     ----------
     :param records: The input data. Can be a list or a dataFrame
-    :param htmlCode: Optional. The component identifier code (for bot
+    :param html_code: Optional. The component identifier code (for bot
     :param label: Optional. The HTML label attached to the component
     :param selected: The selected values
     :param width: Optional. Integer for the component width
@@ -114,16 +114,18 @@ class Lists(object):
         for rec in records:
           if rec["value"] in selected:
             rec["selected"] = True
-      return html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
+      return html.HtmlSelect.Select(self.page, records, html_code, width, height, filter, profile, multiple,
+                                    options)
 
     if selected is not None:
       for rec in records:
         if rec["value"] == selected:
           rec["selected"] = True
-    html_select = html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
+    html_select = html.HtmlSelect.Select(self.page, records, html_code, width, height, filter, profile,
+                                         multiple, options)
     return html_select
 
-  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+  def lookup(self, lookupData=None, html_code=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
              column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
@@ -146,7 +148,7 @@ class Lists(object):
     Attributes:
     ----------
     :param lookupData: The input data. Can be a list or a dataFrame
-    :param htmlCode: Optional. The component identifier code (for bot
+    :param html_code: Optional. The component identifier code (for bot
     :param label: Optional. The HTML label attached to the component
     :param selected: The selected values
     :param width: Optional. Integer for the component width
@@ -160,7 +162,8 @@ class Lists(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
     options = {} if options is None else options
-    html_select = html.HtmlSelect.Lookup(self.context.rptObj, lookupData, htmlCode, width, height, filter, profile, multiple, options)
+    html_select = html.HtmlSelect.Lookup(self.page, lookupData, html_code, width, height, filter, profile,
+                                         multiple, options)
     return html_select
 
   def item(self, text=None):
@@ -182,10 +185,10 @@ class Lists(object):
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
     """
-    html_item = html.HtmlList.Li(self.context.rptObj, text)
+    html_item = html.HtmlList.Li(self.page, text)
     return html_item
 
-  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
+  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
            options=None, profile=None):
     """
     Description:
@@ -215,18 +218,19 @@ class Lists(object):
     :param color:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_list = html.HtmlList.List(self.page, data or [], color, width, height, html_code, helper,
+                                   options or {}, profile)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
+  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
            options=None, profile=None):
     """
     Description:
@@ -241,19 +245,20 @@ class Lists(object):
     :param color:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
-    list = self.list(data, color, width, height, htmlCode, helper, options, profile)
+    list = self.list(data, color, width, height, html_code, helper, options, profile)
     list.style.css.min_height = 40
     list.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
-              'border': "1px dashed %s" % self.context.rptObj.theme.greys[4]})
+              'border': "1px dashed %s" % self.page.theme.greys[4]})
     list.style.css.padding = 5
     return list
 
-  def items(self, records=None, width=(100, "%"), height=("auto", ""), column=None, options=None, htmlCode=None, profile=None, helper=None):
+  def items(self, records=None, width=(100, "%"), height=("auto", ""), column=None, options=None, html_code=None,
+            profile=None, helper=None):
     """
     Description:
     ------------
@@ -274,7 +279,7 @@ class Lists(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param helper: String. Optional. A tooltip helper
     """
@@ -285,11 +290,14 @@ class Lists(object):
       for rec in records:
         values.add(rec[column])
       records = sorted(list(values))
-    html_item = html.HtmlList.Items(self.context.rptObj, 'text', records or [], width, height, options, htmlCode, profile, helper)
+    dft_options = {"items_type": 'text'}
+    if options is not None:
+      dft_options.update(options)
+    html_item = html.HtmlList.Items(self.page, records or [], width, height, dft_options, html_code, profile, helper)
     html_item.css({"list-style-type": 'none'})
     return html_item
 
-  def pills(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None,
+  def pills(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, html_code=None,
             profile=None, helper=None):
     """
     Description:
@@ -305,17 +313,18 @@ class Lists(object):
     :param height:
     :param column:
     :param options:
-    :param htmlCode:
+    :param html_code:
     :param profile:
     :param helper:
     """
-    html_item = self.items(records, width, height, column, options, htmlCode, profile, helper)
+    html_item = self.items(records, width, height, column, options, html_code, profile, helper)
     html_item.options.li_style = {"display": "inline-block", "margin": "0 2px",
                                   "padding": "1px 4px", "border-radius": "10px",
-                                  "background": self.context.rptObj.theme.greys[2]}
+                                  "background": self.page.theme.greys[2]}
     return html_item
 
-  def box(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
+  def box(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, html_code=None,
+          profile=None, helper=None):
     """
     Description:
     ------------
@@ -335,7 +344,7 @@ class Lists(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     :param helper: String. Optional. A tooltip helper
     """
@@ -346,12 +355,16 @@ class Lists(object):
       for rec in records:
         values.add(rec[column])
       records = sorted(list(values))
-    html_item = html.HtmlList.Items(self.context.rptObj, 'box', records, width, height, options, htmlCode, profile, helper)
+    dflt_options = {"items_type": 'box'}
+    if options is not None:
+      dflt_options.update(options)
+    html_item = html.HtmlList.Items(self.page, records, width, height, dflt_options, html_code, profile, helper)
     html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
     return html_item
 
-  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
+  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, options=None,
+              profile=None, helper=None):
     """
     Description:
     ------------
@@ -372,11 +385,12 @@ class Lists(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'decimal'})
     return html_list
 
-  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
+  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, options=None,
+            profile=None, helper=None):
     """
     Description:
     ------------
@@ -394,18 +408,19 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
 
-  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
+  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, options=None,
+            profile=None, helper=None):
     """
     Description:
     ------------
@@ -423,18 +438,19 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
 
-  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align=None,  column=None, htmlCode=None, options=None, profile=None, helper=None):
+  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align=None,  column=None, html_code=None,
+             options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -457,21 +473,22 @@ class Lists(object):
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align:
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'circle'})
     if align == "center":
       html_list.style.css.margin = "auto"
       html_list.style.css.display = "block"
     return html_list
 
-  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, helper=None,
+           options=None, profile=None):
     """
     Description:
     ------------
@@ -497,18 +514,19 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'disc'})
     return html_list
 
-  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, helper=None,
+              options=None, profile=None):
     """
     Description:
     ------------
@@ -532,18 +550,18 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
+    html_list = self.items(data, width, height, column, options, html_code, profile, helper)
     html_list.css({"list-style-type": 'square'})
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None,
+  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -571,7 +589,7 @@ class Lists(object):
     :param color:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -586,10 +604,12 @@ class Lists(object):
       else:
         # This object is expecting a list of lists
         data = [data]
-    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, options, profile)
+    html_obj = html.HtmlList.Groups(self.page, data, categories, color, width, height, html_code, helper,
+                                    options, profile)
     return html_obj
 
-  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -606,20 +626,20 @@ class Lists(object):
 
     ----------
     :param data:
-    :param color:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], width, height, htmlCode, helper, options, profile)
+    html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options, profile)
     return html_tree
 
-  def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def dropdown(self, records=None, text="", width=('auto', ""), height=(32, 'px'), html_code=None, helper=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -641,11 +661,11 @@ class Lists(object):
 
     Attributes:
     ----------
-    :param recordSet:
-    :param text:
+    :param records: List. Optional. The list of dictionaries with the input data.
+    :param text: String. Optional. The value to be displayed to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -654,11 +674,13 @@ class Lists(object):
     height = Arguments.size(height, unit="px")
     dftl_options = {"width": 90}
     dftl_options.update(options or {})
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper, dftl_options, profile)
+    html_d = html.HtmlTrees.DropDown(self.page, records, text, width, height, html_code, helper,
+                                     dftl_options, profile)
     html_d.style.css.display = 'inline-block'
     return html_d
 
-  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, helper=None,
+             options=None, profile=None):
     """
     Description:
     ------------
@@ -683,7 +705,7 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -696,15 +718,16 @@ class Lists(object):
         values.add(rec[column])
       data = sorted(list(values))
 
-    dft_options = {"checked": False}
+    dft_options = {"checked": False, "items_type": 'check'}
     if options is not None:
       dft_options.update(options)
 
-    html_list = html.HtmlList.Items(self.context.rptObj, 'check', data or [], width, height, dft_options, htmlCode, profile, helper)
+    html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, helper=None,
+             options=None, profile=None):
     """
     Description:
     ------------
@@ -733,7 +756,7 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -746,15 +769,15 @@ class Lists(object):
         values.add(rec[column])
       data = sorted(list(values))
 
-    dft_options = {"badge": {"background": 'red', 'color': 'white'}}
+    dft_options = {"badge": {"background": 'red', 'color': 'white', "items_type": 'badge'}}
     if options is not None:
       dft_options.update(options)
-
-    html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, dft_options, htmlCode, profile, helper)
+    html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, html_code=None, helper=None,
+            options=None, profile=None):
     """
     Description:
     ------------
@@ -779,7 +802,7 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -792,15 +815,15 @@ class Lists(object):
         values.add(rec[column])
       data = sorted(list(values))
 
-    dft_options = {"icon": "fas fa-check", 'markdown': True}
+    dft_options = {"icon": "fas fa-check", 'markdown': True, "items_type": 'icon'}
     if options is not None:
       dft_options.update(options)
-
-    html_list = html.HtmlList.Items(self.context.rptObj, 'icon', data or [], width, height, dft_options, htmlCode,profile, helper)
+    html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def radios(self, data=None, group_name='group', width=('auto', ""), height=(None, "px"), column=None, htmlCode=None, helper=None, options=None, profile=None):
+  def radios(self, data=None, group_name='group', width=('auto', ""), height=(None, "px"), column=None, html_code=None,
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -820,7 +843,7 @@ class Lists(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param column:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -832,13 +855,15 @@ class Lists(object):
       for rec in data:
         values.add(rec[column])
       data = sorted(list(values))
-
-    html_list = html.HtmlList.Items(self.context.rptObj, 'radio', data or [], width, height, options or {}, htmlCode, profile, helper)
+    dft_options = {"items_type": 'radio'}
+    if options is not None:
+      dft_options.update(options)
+    html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code,  profile, helper)
     html_list._jsStyles['group'] = group_name
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
+  def brackets(self, records=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -848,7 +873,7 @@ class Lists(object):
 
     Attributes:
     ----------
-    :param recordSet:
+    :param records:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options: Dictionary. Optional. Specific Python options available for this component
@@ -856,9 +881,13 @@ class Lists(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    return html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options or {}, profile)
+    dfp_options = {}
+    if options is not None:
+      dfp_options.update(options)
+    return html.HtmlList.ListTournaments(self.page, records, width, height, dfp_options, profile)
 
-  def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), html_code=None,
+            helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -889,23 +918,27 @@ class Lists(object):
     :param placeholder: String. The input field placeholder
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px', 'margin': '2px',
-                                 "width": 'auto', 'display': 'inline-block', 'background': 'inherit', 'white-space': 'nowrap'},
+    dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.page.theme.success[0],
+                                 'border-radius': '5px', 'margin': '2px', "width": 'auto', 'display': 'inline-block',
+                                 'background': 'inherit', 'white-space': 'nowrap'},
                     'category': category, 'visible': True,
                     'value_css': {'font-size': Defaults.font(0), 'font-weight': 'bold', 'vertical-align': 'bottom'},
-                    'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top', 'font-size': Defaults.font(-3)},
-                    'icon_css': {'color': self.context.rptObj.theme.success[1], 'margin-left': '5px', 'cursor': 'pointer'}}
+                    'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top',
+                                     'font-size': Defaults.font(-3)},
+                    'icon_css': {'color': self.page.theme.success[1], 'margin-left': '5px',
+                                 'cursor': 'pointer'}}
     if not hasattr(category, 'toStr') and category == 'group':
       dflt_options['visible'] = False
     if options is not None:
       dflt_options.update(options)
-    html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], width, height, htmlCode, helper, dflt_options, profile)
+    html_f = html.HtmlEvent.Filters(self.page, items or [], width, height, html_code, helper, dflt_options,
+                                    profile)
     html_f.input.attr['placeholder'] = placeholder
     return html_f

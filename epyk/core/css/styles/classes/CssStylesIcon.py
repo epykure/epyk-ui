@@ -11,22 +11,22 @@ class CssIcon(CssStyle.Style):
   _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[-1]})
-    self.hover.css({"color": self.rptObj.theme.success[1]})
+    self.css({"color": self.page.theme.colors[-1]})
+    self.hover.css({"color": self.page.theme.success[1]})
 
 
 class CssStdIcon(CssStyle.Style):
   _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.success[1]})
+    self.hover.css({"color": self.page.theme.success[1]})
 
 
 class CssSmallIcon(CssStyle.Style):
   _attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.colors[5],
+    self.hover.css({"color": self.page.theme.colors[5],
                     'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
 
 
@@ -34,7 +34,7 @@ class CssSmallIconRight(CssStyle.Style):
   _attrs = {'display': 'inline-block', 'margin': '0 0 0 5px', 'cursor': 'pointer', 'float': 'right'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.colors[5],
+    self.hover.css({"color": self.page.theme.colors[5],
                     'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
 
 
@@ -42,32 +42,32 @@ class CssSmallIconRed(CssStyle.Style):
   _attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.danger[1],
+    self.css({"color": self.page.theme.danger[1],
               'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
-    self.hover.css({"color": self.rptObj.theme.danger[1]})
+    self.hover.css({"color": self.page.theme.danger[1]})
 
 
 class CssOutIcon(CssStyle.Style):
   _attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.danger[1],
+    self.css({"color": self.page.theme.danger[1],
               'font-size': '%s%s' % (Defaults_css.Icon.normal, Defaults_css.Icon.unit)})
-    self.hover.css({"color": self.rptObj.theme.danger[1]})
+    self.hover.css({"color": self.page.theme.danger[1]})
 
 
 class CssBigIcon(CssStyle.Style):
   _attrs = {'display': 'inline-block', 'margin': '0 10px 0 10px', 'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.danger[1],
+    self.css({"color": self.page.theme.danger[1],
               'font-size': '%s%s' % (Defaults_css.Icon.big, Defaults_css.Icon.unit)})
-    self.hover.css({"color": self.rptObj.theme.danger[1]})
+    self.hover.css({"color": self.page.theme.danger[1]})
 
 
 class CssIconSelected(CssStyle.Style):
   _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[-1]})
-    self.active.css({"color": self.rptObj.theme.danger[1]})
+    self.css({"color": self.page.theme.greys[-1]})
+    self.active.css({"color": self.page.theme.danger[1]})

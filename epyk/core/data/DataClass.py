@@ -8,8 +8,9 @@ from epyk.core.js import JsUtils
 
 class DataClass:
 
-  def __init__(self, report, attrs=None, options=None):
-    self._report, self.options, self._attrs = report, options, dict(attrs or {})
+  def __init__(self, component, attrs=None, options=None):
+    self._report, self.options, self._attrs = component, options, dict(attrs or {})
+    self.component = self._report
     self.__sub_levels, self.__sub__enum_levels = set(), set()
 
   def __getitem__(self, i):
@@ -204,8 +205,9 @@ class DataEnum:
   dflt = None
   js_conversion = False
 
-  def __init__(self, report, value=None):
-    self._report, self.__value = report, value or self.dflt
+  def __init__(self, component, value=None):
+    self._report, self.__value = component, value or self.dflt
+    self.component = self._report
 
   def set(self, value=None):
     """

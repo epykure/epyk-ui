@@ -4,12 +4,12 @@
 from epyk.fwk.mt.js import JsMdcComponents
 
 
-class Navigation(object):
+class Navigation:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def tabs(self, data, htmlCode=None):
+  def tabs(self, data, html_code=None):
     """
     Description:
     ------------
@@ -23,7 +23,7 @@ class Navigation(object):
     Attributes:
     ----------
     :param data:
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     """
     schema = {"type": 'div', 'css': False, 'attrs': {'role': 'tablist'},
       'children': [
@@ -47,7 +47,7 @@ class Navigation(object):
              {"type": 'span', 'css': False, 'class': 'mdc-tab__ripple'}]
          })
 
-    html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_t = self.page.web.mt.composite(schema, options={"reset_class": True})
 
     #
     dom_obj = JsMdcComponents.TabBar(html_t)
@@ -56,7 +56,7 @@ class Navigation(object):
     html_t.dom = dom_obj
     return html_t
 
-  def top_bar(self, title, icon="menu", buttons=None, htmlCode=None):
+  def top_bar(self, title, icon="menu", buttons=None, html_code=None):
     """
     Description:
     ------------
@@ -71,7 +71,7 @@ class Navigation(object):
     :param title:
     :param icon:
     :param buttons:
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     """
     schema = {"type": 'header', 'css': False, 'children': [
                 {"type": 'div', 'css': False, 'class': 'mdc-top-app-bar__row', 'children': [
@@ -87,14 +87,14 @@ class Navigation(object):
       for b in buttons:
         schema['children'][1]['children'].append(
           {"type": 'icon', 'class-keep': True, 'css': False, 'arias': {'label': b}, 'args': {'text': b}, 'class': "mdc-top-app-bar__navigation-icon mdc-icon-button"})
-    html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_t = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.TopBar(html_t)
     html_t.style.builder(html_t.style.varName, dom_obj.instantiate("#%s" % html_t.htmlCode))
     # Add the specific dom features
     html_t.dom = dom_obj
     return html_t
 
-  def app_bar(self, title, icon="menu", buttons=None, htmlCode=None):
+  def app_bar(self, title, icon="menu", buttons=None, html_code=None):
     """
     Description:
     ------------
@@ -109,7 +109,7 @@ class Navigation(object):
     :param title:
     :param icon:
     :param buttons:
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     """
     schema = {"type": 'header', 'class-keep': True, 'class': 'app-bar', 'css': False, 'children': [
                 {"type": 'div', 'css': False, 'class': 'mdc-top-app-bar__row', 'children': [
@@ -125,14 +125,14 @@ class Navigation(object):
       for b in buttons:
         schema['children'][1]['children'].append(
           {"type": 'icon', 'class-keep': True, 'css': False, 'arias': {'label': b}, 'args': {'text': b}, 'class': "mdc-top-app-bar__navigation-icon mdc-icon-button"})
-    html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_t = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.TopBar(html_t)
     html_t.style.builder(html_t.style.varName, dom_obj.instantiate("#%s" % html_t.htmlCode))
     # Add the specific dom features
     html_t.dom = dom_obj
     return html_t
 
-  def drawers(self, sections, htmlCode=None):
+  def drawers(self, sections, html_code=None):
     """
     Description:
     ------------
@@ -145,7 +145,7 @@ class Navigation(object):
     Attributes:
     ----------
     :param sections:
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     """
     schema = {"type": 'aside', 'class-keep': True, 'class': 'mdc-drawer--modal', 'css': False, 'children': [
       {"type": 'div', 'css': False, 'class': 'mdc-drawer__content', 'children': [
@@ -160,14 +160,14 @@ class Navigation(object):
         ]}
       )
 
-    html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_t = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.Drawers(html_t)
     html_t.style.builder(html_t.style.varName, dom_obj.instantiate("#%s" % html_t.htmlCode))
     # Add the specific dom features
     html_t.dom = dom_obj
     return html_t
 
-  def drawer_app(self, text, htmlCode=None):
+  def drawer_app(self, text, html_code=None):
     """
     Description:
     ------------
@@ -180,9 +180,9 @@ class Navigation(object):
     Attributes:
     ----------
     :param text:
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     """
     schema = {"type": 'div', 'class': 'mdc-drawer-scrim', 'args': {"components": text}}
-    html_t = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_t = self.page.web.mt.composite(schema, options={"reset_class": True})
     #html_t.dom = dom_obj
     return html_t

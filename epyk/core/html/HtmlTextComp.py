@@ -4,6 +4,7 @@
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsMathjax
 
 from epyk.core.html.options import OptText
 from epyk.core.js.html import JsHtml
@@ -19,16 +20,16 @@ from epyk.core.css.styles import GrpClsText
 class UpDown(Html.Html):
   name = 'Up and Down'
   requirements = ('font-awesome', 'accounting')
+  _option_cls = OptText.OptionsNumber
 
   def __init__(self, report, rec, color, label, options, helper, profile):
     if rec is None:
       rec = {'value': 0, 'previous': 0}
     if label is not None:
       rec["label"] = label
-    super(UpDown, self).__init__(report, rec, profile=profile)
+    super(UpDown, self).__init__(report, rec, profile=profile, options=options)
     self.add_helper(helper)
     self.val['color'] = self._report.theme.colors[9] if color is None else color
-    self.__options = OptText.OptionsNumber(self, options)
     self._jsStyles["label"] = rec.get('label', '')
 
   @property
@@ -36,14 +37,17 @@ class UpDown(Html.Html):
     """
     Description:
     ------------
-    Property to set all the possible object for a button.
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptText.OptionsNumber
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       var delta = data.value - data.previous; htmlObj.innerHTML = "";
@@ -72,7 +76,7 @@ class UpDown(Html.Html):
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
       '''
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -85,25 +89,26 @@ class UpDown(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
     self.style.add_classes.div.color_light_background_hover()
-    return super(UpDown, self).click(js_funcs, profile, source_event, onReady)
+    return super(UpDown, self).click(js_funcs, profile, source_event, on_ready)
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class BlockText(Html.Html):
   requirements = ('font-awesome', )
   name = 'Block text'
+  _option_cls = OptText.OptionsText
 
   def __init__(self, report, record, color, border, width, height, helper, options, profile):
-    super(BlockText, self).__init__(report, record, css_attrs={'color': color, "width": width, "height": height}, profile=profile)
+    super(BlockText, self).__init__(report, record, profile=profile, options=options,
+                                    css_attrs={'color': color, "width": width, "height": height})
     self.add_helper(helper)
-    self.__options = OptText.OptionsText(self, options)
     self.css({'padding': '5px'})
     if border != 'auto':
       self.css('border', str(border))
@@ -111,6 +116,8 @@ class BlockText(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set all the possible object for a button.
 
     Usage:
@@ -118,7 +125,7 @@ class BlockText(Html.Html):
 
     :rtype: OptText.OptionsText
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
@@ -136,21 +143,21 @@ class BlockText(Html.Html):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
     items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlCode, Defaults_css.font(3)))
     items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode)
-    #if self.val.get('button') is not None:
-    #  items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
+    #self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return ''.join(items)
 
 
 class TextWithBorder(Html.Html):
   requirements = ('font-awesome', )
   name = 'Text with Border and Icon'
+  _option_cls = OptText.OptionsText
 
   def __init__(self, report, record, width, height, align, helper, options, profile):
-    super(TextWithBorder, self).__init__(report, record, css_attrs={"width": width, "height": height}, profile=profile)
+    super(TextWithBorder, self).__init__(report, record, options=options,
+                                         css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    self.__options = OptText.OptionsText(self, options)
     self.align = align
     if 'colorTitle' not in self.val:
       self.val['colorTitle'] = self._report.theme.colors[9]
@@ -161,14 +168,19 @@ class TextWithBorder(Html.Html):
   @property
   def options(self):
     """
-    Property to set all the possible object for a button.
+    Description:
+    ------------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptText.OptionsText
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       if(options.showdown){var converter = new showdown.Converter(options.showdown); 
@@ -185,7 +197,7 @@ class TextWithBorder(Html.Html):
     else:
       item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (Defaults_css.font(10), self.val['colorTitle']))
     item.append(self.helper)
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return "".join(item)
 
 
@@ -207,7 +219,7 @@ class Number(Html.Html):
       self.span = self.link
     self.link.style.css.font_factor(10)
     self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "100%", "margin": 0},
-                   position=options.get('label', 'before'), htmlCode=self.htmlCode)
+                   position=options.get('label', 'before'), html_code=self.htmlCode)
     self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
 
   def __str__(self):
@@ -266,7 +278,7 @@ class Delta(Html.Html):
       '''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '''<div %(strAttr)s>
       <div style="width:100%%;text-align:right;font-size:%(size)s"></div>
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
@@ -281,12 +293,54 @@ class Formula(Html.Html):
   requirements = ('mathjax', )
   name = 'Latex Formula'
 
-  def __init__(self, report, text, width, color, helper, profile):
-    super(Formula, self).__init__(report, text, css_attrs={"color": color, "width": width}, profile=profile)
+  def __init__(self, report, text, width, height, color, html_code, helper, options, profile):
+    super(Formula, self).__init__(report, text, options=options, html_code=html_code,
+                                  css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    #self._report.jsGlobal.addJs("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}})")
 
-  _js__builder__ = 'htmlObj.innerHTML = data'
+  _js__builder__ = '''
+    htmlObj.innerHTML = data; MathJax.typeset([htmlObj])'''
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component.
+
+    Usage:
+    -----
+
+    :rtype: GrpClsText.ContentTable
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsText.ClsFormula(self)
+    return self._styleObj
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsSelect.JSelect
+    """
+    if self._js is None:
+      self._js = JsMathjax.Mathjax(self, selector=self.dom.varId)
+    return self._js
 
   def __str__(self):
     return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
@@ -301,12 +355,14 @@ class TrafficLight(Html.Html):
     super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height}, profile=profile)
     self.add_helper(helper, css={"margin-top": "-17px"})
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
-                               "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'}, htmlCode=self.htmlCode)
+                               "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'},
+                   html_code=self.htmlCode)
     self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
     self.set_attrs(name="data-status", value=color)
-    self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1], 'orange': self._report.theme.warning[1]}
+    self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1],
+                      'orange': self._report.theme.warning[1]}
     self.action = None
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -345,7 +401,7 @@ class TrafficLight(Html.Html):
     :param red: String. Optional. The color used in case of result false.
     :param neutral: String. Optional. The color used in case of null.
 
-    :return: self to allow the chains
+    :return: self to allow the chains.
     """
     if neutral is not None:
       self._jsStyles['orange'] = neutral
@@ -355,7 +411,7 @@ class TrafficLight(Html.Html):
       self._jsStyles['red'] = red
     return self
 
-  def resolve(self, js_funcs, profile=False):
+  def resolve(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -379,7 +435,7 @@ class TrafficLight(Html.Html):
     self.action.click(js_funcs, profile)
     return self
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -391,14 +447,15 @@ class TrafficLight(Html.Html):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     success = Colors.getHexToRgb(self._report.theme.success[1])
     self.style.css.cursor = "pointer"
-    js_funcs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
-                                                   self._report.theme.danger[1])] + js_funcs
-    return super(TrafficLight, self).click(js_funcs, profile, source_event, onReady)
+    js_funcs = [self.dom.querySelector("div").toggle(
+      "background-color", "rgb(%s, %s, %s)" % (
+        success[0], success[1], success[2]), self._report.theme.danger[1])] + js_funcs
+    return super(TrafficLight, self).click(js_funcs, profile, source_event, on_ready)
 
   _js__builder__ = '''
       if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
@@ -408,18 +465,22 @@ class TrafficLight(Html.Html):
 
   def __str__(self):
     if self.action is not None:
-      return '<div id="%s"><div %s></div>%s</div>%s' % (self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.action.html(), self.helper)
+      return '<div id="%s"><div %s></div>%s</div>%s' % (
+        self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False),
+        self.action.html(), self.helper)
 
-    return '<div id="%s"><div %s></div></div>%s' % (self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
+    return '<div id="%s"><div %s></div></div>%s' % (
+      self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
 
 
 class ContentsTable(Html.Html):
   name = 'Contents Table'
+  _option_cls = OptText.OptContents
 
-  def __init__(self, report, title, width, height, htmlCode, options, profile):
+  def __init__(self, report, title, width, height, html_code, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptText.OptContents(self, options)
+    super(ContentsTable, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                        css_attrs={"width": width, "height": height})
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
@@ -443,7 +504,7 @@ class ContentsTable(Html.Html):
 
     :rtype: OptText.OptContents
     """
-    return self.__options
+    return super().options
 
   @property
   def style(self):
@@ -578,7 +639,7 @@ class ContentsTable(Html.Html):
     :param options: Dictionary. Optional. The options for the title component.
     """
     # Special attribute set in the base component interface
-    div = self._report.ui.div(htmlCode="%s_anchor" % component.htmlCode)
+    div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
     if self._report.body.css('padding-top') is None:
       div.style.css.margin_top = - 10
     else:
@@ -587,7 +648,8 @@ class ContentsTable(Html.Html):
     div.style.css.z_index = -1
     link = self._report._content_table.anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
     self._report._content_table[-1].click([
-      component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
+      component.dom.transition(
+        ["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
     return link
 
   def add_url(self, component, url, level=None, options=None):
@@ -605,7 +667,7 @@ class ContentsTable(Html.Html):
     :param options: Dictionary. Optional. The options for the title component.
     """
     component.options.managed = False
-    div = self._report.ui.div(htmlCode="%s_anchor" % component.htmlCode)
+    div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
     if self._report.body.css('padding-top') is None:
       div.style.css.margin_top = - 10
     else:
@@ -626,22 +688,22 @@ class ContentsTable(Html.Html):
     self.menu.attr["name"] = "menu"
     self.menu.options.managed = False
     self.title[-1].click([self.menu.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
-    return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
-                                                            'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': self.menu.html()}
+    return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {
+      'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
+      'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': self.menu.html()}
 
 
 class SearchResult(Html.Html):
   name = 'Search Result'
   requirements = ('jquery', )
 
-  def __init__(self, report, recordSet, pageNumber, width, height, options, profile):
-    super(SearchResult, self).__init__(report, recordSet, css_attrs={"width": width, "height": height})
+  def __init__(self, report, records, pageNumber, width, height, options, profile):
+    super(SearchResult, self).__init__(report, records, profile=profile, css_attrs={"width": width, "height": height})
     self._jsStyles = {'title': {'color': self._report.theme.colors[7], 'font-size': '18px'}, 'dsc': {'color': self._report.theme.greys[6]},
                       'url': {'color': self._report.theme.success[1], 'font-size': '14px'}, 'visited': {'color': self._report.theme.greys[5]},
                       'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber,
                       'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
 
-  # self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ;
   _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
       if (typeof options.currPage == 'undefined'){options.currPage = 0}; var pageNumber = options.pageNumber;
@@ -690,17 +752,18 @@ class SearchResult(Html.Html):
       } ''' % {'jquery': JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class Composite(Html.Html):
   name = 'Composite'
+  _option_cls = OptText.OptionsComposite
 
-  def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
-    super(Composite, self).__init__(report, None, htmlCode=htmlCode, css_attrs={"width": width, "height": height})
+  def __init__(self, report, schema, width, height, html_code, options, profile, helper):
+    super(Composite, self).__init__(report, None, html_code=html_code, profile=profile, options=options,
+                                    css_attrs={"width": width, "height": height})
     self.__builders, ref_map = set(), {}
-    self.__options = OptText.OptionsComposite(self, options)
     self.add_helper(helper)
     self._set_comp(None, schema, self.__builders, ref_map)
     self.attr = self.val.attr
@@ -713,13 +776,17 @@ class Composite(Html.Html):
     """
     Description:
     ------------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: ptText.OptionsComposite
     """
-    return self.__options
+    return super().options
 
   @property
   def dom(self):
@@ -751,6 +818,7 @@ class Composite(Html.Html):
     """
     Description:
     ------------
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -766,7 +834,8 @@ class Composite(Html.Html):
 
   def __add__(self, component):
     """ Add items to a container """
-    component.options.managed = False # Has to be defined here otherwise it is set to late
+    # Has to be defined here otherwise it is set to late
+    component.options.managed = False
     if not isinstance(self.val.val, list):
       self._vals = self.val._vals
     self.val.val.append(component)
@@ -824,14 +893,15 @@ class Composite(Html.Html):
     :param comp:
     :param schema_child:
     :param builders:
+    :param ref_map:
     """
     if 'args' in schema_child and 'url' in schema_child['args']:
       schema_child['args']['url'] = schema_child['args']['url'] % ref_map
+    # delegate the htmlCode to the main component
     if comp is None:
-      # delegate the htmlCode to the main component
       del self._report.components[self.htmlCode]
 
-      new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlCode, **schema_child.get('args', {}))
+      new_comp = self._get_comp_map[schema_child['type']](html_code=self.htmlCode, **schema_child.get('args', {}))
       self._vals = new_comp
     else:
       new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
@@ -867,16 +937,17 @@ class Composite(Html.Html):
       comp += new_comp
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).extend(list(self.__builders))
+    self.page.properties.js.add_builders(list(self.__builders))
     return self.val.html()
 
 
 class Status(Html.Html):
   name = 'status'
+  _option_cls = OptText.OptionsStatus
 
-  def __init__(self, report, status, width, height, htmlCode, profile, options):
-    super(Status, self).__init__(report, status, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptText.OptionsStatus(self, options)
+  def __init__(self, report, status, width, height, html_code, profile, options):
+    super(Status, self).__init__(report, status, html_code=html_code, profile=profile, options=options,
+                                 css_attrs={"width": width, "height": height})
     self.style.css.text_align = 'center'
     self.style.css.line_height = 30
     self.style.css.margin = 2
@@ -889,16 +960,22 @@ class Status(Html.Html):
     """
     Description:
     ------------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: ptText.OptionsStatus
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  else {var content = data}
+        if(options.showdown){
+          var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  
+        else {var content = data}
         htmlObj.innerHTML = content;
         if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 

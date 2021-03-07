@@ -7,10 +7,12 @@ from epyk.core.css.styles.classes import CssStyle
 class CssStyleNoSmartphone(CssStyle.Style):
 
   def customize(self):
-    self.media({"display": "none"}, "only", "screen", {'and': [{'max-width': '600px'}]}, change=False, thisClass=True)
+    self.media(
+      {"display": "none"}, "only", "screen", {'and': [{'max-width': '600px'}]}, change=False, this_class=True)
 
 
 class CssStyleFont(CssStyle.Style):
 
   def customize(self):
-    self.media({"font-size": "20px"}, "only", "screen", {'and': [{'max-width': '600px'}]}, change=False, thisClass=True)
+    self.media(
+      {"font-size": "20px"}, "only", "screen", {'and': [{'max-width': '600px'}]}, change=False, this_class=True)

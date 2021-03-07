@@ -665,7 +665,7 @@ class D3File(object):
     self._js_frg.append(jsFnc)
     return self
 
-  def then(self, jsFncs):
+  def then(self, jsFncs, profile=False):
     """
     Description:
     -----------
@@ -678,10 +678,10 @@ class D3File(object):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._js_then = ".then(function(data) {%s})" % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    self._js_then = ".then(function(data) {%s})" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     return self
 
-  def row(self, jsFncs):
+  def row(self, jsFncs, profile=False):
     """
 
     :param jsFncs:
@@ -689,7 +689,8 @@ class D3File(object):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._js_frg.append("function(data) {data.foreach(function(row){ %s } )" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    self._js_frg.append(
+      "function(data) {data.foreach(function(row){ %s } )" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
     return self
 
   def get(self, jsFncs):
@@ -800,7 +801,7 @@ class D3Request(JsPackage):
     mine_type = JsUtils.jsConvertData(mine_type, None)
     return self.fnc('mimeType(%s)' % mine_type)
 
-  def response(self, jsFncs):
+  def response(self, jsFncs, profile=False):
     """
     Description:
     -----------
@@ -817,9 +818,11 @@ class D3Request(JsPackage):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return self.fnc('response(function(xhr) {var data = xhr.responseTex; %s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self.fnc(
+      'response(function(xhr) {var data = xhr.responseTex; %s})' % JsUtils.jsConvertFncs(
+        jsFncs, toStr=True, profile=profile))
 
-  def get(self, jsFncs):
+  def get(self, jsFncs, profile=False):
     """
     Description:
     -----------
@@ -833,10 +836,11 @@ class D3Request(JsPackage):
     Attributes:
     ----------
     :param jsFncs:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
 
 class JsD3(JsPackage):
@@ -862,8 +866,6 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    #url = JsUtils.jsConvertData(url, None)
-    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.csv" % self._selector)
 
   def tsv(self, url):
@@ -880,15 +882,14 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    #url = JsUtils.jsConvertData(url, None)
-    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
   def xml(self, url):
     """
     Description:
     -----------
-    Sends http request to the specified url to load an .xml file or data and executes callback function with parsed xml data objects.
+    Sends http request to the specified url to load an .xml file or data and executes callback function with parsed
+    xml data objects.
 
     Related Pages:
 
@@ -899,15 +900,14 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    #url = JsUtils.jsConvertData(url, None)
-    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
   def json(self, url):
     """
     Description:
     -----------
-    Sends http request to the specified url to load .json file or data and executes callback function with parsed json data objects.
+    Sends http request to the specified url to load .json file or data and executes callback function with parsed
+    json data objects.
 
     Related Pages:
 
@@ -917,8 +917,6 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    #url = JsUtils.jsConvertData(url, None)
-    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.json" % self._selector)
 
   def text(self, url):
@@ -1004,8 +1002,6 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    #url = JsUtils.jsConvertData(url, None)
-    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
     return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
   def min(self, dataset, jsFnc):

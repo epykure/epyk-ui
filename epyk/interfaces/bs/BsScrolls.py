@@ -1,9 +1,9 @@
 
 
-class Scrolls(object):
+class Scrolls:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def spy(self):
     pass

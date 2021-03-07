@@ -8,14 +8,15 @@ from epyk.core.html.options import OptText
 
 class ExternalLink(Html.Html):
   name = 'External link'
+  _option_cls = OptText.OptionsLink
 
-  def __init__(self, report, text, url, icon, helper, height, decoration, htmlCode, options, profile):
-    super(ExternalLink, self).__init__(report, {"text": text, "url": url}, htmlCode=htmlCode, css_attrs={'height': height}, profile=profile)
+  def __init__(self, report, text, url, icon, helper, height, decoration, html_code, options, profile):
+    super(ExternalLink, self).__init__(report, {"text": text, "url": url}, html_code=html_code, options=options,
+                                       css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
-    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
     self.decoration, self.__url = decoration, {}
-    self.__options = OptText.OptionsLink(self, options)
     if 'url' not in self.val:
       self.options.url = self.val['text']
     else:
@@ -52,15 +53,19 @@ class ExternalLink(Html.Html):
 
     :rtype: OptText.OptionsLink
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       if(typeof data === 'undefined'){data = {text: ''}}
       var text = "";
       if((typeof data.text !== 'undefined') && (data.text)){text = data.text} else if (data.text) {text = data}
-      if (options.type_number == 'money'){ text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
-      else if (options.type_number == 'number'){text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
-      if(typeof data.icon !== 'undefined'){htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
+      if (options.type_number == 'money'){
+        text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, 
+        options.decimal_sep, options.format)}
+      else if (options.type_number == 'number'){
+        text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
+      if(typeof data.icon !== 'undefined'){
+        htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
       else {htmlObj.innerHTML = text}; if(typeof data.url !== 'undefined'){htmlObj.href = data.url}'''
 
   def anchor(self, component):
@@ -101,7 +106,7 @@ class ExternalLink(Html.Html):
     self.style.css.color = color
     return self
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     """
     Description:
     -----------
@@ -115,13 +120,14 @@ class ExternalLink(Html.Html):
     :param data: String | object. The component expected content.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id:
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):
         data = {"text": data}
       if "url" not in data:
         data["url"] = self.val["url"]
-    return super(ExternalLink, self).build(data, options, profile)
+    return super(ExternalLink, self).build(data, options, profile, component_id)
 
   def __str__(self):
     return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val['text'], self.helper)
@@ -130,10 +136,10 @@ class ExternalLink(Html.Html):
 class DataLink(Html.Html):
   name = 'Data link'
 
-  def __init__(self, report, text, value, width, height, format, profile):
-    super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile,
+  def __init__(self, report, text, value, width, height, fmt, options, profile):
+    super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile, options=options,
                                    css_attrs={"width": width, 'height': height})
-    self.format = format
+    self.format = fmt
 
   @property
   def no_decoration(self):
@@ -154,5 +160,6 @@ class DataLink(Html.Html):
     htmlObj.innerHTML = data.text'''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'], 'format': self.format}
+    self.page.properties.js.add_builders(self.refresh())
+    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {
+      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'], 'format': self.format}

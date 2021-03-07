@@ -1,15 +1,18 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 
 
-class Inputs(object):
-  def __init__(self, context):
-    self.context = context
+class Inputs:
+  
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
-            options=None, attrs=None, profile=None):
+  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
+             options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -25,24 +28,25 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+    html_input = html.HtmlInput.Input(
+      self.page, text, placeholder, width, height, html_code, options, attrs, profile)
     html_input.style.css.margin_bottom = '2px'
     return html_input
 
-  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
+  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
               options=None, attrs=None, profile=None):
     """
     Description:
@@ -60,21 +64,23 @@ class Inputs(object):
     Attributes:
     ----------
     :param flag:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param group_name:
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
     attrs = attrs or {}
-    html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, group_name, placeholder, width, height, htmlCode,
+    html_input = html.HtmlInput.InputRadio(self.page, flag, group_name, placeholder, width, height, html_code,
                                            options, attrs, profile)
     return html_input
 
-  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+               attrs=None, profile=None):
     """
     Description:
     ------------
@@ -92,31 +98,32 @@ class Inputs(object):
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
-    https://css-tricks.com/webkit-html5-search-inputs/
+      https://css-tricks.com/webkit-html5-search-inputs/
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
-    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
+    html_search = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code,
                                        options, attrs, profile)
     attrs.update({"type": 'search'})
     return html_search
 
-  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  @html.Html.css_skin()
+  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+               attrs=None, profile=None):
     """
-
     Description:
     ------------
-    Input field that will hide characters typed in
+    Input field that will hide characters typed in.
 
     Usage:
     -----
@@ -127,20 +134,24 @@ class Inputs(object):
 
       - :class:`epyk.core.html.HtmlInput.Input`
 
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
-    return html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+    return html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs,
+                                profile)
 
-  def file(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  def file(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+           attrs=None, profile=None):
     """
     Input file object.
 
@@ -157,20 +168,24 @@ class Inputs(object):
 
       - :class:`epyk.core.html.HtmlInput.File`
 
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
     attrs.update({"type": 'file'})
-    return html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+    return html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs,
+                                profile)
 
-  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), html_code=None, options=None,
+             attrs=None, profile=None):
     """
     Description:
     ------------
@@ -186,21 +201,23 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {'timeFormat': 'HH:mm:ss'}
     dflt_options.update(options or {})
-    html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, dflt_options, attrs or {}, profile)
+    html_input_t = html.HtmlInput.InputTime(self.page, text, placeholder, width, height, html_code,
+                                            dflt_options, attrs or {}, profile)
     return html_input_t
 
-  def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), html_code=None, options=None,
+             attrs=None, profile=None):
     """
     Description:
     ------------
@@ -216,19 +233,21 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs or {}, profile)
+    html_date = html.HtmlInput.InputDate(self.page, text, placeholder, width, height, html_code, options,
+                                         attrs or {}, profile)
     return html_date
 
-  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+            attrs=None, profile=None):
     """
     Description:
     ------------
@@ -244,22 +263,23 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param value:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param value: Integer. Optional. The value of this input number field.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
     attrs.update({"type": 'number'})
-    html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, options, attrs, profile)
+    html_integer = html.HtmlInput.InputInteger(self.page, value, placeholder, width, height, html_code,
+                                               options, attrs, profile)
     return html_integer
 
-  def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
-              options=None, attrs=None, profile=None):
+  def d_range(self, value, min_val=0, max_val=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"),
+              html_code=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -269,29 +289,29 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param value:
-    :param min:
-    :param max:
-    :param step:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param value: Number. Optional. The value of the component.
+    :param min_val: Number. Optional. The minimum value.
+    :param max_val: Number. Optional. The maximum value.
+    :param step: Integer. Optional. The step when the handle is moved.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
     attrs.update({"type": 'range'})
-    html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
-                                           htmlCode, options or {}, attrs, profile)
+    html_range = html.HtmlInput.InputRange(self.page, value, min_val, max_val, step, placeholder, width, height,
+                                           html_code, options or {}, attrs, profile)
     return html_range
 
   def _output(self, value="", options=None, profile=False):
     """
     Description:
     ------------
-    Create a HTML output object
+    Create a HTML output object.
 
     Usage:
     -----
@@ -308,10 +328,11 @@ class Inputs(object):
     :param options:
     :param profile:
     """
-    html_output = html.HtmlInput.Output(self.context.rptObj, value)
+    html_output = html.HtmlInput.Output(self.page, value, options=options, profile=profile)
     return html_output
 
-  def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
+  @html.Html.css_skin()
+  def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, html_code=None,
                options=None, profile=None):
     """
     Description:
@@ -335,21 +356,26 @@ class Inputs(object):
     :param text:
     :param width:
     :param rows:
+    :param placeholder:
     :param background_color:
-    :param htmlCode:
+    :param html_code:
     :param options:
     :param profile:
     """
-    dfltOptions = {"spellcheck": False, 'selectable': False}
-    dfltOptions.update(options or {})
-    html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color, htmlCode, dfltOptions, profile)
+    dflt_options = {"spellcheck": False, 'selectable': False}
+    dflt_options.update(options or {})
+    html_t_area = html.HtmlInput.TextArea(self.page, text, width, rows, placeholder, background_color,
+                                          html_code, dflt_options, profile)
     return html_t_area
 
-  def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  @html.Html.css_skin()
+  def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+                   attrs=None, profile=None):
     """
     Description:
     ------------
-    Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching and filtering.
+    Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching
+    and filtering.
 
     Usage:
     -----
@@ -368,18 +394,19 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
     attrs = attrs or {}
-    html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+    html_input = html.HtmlInput.AutoComplete(self.page, text, placeholder, width, height, html_code, options,
+                                             attrs, profile)
     html_input.style.css.text_align = "left"
     html_input.style.css.padding_left = 5
     # Take into account the padding left in the width size.
@@ -387,10 +414,13 @@ class Inputs(object):
     #html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
     return html_input
 
-  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  @html.Html.css_skin()
+  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+            attrs=None, profile=None):
     """
     Description:
     ------------
+    Add a standard input component.
 
     Usage:
     -----
@@ -409,21 +439,25 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.d_text(text, placeholder, width, height, htmlCode, options, attrs, profile)
+    return self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
 
-  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  @html.Html.css_skin()
+  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+             attrs=None, profile=None):
     """
     Description:
     ------------
+    Add a hidden input component to the page.
+    This could be used to store data to then be passed to underlying services,
 
     Usage::
 
@@ -435,22 +469,24 @@ class Inputs(object):
 
     Attributes:
     ----------
-    :param text:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param attrs:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :rtype: html.HtmlInput.Input
     """
-    input = self.d_text(text, placeholder, width, height, htmlCode, options, attrs, profile)
+    input = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
     input.style.css.display = None
     return input
 
-  def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+  @html.Html.css_skin()
+  def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"), html_code=None,
+               options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -475,7 +511,7 @@ class Inputs(object):
     :param group_name:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param options:
     :param attrs:
     :param profile:
@@ -484,11 +520,13 @@ class Inputs(object):
     height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
-    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,
+    html_coech = html.HtmlInput.Checkbox(self.page, flag, label, group_name, width, height, html_code,
                                          options, attrs, profile)
     return html_coech
 
-  def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"), html_code=None,
+            helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -496,7 +534,7 @@ class Inputs(object):
     Usage:
     -----
 
-      page.ui.radio(['Single', 'Multiple'], htmlCode="type", checked="Multiple")
+      page.ui.radio(['Single', 'Multiple'], html_code="type", checked="Multiple")
 
     Underlying HTML Objects:
 
@@ -515,18 +553,21 @@ class Inputs(object):
     :param flag:
     :param label:
     :param group_name:
+    :param icon:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param helper:
     :param options:
     :param profile:
     """
-    html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
+    html_radio = html.HtmlInput.Radio(self.page, flag, label, group_name, icon, width, height, html_code,
                                       helper, options or {}, profile)
     return html_radio
 
-  def editor(self, text="", language='python', width=(100, "%"), height=(300, "px"), htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def editor(self, text="", language='python', width=(100, "%"), height=(300, "px"), html_code=None, options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -546,17 +587,21 @@ class Inputs(object):
     :param language:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param options:
     :param profile:
     """
-    dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
+    dflt_options = {
+      "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    editor = html.HtmlTextEditor.Editor(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
+    editor = html.HtmlTextEditor.Editor(self.page, text, language, width, height, html_code, dflt_options,
+                                        profile)
     return editor
 
-  def cell(self, text=None, language='python', width=(100, "%"), height=(100, "px"), htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def cell(self, text="", language='python', width=(100, "%"), height=(60, "px"), html_code=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -573,22 +618,28 @@ class Inputs(object):
     Attributes:
     ----------
     :param text:
+    :param language:
     :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
+    :param options:
     :param profile:
     """
-    dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
+    dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True,
+                    'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
+    html_cell = html.HtmlTextEditor.Cell(
+      self.page, text, language, width, height, html_code, dflt_options, profile)
     return html_cell
 
-  def search(self, text='', placeholder='Search..', align="left", color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
-             tooltip='', extensible=False, options=None, profile=None):
+  @html.Html.css_skin()
+  def search(self, text='', placeholder='Search..', align="left", color=None, width=(100, "%"), height=(None, "px"),
+             html_code=None, tooltip='', extensible=False, options=None, profile=None):
     """
     Description:
     ------------
+    Add an input search component.
 
     Usage:
     -----
@@ -611,9 +662,11 @@ class Inputs(object):
     ----------
     :param text:
     :param placeholder:
+    :param align:
     :param color:
+    :param width:
     :param height:
-    :param htmlCode:
+    :param html_code:
     :param tooltip:
     :param extensible:
     :param options:
@@ -624,14 +677,16 @@ class Inputs(object):
     dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)
-    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, width, height, htmlCode, tooltip, extensible, dflt_options, profile)
+    html_s = html.HtmlInput.Search(self.page, text, placeholder, color, width, height, html_code, tooltip,
+                                   extensible, dflt_options, profile)
     html_s.style.css.height = Defaults.LINE_HEIGHT + 5
     if align == "center":
       html_s.style.css.margin = "auto"
       html_s.style.css.display = "block"
     return html_s
 
-  def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
+  @html.Html.css_skin()
+  def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
             options=None, attrs=None, profile=None):
     """
     Description:
@@ -656,11 +711,12 @@ class Inputs(object):
     ----------
 
     """
-    label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',
-                                                           "position": "absolute", "z-index": '20px', "font-size": '14px'})
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
+    label = self.page.ui.texts.label(label).css({
+      "display": 'block', 'text-align': 'left', 'margin-top': '10px', "position": "absolute", "z-index": '20px',
+      "font-size": '14px'})
+    html_input = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code,
                                       options or {}, attrs or {}, profile).css({"margin-top": '10px'})
-    div = self.context.rptObj.ui.div([label, html_input])
+    div = self.page.ui.div([label, html_input])
     div.input = html_input
     div.label = label
     html_input.on('focus', [

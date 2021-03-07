@@ -5,6 +5,7 @@ from epyk.core.css.styles.attributes import AttrInput
 
 
 class ClassInput(GrpCls.ClassHtml):
+
   @property
   def css(self):
     """
@@ -15,7 +16,7 @@ class ClassInput(GrpCls.ClassHtml):
     :rtype: AttrInput.AttrInput
     """
     if self._css_struct is None:
-      self._css_struct = AttrInput.AttrInput(self.htmlObj)
+      self._css_struct = AttrInput.AttrInput(self.component)
     return self._css_struct
 
   @property
@@ -29,7 +30,7 @@ class ClassInput(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).basic()
+      self._css_class = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).basic()
     return self._css_class
 
 
@@ -51,7 +52,7 @@ class ClassInputDate(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_class_dt is None:
-      self._css_class_dt = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).datepicker()
+      self._css_class_dt = Classes.CatalogInput.CatalogDate(self.component.page, self.classList['main']).datepicker()
     return self._css_class_dt
 
   @property
@@ -63,7 +64,8 @@ class ClassInputDate(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_class_dt_ui is None:
-      self._css_class_dt_ui = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).datepicker_ui()
+      self._css_class_dt_ui = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['main']).datepicker_ui()
     return self._css_class_dt_ui
 
   @property
@@ -75,7 +77,8 @@ class ClassInputDate(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_time_picker_header is None:
-      self._css_time_picker_header = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['other']).datepicker_header()
+      self._css_time_picker_header = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['other']).datepicker_header()
     return self._css_time_picker_header
 
 
@@ -96,7 +99,7 @@ class ClassInputTime(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_class_tm is None:
-      self._css_class_tm = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).time_picker()
+      self._css_class_tm = Classes.CatalogInput.CatalogDate(self.component.page, self.classList['main']).time_picker()
     return self._css_class_tm
 
   @property
@@ -108,7 +111,8 @@ class ClassInputTime(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_class_tm_it is None:
-      self._css_class_tm_it = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).time_picker_items()
+      self._css_class_tm_it = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['main']).time_picker_items()
     return self._css_class_tm_it
 
 
@@ -129,7 +133,8 @@ class ClassInputRange(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class_rg is None:
-      self._css_class_rg = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).range()
+      self._css_class_rg = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main']).range()
     return self._css_class_rg
 
   @property
@@ -141,7 +146,8 @@ class ClassInputRange(GrpCls.ClassHtml):
     :rtype:Classes.CatalogInput.CatalogInput
     """
     if self._css_class_rg_tb is None:
-      self._css_class_rg_tb = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).range_thumb()
+      self._css_class_rg_tb = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main']).range_thumb()
     return self._css_class_rg_tb
 
 
@@ -151,9 +157,9 @@ class ClassInputAutocomplete(ClassInput):
     super(ClassInputAutocomplete, self).__init__(component)
     self._css_autocomplete, self._css_menu_item, self._css_class, self._css_item_active = 4 * [None]
     self.classList['main'].add(self.cls_input)
-    self.classList['main'].add(self.cls_autocomplete)
-    self.classList['main'].add(self.cls_menu_item)
-    self.classList['main'].add(self.cls_item_active)
+    self.classList['other'].add(self.cls_autocomplete)
+    self.classList['other'].add(self.cls_menu_item)
+    self.classList['other'].add(self.cls_item_active)
 
   @property
   def cls_autocomplete(self):
@@ -164,7 +170,8 @@ class ClassInputAutocomplete(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_autocomplete is None:
-      self._css_autocomplete = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).autocomplete()
+      self._css_autocomplete = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['other']).autocomplete()
     return self._css_autocomplete
 
   @property
@@ -176,7 +183,8 @@ class ClassInputAutocomplete(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_item_active is None:
-      self._css_item_active = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).autocomplete_item_active()
+      self._css_item_active = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['other']).autocomplete_item_active()
     return self._css_item_active
 
   @property
@@ -188,8 +196,8 @@ class ClassInputAutocomplete(ClassInput):
     :rtype: Classes.CatalogInput.CatalogDate
     """
     if self._css_menu_item is None:
-      self._css_menu_item = Classes.CatalogInput.CatalogDate(self.htmlObj._report,
-                                                                self.classList['main']).autocomplete_menu()
+      self._css_menu_item = Classes.CatalogInput.CatalogDate(
+        self.component.page, self.classList['other']).autocomplete_menu()
     return self._css_menu_item
 
   @property
@@ -203,5 +211,5 @@ class ClassInputAutocomplete(ClassInput):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).basic()
+      self._css_class = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).basic()
     return self._css_class

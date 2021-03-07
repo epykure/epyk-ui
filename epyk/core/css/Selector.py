@@ -1,6 +1,6 @@
 
 
-class Selector(object):
+class Selector:
 
   def __init__(self, component=None):
     self._js = []
@@ -23,10 +23,10 @@ class Selector(object):
     Attributes:
     ----------
     :param name: String. The attribute name.
-    :param value: String. The attribute value.
-    :param startswith:
-    :param containing:
-    :param endswith:
+    :param value: String. Optional. The attribute value.
+    :param startswith: Boolean. Optional.
+    :param containing: Boolean. Optional.
+    :param endswith: Boolean. Optional.
     """
     if value is None:
       self._js.append("[%s]" % name)
@@ -164,19 +164,20 @@ class Selector(object):
     self._js.append(" %s" % tag)
     return self
 
-  def with_htmlcode(self, htmlCode):
+  def with_htmlcode(self, html_code):
     """
     Description:
     -----------
+    Add the component HTML reference to the CSS Class definition.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    self._js.append("#%s" % htmlCode)
+    self._js.append("#%s" % html_code)
     return self
 
   def with_class(self, class_name):
@@ -257,7 +258,7 @@ class Selector(object):
     self._js.append("::first-letter")
     return self
 
-  def first_of_type(self, type):
+  def first_of_type(self, item_type):
     """
     Description:
     -----------
@@ -268,12 +269,12 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag).
+    :param item_type: String. The HTML type (tag).
     """
-    self._js.append("%s:first-of-type" % type)
+    self._js.append("%s:first-of-type" % item_type)
     return self
 
-  def last_of_type(self, type):
+  def last_of_type(self, item_type):
     """
     Description:
     -----------
@@ -284,9 +285,9 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag).
+    :param item_type: String. The HTML type (tag).
     """
-    self._js.append("%s:last-of-type" % type)
+    self._js.append("%s:last-of-type" % item_type)
     return self
 
   def nth_child(self, i):
@@ -321,7 +322,7 @@ class Selector(object):
     self._js.append(":nth-last-child(%s)" % i)
     return self
 
-  def nth_last_of_type(self, type, i):
+  def nth_last_of_type(self, item_type, i):
     """
     Description:
     -----------
@@ -332,13 +333,13 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag).
+    :param item_type: String. The HTML type (tag).
     :param i: Integer. The index (starting from 1).
     """
-    self._js.append("%s:nth-last-of-type(%s)" % (type, i))
+    self._js.append("%s:nth-last-of-type(%s)" % (item_type, i))
     return self
 
-  def nth_of_type(self, type, i):
+  def nth_of_type(self, item_type, i):
     """
     Description:
     -----------
@@ -349,13 +350,13 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag).
+    :param item_type: String. The HTML type (tag).
     :param i: Integer. The index (starting from 1).
     """
-    self._js.append("%s:nth-of-type(%s)" % (type, i))
+    self._js.append("%s:nth-of-type(%s)" % (item_type, i))
     return self
 
-  def only_of_type(self, type):
+  def only_of_type(self, item_type):
     """
     Description:
     -----------
@@ -366,9 +367,9 @@ class Selector(object):
 
     Attributes:
     ----------
-    :param type: String. The HTML type (tag).
+    :param item_type: String. The HTML type (tag).
     """
-    self._js.append("%s:only-of-type" % type)
+    self._js.append("%s:only-of-type" % item_type)
     return self
 
   def only_child(self):

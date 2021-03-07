@@ -119,7 +119,7 @@ class SocketIO(object):
     self._src._props['js']['builders'].add("var %s = io.connect('%s:%s/%s')" % (self._selector, url, port, namespace))
     return JsObjects.JsVoid("var %s = io.connect('%s:%s/%s')" % (self._selector, url, port, namespace))
 
-  def on(self, eventType, jsFncs):
+  def on(self, eventType, jsFncs, profile=False):
     """
     Description:
     ------------
@@ -132,13 +132,15 @@ class SocketIO(object):
     ----------
     :param eventType:
     :param jsFncs:
+    :param profile:
 
     :return: self to allow the chaining
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     eventType = JsUtils.jsConvertData(eventType, None)
-    self._src.js.onReady("%s.on(%s, function(data) {%s})" % (self._selector, eventType, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.on(%s, function(data) {%s})" % (
+      self._selector, eventType, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self
 
   def emit(self, eventType, jsData=None):

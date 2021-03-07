@@ -10,8 +10,9 @@ class Chart(Html.Html):
   name = 'DC Chart'
   requirements = ('dc', 'crossfilter')
 
-  def __init__(self,  report, width, height, title, options, htmlCode, profile):
-    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self,  report, width, height, title, options, html_code, profile):
+    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     self.style.css.margin = "10px 0"
 
   @property
@@ -42,7 +43,7 @@ class Chart(Html.Html):
     self.dom.dimension(dimension.varId).group(group.varId)
     return self
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     """
     Description:
     -----------
@@ -50,6 +51,8 @@ class Chart(Html.Html):
     Usage:
     -----
 
+    Attributes:
+    ----------
     :param data:
     :param options:
     :param profile:
@@ -57,7 +60,7 @@ class Chart(Html.Html):
     return self.dom.render().toStr()
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
@@ -70,7 +73,8 @@ class ChartLine(Chart):
     -----------
     A line chart is used to display information as a series of data points connected by straight lines.
     A data point represents two values, one plotted along the horizontal axis and another along the vertical axis.
-    For example, the popularity of food items can be drawn as a line chart in such a way that the food item is represented along the x-axis and its popularity is represented along the y-axis.
+    For example, the popularity of food items can be drawn as a line chart in such a way that the food item is
+    represented along the x-axis and its popularity is represented along the y-axis.
 
     Usage:
     -----
@@ -94,8 +98,10 @@ class ChartBar(Chart):
     """
     Description:
     -----------
-    Bar chart is one of the most commonly used types of graph and are used to display and compare the number, frequency or other measure (e.g. mean) for different discrete categories or groups.
-    The graph is constructed such that the heights or lengths of the different bars are proportional to the size of the category they represent.
+    Bar chart is one of the most commonly used types of graph and are used to display and compare the number,
+    frequency or other measure (e.g. mean) for different discrete categories or groups.
+    The graph is constructed such that the heights or lengths of the different bars are proportional to the size of
+    the category they represent.
 
     Usage:
     -----
@@ -163,7 +169,8 @@ class ChartBubble(Chart):
     Description:
     -----------
     A bubble chart is used to display three dimensions of the data.
-    It is a variation of scatter chart, in which the data points are replaced with bubbles. The bubble sizes are represented with respect to the data dimension.
+    It is a variation of scatter chart, in which the data points are replaced with bubbles. The bubble sizes are
+    represented with respect to the data dimension.
     It uses horizontal and vertical axes as value axes.
 
     Usage:

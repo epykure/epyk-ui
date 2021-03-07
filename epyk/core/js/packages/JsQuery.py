@@ -23,9 +23,11 @@ def decorate_var(var_name, convert_var=True):
   return '$(%s)' % JsUtils.jsConvertData(var_name, None)
 
 
-class Jsjqxhr(object):
+class Jsjqxhr:
+
   def __init__(self, ajax):
     self.__ajax = {'request': ajax}
+    self.profile = False
 
   def done(self, jsFncs):
     """
@@ -93,7 +95,8 @@ class Jsjqxhr(object):
     reqResult = [self.__ajax['request']]
     for rType in ["done", "fail", "always"]:
       if self.__ajax.get(rType) is not None:
-        reqResult.append("%s(function(){%s})" % (rType, ";".join(JsUtils.jsConvertFncs(self.__ajax[rType]))))
+        reqResult.append("%s(function(){%s})" % (
+          rType, JsUtils.jsConvertFncs(self.__ajax[rType], toStr=True, profile=self.profile)))
     return ".".join(map(lambda x: str(x), reqResult))
 
 
@@ -627,7 +630,7 @@ class JQuery(JsPackage):
     criteria = JsUtils.jsConvertData(criteria, None)
     return self.fnc("find(%s)" % criteria)
 
-  def each(self, jsFncs):
+  def each(self, jsFncs, profile=None):
     """
     Iterate over a jQuery object, executing a function for each matched element.
 
@@ -639,12 +642,13 @@ class JQuery(JsPackage):
 
     :return:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return self.fnc("each(function(index, data){%s})" % ";".join(jsFncs))
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return self.fnc("each(function(index, data){%s})" % jsFncs)
 
   def css(self, key, value=None):
     """
-    Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.
+    Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property
+    naming, or create custom properties.
 
     Related Pages:
 
@@ -760,7 +764,7 @@ class JQuery(JsPackage):
       self.src.style.cssCls(clsName, attrs, eventAttrs, False)
     return self.fnc('addClass("%s")' % clsName)
 
-  def getJSON(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None):
+  def getJSON(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None, profile=None):
     """
     Load JSON-encoded data from the server using a GET HTTP request.
 
@@ -770,11 +774,12 @@ class JQuery(JsPackage):
 
     :return:
     """
-    success = JsUtils.jsConvertFncs(success)
+    success = JsUtils.jsConvertFncs(success, toStr=True, profile=profile)
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
-    return Jsjqxhr("jQuery.getJSON('%s', {data: JSON.stringify(%s)}, function(data) {%s}, '%s')" % (url, jsData, ";".join(success), dataType))
+    return Jsjqxhr("jQuery.getJSON('%s', {data: JSON.stringify(%s)}, function(data) {%s}, '%s')" % (
+      url, jsData, success, dataType))
 
-  def getJsScript(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None):
+  def getJsScript(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None, profile=None):
     """
     Load a JavaScript file from the server using a GET HTTP request, then execute it.
 
@@ -789,11 +794,11 @@ class JQuery(JsPackage):
     :param jsDataKey:
     :param isPyData:
     :param jsFnc:
-    :return:
     """
-    success = JsUtils.jsConvertFncs(success)
+    success = JsUtils.jsConvertFncs(success, toStr=True, profile=profile)
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
-    return Jsjqxhr("jQuery.getScript('%s', {data: JSON.stringify(%s)}, function(data, textStatus, jqxhr) {%s}, '%s')" % (url, jsData, ";".join(success), dataType))
+    return Jsjqxhr("jQuery.getScript('%s', {data: JSON.stringify(%s)}, function(data, textStatus, jqxhr) {%s}, '%s')" % (
+      url, jsData, success, dataType))
 
   def getPyScript(self, script, data=None, successFncs=None, options=None, timeout=None, props=None):
     """
@@ -823,7 +828,9 @@ class JQuery(JsPackage):
       rptObj = self.src._report
     if data is None:
       data = {}
-    qParams = self.getParams('%s/data/%s/%s' % (rptObj._urlsApp['report'], rptObj.run.report_name, script.replace(".py", "")), data, successFncs, None, options, timeout, props)
+    qParams = self.getParams('%s/data/%s/%s' % (
+      rptObj._urlsApp['report'], rptObj.run.report_name, script.replace(".py", "")), data, successFncs, None, options,
+                             timeout, props)
     return Jsjqxhr("jQuery.post(%s)" % qParams)
 
   def load(self, url, jsData=None, successFncs=None):
@@ -851,7 +858,7 @@ class JQuery(JsPackage):
       return "%s.load('%s', function(data) {%s})" % (self.varId, url, successFncs)
     return "%s.load('%s', {data: JSON.stringify(%s)}, function(data) {%s})" % (self.varId, url, jsData, successFncs)
 
-  def ajaxError(self, jsFncs):
+  def ajaxError(self, jsFncs, profile=False):
     """
 
     Related Pages:
@@ -859,12 +866,11 @@ class JQuery(JsPackage):
       https://api.jquery.com/ajaxError/
 
     :param jsFncs:
-    :return:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {%s})" % ";".join(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {%s})" % jsFncs
 
-  def ajaxStart(self, jsFncs):
+  def ajaxStart(self, jsFncs, profile=None):
     """
     Register a handler to be called when the first Ajax request begins. This is an Ajax Event.
 
@@ -872,12 +878,12 @@ class JQuery(JsPackage):
 
       https://api.jquery.com/ajaxStart/
 
-    :return:
-    """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxStart(function() {%s})" % ";".join(jsFncs)
 
-  def ajaxStop(self, jsFncs):
+    """
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxStart(function() {%s})" % jsFncs
+
+  def ajaxStop(self, jsFncs, profile=None):
     """
     Register a handler to be called when all Ajax requests have completed. This is an Ajax Event.
 
@@ -886,12 +892,11 @@ class JQuery(JsPackage):
       https://api.jquery.com/ajaxStop/
 
     :param jsFncs:
-    :return:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxStop(function() {%s})" % ";".join(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxStop(function() {%s})" % jsFncs
 
-  def ajaxSuccess(self, jsFncs):
+  def ajaxSuccess(self, jsFncs, profile=None):
     """
     Attach a function to be executed whenever an Ajax request completes successfully. This is an Ajax Event.
 
@@ -900,12 +905,11 @@ class JQuery(JsPackage):
       https://api.jquery.com/ajaxSuccess/
 
     :param jsFncs:
-    :return:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % ";".join(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % jsFncs
 
-  def ajaxSend(self, jsFncs):
+  def ajaxSend(self, jsFncs, profile=None):
     """
 
     Related Pages:
@@ -913,16 +917,20 @@ class JQuery(JsPackage):
       https://api.jquery.com/ajaxSend/
 
     :param jsFncs:
-    :return:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxSend(function(event, jqxhr, settings) {%s})" % ";".join(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxSend(function(event, jqxhr, settings) {%s})" % jsFncs
 
-  def ajaxComplete(self, jsFncs):
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return "jQuery(document).ajaxComplete(function() {%s})" % ";".join(jsFncs)
+  def ajaxComplete(self, jsFncs, profile=None):
+    """
 
-  def getParams(self, url, data, successFncs, errorFncs, options, timeout, props):
+    :param jsFncs:
+    :param profile:
+    """
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxComplete(function() {%s})" % jsFncs
+
+  def getParams(self, url, data, successFncs, errorFncs, options, timeout, props, profile=None):
     """
 
     :return:
@@ -937,9 +945,11 @@ class JQuery(JsPackage):
     if timeout is not None:
       ajaxData.append("timeout: %s" % timeout)
     if successFncs is not None:
-      ajaxData.append("success: function(result,status,xhr){%s}" % ";".join(JsUtils.jsConvertFncs(successFncs)))
+      ajaxData.append("success: function(result,status,xhr){%s}" % JsUtils.jsConvertFncs(
+        successFncs, toStr=True, profile=profile))
     if errorFncs is not None:
-      ajaxData.append("error: function(xhr, status, error){%s}" % ";".join(JsUtils.jsConvertFncs(errorFncs)))
+      ajaxData.append("error: function(xhr, status, error){%s}" % JsUtils.jsConvertFncs(
+        errorFncs, toStr=True, profile=profile))
     return "{%s}" % ", ".join(ajaxData)
 
   def get(self, url, data, successFncs=None, options=None, timeout=None, props=None):
@@ -977,7 +987,6 @@ class JQuery(JsPackage):
 
       https//www.w3schools.com/jquery/ajax_ajax.asp
 
-    :return:
     :param type: Specifies the type of request. (GET or POST)
     :param url: Specifies the URL to send the request to. Default is the current page
     :param data: Specifies data to be sent to the server
@@ -985,7 +994,6 @@ class JQuery(JsPackage):
     :param errorFncs: A function to run if the request fails.
     :param options: The other parameters specifies one or more name/value pairs for the AJAX request
     :param timeout: The local timeout (in milliseconds) for the request
-    :return:
     """
     if type.upper() not in ['POST', 'GET']:
       raise Exception("Method %s not recognised" % url)
@@ -993,7 +1001,7 @@ class JQuery(JsPackage):
     data = data or {}
     return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, successFncs, errorFncs, options, timeout, props))
 
-  def click(self, jsFnc):
+  def click(self, jsFnc, profile=None):
     """
 
     :param jsFnc:
@@ -1001,4 +1009,4 @@ class JQuery(JsPackage):
     :return:
     """
     self.css("cursor", "pointer")
-    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
+    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))

@@ -11,11 +11,12 @@ from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesP
 from epyk.core.py import OrderedSet
 
 
-class ClassPage(object):
-  def __init__(self, htmlObj):
-    self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
-    self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection, self.__moz_selection = 5 * [None]
-    self.__contenteditable, self.__global_styles = None, None
+class ClassPage:
+  def __init__(self, component):
+    self._css_struct, self._css_class = None, None
+    self.component = component
+    self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection = 4 * [None]
+    self.__contenteditable, self.__global_styles, self.__moz_selection = None, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
 
   @property
@@ -28,7 +29,7 @@ class ClassPage(object):
     :rtype: Body
     """
     if self._css_struct is None:
-      self._css_struct = Body(self.htmlObj)
+      self._css_struct = Body(self.component)
     return self._css_struct
 
   @property
@@ -42,8 +43,8 @@ class ClassPage(object):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'],
-                                                      html_id=self.htmlObj.htmlCode).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
   @property
@@ -61,7 +62,7 @@ class ClassPage(object):
     :rtype: Defaults_css.GlobalStyle
     """
     if self.__global_styles is None:
-      self.__global_styles = Defaults_css.GlobalStyle(self.htmlObj._report)
+      self.__global_styles = Defaults_css.GlobalStyle(self.component.page)
     return self.__global_styles
 
   @property
@@ -73,8 +74,8 @@ class ClassPage(object):
     :rtype: CssStyleScrollbar.CssWebkitScrollbar
     """
     if not self.__webkitscrollbar:
-      self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report)
-    return  self.__webkitscrollbar
+      self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.component.page)
+    return self.__webkitscrollbar
 
   @property
   def scrollbar_webkit_thumb(self):
@@ -85,8 +86,8 @@ class ClassPage(object):
     :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
     """
     if not self.__webkitscrollbar_thumb:
-      self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.htmlObj._report)
-    return  self.__webkitscrollbar_thumb
+      self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.component.page)
+    return self.__webkitscrollbar_thumb
 
   @property
   def scrollbar_webkit_track(self):
@@ -97,8 +98,8 @@ class ClassPage(object):
     :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
     """
     if not self.__webkitscrollbar_track:
-      self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report)
-    return  self.__webkitscrollbar_track
+      self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.component.page)
+    return self.__webkitscrollbar_track
 
   @property
   def selection(self):
@@ -113,7 +114,7 @@ class ClassPage(object):
     :rtype: CssStyleScrollbar.CssWebkitSelection
     """
     if not self.__selection:
-      self.__selection = CssStyleScrollbar.CssWebkitSelection(self.htmlObj._report)
+      self.__selection = CssStyleScrollbar.CssWebkitSelection(self.component.page)
     return self.__selection
 
   @property
@@ -129,14 +130,14 @@ class ClassPage(object):
     :rtype: CssStyleScrollbar.CssWebkitMozSelection
     """
     if not self.__moz_selection:
-      self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.htmlObj._report)
+      self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.component.page)
     return self.__moz_selection
 
   def contenteditable(self):
     """
     Description:
     ------------
-    Set the border color of the editable content according to the selected theme
+    Set the border color of the editable content according to the selected theme.
 
     Related Pages:
 
@@ -145,7 +146,7 @@ class ClassPage(object):
     :rtype: CssStylesPage.CssPageContentDditable
     """
     if not self.__contenteditable:
-      self.__contenteditable = CssStylesPage.CssPageContentEditable(self.htmlObj._report)
+      self.__contenteditable = CssStylesPage.CssPageContentEditable(self.component.page)
       self.classList['other'].add(self.__contenteditable)
     return self.__contenteditable
 
@@ -168,7 +169,7 @@ class ClassPage(object):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
@@ -182,7 +183,7 @@ class ClassPage(object):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def get_classes(self):
@@ -194,7 +195,7 @@ class ClassPage(object):
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
-          self.htmlObj._report._css[c.get_ref()] = str(c)
+          self.component.page._css[c.get_ref()] = str(c)
     return self.classList
 
   def get_classes_css(self):
@@ -216,16 +217,19 @@ class ClassPage(object):
           css_frgs[c.get_ref()] = str(c)
     return css_frgs
 
-  def custom_class(self, css_attrs, classname=None, selector=None, is_class=True):
+  def custom_class(self, css_attrs, classname=None, selector=None, is_class=True, important=False):
     """
     Description:
     -----------
     This will create dynamic CSS class which will not be added to any component.
-    The class definition can then be reused in mutiple components.
+    The class definition can then be reused in multiple components.
 
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
+    TODO: Enable the important for nested css_attrs.
+
     Usage:
+    -----
 
       rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
@@ -234,25 +238,30 @@ class ClassPage(object):
     :param css_attrs: Dictionary. Nested dictionary with the different attributes.
     :param classname: Optional. String. The classname in the CSS definition.
     :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition).
-    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a .
+    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a dot.
+    :param important: Boolean. Optional. Specify if the style is important.
     """
     if classname is None:
       cls_def = {"classname": False, '_selector': selector}
     else:
       cls_def = {"classname": classname}
-    if not '_attrs' in css_attrs and not '_hover' in css_attrs:
+    if '_attrs' not in css_attrs and '_hover' not in css_attrs:
+      if important:
+        css_attrs = {k: "%s !IMPORTANT" % v for k, v in css_attrs.items()}
       css_attrs = {"_attrs": css_attrs}
     css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    cls_obj = v_cls(self.htmlObj._report)
+    cls_obj = v_cls(self.component.page)
     self.classList['other'].add(cls_obj)
     return cls_def
 
 
-class ClassHtml(Properties.CssMixin):
-  def __init__(self, htmlObj):
-    self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
+class ClassHtml:
+
+  def __init__(self, component):
+    self._css_struct, self._css_class = None, None
+    self.component = component
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
     self.__cls_effects, self.__css_virtual = None, {}
     self.classList['main'].add(self.css_class)
@@ -264,7 +273,7 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Unique identifier for the CSS object on the Javascript side.
     """
-    return "%s_css" % self.htmlObj.htmlCode
+    return "%s_css" % self.component.htmlCode
 
   @property
   def css(self):
@@ -276,7 +285,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Commons
     """
     if self._css_struct is None:
-      self._css_struct = Commons(self.htmlObj)
+      self._css_struct = Commons(self.component)
     return self._css_struct
 
   @property
@@ -290,7 +299,8 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
   @property
@@ -312,7 +322,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Effects.Effects
     """
     if self.__cls_effects is None:
-      self.__cls_effects = Effects.Effects(self.htmlObj._report, self.htmlObj)
+      self.__cls_effects = Effects.Effects(self.component.page, self.component)
     return self.__cls_effects
 
   @property
@@ -325,7 +335,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
@@ -339,7 +349,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def attr(self, key, name, dflt=None, suffix="temp"):
@@ -411,6 +421,30 @@ class ClassHtml(Properties.CssMixin):
       self.css.margin_left = "%s%%" % percent
       self.css.margin_right = "%s%%" % percent
 
+  def doc(self, percent=5, max_width=650, paddings=20):
+    """
+    Description:
+    ------------
+
+    TODO: Find way to set the container to the middle of the page.
+
+    Attributes:
+    ----------
+    :param percent: Integer. Optional. The percentage of space on the left and right.
+    :param max_width: Integer. Optional. The max size of the page in pixel.
+    :param paddings: Integer. Optional. The top and bottom padding in the doc.
+    """
+    self.css.max_width = max_width
+    self.css.min_height = 150
+    self.css.padding_top = paddings
+    self.css.padding_bottom = paddings
+    self.css.shadow_box(radius=0)
+    self.css.margin = "20px auto"
+    self.component.page.body.style.css.padding_left = "%s%%" % percent
+    self.component.page.body.style.css.padding_right = "%s%%" % percent
+    self.component.page.body.style.css.text_align = "center"
+    self.component.page.body.style.css.background = self.component.page.theme.greys[2]
+
   def selector(self, suffix, attrs):
     """
     Description:
@@ -436,15 +470,16 @@ class ClassHtml(Properties.CssMixin):
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
     Usage:
+    -----
 
-      rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
+      page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
     Attributes:
     ----------
-    :param css_attrs: Nested dictionary with the different attributes
-    :param classname: Optional. String. The classname in the CSS definition
-    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition)
-    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a .
+    :param css_attrs: Dictionary. Nested dictionary with the different attributes.
+    :param classname: String. Optional. The classname in the CSS definition.
+    :param selector: String. Optional. The class selector (if it is not a classname using . but a strict definition).
+    :param is_class: Boolean. Optional. Automatically transform the name to a CSS class definition by adding a .
     """
     if classname is None:
       cls_def = {"classname": False, '_selector': selector}
@@ -455,7 +490,7 @@ class ClassHtml(Properties.CssMixin):
     css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    cls_obj = v_cls(self.htmlObj._report)
+    cls_obj = v_cls(self.component.page)
     self.classList['other'].add(cls_obj)
     return cls_def
 
@@ -466,7 +501,7 @@ class ClassHtml(Properties.CssMixin):
     Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
-    :return: self to allow the chaining
+    :return: self to allow the chaining.
     """
     self.classList['main'] = OrderedSet()
     self._css_class = None
@@ -480,8 +515,8 @@ class ClassHtml(Properties.CssMixin):
 
     :return: self to allow the chaining.
     """
-    self.htmlObj.attr['css'] = {}
-    self.css.attrs = self.htmlObj.attr['css']
+    self.component.attr['css'] = {}
+    self.css.attrs = self.component.attr['css']
     return self
 
   def clear(self, no_default=False):
@@ -492,19 +527,20 @@ class ClassHtml(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param no_default: Boolean. Remove the default class.
+    :param no_default: Boolean. Optional. Remove the default class.
 
-    :return: self to allow the chaining
+    :return: self to allow the chaining.
     """
     self.classList['main'] = OrderedSet()
     if Defaults_css.DEFAULT_STYLE == 'no_border':
       if no_default:
         self._css_class = ""
       else:
-        self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
+        self._css_class = Classes.CatalogDiv.CatalogDiv(
+          self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     else:
       self._css_class = Defaults_css.DEFAULT_STYLE
-    self.htmlObj.attr['class'] = self.classList['main']
+    self.component.attr['class'] = self.classList['main']
     return self
 
   def clear_all(self, no_default=False):
@@ -513,13 +549,14 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
+
     Set the default style to no margin and no padding.
 
     Attributes:
     ----------
-    :param no_default: Boolean. Remove the default class
+    :param no_default: Boolean. Optional. Remove the default class.
 
-    :return: self to allow the chaining
+    :return: self to allow the chaining.
     """
     self.clear_style()
     self.clear(no_default)
@@ -537,7 +574,7 @@ class ClassHtml(Properties.CssMixin):
     :param name: String. The Javascript variable name.
     :param js_frg: String. The Javascript framework corresponding to the Js builder.
     """
-    self.htmlObj._report._props.setdefault('js', {}).setdefault("builders_css", OrderedSet()).add("const %s = %s" % (name, js_frg))
+    self.component.page.properties.css.add_builders("const %s = %s" % (name, js_frg))
     return self
 
   def get_classes(self):
@@ -546,18 +583,18 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
     """
-    if self.__css_virtual and not '_attrs' in self.__css_virtual:
+    if self.__css_virtual and '_attrs' not in self.__css_virtual:
       self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
       self.__css_virtual["_attrs"].update(dict(self.css.attrs))
-      self.__css_virtual['classname'] = "style_%s" % self.htmlObj.htmlCode
-      meta_cls = type('Style%s' % self.htmlObj.htmlCode, (CssStyle.Style,), self.__css_virtual)
-      self.css.attrs = {} # empty the css inline section
-      self.classList['main'].add(meta_cls(self.htmlObj._report))
-      self.htmlObj.attr['css'] = {}
+      self.__css_virtual['classname'] = "style_%s" % self.component.htmlCode
+      meta_cls = type('Style%s' % self.component.htmlCode, (CssStyle.Style,), self.__css_virtual)
+      self.css.attrs = {}
+      self.classList['main'].add(meta_cls(self.component.page))
+      self.component.attr['css'] = {}
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
-          self.htmlObj._report._css[c.get_ref()] = c
+          self.component.page._css[c.get_ref()] = c
     return self.classList
 
   def get_classes_css(self):
@@ -565,7 +602,6 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
 
-    :return:
     """
     css_frgs = {}
     for css_cls in self.classList.values():
@@ -587,5 +623,5 @@ class ClassHtmlEmpty(ClassHtml):
     :rtype: Empty
     """
     if self._css_struct is None:
-      self._css_struct = Empty(self.htmlObj)
+      self._css_struct = Empty(self.component)
     return self._css_struct

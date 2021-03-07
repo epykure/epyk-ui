@@ -9,14 +9,15 @@ from epyk.core.html.options import OptJqvM
 class JqueryVectorMap(Html.Html):
   name = 'Jquery Vector Map'
   requirements = ('jqvmap', )
+  _option_cls = OptJqvM.OptionsJqVM
 
-  def __init__(self,  report, width, height, htmlCode, options, profile):
+  def __init__(self,  report, width, height, html_code, options, profile):
     self.height = height[0]
-    super(JqueryVectorMap, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptJqvM.OptionsJqVM(self, options)
+    super(JqueryVectorMap, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                          css_attrs={"width": width, "height": height})
     self.chartId = "%s_obj" % self.htmlCode
 
-  def click(self,  js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self,  js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -35,7 +36,7 @@ class JqueryVectorMap(Html.Html):
     :param js_funcs: List | String. A Javascript Python function
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -47,13 +48,17 @@ class JqueryVectorMap(Html.Html):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptJqvM.OptionsJqVM
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''%s.vectorMap(options)''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())

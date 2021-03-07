@@ -4,10 +4,10 @@
 from epyk.fwk.mt.js import JsMdcComponents
 
 
-class List(object):
+class List:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def images(self):
     """
@@ -39,7 +39,7 @@ class List(object):
       schema[ 'children'].append({'type': 'item', 'class': "mdc-list-item", 'css': False, 'attrs': {"tabindex": i}, 'children': [
         {"type": 'span', 'class': "mdc-list-item__text", 'css': False, 'args': {"text": d}}
       ]})
-    html_l = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_l = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.List(html_l)
     html_l.style.builder(html_l.style.varName, dom_obj.instantiate("#%s" % html_l.htmlCode))
     # Add the specific dom features
@@ -66,7 +66,7 @@ class List(object):
       schema[ 'children'].append({'type': 'item', 'class': "mdc-list-item", 'css': False, 'attrs': {"tabindex": i, 'role': 'option'}, 'children': [
         {"type": 'span', 'class': "mdc-list-item__text", 'css': False, 'args': {"text": d}}
       ]})
-    html_l = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_l = self.page.web.mt.composite(schema, options={"reset_class": True})
 
     dom_obj = JsMdcComponents.List(html_l)
     html_l.style.builder(html_l.style.varName, dom_obj.instantiate("#%s" % html_l.htmlCode))
@@ -107,7 +107,7 @@ class List(object):
         ]},
         {"type": 'label', "class": "mdc-list-item__text", 'css': False, 'args': {"text": d}},
       ]})
-    html_l = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_l = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.List(html_l)
     html_l.style.builder(html_l.style.varName, dom_obj.instantiate("#%s" % html_l.htmlCode))
     # Add the specific dom features
@@ -143,7 +143,7 @@ class List(object):
         ]},
         {"type": 'label', "class": "mdc-list-item__text", 'css': False, 'args': {"text": d}},
       ]})
-    html_l = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_l = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.List(html_l)
     html_l.style.builder(html_l.style.varName, dom_obj.instantiate("#%s" % html_l.htmlCode))
     # Add the specific dom features

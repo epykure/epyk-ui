@@ -14,10 +14,10 @@ from epyk.interfaces.bs import BsIcons
 from epyk.fwk.bs.html import BsHtml
 
 
-class Bootstrap(object):
+class Bootstrap:
 
-  def __init__(self, rptObj):
-    self.rptObj = rptObj
+  def __init__(self, page):
+    self.page = page
     self.button = self.buttons.button
     self.input = self.inputs.input
 
@@ -45,7 +45,7 @@ class Bootstrap(object):
 
       https://icons.getbootstrap.com/
     """
-    self.rptObj.cssImport.add("bootstrap-icons")
+    self.page.cssImport.add("bootstrap-icons")
     return BsIcons.Icons(self)
 
   @property
@@ -98,7 +98,8 @@ class Bootstrap(object):
     """
     Description:
     ------------
-    Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs, custom selects, and custom file inputs.
+    Easily extend form controls by adding text, buttons, or button groups on either side of textual inputs,
+    custom selects, and custom file inputs.
 
     Related Pages:
 
@@ -156,7 +157,7 @@ class Bootstrap(object):
     :param pill:
     :param category:
     """
-    container = self.rptObj.web.std.texts.span(value)
+    container = self.page.web.std.texts.span(value)
     container.style.clear_all()
     container.attr["class"].add("badge badge-%s" % category)
     if pill:
@@ -186,14 +187,15 @@ class Bootstrap(object):
         schema['children'][0]['children'][-1]['class'] = 'breadcrumb-item active'
         schema['children'][0]['children'][-1]['aria'] = {'current': 'page'}
 
-    h = self.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    h = self.page.web.bs.composite(schema, options={"reset_class": True})
     return h
 
   def pagination(self, values, selected=None, sizing=None):
     """
     Description:
     ------------
-    Documentation and examples for showing pagination to indicate a series of related content exists across multiple pages.
+    Documentation and examples for showing pagination to indicate a series of related content exists across
+    multiple pages.
 
     Related Pages:
 
@@ -219,7 +221,7 @@ class Bootstrap(object):
         schema['children'][0]['children'][-1]['children'][0]['args']['text'] = "%s <span class='sr-only'>(current)</span>" % v
     schema['children'][0]['children'].append({"type": 'item', 'class': 'page-item', 'css': False, 'children': [
       {"type": 'link', 'css': False, 'class': 'page-link', 'args': {'text': 'Next', 'url': '#'}}]})
-    h = self.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    h = self.page.web.bs.composite(schema, options={"reset_class": True})
     return h
 
   def jumbotron(self, components):
@@ -232,14 +234,15 @@ class Bootstrap(object):
 
     :param components:
     """
-    container = self.rptObj.web.std.div(components)
+    container = self.page.web.std.div(components)
     container.style.clear_all()
     container.attr["class"].add("jumbotron jumbotron-fluid")
     return container
 
   def progress(self, value, valuemin=0, valuemax=100, stripped=False, category='success'):
     """
-    Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars, animated backgrounds, and text labels.
+    Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars,
+    animated backgrounds, and text labels.
 
     Related Pages:
 
@@ -250,10 +253,10 @@ class Bootstrap(object):
     :param valuemax:
     :param category:
     """
-    container = self.rptObj.web.std.div()
+    container = self.page.web.std.div()
     container.style.clear_all()
     container.attr["class"].add("progress")
-    d = self.rptObj.web.std.div("%s%%" % value)
+    d = self.page.web.std.div("%s%%" % value)
     d.style.clear_all()
     d.attr["role"] = 'progressbar'
     d.attr["class"].add("progress-bar bg-%s" % category)
@@ -272,7 +275,7 @@ class Bootstrap(object):
 
     :param data:
     """
-    container = BsHtml.BsCards(self.rptObj, component or [], title, width, height, options, profile)
+    container = BsHtml.BsCards(self.page, component or [], title, width, height, options, profile)
     container.style.clear_all()
     container.attr["class"].add("card")
     return container
@@ -284,7 +287,7 @@ class Bootstrap(object):
     """
     if component is not None and not isinstance(component, list):
       component = [component]
-    h_toast = BsHtml.BsToasts(self.rptObj, component or [], title, width, height, options, profile)
+    h_toast = BsHtml.BsToasts(self.page, component or [], title, width, height, options, profile)
     return h_toast
 
   def alert(self, test, dismissing=True, category='primary'):
@@ -299,15 +302,15 @@ class Bootstrap(object):
 
     :param category:
     """
-    container = self.rptObj.web.std.div(test)
+    container = self.page.web.std.div(test)
     container.style.clear_all()
     container.attr['class'].add('alert alert-%s' % category)
     container.attr['role'] = 'alert'
     if dismissing:
       container.attr['class'].add('alert-dismissible fade show')
-      span = self.rptObj.web.std.texts.span("&times;")
+      span = self.page.web.std.texts.span("&times;")
       span.style.clear_all()
-      button = self.rptObj.web.std.button([span])
+      button = self.page.web.std.button([span])
       button.style.clear_all()
       button.attr['class'].add('close')
       button.attr['data-dismiss'] = "alert"
@@ -315,7 +318,8 @@ class Bootstrap(object):
       container += button
     return container
 
-  def composite(self, schema, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def composite(self, schema, width=(None, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
+                profile=None):
     """
     Description:
     ------------
@@ -336,12 +340,13 @@ class Bootstrap(object):
     :param schema: Dictionary. The schema of the composite item with the different sub items
     :param width: Optional. Tuple. The component width in pixel or percentage
     :param height: Optional. Tuple. The component height in pixel or percentage
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     :param helper: Optional. String. Optional. The helper message
     :param options: Optional. Dictionary. the component specific items
     :param profile: Optional. Not yet available
     """
-    html_help = BsHtml.BsComposite(self.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
+    html_help = BsHtml.BsComposite(self.page, schema, width=width, height=height, html_code=html_code,
+                                   profile=profile, options=options or {}, helper=helper)
     return html_help
 
   def spinner(self, category='primary', grow=False):
@@ -357,14 +362,14 @@ class Bootstrap(object):
     :param category:
     :param grow:
     """
-    container = self.rptObj.web.std.div()
+    container = self.page.web.std.div()
     container.style.clear_all()
     if grow:
       container.attr["class"].add("spinner-grow text-%s" % category)
     else:
       container.attr["class"].add("spinner-border text-%s" % category)
     container.attr["role"] = "status"
-    span = self.rptObj.web.std.texts.span("Loading...")
+    span = self.page.web.std.texts.span("Loading...")
     span.style.clear_all()
     span.attr["class"].add("sr-only")
     return container

@@ -25,9 +25,10 @@ class Table(Html.Html):
   requirements = ('datatables', )
   name = 'Table'
 
-  def __init__(self, report, records, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Table, self).__init__(report, [], html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     if records is not None:
       self.config.data = records
 
@@ -36,6 +37,7 @@ class Table(Html.Html):
     """
     Description:
     -----------
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -107,7 +109,7 @@ class Table(Html.Html):
       self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False, parent=self)
     return self._js
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
     -----------
@@ -117,24 +119,24 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param data:
-    :param options:
-    :param profile:
+    :param data: String. A String corresponding to a JavaScript object.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data:
-      return JsUtils.jsConvertFncs([self.js.clear(), self.js.rows.add(data, update=True)], toStr=True) # self.js.rows.add(data)
+      return JsUtils.jsConvertFncs([self.js.clear(), self.js.rows.add(data, update=True)], toStr=True, profile=profile)
 
-    return 'var %s = %s.DataTable(%s)' % (self.tableId, self.dom.jquery.varId, self.config)
+    return 'var %s = %s.DataTable(%s)' % (self.tableId, component_id or self.dom.jquery.varId, self.config)
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return "<table %s></table>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class EnumStyleOptions(DataEnum):
   js_conversion = True
 
-  def __wrap(self, name,  header_only=False, body_only=False):
+  def __wrap(self, name, header_only=False, body_only=False):
     """
     Description:
     -----------
@@ -145,6 +147,12 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param name:
+    :param header_only:
+    :param body_only:
     """
     if header_only:
       return self.set('dt-head-%s' % name)
@@ -165,6 +173,11 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param header_only:
+    :param body_only:
     """
     return self.__wrap('left', header_only, body_only)
 
@@ -179,6 +192,11 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param header_only:
+    :param body_only:
     """
     return self.__wrap('right', header_only, body_only)
 
@@ -193,6 +211,11 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param header_only:
+    :param body_only:
     """
     return self.__wrap('center', header_only, body_only)
 
@@ -207,6 +230,11 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param header_only:
+    :param body_only:
     """
     return self.__wrap('justify', header_only, body_only)
 
@@ -221,6 +249,11 @@ class EnumStyleOptions(DataEnum):
     Related Pages:
 
       https://datatables.net/manual/styling/classes
+
+    Attributes:
+    ----------
+    :param header_only:
+    :param body_only:
     """
     return self.__wrap('nowrap', header_only, body_only)
 
@@ -232,7 +265,8 @@ class ColumnDef(DataClass):
     """
     Description:
     -----------
-    The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
+    The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a
+    DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
 
     Usage:
     -----
@@ -327,7 +361,8 @@ class Column(DataClass):
     """
     Description:
     -----------
-    Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM, Javascript or Ajax. This can be useful for styling columns.
+    Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM,
+    Javascript or Ajax. This can be useful for styling columns.
 
     Related Pages:
 
@@ -377,7 +412,9 @@ class Column(DataClass):
     """
     Description:
     -----------
-    When working with DataTables' API, it is very common to want to be able to address individual columns so you can work with them (you wish to sum the numeric content of a column for example). DataTables has two basic methods of addressing columns:
+    When working with DataTables' API, it is very common to want to be able to address individual columns so you can
+    work with them (you wish to sum the numeric content of a column for example). DataTables has two basic methods of
+    addressing columns.
 
     Related Pages:
 
@@ -471,7 +508,8 @@ class Column(DataClass):
     """
     Description:
     -----------
-    You can control the default ordering direction, and even alter the behaviour of the order handler (i.e. only allow ascending sorting etc) using this parameter.
+    You can control the default ordering direction, and even alter the behaviour of the order handler
+    (i.e. only allow ascending sorting etc) using this parameter.
 
     Related Pages:
 
@@ -488,7 +526,9 @@ class Column(DataClass):
     """
     Description:
     -----------
-    This property will modify the data that is used by DataTables for various operations as it is read from the data source. columns.render can be considered to be the the read only companion to columns.data which is read / write (and therefore more complex)
+    This property will modify the data that is used by DataTables for various operations as it is read from the data
+    source. columns.render can be considered to be the the read only companion to columns.data which is read / write
+    (and therefore more complex).
 
     Related Pages:
 
@@ -513,7 +553,9 @@ class Column(DataClass):
     """
     Description:
     -----------
-    Using this parameter, you can define if DataTables should include this column in the filterable data in the table. You may want to use this option to disable search on generated columns such as 'Edit' and 'Delete' buttons for example.
+    Using this parameter, you can define if DataTables should include this column in the filterable data in the table.
+    You may want to use this option to disable search on generated columns such as 'Edit' and 'Delete' buttons for
+    example.
 
     Related Pages:
 
@@ -663,7 +705,8 @@ class Search(DataClass):
     """
     Description:
     -----------
-    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
+    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
+    initial global filter.
 
     Related Pages:
 
@@ -680,7 +723,10 @@ class Search(DataClass):
     """
     Description:
     -----------
-    Regular expressions can be used to build fantastically complex filtering terms, but also it is perfectly valid for users to enter characters such as * into the filter, so a decision needs to be made if you wish to escape regular expression special characters or not.
+    Regular expressions can be used to build fantastically complex filtering terms, but also it is perfectly valid for
+    users to enter characters such as * into the filter, so a decision needs to be made if you wish to escape regular
+    expression special characters or not.
+
     This option controls that ability in DataTables.
 
     Related Pages:
@@ -698,7 +744,8 @@ class Search(DataClass):
     """
     Description:
     -----------
-    DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches those words in any position and in any order in the table (rather than simple doing a simple string compare).
+    DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches
+    those words in any position and in any order in the table (rather than simple doing a simple string compare).
 
     Related Pages:
 
@@ -726,7 +773,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Enable or disable automatic column width calculation.
-    This can be disabled as an optimisation (it takes a finite amount of time to calculate the widths) if the tables widths are passed in using
+    This can be disabled as an optimisation (it takes a finite amount of time to calculate the widths) if the tables
+    widths are passed in using
 
     Related Pages:
 
@@ -744,7 +792,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may be to alter the table's state, modify the data in the table, gather the data from the table or even to activate some external process.
+    A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may
+    be to alter the table's state, modify the data in the table, gather the data from the table or even to activate some
+    external process.
+
     Showing such buttons is an interface that end users are comfortable with, making them feel at home with the table.
 
     Related Pages:
@@ -790,8 +841,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When displaying tables with a particularly large amount of data shown on each page, it can be useful to have the table's header and / or footer fixed to the top or bottom of the scrolling window.
-    This lets your users quickly determine what each column refers to rather than needing to scroll back to the top of the table.
+    When displaying tables with a particularly large amount of data shown on each page, it can be useful to have the
+    table's header and / or footer fixed to the top or bottom of the scrolling window.
+    This lets your users quickly determine what each column refers to rather than needing to scroll back to the top of
+    the table.
 
     Related Pages:
 
@@ -801,7 +854,7 @@ class TableConfig(DataClass):
     return self.sub_data("fixedHeader", DtFixedHeader.FixedHeater)
 
   @property
-  @packageImport('datatables-fixed-columns','datatables-fixed-columns')
+  @packageImport('datatables-fixed-columns', 'datatables-fixed-columns')
   def fixedColumns(self):
     """
 
@@ -825,7 +878,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When pagination is enabled, this option will control the display of an option for the end user to change the number of records to be shown per page.
+    When pagination is enabled, this option will control the display of an option for the end user to change the number
+    of records to be shown per page.
     The options shown in the list are controlled by the lengthMenu configuration option.
 
     Related Pages:
@@ -843,7 +897,9 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in this case the column options defined can be applied to one or more columns. Additionally, not every column need be specified, unlike columns.
+    Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in
+    this case the column options defined can be applied to one or more columns. Additionally, not every column need be
+    specified, unlike columns.
 
     Related Pages:
 
@@ -856,7 +912,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The columns option in the initialisation parameter allows you to define details about the way individual columns behave. For a full list of column options that can be set, please see the related parameters below.
+    The columns option in the initialisation parameter allows you to define details about the way individual columns
+    behave. For a full list of column options that can be set, please see the related parameters below.
 
     Related Pages:
 
@@ -869,7 +926,7 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Language configuration options for DataTables
+    Language configuration options for DataTables.
 
     Related Pages:
 
@@ -882,8 +939,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    DataTables can obtain the data that it is to display in the table body from a number of sources, including from an Ajax data source, using this initialisation parameter.
-    As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
+    DataTables can obtain the data that it is to display in the table body from a number of sources, including from an
+    Ajax data source, using this initialisation parameter.
+    As with other dynamic data sources, arrays or objects can be used for the data source for each row,
+    with columns.data employed to read from specific object properties.
 
     Related Pages:
 
@@ -901,7 +960,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Enable or disable the display of a 'processing' indicator when the table is being processed (e.g. a sort).
-    This is particularly useful for tables with large amounts of data where it can take a noticeable amount of time to sort the entries.
+    This is particularly useful for tables with large amounts of data where it can take a noticeable amount of time
+    to sort the entries.
 
     Related Pages:
 
@@ -918,7 +978,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
+    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
+    initial global filter.
 
     Related Pages:
 
@@ -931,8 +992,11 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    By default DataTables operates in client-side processing mode, but can be switched to server-side processing mode using this option.
-    Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
+    By default DataTables operates in client-side processing mode, but can be switched to server-side processing mode
+    using this option.
+    Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a
+    database engine can be used to perform the sorting etc calculations - operations that modern database engines are
+    highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
 
     Related Pages:
 
@@ -949,9 +1013,12 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When using server-side processing, the default mode of operation for DataTables is to simply throw away any data that currently exists in the table and make a request to the server to get the first page of data to display.
-    This is fine for an empty table, but if you already have the first page of data displayed in the plain HTML, it is a waste of resources.
-    As such, this option exists to allow you to instruct DataTables to not make that initial request, rather it will use the data already on the page (no sorting etc will be applied to it).
+    When using server-side processing, the default mode of operation for DataTables is to simply throw away any data
+    that currently exists in the table and make a request to the server to get the first page of data to display.
+    This is fine for an empty table, but if you already have the first page of data displayed in the plain HTML, it is
+    a waste of resources.
+    As such, this option exists to allow you to instruct DataTables to not make that initial request, rather it will
+    use the data already on the page (no sorting etc will be applied to it).
 
     Related Pages:
 
@@ -968,7 +1035,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Initialise a new DataTable as usual, but if there is an existing DataTable which matches the selector, it will be destroyed and replaced with the new table.
+    Initialise a new DataTable as usual, but if there is an existing DataTable which matches the selector, it will be
+    destroyed and replaced with the new table.
     This can be useful if you want to change a property of the table which cannot be altered through the API.
 
     Related Pages:
@@ -1003,8 +1071,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    DataTables will add a number of elements around the table to both control the table and show additional information about it.
-    The position of these elements on screen are controlled by a combination of their order in the document (DOM) and the CSS applied to the elements.
+    DataTables will add a number of elements around the table to both control the table and show additional information
+    about it.
+    The position of these elements on screen are controlled by a combination of their order in the document (DOM) and
+    the CSS applied to the elements.
     This parameter is used to control their ordering and additional mark-up surrounding them in the DOM.
 
     Related Pages:
@@ -1022,8 +1092,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    DataTables can obtain the data it is to display in the table's body from a number of sources, including being passed in as an array of row data using this initialisation parameter.
-    As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
+    DataTables can obtain the data it is to display in the table's body from a number of sources, including being
+    passed in as an array of row data using this initialisation parameter.
+    As with other dynamic data sources, arrays or objects can be used for the data source for each row, with
+    columns.data employed to read from specific object properties.
 
     Related Pages:
 
@@ -1040,7 +1112,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    DataTables can split the rows in tables into individual pages, which is an efficient method of showing a large number of records in a small space.
+    DataTables can split the rows in tables into individual pages, which is an efficient method of showing a large
+    number of records in a small space.
     The end user is provided with controls to request the display of different data as the navigate through the data.
     This feature is enabled by default, but if you wish to disable it, you may do so with this parameter.
 
@@ -1059,7 +1132,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When this option is enabled, Datatables will show information about the table including information about filtered data if that action is being performed.
+    When this option is enabled, Datatables will show information about the table including information about filtered
+    data if that action is being performed.
     This option allows that feature to be enabled or disabled.
 
     Related Pages:
@@ -1077,7 +1151,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Allows control over whether DataTables should use the top (true) unique cell that is found for a single column, or the bottom (false - default) to attach the default order listener.
+    Allows control over whether DataTables should use the top (true) unique cell that is found for a single column, or
+    the bottom (false - default) to attach the default order listener.
     This is useful when using complex headers.
 
     Related Pages:
@@ -1095,7 +1170,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    DataTables highlight the columns which are used to order the content in the table's body by adding a class to the cells in that column, which in turn has CSS applied to those classes to highlight those cells.
+    DataTables highlight the columns which are used to order the content in the table's body by adding a class to the
+    cells in that column, which in turn has CSS applied to those classes to highlight those cells.
 
     Related Pages:
 
@@ -1112,7 +1188,9 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The option works in tandem with the order option which provides an initial ordering state for the table which can then be modified by the user clicking on column headings, while the ordering specified by this option will always be applied to the table, regardless of user interaction.
+    The option works in tandem with the order option which provides an initial ordering state for the table which can
+    then be modified by the user clicking on column headings, while the ordering specified by this option will always
+    be applied to the table, regardless of user interaction.
 
     Related Pages:
 
@@ -1129,8 +1207,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When ordering is enabled (ordering), by default DataTables allows users to sort multiple columns by shift clicking upon the header cell for each column.
-    Although this can be quite useful for users, it can also increase the complexity of the order, potentiality increasing the processing time of ordering the data.
+    When ordering is enabled (ordering), by default DataTables allows users to sort multiple columns by shift clicking
+    upon the header cell for each column.
+    Although this can be quite useful for users, it can also increase the complexity of the order, potentiality
+    increasing the processing time of ordering the data.
     Therefore, this option is provided to allow this shift-click multiple column ability.
 
     Related Pages:
@@ -1148,7 +1228,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Enable or disable ordering of columns - it is as simple as that! DataTables, by default, allows end users to click on the header cell for each column, ordering the table by the data in that column.
+    Enable or disable ordering of columns - it is as simple as that! DataTables, by default, allows end users to click
+    on the header cell for each column, ordering the table by the data in that column.
     The ability to order data can be disabled using this option.
 
     Related Pages:
@@ -1193,8 +1274,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    In the modern world of responsive web design tables can often cause a particular problem for designers due to their row based layout.
-    Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.
+    In the modern world of responsive web design tables can often cause a particular problem for designers due to their
+    row based layout.
+    Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different
+    screen sizes through the dynamic insertion and removal of columns from the table.
 
     Related Pages:
 
@@ -1211,7 +1294,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Enable or disable state saving.
-    When enabled aDataTables will store state information such as pagination position, display length, filtering and sorting.
+    When enabled aDataTables will store state information such as pagination position, display length, filtering and
+    sorting.
     When the end user reloads the page the table's state will be altered to match what they had previously set up.
 
     Related Pages:
@@ -1230,7 +1314,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Enable vertical scrolling.
-    Vertical scrolling will constrain the DataTable to the given height, and enable scrolling for any data which overflows the current viewport. This can be used as an alternative to paging to display a lot of data in a small area (although paging and scrolling can both be enabled at the same time if desired).
+    Vertical scrolling will constrain the DataTable to the given height, and enable scrolling for any data which
+    overflows the current viewport. This can be used as an alternative to paging to display a lot of data in a small area (although paging and scrolling can both be enabled at the same time if desired).
 
     Related Pages:
 
@@ -1248,7 +1333,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Enable horizontal scrolling.
-    When a table is too wide to fit into a certain layout, or you have a large number of columns in the table, you can enable horizontal (x) scrolling to show the table in a viewport, which can be scrolled.
+    When a table is too wide to fit into a certain layout, or you have a large number of columns in the table, you can
+    enable horizontal (x) scrolling to show the table in a viewport, which can be scrolled.
 
     Related Pages:
 
@@ -1265,8 +1351,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    When vertical (y) scrolling is enabled through the use of the scrollY option, DataTables will force the height of the table's viewport to the given height at all times (useful for layout).
-    However, this can look odd when filtering data down to a small data set, and the footer is left "floating" further down.
+    When vertical (y) scrolling is enabled through the use of the scrollY option, DataTables will force the height of
+    the table's viewport to the given height at all times (useful for layout).
+    However, this can look odd when filtering data down to a small data set, and the footer is left "floating" further
+    down.
 
     Related Pages:
 
@@ -1291,7 +1379,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows when pagination is enabled. It can be either:
+    This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows
+    when pagination is enabled. It can be either:
 
     Related Pages:
 
@@ -1338,7 +1427,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The pagination option of DataTables will display a pagination control below the table (by default, its position can be changed using dom and CSS) with buttons that the end user can use to navigate the pages of the table.
+    The pagination option of DataTables will display a pagination control below the table (by default, its position can
+    be changed using dom and CSS) with buttons that the end user can use to navigate the pages of the table.
     Which buttons are shown in the pagination control are defined by the option given here.
 
     Related Pages:
@@ -1357,7 +1447,9 @@ class TableConfig(DataClass):
     Description:
     -----------
     DataTables adds complex components to your HTML page, such as the pagination control.
-    The business logic used to calculate what information should be displayed (what buttons in the case of the pagination buttons) is core to DataTables and generally doesn't vary how the buttons are actually displayed based on the styling requirements of the page.
+    The business logic used to calculate what information should be displayed (what buttons in the case of the
+    pagination buttons) is core to DataTables and generally doesn't vary how the buttons are actually displayed based
+    on the styling requirements of the page.
 
     Related Pages:
 
@@ -1375,7 +1467,9 @@ class TableConfig(DataClass):
     Description:
     -----------
     Retrieve the DataTables object for the given selector.
-    Note that if the table has already been initialised, this parameter will cause DataTables to simply return the object that has already been set up - it will not take account of any changes you might have made to the initialisation object passed to DataTables
+    Note that if the table has already been initialised, this parameter will cause DataTables to simply return the
+    object that has already been set up - it will not take account of any changes you might have made to the
+    initialisation object passed to DataTables
 
     Related Pages:
 
@@ -1392,7 +1486,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source identification, particularly when using events.
+    It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source
+    identification, particularly when using events.
 
     Related Pages:
 
@@ -1441,7 +1536,9 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected independently, or together. Item selection can be particularly useful in interactive tables where users can perform some action on the table, such as editing rows or marking items to perform an action on.
+    Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected
+    independently, or together. Item selection can be particularly useful in interactive tables where users can perform
+    some action on the table, such as editing rows or marking items to perform an action on.
 
     Related Pages:
 
@@ -1456,8 +1553,11 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very quickly.
-    What the virtual rendering means is that only the visible portion of the table (and a bit to either side to make the scrolling smooth) is drawn, while the scrolling container gives the visual impression that the whole table is visible.
+    Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very
+    quickly.
+    What the virtual rendering means is that only the visible portion of the table (and a bit to either side to make
+    the scrolling smooth) is drawn, while the scrolling container gives the visual impression that the whole table
+    is visible.
 
     Related Pages:
 
@@ -1495,7 +1595,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Basically the same as the search option, but in this case for individual columns, rather than the global filter, this option defined the filtering to apply to the table during initialisation.
+    Basically the same as the search option, but in this case for individual columns, rather than the global filter,
+    this option defined the filtering to apply to the table during initialisation.
 
     Related Pages:
 
@@ -1512,7 +1613,9 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the table on every keypress when in client-side processing mode and reduce the search call frequency automatically to 400mS when in server-side processing mode.
+    The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the
+    table on every keypress when in client-side processing mode and reduce the search call frequency automatically to
+    400mS when in server-side processing mode.
 
     Related Pages:
 
@@ -1529,7 +1632,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Duration for which the saved state information is considered valid. After this period has elapsed the state will be returned to the default.
+    Duration for which the saved state information is considered valid. After this period has elapsed the state will be
+    returned to the default.
 
     Related Pages:
 
@@ -1546,7 +1650,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and DataTables will apply each class sequentially, looping when required.
+    An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and
+    DataTables will apply each class sequentially, looping when required.
 
     Related Pages:
 
@@ -1563,7 +1668,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex attribute to the required elements.
+    By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex
+    attribute to the required elements.
 
     Related Pages:
 

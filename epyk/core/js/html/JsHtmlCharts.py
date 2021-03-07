@@ -178,7 +178,7 @@ class ChartJs(JsCanvas.Canvas):
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return ";".join(styles)
 
-  def registerFunction(self, fncName, jsFncs, pmts=None):
+  def registerFunction(self, fncName, jsFncs, pmts=None, profile=None):
     """
     Description:
     -----------
@@ -194,12 +194,12 @@ class ChartJs(JsCanvas.Canvas):
     :param fncName: String. The function name
     :param jsFncs: String or List. The Javascript function definition
     :param pmts:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The JsObject
     """
-    jsData = JsUtils.jsConvertFncs(jsFncs)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData),
-                                                                                  'pmt': pmts}
+    jsData = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': jsData, 'pmt': pmts}
     return self
 
   def hide(self):
@@ -332,7 +332,7 @@ class ChartJs(JsCanvas.Canvas):
     return '''%s; setTimeout(function(){%s}, %s)
         ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, htmlObjs, append=False):
+  def loadHtml(self, htmlObjs, append=False, profile=None):
     """
     Description:
     ------------
@@ -343,17 +343,18 @@ class ChartJs(JsCanvas.Canvas):
 
     Usage::
 
-      d = rptObj.ui.div().css({"border": "1px solid black"})
-    b = rptObj.ui.button("test")
+      d = page.ui.div().css({"border": "1px solid black"})
+    b = page.ui.button("test")
     b.click([
-      rptObj.js.console.debugger,
-      d.dom.loadHtml(rptObj.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
+      page.js.console.debugger,
+      d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
     ])
 
     Attributes:
     ----------
     :param htmlObjs: List. The different HTML objects to be added to the component
     :param append: Boolean. Mention if the component should replace or append the data
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The Javascript string to be added to the page
     """
@@ -365,7 +366,7 @@ class ChartJs(JsCanvas.Canvas):
       h.options.managed = False
       jsFncs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
       jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
-    return JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
 
   def options(self, options=None):
     """

@@ -20,8 +20,10 @@ class JsMaths(object):
     ------------
     The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
-    Example
-    jsObj.math.E
+    Usage:
+    -----
+
+      jsObj.math.E
 
     Related Pages:
 
@@ -38,8 +40,10 @@ class JsMaths(object):
     ------------
     The LN2 property returns the natural logarithm of 2, approximately 0.693.
 
-    Example
-    jsObj.math.LN2
+    Usage:
+    -----
+
+      jsObj.math.LN2
 
     Related Pages:
 
@@ -56,8 +60,10 @@ class JsMaths(object):
     ------------
     The LN10 property returns the natural logarithm of 10, approximately 2.302.
 
-    Example
-    jsObj.math.LN10
+    Usage:
+    -----
+
+      jsObj.math.LN10
 
     Related Pages:
 
@@ -74,8 +80,10 @@ class JsMaths(object):
     ------------
     The LOG2E property returns the base-2 logarithm of E, approximately 1.442
 
-    Example
-    jsObj.math.LOG2E
+    Usage:
+    -----
+
+      jsObj.math.LOG2E
 
     Related Pages:
 
@@ -92,8 +100,10 @@ class JsMaths(object):
     ------------
     The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
 
-    Example
-    jsObj.math.SQRT1_2
+    Usage:
+    -----
+
+      jsObj.math.SQRT1_2
 
     Related Pages:
 
@@ -110,8 +120,10 @@ class JsMaths(object):
     ------------
     The SQRT2 property returns the square root of 2, approximately 1.414.
 
-    Example
-    jsObj.math.SQRT2
+    Usage:
+    -----
+
+      jsObj.math.SQRT2
 
     Example
     rptObj.js.math.SQRT2
@@ -129,7 +141,7 @@ class JsMaths(object):
     """
     Description:
     ------------
-    The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14
+    The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14.
 
     Related Pages:
 
@@ -137,28 +149,35 @@ class JsMaths(object):
     """
     return JsNumber.JsNumber("Math.PI", isPyData=False)
 
-  def random(self, min=0, max=1):
+  def random(self, min_val=0, max_val=1):
     """
     Description:
     ------------
     Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
 
-    Example
-    rptObj.js.math.random()
-    jsObj.math.random(10, 100)
+    Usage:
+    -----
+
+      page.js.math.random()
+      jsObj.math.random(10, 100)
 
     Related Pages:
 
       https://www.w3schools.com/js/js_random.asp
 
-    :return: A Number, representing a number from 0 up to but not including 1
+    Attributes:
+    ----------
+    :param min_val: Integer. Optional The minimum value for the random function.
+    :param max_val: Integer. Optional The maximum value for the random function.
+
+    :return: A Number, representing a number from 0 up to but not including 1.
     """
-    if min == 0 and max == 1:
+    if min_val == 0 and max_val == 1:
       return JsNumber.JsNumber("Math.random()", isPyData=False)
 
-    min = JsUtils.jsConvertData(min, None)
-    max = JsUtils.jsConvertData(max, None)
-    return JsNumber.JsNumber("Math.random() * (%(max)s - %(min)s + 1) + %(min)s" % {"min": min, "max": max})
+    min_val = JsUtils.jsConvertData(min_val, None)
+    max_val = JsUtils.jsConvertData(max_val, None)
+    return JsNumber.JsNumber("Math.random() * (%(max)s - %(min)s + 1) + %(min)s" % {"min": min_val, "max": max_val})
 
   def min(self, *args):
     """
@@ -166,8 +185,10 @@ class JsMaths(object):
     ------------
     The min() method returns the number with the lowest value.
 
-    Example
-    jsObj.math.min(10, 45, 100, -3, 56)
+    Usage:
+    -----
+
+      jsObj.math.min(10, 45, 100, -3, 56)
 
     Related Pages:
 
@@ -177,7 +198,8 @@ class JsMaths(object):
     ----------
     :param args: Optional. One or more numbers to compare
 
-    :return: A Number, representing the lowest number of the arguments, or Infinity if no arguments are given, or NaN if one or more arguments are not numbers
+    :return: A Number, representing the lowest number of the arguments, or Infinity
+    if no arguments are given, or NaN if one or more arguments are not numbers
     """
     jsArgs = [JsUtils.jsConvertData(a, None) for a in args]
     return JsNumber.JsNumber("Math.min(%s)" % ",".join([str(jsa) for jsa in jsArgs]), isPyData=False)
@@ -188,19 +210,22 @@ class JsMaths(object):
     ------------
     The max() method returns the number with the highest value.
 
-    Example
-    jsObj.math.max(10, 45, 100, -3, 56)
+    Usage:
+    -----
+
+      jsObj.math.max(10, 45, 100, -3, 56)
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_max.asp
-    https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
+      https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
     Attributes:
     ----------
     :param args: Optional. One or more numbers to compare
 
-    :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN if one or more arguments are not numbers
+    :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
+    if one or more arguments are not numbers
     """
     jsArgs = [JsUtils.jsConvertData(a, None) for a in args]
     if len(jsArgs) == 1 and getattr(jsArgs[0], '_jsClass', None) == "Array":
@@ -214,8 +239,10 @@ class JsMaths(object):
     ------------
     The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
 
-    Example
-    jsObj.math.floor(13.566)
+    Usage:
+    -----
+
+      jsObj.math.floor(13.566)
 
     Related Pages:
 
@@ -223,7 +250,7 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. The number you want to round
+    :param number: Number. Required. The number you want to round.
 
     :return: A Number, representing the nearest integer when rounding downwards
     """
@@ -236,8 +263,10 @@ class JsMaths(object):
     ------------
     The trunc() method returns the integer part of a number.
 
-    Example
-    rptObj.js.math.trunc(rptObj.js.math.SQRT2)
+    Usage:
+    -----
+
+      page.js.math.trunc(rptObj.js.math.SQRT2)
 
     Related Pages:
 
@@ -245,9 +274,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. A number
+    :param number: Number. Required. A number.
 
-    :return: Returns the integer part of a number (x)
+    :return: Returns the integer part of a number (x).
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.trunc(%s)" % number, isPyData=False)
@@ -283,9 +312,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Returns the cosine of x (x is in radians)
+    :param number: Number. Returns the cosine of x (x is in radians).
 
-    :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty
+    :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.cos(%s)" % number, isPyData=False)
@@ -302,9 +331,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Returns the sinus of x (x is in radians)
+    :param number: Returns the sinus of x (x is in radians).
 
-    :return: A Number, from -1 to 1, representing the sine of an angle, or NaN if the value is empty
+    :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sin(%s)" % number, isPyData=False)
@@ -321,9 +350,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. A number
+    :param number: Number. Required. A number.
 
-    :return: Returns the natural logarithm (base E) of x
+    :return: Returns the natural logarithm (base E) of x.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.log(%s)" % number, isPyData=False)
@@ -332,7 +361,8 @@ class JsMaths(object):
     """
     Description:
     ------------
-    The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the number passed to it.
+    The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the
+    number passed to it.
 
     Related Pages:
 
@@ -340,9 +370,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. A number
+    :param number: Number. Required. A number,
 
-    :return: Returns the value of exponential of x
+    :return: Returns the value of exponential of x,
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.exp(%s)" % number, isPyData=False)
@@ -355,9 +385,11 @@ class JsMaths(object):
 
     Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
 
-    Example
-    jsObj.objects.number.new(23.6, varName="MyNumber")
-    jsObj.math.round(jsObj.objects.number.get("MyNumber"))
+    Usage:
+    -----
+
+      jsObj.objects.number.new(23.6, varName="MyNumber")
+      jsObj.math.round(jsObj.objects.number.get("MyNumber"))
 
     Related Pages:
 
@@ -365,9 +397,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. The number to be rounded
+    :param number: Number. Required. The number to be rounded.
 
-    :return: Rounds x to the nearest integer
+    :return: Rounds x to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.round(%s)" % number, isPyData=False)
@@ -378,9 +410,11 @@ class JsMaths(object):
     ------------
     The sqrt() method returns the square root of a number.
 
-    Example
-    jsObj.objects.number.new(23.6, varName="MyNumber")
-    jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
+    Usage:
+    -----
+
+      jsObj.objects.number.new(23.6, varName="MyNumber")
+      jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
 
     Related Pages:
 
@@ -388,9 +422,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. A number
+    :param number: Number. Required. A number
 
-    :return: A Number. If x is a negative number, NaN is returned
+    :return: A Number. If x is a negative number, NaN is returned.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sqrt(%s)" % number, isPyData=False)
@@ -401,8 +435,10 @@ class JsMaths(object):
     ------------
     The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
 
-    Example
-    jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
+    Usage:
+    -----
+
+      jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
 
     Related Pages:
 
@@ -410,9 +446,9 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. The number you want to round
+    :param number: Number. Required. The number you want to round.
 
-    :return: Returns x, rounded upwards to the nearest integer
+    :return: Returns x, rounded upwards to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.ceil(%s)" % number, isPyData=False)
@@ -424,9 +460,11 @@ class JsMaths(object):
     ------------
     The pow() method returns the value of x to the power of y (xy).
 
-    Example
-    jsObj.objects.number.new(23.6, varName="MyNumber")
-    jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)
+    Usage:
+    -----
+
+      jsObj.objects.number.new(23.6, varName="MyNumber")
+      jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)
 
     Related Pages:
 
@@ -434,10 +472,10 @@ class JsMaths(object):
 
     Attributes:
     ----------
-    :param number: Required. The base
-    :param power: Required. The exponent
+    :param number: Number. Required. The base.
+    :param power: Number. Required. The exponent
 
-    :return: Returns the value of x to the power of y
+    :return: Returns the value of x to the power of y.
     """
     number = JsUtils.jsConvertData(number, None)
     power = JsUtils.jsConvertData(power, None)

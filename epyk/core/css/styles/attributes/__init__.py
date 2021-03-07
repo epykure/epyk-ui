@@ -6,26 +6,38 @@ from epyk.core.css import Defaults_css
 
 
 class Attrs(Properties.CssMixin):
-  def __init__(self, htmlObj):
-    self.htmlObj, self.attrs = self, {}
-    self.orign_htmlObj = htmlObj
-    self._report = htmlObj._report
 
-  def css(self, attrs):
+  def __init__(self, component):
+    self.attrs = {}
+    self.component = component
+    self._report = component.page
+    self.page = component.page
+
+  def css(self, attrs, value=None, important=False):
     """
     Description:
     ------------
-    Set multiple CSS attributes to the HTML component
+    Set multiple CSS attributes to the HTML component.
 
     Attributes:
     ----------
-    :param attrs: Dictionary. optional. The attributes to be added
+    :param attrs: Dictionary | String. optional. The attributes to be added.
+    :param value: String. Optional. The value for a given item.
+    :param important: Boolean. Optional. Flag the attribute to be important.
     """
     if not isinstance(attrs, dict):
-      return self.attrs.get(attrs)
+      if value is None:
+        return self.attrs.get(attrs)
+
+      if important:
+        value = "%s !IMPORTANT" % value
+      self.attrs[attrs] = value
 
     for k, v in attrs.items():
+      if important:
+        v = "%s !IMPORTANT" % v
       self.attrs[k] = v
+    return self.attrs
 
   def remove(self, attr=None, set_none=False):
     """
@@ -38,36 +50,31 @@ class Attrs(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param attr: String. Optional. The attribute to be removed
-    :param set_none:Boolean. Optinal. Set the CSS attribute value to None on the CSS
+    :param attr: String. Optional. The attribute to be removed.
+    :param set_none: Boolean. Optional. Set the CSS attribute value to None on the CSS.
     """
     key = attr or sys._getframe().f_back.f_code.co_name.replace("_", "-")
     if set_none:
       self.attrs[key] = "none"
-      self.orign_htmlObj.attr['css'][key] = "none"
+      self.component.attr['css'][key] = "none"
     else:
       if key in self.attrs:
         del self.attrs[key]
-        if key in self.orign_htmlObj.attr['css']:
-          del self.orign_htmlObj.attr['css'][key]
+        if key in self.component.attr['css']:
+          del self.component.attr['css'][key]
       else:
         self.attrs[key] = "unset"
-        self.orign_htmlObj.attr['css'][key] = "auto"
+        self.component.attr['css'][key] = "auto"
 
   def __str__(self):
-    """
-
-    """
-    css_tag = []
-    for k, v in self.attrs.items():
-      css_tag.append("%s:%s" % (k, v))
+    css_tag = ["%s:%s" % (k, v) for k, v in self.attrs.items()]
     return ";".join(css_tag)
 
 
 class Commons(Attrs):
 
-  def __init__(self, htmlObj):
-    super(Commons, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(Commons, self).__init__(component)
     self.font_size = 'inherit'
     self.font_family = 'inherit'
     self.box_sizing = 'border-box'
@@ -75,16 +82,14 @@ class Commons(Attrs):
 
 class Empty(Attrs):
 
-  def __init__(self, htmlObj):
-    super(Empty, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(Empty, self).__init__(component)
 
 
 class Body(Attrs):
 
-  def __init__(self, htmlObj):
-    super(Body, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(Body, self).__init__(component)
     self.font_size = Defaults_css.font()
     self.font_family = Defaults_css.Font.family
     self.margin = 0
-
-

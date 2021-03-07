@@ -19,12 +19,14 @@ from epyk.interfaces.graphs import CompChartsCanvas
 from epyk.interfaces.graphs import CompChartsGoogle
 
 
-class Graphs(object):
-  def __init__(self, context):
-    self.context = context
+class Graphs:
 
+  def __init__(self, ui):
+    self.page = ui.page
+
+  @html.Html.css_skin()
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
-                height=(None, 'px'), htmlCode=None, options=None, profile=False):
+                height=(None, 'px'), html_code=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -51,21 +53,25 @@ class Graphs(object):
     :param title:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
-    :param profile:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
     options = options or {}
-    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode, options, profile)
+    html_skillbar = html.HtmlEvent.SkillBar(
+      self.page, records, y_column, x_axis, title, width, height, html_code, options, profile)
     return html_skillbar
 
-  def sparkline(self, chart_type, data, title=None, options=None, column=None, width=(None, "%"), height=(None, "px")):
+  @html.Html.css_skin()
+  def sparkline(self, chart_type, data, title=None, options=None, column=None, width=(None, "%"),
+                height=(None, "px"), profile=False):
     """
     Description:
     ------------
-    Display a sparkline component
+    Display a sparkline component.
 
     Usage:
     -----
@@ -81,11 +87,12 @@ class Graphs(object):
     ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
     :param data: A list of values
-    :param options: The chart options
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param column:
     :param title:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: A python Sparkline object
     """
@@ -93,7 +100,8 @@ class Graphs(object):
       if isinstance(data, list):
         pass
 
-    html_chart = html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, title, width, height, options)
+    html_chart = html.graph.GraphSparklines.Sparklines(
+      self.page, data, chart_type, title, width, height, options or {}, profile)
     return html_chart
 
   @property
@@ -276,7 +284,7 @@ class Graphs(object):
 
       https://developers.google.com/chart
     """
-    if not getattr(self.context.rptObj, '_with_google_imports', False):
+    if not getattr(self.page, '_with_google_imports', False):
       raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
 
     return CompChartsGoogle.ChartGoogle(self)
@@ -317,10 +325,10 @@ class Graphs(object):
     return CompChartsCanvas.Canvas(self)
 
 
-class Chart2d(object):
+class Chart2d:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   @property
   def plotly(self):
@@ -524,10 +532,10 @@ class Chart2d(object):
     return CompChartsVis.Vis2D(self)
 
 
-class Chart3d(object):
+class Chart3d:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   @property
   def plotly(self):

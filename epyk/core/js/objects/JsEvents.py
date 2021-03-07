@@ -8,7 +8,7 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
 
-class Event(object):
+class Event:
 
   def getEvent(self, varName):
     return JsObject.JsObject.get(varName)
@@ -41,9 +41,9 @@ class Event(object):
 
     Attributes:
     ----------
-    :param name:
-    :param bubbles:
-    :param cancelable:
+    :param name: String. Optional.
+    :param bubbles: Boolean. Optional.
+    :param cancelable: Boolean. Optional.
     """
     name = JsUtils.jsConvertData(name, None)
     bubbles = JsUtils.jsConvertData(bubbles, None)
@@ -81,14 +81,15 @@ class Event(object):
     Description:
     ------------
     The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
-    It may hold one or more data items, each of one or more data types. For more information about drag and drop, see HTML Drag and Drop API.
+    It may hold one or more data items, each of one or more data types. For more information about drag and drop,
+    see HTML Drag and Drop API.
 
     This object is available from the dataTransfer property of all drag events.
 
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
-    """#
+    """
     from epyk.core.js.objects.JsData import JsDataTransfer
 
     return JsDataTransfer("event.dataTransfer")
@@ -100,7 +101,8 @@ class Event(object):
     ------------
     The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
 
-      - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a setData(format, data) call;
+      - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a
+        setData(format, data) call;
       - to obtain the data to be pasted from the paste event handler, typically with a getData(format) call.
 
     Related Pages:
@@ -116,7 +118,7 @@ class Event(object):
     """
     Description:
     ------------
-    Returns the time (in milliseconds relative to the epoch) at which the event was created
+    Returns the time (in milliseconds relative to the epoch) at which the event was created.
 
     Related Pages:
 
@@ -141,7 +143,7 @@ class Event(object):
     """
     Description:
     ------------
-    Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur
+    Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
 
     Related Pages:
 
@@ -153,7 +155,8 @@ class Event(object):
     """
     Description:
     ------------
-    The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from being called.
+    The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from
+    being called.
 
     Related Pages:
 
@@ -165,7 +168,7 @@ class Event(object):
     """
     Description:
     ------------
-    Prevents further propagation of an event during event flow
+    Prevents further propagation of an event during event flow.
 
     Related Pages:
 
@@ -215,7 +218,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key
+    event was triggered.
 
     Related Pages:
 
@@ -255,7 +259,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a key event was triggered.
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a
+    key event was triggered.
 
     Related Pages:
 
@@ -282,7 +287,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The keyCode property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
+    The keyCode property returns the Unicode character code of the key that triggered the onkeypress event,
+    or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
     Related Pages:
 
@@ -309,7 +315,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a key event was triggered.
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    when a key event was triggered.
 
     Related Pages:
 
@@ -335,7 +342,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The which property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
+    The which property returns the Unicode character code of the key that triggered the onkeypress event,
+    or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
     Related Pages:
 
@@ -351,7 +359,8 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
+    when a key event was triggered.
 
     Related Pages:
 
@@ -374,7 +383,8 @@ class MouseEvent(UIEvent):
   @JsUtils.incompatibleBrowser(["Safari"])
   def buttons(self):
     """
-    The buttons property returns a number that indicates which mouse button or mouse buttons were pressed when a mouse event was triggered.
+    The buttons property returns a number that indicates which mouse button or mouse buttons were pressed
+    when a mouse event was triggered.
 
     Related Pages:
 
@@ -395,7 +405,8 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the horizontal coordinate of the mouse pointer, relative to the current window, when the mouse event was triggered
+    Returns the horizontal coordinate of the mouse pointer, relative to the current window,
+    when the mouse event was triggered
 
     Related Pages:
 
@@ -408,7 +419,8 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer when a mouse event was triggered.
+    The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer
+    when a mouse event was triggered.
 
     Related Pages:
 
@@ -437,7 +449,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element
+    Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
     return JsNumber.JsNumber.get(varName="event.offsetX")
 
@@ -446,7 +458,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element
+    Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
     return JsNumber.JsNumber.get(varName="event.offsetY")
 
@@ -456,7 +468,8 @@ class MouseEvent(UIEvent):
   @property
   def metaKey(self):
     """
-    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a key event was triggered.
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    when a key event was triggered.
 
     https://www.w3schools.com/jsref/event_metakey.asp
     """
@@ -465,7 +478,8 @@ class MouseEvent(UIEvent):
   @property
   def shiftKey(self):
     """
-    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a mouse event was triggered.
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
+    when a mouse event was triggered.
 
     https://www.w3schools.com/jsref/event_shiftkey.asp
     """
@@ -474,7 +488,8 @@ class MouseEvent(UIEvent):
   @property
   def ctrlKey(self):
     """
-    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a mouse event was triggered.
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
+    when a mouse event was triggered.
 
     https://www.w3schools.com/jsref/event_ctrlkey.asp
     """
@@ -494,7 +509,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event
+    Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event.
 
     Related Pages:
 
@@ -507,7 +522,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event
+    Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event.
 
     Related Pages:
 
@@ -520,7 +535,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered
+    Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
     Related Pages:
 
@@ -533,7 +548,7 @@ class MouseEvent(UIEvent):
     """
     Description:
     ------------
-    Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered
+    Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
     Related Pages:
 
@@ -552,7 +567,8 @@ class TouchEvent(UIEvent):
     """
     Description:
     ------------
-    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a touch event was triggered.
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
+    when a touch event was triggered.
 
     Related Pages:
 
@@ -565,7 +581,8 @@ class TouchEvent(UIEvent):
     """
     Description:
     ------------
-    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a touch event was triggered.
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
+    when a touch event was triggered.
 
     Related Pages:
 
@@ -578,7 +595,8 @@ class TouchEvent(UIEvent):
     """
     Description:
     ------------
-    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a touch event was triggered.
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    when a touch event was triggered.
 
     Related Pages:
 
@@ -591,7 +609,8 @@ class TouchEvent(UIEvent):
     """
     Description:
     ------------
-    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a touch event was triggered.
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
+    when a touch event was triggered.
 
     Related Pages:
 
@@ -604,7 +623,8 @@ class TouchEvent(UIEvent):
     """
     Description:
     ------------
-    The targetTouches property returns an array of Touch objects, one for each finger that is touching the current target element.
+    The targetTouches property returns an array of Touch objects, one for each finger that is touching the
+    current target element.
 
     Related Pages:
 

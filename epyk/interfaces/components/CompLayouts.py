@@ -5,10 +5,10 @@ from epyk.core import html
 from epyk.interfaces import Arguments
 
 
-class Layouts(object):
+class Layouts:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def br(self, count=1, profile=None):
     """
@@ -36,7 +36,7 @@ class Layouts(object):
     :param count: Integer. Optional. The number of empty line to put. Default 1.
     :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
-    html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
+    html_new_line = html.HtmlOthers.Newline(self.page, count, profile=profile)
     return html_new_line
 
   def new_line(self, count=1, profile=None):
@@ -72,7 +72,9 @@ class Layouts(object):
     """
     return self.br(count, profile)
 
-  def hr(self, count=1, background_color=None, margins=0, width=(100, '%'), height=(None, 'px'), align=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def hr(self, count=1, background_color=None, margins=0, width=(100, '%'), height=(None, 'px'), align=None,
+         options=None, profile=None):
     """
     Description:
     ------------
@@ -108,9 +110,10 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    hr_html = self.context.rptObj.ui.div(width=Arguments.size(width))
+    hr_html = self.page.ui.div(width=Arguments.size(width))
     for _ in range(count):
-      hr_html.hr = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), Arguments.size(height), align, options, profile)
+      hr_html.hr = html.HtmlOthers.Hr(
+        self.page, background_color, (100, '%'), Arguments.size(height), align, options, profile)
       hr_html += hr_html.hr
     if align == 'center':
       hr_html.style.css.margin = "auto"
@@ -121,6 +124,7 @@ class Layouts(object):
       hr_html.style.css.margin_bottom = margins
     return hr_html
 
+  @html.Html.css_skin()
   def underline(self, width=(10, '%'), height=(3, 'px'), align=None, options=None, profile=None):
     """
     Description:
@@ -143,12 +147,14 @@ class Layouts(object):
     :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    hr = self.hr(1, self.context.rptObj.theme.colors[-1], 0, width=width, height=height, align=align, options=options, profile=profile)
+    hr = self.hr(
+      1, self.page.theme.colors[-1], 0, width=width, height=height, align=align, options=options, profile=profile)
     hr.style.css.margin_top = -5
     hr.style.css.border_radius = 10
     hr.style.css.margin_bottom = 10
     return hr
 
+  @html.Html.css_skin()
   def accentuate(self, width=(10, '%'), height=(1, 'px'), align=None, options=None, profile=None):
     """
     Description:
@@ -170,12 +176,14 @@ class Layouts(object):
     :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    hr = self.hr(1, self.context.rptObj.theme.colors[6], 0, width=width, height=height, align=align, options=options, profile=profile)
+    hr = self.hr(
+      1, self.page.theme.colors[6], 0, width=width, height=height, align=align, options=options, profile=profile)
     hr.style.css.margin_top = -5
     hr.style.css.border_radius = 10
     hr.style.css.margin_bottom = 10
     return hr
 
+  @html.Html.css_skin()
   def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
     """
@@ -220,9 +228,10 @@ class Layouts(object):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    html_col = html.HtmlContainer.Col(self.context.rptObj, components, position, width, height, align, helper, options, profile)
+    html_col = html.HtmlContainer.Col(self.page, components, position, width, height, align, helper, options, profile)
     return html_col
 
+  @html.Html.css_skin()
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
     """
@@ -269,9 +278,11 @@ class Layouts(object):
     dft_option = {"autoSize": True}
     if options is not None:
       dft_option.update(options)
-    html_col = html.HtmlContainer.Row(self.context.rptObj, components, position, width, height, align, helper, dft_option, profile)
+    html_col = html.HtmlContainer.Row(
+      self.page, components, position, width, height, align, helper, dft_option, profile)
     return html_col
 
+  @html.Html.css_skin()
   def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
     """
     Description:
@@ -301,10 +312,12 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_row = html.HtmlContainer.Table(self.context.rptObj, components, width, height, helper, options, profile)
+    html_row = html.HtmlContainer.Table(self.page, components, width, height, helper, options, profile)
     return html_row
 
-  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -338,10 +351,11 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, position, options, profile)
+    html_grid = html.HtmlContainer.Grid(self.page, rows, width, height, align, position, options, profile)
     return html_grid
 
-  def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+  @html.Html.css_skin()
+  def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
     Description:
@@ -364,7 +378,7 @@ class Layouts(object):
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
@@ -373,11 +387,14 @@ class Layouts(object):
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_panel = html.HtmlContainer.Panel(self.context.rptObj, components or [], title, color, width, height, htmlCode, helper, options, profile)
+    html_panel = html.HtmlContainer.Panel(
+      self.page, components or [], title, color, width, height, html_code, helper, options, profile)
     return html_panel
 
-  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
-          align='left', padding=None, htmlCode=None, tag='div', helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"),
+          editable=False, align='left', padding=None, html_code=None, tag='div', helper=None, options=None,
+          profile=None):
     """
     Description:
     ------------
@@ -411,7 +428,7 @@ class Layouts(object):
     :param editable:
     :param align: String. Optional. A string with the horizontal position of the component
     :param padding:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param tag:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
@@ -422,13 +439,14 @@ class Layouts(object):
     if components is not None and not isinstance(components, list):
       components = [components]
 
-    html_div = html.HtmlContainer.Div(self.context.rptObj, components or [], label, color, width, icon, height,
-                                      editable, align, padding, htmlCode, tag, helper, options or {}, profile)
+    html_div = html.HtmlContainer.Div(self.page, components or [], label, color, width, icon, height,
+                                      editable, align, padding, html_code, tag, helper, options or {}, profile)
     if width[0] == 'auto':
       html_div.style.css.display = "inline-block"
     return html_div
 
-  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', htmlCode=None, options=None,
+  @html.Html.css_skin()
+  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code=None, options=None,
              profile=None):
     """
     Description:
@@ -445,16 +463,19 @@ class Layouts(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
-    html_comp = self.div(components=components, width=width, height=height, align=align, htmlCode=htmlCode, options=options,
-                         profile=profile)
+    html_comp = self.div(
+      components=components, width=width, height=height, align=align, html_code=html_code, options=options,
+      profile=profile)
     html_comp.style.css.display = "inline-block"
     return html_comp
 
-  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -470,15 +491,16 @@ class Layouts(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param align: String. Optional. A string with the horizontal position of the component
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     html_comp = self.div(components=components, width=width, height=height, align=align, options=options,
-                         htmlCode=htmlCode, profile=profile)
+                         html_code=html_code, profile=profile)
     self.div(html_comp, align="center")
     return html_comp
 
+  @html.Html.css_skin()
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -514,8 +536,9 @@ class Layouts(object):
     dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
     if options is not None:
       dfl_options.update(options)
-    return html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    return html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
 
+  @html.Html.css_skin()
   def iframe(self, url="", width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
     Description:
@@ -543,38 +566,46 @@ class Layouts(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
-    html_frame = html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile)
+    html_frame = html.HtmlContainer.IFrame(self.page, url, width, height, helper, profile)
     return html_frame
 
-  def dialogs(self, record=None, width=(100, "%"), height=(500, "px"), helper=None, profile=None):
+  @html.Html.css_skin()
+  def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None,
+              profile=None):
     """
     Description:
     ------------
+    Simple Jquery UI modal with a text.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Dialog`
+
+    Related Pages:
+
+      https://jqueryui.com/dialog/
 
     Usage:
     -----
 
 
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlContainer.Dialog`
-
-    Templates:
-
     Attributes:
     ----------
-    :param record:
+    :param text: String. Optional. The value to be displayed to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, record, width, height, helper, profile)
-    return html_dialog
+    html_pr = html.HtmlEvent.Dialog(self.page, text, width, height, helper, options or {}, html_code, profile)
+    return html_pr
 
-  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  @html.Html.css_skin()
+  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -600,7 +631,7 @@ class Layouts(object):
     :param icon_names:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -609,9 +640,10 @@ class Layouts(object):
     icon_names = icon_names or None
     if not isinstance(icon_names, list):
       icon_names = [icon_names]
-    html_icon = html.HtmlContainer.IconsMenu(icon_names, self.context.rptObj, width, height, htmlCode, helper, profile)
+    html_icon = html.HtmlContainer.IconsMenu(icon_names, self.page, width, height, html_code, helper, profile)
     return html_icon
 
+  @html.Html.css_skin()
   def form(self, components=None, helper=None):
     """
     Description:
@@ -631,10 +663,12 @@ class Layouts(object):
     :param components: List. The different HTML objects to be added to the component.
     :param helper: String. Optional. A tooltip helper.
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, components, helper)
+    form = html.HtmlContainer.Form(self.page, components, helper)
     return form
 
-  def header(self, components=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def header(self, components=None, width=(100, "%"),  height=(None, "px"), html_code=None, helper=None, options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -662,7 +696,8 @@ class Layouts(object):
     :param components: List. The different HTML objects to be added to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper:
     :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -670,14 +705,18 @@ class Layouts(object):
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_obj = html.HtmlContainer.Header(self.context.rptObj, components or [], width, height, htmlCode, helper, options or {}, profile)
+    html_obj = html.HtmlContainer.Header(self.page, components or [], width, height, html_code, helper,
+                                         options or {}, profile)
     return html_obj
 
-  def section(self, components=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def section(self, components=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
+              profile=None):
     """
     Description:
     ------------
-    The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections of the document.
+    The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections
+    of the document.
 
     Usage:
     -----
@@ -700,7 +739,7 @@ class Layouts(object):
     :param components: List. The different HTML objects to be added to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
@@ -709,10 +748,13 @@ class Layouts(object):
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_obj = html.HtmlContainer.Section(self.context.rptObj, components or [], width, height, htmlCode, helper, options or {}, profile)
+    html_obj = html.HtmlContainer.Section(self.page, components or [], width, height, html_code, helper,
+                                          options or {}, profile)
     return html_obj
 
-  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
+              profile=None):
     """
     Description:
     ------------
@@ -744,14 +786,15 @@ class Layouts(object):
       row.append(c)
     if len(row):
       rows.append(row)
-    g = self.grid(rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile)
+    g = self.grid(
+      rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile)
     return g
 
 
-class Delimiter(object):
+class Delimiter:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def line(self, count=1, width=(100, '%'), align=None, options=None, profile=None):
     """
@@ -773,7 +816,7 @@ class Delimiter(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
+    hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     hrs.style.css.margin = "10px 0"
     return hrs
 
@@ -797,9 +840,9 @@ class Delimiter(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
+    hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     for hr in hrs:
-      hr.style.css.border = "1px double %s" % self.context.rptObj.theme.colors[-1]
+      hr.style.css.border = "1px double %s" % self.page.theme.colors[-1]
     return hrs
 
   def dashed(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
@@ -822,11 +865,11 @@ class Delimiter(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
+    hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     hrs.style.css.margin_top = 10
     hrs.style.css.margin_bottom = 10
     for hr in hrs:
-      hr.style.css.border = "1px dashed %s" % self.context.rptObj.theme.colors[-1]
+      hr.style.css.border = "1px dashed %s" % self.page.theme.colors[-1]
     return hrs
 
   def dotted(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
@@ -849,7 +892,7 @@ class Delimiter(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
+    hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     for hr in hrs:
-      hr.style.css.border = "1px dotted %s" % self.context.rptObj.theme.colors[-1]
+      hr.style.css.border = "1px dotted %s" % self.page.theme.colors[-1]
     return hrs

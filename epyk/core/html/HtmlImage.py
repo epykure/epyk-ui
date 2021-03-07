@@ -23,18 +23,18 @@ from epyk.core import data
 class Image(Html.Html):
   name = 'Picture'
 
-  def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
+  def __init__(self, report, image, path, align, html_code, width, height, profile, options):
     if path is None and image is not None:
       if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]
         image = os.path.split(image)[-1]
-    super(Image, self).__init__(report, {'path': path, 'image': image}, htmlCode=htmlCode, profile=profile,
+    super(Image, self).__init__(report, {'path': path, 'image': image}, html_code=html_code, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._jsStyles = options
     if align is not None:
-      # https://www.w3schools.com/howto/howto_css_image_center.asp
+      """ https://www.w3schools.com/howto/howto_css_image_center.asp """
       if align == "center":
         self.css({"margin-left": "auto", "margin-right": "auto", "display": "block"})
       elif align == "right":
@@ -59,7 +59,7 @@ class Image(Html.Html):
       self._dom = JsHtml.JsHtmlImg(self, report=self._report)
     return self._dom
 
-  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
     """
     Description:
     -----------
@@ -70,17 +70,17 @@ class Image(Html.Html):
 
     Attributes:
     ----------
-    :param url: String.
-    :param js_funcs: List | String. The Javascript Events triggered before the redirection
-    :param profile: Boolean. Optional
-    :param name: String. Optional.
+    :param url: String. the url.
+    :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param target: String. Optional. The target attribute specifies where to open the linked document.
     :param source_event: String. Optional. The event source.
     """
     js_funcs = js_funcs or []
     self.style.css.cursor = 'pointer'
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    js_funcs.append(self.js.location.open_new_tab(url, name))
+    js_funcs.append(self.js.location.open_new_tab(url, target))
     return self.click(js_funcs, profile, source_event)
 
   _js__builder__ = '''
@@ -100,17 +100,20 @@ class Image(Html.Html):
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'
 
-  def __init__(self, report, image, text, title, url, path, width, height, options, profile):
+  def __init__(self, report, image, text, title, html_code, url, path, width, height, options, profile):
     if path is None:
       if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]
         image = os.path.split(image)[-1]
-    super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
-                                        css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'},
+    super(AnimatedImage, self).__init__(report,
+                                        {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
+                                        css_attrs={"width": width, "height": height, 'overflow': 'hidden',
+                                                   'display': 'block'},
                                         options=options, profile=profile)
-    self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''), options=options)
+    self.img = report.ui.img(
+      image, path=path, width=(width[0]-5, width[1]), html_code=html_code, height=("auto", ''), options=options)
     self.img.options.managed = False
     self.title = report.ui.tags.h2(title).css({"display": 'block'})
     self.text = report.ui.tags.p(text).css({"display": 'block'})
@@ -122,11 +125,12 @@ class AnimatedImage(Html.Html):
 
   def __str__(self):
     return '''<div %(cssAttr)s>%(div)s%(img)s</div>
-      ''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'img': self.img.html(), 'div': self.div.html()}
+      ''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'img': self.img.html(),
+             'div': self.div.html()}
 
 
 class ImgCarousel(Html.Html):
-  name = 'Carrousel'
+  name = 'Carousel'
 
   def __init__(self, report, images, path, selected, width, height, options, profile):
     self.items, self.__click_items = [], []
@@ -140,11 +144,14 @@ class ImgCarousel(Html.Html):
           rec['path'] = path
         if rec.get('selected') is not None:
           selected = i
-        img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60 if height[0] is not None else None, height[1]))
-        div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css(
-          {"display": 'none', "text-align": "center"})
+        img = report.ui.img(rec["image"], path=rec["path"], width=width,
+                            height=(height[0] - 60 if height[0] is not None else None, height[1]))
+        div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img],
+                                    html_code="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none',
+                                                                                    "text-align": "center"})
       else:
-        div = report.ui.layouts.div(rec, htmlCode="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none', "text-align": "center"})
+        div = report.ui.layouts.div(rec, html_code="%s_img_%s" % (self.htmlCode, i)).css(
+          {"display": 'none', "text-align": "center"})
       div.set_attrs(name="name", value="%s_img" % self.htmlCode)
       div.options.managed = False
       self.items.append(div)
@@ -153,12 +160,12 @@ class ImgCarousel(Html.Html):
     self.container = self._report.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
     self.container.options.managed = False
     if 'arrows' in options:
-      self.next = self._report.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css({"position": 'absolute',
-                 "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
+      self.next = self._report.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css(
+        {"position": 'absolute', "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
       self.next.options.managed = False
 
-      self.previous = self._report.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css({"position": 'absolute',
-                 "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
+      self.previous = self._report.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css(
+        {"position": 'absolute', "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
       self.previous.options.managed = False
 
       if options.get("keyboard", False):
@@ -176,7 +183,7 @@ class ImgCarousel(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -187,10 +194,10 @@ class ImgCarousel(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. optional. The reference of the component
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. optional. The reference of the component.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -213,7 +220,8 @@ class ImgCarousel(Html.Html):
     self.container._vals = self.items
     self.attr['data-last_picture'] = len(self.items)-1
     if not "%s_points" % self.htmlCode in self._report.components:
-      points = self._report.ui.navigation.points(len(self.items), htmlCode="%s_points" % self.htmlCode, options={"managed": False})
+      points = self._report.ui.navigation.points(len(self.items), html_code="%s_points" % self.htmlCode,
+                                                 options={"managed": False})
       points.style.css.cursor = "pointer"
       if not self.__point_display:
         points.style.css.display = 'none'
@@ -249,15 +257,17 @@ class ImgCarousel(Html.Html):
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
       ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),
-             "points": points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '', 'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
+             "points": points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '',
+             'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
 
 
 class Icon(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report, value, width, height, color, tooltip, options, htmlCode, profile):
+  def __init__(self, report, value, width, height, color, tooltip, options, html_code, profile):
     self.requirements = (options['icon_family'], )
-    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, htmlCode=htmlCode, profile=profile)
+    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height},
+                               html_code=html_code, profile=profile)
     if options['icon_family'] == 'office-ui-fabric-core':
       self.attr['class'].add("ms-Icon")
       if not value.startswith("ms-Icon--"):
@@ -272,7 +282,7 @@ class Icon(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def goto(self, url, js_funcs=None, profile=False, name="_blank", source_event=None):
+  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
     """
     Description:
     -----------
@@ -283,16 +293,16 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param url:
+    :param url: String. The url text.
     :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param name: String. Optional. The name (type) of the href link.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param target: String. Optional. The name (type) of the href link.
     :param source_event: String. Optional. The event source.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    js_funcs.append(self.js.location.open_new_tab(url, name))
+    js_funcs.append(self.js.location.open_new_tab(url, target))
     return self.click(js_funcs, profile, source_event)
 
   @property
@@ -528,23 +538,24 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    The onclick event occurs when the user clicks on an element.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcs: String or List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
-    return super(Icon, self).click(js_funcs, profile, source_event, onReady=onReady)
+    return super(Icon, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   _js__builder__ = '''
       if (typeof data !== 'undefined'){
@@ -572,26 +583,27 @@ class IconToggle(Icon):
     self._linked_components = components
     return self
 
-  def click(self, jsOnOffFncs=None, profile=False, source_event=None, onReady=False):
+  def click(self, js_on_off_funcs=None, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    The onclick event occurs when the user clicks on an element.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param jsOnOffFncs: String or List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_on_off_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
-    if jsOnOffFncs is None:
-      jsOnOffFncs = {}
-    js_funcs_on = jsOnOffFncs.get("on", [])
-    js_funcs_off = jsOnOffFncs.get("off", [])
+    if js_on_off_funcs is None:
+      js_on_off_funcs = {}
+    js_funcs_on = js_on_off_funcs.get("on", [])
+    js_funcs_off = js_on_off_funcs.get("off", [])
     if getattr(self, "_linked_components", None) is not None:
       for c in self._linked_components:
         js_funcs_on.append(c.dom.hide().r)
@@ -602,15 +614,16 @@ class IconToggle(Icon):
       for c in self._linked_components:
         js_funcs_off.append(c.dom.show().r)
     js_funcs_off.append(self.build(self.icon_on))
-    return super(Icon, self).click(self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, js_funcs_on).else_(js_funcs_off),
-                                   profile, source_event, onReady=onReady)
+    return super(Icon, self).click(
+      self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, js_funcs_on).else_(js_funcs_off),
+      profile, source_event, on_ready=on_ready)
 
 
 class Emoji(Html.Html):
   name = 'Emoji'
 
-  def __init__(self, report, symbole, top, options, profile):
-    super(Emoji, self).__init__(report, symbole, options=options, profile=profile)
+  def __init__(self, report, symbol, top, options, profile):
+    super(Emoji, self).__init__(report, symbol, options=options, profile=profile)
     self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
   _js__builder__ = '''
@@ -643,30 +656,34 @@ class Emoji(Html.Html):
 class Badge(Html.Html):
   name = 'Badge'
   requirements = ('font-awesome', 'bootstrap')
+  _option_cls = OptButton.OptionsBadge
 
   def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
-    self.add_label(label, htmlCode=self.htmlCode, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
-    self.__options = OptButton.OptionsBadge(self, options)
+    super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height},
+                                profile=profile, options=options)
+    self.add_label(label, html_code=self.htmlCode, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     if self.options.badge_position == 'left':
-      self.add_icon(icon, htmlCode=self.htmlCode, css={"float": 'None', 'margin-left': "5px"}, position="after", family=options.get("icon_family"))
+      self.add_icon(icon, html_code=self.htmlCode, css={"float": 'None', 'margin-left': "5px"}, position="after",
+                    family=options.get("icon_family"))
     else:
-      self.add_icon(icon, htmlCode=self.htmlCode, css={"float": 'left', 'margin-left': "5px"}, family=options.get("icon_family"))
+      self.add_icon(icon, html_code=self.htmlCode, css={"float": 'left', 'margin-left': "5px"},
+                    family=options.get("icon_family"))
     if hasattr(self.icon, 'css') and width[0] is not None:
       self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None
     if url is not None:
-      self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px", "width": "auto"})
+      self.link = self._report.ui.links.external(text, url).css(
+        {"color": "inherit", 'display': 'inline-block', "padding": "2px", "width": "auto"})
       self.link.options.managed = False
     else:
-      self.link = self._report.ui.text(text).css({'display': 'inline-block',
-          "padding": "2px", "width": "auto"})
+      self.link = self._report.ui.text(text).css(
+        {'display': 'inline-block', "padding": "2px", "width": "auto"})
     self.link.css(self.options.badge_css)
-    self.link.css({"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
-                   'background': background_color, 'top': "-5px"})
+    self.link.css(
+      {"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
+       'background': background_color, 'top': "-5px"})
     self.link.options.managed = False
-    self.attr['class'].add("badge") # From bootstrap
+    self.attr['class'].add("badge")
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -675,32 +692,33 @@ class Badge(Html.Html):
     """
     Description:
     ------------
-    Property to the options specific to the HTML component
+    Property to the options specific to the HTML component.
 
     Usage:
     -----
 
     :rtype: OptButton.OptionsBadge
     """
-    return self.__options
+    return super().options
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
+    The onclick event occurs when the user clicks on an element.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.icon.style.add_classes.icon.standard()
-    return super(Badge, self).click(js_funcs, profile, source_event, onReady=onReady)
+    return super(Badge, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   def __str__(self):
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
@@ -719,16 +737,18 @@ class Figure(HtmlContainer.Div):
       else:
         rows.append(str(htmlObj))
 
-    return "<figure %s>%s</figure>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
+    return "<figure %s>%s</figure>%s" % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
 
 
 class SlideShow(Html.Html):
   name = 'Slide Show'
   requirements = ('tiny-slider', )
+  _option_cls = OptImg.OptionsTinySlider
 
   def __init__(self, report, images, width, height, options, profile):
-    super(SlideShow, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptImg.OptionsTinySlider(self, options)
+    super(SlideShow, self).__init__(report, [], css_attrs={"width": width, "height": height},
+                                    profile=profile, options=options)
     for i in images:
       self.add(i)
 
@@ -750,9 +770,9 @@ class SlideShow(Html.Html):
     """
     Description:
     -----------
-    The tiny slider javascript events
+    The tiny slider javascript events.
 
-    Return the Javascript internal object
+    Return the Javascript internal object.
 
     Usage:
     -----
@@ -776,7 +796,7 @@ class SlideShow(Html.Html):
     Usage:
     -----
 
-    :return: A Javascript Dom object
+    :return: A Javascript Dom object.
 
     :rtype: JsHtmlTinySlider.JsHtmlTinySlider
     """
@@ -784,7 +804,7 @@ class SlideShow(Html.Html):
       self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self._report)
     return self._dom
 
-  def _events(self, event, js_funcs, source_event, profile=False, add=True):
+  def _events(self, event, js_funcs, source_event, profile=None, add=True):
     """
     Description:
     ------------
@@ -794,163 +814,370 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param event: String. The event type
-    :param js_funcs: List | String. The JavaScript fragments
-    :param source_event: String.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param add: Boolean. Optional
+    :param event: String. The event type.
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param source_event: String. The source target for the event.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param add: Boolean. Optional.
     """
     if add:
-      self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True))])
+      self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (
+        source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))])
     else:
-      self.onReady(["%s.off('%s', function (info, eventName) {%s})" % (source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True))])
+      self.onReady(["%s.off('%s', function (info, eventName) {%s})" % (
+        source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))])
     return self
 
-  def addIndexChanged(self, js_funcs, profile=False, source_event=None):
+  def add_index_changed(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def remIndexChanged(self, js_funcs, profile=False, source_event=None):
+  def rem_index_changed(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def addTransitionStart(self, js_funcs, profile=False, source_event=None):
+  def add_transition_start(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
-    return self._events("transitionStart", js_funcs, source_event or "%s.events" %self.jsonId, profile)
+    return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def remTransitionStart(self, js_funcs, profile=False, source_event=None):
+  def rem_transition_start(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
-    return self._events("transitionStart", js_funcs, source_event or "%s.events" %self.jsonId, profile, add=False)
+    return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def addTransitionEnd(self, js_funcs, profile=False, source_event=None):
+  def add_transition_end(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def remTransitionEnd(self, js_funcs, profile=False, source_event=None):
+  def rem_transition_end(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def addNewBreakpointStart(self, js_funcs, profile=False, source_event=None):
+  def add_new_breakpoint_start(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remNewBreakpointStart(self, js_funcs, profile=False, source_event=None):
+  def rem_new_breakpoint_start(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    ------------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addNewBreakpointEnd(self, js_funcs, profile=False, source_event=None):
+  def add_new_breakpoint_end(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    -----------
 
     Usage:
     -----
 
-    :param js_funcs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
     """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remNewBreakpointEnd(self, js_funcs, profile=False, source_event=None):
+  def rem_new_breakpoint_end(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchStart(self, js_funcs, profile=False, source_event=None):
+  def add_touch_start(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchStart(self, js_funcs, profile=False, source_event=None):
+  def rem_touch_start(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchMove(self, js_funcs, profile=False, source_event=None):
+  def add_touch_move(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchMove(self, js_funcs, profile=False, source_event=None):
+  def rem_touch_move(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addTouchEnd(self, js_funcs, profile=False, source_event=None):
+  def add_touch_end(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remTouchEnd(self, js_funcs, profile=False, source_event=None):
+  def rem_touch_dnd(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragStart(self, js_funcs, profile=False, source_event=None):
+  def add_drag_start(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragStart(self, js_funcs, profile=False, source_event=None):
+  def rem_drag_start(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragMove(self, js_funcs, profile=False, source_event=None):
+  def add_drag_move(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragMove(self, js_funcs, profile=False, source_event=None):
+  def rem_drag_move(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def addDragEnd(self, js_funcs, profile=False, source_event=None):
+  def add_drag_end(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def remDragEnd(self, js_funcs, profile=False, source_event=None):
+  def rem_drag_end(self, js_funcs, profile=None, source_event=None):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. The JavaScript fragments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. The source target for the event.
+    """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
   def refresh(self):
@@ -970,7 +1197,7 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-    The tiny slider options
+    The tiny slider options.
 
     Usage:
     -----
@@ -979,7 +1206,7 @@ class SlideShow(Html.Html):
 
     :rtype: OptImg.OptionsTinySlider
     """
-    return self.__options
+    return super().options
 
   def empty(self):
     """
@@ -1024,14 +1251,14 @@ class SlideShow(Html.Html):
       window[ htmlObj.id + '_obj'] = tns(options)'''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     rows = [htmlObj.html() for htmlObj in self.val]
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
 
 
 class Background(HtmlContainer.Div):
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, value=None, options=None, profile=None, component_id=None):
     """
     Description:
     ------------
@@ -1041,14 +1268,14 @@ class Background(HtmlContainer.Div):
 
     Attributes:
     ----------
-    :param data: String.
-    :param options: Dictionary. Optional.
-    :param profile: Boolean | Dictionary.
+    :param value: String.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if isinstance(data, dict):
-      js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()])
+    if isinstance(value, dict):
+      js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in value.items()])
     else:
-      js_data = JsUtils.jsConvertData(data, None)
+      js_data = JsUtils.jsConvertData(value, None)
     options, js_options = options or {}, []
     for k, v in options.items():
       if isinstance(v, dict):
@@ -1056,4 +1283,4 @@ class Background(HtmlContainer.Div):
         js_options.append("%s: {%s}" % (k, ", ".join(row)))
       else:
         js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return '''%s.style.backgroundImage = "url('" + %s +"')"''' % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))
+    return '''%s.style.backgroundImage = "url('" + %s +"')"''' % (component_id or self.dom.varId, js_data)

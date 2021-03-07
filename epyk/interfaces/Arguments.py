@@ -12,20 +12,22 @@ def size(value, unit="%"):
   Attributes:
   ----------
   :param value: Integer. The value for this argument
-  :param unit: String. Optional. The unit for the argument. Default %
+  :param unit: String. Optional. The unit for the argument. Default %.
   """
   if isinstance(value, tuple):
     return value
 
   elif value == "auto":
-    return (value, '')
+    return value, ''
 
-  return (value, unit)
+  return value, unit
 
 
-class Align(object):
+class Align:
   """
-  A string with the horizontal position of the component
+  Description:
+  ------------
+  A string with the horizontal position of the component.
   """
 
   @property
@@ -41,9 +43,11 @@ class Align(object):
     return "right"
 
 
-class Position(object):
+class Position:
   """
-  A string with the vertical position of the component
+  Description:
+  ------------
+  A string with the vertical position of the component.
   """
 
   @property
@@ -59,26 +63,31 @@ class Position(object):
     return "middle"
 
 
-class Size(object):
+class Size:
   """
-  A tuple with the integer for the component size and its unit
-
+  Description:
+  ------------
+  A tuple with the integer for the component size and its unit.
   """
 
   @property
   def auto(self):
     return "auto", ''
 
-  def px(self, value):
+  @staticmethod
+  def px(value):
     return value, 'px'
 
-  def percent(self, value):
+  @staticmethod
+  def percent(value):
     return value, '%'
 
 
-class Color(object):
+class Color:
   """
-  The font color in the component. Default inherit
+  Description:
+  ------------
+  The font color in the component. Default inherit.
   """
 
   @property
@@ -86,9 +95,11 @@ class Color(object):
     return ""
 
 
-class Profile(object):
+class Profile:
   """
-  A flag to set the component performance storage
+  Description:
+  ------------
+  A flag to set the component performance storage.
   """
 
   @property
@@ -102,7 +113,8 @@ class Profile(object):
 ICON = "The component icon content from font-awesome references"
 COLOR = Color()
 WIDTH = Size()
-HEIGHT = Size() # "A tuple with the integer for the component height and its unit"
+# "A tuple with the integer for the component height and its unit"
+HEIGHT = Size()
 PROFILE = Profile()
 OPTIONS = "Specific Python options available for this component"
 ALIGN = Align()

@@ -182,7 +182,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, text: %s, options_text: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self.content.toStr(), self.text, self.options_text))
+        self.htmlCode, self.content.toStr(), self.text, self.selected.text()))
 
   @property
   def content(self):

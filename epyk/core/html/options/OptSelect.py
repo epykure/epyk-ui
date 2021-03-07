@@ -26,7 +26,8 @@ class OptionsSelect(Options):
     """
     Description:
     ------------
-    dropupAuto is set to true by default, which automatically determines whether or not the menu should display above or below the select box.
+    dropupAuto is set to true by default, which automatically determines whether
+    or not the menu should display above or below the select box.
     If dropupAuto is set to false, manually make the select a dropup menu by adding the .dropup class to the select.
 
     Related Pages:
@@ -36,8 +37,8 @@ class OptionsSelect(Options):
     return self._report.attr.get("data-dropup-auto", False)
 
   @drop_up.setter
-  def drop_up(self, bool):
-    self._report.attr["data-dropup-auto"] = bool
+  def drop_up(self, flag):
+    self._report.attr["data-dropup-auto"] = flag
 
   @property
   def header(self):
@@ -96,7 +97,8 @@ class OptionsSelect(Options):
     """
     Description:
     ------------
-    Using the title attribute will set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
+    Using the title attribute will set the default placeholder text when nothing is selected.
+    This works for both multiple and standard select boxes:
 
     Related Pages:
 
@@ -135,8 +137,8 @@ class OptionsSelect(Options):
     return self._report.attr.get("data-actions-box", False)
 
   @select_all.setter
-  def select_all(self, bool):
-    self._report.attr["data-actions-box"] = bool
+  def select_all(self, flag):
+    self._report.attr["data-actions-box"] = flag
 
   @property
   def selected_text_format(self):
@@ -169,8 +171,8 @@ class OptionsSelect(Options):
     return self._report.attr.get("show-tick", True)
 
   @show_tick.setter
-  def show_tick(self, bool):
-    self._report.attr["show-tick"] = bool
+  def show_tick(self, flag):
+    self._report.attr["show-tick"] = flag
 
   @property
   def size(self):
@@ -210,7 +212,8 @@ class OptionsSelect(Options):
     """
     Description:
     ------------
-    Using the title attribute will set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
+    Using the title attribute will set the default placeholder text when nothing is selected.
+    This works for both multiple and standard select boxes:
 
     Related Pages:
 
@@ -312,7 +315,8 @@ class OptionsSelectJs(OptionsSelect):
     """
     Description:
     ------------
-    Align the menu to the right instead of the left. If set to 'auto', the menu will automatically align right if there isn't room for the menu's full width when aligned to the left.
+    Align the menu to the right instead of the left. If set to 'auto', the menu will automatically align right
+    if there isn't room for the menu's full width when aligned to the left.
 
     Related Pages:
 
@@ -321,8 +325,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @dropdownAlignRight.setter
-  def dropdownAlignRight(self, bool):
-    self._config(bool)
+  def dropdownAlignRight(self, flag):
+    self._config(flag)
 
   @property
   def dropupAuto(self):
@@ -340,8 +344,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @dropupAuto.setter
-  def dropupAuto(self, bool):
-    self._config(bool)
+  def dropupAuto(self, flag):
+    self._config(flag)
 
   @property
   def header(self):
@@ -357,8 +361,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @header.setter
-  def header(self, bool):
-    self._config(bool)
+  def header(self, flag):
+    self._config(flag)
 
   @property
   def hideDisabled(self):
@@ -374,8 +378,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @hideDisabled.setter
-  def hideDisabled(self, bool):
-    self._config(bool)
+  def hideDisabled(self, flag):
+    self._config(flag)
 
   @property
   def iconBase(self):
@@ -383,7 +387,8 @@ class OptionsSelectJs(OptionsSelect):
     Description:
     ------------
     Set the base to use a different icon font instead of Glyphicons.
-    If changing iconBase, you might also want to change tickIcon, in case the new icon font uses a different naming scheme.
+    If changing iconBase, you might also want to change tickIcon,
+    in case the new icon font uses a different naming scheme.
 
     Related Pages:
 
@@ -392,8 +397,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @iconBase.setter
-  def iconBase(self, bool):
-    self._config(bool)
+  def iconBase(self, flag):
+    self._config(flag)
 
   @property
   def liveSearch(self):
@@ -409,8 +414,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @liveSearch.setter
-  def liveSearch(self, bool):
-    self._config(bool)
+  def liveSearch(self, flag):
+    self._config(flag)
 
   @property
   def liveSearchPlaceholder(self):
@@ -596,8 +601,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showContent.setter
-  def showContent(self, bool):
-    self._config(bool)
+  def showContent(self, flag):
+    self._config(flag)
 
   @property
   def showIcon(self):
@@ -613,8 +618,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showIcon.setter
-  def showIcon(self, bool):
-    self._config(bool)
+  def showIcon(self, flag):
+    self._config(flag)
 
   @property
   def showSubtext(self):
@@ -740,7 +745,9 @@ class OptionsSelectJs(OptionsSelect):
     """
     Description:
     ------------
-    If enabled, the items in the dropdown will be rendered using virtualization (i.e. only the items that are within the viewport will be rendered).
+    If enabled, the items in the dropdown will be rendered using virtualization
+    (i.e. only the items that are within the viewport will be rendered).
+
     This drastically improves performance for selects with a large number of options.
     Set to an integer to only use virtualization if the select has at least that number of options.
 
@@ -804,5 +811,5 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @sanitize.setter
-  def sanitize(self, bool):
-    self._config(bool)
+  def sanitize(self, flag):
+    self._config(flag)

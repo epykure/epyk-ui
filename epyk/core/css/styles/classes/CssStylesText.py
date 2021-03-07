@@ -23,7 +23,7 @@ class CssTitle1(CssStyle.Style):
             'margin-bottom': '5px'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[7], "border-color": self.rptObj.theme.greys[9]})
+    self.css({"color": self.page.theme.greys[-3], "border-color": self.page.theme.greys[-1]})
 
 
 class CssTitle2(CssStyle.Style):
@@ -31,7 +31,7 @@ class CssTitle2(CssStyle.Style):
             'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[7]})
+    self.css({"color": self.page.theme.colors[7]})
 
 
 class CssTitle3(CssStyle.Style):
@@ -39,14 +39,14 @@ class CssTitle3(CssStyle.Style):
             'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[7], 'font-family': Defaults_css.Font.family})
+    self.css({"color": self.page.theme.colors[7], 'font-family': Defaults_css.Font.family})
 
 
 class CssTitle4(CssStyle.Style):
   _attrs = {'padding': 0, 'margin': '5px 0 0 0', 'font-weight': 'bold', 'width': '100%', 'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[5]})
+    self.css({"color": self.page.theme.greys[5]})
 
 
 class CssTitle(CssStyle.Style):
@@ -66,7 +66,7 @@ class CssMarkRed(CssStyle.Style):
   _attrs = {'background': 'none'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.danger[1],
+    self.css({"color": self.page.theme.danger[1],
               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
@@ -74,7 +74,7 @@ class CssMarkBlue(CssStyle.Style):
   _attrs = {'background': 'none', 'font-weight': 'bold'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[7],
+    self.css({"color": self.page.theme.colors[7],
               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
@@ -83,7 +83,7 @@ class CssTextWithBorder(CssStyle.Style):
   _selectors = {'child': 'fieldset'}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0]})
+    self.css({"background-color": self.page.theme.greys[0]})
 
 
 class CssCheckMark(CssStyle.Style):
@@ -91,15 +91,15 @@ class CssCheckMark(CssStyle.Style):
             'font-family': 'FontAwesome', 'height': '18px', 'width': '18px'}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[9]})
-    self.hover.css({'color': 'white', 'background-color': self.rptObj.theme.colors[9]})
+    self.css({"background-color": self.page.theme.greys[0], "color": self.page.theme.greys[9]})
+    self.hover.css({'color': 'white', 'background-color': self.page.theme.colors[9]})
 
 
 class CssTextItem(CssStyle.Style):
   _attrs = {'cursor': 'pointer', 'width': '200px', 'padding': '5px 5px 5px 20px'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[2]})
+    self.hover.css({"color": self.page.theme.greys[-1], "background": self.page.theme.colors[2]})
 
 
 class CssTextNotSelectable(CssStyle.Style):

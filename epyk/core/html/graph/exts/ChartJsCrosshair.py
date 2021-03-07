@@ -56,8 +56,8 @@ class Sync(DataClass):
     return self.get(True)
 
   @enabled.setter
-  def enabled(self, bool):
-    self.set(bool)
+  def enabled(self, flag):
+    self.set(flag)
 
   @property
   def group(self):
@@ -90,8 +90,8 @@ class Sync(DataClass):
     return self.get(True)
 
   @suppressTooltips.setter
-  def suppressTooltips(self, bool):
-    self.set(bool)
+  def suppressTooltips(self, flag):
+    self.set(flag)
 
 
 class Zoom(DataClass):
@@ -110,8 +110,8 @@ class Zoom(DataClass):
     return self.get(True)
 
   @enabled.setter
-  def enabled(self, bool):
-    self.set(bool)
+  def enabled(self, flag):
+    self.set(flag)
 
   @property
   def zoomboxBackgroundColor(self):
@@ -236,10 +236,10 @@ class Crosshair(DataClass):
     return self.get(True)
 
   @snapToDataPoint.setter
-  def snapToDataPoint(self, bool):
-    self.set(bool)
+  def snapToDataPoint(self, flag):
+    self.set(flag)
 
-  def beforeZoom(self, jsFncs):
+  def beforeZoom(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -251,13 +251,15 @@ class Crosshair(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["beforeZoom"] = JsObjects.JsVoid("function(start, end) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["beforeZoom"] = JsObjects.JsVoid("function(start, end) {%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
-  def afterZoom(self, jsFncs):
+  def afterZoom(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -269,9 +271,11 @@ class Crosshair(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["afterZoom"] = JsObjects.JsVoid("function(start, end) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["afterZoom"] = JsObjects.JsVoid("function(start, end) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 

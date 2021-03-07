@@ -5,11 +5,13 @@
 from epyk.core import html
 
 
-class Forms(object):
-  def __init__(self, context):
-    self.context = context
+class Forms:
+  
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def new(self, helper=None):
+  @html.Html.css_skin()
+  def new(self, components=None, helper=None):
     """
     Description:
     ------------
@@ -23,15 +25,17 @@ class Forms(object):
     Attributes:
     ----------
     :param helper: String. Optional. A tooltip helper.
+    :param components: List. Optional. The different HTML objects to be added to the component.
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
+    form = html.HtmlContainer.Form(self.page, components or [], helper)
     return form
 
-  def date(self, htmlCode="Current", profile=None, options=None, helper=None):
+  @html.Html.css_skin()
+  def date(self, html_code="Current", profile=None, options=None, helper=None):
     """
     Description:
     ------------
-    Create a datepicker object.
+    Create a DatePicker object.
 
     Usage:
     -----
@@ -46,21 +50,23 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    date = self.context.rptObj.ui.fields.today(label=htmlCode, profile=profile, options=options)
-    date.input.set_attrs({"name": htmlCode.upper()})
-    col = self.context.rptObj.ui.col([date])
-    col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
-                                   "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    date = self.page.ui.fields.today(label=html_code, profile=profile, options=options)
+    date.input.set_attrs({"name": html_code.upper()})
+    col = self.page.ui.col([date])
+    col.css({
+      "border": '1px solid %s' % self.page.theme.greys[4],
+      "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+    form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
     return form
 
-  def dates(self, htmlCode, profile=None, options=None, helper=None):
+  @html.Html.css_skin()
+  def dates(self, html_code, profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -79,23 +85,24 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. An identifier for the prefix of the date components (on both Python and Javascript side)
+    :param html_code: String. An identifier for the prefix of the date components (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: String. Optional. A tooltip helper.
     """
-    date1 = self.context.rptObj.ui.fields.today(label="%s_current" % htmlCode, profile=profile, options=options)
+    date1 = self.page.ui.fields.today(label="%s_current" % html_code, profile=profile, options=options)
     date1.input.set_attrs({"name": date1.htmlCode.upper()})
-    date2 = self.context.rptObj.ui.fields.today(label="%s_previous" % htmlCode, profile=profile, options=options)
+    date2 = self.page.ui.fields.today(label="%s_previous" % html_code, profile=profile, options=options)
     date2.input.set_attrs({"name": date2.htmlCode.upper()})
-    col = self.context.rptObj.ui.col([date1, date2])
-    col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
+    col = self.page.ui.col([date1, date2])
+    col.css({"border": '1px solid %s' % self.page.theme.greys[4],
              "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
     return form
 
-  def input(self, htmlCode, value="", label=None, placeholder="", icon=None, profile=None, options=None, helper=None):
+  @html.Html.css_skin()
+  def input(self, html_code, value="", label=None, placeholder="", icon=None, profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -110,7 +117,7 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. An identifier for this component (on both Python and Javascript side).
     :param value: String. Optional. The value to be displayed to this component. Default empty.
     :param label: String. Optional. The text of label to be added to the component.
     :param placeholder: String. Optional. The text to be displayed when the input is empty.
@@ -119,12 +126,15 @@ class Forms(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: String. Optional. A tooltip helper.
     """
-    inp = self.context.rptObj.ui.fields.input(value=value, label=label, placeholder=placeholder, icon=icon, profile=profile, options=options)
-    inp.input.set_attrs({"name": htmlCode})
-    form = html.HtmlContainer.Form(self.context.rptObj, [inp], helper)
+    inp = self.page.ui.fields.input(
+      value=value, label=label, html_code="%s_input" % html_code, placeholder=placeholder, icon=icon, profile=profile,
+      options=options)
+    inp.input.set_attrs({"name": html_code})
+    form = html.HtmlContainer.Form(self.page, [inp], helper)
     return form
 
-  def inputs(self, record, helper=None):
+  @html.Html.css_skin()
+  def inputs(self, record, helper=None, html_code=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -146,19 +156,26 @@ class Forms(object):
     Attributes:
     ----------
     :param record: List of dict. The Python list of dictionaries.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = []
-    for rec in record:
-      inp = self.context.rptObj.ui.fields.input(label=rec["label"])
+    for i, rec in enumerate(record):
+      html_code_input = "%s_input_%s" % (html_code, i) if html_code is not None else html_code
+      inp = self.page.ui.fields.input(label=rec["label"], html_code=html_code_input, options=options, profile=profile)
       inp.input.set_attrs({"name": rec["htmlCode"]})
       components.append(inp)
-    col = self.context.rptObj.ui.col(components).css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
-                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    col = self.page.ui.col(components, options=options, profile=profile).css({
+      "border": '1px solid %s' % self.page.theme.greys[4],
+      "text-align": 'center', "width": 'none', "padding": '5px',
+      "border-radius": '5px'})
+    form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
     return form
 
+  @html.Html.css_skin()
   def subscribe(self, value="", placeholder="Enter email address", button="Subscribe", width=(100, '%'),
                 height=(None, 'px'), options=None, profile=False):
     """
@@ -172,28 +189,27 @@ class Forms(object):
     ----------
     :param value: Optional. The value to be displayed to this component. Default empty.
     :param placeholder: String. Optional. The text to be displayed when the input is empty.
-    :param button:
+    :param button: HTML Component | String. The button component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    input = self.context.rptObj.ui.input(text=value, placeholder=placeholder)
-    input.attr["class"].add("form-control")
-    input.style.css.display = "inline-block"
-    input.style.css.width = None
+    input_component = self.page.ui.input(text=value, placeholder=placeholder)
+    input_component.attr["class"].add("form-control")
+    input_component.style.css.display = "inline-block"
+    input_component.style.css.width = None
 
     if not hasattr(button, 'options'):
-      button = self.context.rptObj.ui.button(button, width=("auto", ""))
+      button = self.page.ui.button(button, width=("auto", ""))
       button.style.css.margin = 0
-    button_container = self.context.rptObj.ui.div([button])
+    button_container = self.page.ui.div([button])
     button_container.attr["class"].add("input-group-append")
     button_container.style.css.width = None
-    container = self.context.rptObj.ui.div([input, button_container], width=width, height=height, options=options, profile=profile)
+    container = self.page.ui.div([
+      input_component, button_container], width=width, height=height, options=options, profile=profile)
     container.attr["class"].add("input-group mb-3")
     container.button = button
-    container.input = input
-    input.enter(button.dom.events.trigger("click"))
+    container.input = input_component
+    input_component.enter(button.dom.events.trigger("click"))
     return container
-
-

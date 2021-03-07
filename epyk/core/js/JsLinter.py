@@ -27,6 +27,7 @@ def parse_statements(line, level, delimiter=";", spaces=None):
   Parse and format a JavaScript line.
 
   Usage:
+  -----
 
 
   Attributes:
@@ -56,6 +57,7 @@ def parse(data, minify=None, toStr=True, spaces=None):
   Parse and format a JavaScript string full statement.
 
   Usage:
+  -----
 
 
   Attributes:
@@ -102,6 +104,7 @@ def builder(cls, minify=None, toStr=True, spaces=None):
   Extract the builder function from the HTML component.
 
   Usage:
+  -----
 
 
   Attributes:
@@ -112,7 +115,8 @@ def builder(cls, minify=None, toStr=True, spaces=None):
   :param spaces: Integer. Optional. The number of spaces. (Default 2).
   """
   builder_name = cls.builder_name if cls.builder_name is not None else cls.__name__
-  return parse("function %s(htmlObj, data, options){%s}" % (builder_name, cls._js__builder__), minify, toStr, spaces=spaces)
+  return parse(
+    "function %s(htmlObj, data, options){%s}" % (builder_name, cls._js__builder__), minify, toStr, spaces=spaces)
 
 
 def events(component, minify=None, toStr=True, spaces=None):
@@ -122,6 +126,7 @@ def events(component, minify=None, toStr=True, spaces=None):
   Extract the JavaSscript events from an HTML component.
 
   Usage:
+  -----
 
     but = page.ui.button()
     but.click([page.js.alert("test1"), page.js.alert("test2")])
@@ -139,5 +144,7 @@ def events(component, minify=None, toStr=True, spaces=None):
   results = []
   for event_type, fnc_details in component._browser_data.get('mouse', {}).items():
     for src, fnc_content in fnc_details.items():
-      results.append(parse("function %s_%s(){%s}" % (component.htmlCode, event_type, ";".join(fnc_content['content'])), minify=minify, toStr=toStr, spaces=spaces))
+      results.append(parse(
+        "function %s_%s(){%s}" % (
+          component.htmlCode, event_type, ";".join(fnc_content['content'])), minify=minify, toStr=toStr, spaces=spaces))
   return "\n\n".join(results)

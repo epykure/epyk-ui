@@ -4,10 +4,10 @@
 from epyk.fwk.mt.js import JsMdcComponents
 
 
-class Inputs(object):
+class Inputs:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def input(self, value="", label=""):
     """
@@ -32,7 +32,7 @@ class Inputs(object):
       ]
     }
 
-    html_b = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_b = self.page.web.mt.composite(schema, options={"reset_class": True})
     return html_b
 
   def filled(self, value="", label="", leading_icon=None, trailing_icon=None):
@@ -67,7 +67,7 @@ class Inputs(object):
       schema['children'] = [{"type": 'icon', 'class-keep': True, 'css': False, 'args': {'text': leading_icon, 'in_text_field': True}}] + schema['children']
     if trailing_icon is not None:
       schema['children'] = [{"type": 'icon', 'class-keep': True, 'css': False, 'args': {'text': trailing_icon, 'in_text_field': True}}] + schema['children']
-    html_b = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_b = self.page.web.mt.composite(schema, options={"reset_class": True})
     if leading_icon is not None:
       html_b.attr['class'].add("mdc-text-field--with-leading-icon")
     if trailing_icon is not None:
@@ -108,11 +108,13 @@ class Inputs(object):
     ]}
 
     if leading_icon is not None:
-      schema['children'] = [{"type": 'mdc_icon', 'class-keep': True, 'css': False, 'args': {'text': leading_icon, 'in_text_field': True}}] + schema['children']
+      schema['children'] = [{"type": 'mdc_icon', 'class-keep': True, 'css': False,
+                             'args': {'text': leading_icon, 'in_text_field': True}}] + schema['children']
     if trailing_icon is not None:
-      schema['children'] = [{"type": 'mdc_icon', 'class-keep': True, 'css': False, 'args': {'text': trailing_icon, 'in_text_field': True}}] + schema['children']
+      schema['children'] = [{"type": 'mdc_icon', 'class-keep': True, 'css': False,
+                             'args': {'text': trailing_icon, 'in_text_field': True}}] + schema['children']
 
-    html_b = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_b = self.page.web.mt.composite(schema, options={"reset_class": True})
 
     dom_obj_ripple = JsMdcComponents.TextRipple(html_b)
     html_b.style.builder(html_b.style.varName, dom_obj_ripple.instantiate("#%s" % html_b.htmlCode))
@@ -158,7 +160,7 @@ class Inputs(object):
         ]},
         {"type": 'div', "class": "mdc-notched-outline__trailing", 'css': False},
     ]}]}
-    html_r = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_r = self.page.web.mt.composite(schema, options={"reset_class": True})
     return html_r
 
   def password(self, value="", label="", required=False, rules=None):
@@ -188,7 +190,7 @@ class Inputs(object):
       schema['children'][1]['attrs']["required"] = ""
     if rules is not None:
       schema['children'][1]['attrs'].update(rules)
-    html_r = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_r = self.page.web.mt.composite(schema, options={"reset_class": True})
     return html_r
 
   def html5(self, value="", label="", required=False, rules=None):
@@ -218,7 +220,7 @@ class Inputs(object):
       schema['children'][1]['attrs']["required"] = ""
     if rules is not None:
       schema['children'][1]['attrs'].update(rules)
-    html_r = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_r = self.page.web.mt.composite(schema, options={"reset_class": True})
     return html_r
 
   def prefilled(self, value="", label=""):
@@ -244,7 +246,7 @@ class Inputs(object):
       {"type": 'mdc_line', 'class-keep': True, 'css': False, 'args': {'label': label}},
     ]}
 
-    html_r = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_r = self.page.web.mt.composite(schema, options={"reset_class": True})
     return html_r
 
   def mdc_radio(self, flag=False, value="", group_name=None):
@@ -269,14 +271,15 @@ class Inputs(object):
     :param group_name:
     """
     schema = {"type": 'div', 'css': False, 'children': [
-      {"type": 'radio', "class": "mdc-radio__native-control", 'attrs': {"value": value}, 'css': False, 'args': {'flag': flag, 'group_name': group_name}},
+      {"type": 'radio', "class": "mdc-radio__native-control", 'attrs': {"value": value}, 'css': False,
+       'args': {'flag': flag, 'group_name': group_name}},
       {"type": 'div', "class": "mdc-radio__background", 'css': False, 'children': [
         {"type": 'div', "class": "mdc-radio__outer-circle", 'css': False},
         {"type": 'div', "class": "mdc-radio__inner-circle", 'css': False},
       ]},
       {"type": 'div', "class": "mdc-radio__ripple", 'css': False},
     ]}
-    html_r = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_r = self.page.web.mt.composite(schema, options={"reset_class": True})
 
     dom_obj = JsMdcComponents.Radio(html_r)
     html_r.style.builder(html_r.style.varName, dom_obj.instantiate("#%s" % html_r.htmlCode))
@@ -303,9 +306,10 @@ class Inputs(object):
     :param group_name:
     """
     schema = {"type": 'div', 'class': None, 'css': None, 'children': [
-      {"type": 'mdc_radio', 'class-keep': True, 'css': None, 'args': {"value": value, 'flag': flag, 'group_name': group_name}}]}
+      {"type": 'mdc_radio', 'class-keep': True, 'css': None,
+       'args': {"value": value, 'flag': flag, 'group_name': group_name}}]}
 
-    div = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    div = self.page.web.mt.composite(schema, options={"reset_class": True})
     div.set_attrs({"class": None, 'css': None})
 
     dom_obj = JsMdcComponents.Field(div)
@@ -319,7 +323,8 @@ class Inputs(object):
     """
     Description:
     ------------
-    Chips are compact elements that allow users to enter information, select a choice, filter content, or trigger an action.
+    Chips are compact elements that allow users to enter information, select a choice, filter content, or trigger
+    an action.
 
     Usage::
 
@@ -348,14 +353,14 @@ class Inputs(object):
         ]},
       ]})
 
-    html_c = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    html_c = self.page.web.mt.composite(schema, options={"reset_class": True})
     dom_obj = JsMdcComponents.Chip(html_c)
     html_c.style.builder(html_c.style.varName, dom_obj.instantiate("#%s" % html_c.htmlCode))
     # Add the specific dom features
     html_c.dom = dom_obj
     return html_c
 
-  def checkbox(self, flag, text, width=24, height=24, htmlCode=None):
+  def checkbox(self, flag, text, width=24, height=24, html_code=None):
     """
     Description:
     ------------
@@ -390,10 +395,10 @@ class Inputs(object):
         ]},
       {'type': 'label', 'css': False, 'args': {'text': text}}
       ]}
-    html_chk = self.context.rptObj.web.mt.composite(schema, htmlCode=htmlCode, options={"reset_class": True})
+    html_chk = self.page.web.mt.composite(schema, html_code=html_code, options={"reset_class": True})
     dom_obj = JsMdcComponents.CheckBox(html_chk)
     if flag:
-      self.context.rptObj.body.onReady([dom_obj.setStatus('checked')])
+      self.page.body.onReady([dom_obj.setStatus('checked')])
     html_chk.style.builder(html_chk.style.varName, dom_obj.instantiate("#%s" % html_chk.htmlCode))
     html_chk.dom = dom_obj
     return html_chk

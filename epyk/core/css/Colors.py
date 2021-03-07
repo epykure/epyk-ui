@@ -161,8 +161,10 @@ def getHexToRgb(hexColor):
 
   An RGB color value is specified with the rgb() function, which has the following syntax:
   rgb(red, green, blue)
-  Each parameter (red, green, and blue) defines the intensity of the color and can be an integer between 0 and 255 or a percentage value (from 0% to 100%).
-  For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest value (255) and the others are set to 0.
+  Each parameter (red, green, and blue) defines the intensity of the color and can be an integer between 0 and 255 or
+  a percentage value (from 0% to 100%).
+  For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest value (255)
+  and the others are set to 0.
   Also, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).
 
   A Rgb color can be passed as input.
@@ -200,7 +202,7 @@ def rgba(red, green, blue, alpha):
   """
   Description:
   -----------
-  RGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity of the object.
+  RGBA color values are an extension of RGB color values with an alpha channel which specifies the opacity.
 
   An RGBA color is specified with the rgba() function, which has the following syntax:
   rgba(red, green, blue, alpha)
@@ -239,14 +241,14 @@ def getRgbToHex(rgbColor):
   ----------
   :param rgbColor: List. A list corresponding to the RGB color code.
 
-  :return: String object defining the hexadecimal color code
+  :return: String object defining the hexadecimal color code.
   """
   color = []
   for val in rgbColor:
     val = hex(int(val)).lstrip('0x')
     if len(val) != 2:
-      leadingZeros = ["0"] * (2 - len(val))
-      val = "%s%s" % ("".join(leadingZeros), val)
+      leading_zeros = ["0"] * (2 - len(val))
+      val = "%s%s" % ("".join(leading_zeros), val)
     color.append(val)
   return "#%s" % "".join(color)
 
@@ -276,7 +278,8 @@ def randColor(seedNo=None):
   for i in range(6):
     color.append(letters[math.floor(random.random() * 16)])
   if seedNo is not None:
-    random.seed(None) # Resent the seed to None
+    # Resent the seed to None
+    random.seed(None)
   return "".join(color)
 
 
@@ -303,9 +306,9 @@ def gradient(start, end, factor):
   if factor > 1:
     raise Exception("Gradient factor must be <= 1")
 
-  rgbEnd = getHexToRgb(end)
-  rgbDiff = [(rgbEnd[i] - val) * factor + val for i, val in enumerate(getHexToRgb(start))]
-  return getRgbToHex(rgbDiff)
+  rgb_end = getHexToRgb(end)
+  rgb_diff = [(rgb_end[i] - val) * factor + val for i, val in enumerate(getHexToRgb(start))]
+  return getRgbToHex(rgb_diff)
 
 
 def colors(start, end, steps):
@@ -328,14 +331,14 @@ def colors(start, end, steps):
 
   :return: A list of hexadecimal color codes.
   """
-  colors = [start]
+  colors_panel = [start]
   for i in range(steps-2):
-    colors.append(gradient(start, end, 1.0 / (steps-1) * (i + 1)))
-  colors.append(end)
-  return colors
+    colors_panel.append(gradient(start, end, 1.0 / (steps-1) * (i + 1)))
+  colors_panel.append(end)
+  return colors_panel
 
 
-class HexColors(object):
+class HexColors:
   MAROON = '#800000'
   DARK_RED = '#8B0000'
   BROWN = '#A52A2A'
@@ -472,7 +475,7 @@ class HexColors(object):
   WHITE = '#FFFFFF'
 
 
-class RgbColors(object):
+class RgbColors:
   TRANSPARENT = "rgba(0, 0, 0, 0)"
   MAROON = 'rgb(128,0,0)'
   DARK_RED = 'rgb(139,0,0)'
@@ -610,7 +613,7 @@ class RgbColors(object):
   WHITE = 'rgb(255,255,255)'
 
 
-class DefinedColors(object):
+class DefinedColors:
 
   @property
   def hex(self):

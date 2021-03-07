@@ -180,7 +180,8 @@ class JsString(JsObject.JsObject):
     """
     Description:
     ------------
-    The substring() method extracts the characters from a string, between two specified indices, and returns the new sub string.
+    The substring() method extracts the characters from a string, between two specified indices, and returns the new
+    sub string.
 
     Usage:
     -----
@@ -192,7 +193,8 @@ class JsString(JsObject.JsObject):
     Attributes:
     ----------
     :param start: Integer. Required. The position where to start the extraction. First character is at index 0.
-    :param end: Integer. Optional. The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the string
+    :param end: Integer. Optional. The position (up to, but not including) where to end the extraction.
+    If omitted, it extracts the rest of the string
     """
     if end is None:
       end = self.length
@@ -202,7 +204,8 @@ class JsString(JsObject.JsObject):
     """
     Description:
     ------------
-    The substr() method extracts parts of a string, beginning at the character at the specified position, and returns the specified number of characters.
+    The substr() method extracts parts of a string, beginning at the character at the specified position, and returns
+    the specified number of characters.
 
     Usage:
     -----
@@ -283,7 +286,8 @@ class JsString(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param searchvalue: String. Required. A regular expression. A string will automatically be converted to a regular expression..
+    :param searchvalue: String. Required. A regular expression.
+    A string will automatically be converted to a regular expression..
     :param isPyData: Boolean. Optional.
     """
     from epyk.core.js.primitives import JsNumber
@@ -330,7 +334,8 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
     Remove the special characts in a string and only keep the ones necessary to be considered as a valid Javascript
-    variable name. Indeed some rules are defined for the variable names and the HTML codes values must follow those rules.
+    variable name.
+    Indeed some rules are defined for the variable names and the HTML codes values must follow those rules.
     Check are on the Python side with an exception raised but it can also be added on the Javascript side
 
     Usage:
@@ -391,7 +396,8 @@ class JsString(JsObject.JsObject):
     ----------
     :param i: Required. An integer representing the index of the character you want to return.
 
-    :return: A String, representing the character at the specified index, or an empty string if the index number is not found
+    :return: A String, representing the character at the specified index, or an empty string if the index number
+    is not found
     """
     return JsString("%s.charAt(%s)" % (self.varId, i), isPyData=False)
 
@@ -477,8 +483,8 @@ class JsString(JsObject.JsObject):
     from epyk.core.js.primitives import JsBoolean
 
     searchvalue = JsUtils.jsConvertData(searchvalue, jsFnc)
+    # Add a polyfill to ensure the browser compatibility
     if jsObj is not None:
-      # Add a polyfill to ensure the browser compatibility
       jsObj._addImport("babel-polyfill")
     return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, searchvalue, start), isPyData=False)
 
@@ -507,10 +513,9 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsBoolean
 
+    # Add a polyfill to ensure the browser compatibility
     if jsObj is not None:
-      # Add a polyfill to ensure the browser compatibility
       jsObj._addImport("babel-polyfill")
-
     searchvalue = JsUtils.jsConvertData(searchvalue, jsFnc)
     return JsBoolean.JsBoolean("%s.startsWith(%s, %s)" % (self.varId, searchvalue, start), isPyData=False)
 
@@ -530,7 +535,8 @@ class JsString(JsObject.JsObject):
     Attributes:
     ----------
     :param searchvalue: Required. The string to search for.
-    :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length of the string.
+    :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length
+    of the string.
     :param jsFnc: List | String. Javascript functions.
 
     :return: A Boolean. Returns true if the string ends with the value, otherwise it returns false
@@ -582,7 +588,8 @@ class JsString(JsObject.JsObject):
     ----------
     :param separator: String. Optional. Specifies the character, or the regular expression, to use for splitting the string.
                                 If omitted, the entire string will be returned (an array with only one item).
-    :param limit: Integer. Optional. An integer that specifies the number of splits, items after the split limit will not be included in the array
+    :param limit: Integer. Optional. An integer that specifies the number of splits, items after the split limit
+    will not be included in the array
 
     :return: A Python JsArray
     """
@@ -624,7 +631,7 @@ class JsString(JsObject.JsObject):
 
     return JsArray("%s.splitEmptyArray('%s')" % (self.varId, separator), isPyData=False)
 
-  def formatMoney(self, jsObj, decPlaces, countryCode='UK'):
+  def formatMoney(self, jsObj, decPlaces, countryCode='UK', profile=None):
     """
     Description:
     ------------
@@ -637,9 +644,10 @@ class JsString(JsObject.JsObject):
     :param jsObj:
     :param decPlaces:
     :param countryCode:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsObj.extendProto(self, "formatMoney", '''var n = parseFloat(this); n.formatMoney(decPlaces, thouSeparator, decSeparator);
-      ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
+      ''', pmts=["decPlaces", "thouSeparator", "decSeparator"], profile=profile)
     return self.parseFloat().formatMoney(jsObj, decPlaces, countryCode)
 
   def parseFloat(self):

@@ -6,4 +6,4 @@ class CssPageContentEditable(CssStyle.Style):
   classname = "[contenteditable]:focus"
 
   def customize(self):
-    self.css({'outline': '1px solid %s' % self.rptObj.theme.success[1]})
+    self.css({'outline': '1px solid %s' % self.page.theme.success[1]})

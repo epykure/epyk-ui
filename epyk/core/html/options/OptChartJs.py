@@ -7,6 +7,7 @@ from epyk.core.data.DataClass import DataClass
 from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
+from epyk.core.html.options import OptChart
 
 
 class OptionAxesTicks(DataClass):
@@ -998,23 +999,23 @@ class OptionTitle(DataClass):
     self._attrs["lineHeight"] = val
 
 
-class Options(DataClass):
+class ChartJsOptions(OptChart.OptionsChart):
 
   @property
   def responsive(self):
     return self._attrs["responsive"]
 
   @responsive.setter
-  def responsive(self, bool):
-    self.add("responsive", bool)
+  def responsive(self, flag):
+    self.add("responsive", flag)
 
   @property
   def maintainAspectRatio(self):
     return self._attrs["maintainAspectRatio"]
 
   @maintainAspectRatio.setter
-  def maintainAspectRatio(self, bool):
-    self.add("maintainAspectRatio", bool)
+  def maintainAspectRatio(self, flag):
+    self.add("maintainAspectRatio", flag)
 
   @property
   def elements(self):
@@ -1060,18 +1061,6 @@ class Options(DataClass):
       self.title.fontColor = color
     return self
 
-  @property
-  def managed(self):
-    """
-    Description:
-    ------------
-    """
-    return self.get(True)
-
-  @managed.setter
-  def managed(self, bool):
-    self.set(bool)
-
 
 class OptionPieAnimation(DataClass):
 
@@ -1108,7 +1097,7 @@ class OptionPieAnimation(DataClass):
     self.attr("animateScale", val)
 
 
-class OptionsBar(Options):
+class OptionsBar(ChartJsOptions):
 
   @property
   def stacked(self):
@@ -1130,7 +1119,7 @@ class OptionsBar(Options):
     self.scales.y_axis().stacked = val
 
 
-class OptionsPie(Options):
+class OptionsPie(ChartJsOptions):
 
   @property
   def tooltips(self):
@@ -1189,7 +1178,7 @@ class OptionsPie(Options):
     return self.sub_data("animation", OptionPieAnimation)
 
 
-class OptionsLine(Options):
+class OptionsLine(ChartJsOptions):
 
   @property
   def showLines(self):
@@ -1224,7 +1213,7 @@ class OptionsLine(Options):
     self._attrs["spanGaps"] = val
 
 
-class OptionsPolar(Options):
+class OptionsPolar(ChartJsOptions):
 
   @property
   def startAngle(self):
@@ -1512,7 +1501,7 @@ class OptionGeo(DataClass):
     return self.sub_data("radiusScale", OptionGeoRadiusScale)
 
 
-class OptionsGeo(Options):
+class OptionsGeo(ChartJsOptions):
 
   @property
   def showOutline(self):

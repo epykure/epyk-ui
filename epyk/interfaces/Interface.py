@@ -47,48 +47,50 @@ from epyk.interfaces import Arguments
 
 
 class Components:
-  def __init__(self, rptObj):
-    self.rptObj = rptObj
-    self.components_skin = None #
+
+  def __init__(self, page):
+    self.rptObj = page
+    self.page = page
+    self.components_skin = None
 
     # Special shortcut for some components
-    self.button = self.buttons.button #: shortcut for button :func:`epyk.interfaces.components.CompButtons.Buttons.button`
-    self.toggle = self.buttons.toggle #: shortcut for Toogle button :func:`epyk.interfaces.components.CompButtons.Buttons.toggle`
-    self.input = self.inputs.input #: shortcut for input :func:`epyk.interfaces.components.CompInputs.Inputs.input`
-    self.div = self.layouts.div #: shortcut for div :func:`epyk.interfaces.components.CompLayouts.Layouts.div`
-    self.grid = self.layouts.grid #: shortcut for grid :func:`epyk.interfaces.components.CompLayouts.Layouts.grid`
-    self.row = self.layouts.row #: shortcut for row :func:`epyk.interfaces.components.CompLayouts.Layouts.row`
-    self.col = self.layouts.col #: shortcut for column :func:`epyk.interfaces.components.CompLayouts.Layouts.col`
-    self.table = self.tables.tabulator #: shortcut for tabulator :func:`epyk.interfaces.components.CompTables.Tables.tabulator`
-    self.pivot = self.tables.pivot #: shortcut for pivot :func:`epyk.interfaces.components.CompTables.Tables.pivot`
-    self.text = self.texts.text #: shortcut for text :func:`epyk.interfaces.components.CompTexts.Texts.text`
-    self.title = self.texts.title #: shortcut for title :func:`epyk.interfaces.components.CompTexts.Texts.title`
-    self.subtitle = self.titles.subtitle #: shortcut for title :func:`epyk.interfaces.components.CompTexts.Texts.title`
-    self.icon = self.images.icon #: shortcut for icon :func:`epyk.interfaces.components.CompImages.Images.icon`
-    self.img = self.images.img #: shortcut for img :func:`epyk.interfaces.components.CompImages.Images.img`
-    self.list = self.lists.list #: shortcut for list :func:`epyk.interfaces.components.CompLists.Lists.list`
-    self.link = self.links.link #: shortcut for link :func:`epyk.interfaces.components.CompLinks.Links.link`
-    self.check = self.buttons.check #: shortcut for check :func:`epyk.interfaces.components.CompButtons.Buttons.check`
-    self.slider = self.sliders.slider #: shortcut for slider :func:`epyk.interfaces.components.CompSliders.Sliders.slider`
-    self.select = self.lists.select #: shortcut for select :func:`epyk.interfaces.components.CompLists.Lists.select`
-    self.lookup = self.lists.lookup #: shortcut for lookup :func:`epyk.interfaces.components.CompLists.Lists.lookup`
-    self.date = self.fields.cob #: shortcut for date :func:`epyk.interfaces.components.CompFields.Fields.cob`
-    self.tree = self.lists.tree #: shortcut for tree :func:`epyk.interfaces.components.CompLists.Lists.tree`
-    self.info = self.rich.info #: shortcut for info :func:`epyk.interfaces.components.CompRich.Rich.input`
-    self.radio = self.buttons.radio #: shortcut for radio :func:`epyk.interfaces.components.CompButtons.Buttons.radio`
-    self.navbar = self.navigation.nav #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
-    self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
-    self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
-    self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
-    self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
-    self.stepper = self.steppers.stepper #: shortcut for steppers :func:`epyk.interfaces.components.CompSteppers.Steppers.stepper`
-    self.chips = self.lists.chips #: shortcut for chips :func:`epyk.interfaces.components.CompLists.Lists.chips`
-    self.contextual = self.menus.contextual #: shortcut for chips :func:`epyk.interfaces.components.CompMenus.Menus.contextual`
-    self.hidden = self.fields.hidden #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
-    self.number = self.numbers.number #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
-    self.euro = self.numbers.euro #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
-    self.percent = self.numbers.percent #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
-    self.banner = self.banners.text #: shortcut for banners
+    self.button = self.buttons.button
+    self.toggle = self.buttons.toggle
+    self.input = self.inputs.input
+    self.div = self.layouts.div
+    self.grid = self.layouts.grid
+    self.row = self.layouts.row
+    self.col = self.layouts.col
+    self.table = self.tables.tabulator
+    self.pivot = self.tables.pivot
+    self.text = self.texts.text
+    self.title = self.texts.title
+    self.subtitle = self.titles.subtitle
+    self.icon = self.images.icon
+    self.img = self.images.img
+    self.list = self.lists.list
+    self.link = self.links.link
+    self.check = self.buttons.check
+    self.slider = self.sliders.slider
+    self.select = self.lists.select
+    self.lookup = self.lists.lookup
+    self.date = self.fields.cob
+    self.tree = self.lists.tree
+    self.info = self.rich.info
+    self.radio = self.buttons.radio
+    self.navbar = self.navigation.nav
+    self.footer = self.navigation.footer
+    self.modal = self.modals.forms
+    self.disclaimer = self.modals.disclaimer
+    self.drawer = self.drawers.drawer
+    self.stepper = self.steppers.stepper
+    self.chips = self.lists.chips
+    self.contextual = self.menus.contextual
+    self.hidden = self.fields.hidden
+    self.number = self.numbers.number
+    self.euro = self.numbers.euro
+    self.percent = self.numbers.percent
+    self.banner = self.banners.text
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -97,7 +99,7 @@ class Components:
     self.section = self.layouts.section
     self.composite = self.rich.composite
 
-  def css(self, cssAttrs):
+  def css(self, css_attrs):
     """
     Description:
     ------------
@@ -108,19 +110,20 @@ class Components:
 
     Attributes:
     ----------
-    :param cssAttrs: Dictionary. The CSS attributes to be applied.
+    :param css_attrs: Dictionary. The CSS attributes to be applied.
     """
-    self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
+    self.page.properties.css.container_style(css_attrs)
     return self
 
-  def print(self, text=None, sep="", end="\n", htmlCode=None, options=None, profile=None):
+  def print(self, text=None, end="\n", html_code=None, options=None, profile=None):
     """
     Description:
     ------------
     Mimic the print function available in Python.
     This will create a div container with the content as a string.
 
-    This function can be also used to display Python function. Inspect module will be used in this case to get the source code.
+    This function can be also used to display Python function. Inspect module will be used in this case to get the
+    source code.
 
     Usage:
     -----
@@ -131,9 +134,8 @@ class Components:
     Attributes:
     ----------
     :param text: String. Optional. The content to be displayed.
-    :param sep: String. Optional. sep. not used.
     :param end: String. Optional. The end of line.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -143,9 +145,9 @@ class Components:
 
     if text is not None:
       if end == "\n":
-        div = self.text(text, width=(100, '%'), htmlCode=htmlCode, options=options, profile=profile)
+        div = self.text(text, width=(100, '%'), html_code=html_code, options=options, profile=profile)
       else:
-        div = self.text(text, htmlCode=htmlCode, options=options, profile=profile)
+        div = self.text(text, html_code=html_code, options=options, profile=profile)
       div.style.css.padding = 5
       div.style.css.white_space = 'pre'
       div.style.css.font_family = 'Courier'
@@ -184,7 +186,6 @@ class Components:
 
     Usage:
     -----
-
 
     """
     return CompNetwork.Network(self)
@@ -377,7 +378,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce list or selection items.
 
-    Simple list, trees or dropdown boxes will be part of this category of items.
+    Simple list, trees or DropDown boxes will be part of this category of items.
     """
     return CompLists.Lists(self)
 
@@ -433,7 +434,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce tables or pivot tables.
 
-    Different kind of tables are available in the framework (Tabulator, Datatable, PivotTable or even a bespoke
+    Different kind of tables are available in the framework (Tabulator, DataTable, PivotTable or even a bespoke
     implementation).
 
     Usage:
@@ -514,7 +515,7 @@ class Components:
     Group all the UI components dedicated to produce input items.
 
     Those components are editable items which need to be updated by the user of the dashboard.
-    This category will take into account textarea, input text...
+    This category will take into account TextArea, input text...
 
     Usage:
     -----
@@ -532,7 +533,7 @@ class Components:
     Group all the UI components dedicated to produce input items.
 
     Those components are editable items which need to be updated by the user of the dashboard.
-    This category will take into account textarea, input text...
+    This category will take into account TextArea, input text...
 
     Usage:
     -----
@@ -723,7 +724,7 @@ class Components:
     return CompLayouts.Delimiter(self)
 
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"),
-               htmlCode=None, options=None, profile=None):
+               html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -747,16 +748,16 @@ class Components:
     :param left: Integer. Optional. The left property affects the horizontal position of a positioned element.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    htmlCode = htmlCode or "content"
-    if htmlCode not in self.rptObj.components:
-      html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, htmlCode, options, profile)
-      html_contents.menu = self.rptObj.ui.div(htmlCode="%s_page" % htmlCode)
+    html_code = html_code or "content"
+    if html_code not in self.page.components:
+      html_contents = html.HtmlTextComp.ContentsTable(self.page, title, width, height, html_code, options, profile)
+      html_contents.menu = self.page.ui.div(html_code="%s_page" % html_code)
       html_contents.style.css.max_height = "60%"
-      if Defaults_css.BODY_CONTAINER is not None and "page_nav_bar" in self.rptObj.components:
+      if Defaults_css.BODY_CONTAINER is not None and "page_nav_bar" in self.page.components:
         html_contents.style.css.top = Defaults_css.BODY_CONTAINER.get('padding-top', 0) + top
       else:
         html_contents.style.css.top = top
@@ -764,18 +765,18 @@ class Components:
         html_contents.style.css.left = left
       else:
         html_contents.style.css.right = right
-      # Attach the table content to the main report object
-      self.rptObj._content_table = html_contents
+        #   Attach the table content to the main report object
+      self.page._content_table = html_contents
       html_contents.style.css.z_index = 500
-      if self.rptObj.body.style.css.padding_top is not None:
-        html_contents.style.css.top = self.rptObj.body.style.css.padding_top
+      if self.page.body.style.css.padding_top is not None:
+        html_contents.style.css.top = self.page.body.style.css.padding_top
     else:
-      html_contents = self.rptObj.components[htmlCode]
+      html_contents = self.page.components[html_code]
       title_link = html_contents.add_category(title, level=1)
       title_link.style.css.margin_top = 10
     return html_contents
 
-  def bespoke(self, htmlCls, *args, **kwargs):
+  def bespoke(self, html_cls, *args, **kwargs):
     """
     Description:
     ------------
@@ -792,13 +793,13 @@ class Components:
 
     Attributes:
     ----------
-    :param htmlCls: Class. The bespoke HTML component.
+    :param html_cls: Class. The bespoke HTML component.
     :param args: The python attributes used in the HTML component constructor.
     :param kwargs: The python attributes used in the HTML component constructor.
     """
-    return htmlCls(self.rptObj, *args, **kwargs)
+    return html_cls(self.page, *args, **kwargs)
 
-  def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), html_code=None, profile=None):
     """
     Description:
     ------------
@@ -817,10 +818,12 @@ class Components:
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile)
+    return html.HtmlTextEditor.Tags(
+      self.page, vals, title, icon, (self.page.body.style.globals.font.size, 'px'), width, height, html_code,
+      profile)
 
   def loading(self, text="Loading", color=None, options=None, profile=None):
     """
@@ -843,18 +846,19 @@ class Components:
     ----------
     :param text: String. Optional. The text in the component (during the loading).
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {}, profile)
+    html_loading = html.HtmlOthers.Loading(
+      self.page, text, color, (self.page.body.style.globals.font.size, 'px'), options or {}, profile)
     return html_loading
 
-  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), htmlCode=None, options=None,
+  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), html_code=None, options=None,
                  profile=None):
     """
     Description:
     ------------
-    Add Breadcrum information to the page.
+    Add Breadcrumb information to the page.
 
     Usage:
     -----
@@ -871,25 +875,26 @@ class Components:
 
     Attributes:
     ----------
-    :param values: List. Optional. The breadcrum record definition.
+    :param values: List. Optional. The breadcrumb record definition.
     :param selected: Integer. Optional. The selected item index.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    dflt_options = {"style": {}}
+    dfl_options = {"style": {}}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options['selected'] = selected
-    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values or [], width, height, htmlCode, dflt_options, profile)
+    dfl_options['selected'] = selected
+    html_breadcrumb = html.HtmlOthers.Breadcrumb(
+      self.page, values or [], width, height, html_code, dfl_options, profile)
     html_breadcrumb.style.css.margin_top = 5
     return html_breadcrumb
 
-  def form(self, action=None, method=None, helper=None):
+  def form(self, components=None, helper=None):
     """
     Description:
     ------------
@@ -904,11 +909,10 @@ class Components:
 
     Attributes:
     ----------
-    :param action:
-    :param method:
-    :param helper:
+    :param components: List. Optional. The HTML components to be added to the HTML form.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
     """
-    form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
+    form = html.HtmlContainer.Form(self.page, components or [], helper)
     return form
 
   def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
@@ -938,7 +942,7 @@ class Components:
     data = data or {}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    h_json = html.HtmlOthers.HtmlJson(self.rptObj, data, width, height, options, profile)
+    h_json = html.HtmlOthers.HtmlJson(self.page, data, width, height, options, profile)
     if height[1] != '%':
       h_json.style.css.overflow = 'auto'
     return h_json
@@ -971,7 +975,7 @@ class Components:
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
-    html_i = html.HtmlImage.SlideShow(self.rptObj, components or [], width, height, options or {}, profile)
+    html_i = html.HtmlImage.SlideShow(self.page, components or [], width, height, options or {}, profile)
     return html_i
 
   def qrcode(self, data=None, width=(128, 'px'), height=(128, 'px'), options=None, profile=None):
@@ -1003,7 +1007,7 @@ class Components:
     data = data or {}
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    h_qrcode = html.HtmlOthers.HtmlQRCode(self.rptObj, data, width, height, options, profile)
+    h_qrcode = html.HtmlOthers.HtmlQRCode(self.page, data, width, height, options, profile)
     if height[1] != '%':
       h_qrcode.style.css.overflow = 'auto'
     return h_qrcode
@@ -1024,12 +1028,12 @@ class Components:
     :param text: String. Optional. The button content for the captcha validation.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    captcha = html.HtmlOthers.HtmlCaptcha(self.rptObj, text, width, height, options or {}, profile)
+    captcha = html.HtmlOthers.HtmlCaptcha(self.page, text, width, height, options or {}, profile)
     return captcha
 
   def postit(self, components=None, anchor=None, options=None, profile=None):
@@ -1049,17 +1053,17 @@ class Components:
     :param components: Components. Optional.
     :param anchor: Component. Optional.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    postit = self.rptObj.ui.div(options=options, profile=profile)
+    postit = self.page.ui.div(options=options, profile=profile)
     if anchor is None:
-      anchor = self.rptObj.ui.icon("fas fa-map-marker")
+      anchor = self.page.ui.icon("fas fa-map-marker")
       anchor.style.css.padding = "4px"
       postit += anchor
     postit.anchor = anchor
-    popup = self.rptObj.ui.div(components, width=(None, 'px'), options=options, profile=profile)
+    popup = self.page.ui.div(components, width=(None, 'px'), options=options, profile=profile)
     popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px',
-               'padding': '5px', 'background': self.rptObj.theme.greys[0]})
+               'padding': '5px', 'background': self.page.theme.greys[0]})
     postit += popup
     postit.popup = popup
     anchor.mouse([
@@ -1084,7 +1088,7 @@ class Components:
     Attributes:
     ----------
     :param package_name: String. The package name.
-    :param alias: String. The alias for the link in report.ui.
+    :param alias: String. Optional. The alias for the link in report.ui.
     """
     mod = __import__(package_name)
     __import__("%s.components" % package_name)
@@ -1092,7 +1096,7 @@ class Components:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
 
-  def asterix(self, tooltip, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None,
+  def asterix(self, tooltip, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
               align="left", options=None, profile=None):
     """
     Description:
@@ -1110,22 +1114,22 @@ class Components:
     :param family:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param color:
     :param align:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.icon("fas fa-asterisk", family, width, htmlCode, height, color, tooltip, align, options, profile)
+    component = self.icon("fas fa-asterisk", family, width, html_code, height, color, tooltip, align, options, profile)
     component.style.css.vertical_align = "top"
-    component.style.css.color = self.rptObj.theme.greys[5]
+    component.style.css.color = self.page.theme.greys[5]
     return component
 
 
 class WebComponents:
 
   def __init__(self, page):
-    self.rptObj = page
+    self.page = page
     self.fwks = {}
 
   @property
@@ -1142,7 +1146,7 @@ class WebComponents:
     :rtype: Components
     """
     if 'ui' not in self.fwks:
-      self.fwks["ui"] = Components(self.rptObj)
+      self.fwks["ui"] = Components(self.page)
     return self.fwks["ui"]
 
   @property
@@ -1163,13 +1167,13 @@ class WebComponents:
 
     :rtype: Bs.Bootstrap
     """
-    if self.rptObj.ext_packages is None:
-      self.rptObj.ext_packages = {}
-    self.rptObj.ext_packages.update(Imports.BOOTSTRAP)
+    if self.page.ext_packages is None:
+      self.page.ext_packages = {}
+    self.page.ext_packages.update(Imports.BOOTSTRAP)
     if 'bs' not in self.fwks:
-      self.rptObj.jsImports.add("bootstrap")
-      self.rptObj.cssImport.add("bootstrap")
-      self.fwks["bs"] = Bs.Bootstrap(self.rptObj)
+      self.page.jsImports.add("bootstrap")
+      self.page.cssImport.add("bootstrap")
+      self.fwks["bs"] = Bs.Bootstrap(self.page)
     return self.fwks["bs"]
 
   @property
@@ -1194,16 +1198,16 @@ class WebComponents:
 
     :return: Python HTML object
     """
-    if self.rptObj.ext_packages is None:
-      self.rptObj.ext_packages = {}
-    self.rptObj.ext_packages.update(Imports.MATERIAL_DESIGN_COMPONENTS)
+    if self.page.ext_packages is None:
+      self.page.ext_packages = {}
+    self.page.ext_packages.update(Imports.MATERIAL_DESIGN_COMPONENTS)
     if 'mt' not in self.fwks:
-      self.rptObj.jsImports.add("material-components-web")
-      self.rptObj.cssImport.add("material-components-web")
-      self.rptObj.css.customText('''
+      self.page.jsImports.add("material-components-web")
+      self.page.cssImport.add("material-components-web")
+      self.page.css.customText('''
 :root {--mdc-theme-primary: %(color)s; --mdc-theme--on-primary: %(color)s; --mdc-theme--primary-bg: %(color)s;}
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
-          ''' % {"color": self.rptObj.theme.success[1]})
+          ''' % {"color": self.page.theme.success[1]})
 
-      self.fwks["mt"] = Mt.Materials(self.rptObj)
+      self.fwks["mt"] = Mt.Materials(self.page)
     return self.fwks["mt"]

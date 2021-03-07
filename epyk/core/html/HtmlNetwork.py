@@ -14,11 +14,11 @@ from epyk.core.css.styles import GrpClsNetwork
 
 class Comments(Html.Html):
   name = 'Comment'
+  _option_cls = OptNet.OptionsChat
 
-  def __init__(self, report, record, width, height, htmlCode, options, profile):
-    super(Comments, self).__init__(report, record, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode,
-                                   profile=profile)
-    self.__options = OptNet.OptionsChat(self, options)
+  def __init__(self, report, record, width, height, html_code, options, profile):
+    super(Comments, self).__init__(report, record, css_attrs={"width": width, 'height': height}, html_code=html_code,
+                                   profile=profile, options=options)
     self.css({'padding': '5px'})
     self.input = None
     self.counter = report.ui.texts.span("0", width=(None, 'px'))
@@ -26,7 +26,7 @@ class Comments(Html.Html):
     self.counter.attr["name"] = "count"
     self.counter.css({"display": "inline-block", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
-      self.input = report.ui.input(htmlCode="%s_input" % self.htmlCode)
+      self.input = report.ui.input(html_code="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
       if "background" in options:
@@ -47,19 +47,19 @@ class Comments(Html.Html):
 
     :rtype: OptNet.OptionsChat
     """
-    return self.__options
+    return super().options
 
   @property
   def js(self):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsComponents.Chat
@@ -76,7 +76,8 @@ class Comments(Html.Html):
           } else {comments = data}
           comments.forEach(function(comment){
             var feed = document.createElement("p"); feed.style.margin = "0 0 5px 0";
-            if(options.showdown){var converter = new showdown.Converter(options.showdown); comment.text = converter.makeHtml(comment.text.trim())};
+            if(options.showdown){var converter = new showdown.Converter(options.showdown); 
+            comment.text = converter.makeHtml(comment.text.trim())};
             feed.innerHTML = comment.text; htmlObj.querySelector("div").prepend(feed);
     
             var dateNews = document.createElement("p");
@@ -91,46 +92,48 @@ class Comments(Html.Html):
     """
     Description:
     ------------
+    Add a text message.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param text:
-    :param time:
+    :param text: String. The text message.
+    :param time: String the timestamp.
     """
     self.val.append({"text": text, "time": time})
     return self
 
-  def enter(self, jsFncs=None, profile=False, source_event=None, onReady=False):
+  def enter(self, js_funcs=None, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    Define the function when the user press enter.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param jsFncs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.options.readonly:
       self.options.readonly = False
-      self.input = self._report.ui.input(htmlCode="%s_input" % self.htmlCode)
+      self.input = self._report.ui.input(html_code="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs] if jsFncs is not None else []
-    self.input.enter(jsFncs + [
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs] if js_funcs is not None else []
+    self.input.enter(js_funcs + [
       self.js.add(self.input.dom.content),
-      self.input.dom.empty()], profile, source_event, onReady)
+      self.input.dom.empty()], profile, source_event, on_ready)
     return self
 
-  def send(self, socket, channel=None, jsFncs=None, profile=False):
+  def send(self, socket, channel=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -142,22 +145,22 @@ class Comments(Html.Html):
     ----------
     :param socket:
     :param channel:
-    :param jsFncs:
-    :param profile: Boolean | Dictionary.
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if self.options.readonly:
       self.options.readonly = False
       self.input = self._report.ui.input()
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.input.enter(jsFncs + [
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.input.enter(js_funcs + [
       socket.emit(channel or 'message', self.input.dom.content),
-      self.input.dom.empty()])
+      self.input.dom.empty()], profile=profile)
     return self
 
-  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -179,17 +182,17 @@ class Comments(Html.Html):
     :param channel: String. The channel on which events will be received
     :param data:
     :param options: Dictionary.
-    :param jsFncs:
+    :param js_funcs:
     :param profile: Boolean | Dictionary.
     """
     if data is None:
       data = socket.message
-    jsFncs = jsFncs if jsFncs is not None else []
-    socket.on(channel, [self.js.add(data)] + jsFncs)
+    js_funcs = js_funcs if js_funcs is not None else []
+    socket.on(channel, [self.js.add(data)] + js_funcs, profile=profile)
     return self
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '''
       <div %(attr)s>
         <span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
@@ -214,8 +217,8 @@ class Bot(Html.Html):
   """
   name = 'Bot'
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Bot, self).__init__(report, [], css_attrs={"width": width}, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Bot, self).__init__(report, [], css_attrs={"width": width}, html_code=html_code, profile=profile)
     self.css({"text-align": 'right', "position": 'fixed', "bottom": 0, 'margin': '10px', "height": "80px",
               "padding": "5px",  "z-index": 200})
 
@@ -224,7 +227,7 @@ class Bot(Html.Html):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -248,12 +251,10 @@ class Bot(Html.Html):
 
 
 class Assistant(Html.Html):
-  """
-  """
   name = 'Assistant'
 
-  def __init__(self, component, title, report, htmlCode, options, profile):
-    super(Assistant, self).__init__(report, component, htmlCode=htmlCode, profile=profile)
+  def __init__(self, component, title, report, html_code, options, profile):
+    super(Assistant, self).__init__(report, component, html_code=html_code, profile=profile)
     self.css({'margin': '0 10px', "padding": "0 5px", 'text-align': 'center'})
     self.name = report.ui.text(title, align="center")
     self.name.options.managed = False
@@ -276,16 +277,18 @@ class Assistant(Html.Html):
     self.chat.style.css.margin_top = -20
 
   def __str__(self):
-    return '''<div %(attr)s>%(name)s%(avatar)s%(mail)s%(chat)s</div>''' % {'attr': self.get_attrs(),
-               'avatar': self.val.html(), 'mail': self.mail.html(), 'chat': self.chat.html(), 'name': self.name.html()}
+    return '''<div %(attr)s>%(name)s%(avatar)s%(mail)s%(chat)s</div>''' % {
+      'attr': self.get_attrs(), 'avatar': self.val.html(), 'mail': self.mail.html(), 'chat': self.chat.html(),
+      'name': self.name.html()}
 
 
 class Chat(Html.Html):
   name = 'Chat'
+  _option_cls = OptNet.OptionsChat
 
-  def __init__(self, report, recordSet, width, height, htmlCode, options, profile):
-    super(Chat, self).__init__(report, recordSet, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
-    self.__options = OptNet.OptionsChat(self, options)
+  def __init__(self, report, records, width, height, html_code, options, profile):
+    super(Chat, self).__init__(report, records, css_attrs={"width": width, 'height': height},
+                               html_code=html_code, profile=profile, options=options)
     self.css({'padding': '5px'})
     self.input = None
     self.counter = report.ui.texts.span("0", width=(None, 'px'))
@@ -302,26 +305,28 @@ class Chat(Html.Html):
     """
     Description:
     ------------
+    Property to the comments component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptNet.OptionsChat
     """
-    return self.__options
+    return super().options
 
   @property
   def js(self):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    Attributes:
-    ----------
-    :return: A Javascript Dom object
 
     :rtype: JsComponents.Chat
     """
@@ -344,7 +349,7 @@ class Chat(Html.Html):
       htmlObj.querySelector("div").prepend(dateNews);
       '''
 
-  def enter(self, jsFncs, profile=False, source_event=None, onReady=False):
+  def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -354,19 +359,19 @@ class Chat(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.input.enter(jsFncs + [
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.input.enter(js_funcs + [
       self.js.add(self.input.dom.content),
-      self.input.dom.empty()], profile, source_event, onReady)
+      self.input.dom.empty()], profile, source_event, on_ready)
     return self
 
-  def send(self, socket, channel=None, jsFncs=None, profile=False):
+  def send(self, socket, channel=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -378,17 +383,17 @@ class Chat(Html.Html):
     ----------
     :param socket:
     :param channel:
-    :param jsFncs: List.
-    :param profile: Boolean | Dictionary.
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.input.enter(jsFncs + [
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.input.enter(js_funcs + [
       socket.emit(channel or 'message', self.input.dom.content),
-      self.input.dom.empty()])
+      self.input.dom.empty()], profile=profile)
     return self
 
-  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -410,13 +415,13 @@ class Chat(Html.Html):
     :param channel: String. The channel on which events will be received
     :param data:
     :param options: Dictionary.
-    :param jsFncs:
-    :param profile:
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data is None:
       data = socket.message
-    jsFncs = jsFncs if jsFncs is not None else []
-    socket.on(channel, [self.js.add(data)] + jsFncs)
+    js_funcs = js_funcs if js_funcs is not None else []
+    socket.on(channel, [self.js.add(data)] + js_funcs, profile=profile)
     return self
 
   def __str__(self):
@@ -426,17 +431,19 @@ class Chat(Html.Html):
         <div style="margin:0;padding:5px 0;height:%(height)spx;overflow:auto"></div>
         %(counter)s
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode, 'height': int(self.css("height")[:-2]) - 70,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
+             'height': int(self.css("height")[:-2]) - 70,
              'inputTag': '' if self.input is None else self.input.html(), "counter": self.counter.html()}
 
 
 class Alert(Html.Html):
   requirements = ('bootstrap', )
   name = 'Alert'
+  _option_cls = OptNet.OptionsAlert
 
-  def __init__(self, report, value, width, height, htmlCode, options, profile):
-    super(Alert, self).__init__(report, value, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
-    self.__options = OptNet.OptionsAlert(self, options)
+  def __init__(self, report, value, width, height, html_code, options, profile):
+    super(Alert, self).__init__(report, value, css_attrs={"width": width, 'height': height},
+                                html_code=html_code, profile=profile, options=options)
     self.css({"padding": '5px', 'position': 'fixed', 'top': '20px', 'right': '20px'})
 
   @property
@@ -444,7 +451,10 @@ class Alert(Html.Html):
     """
     Description:
     ------------
-    Property to the popup options.
+    Property to the component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
@@ -454,12 +464,13 @@ class Alert(Html.Html):
 
     :rtype: OptNet.OptionsAlert
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       var feed = document.createElement("p");
       options.classes.forEach(function(cls){ feed.classList.add(cls) });
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
+      if(options.showdown){
+        var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
       if (htmlObj.style.display != 'block'){htmlObj.innerHTML = ""};
       if (options.close){
         var icon = document.createElement("i");  
@@ -479,18 +490,18 @@ class Alert(Html.Html):
 
 class News(Html.Html):
   name = 'News'
+  _option_cls = OptNet.OptionsNews
 
-  def __init__(self, report, value, width, height, htmlCode, options, profile):
-    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
-    #self.css({"padding": '5px', 'position': 'fixed', 'border': '1px solid %s' % self._report.theme.success[1],
-    #          "background": self._report.theme.greys[0], 'bottom': '20px', 'right': '20px'})
-    self.__options = OptNet.OptionsNews(self, options)
+  def __init__(self, report, value, width, height, html_code, options, profile):
+    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height},
+                               html_code=html_code, profile=profile, options=options)
     self._report.jsImports.add('moment')
 
   _js__builder__ = '''
     var feed = document.createElement("p");
     feed.style.margin = "0 0 5px 0";
-    if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
+    if(options.showdown){
+      var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
     feed.innerHTML = data; htmlObj.prepend(feed);
     
     if (options.dated){
@@ -500,7 +511,7 @@ class News(Html.Html):
       dateNews.style.margin = 0;
       dateNews.style.fontWeight = 'bold';
       dateNews.innerHTML = dateStringWithTime;
-      htmlObj.prepend(dateNews); }
+      htmlObj.prepend(dateNews)}
     '''
 
   @property
@@ -508,11 +519,11 @@ class News(Html.Html):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    :return: A Javascript Dom object
 
     :rtype: JsComponents.News
     """
@@ -525,13 +536,17 @@ class News(Html.Html):
     """
     Description:
     ------------
+    Property to the component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptNet.OptionsNews
     """
-    return self.__options
+    return super().options
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
@@ -539,10 +554,11 @@ class News(Html.Html):
 
 class Room(Html.Html):
   name = 'room'
+  _option_cls = OptNet.OptionsNews
 
-  def __init__(self, report, img, width, height, htmlCode, options, profile):
-    super(Room, self).__init__(report, "", css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
-    self.__options = OptNet.OptionsNews(self, options)
+  def __init__(self, report, img, width, height, html_code, options, profile):
+    super(Room, self).__init__(report, "", css_attrs={"width": width, 'height': height},
+                               html_code=html_code, profile=profile, options=options)
     color = 'green'
     self.css({"padding": '5px', 'position': 'fixed', 'bottom': '10px', 'right': '20px', 'border-radius': '30px',
               'border': '1px solid %s' % color, 'background-repeat': 'no-repeat', 'z-index': 100,
@@ -563,7 +579,8 @@ class Room(Html.Html):
     attrs = {"0%, 20%": {"color": "rgba(0,0,0,0)", "text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
              "40%": {"text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
              "60%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 rgba(0,0,0,0)" % report.theme.greys[-1]},
-             "80%, 100%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 %s" % (report.theme.greys[-1], report.theme.greys[-1])}}
+             "80%, 100%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 %s" % (
+               report.theme.greys[-1], report.theme.greys[-1])}}
     self.dots.style.css_class.keyframes(keyframe_name, attrs)
 
   @property
@@ -571,11 +588,11 @@ class Room(Html.Html):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    :return: A Javascript Dom object
 
     :rtype: JsComponents.Room
     """
@@ -584,16 +601,18 @@ class Room(Html.Html):
     return self._js
 
   def __str__(self):
-    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.dots.html(), self.status.html())
+    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.dots.html(),
+                                   self.status.html())
 
 
 class DropFile(Html.Html):
   requirements = ('font-awesome',)
   name, inputType = 'Drop File Area', "file"
+  _option_cls = OptNet.OptionFiles
 
-  def __init__(self, report, vals, delimiter, tooltip, width, height, htmlCode, options, profile):
-    super(DropFile, self).__init__(report, vals, profile=profile, htmlCode=htmlCode, css_attrs={"width": width, "height": height})
-    self.__options = OptNet.OptionFiles(self, options)
+  def __init__(self, report, vals, delimiter, tooltip, width, height, html_code, options, profile):
+    super(DropFile, self).__init__(report, vals, profile=profile, html_code=html_code, options=options,
+                                   css_attrs={"width": width, "height": height})
     self.tooltip(tooltip, location='bottom')
     self.container = self._report.ui.div()
     self.container.css({"display": "inline-block", 'text-align': 'center', "color": self._report.theme.success[0],
@@ -611,13 +630,13 @@ class DropFile(Html.Html):
     self.text.options.managed = False
     self.text.style.css.margin_bottom = 5
     self.text.style.css.padding_left = 5
-    self.delimiter = self._report.ui.text(delimiter, width=(25, 'px'), htmlCode="%s_delimiter" % self.htmlCode, options={"editable": True})
+    self.delimiter = self.page.ui.text(
+      delimiter, width=(25, 'px'), html_code="%s_delimiter" % self.htmlCode, options={"editable": True})
     self.delimiter.options.managed = False
     self.delimiter.style.css.bold()
     self.delimiter.style.css.display = 'inline-block'
     self.delimiter.style.css.text_align = 'center'
     self.delimiter.style.css.border = "1px solid %s" % report.theme.colors[3]
-    self.delimiter.style.css.font_factor(2)
     self.delimiter.style.css.margin_top = 5
     self.delimiter.style.css.margin_left = 5
     self.delimiter.style.css.margin_right = 5
@@ -653,7 +672,7 @@ class DropFile(Html.Html):
     :rtype: JsHtmlNetwork.JsHtmlDropFiles
     """
     if self._dom is None:
-      self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, report=self._report)
+      self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, report=self.page)
     return self._dom
 
   @property
@@ -661,20 +680,23 @@ class DropFile(Html.Html):
     """
     Description:
     ------------
-    Specific options for the files components.
+    Property to the component options.
+    Optional can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     Usage:
     -----
 
     :rtype: OptNet.OptionFiles
     """
-    return self.__options
+    return super().options
 
   def transfer(self, url):
     """
     Description:
     -----------
-    Create a Ajax transfer to a distant server
+    Create a Ajax transfer to a distant server.
 
     Usage:
     -----
@@ -687,35 +709,37 @@ class DropFile(Html.Html):
     post = self._report.js.post(url, self._report.js.objects.get("form_data"), is_json=False)
     return post
 
-  def drop(self, jsFncs, jsData=None, preventDefault=True, profile=False):
+  def drop(self, js_funcs, js_data=None, prevent_default=True, profile=None):
     """
     Description:
     -----------
-    Add a drag and drop property to the element
+    Add a drag and drop property to the element.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param jsFncs: List | String. The Javascript series of functions
-    :param jsData: Data. Optional. A datamap objection of a dictionary
-    :param preventDefault: Boolean. Optional. Prevent default on the JavaScript event
-    :param profile: Boolean. Optional. Profiling
+    :param js_funcs: List | String. The Javascript series of functions.
+    :param js_data: Data. Optional. A datamap objection of a dictionary.
+    :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: Return self to allow the chaining
     """
     dft_fnc = ""
-    if preventDefault:
+    if prevent_default:
       dft_fnc = self._report.js.objects.event.preventDefault()
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     form_data = self._report.js.data.formdata()
-    newJsFncs = [form_data.new("form_data"),  form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])]
-    if jsData is not None:
-      newJsFncs.extend(form_data.update(jsData))
-    newJsFncs.extend(jsFncs)
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.files] + newJsFncs, toStr=True)
+    new_js_funcs = [form_data.new("form_data"),
+                    form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])]
+    if js_data is not None:
+      new_js_funcs.extend(form_data.update(js_data))
+    new_js_funcs.extend(js_funcs)
+    str_fncs = JsUtils.jsConvertFncs(
+      ["var data = %s" % self._report.js.objects.event.dataTransfer.files] + new_js_funcs, toStr=True, profile=profile)
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
@@ -734,7 +758,7 @@ class DropFile(Html.Html):
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
-  def load(self, jsFncs, jsData=None, preventDefault=True, profile=False):
+  def load(self, js_funcs, js_data=None, prevent_default=True, profile=None):
     """
     Description:
     -----------
@@ -747,39 +771,43 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs: List. The Javascript series of functions
-    :param jsData: String. Optional. A datamap objection of a dictionary
-    :param preventDefault: Boolean. Optional. Prevent default on the JavaScript event
-    :param profile: Boolean. Optional. Profiling
+    :param js_funcs: List. The Javascript series of functions.
+    :param js_data: String. Optional. A datamap objection of a dictionary.
+    :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     from epyk.core.data import events
 
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return self.drop(['''
       var reader = new FileReader(); var f = data[data.length - 1];
        reader.onloadstart = function() {%s};
        reader.onload = (function(value) {
           return function(e){data = atob(e.target.result.replace(/^data:.+;base64,/, '')); %s}})(f);
        reader.readAsDataURL(f);
-      ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(jsFncs + [
-            self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows")),
-            self.text.build(events.file.description) if self.options.text else self.text.build("File Loaded")], toStr=True),
-             )], jsData=jsData, preventDefault=preventDefault, profile=profile)
+      ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(js_funcs + [
+        self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows")),
+        self.text.build(events.file.description) if self.options.text else self.text.build("File Loaded")], toStr=True),
+         )], js_data=js_data, prevent_default=prevent_default, profile=profile)
 
-  def paste(self, jsFncs, profile=False, source_event=None):
+  def paste(self, js_funcs, profile=None, source_event=None):
     """
+    Description:
+    -----------
 
     Usage:
     -----
 
-    :param jsFncs:
-    :param profile:
-    :param source_event:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return super(DropFile, self).paste([self.loading()]+jsFncs+[
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return super(DropFile, self).paste([self.loading()] + js_funcs + [
       self.text.build(self._report.js.objects.get("'Bespoke data Loaded, '+ (new Date).toISOString()")),
       self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows"))], profile, source_event)
 

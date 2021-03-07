@@ -12,8 +12,8 @@ class BsDate(html.Html.Html):
   requirements = ('bootstrap-datetimepicker', 'jquery')
   name = 'Bootstrap Name'
 
-  def __init__(self, report, value, label, icon, htmlCode, profile, options, helper):
-    super(BsDate, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, value, label, icon, html_code, profile, options, helper):
+    super(BsDate, self).__init__(report, value, html_code=html_code, profile=profile)
     self.style.clear_all()
     self.__options = BsOptions.OptionsDt(self, options)
     self.attr['class'].add("input-group date")

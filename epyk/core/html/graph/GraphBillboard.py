@@ -13,15 +13,14 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name = 'Billboard Chart'
+  name = 'Billboard'
   requirements = ('billboard.js', )
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
+  def __init__(self, report, width, height, html_code, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height},
-                                profile=profile)
+    super(Chart, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+                                profile=profile, options=options)
     self._d3, self._datasets, self._options, self._data_attrs, self._attrs = None, [], None, {}, {}
-    self._options_init = options
     self.style.css.margin_top = 10
 
   @property
@@ -29,7 +28,7 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    JC3 reference API
+    JC3 reference API.
 
     https://c3js.org/reference.html#api-show
 
@@ -46,11 +45,11 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -60,7 +59,7 @@ class Chart(Html.Html):
     :param js_funcs: List of Js Functions. A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.data.onclick(js_funcs, profile)
     return self
@@ -70,6 +69,7 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+    Property shortcut the the D£ underlying base classes.
 
     :rtype: JsD3.D3Select
     """
@@ -77,39 +77,24 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
-  def convert(self, data, options, profile=False):
-    mod_name = __name__.split(".")[-1]
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
-      mod_name, self.builder_name, self._js__convertor__)
-    if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
-    else:
-      js_data = JsUtils.jsConvertData(data, None)
-    dfl_options, js_options = dict(self._options_init), []
-    if options is not None:
-      dfl_options.update(options)
-    for k, v in dfl_options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
-
-  def build(self, data=None, options=None, profile=False):
-    if data:
-      return '%(chartId)s.unload(); %(chartId)s.load(%(data)s)' % {'chartId': self.chartId, 'data': self.convert(data, options, profile)}
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    if data is not None:
+      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      self.page.properties.js.add_constructor(
+        js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
+      profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
+      if profile:
+        js_func_builder = JsUtils.jsConvertFncs(
+          ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
+        js_convertor = "(function(data, options){%s; return result})" % js_func_builder
+      return '%(chartId)s.unload(); %(chartId)s.load(%(chartFnc)s(%(data)s, %(options)s))' % {
+        'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
+        "options": self.options.config_js(options)}
 
     return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.build())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
@@ -117,6 +102,10 @@ class JsTick(DataClass):
 
   @property
   def format(self):
+    """
+    Description:
+    -----------
+    """
     return self._attrs["format"]
 
   @format.setter
@@ -128,6 +117,10 @@ class BBAxis(DataClass):
 
   @property
   def type(self):
+    """
+    Description:
+    -----------
+    """
     return self._attrs["type"]
 
   @type.setter
@@ -136,6 +129,10 @@ class BBAxis(DataClass):
 
   @property
   def show(self):
+    """
+    Description:
+    -----------
+    """
     return self._attrs["show"]
 
   @show.setter
@@ -144,6 +141,10 @@ class BBAxis(DataClass):
 
   @property
   def tick(self):
+    """
+    Description:
+    -----------
+    """
     return self.sub_data("x", JsTick)
 
 
@@ -155,7 +156,8 @@ class BBSelection(DataClass):
     -----------
     Set data selection enabled.
 
-    If this option is set true, we can select the data points and get/set its state of selection by API (e.g. select, unselect, selected).
+    If this option is set true, we can select the data points and get/set its state of selection by API (e.g. select,
+    unselect, selected).
 
     Related Pages:
 
@@ -182,6 +184,8 @@ class BBSelection(DataClass):
   @property
   def multiple(self):
     """
+    Description:
+    -----------
     """
     return self._attrs["multiple"]
 
@@ -192,6 +196,8 @@ class BBSelection(DataClass):
   @property
   def draggable(self):
     """
+    Description:
+    -----------
     """
     return self._attrs["draggable"]
 
@@ -202,6 +208,8 @@ class BBSelection(DataClass):
   @property
   def isselectable(self):
     """
+    Description:
+    -----------
     """
     return self._attrs["isselectable"]
 
@@ -213,6 +221,10 @@ class BBSelection(DataClass):
 class JsData(DataClass):
   @property
   def x(self):
+    """
+    Description:
+    -----------
+    """
     return self._attrs["x"]
 
   @x.setter
@@ -255,10 +267,10 @@ class JsData(DataClass):
   @type.setter
   def type(self, val): self._attrs["type"] = val
 
-  def add_type(self, alias, type):
+  def add_type(self, alias, value):
     if "types" not in self._attrs:
       self.types = {}
-    self.types[alias] = type
+    self.types[alias] = value
     return self
 
   @property
@@ -318,10 +330,23 @@ class JsData(DataClass):
   def selection(self):
     return self.sub_data("selection", BBSelection)
 
-  def onclick(self, js_funcs, profile=False):
+  def onclick(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () {%s}" % js_funcs)
 
 
 class JsScales(DataClass):
@@ -520,8 +545,8 @@ class BBPoints(DataClass):
 class ChartLine(Chart):
   _type = 'line'
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartLine, self).__init__(report, width, height, html_code, options, profile)
     self._attrs["bindto"] = "#%s" % self.htmlCode
 
   def labels(self, labels, series_id='x'):
@@ -535,9 +560,7 @@ class ChartLine(Chart):
       self.data.add_type(name, self._type)
     return self._attrs
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){ 
         result = {'columns': [], type: options.type};
         result['columns'].push(['x'].concat(data.labels));
@@ -558,7 +581,7 @@ class ChartLine(Chart):
           labels.forEach(function(x){
             if(temp[series][x] == undefined){dataSet.push(null)} else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
         var result = {columns: columns}
-      }'''
+      }; return result'''
 
   @property
   def axis(self):
@@ -641,9 +664,7 @@ class ChartBar(ChartLine):
 class ChartScatter(ChartLine):
   _type = 'scatter'
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){ 
         result = {'columns': [], type: options.type};
         result['columns'].push(['x'].concat(data.labels));
@@ -656,20 +677,20 @@ class ChartScatter(ChartLine):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in tempVal[name])){tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
+              if(!(rec[options.x_column] in tempVal[name])){
+                tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
               else {tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}}})});
         result = {'columns': [], 'xs': {}};
         options.y_columns.forEach(function(series){
-          result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); result.xs[series] = series +"_x"})
-      }'''
+          result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); 
+          result.xs[series] = series +"_x"})
+      }; return result'''
 
 
 class ChartPie(ChartLine):
   _type = 'pie'
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){ 
         result = {'columns': [], type: options.type};
         result['columns'].push(['x'].concat(data.labels));
@@ -683,15 +704,17 @@ class ChartPie(ChartLine):
           options.y_columns.forEach(function(name){
             labels[name] = true; 
             if(rec[name] !== undefined){
-              if(!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} else{temp[rec[options.x_column]][name] += rec[name]}}})});
+              if(!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} 
+              else{temp[rec[options.x_column]][name] += rec[name]}}})});
         columns = []; var labels = Object.keys(labels); var count = 0;
         for(var series in temp){
           var values = [count]; count += 1;
           labels.forEach(function(label){
-            if(temp[series][label] !== undefined){values.push(temp[series][label])} else{values.push(null)}});
+            if(temp[series][label] !== undefined){
+              values.push(temp[series][label])} else{values.push(null)}});
           columns.push(values)};
         var result = {columns: columns};
-      }'''
+      }; return result'''
 
   def labels(self, labels, series_id='x'):
     """
@@ -720,7 +743,7 @@ class ChartDonut(ChartPie):
 class ChartGauge(ChartPie):
   _type = 'gauge'
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     if data:
       return '%(chartId)s.load({columns: [["data", %(value)s]]})' % {'chartId': self.chartId, 'value': data}
 

@@ -3,6 +3,7 @@
 
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
+from epyk.core.js import JsUtils
 
 
 class OptionsLi(Options):
@@ -49,7 +50,7 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable')
+  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable', 'prefix', )
 
   @property
   def style(self):
@@ -134,13 +135,27 @@ class OptionsItems(Options):
     """
     Description:
     ------------
-    Change the type of items in the dynamic list
+    Change the type of items in the dynamic list.
     """
     return self._config_get("text")
 
   @items_type.setter
   def items_type(self, text):
     self._config(text)
+    self._config(text not in ('link', 'badge', 'text', 'icon', 'check'), name="items_space")
+
+  @property
+  def items_space(self):
+    """
+    Description:
+    ------------
+    Keep the LI margin between the items.
+    """
+    return self._config_get(True)
+
+  @items_space.setter
+  def items_space(self, flag):
+    self._config(flag)
 
   @property
   def info_icon(self):
@@ -271,6 +286,19 @@ class OptionsItems(Options):
   @draggable.setter
   def draggable(self, value):
     self._config(value, js_type=True)
+
+  @property
+  def prefix(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get("")
+
+  @prefix.setter
+  def prefix(self, value):
+    self._config(value)
 
 
 class OptionsTagItems(Options):
@@ -405,4 +433,273 @@ class OptionsTagItems(Options):
 
   @max_height.setter
   def max_height(self, num):
+    self._config(num)
+
+
+class OptionsListBrackets(Options):
+
+  def save(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(){ %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True, name="save")
+
+  def onMatchClick(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(data){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True, name="onMatchClick")
+
+  def onMatchHover(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(data, hover){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True, name="onMatchHover")
+
+  @property
+  def centerConnectors(self):
+    """
+    Description:
+    ------------
+    route connectors between matches instead of seats.
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param flag: Boolean.
+    """
+    return self._config_get(False)
+
+  @centerConnectors.setter
+  def centerConnectors(self, flag):
+    self._config(flag)
+
+  @property
+  def disableHighlight(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param flag: Boolean.
+    """
+    return self._config_get(False)
+
+  @disableHighlight.setter
+  def disableHighlight(self, flag):
+    self._config(flag)
+
+  @property
+  def skipSecondaryFinal(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param flag: Boolean.
+    """
+    return self._config_get(False)
+
+  @skipSecondaryFinal.setter
+  def skipSecondaryFinal(self, flag):
+    self._config(flag)
+
+  @property
+  def skipConsolationRound(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param flag: Boolean.
+    """
+    return self._config_get(False)
+
+  @skipConsolationRound.setter
+  def skipConsolationRound(self, flag):
+    self._config(flag)
+
+  @property
+  def skipGrandFinalComeback(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param flag: Boolean.
+    """
+    return self._config_get(False)
+
+  @skipGrandFinalComeback.setter
+  def skipGrandFinalComeback(self, flag):
+    self._config(flag)
+
+  @property
+  def dir(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param value: String.
+    """
+    return self._config_get("rl")
+
+  @dir.setter
+  def dir(self, value):
+    self._config(value)
+
+  @property
+  def userData(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :param value: String.
+    """
+    return self._config_get("")
+
+  @userData.setter
+  def userData(self, value):
+    self._config(value)
+
+  @property
+  def teamWidth(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :prop num: String.
+    """
+    return self._config_get("")
+
+  @teamWidth.setter
+  def teamWidth(self, num):
+    self._config(num)
+
+  @property
+  def scoreWidth(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :prop num: String.
+    """
+    return self._config_get("")
+
+  @scoreWidth.setter
+  def scoreWidth(self, num):
+    self._config(num)
+
+  @property
+  def matchMargin(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :prop num: String.
+    """
+    return self._config_get("")
+
+  @matchMargin.setter
+  def matchMargin(self, num):
+    self._config(num)
+
+  @property
+  def roundMargin(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      http://www.aropupu.fi/bracket/
+
+    Attributes:
+    ----------
+    :prop num: String.
+    """
+    return self._config_get("")
+
+  @roundMargin.setter
+  def roundMargin(self, num):
     self._config(num)

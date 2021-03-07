@@ -695,17 +695,24 @@ class OptionAutoComplete(OptionsInput):
   def reset(self, bool):
     self.set(bool)
 
-  @property
-  def select(self):
+  def on_select(self, js_funcs, profile=None):
     """
     Description:
-    ------------
-    """
-    return self.get(False)
+    -----------
+    Triggered when an item is selected from the menu.
+    The default action is to replace the text field's value with the value of the selected item.
 
-  @select.setter
-  def select(self, bool):
-    self.set(bool)
+    Related Pages:
+
+      https://api.jqueryui.com/autocomplete/#event-select
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    self._config("function(e, ui) {var value = ui.item.value; %s}" % js_funcs, js_type=True, name="select")
 
   @property
   def source(self):
@@ -743,7 +750,7 @@ class OptionAutoComplete(OptionsInput):
     self._config('''function(request, response) {
         var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
         response($.grep(%s, function(item){return matcher.test(item);}) );
-    }''' % values, "source")
+    }''' % values, "source", js_type=True)
 
 
 class OptionsDatePicker(OptionsInput):
@@ -753,7 +760,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    An input element that is to be updated with the selected date from the datepicker. Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
+    An input element that is to be updated with the selected date from the DatePicker.
+    Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
 
     Related Pages:
 
@@ -770,7 +778,9 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The dateFormat to be used for the altField option. This allows one date format to be shown to the user for selection purposes, while a different format is actually sent behind the scenes. For a full list of the possible formats see the formatDate function
+    The dateFormat to be used for the altField option.
+    This allows one date format to be shown to the user for selection purposes, while a different format is actually
+    sent behind the scenes. For a full list of the possible formats see the formatDate function
 
     Related Pages:
 
@@ -821,7 +831,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    A function that takes an input field and current datepicker instance and returns an options object to update the datepicker with. It is called just before the datepicker is displayed.
+    A function that takes an input field and current DatePicker instance and returns an options object to update the
+    DatePicker with. It is called just before the DatePicker is displayed.
 
     Related Pages:
 
@@ -855,7 +866,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    A URL of an image to use to display the datepicker when the showOn option is set to "button" or "both". If set, the buttonText option becomes the alt value and is not directly displayed.
+    A URL of an image to use to display the DatePicker when the showOn option is set to "button" or "both".
+    If set, the buttonText option becomes the alt value and is not directly displayed.
 
     Related Pages:
 
@@ -872,7 +884,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether the button image should be rendered by itself instead of inside a button element. This option is only relevant if the buttonImage option has also been set.
+    Whether the button image should be rendered by itself instead of inside a button element.
+    This option is only relevant if the buttonImage option has also been set.
 
     Related Pages:
 
@@ -906,7 +919,9 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    A function to calculate the week of the year for a given date. The default implementation uses the ISO 8601 definition: weeks start on a Monday; the first week of the year contains the first Thursday of the year.
+    A function to calculate the week of the year for a given date.
+    The default implementation uses the ISO 8601 definition:
+    weeks start on a Monday; the first week of the year contains the first Thursday of the year.
 
     Related Pages:
 
@@ -923,7 +938,7 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether the month should be rendered as a dropdown instead of text.
+    Whether the month should be rendered as a DropDown instead of text.
 
     Related Pages:
 
@@ -940,7 +955,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether the year should be rendered as a dropdown instead of text. Use the yearRange option to control which years are made available for selection.
+    Whether the year should be rendered as a DropDown instead of text.
+    Use the yearRange option to control which years are made available for selection.
 
     Related Pages:
 
@@ -1042,7 +1058,7 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The list of minimised day names, starting from Sunday, for use as column headers within the datepicker.
+    The list of minimised day names, starting from Sunday, for use as column headers within the DatePicker.
 
     Related Pages:
 
@@ -1076,7 +1092,10 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Set the date to highlight on first opening if the field is blank. Specify either an actual date via a Date object or as a string in the current dateFormat, or a number of days from today (e.g. +7) or a string of values and periods ('y' for years, 'm' for months, 'w' for weeks, 'd' for days, e.g. '+1m +7d'), or null for today.
+    Set the date to highlight on first opening if the field is blank.
+    Specify either an actual date via a Date object or as a string in the current dateFormat, or a number of days
+    from today (e.g. +7) or a string of values and periods ('y' for years, 'm' for months, 'w' for weeks, 'd'
+    for days, e.g. '+1m +7d'), or null for today.
 
     Related Pages:
 
@@ -1093,7 +1112,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Control the speed at which the datepicker appears, it may be a time in milliseconds or a string representing one of the three predefined speeds ("slow", "normal", "fast").
+    Control the speed at which the DatePicker appears, it may be a time in milliseconds or a string representing one
+    of the three predefined speeds ("slow", "normal", "fast").
 
     Related Pages:
 
@@ -1114,8 +1134,8 @@ class OptionsDatePicker(OptionsInput):
     return self.get(False)
 
   @inline.setter
-  def inline(self, bool):
-    self.set(bool)
+  def inline(self, flag):
+    self.set(flag)
 
   @property
   def firstDay(self):
@@ -1156,7 +1176,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Normally the previous and next links are disabled when not applicable (see the minDate and maxDate options). You can hide them altogether by setting this attribute to true.
+    Normally the previous and next links are disabled when not applicable (see the minDate and maxDate options).
+    You can hide them altogether by setting this attribute to true.
 
     Related Pages:
 
@@ -1241,7 +1262,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The list of abbreviated month names, as used in the month header on each datepicker and as requested via the dateFormat option.
+    The list of abbreviated month names, as used in the month header on each DatePicker and as requested via the
+    dateFormat option.
 
     Related Pages:
 
@@ -1258,7 +1280,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether the currentText, prevText and nextText options should be parsed as dates by the formatDate function, allowing them to display the target month names for example.
+    Whether the currentText, prevText and nextText options should be parsed as dates by the formatDate function,
+    allowing them to display the target month names for example.
 
     Related Pages:
 
@@ -1275,7 +1298,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The text to display for the next month link. With the standard ThemeRoller styling, this value is replaced by an icon.
+    The text to display for the next month link. With the standard ThemeRoller styling,
+    this value is replaced by an icon.
 
     Related Pages:
 
@@ -1309,7 +1333,9 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Called when the datepicker moves to a new month and/or year. The function receives the selected year, month (1-12), and the datepicker instance as parameters. this refers to the associated input field.
+    Called when the DatePicker moves to a new month and/or year.
+    The function receives the selected year, month (1-12), and the DatePicker instance as parameters.
+    this refers to the associated input field.
 
     Related Pages:
 
@@ -1321,39 +1347,37 @@ class OptionsDatePicker(OptionsInput):
   def onChangeMonthYear(self, value):
     self._config(value)
 
-  @property
-  def onClose(self):
+  def onClose(self, values, profile=False):
     """
     Description:
     ------------
-    Called when the datepicker is closed, whether or not a date is selected. The function receives the selected date as text ("" if none) and the datepicker instance as parameters. this refers to the associated input field.
+    Called when the DatePicker is closed, whether or not a date is selected.
+    The function receives the selected date as text ("" if none) and the DatePicker instance as parameters.
+    This refers to the associated input field.
 
     Related Pages:
 
       https://api.jqueryui.com/datepicker/#option-onClose
+
+
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self._config_get(None)
+    values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
+    self._config("function(dateText, inst){let data = dateText; %s}" % values)
 
-  @onClose.setter
-  def onClose(self, value):
-    self._config(value)
-
-  @property
-  def onSelect(self):
+  def onSelect(self, values, profile=False):
     """
     Description:
     ------------
-    Called when the datepicker is selected. The function receives the selected date as text and the datepicker instance as parameters. this refers to the associated input field.
+    Called when the DatePicker is selected.
+    The function receives the selected date as text and the DatePicker instance as parameters.
+    this refers to the associated input field.
 
     Related Pages:
 
       https://api.jqueryui.com/datepicker/#option-onSelect
     """
-    return self._config_get(None)
-
-  @onSelect.setter
-  def onSelect(self, values):
-    values = JsUtils.jsConvertFncs(values, toStr=True)
+    values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
     self._config("function(dateText, inst){let data = dateText; %s}" % values)
 
   @property

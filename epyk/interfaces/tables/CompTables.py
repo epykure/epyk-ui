@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import tables as html_tables
 
@@ -10,9 +12,10 @@ from epyk.interfaces.tables import CompPivot
 from epyk.interfaces.tables import CompTableGoogle
 
 
-class Tables(object):
-  def __init__(self, context):
-    self.context = context
+class Tables:
+
+  def __init__(self, ui):
+    self.page = ui.page
     # Default table configuration per available framework
     self.datatable = self.datatables.table
     self.tabulator = self.tabulators.table
@@ -58,8 +61,11 @@ class Tables(object):
     """
     Description:
     -----------
+    Interface to the Google Table interface.
+
+    In order to use it, the Google products need to be specially enabled.
     """
-    if not getattr(self.context.rptObj, '_with_google_imports', False):
+    if not getattr(self.page, '_with_google_imports', False):
       raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
 
     return CompTableGoogle.Google(self)
@@ -95,6 +101,8 @@ class Tables(object):
   @property
   def plotlys(self):
     """
+    Description:
+    -----------
     Interface to the different Tabulator configurations.
 
     Related Pages:
@@ -120,57 +128,76 @@ class Tables(object):
     """
     return CompDatatable.Datatables(self)
 
-  def config(self, htmlCode, visible=False, profile=None):
+  def config(self, html_code, visible=False, profile=None):
     """
     Description:
     -----------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param htmlCode:
-    :param visible:
-    :param profile:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param visible: Boolean. Optional. A flag to specific if the table is visible or just used as a cache.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return html_tables.HtmlTableConfig.ConfigTable(self.context.rptObj, htmlCode, visible, profile)
+    return html_tables.HtmlTableConfig.ConfigTable(self.page, html_code, visible, profile)
 
-  def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     -----------
 
-    Usage::
+    Usage:
+    -----
 
       simple_table = page.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
       simple_table.add({"COL1": "Value"})
 
     Attributes:
     ----------
-    :param records:
-    :param cols:
-    :param rows:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param records: List. Optional. The list of dictionaries with the input data.
+    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
+    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
+    table = html_tables.HtmlTable.Bespoke(self.page, records, cols, rows, width, height, html_code, options,
+                                          profile)
     return table
 
-  def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,
+           profile=None):
     """
+    Description:
+    -----------
 
-    Usage::
+    Usage:
+    -----
 
-      """
+    Attributes:
+    ----------
+    :param records: List. Optional. The list of dictionaries with the input data.
+    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
+    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.:
+    """
     width_cells, width_rows_header = 50, 100
     for rec in records:
       for c in cols:
         if c not in rec:
           rec[c] = 0
-    table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
+    table = html_tables.HtmlTable.Bespoke(
+      self.page, records, cols, rows, width, height, html_code, options, profile)
     table.css({"width": "%spx" % (width_rows_header + len(cols) * width_cells)})
-    # table[0][0]._vals = ""
     for i in table[1:]:
       for j in range(len(rows)):
         i[j].attr["name"] = "row_header"
@@ -191,31 +218,34 @@ class Tables(object):
     -----------
     Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param table:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     options = options or {}
-    copy_file = self.context.rptObj.ui.icons.awesome("fas fa-copy", text="Copy", width=(32, 'px'))
+    copy_file = self.page.ui.icons.awesome("fas fa-copy", text="Copy", width=(32, 'px'))
     copy_file.icon.style.css.font_factor(-5)
     copy_file.style.css.font_factor(-5)
     copy_file.span.style.css.margin = "0 0 -3px -3px"
     copy_file.click([table.js.copyToClipboard()])
-    csv_file = self.context.rptObj.ui.icons.awesome("fas fa-file-csv", text="Csv", width=(32, 'px'))
+    csv_file = self.page.ui.icons.awesome("fas fa-file-csv", text="Csv", width=(32, 'px'))
     csv_file.icon.style.css.font_factor(-5)
     csv_file.style.css.font_factor(-5)
     csv_file.span.style.css.margin = "0 0 -3px -3px"
     csv_file.click([table.js.download("csv", "data.csv")])
-    add_row = self.context.rptObj.ui.icons.awesome("fas fa-plus", text="New", width=(35, 'px'))
+    add_row = self.page.ui.icons.awesome("fas fa-plus", text="New", width=(35, 'px'))
     add_row.icon.style.css.font_factor(-5)
     add_row.style.css.font_factor(-5)
     add_row.span.style.css.margin = "0 3px -3px -3px"
     add_row.click([table.js.addRow(options.get("add", {}), True)])
-    del_row = self.context.rptObj.ui.icons.awesome("fas fa-trash-alt", text="Delete", width=(37, 'px'))
+    del_row = self.page.ui.icons.awesome("fas fa-trash-alt", text="Delete", width=(37, 'px'))
     del_row.icon.style.css.font_factor(-5)
     del_row.style.css.font_factor(-5)
     del_row.span.style.css.margin = "0 0 -3px -3px"
     del_row.click([table.js.clearData()])
-    container = self.context.rptObj.ui.div([copy_file, csv_file, add_row, del_row], align="right")
+    container = self.page.ui.div([copy_file, csv_file, add_row, del_row], align="right")
     return container

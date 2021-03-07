@@ -196,8 +196,8 @@ class Labels(DataClass):
     return self.get(True)
 
   @showZero.setter
-  def showZero(self, bool):
-    self.set(bool)
+  def showZero(self, flag):
+    self.set(flag)
 
   @property
   def fontSize(self):
@@ -281,8 +281,8 @@ class Labels(DataClass):
     return self.get(True)
 
   @textShadow.setter
-  def textShadow(self, bool):
-    self.set(bool)
+  def textShadow(self, flag):
+    self.set(flag)
 
   @property
   def shadowBlur(self):
@@ -366,8 +366,8 @@ class Labels(DataClass):
     return self.get(True)
 
   @arc.setter
-  def arc(self, bool):
-    self.set(bool)
+  def arc(self, flag):
+    self.set(flag)
 
   @property
   def position(self):
@@ -401,8 +401,8 @@ class Labels(DataClass):
     return self.get(True)
 
   @overlap.setter
-  def overlap(self, bool):
-    self.set(bool)
+  def overlap(self, flag):
+    self.set(flag)
 
   @property
   def outsidePadding(self):

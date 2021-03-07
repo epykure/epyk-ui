@@ -1,4 +1,3 @@
-
 from epyk.core.css.styles.classes import CssStyle
 
 
@@ -19,12 +18,14 @@ class CssDropDownMenuHoverAAfter(CssStyle.Style):
 
 
 class CssDropDownSubMenuPullLeft(CssStyle.Style):
-  _attrs = {'position': 'absolute', 'top': '0px', 'list-style-type': 'none', 'white-space': 'nowrap', 'margin': 0, 'padding': 0} # 'left': '0px',
+  _attrs = {'position': 'absolute', 'top': '0px', 'list-style-type': 'none', 'white-space': 'nowrap', 'margin': 0,
+            'padding': 0}  # 'left': '0px',
   classname = "menu .submenu .submenu"
 
 
 class CssDropDownMenu(CssStyle.Style):
-  _attrs = {'position': 'absolute', 'top': '0px', 'list-style-type': 'none', 'white-space': 'nowrap', 'margin': 0, 'padding': 0} # 'left': '0px',
+  _attrs = {'position': 'absolute', 'top': '0px', 'list-style-type': 'none', 'white-space': 'nowrap', 'margin': 0,
+            'padding': 0}  # 'left': '0px',
   classname = "menu ul.submenu"
 
 
@@ -33,7 +34,7 @@ class CssDropDownAfterMenu(CssStyle.Style):
   classname = "menu li a"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background': self.rptObj.theme.greys[0]})
+    self.css({'color': self.page.theme.greys[-1], 'background': self.page.theme.greys[0]})
 
 
 class CssDropDownCaret(CssStyle.Style):

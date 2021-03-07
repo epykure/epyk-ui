@@ -1,7 +1,7 @@
 """
 Related Pages:
 
-		https://www.w3schools.com/charsets/ref_html_entities_b.asp
+https://www.w3schools.com/charsets/ref_html_entities_b.asp
 """
 
 backcong = '&#8780'

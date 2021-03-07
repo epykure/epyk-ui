@@ -1,10 +1,10 @@
 
 
-class Dropdowns(object):
+class Dropdowns:
 
-  def __init__(self, context):
-    context.rptObj.jsImports.add("@popperjs/core")
-    self.context = context
+  def __init__(self, ui):
+    ui.page.jsImports.add("@popperjs/core")
+    self.page = ui.page
 
   def buttons(self, text, values, category="primary"):
     """
@@ -30,7 +30,7 @@ class Dropdowns(object):
     for v in values:
       schema['children'][1]['children'].append(
         {'type': 'link', 'css': None, 'class': 'dropdown-item', 'args': {'text': v, 'url': '#'}})
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     return button
 
   def menu(self, text, values):
@@ -52,8 +52,9 @@ class Dropdowns(object):
     ]}
 
     for v in values:
-      schema['children'].append({'type': 'link', 'css': None, 'class': 'dropdown-item', 'args': {'text': v, 'url': '#'}})
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+      schema['children'].append({'type': 'link', 'css': None, 'class': 'dropdown-item',
+                                 'args': {'text': v, 'url': '#'}})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     return button
 
   def text(self, values):
@@ -72,5 +73,5 @@ class Dropdowns(object):
     schema = {"type": 'div', 'class': 'dropdown-menu p-4 text-muted', 'css': None, 'children': []}
     for v in values:
       schema['children'].append({'type': 'p', 'css': None, 'class': None, 'args': {'text': v}})
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     return button

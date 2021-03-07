@@ -17,14 +17,15 @@ class Table(Html.Html):
   name = 'Ag Grid Table'
   requirements = ('ag-grid-community', )
 
-  def __init__(self, report, records, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Table, self).__init__(report, [], html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     self.config.update(options)
     if records is not None:
       self.config.data = records
 
-  def headers(self, colsDef):
+  def headers(self, cols_def):
     """
     Description:
     -----------
@@ -34,11 +35,11 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param colsDef:
+    :param cols_def:
     """
     for col in self.config['columnDefs']:
-      if col['colId'] in colsDef:
-        col.update(colsDef[col['colId']])
+      if col['colId'] in cols_def:
+        col.update(cols_def[col['colId']])
 
   @property
   def style(self):
@@ -120,7 +121,7 @@ class Table(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
     -----------
@@ -137,10 +138,11 @@ class Table(Html.Html):
     if data:
       return self.js.setRowData(data)
 
-    return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {'tableId': self.tableId, 'config': self.config, 'htmlCode': self.dom.varName}
+    return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
+      'tableId': self.tableId, 'config': self.config, 'htmlCode': component_id or self.dom.varName}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
@@ -438,7 +440,8 @@ class Column(DataClass):
     """
     Description:
     -----------
-    Set filtering on a column using the column definition property filter. The property can have one of the following values:
+    Set filtering on a column using the column definition property filter. The property can have one of the following
+    values:
 
     Related Pages:
 
@@ -740,8 +743,10 @@ class Column(DataClass):
     """
     Description:
     -----------
-    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the colDef.
-    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default, and then tailoring per column.
+    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+    colDef.
+    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default,
+    and then tailoring per column.
 
     Related Pages:
 
@@ -1031,7 +1036,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    To have one (the first) grid reflect column changes in another (the second), place the first grid's options in alignedGrids property of the second grids.
+    To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
+    alignedGrids property of the second grids.
 
     Related Pages:
 
@@ -1064,7 +1070,8 @@ class TableConfig(DataClass):
     This means the total width for all columns will be constant.
 
     You can also change the default behaviour for resizing.
-    Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when shift key is pressed.
+    Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when
+    shift key is pressed.
 
     Related Pages:
 
@@ -1145,7 +1152,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Set to true to have Enter key move focus to the cell below if not editing. The default is Enter key starts editing the currently focused cell.
+    Set to true to have Enter key move focus to the cell below if not editing.
+    The default is Enter key starts editing the currently focused cell.
 
     Related Pages:
 
@@ -1162,7 +1170,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    Set to true to have Enter key move focus to the cell below after Enter is pressed while editing. The default is editing will stop and focus will remain on the editing cell.
+    Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
+    The default is editing will stop and focus will remain on the editing cell.
 
     Related Pages:
 
@@ -1180,7 +1189,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     To enable pagination in, set the grid property pagination=true.
-    The following simple example shows this, the only difference to this and previous examples is the pagination=true property.
+    The following simple example shows this, the only difference to this and previous examples is the pagination=true
+    property.
 
     Related Pages:
 
@@ -1197,7 +1207,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored. See Customising Pagination.
+    How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored.
+    See Customising Pagination.
     Default: 100
 
     Related Pages:
@@ -1252,7 +1263,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
-    This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you get when inside Excel.
+    This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you
+    get when inside Excel.
 
     Related Pages:
 
@@ -1304,7 +1316,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the page changes.
+    The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the
+    page changes.
 
     Related Pages:
 
@@ -1356,7 +1369,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Column animations happen when you move a column. The default is for animations to be turned on.
-    It is recommended that you leave the column move animations on unless your target platform (browser and hardware) is to slow to manage the animations.
+    It is recommended that you leave the column move animations on unless your target platform (browser and hardware)
+    is to slow to manage the animations.
     To turn OFF column animations, set the grid property suppressColumnMoveAnimation=true.
 
     Related Pages:
@@ -1375,7 +1389,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Set to true to allow multiple rows to be selected with clicks.
-    For example, if you click to select one row and then click to select another row, the first row will stay selected as well.
+    For example, if you click to select one row and then click to select another row, the first row will stay selected
+    as well.
     Clicking a selected row in this mode will deselect the row.
     This is useful for touch devices where Ctrl and Shift clicking is not an option.
 
@@ -1395,7 +1410,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
-    By default the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another row is selected in its place).
+    By default the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
+    row is selected in its place).
 
     Related Pages:
 
@@ -1413,7 +1429,8 @@ class TableConfig(DataClass):
     Description:
     -----------
     Type of row selection, set to either 'single' or 'multiple' to enable selection.
-    'single' will use single row selection, such that when you select a row, any previously selected row gets unselected.
+    'single' will use single row selection, such that when you select a row, any previously selected row gets
+    unselected.
     'multiple' allows multiple rows to be selected.
 
     Related Pages:
@@ -1448,7 +1465,8 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to also select the row when the row is clicked.
+    If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to
+    also select the row when the row is clicked.
 
     Related Pages:
 
@@ -1465,8 +1483,10 @@ class TableConfig(DataClass):
     """
     Description:
     -----------
-    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the colDef.
-    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default, and then tailoring per column.
+    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+    colDef.
+    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common
+    default, and then tailoring per column.
 
     Related Pages:
 

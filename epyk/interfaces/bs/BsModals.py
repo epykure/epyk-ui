@@ -2,12 +2,13 @@
 from epyk.fwk.bs.html import BsHtml
 
 
-class Modals(object):
+class Modals:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def modal(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None, profile=False):
+  def modal(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None,
+            profile=False):
     """
     Description:
     ------------
@@ -25,12 +26,13 @@ class Modals(object):
     :param options:
     :param profile:
     """
-    container = BsHtml.BsModals(self.context.rptObj, component or [], title, width, height, options or {}, profile)
+    container = BsHtml.BsModals(self.page, component or [], title, width, height, options or {}, profile)
     if sizing is not None:
       container.dialog.attr["class"].add("modal-%s" % sizing)
     return container
 
-  def popup(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None, profile=False):
+  def popup(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None,
+            profile=False):
     """
     Description:
     ------------
@@ -49,12 +51,13 @@ class Modals(object):
     :param options:
     :param profile:
     """
-    container = BsHtml.BsModals(self.context.rptObj, component or [], title, width, height, options or {}, profile)
+    container = BsHtml.BsModals(self.page, component or [], title, width, height, options or {}, profile)
     if sizing is not None:
       container.dialog.attr["class"].add("modal-%s" % sizing)
     return container
 
-  def static(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None, profile=False):
+  def static(self, component=None, title=None, width=(100, "%"), height=(None, "px"), sizing=None, options=None,
+             profile=False):
     """
     Description:
     ------------
@@ -73,7 +76,7 @@ class Modals(object):
     :param options:
     :param profile:
     """
-    container = BsHtml.BsModals(self.context.rptObj, component or [], title, width, height, options or {}, profile)
+    container = BsHtml.BsModals(self.page, component or [], title, width, height, options or {}, profile)
     if sizing is not None:
       container.dialog.attr["class"].add("modal-%s" % sizing)
     container.attr['data-backdrop'] = "static"
@@ -101,10 +104,10 @@ class Modals(object):
     :param options:
     :param profile:
     """
-    container = BsHtml.BsModals(self.context.rptObj, component or [], title, width, height, options or {}, profile)
+    container = BsHtml.BsModals(self.page, component or [], title, width, height, options or {}, profile)
     if sizing is not None:
       container.dialog.attr["class"].add("modal-%s" % sizing)
-    self.button = self.context.rptObj.web.bs.button(event, category=category)
+    self.button = self.page.web.bs.button(event, category=category)
     self.button.options.managed = False
     self.button.attr["data-dismiss"] = "modal"
     footer = container.footer
@@ -133,18 +136,18 @@ class Modals(object):
     :param options:
     :param profile:
     """
-    container = BsHtml.BsModals(self.context.rptObj, component or [], title, width, height, options or {}, profile)
+    container = BsHtml.BsModals(self.page, component or [], title, width, height, options or {}, profile)
     if sizing is not None:
       container.dialog.attr["class"].add("modal-%s" % sizing)
     self.buttons = []
 
     header = container.header
-    closure = self.context.rptObj.web.bs.buttons.close(dismiss='modal')
+    closure = self.page.web.bs.buttons.close(dismiss='modal')
     closure.options.managed = False
     header += closure
     footer = container.footer
     for b in events:
-      button = self.context.rptObj.web.bs.button(b, category=category)
+      button = self.page.web.bs.button(b, category=category)
       button.options.managed = False
       footer += button
     return container

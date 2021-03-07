@@ -149,7 +149,7 @@ class PyOuts(object):
           htmlParts.append(component.html())
         #
         cssParts.update(component.style.get_classes_css())
-    onloadParts, onloadPartsCommon = list(self._report._jsText), {}
+    onloadParts, onloadPartsCommon = list(self._report.properties.js.frgs), {}
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
@@ -180,7 +180,8 @@ class PyOuts(object):
       if component.name == 'Body':
         for event, source_fncs in component._browser_data['keys'].items():
           for source, event_fncs in source_fncs.get_event().items():
-            str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+            str_fncs = JsUtils.jsConvertFncs(
+              event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
             onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
         continue
 
@@ -188,17 +189,18 @@ class PyOuts(object):
 
       for event, source_fncs in component._browser_data['mouse'].items():
         for source, event_fncs in source_fncs.items():
-          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
           if 'sub_items' in event_fncs:
             # This is using jquery
             # TODO: Find a way to replace Jquery
-            onloadParts.append("%s.on('%s', '%s', function(event){%s})" % (source, event, event_fncs['sub_items'], str_fncs))
+            onloadParts.append(
+              "%s.on('%s', '%s', function(event){%s})" % (source, event, event_fncs['sub_items'], str_fncs))
           else:
             onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
       for event, source_fncs in component._browser_data['keys'].items():
         for source, event_fncs in source_fncs.get_event().items():
-          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
           onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
     # Add the page on document ready functions
@@ -215,7 +217,7 @@ class PyOuts(object):
     else:
       importMng = Imports.ImportManager(report=self._report)
     results = {
-      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)),
+      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self._report.properties.css.text),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       'jsFrgsCommon': onloadPartsCommon, # This is only used in some specific web frameworks and it is better to keep the data as list

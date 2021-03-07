@@ -6,10 +6,10 @@ from epyk.core.html import graph
 from epyk.interfaces import Arguments
 
 
-class Pictogram(object):
+class Pictogram:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def path(self, path, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100)):
     """
@@ -31,10 +31,10 @@ class Pictogram(object):
     x, y = path.split(",", 1)
     width = Arguments.size(width, unit='px')
     height = Arguments.size(height, unit="px")
-    html_svg = graph.GraphSvg.SVG(self.context.rptObj, width=(viewbox[0], "px"), height=(viewbox[1], "px"))
+    html_svg = graph.GraphSvg.SVG(self.page, width=(viewbox[0], "px"), height=(viewbox[1], "px"))
     html_svg.style.css.width = width[0]
     html_svg.style.css.height = height[0]
-    html_svg.path(fill=fill or self.context.rptObj.theme.greys[-1], stroke=stroke, x=x[1:] if x.startswith("M") else x, y=y)
+    html_svg.path(fill=fill or self.page.theme.greys[-1], stroke=stroke, x=x[1:] if x.startswith("M") else x, y=y)
     return html_svg
 
   def paths(self, paths, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100)):
@@ -56,12 +56,12 @@ class Pictogram(object):
     """
     width = Arguments.size(width, unit='px')
     height = Arguments.size(height, unit="px")
-    html_svg = graph.GraphSvg.SVG(self.context.rptObj, width=(viewbox[0], "px"), height=(viewbox[1], "px"))
+    html_svg = graph.GraphSvg.SVG(self.page, width=(viewbox[0], "px"), height=(viewbox[1], "px"))
     html_svg.style.css.width = width[0]
     html_svg.style.css.height = height[0]
     for path in paths:
       x, y = path.split(",", 1)
-      html_svg.path(fill=fill or self.context.rptObj.theme.greys[-1], stroke=stroke, x=x[1:] if x.startswith("M") else x, y=y)
+      html_svg.path(fill=fill or self.page.theme.greys[-1], stroke=stroke, x=x[1:] if x.startswith("M") else x, y=y)
     return html_svg
 
   def arrow(self, width=(21, "px"), height=(12, "px")):
@@ -77,7 +77,7 @@ class Pictogram(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     """
-    html_svg = graph.GraphSvg.SVG(self.context.rptObj, width=width, height=height)
+    html_svg = graph.GraphSvg.SVG(self.page, width=width, height=height)
     html_svg.style.css.width = 21
     html_svg.style.css.height = 12
     html_svg.path(fill="rgb(0, 117, 235)", x=0.0917969,
@@ -100,7 +100,7 @@ class Pictogram(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     """
-    html_svg = graph.GraphSvg.SVG(self.context.rptObj, width=(619, "px"), height=(423, "px"))
+    html_svg = graph.GraphSvg.SVG(self.page, width=(619, "px"), height=(423, "px"))
     html_svg.style.css.width = 200
     html_svg.style.css.height = 100
     html_svg.path(fill="red", x=31.5, y="49.6C55 41.5 59 20.4 56 1c0-.7.6-1.2 1.2-1C79.7 11 105 35 105 71c0 27.6-21.4 52-52.5 52a50 50 0 0 1-28.2-92.7c.6-.4 1.4 0 1.4.7.3 3.7 1.3 13 5.4 18.6h.4z")
@@ -108,7 +108,7 @@ class Pictogram(object):
 
   def gout(self):
     """"""
-    svg = graph.GraphSvg.SVG(self.context.rptObj, width=(1199.96, "px"), height=(1014.39, "px"))
+    svg = graph.GraphSvg.SVG(self.page, width=(1199.96, "px"), height=(1014.39, "px"))
     svg.style.css.width = 33
     svg.style.css.height = 33
     svg.path(fill='#2dbeff', x=531.96,
@@ -159,7 +159,7 @@ class Pictogram(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     """
-    svg = self.path(fill=fill or self.context.rptObj.theme.success[-1], stroke=border, width=width, height=height,
+    svg = self.path(fill=fill or self.page.theme.success[-1], stroke=border, width=width, height=height,
                     path="M4.43,63.63c-2.869-2.755-4.352-6.42-4.427-10.11c-0.074-3.689,1.261-7.412,4.015-10.281 c2.752-2.867,6.417-4.351,10.106-4.425c3.691-0.076,7.412,1.255,10.283,4.012l24.787,23.851L98.543,3.989l1.768,1.349l-1.77-1.355 c0.141-0.183,0.301-0.339,0.479-0.466c2.936-2.543,6.621-3.691,10.223-3.495V0.018l0.176,0.016c3.623,0.24,7.162,1.85,9.775,4.766 c2.658,2.965,3.863,6.731,3.662,10.412h0.004l-0.016,0.176c-0.236,3.558-1.791,7.035-4.609,9.632l-59.224,72.09l0.004,0.004 c-0.111,0.141-0.236,0.262-0.372,0.368c-2.773,2.435-6.275,3.629-9.757,3.569c-3.511-0.061-7.015-1.396-9.741-4.016L4.43,63.63 L4.43,63.63z"
     )
     return svg

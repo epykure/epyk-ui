@@ -6,6 +6,7 @@ from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
+from epyk.core.html.options import OptChart
 
 
 class OptionHover(Options):
@@ -138,8 +139,8 @@ class OptionDropShadow(Options):
 
 class OptionLabels(Options):
 
-  def formatter(self, jsFncs):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+  def formatter(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def style(self):
@@ -445,7 +446,9 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config(
+      "function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
+        jsFncs, toStr=True, profile=profile), js_type=True)
 
   def mouseMove(self, jsFncs, profile=None):
     """
@@ -462,7 +465,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def legendClick(self, jsFncs, profile=None):
     """
@@ -479,7 +483,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, seriesIndex, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, seriesIndex, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def markerClick(self, jsFncs, profile=None):
     """
@@ -496,7 +501,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, seriesIndex, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, seriesIndex, options){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def selection(self, jsFncs, profile=None):
     """
@@ -514,7 +520,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def zoomed(self, jsFncs, profile=None):
     """
@@ -532,7 +539,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def scrolled(self, jsFncs, profile=None):
     """
@@ -550,7 +558,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def animationEnd(self, jsFncs, profile=None):
     """
@@ -567,7 +576,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def updated(self, jsFncs, profile=None):
     """
@@ -584,7 +594,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def mounted(self, jsFncs, profile=None):
     """
@@ -601,7 +612,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   def beforeMount(self, jsFncs, profile=None):
     """
@@ -618,7 +630,8 @@ class OptionEvents(Options):
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+    self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
 
 class OptionChart(Options):
@@ -744,8 +757,9 @@ class OptionTotal(Options):
   def label(self, value):
     self._config(value)
 
-  def formatter(self, jsFncs):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+  def formatter(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def formatters(self):
@@ -766,7 +780,8 @@ class OptionFormatters:
     :param thousand_sep:
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    self.__option._config("function (value){return accounting.formatNumber(value, %s, %s)}" % (digit, thousand_sep), self.__name, True)
+    self.__option._config("function (value){return accounting.formatNumber(value, %s, %s)}" % (
+      digit, thousand_sep), self.__name, True)
 
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -780,7 +795,8 @@ class OptionFormatters:
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s)}" % (symbol, digit, thousand_sep, decimal_sep), self.__name, True)
+    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s)}" % (
+      symbol, digit, thousand_sep, decimal_sep), self.__name, True)
 
   @packageImport("accounting")
   def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
@@ -802,7 +818,9 @@ class OptionFormatters:
       factor, digits, thousand_sep, alias), self.__name, True)
 
   def mapTo(self, mapping):
-    self.__option._config("function (value){var mapping = %s; if (value in mapping){return mapping[value]}; return value}" % mapping, self.__name, js_type=True)
+    self.__option._config(
+      "function (value){var mapping = %s; if (value in mapping){return mapping[value]}; return value}" % mapping,
+      self.__name, js_type=True)
 
 
 class OptionDataLabels(Options):
@@ -851,8 +869,8 @@ class OptionDataLabels(Options):
   def total(self):
     return self._config_sub_data("total", OptionTotal)
 
-  def formatter(self, jsFncs):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+  def formatter(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def formatters(self):
@@ -1004,8 +1022,8 @@ class OptionLegend(Options):
 
 class OptionY(Options):
 
-  def formatter(self, jsFncs):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), js_type=True)
+  def formatter(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def formatters(self):
@@ -1299,31 +1317,11 @@ class plotOptionsRadial(Options):
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
-class OptionsLine(Options):
+class OptionsLine(OptChart.OptionsChart):
 
   @property
   def chart(self):
     return self._config_sub_data("chart", OptionChart)
-
-  @property
-  def colors(self):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https://apexcharts.com/docs/options/colors/
-
-    Attributes:
-    ----------
-    :prop values: List. The color codes
-    """
-    return self._config_get()
-
-  @colors.setter
-  def colors(self, valuea):
-    self._config(valuea)
 
   @property
   def grid(self):
@@ -1378,6 +1376,10 @@ class OptionsLine(Options):
 
   def get_series(self, i=0):
     return self.js_tree["series"][i]
+
+  @property
+  def all_series(self):
+    return self.js_tree.get("series", [])
 
   def add_responsive(self):
     return self._config_sub_data_enum("responsive", OptionResponsive)

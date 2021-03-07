@@ -7,8 +7,7 @@ from epyk.core.html.options import Options
 
 
 class OptionsPivot(Options):
-  component_properties = ('aggregator', 'aggregatorName', 'showUI',
-                          'dataClass')
+  component_properties = ('aggregator', 'aggregatorName', 'showUI', 'dataClass')
 
   @property
   def aggregator(self):

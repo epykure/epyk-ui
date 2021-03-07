@@ -2,9 +2,10 @@
 from epyk.core.html.graph import GraphDC
 
 
-class DC(object):
-  def __init__(self, context):
-    self.parent = context
+class DC:
+
+  def __init__(self, ui):
+    self.page = ui.page
     self.chartFamily = "DC"
 
   def set_crossfilter(self, record, y_columns, x_axis, varName, extra_cols=None):
@@ -28,7 +29,7 @@ class DC(object):
 
     if not isinstance(x_axis, tuple):
       x_axis = (x_axis, str)
-    crossfilter = self.parent.context.rptObj.js.data.crossfilter(record, "%s_xf" % varName)
+    crossfilter = self.page.js.data.crossfilter(record, "%s_xf" % varName)
     if len(y_columns) == 1:
       dimension = crossfilter.dimension([x_axis] + (extra_cols or []), '%s_xf_dim' % varName)
       group = dimension.group('%s_xf_group' % varName).reduceSum(y_columns[0])
@@ -37,14 +38,14 @@ class DC(object):
       group = dimension.group('%s_xf_group' % varName)
 
     #
-    self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf" % varName] = crossfilter.toStr()
-    self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_dim" % varName] = dimension.toStr()
-    self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_group" % varName] = group.toStr()
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf" % varName] = crossfilter.toStr()
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_dim" % varName] = dimension.toStr()
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_group" % varName] = group.toStr()
 
     return {"crossfilter": crossfilter, 'dimension': dimension, 'group': group}
 
   def line(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -67,12 +68,12 @@ class DC(object):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if isinstance(y_columns, list):
-      line_chart = self.series(record, y_columns, x_axis, 'line', title, profile, options, width, height, htmlCode)
+      line_chart = self.series(record, y_columns, x_axis, 'line', title, profile, options, width, height, html_code)
     else:
-      line_chart = GraphDC.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+      line_chart = GraphDC.ChartLine(self.page, width, height, title, options or {}, html_code, profile)
       line_chart.dom.height(height[0]).x().yAxisLabel(y_columns).renderArea(True)
       if record is not None:
         self.set_crossfilter(record, y_columns, x_axis)
@@ -81,7 +82,7 @@ class DC(object):
     return line_chart
 
   def series(self, record=None, y_columns=None, x_axis=None, series_type='line', title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -103,15 +104,15 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
     pivot_rec = []
     for rec in record:
       pivot_rec.extend([{'x': rec[x_axis], "name": "Series %s" % y, "y": rec[y]} for y in y_columns])
 
-    line_chart = GraphDC.ChartSeries(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    line_chart = GraphDC.ChartSeries(self.page, width, height, title, options or {}, html_code, profile)
     cross_filter = self.set_crossfilter(pivot_rec, ["y"], "x", line_chart.htmlCode, extra_cols=[('name', str)])
-    #self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return [d.name, +d.x]})" % {'cId': line_id, 'data': pivot_rec}
+    #self.page._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return [d.name, +d.x]})" % {'cId': line_id, 'data': pivot_rec}
     if series_type == 'line':
       line_chart.dom.line().height(height[0]).x().seriesAccessorByKey(1).keyAccessor(0).valueAccessor().elasticY(True) # .dimension("%s_dim" % line_id).group("%(cId)s_dim.group().reduceSum(function(d) {return d.y ;})" % {'cId': line_id})
       line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
@@ -131,7 +132,7 @@ class DC(object):
     return line_chart
 
   def scatter(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -153,12 +154,12 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
     if isinstance(y_columns, list):
-      line_chart = self.series(record, y_columns, x_axis, 'scatter', title, profile, options, width, height, htmlCode)
+      line_chart = self.series(record, y_columns, x_axis, 'scatter', title, profile, options, width, height, html_code)
     else:
-      line_chart = GraphDC.ChartScatter(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+      line_chart = GraphDC.ChartScatter(self.page, width, height, title, options or {}, html_code, profile)
       line_chart.dom.height(height[0]).x().yAxisLabel(y_columns)
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, line_chart.htmlCode)
@@ -166,7 +167,7 @@ class DC(object):
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -185,13 +186,13 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
 
     if isinstance(y_columns, list):
-      line_chart = self.series(record, y_columns, x_axis, 'step', title, profile, options, width, height, htmlCode)
+      line_chart = self.series(record, y_columns, x_axis, 'step', title, profile, options, width, height, html_code)
     else:
-      line_chart = GraphDC.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+      line_chart = GraphDC.ChartLine(self.page, width, height, title, options or {}, html_code, profile)
       line_chart.dom.height(height[0]).x().yAxisLabel(y_columns).renderArea(True).curveStepBefore()
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, line_chart.htmlCode)
@@ -199,7 +200,7 @@ class DC(object):
     return line_chart
 
   def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -218,12 +219,12 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
     if isinstance(y_columns, list):
-      bar_chart = self.series(record, y_columns, x_axis, 'bar', title, profile, options, width, height, htmlCode)
+      bar_chart = self.series(record, y_columns, x_axis, 'bar', title, profile, options, width, height, html_code)
     else:
-      bar_chart = GraphDC.ChartBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+      bar_chart = GraphDC.ChartBar(self.page, width, height, title, options or {}, html_code, profile)
       bar_chart.dom.height(height[0]).x().controlsUseVisibility(True).yAxisLabel(y_columns)
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, bar_chart.htmlCode)
@@ -231,7 +232,7 @@ class DC(object):
     return bar_chart
 
   def hbar(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -250,9 +251,9 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
-    bar_chart = GraphDC.ChartRow(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    bar_chart = GraphDC.ChartRow(self.page, width, height, title, options or {}, html_code, profile)
     line_id = bar_chart.htmlCode
     bar_chart.dom.height(height[0]).x().chartGroup(line_id).elasticX(True)
     if record is not None:
@@ -261,7 +262,7 @@ class DC(object):
     return bar_chart
 
   def pie(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -283,9 +284,9 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
-    pie_chart = GraphDC.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    pie_chart = GraphDC.ChartPie(self.page, width, height, title, options or {}, html_code, profile)
     pie_chart.dom.height(height[0])
     if record is not None:
       cross_filter = self.set_crossfilter(record, y_column, x_axis, pie_chart.htmlCode)
@@ -293,7 +294,7 @@ class DC(object):
     return pie_chart
 
   def sunburst(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+           height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -317,16 +318,16 @@ class DC(object):
     :param xAxisOrder:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
-    pie_chart = GraphDC.ChartSunburst(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    pie_chart = GraphDC.ChartSunburst(self.page, width, height, title, options or {}, html_code, profile)
     line_id = pie_chart.htmlCode
-    self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return +d['%(x)s'];})" % {'cId': line_id, 'data': record, 'x': x_axis}
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return +d['%(x)s'];})" % {'cId': line_id, 'data': record, 'x': x_axis}
     pie_chart.dom.dimension("%s_dim" % line_id).group("%(cId)s_dim.group().reduceSum(function(d) {return d['%(y)s'] ;})" % {'cId': line_id, 'y': y_column})
     return pie_chart
 
   def bubble(self, record=None, y_columns=None, x_axis=None, r_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-             height=(330, "px"), htmlCode=None):
+             height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -349,13 +350,13 @@ class DC(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode:
+    :param html_code:
     """
     options = options or {}
     if isinstance(y_columns, list):
-      bubble_chart = self.series(record, y_columns, x_axis, 'bubble', title, profile, options, width, height, htmlCode)
+      bubble_chart = self.series(record, y_columns, x_axis, 'bubble', title, profile, options, width, height, html_code)
     else:
-      bubble_chart = GraphDC.ChartBubble(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+      bubble_chart = GraphDC.ChartBubble(self.page, width, height, title, options or {}, html_code, profile)
       bubble_chart.dom.height(height[0]).x().yAxisLabel(y_columns).keyAccessor(0).radiusValueAccessorByKey(1, statc_factor=options.get('statc_factor'))
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, bubble_chart.htmlCode, extra_cols=[(r_axis, int)])

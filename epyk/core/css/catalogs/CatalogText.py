@@ -174,3 +174,22 @@ class CatalogEditor(Catalog.CatalogGroup):
     :return:
     """
     return self._set_class(CssStylesCode.CMEditorActiveLine)
+
+
+class CatalogFormulas(Catalog.CatalogGroup):
+
+  def mjx(self):
+    """
+    Description:
+    ------------
+    Group for the CSS Class for the codemirror container.
+    """
+    return self._set_class(CssStylesCode.Mjx)
+
+  def container(self):
+    """
+    Description:
+    ------------
+    Group for the CSS Class for the codemirror container.
+    """
+    return self._set_class(CssStylesCode.MjxContainer)

@@ -4,10 +4,10 @@
 from epyk.fwk.mt.js import JsMdcComponents
 
 
-class Menu(object):
+class Menu:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def surface(self):
     """
@@ -19,7 +19,7 @@ class Menu(object):
       https://material.io/develop/web/components/menu-surface/
     """
     schema = {"type": 'div', 'class': None, 'css': None}
-    menu = self.context.rptObj.web.mt.composite(schema, options={"reset_class": True})
+    menu = self.page.web.mt.composite(schema, options={"reset_class": True})
 
     dom_obj = JsMdcComponents.MenuSurface(menu)
     menu.style.builder(menu.style.varName, dom_obj.instantiate("#%s" % menu.htmlCode))
@@ -39,8 +39,8 @@ class Menu(object):
     :param text:
     :param surface:
     """
-    button = self.context.rptObj.ui.button(text)
+    button = self.page.ui.button(text)
     button.set_attrs({"class": "menu-surface-button", 'css': None})
-    menu = self.context.rptObj.ui.div([button, surface])
+    menu = self.page.ui.div([button, surface])
     menu.set_attrs({"class": "mdc-menu-surface--anchor", 'css': None})
     return menu

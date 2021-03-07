@@ -6,12 +6,14 @@ from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
 
 
-class Links(object):
+class Links:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def external(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def external(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False,
+               html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -42,7 +44,7 @@ class Links(object):
     :param helper: String. Optional. A tooltip helper
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -50,13 +52,16 @@ class Links(object):
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    text = self.page.py.encode_html(text)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
+                                            dft_options, profile)
     if align == "center":
-      self.context.rptObj.ui.div(html_link, align=align)
+      self.page.ui.div(html_link, align=align)
     return html_link
 
-  def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, html_code=None,
+             options=None, profile=None):
     """
     Description:
     ------------
@@ -80,6 +85,7 @@ class Links(object):
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
+    :param html_code:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -87,12 +93,15 @@ class Links(object):
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration,
+                                            html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     return html_link
 
-  def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'),
+           decoration=False, html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -120,7 +129,7 @@ class Links(object):
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -128,14 +137,16 @@ class Links(object):
     options = options or {}
     if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
       url = "//%s" % url
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
+                                            options, profile)
     if tooltip is not None:
       html_link.tooltip(tooltip)
     if align == "center":
-      self.context.rptObj.ui.div(html_link, align=align)
+      self.page.ui.div(html_link, align=align)
     return html_link
 
-  def data(self, text, value, width=(None, '%'), height=(None, 'px'), format='txt', options=None, profile=None):
+  @html.Html.css_skin()
+  def data(self, text, value, width=(None, '%'), height=(None, 'px'), fmt='txt', options=None, profile=None):
     """
     Description:
     ------------
@@ -161,16 +172,18 @@ class Links(object):
     :param value: String. The value to be displayed to this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param format: String. Optional. The downloaded data format.
+    :param fmt: String. Optional. The downloaded data format.
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storag.e
     """
     height = Arguments.size(height, unit="px")
-    html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
+    html_data = html.HtmlLinks.DataLink(self.page, text, value, width=width, height=height, fmt=fmt, options=options,
+                                        profile=profile)
     return html_data
 
+  @html.Html.css_skin()
   def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False,
-              htmlCode=None, options=None, profile=None):
+              html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -188,7 +201,7 @@ class Links(object):
     :param color: String. Optional. The font color in the component. Default inherit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: String. Optional. Optional. A flag to set the component performance storage
     """
@@ -196,20 +209,23 @@ class Links(object):
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
+                                            dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
-    html_link.style.css.background = color or self.context.rptObj.theme.colors[-1]
-    html_link.style.css.border = "1px solid %s" % (color or self.context.rptObj.theme.colors[-1])
+    html_link.style.css.background = color or self.page.theme.colors[-1]
+    html_link.style.css.border = "1px solid %s" % (color or self.page.theme.colors[-1])
     if icon is not None:
-      html_link.icon.style.css.color = self.context.rptObj.theme.colors[0]
-    html_link.style.css.color = self.context.rptObj.theme.colors[0]
+      html_link.icon.style.css.color = self.page.theme.colors[0]
+    html_link.style.css.color = self.page.theme.colors[0]
     html_link.style.css.margin_top = 5
     html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
     html_link.style.css.margin_bottom = 5
     return html_link
 
-  def upload(self, url="#", text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False, align="left", htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def upload(self, url="#", text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False,
+             align="left", html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -226,7 +242,8 @@ class Links(object):
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param align:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -234,7 +251,8 @@ class Links(object):
     dft_options = {"target": '_self'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
+                                            dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     html_link.style.css.remove("border", set_none=True)
@@ -251,7 +269,9 @@ class Links(object):
       html_link.style.css.float = align
     return html_link
 
-  def download(self, url="#", text="", icon="fas fa-file-download", helper=None, height=(None, 'px'), decoration=False, align="left", htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def download(self, url="#", text="", icon="fas fa-file-download", helper=None, height=(None, 'px'), decoration=False,
+               align="left", html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -268,7 +288,8 @@ class Links(object):
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param align:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -276,7 +297,8 @@ class Links(object):
     dft_options = {"target": '_self'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
+                                            dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     html_link.style.css.remove("border", set_none=True)

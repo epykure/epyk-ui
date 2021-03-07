@@ -4,53 +4,57 @@
 from epyk.core.js import JsUtils
 
 
-class JsIf(object):
+class JsIf:
 
-  def __init__(self, jsCondition, jsFncs, context=None):
+  def __init__(self, jsCondition, jsFncs, context=None, profile=False):
     """
     Description:
     ------------
     Create a JavaScript If statement
 
-    Usage::
+    Usage:
+    -----
 
       JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
 
     Attributes:
     ----------
-    :param jsCondition: The Javascript condition. Can be a JsBoolean object
-    :param jsFncs: The Javascript functions
-    :param context: Optional. Dictionary. Meta data concerning the context
+    :param jsCondition: String. The Javascript condition. Can be a JsBoolean object.
+    :param jsFncs: List | String. Optional. The Javascript functions.
+    :param context: Page. Optional. Dictionary. Meta data concerning the context.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     self._context = context
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
-    self._js = [(jsCondition, jsFncs)]
+    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
+    self._js = [(jsCondition, js_funcs)]
     self.__jsElse = None
 
-  def elif_(self, jsCondition, jsFncs):
+  def elif_(self, jsCondition, jsFncs, profile=False):
     """
     Description:
     ------------
-    Add a Javascript elif statement to the loop
+    Add a Javascript elif statement to the loop.
 
-    Usage::
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param jsCondition: The Javascript condition. Can be a JsBoolean object
-    :param jsFncs: The Javascript functions
+    :param jsCondition: String. The Javascript condition. Can be a JsBoolean object.
+    :param jsFncs: List | String. Optional. The Javascript functions.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
 
-    :return: The If object to allow the chaining
+    :return: The If object to allow the chaining.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
-    self._js.append((jsCondition, jsFncs))
+    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
+    self._js.append((jsCondition, js_funcs))
     return self
 
-  def else_(self, jsFncs):
+  def else_(self, jsFncs, profile=False):
     """
     Description:
     ------------
-    Add the Javascript else statement to the loop
+    Add the Javascript else statement to the loop.
 
     Usage::
 
@@ -58,19 +62,21 @@ class JsIf(object):
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript functions
+    :param jsFncs: List | String. The Javascript functions.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
 
-    :return: The If object to allow the chaining
+    :return: The If object to allow the chaining.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
-    self.__jsElse = jsFncs
+    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
+    self.__jsElse = js_funcs
     return self
 
   def toStr(self):
-    strData = ["if(%s){%s}" % (self._js[0][0], ";".join(map(lambda x: str(x),  self._js[0][1])))]
-    for condition, fncs in self._js[1:]:
-      strData.append("else if(%s){%s}" % (condition, ";".join(fncs)))
+    str_data = ["if(%s){%s}" % (self._js[0][0], ";".join(map(lambda x: str(x),  self._js[0][1])))]
+    for condition, funcs in self._js[1:]:
+      str_data.append("else if(%s){%s}" % (condition, ";".join(funcs)))
     if self.__jsElse is not None:
-      strData.append("else{%s}" % ";".join(map(lambda x: str(x),  self.__jsElse)))
-    self._js, self.__jsElse = [], None # empty the stack
-    return "".join(strData)
+      str_data.append("else{%s}" % ";".join(map(lambda x: str(x),  self.__jsElse)))
+    # empty the stack
+    self._js, self.__jsElse = [], None
+    return "".join(str_data)

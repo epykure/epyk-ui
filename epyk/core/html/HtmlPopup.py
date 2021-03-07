@@ -12,7 +12,8 @@ class Popup(Html.Html):
     super(Popup, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
-      self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': 'rgba(0,0,0,0.4)', 'left': 0, 'top': 0})
+      self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': 'rgba(0,0,0,0.4)',
+                'left': 0, 'top': 0})
       self.css({'display': 'none', 'z-index': self.options.z_index, 'text-align': 'center'})
     else:
       self.css({'position': 'absolute', 'margin': 0, 'padding': 0, 'display': 'none', 'z-index': self.options.z_index})
@@ -44,6 +45,9 @@ class Popup(Html.Html):
     Add a component to the popup.
     If this is a list then they will be added in a row.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param component: HTML Component | List. The component to be added to the underlying list.
@@ -56,6 +60,9 @@ class Popup(Html.Html):
     ------------
     Append list of component to the popup.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
     :param components: HTML Component | List. The component to be added to the underlying list.
@@ -67,6 +74,9 @@ class Popup(Html.Html):
     Description:
     ------------
     Insert a component to the popup at a specific place.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -100,12 +110,12 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param text: String.
-    :param align: String. Optional.
-    :param level: Integer. Optional
-    :param css: Dictionary. Optional.
-    :param position: String. Optional.
-    :param options:
+    :param text: String. The value to be displayed to the component.
+    :param align: String. Optional. The text-align property within this component.
+    :param level: Integer. Optional.
+    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component
+    :param position: String. Optional. The position compared to the main component tag.
+    :param options: Specific Python options available for this component.
     """
     if not hasattr(text, 'options'):
       title = self._report.ui.title(text, align=align, level=level, options=options)

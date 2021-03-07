@@ -14,14 +14,15 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name = 'Plotly Chart'
+  name = 'Plotly'
   requirements = ('plotly.js', )
+  _option_cls = OptPlotly.OptionConfig
 
-  def __init__(self,  report, width, height, options, htmlCode, profile):
+  def __init__(self,  report, width, height, options, html_code, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                css_attrs={"width": width, "height": height})
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
-    self._options_init = options
     self.layout.autosize = True
     if not height[0] is None:
       self.layout.height = height[0]
@@ -31,11 +32,11 @@ class Chart(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
-  def click_legend(self, jsFnc, profile=False):
+  def click_legend(self, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -46,16 +47,18 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self.onReady("%s.on('plotly_legendclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.on('plotly_legendclick', function(data) {%s})" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def click(self, jsFnc, profile=False, source_event=None):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    The onclick event occurs when the user clicks on an element.
 
     Related Pages:
 
@@ -63,16 +66,20 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.on('plotly_click', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.on('plotly_click', function(data) {%s})" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def dblclick(self, jsFnc, profile=False):
+  def dblclick(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    The onDblclick event occurs when the user double clicks on an element.
 
     Related Pages:
 
@@ -80,13 +87,16 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.on('plotly_doubleclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.on('plotly_doubleclick', function(data) {%s})" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def hover(self, jsFnc, profile=False, source_event=None):
+  def hover(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -97,13 +107,16 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.on('plotly_hover', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.on('plotly_hover', function(data) {%s})" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def unhover(self, jsFnc, profile=False):
+  def unhover(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -114,18 +127,22 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.onReady("%s.on('plotly_unhover', function(data) { %s })" % (self.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.on('plotly_unhover', function(data) {%s})" % (
+      self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
   @property
   def data(self):
     """
+    Description:
+    ------------
 
     :rtype: JsChartJs.DataSetPie
-    :return:
     """
     if not self._traces:
       self.add_trace([])
@@ -136,12 +153,14 @@ class Chart(Html.Html):
     """
     Description:
     ------------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptPlotly.OptionConfig
     """
-    if self._options is None:
-      self._options = OptPlotly.OptionConfig(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
   def traces(self, i=None):
     """
@@ -155,15 +174,14 @@ class Chart(Html.Html):
 
     return self._traces[i]
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
         result = [];
         data.datasets.forEach(function(values, i){
           dataSet = {x: [], y: [], name: data.series[i], type: options.type, mode: options.mode, marker: {}};
           if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          if(typeof options.marker !== undefined){
+            for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
           result.push(Object.assign(dataSet, values))
         }); 
       } else {
@@ -172,27 +190,30 @@ class Chart(Html.Html):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              if(!(rec[options.x_column] in uniqLabels)){
+                labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
               temp[name][rec[options.x_column]] = rec[name]}})});
         options.y_columns.forEach(function(series){
           dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
-          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          if(typeof options.attrs !== undefined){ 
+            for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){
+            for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
           labels.forEach(function(x, i){
             dataSet.x.push(x);
             if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
           }); result.push(dataSet)})
-      }'''
+      }; return result'''
 
   @property
   def js(self):
     """
     Description:
     -----------
-    Javascript base function
+    Javascript base function.
 
     Return all the Javascript functions defined in the framework.
-    THis is an entry point to the full Javascript ecosystem.
+    This is an entry point to the full Javascript ecosystem.
 
     :return: A Javascript object
 
@@ -227,6 +248,16 @@ class Chart(Html.Html):
     return self._d3
 
   def add_trace(self, data, type=None, mode=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param type:
+    :param mode:
+    """
     c_data = dict(data)
     if type is not None:
       c_data['type'] = type
@@ -235,43 +266,30 @@ class Chart(Html.Html):
     self._traces.append(DataChart(self._report, attrs=c_data))
     return self
 
-  def convert(self, data, options, profile=False):
-    mod_name = __name__.split(".")[-1]
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
-      mod_name, self.builder_name, self._js__convertor__)
-    if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
-    else:
-      js_data = JsUtils.jsConvertData(data, None)
-    dfl_options, js_options = dict(self._options_init), []
-    if options is not None:
-      dfl_options.update(options)
-    for k, v in dfl_options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return JsObject.JsObject("%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options)), isPyData=True)
-
-  def build(self, data=None, options=None, profile=False):
-    if data:
-      return JsUtils.jsConvertFncs([self.js.react(self.convert(data, options, profile), self.layout, self.options)], toStr=True)
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    if data is not None:
+      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      self.page.properties.js.add_constructor(
+        js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
+      profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
+      if profile:
+        js_func_builder = JsUtils.jsConvertFncs(
+          ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
+        js_convertor = "(function(data, options){%s; return result})" % js_func_builder
+      return JsUtils.jsConvertFncs([
+        self.js.react(JsUtils.jsWrap("%(chartFnc)s(%(data)s, %(options)s)" % {
+          'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
+          "options":  self.options.config_js(options)}), self.layout, self.options.config_js(options))], toStr=True)
 
     str_traces = []
     for t in self._traces:
       str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
     obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
-    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([self.js.newPlot(obj_datasets, self.layout, self.options)], toStr=True))
+    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([
+      self.js.newPlot(obj_datasets, self.layout, self.options)], toStr=True))
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.build())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
@@ -289,9 +307,9 @@ class Line(Chart):
   def trace(self, data, type=None, mode='lines+markers'):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', mode)
+      c_data['mode'] = self.options.mode or mode
     return DataXY(self._report, attrs=c_data)
 
   def add_trace(self, data, type=None, mode='lines+markers'):
@@ -319,9 +337,9 @@ class Bar(Chart):
   def trace(self, data, type='bar', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', mode)
+      c_data['mode'] = self.options.mode or mode
     return DataXY(self._report, attrs=c_data)
 
   def add_trace(self, data, type='bar', mode=None):
@@ -473,6 +491,8 @@ class LayoutShape(DataClass):
     :param y:
     :param x1:
     :param y1:
+    :param opacity:
+    :param color:
     """
     self._attrs.update({'type': 'rect', 'xref': 'x', 'yref': 'paper', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
     self.fillcolor = color or self._report.theme.warning[0]
@@ -557,7 +577,6 @@ class LayoutShape(DataClass):
     """
 
     :rtype: DataMarkersLine
-    :return:
     """
     return self.sub_data("line", DataMarkersLine)
 
@@ -568,7 +587,7 @@ class LayoutFont(DataClass):
   def color(self):
     """
 
-    :param color: color or array of colors
+    :prop color: color or array of colors
     """
     return self._attrs["color"]
 
@@ -583,7 +602,7 @@ class LayoutFont(DataClass):
 
     https://plot.ly/javascript/reference/#pie-outsidetextfont-family
 
-    :param font-family:  string or array of strings
+    :prop font-family:  string or array of strings
     """
     return self._attrs["family"]
 
@@ -747,14 +766,6 @@ class LayoutAxis(DataClass):
   @tickangle.setter
   def tickangle(self, val):
     self._attrs["tickangle"] = val
-
-  @property
-  def showticklabels(self):
-    return self._attrs["showticklabels"]
-
-  @showticklabels.setter
-  def showticklabels(self, val):
-    self._attrs["showticklabels"] = val
 
   @property
   def titlefont(self):
@@ -1390,6 +1401,7 @@ class Layout3D(Layout):
 
     :param x_color:
     :param y_color:
+    :param z_color:
 
     :return:
     """
@@ -2067,7 +2079,7 @@ class DataIndicator(DataChart):
 
     :rtype: DataGauge
     """
-    if not 'gauge' in self.mode:
+    if 'gauge' not in self.mode:
       self.mode = "%s+gauge" % self.mode
     return self.sub_data("gauge", DataGauge)
 
@@ -2235,20 +2247,19 @@ class Pie(Chart):
   def add_trace(self, data, type='pie', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', type)
+      c_data['mode'] = self.options.mode or mode
     self._traces.append(DataPie(self._report, attrs=c_data))
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
         result = []; 
         dataSet = {label: [], values: [], name: data.series, type: options.type, mode: options.mode, marker: {}};
         if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-        if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+        if(typeof options.marker !== undefined){
+          for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]}};
         data.datasets.forEach(function(rec, i){
           dataSet.label = rec.x; dataSet.values = rec.y}); result.push(dataSet)
       } else {
@@ -2257,17 +2268,20 @@ class Pie(Chart):
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              if(!(rec[options.x_column] in uniqLabels)){
+                labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
               temp[name][rec[options.x_column]] = rec[name]}})});
         options.y_columns.forEach(function(series){
           dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
-          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          if(typeof options.attrs !== undefined){
+            for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]}};
+          if(typeof options.marker !== undefined){ 
+            for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
           labels.forEach(function(x, i){
             dataSet.label.push(x);
             if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
           }); result.push(dataSet)})
-      }'''
+      }; return result'''
 
 
 class Surface(Chart):
@@ -2297,9 +2311,7 @@ class Surface(Chart):
     self._traces.append(DataSurface(self._report, attrs=c_data))
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       if(data.python){
         result = []; 
         data.datasets.forEach(function(dataset, i){
@@ -2310,7 +2322,7 @@ class Surface(Chart):
         data.series.forEach(function(name, i){
           result.push( {z: data.datasets[i], type: options.type} );
         })
-      }'''
+      }; return result'''
 
 
 class Scatter3D(Chart):
@@ -2340,35 +2352,35 @@ class Scatter3D(Chart):
   def add_trace(self, data, type='scatter3d', mode="lines"):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = self._options_init.get('type', type)
+      c_data['type'] = self.options.type
     if mode is not None:
-      c_data['mode'] = self._options_init.get('mode', mode)
+      c_data['mode'] = self.options.mode or mode
     self._traces.append(DataSurface(self._report, attrs=c_data))
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
-        var temp = {}; var tempZ = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-        options.y_columns.forEach(function(series){temp[series] = {}});
-        options.y_columns.forEach(function(series){tempZ[series] = {}});
-        data.forEach(function(rec){ 
-          options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name];
-              tempZ[name][rec[options.x_column]] = rec[options.z_axis];
-            }})});
-        options.y_columns.forEach(function(series){
-          dataSet = {x: [], y: [], z: [], name: series, type: options.type, mode: options.mode, marker: {}};
-          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-          labels.forEach(function(x, i){
-            dataSet.x.push(x);
-            if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])};
-            if(tempZ[series][x] == undefined){dataSet.y.push(null)} else{dataSet.z.push(tempZ[series][x])};
-          }); result.push(dataSet)});
-        '''
+  _js__builder__ = '''
+      var temp = {}; var tempZ = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      options.y_columns.forEach(function(series){tempZ[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if(!(rec[options.x_column] in uniqLabels)){
+              labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name];
+            tempZ[name][rec[options.x_column]] = rec[options.z_axis];
+          }})});
+      options.y_columns.forEach(function(series){
+        dataSet = {x: [], y: [], z: [], name: series, type: options.type, mode: options.mode, marker: {}};
+        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+        if(typeof options.marker !== undefined){ 
+          for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+        labels.forEach(function(x, i){
+          dataSet.x.push(x);
+          if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])};
+          if(tempZ[series][x] == undefined){dataSet.y.push(null)} else{dataSet.z.push(tempZ[series][x])};
+        }); result.push(dataSet)});
+      return result'''
 
 
 class Mesh3d(Chart):
@@ -2422,13 +2434,11 @@ class Indicator(Chart):
     self._traces.append(DataIndicator(self._report, attrs=c_data))
     return self
 
-  @property
-  def _js__convertor__(self):
-    return '''
+  _js__builder__ = '''
       var dataset = {value: data, type: options.type, mode: options.mode, delta: {}};
-      if(typeof options.delta !== undefined){ for(var attr in options.delta){dataset.delta[attr] = options.delta[attr]}};
-      var result = [dataset]
-      '''
+      if(typeof options.delta !== undefined){
+        for(var attr in options.delta){dataset.delta[attr] = options.delta[attr]}};
+      return [dataset]'''
 
 
 class ScatterPolar(Chart):

@@ -91,7 +91,7 @@ class ChartJs(JsPackage):
     self.src.jsImports.add(self.lib_alias['js'])
     self._js = []
 
-  def getElementsAtEvent(self, jsFncs):
+  def getElementsAtEvent(self, jsFncs, profile=False):
     """
     Description:
     -----------
@@ -104,7 +104,8 @@ class ChartJs(JsPackage):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)), isPyData=False)
+    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (
+      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)), isPyData=False)
 
   def add(self, point, values):
     """
@@ -905,7 +906,7 @@ class OptionsLegend(DataAttrs):
     :param flag:
     """
 
-  def onClick(self, callback):
+  def onClick(self, callback, profile=False):
     """
     Description:
     ------------
@@ -913,10 +914,10 @@ class OptionsLegend(DataAttrs):
 
     :param callback:
     """
-    self._attrs["onClick"] = JsUtils.jsConvertFncs(callback)
+    self._attrs["onClick"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
-  def onHover(self, callback):
+  def onHover(self, callback, profile=False):
     """
     Description:
     ------------
@@ -924,17 +925,17 @@ class OptionsLegend(DataAttrs):
 
     :param callback:
     """
-    self._attrs["onHover"] = JsUtils.jsConvertFncs(callback)
+    self._attrs["onHover"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
-  def onLeave(self, callback):
+  def onLeave(self, callback, profile=False):
     """
     Description:
     ------------
 
     :param callback:
     """
-    self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback)
+    self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
   def reverse(self, flag=False):

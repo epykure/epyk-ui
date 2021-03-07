@@ -160,7 +160,7 @@ class CatalogDiv(Catalog.CatalogGroup):
 class CatalogDrawer(Catalog.CatalogGroup):
 
   def drawer(self):
-    """  The main layout for the drawer compenent """
+    """  The main layout for the drawer component """
     return self._set_class(CssStylesDivDrawers.CssDrawer)
 
   def nav(self):

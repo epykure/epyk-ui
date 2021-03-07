@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-class D3(object):
+class D3:
 
-  def __init__(self, context):
-    self.parent = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def table(self, records=None, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None,
+  def table(self, records=None, header=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
             profile=None):
     """
     Description:
@@ -18,15 +18,15 @@ class D3(object):
 
     Attributes:
     ----------
-    :param records:
+    :param records: List. Optional. The list of dictionaries with the input data.
     :param header:
     :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
     :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
-    table = self.parent.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, options=options,
+    table = self.page.ui.div(width=width, height=height, html_code=html_code, options=options,
                                               profile=profile)
     d3_table = table.js.d3.select("#%s" % table.htmlCode, varName='d3Table').rappend('table')
     if header is None and records is not None:

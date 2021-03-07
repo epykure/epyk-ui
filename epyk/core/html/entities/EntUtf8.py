@@ -319,17 +319,9 @@ LATIN_SMALL_LETTER_Y_WITH_ACUTE = '&#xFD;'
 LATIN_SMALL_LETTER_THORN = '&#xFE;'
 LATIN_SMALL_LETTER_Y_WITH_DIAERESIS = '&#xFF;'
 EM_DASH = '&#x2014;'
-LEFT_DOUBLE_QUOTE_MARK = '&#8220;' # https://dwheeler.com/essays/quotes-in-html.html
-RIGHT_DOUBLE_QUOTE_MARK = '&#8221;' # https://dwheeler.com/essays/quotes-in-html.html
 
+# https://dwheeler.com/essays/quotes-in-html.html
+LEFT_DOUBLE_QUOTE_MARK = '&#8220;'
 
-if __name__ == '__main__':
-
-  data = '''
-'''
-
-  for d in data.split("\n"):
-    s_data = d.split("\t")
-    if len(s_data) > 5:
-      #print("%s: entities.EntUtf8.%s," % (bytes(s_data[1].strip(), 'utf-8'), s_data[-1].replace(" ", "_").replace("-", "_")))
-      print("%s = '%s'" % (s_data[-1].replace(" ", "_").replace("-", "_"), s_data[3]))
+# https://dwheeler.com/essays/quotes-in-html.html
+RIGHT_DOUBLE_QUOTE_MARK = '&#8221;'

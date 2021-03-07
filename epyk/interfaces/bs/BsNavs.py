@@ -1,9 +1,9 @@
 
 
-class Bars(object):
+class Bars:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
   def bar(self, values, active=None):
     """
@@ -18,7 +18,7 @@ class Bars(object):
       ]})
       if active == v:
         schema['children'][-1]['children'][0]['class'] = 'nav-link active'
-    nav = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    nav = self.page.web.bs.composite(schema, options={"reset_class": True})
     nav.attr['data-toggle'] = "button"
     return nav
 

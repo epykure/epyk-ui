@@ -77,7 +77,7 @@ class JsArray(JsObject.JsObject):
 
     return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, jsFnc), isPyData=False)
 
-  def every_(self, jsFncs, jsValue=None):
+  def every_(self, jsFncs, jsValue=None, profile=False):
     """
     Description:
     -----------
@@ -94,16 +94,17 @@ class JsArray(JsObject.JsObject):
     ----------
     :param jsFncs: A function to be run for each element in the array
     :param jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: None
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     if jsValue is None:
-      return JsFncs.JsFunction("%s.every(function(val, index, arr){%s})" % (self.varId, ";".join(jsFncs)))
+      return JsFncs.JsFunction("%s.every(function(val, index, arr){%s})" % (self.varId, jsFncs))
 
-    return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, ";".join(jsFncs), jsValue))
+    return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, jsFncs, jsValue))
 
-  def filter_(self, jsFncs, jsValue=None):
+  def filter_(self, jsFncs, jsValue=None, profile=False):
     """
     Description:
     -----------
@@ -119,14 +120,15 @@ class JsArray(JsObject.JsObject):
     ----------
     :param jsFncs: A function to be run for each element in the array
     :param jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: None
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     if jsValue is None:
-      return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s))" % (self.varId, ";".join(jsFncs)))
+      return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s))" % (self.varId, jsFncs))
 
-    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, ";".join(jsFncs), jsValue))
+    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, jsFncs, jsValue))
 
   def find(self, jsFnc):
     """
@@ -144,11 +146,12 @@ class JsArray(JsObject.JsObject):
     ----------
     :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
 
-    :return: Returns the array element value if any of the elements in the array pass the test, otherwise it returns undefined
+    :return: Returns the array element value if any of the elements in the array pass the test, otherwise it
+    returns undefined
     """
     return "%s.find(%s)" % (self.varId, jsFnc)
 
-  def findIndex(self, jsFnc):
+  def findIndex(self, jsFnc, profile=False):
     """
     Description:
     -----------
@@ -168,13 +171,14 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: Returns the array element index if any of the elements in the array pass the test, otherwise it returns -1
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc)
-    return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)))
+    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
+    return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, jsFnc))
 
-  def forEach(self, jsFnc, value="value"):
+  def forEach(self, jsFnc, value="value", profile=False):
     """
     Description:
     -----------
@@ -192,13 +196,14 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: Void, The Javascript String
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc)
-    return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, ";".join(jsFnc)))
+    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
+    return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, jsFnc))
 
-  def map(self, jsFnc):
+  def map(self, jsFnc, profile=False):
     """
     Description:
     -----------
@@ -217,16 +222,18 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc)
+    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
     if self.varName is not None:
-      return JsArray("%s = %s" % (self.varId, JsArray("%s.map(function(value, index, arr){%s; return value})" % (self.varId, ";".join(jsFnc)), isPyData=False)), isPyData=False)
+      return JsArray("%s = %s" % (self.varId, JsArray("%s.map(function(value, index, arr){%s; return value})" % (
+        self.varId, jsFnc), isPyData=False)), isPyData=False)
 
     return JsArray("%s.map(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)), isPyData=False)
 
-  def sort(self, jsFnc=None):
+  def sort(self, jsFnc=None, profile=False):
     """
     Description:
     -----------
@@ -244,11 +251,14 @@ class JsArray(JsObject.JsObject):
     :return: An Array object, representing the joined array
     """
     if jsFnc is not None:
+      if not isinstance(jsFnc, list):
+        jsFnc = [jsFnc]
+      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
       return JsArray("%s.sort(function(a, b){%s})" % (self.varId, jsFnc))
 
     return JsArray("%s.sort()" % self.varId, isPyData=False)
 
-  def reduce(self, jsFnc):
+  def reduce(self, jsFnc, profile=False):
     """
     Description:
     -----------
@@ -272,8 +282,8 @@ class JsArray(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    jsFnc = JsUtils.jsConvertFncs(jsFnc)
-    return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, ";".join(jsFnc)))
+    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
+    return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, jsFnc))
 
   #------------------------------------------------------------------
   #             ARRAY TRANSFORMATION ON DATA
@@ -293,7 +303,8 @@ class JsArray(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/jsref_shift.asp
 
-    :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a boolean, or any other object types that are allowed in an array.
+    :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a
+    boolean, or any other object types that are allowed in an array.
     """
     return JsObject.JsObject("%s.shift()" % self.varId, isPyData=False)
 
@@ -480,7 +491,8 @@ class JsArray(JsObject.JsObject):
 
     :return: An Array object, representing the joined array
     """
-    return JsArray("%s.concat(%s)" % (self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
+    return JsArray("%s.concat(%s)" % (
+      self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
 
   def append(self, jsObj, val):
     """
@@ -533,7 +545,8 @@ class JsArray(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    return JsNumber.JsNumber("%s.push(%s)" % (self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
+    return JsNumber.JsNumber("%s.push(%s)" % (
+      self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
 
   def push_dict(self, **kwargs):
     """
@@ -574,7 +587,8 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the specified depth.
+    The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the
+    specified depth.
 
     Related Pages:
 
@@ -586,12 +600,13 @@ class JsArray(JsObject.JsObject):
     """
     return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), isPyData=False)
 
-  def flatMap(self, jsFnc):
+  def flatMap(self, jsFnc, profile=False):
     """
     Description:
     -----------
     The flatMap() method first maps each element using a mapping function, then flattens the result into a new array.
-    It is identical to a map() followed by a flat() of depth 1, but flatMap() is often quite useful, as merging both into one method is slightly more efficient.
+    It is identical to a map() followed by a flat() of depth 1, but flatMap() is often quite useful, as merging both
+    into one method is slightly more efficient.
 
     Related Pages:
 
@@ -600,16 +615,17 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc)
+    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
     if self.varName is not None:
       return JsArray("%s = %s" % (self.varId, JsArray(
-        "%s.flatMap(function(value, index, arr){%s; return value})" % (self.varId, ";".join(jsFnc)), isPyData=False)),
+        "%s.flatMap(function(value, index, arr){%s; return value})" % (self.varId, jsFnc), isPyData=False)),
                      isPyData=False)
 
-    return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)), isPyData=False)
+    return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, jsFnc), isPyData=False)
 
   def includes(self, element, start=0):
     """
@@ -632,7 +648,8 @@ class JsArray(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsBoolean
 
-    return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, JsUtils.jsConvertData(element, None), start), isPyData=False)
+    return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (
+      self.varId, JsUtils.jsConvertData(element, None), start), isPyData=False)
 
   def unshift(self, *args):
     """
@@ -755,7 +772,9 @@ class JsArray(JsObject.JsObject):
 
     :param header:
     """
-    return JsObject.JsObject("(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (self.varId, header))
+    return JsObject.JsObject(
+      "(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (
+        self.varId, header))
 
   def sample(self, n=None, report=None):
     """
@@ -950,7 +969,8 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    Looks through each value in the list, returning an array of all the values that matches the key-value pairs listed in properties.
+    Looks through each value in the list, returning an array of all the values that matches the key-value pairs
+    listed in properties.
 
     Usage::
 
@@ -999,7 +1019,8 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    of the arrays.
 
     Usage::
 
@@ -1024,7 +1045,8 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    of the arrays.
 
     Usage::
 
@@ -1043,13 +1065,15 @@ class JsArray(JsObject.JsObject):
     if self.varName is None:
       return JsArray("(function(){return _.intersection(%s, ...%s)})()" % (self.toStr(), arrays), report=report)
 
-    return JsArray("(function(){%s; return _.intersection(%s, ...%s)})()" % (self.toStr, self.varName, arrays), report=report)
+    return JsArray("(function(){%s; return _.intersection(%s, ...%s)})()" % (
+      self.toStr, self.varName, arrays), report=report)
 
   def uniq(self, is_sorted=False, report=None):
     """
     Description:
     -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    of the arrays.
 
     Usage::
 
@@ -1068,7 +1092,7 @@ class JsArray(JsObject.JsObject):
     if is_sorted:
        return JsArray("_.uniq(%s, %s)" % (self.varId, is_sorted), report=report)
 
-    return JsArray("_.uniq(%s)" % (self.varId), report=report)
+    return JsArray("_.uniq(%s)" % self.varId, report=report)
 
   @property
   def every(self):
@@ -1076,7 +1100,8 @@ class JsArray(JsObject.JsObject):
     Description:
     -----------
     Returns true if all of the values in the list pass the predicate truth test.
-    Short-circuits and stops traversing the list if a false element is found. predicate is transformed through iteratee to facilitate shorthand syntaxes.
+    Short-circuits and stops traversing the list if a false element is found. predicate is transformed through iteratee
+    to facilitate shorthand syntaxes.
     """
     return JaArrayRejector("every", self.toStr(), self.varName, self._report)
 
@@ -1086,7 +1111,8 @@ class JsArray(JsObject.JsObject):
     Description:
     -----------
     Returns true if any of the values in the list pass the predicate truth test.
-    Short-circuits and stops traversing the list if a true element is found. predicate is transformed through iteratee to facilitate shorthand syntaxes.
+    Short-circuits and stops traversing the list if a true element is found. predicate is transformed through iteratee
+    to facilitate shorthand syntaxes.
     """
     return JaArrayRejector("some", self.toStr(), self.varName, self._report)
 
@@ -1113,9 +1139,12 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults to 0; step defaults to 1.
-    Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented) by step, exclusive.
-    Note that ranges that stop before they start are considered to be zero-length instead of negative — if you'd like a negative range, use a negative step.
+    A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults
+    to 0; step defaults to 1.
+    Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented) by
+    step, exclusive.
+    Note that ranges that stop before they start are considered to be zero-length instead of negative — if you'd like
+    a negative range, use a negative step.
 
     Usage::
 
@@ -1138,7 +1167,8 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list of values.
+    Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list
+    of values.
     Passing by pairs is the reverse of pairs. If duplicate keys exist, the last value wins.
 
     Related Pages:
@@ -1155,7 +1185,7 @@ class JsArray(JsObject.JsObject):
     return JsObject.JsObject("_.zip(%s, %s)" % (keys, self.varId), report=report)
 
 
-class JaArrayRejector(object):
+class JaArrayRejector:
 
   def __init__(self, fncName, data, varName, report):
     self._report, self.varName, self.data, self.fncName = report, varName, data, fncName
@@ -1170,9 +1200,11 @@ class JaArrayRejector(object):
     :param n:
     """
     if self.varName is None:
-      return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (self.fncName, self.data, n), report=self._report)
+      return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (
+        self.fncName, self.data, n), report=self._report)
 
-    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num %% %s == 0; })})()" % (self.data, self.fncName, self.varName, n), report=self._report)
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num %% %s == 0; })})()" % (
+      self.data, self.fncName, self.varName, n), report=self._report)
 
   def equal(self, val):
     """
@@ -1185,9 +1217,11 @@ class JaArrayRejector(object):
     """
     val = JsUtils.jsConvertData(val, None)
     if self.varName is None:
-      return JsArray("_.%s(%s, function(num){ return num == %s; })" % (self.fncName, self.data, val), report=self._report)
+      return JsArray("_.%s(%s, function(num){ return num == %s; })" % (
+        self.fncName, self.data, val), report=self._report)
 
-    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num == %s; })})()" % (self.data, self.fncName, self.varName, val), report=self._report)
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num == %s; })})()" % (
+      self.data, self.fncName, self.varName, val), report=self._report)
 
   def includes(self, values):
     """
@@ -1200,9 +1234,11 @@ class JaArrayRejector(object):
     """
     values = JsUtils.jsConvertData(values, None)
     if self.varName is None:
-      return JsArray("_.%s(%s, function(num){ return %s.includes(num); })" % (self.fncName, self.data, values), report=self._report)
+      return JsArray("_.%s(%s, function(num){ return %s.includes(num); })" % (
+        self.fncName, self.data, values), report=self._report)
 
-    return JsArray("(function(){%s; return _.%s(%s, function(num){ return %s.includes(num); })})()" % (self.data, self.fncName, self.varName, values), report=self._report)
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return %s.includes(num); })})()" % (
+      self.data, self.fncName, self.varName, values), report=self._report)
 
   def custom(self, js_expr):
     """
@@ -1216,7 +1252,8 @@ class JaArrayRejector(object):
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ %s; })" % (self.fncName, self.data, js_expr), report=self._report)
 
-    return JsArray("(function(){%s; return _.%s(%s, function(num){ %s; })})()" % (self.data, self.fncName, self.varName, js_expr), report=self._report)
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ %s; })})()" % (
+      self.data, self.fncName, self.varName, js_expr), report=self._report)
 
 
 class JsRecordSet(JsArray):

@@ -12,7 +12,7 @@ class CssSideBarMenu(CssStyle.Style):
   _hover = {'text-decoration': 'underline'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.colors[9]})
+    self.css({'color': self.page.theme.colors[9]})
 
 
 class CssSideBarFixed(CssStyle.Style):
@@ -20,7 +20,7 @@ class CssSideBarFixed(CssStyle.Style):
             'z-index': 5, 'top': 0, 'left': 0, 'overflow-x': 'hidden'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[9]})
 
 
 class CssSideBarBubble(CssStyle.Style):
@@ -28,12 +28,13 @@ class CssSideBarBubble(CssStyle.Style):
             'height': '100%', 'min-width': '200px', 'padding': '10px', 'color': 'black'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[9], 'font-family': Defaults_css.Font.family,
+    self.css({'background-color': self.page.theme.colors[9], 'font-family': Defaults_css.Font.family,
               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
 class CssSideBar(CssStyle.Style):
-  _attrs = {'height': '100%', 'position': 'fixed', 'z-index': 5, 'left': 0, 'overflow-x': 'hidden', 'padding-top': '15px'}
+  _attrs = {'height': '100%', 'position': 'fixed', 'z-index': 5, 'left': 0, 'overflow-x': 'hidden',
+            'padding-top': '15px'}
 
 
 class CssSideBarLiHref(CssStyle.Style):
@@ -41,7 +42,7 @@ class CssSideBarLiHref(CssStyle.Style):
   _selectors = {'child': 'li ul a'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[9]})
 
 
 class CssSideBarLi(CssStyle.Style):
@@ -49,7 +50,7 @@ class CssSideBarLi(CssStyle.Style):
   _selectors = {'child': 'li'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[9]})
 
 
 class CssParamsBar(CssStyle.Style):
@@ -57,4 +58,4 @@ class CssParamsBar(CssStyle.Style):
             'padding': '2px 10px', 'z-index': 10, 'width': '100%', 'position': 'fixed', 'left': 0, 'margin': 0}
 
   def customize(self):
-    self.css({'border-top': "1px solid %s" % self.rptObj.theme.greys[6], 'background-color': self.rptObj.theme.greys[0]})
+    self.css({'border-top': "1px solid %s" % self.page.theme.greys[6], 'background-color': self.page.theme.greys[0]})

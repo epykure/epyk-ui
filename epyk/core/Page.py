@@ -29,10 +29,181 @@ from epyk.core.py import PyExt
 from epyk.web import apps
 
 
-class Report(object):
+class JsProperties:
+
+  def __init__(self, context):
+    self._context = context
+
+  @property
+  def frgs(self):
+    """
+    Description:
+    ------------
+    Return the extra JavaScript function manually added.
+    """
+    return "\n".join(self._context["text"])
+
+  def add_text(self, text):
+    """
+    Description:
+    ------------
+    Add JavaScript fragments from String.
+
+    Attributes:
+    ----------
+    :param text: String. JavaScript fragments to be directly included to the page.
+    """
+    self._context["text"].append(text)
+
+  def add_builders(self, builder_def):
+    """
+    Description:
+    ------------
+    This will use add or extend according to the builder_def type.
+
+    Attributes:
+    ----------
+    :param builder_def: String. The builder definition.
+    """
+    if isinstance(builder_def, list):
+      self._context['builders'].extend(builder_def)
+    else:
+      self._context['builders'].append(builder_def)
+
+  def add_on_ready(self, builder_def):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param builder_def:
+    """
+    self._context['onReady'].add(builder_def)
+
+  def add_constructor(self, name, content):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param content:
+    """
+    self._context['constructors'][name] = content
+
+  def has_constructor(self, name):
+    """
+
+    :param name:
+    """
+    return name in self._context['constructors']
+
+
+class CssProperties:
+
+  def __init__(self, context):
+    self._context = context
+
+  @property
+  def text(self):
+    """
+    Description:
+    ------------
+    Return the extra CSS styles manually added.
+    """
+    return "\n".join(self._context['css']["text"])
+
+  def add_text(self, text):
+    """
+    Description:
+    ------------
+    Add CSS style from String.
+
+    Attributes:
+    ----------
+    :param text: String. CSS Style to be directly included to the page.
+    """
+    self._context['css']["text"].append(text)
+
+  def add_builders(self, builder_def):
+    """
+    Description:
+    ------------
+    This will use add or extend to the CSS JavaScript builders according to the builder_def type.
+
+    Attributes:
+    ----------
+    :param builder_def: String. The builder definition.
+    """
+    if 'builders_css' not in self._context['js']:
+      self._context['js']['builders_css'] = OrderedSet()
+    if isinstance(builder_def, list):
+      self._context['js']['builders_css'].extend(builder_def)
+    else:
+      self._context['js']['builders_css'].append(builder_def)
+
+  def container_style(self, css):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes to be applied.
+    """
+    self._context['css']['container'].update(css)
+
+  def font_face(self, font_family, src, stretch="normal", style="normal", weight="normal"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param font_family: String. Required. Defines the name of the font.
+    :param src: String. Required. Defines the URL(s) where the font should be downloaded from.
+    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal".
+    :param style: String. Optional. Defines how the font should be styled. Default value is "normal".
+    :param weight: String. Optional. Defines the boldness of the font. Default value is "normal".
+    """
+    self._context['css']["font-face"][font_family] = {
+      'src': "url(%s)" % src, 'font-stretch': stretch, 'font-style': style, 'font-weight': weight}
+
+
+class Properties:
+
+  def __init__(self, context):
+    self._context = context
+
+  @property
+  def js(self):
+    """
+    Description:
+    ------------
+    The JavaScript page properties.
+    This will keep track of all the global functions used by the components.
+    """
+    return JsProperties(self._context['js'])
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    The Css page properties.
+    This will keep track of all the global functions used by the components.
+
+    CSS Properties will work on both the CSS and JS section of the underlying prop dictionary.
+    """
+    return CssProperties(self._context)
+
+
+class Report:
   showNavMenu, withContainer = False, False
-  ext_packages = None # For extension modules
-  _node_modules = None # Path for the external packages (default to the CDNJS is not available)
+  ext_packages = None    # For extension modules
+  _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
   def __init__(self, inputs=None):
     """
@@ -44,30 +215,54 @@ class Report(object):
     :param inputs: Dictionary. The global input data for the defined components in the page.
                                Passing data for a given component with an htmlCode will override the value.
     """
-    self._css, self._ui, self._js, self._py, self._theme, self._auth, self.__body = {}, None, None, None, None, None, None
+    self._css = {}
+    self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
     self._props = {'js': {
-        'onReady': OrderedSet(), # JavaScript framework triggered after the HTML. Impact the entire page
-        'events': {},
-        'workers': {}, # Local worker sections
-        'constructors': {}, # Static and generic builders
-        'datasets': {}, # Input data used in the various component (Page global variables)
-        'configs': {}, # Global server configurations used for connection to the backend
-        'builders': OrderedSet()}, # Trigger the component generation using the Js Constructor
-        'context': {'framework': 'JS'}, # Used on the Python side to make some decisions
-        'css': {"font-face": {}} # Add report font-face CSS definition
+          # JavaScript framework triggered after the HTML. Impact the entire page
+          'onReady': OrderedSet(),
+          'events': {},
+          # Local worker sections
+          'workers': {},
+          # Static and generic builders
+          'constructors': {},
+          # Input data used in the various component (Page global variables)
+          'datasets': {},
+          # Global server configurations used for connection to the backend
+          'configs': {},
+          # Trigger the component generation using the Js Constructor
+          'builders': OrderedSet(),
+          'text': [],
+        },
+        # Used on the Python side to make some decisions
+        'context': {'framework': 'JS'},
+        # Add report font-face CSS definition
+        'css': {
+          "font-face": {},
+          "container": {},
+          "text": []}
     }
-    self.components = collections.OrderedDict() # Components for the entire page
+    # Components for the entire page
+    self.components = collections.OrderedDict()
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
-    self._scroll, self._contextMenu, self.verbose = set(), {}, False
-    self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
-
+    self._scroll, self._contextMenu, self.verbose, self.profile = set(), {}, False, False
+    # to be reviewed
+    self.logo, self._dbSettings, self.dbsDef = None, None, {}
     self.jsImports, self.jsLocalImports, self.cssImport, self.cssLocalImports = set(), set(), set(), set()
 
     # Section dedicated to load the static json configuration files
     frame_records = inspect.stack()[1]
     calling_module = inspect.getmodulename(frame_records[1])
     self.json_config_file = calling_module
+
+  @property
+  def properties(self):
+    """
+    Description:
+    ------------
+    Property to the different Page properties JavaScript and CSS.
+    """
+    return Properties(self._props)
 
   @property
   def body(self):
@@ -87,7 +282,7 @@ class Report(object):
     :rtype: html.Html.Body
     """
     if self.__body is None:
-      self.__body = html.Html.Body(self, None, htmlCode='body')
+      self.__body = html.Html.Body(self, None, html_code='body')
       self.__body.style.css.background = self.theme.greys[0]
       self.__body.style.css.color = self.theme.greys[-1]
     return self.__body
@@ -147,10 +342,10 @@ class Report(object):
 
     Attributes:
     ----------
-    :param path:
-    :param alias:
-    :param install:
-    :param update:
+    :param path: String. Optional.
+    :param alias: String. Optional.
+    :param install: Boolean. Optional.
+    :param update: Boolean. Optional.
     """
     if path is not None:
       self._node_modules = (path, alias or path, install, update)
@@ -160,7 +355,8 @@ class Report(object):
     """
     Description:
     ------------
-    Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
+    Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to
+    run.
     By default the imports are retrieved online from CDNJS paths.
 
     This can be changed by loading the packages locally and switching off the online mode.
@@ -228,7 +424,7 @@ class Report(object):
     User Interface section.
 
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
-    Within this object different categories of items can be used like (list, simple text, charts...)
+    Within this object different categories of items can be used like (list, simple text, charts...).
 
     Usage:
     -----
@@ -254,7 +450,7 @@ class Report(object):
     User Interface section.
 
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
-    Within this object different categories of items can be used like (list, simple text, charts...)
+    Within this object different categories of items can be used like (list, simple text, charts...).
 
     Usage:
     -----
@@ -275,13 +471,17 @@ class Report(object):
   @property
   def css(self):
     """
+    Description:
+    ------------
     Returns the set of :doc:`CSS Classes <css>` for the HTML report.
 
     Usage:
     -----
 
     """
-    return Classes.Catalog(self, {'other': set()})._class_type('other')
+    cls_obj = Classes.Catalog(self, {'other': set()})
+    cls_obj.other
+    return cls_obj
 
   @property
   def js(self):
@@ -351,7 +551,7 @@ class Report(object):
 
     :rtype: auth.Auth
 
-    :return: Python Auth Object
+    :return: Python Auth Object.
     """
     if self._auth is None:
       self._auth = auth.Auth(self)
@@ -379,7 +579,7 @@ class Report(object):
     """
     Description:
     ------------
-    This function allows you to register external epyk objects (namely coming from Pyk Reports)
+    This function allows you to register external Components (namely coming from Pyk Reports)
     by registering them you this will engrave the object within your report.
 
     The example below will add obj1 and obj2 from an external pyk report previously required,
@@ -407,7 +607,7 @@ class Report(object):
 
       self.components[comp.htmlCode] = comp
 
-  def get_components(self, htmlCodes):
+  def get_components(self, html_codes):
     """
     Description:
     ------------
@@ -424,12 +624,12 @@ class Report(object):
 
     Attributes:
     ----------
-    :param htmlCodes: List | String. The reference of the HTML components loaded on the page.
+    :param html_codes: List | String. The reference of the HTML components loaded on the page.
     """
-    if not isinstance(htmlCodes, list):
-      return self.components[htmlCodes]
+    if not isinstance(html_codes, list):
+      return self.components[html_codes]
 
-    return [self.components[htmlCode] for htmlCode in htmlCodes]
+    return [self.components[html_code] for html_code in html_codes]
 
   def framework(self, name):
     """
@@ -490,12 +690,14 @@ class Report(object):
       self._header_obj = html.Header.Header(self)
     return self._header_obj
 
-  def dumps(self, data):
+  def dumps(self, result):
     """
     Description:
     ------------
-    Function used to dump the data before being sent to the Javascript layer
-    This function relies on json.dumps with a special encoder in order to work with Numpy array and Pandas data structures.
+    Function used to dump the data before being sent to the Javascript layer.
+
+    This function relies on json.dumps with a special encoder in order to work with Numpy array and Pandas data
+    structures.
 
     As NaN is not valid on the Json side those object are not allowed during the dump.
     It is advised to use fillna() in your script before returning the data to the framework to avoid this issue.
@@ -512,7 +714,7 @@ class Report(object):
 
     Attributes:
     ----------
-    :param data: Dictionary. The python dictionary or data structure
+    :param result: Dictionary. The python dictionary or data structure.
 
     :return: The serialised data
     """

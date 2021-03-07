@@ -9,6 +9,7 @@ import functools
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
 
+PROFILE_COUNT = 0
 
 # --------------------------------------------------------------------------------------------------------------
 #                                                       DECORATORS
@@ -56,7 +57,8 @@ def fromVersion(data):
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
             if mod['version'] < v:
-              raise Exception("Function %s can only be used from %s version %s (current %s)" % (func.__name__, k, v, mod['version']))
+              raise Exception("Function %s can only be used from %s version %s (current %s)" % (
+                func.__name__, k, v, mod['version']))
 
       return func(*args, **kwargs)
 
@@ -231,19 +233,22 @@ def getJsValid(value, fail=True):
   return cleanName
 
 
-def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
+def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False, profile=False):
   """
   Description:
   ------------
-  Generic conversion function for all the PyJs functions
+  Generic conversion function for all the PyJs functions.
 
   Attributes:
   ----------
   :param jsFncs: Array. The PyJs functions
-  :param isPyData: Boolean. A flag to force the Python conversion using json
+  :param isPyData: Boolean. Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
-  :param toStr: Boolean. A flag to specify if the result should be aggregated
+  :param toStr: Boolean. Optional. A flag to specify if the result should be aggregated.
+  :param profile. Dictionary | Boolean. Optional.
   """
+  global PROFILE_COUNT
+
   if not isinstance(jsFncs, list):
     jsFncs = [jsFncs]
 
@@ -267,6 +272,16 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
         if jsFncVal is not None:
           f = str(f).replace("trans_val", jsFncVal)
         cnvFncs.append(f)
+  if profile is not None and profile:
+    cnvFncs.insert(0, "var t%s = performance.now()" % PROFILE_COUNT)
+    if isinstance(profile, dict):
+      profile["id"] = PROFILE_COUNT
+      cnvFncs.append("console.log('%(name)s, start: ' + t%(id)s + ' ms')" % profile)
+      cnvFncs.append("console.log('%(name)s, process: ' + (performance.now() - t%(id)s) + ' ms')" % profile)
+    else:
+      cnvFncs.append("console.log(performance.now() - t%s)" % PROFILE_COUNT)
+    PROFILE_COUNT += 1
+
   if toStr:
     return ";".join(cnvFncs)
 
@@ -278,7 +293,7 @@ def cleanFncs(fnc):
   Description:
   ------------
   Try to remove as much as possible all the characters in order to speed up the javascript
-  Indeed most of the browsers are using minify Javascript to make the page less heavy
+  Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
   Thus pre stored function code can be written to be easier to read.
 
@@ -295,7 +310,7 @@ def isNotDefined(varName):
   """
   Description:
   ------------
-  Check if a variable is defined
+  Check if a variable is defined.
 
   Example
   JsUtils.isNotDefined(varId)
@@ -304,12 +319,12 @@ def isNotDefined(varName):
   ----------
   :param varName: String. The varName
 
-  :return: A string in Python and a Boolean in Javascript
+  :return: A string in Python and a Boolean in Javascript.
   """
   return "typeof %s === 'undefined'" % varName
 
 
-class JsFile(object):
+class JsFile:
 
   def __init__(self, scriptName=None, path=None):
     self.scriptName, self.path = scriptName, path
@@ -332,7 +347,7 @@ class JsFile(object):
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript fragments
+    :param jsFncs: The Javascript fragments.
 
     :return: The File object
     """

@@ -12,7 +12,7 @@ class Sortable(JsPackage):
 
   def __init__(self, src=None, varName=None, selector=None, setVar=True, parent=None):
     super(Sortable, self).__init__(src=src, varName=varName, selector=selector, data=None, setVar=setVar, parent=parent)
-    self.__options = OptSortable.OptionsSortable(self)
+    self.__options = OptSortable.OptionsSortable(src)
 
   @property
   def options(self):

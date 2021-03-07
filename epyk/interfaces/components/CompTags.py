@@ -6,12 +6,14 @@ import sys
 from epyk.core import html
 
 
-class Tags(object):
+class Tags:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def a(self, text, url, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def a(self, text, url, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
+        profile=None):
     """
     Description:
     ------------
@@ -40,18 +42,19 @@ class Tags(object):
     :param url: String. Specifies the URL of the page the link goes to.
     :param width: Tuple with the width value and its unit.
     :param height: Tuple with the height value and its unit.
-    :param htmlCode: String. The code reference of the component.
+    :param html_code: String. The code reference of the component.
     :param tooltip: String. The tooltip to be display on the component.
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component.
     """
-    html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                            height, htmlCode, tooltip, options, profile)
+    html_a = html.HtmlTags.HtmlGenericLInk(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html_a.set_attrs(name="href", value=url)
     html_a.style.clear()
     return html_a
 
-  def aside(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None,
+  @html.Html.css_skin()
+  def aside(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
             profile=None):
     """
     Description:
@@ -73,16 +76,18 @@ class Tags(object):
     :param text: String with the content to be added to the component.
     :param width: Tuple with the width value and its unit.
     :param height: Tuple with the height value and its unit.
-    :param htmlCode: String. The code reference of the component.
+    :param html_code: String. The code reference of the component.
     :param tooltip: String. The tooltip to be display on the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component.
     """
-    html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                           height, htmlCode, tooltip, options, profile)
+    html_a = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
+                                           height, html_code, tooltip, options, profile)
     html_a.style.clear()
     return html_a
 
-  def b(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def b(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -101,16 +106,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_b = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                       height, htmlCode, tooltip, options, profile)
+    html_b = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                       height, html_code, tooltip, options, profile)
     html_b.style.clear()
     return html_b
 
-  def h1(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def h1(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -131,16 +138,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_h1 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_h1 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                        height, html_code, tooltip, options, profile)
     html_h1.style.clear_all()
     return html_h1
 
-  def h2(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def h2(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -161,16 +170,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_h2 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_h2 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                        height, html_code, tooltip, options, profile)
     html_h2.style.clear_all()
     return html_h2
 
-  def h3(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def h3(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -191,16 +202,19 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_h3 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_h3 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                        height, html_code, tooltip, options, profile)
     html_h3.style.clear_all()
     return html_h3
 
-  def delete(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def delete(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -214,15 +228,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_d = html.HtmlTags.HtmlGeneric(self.context.rptObj, 'del', text, width,  height, htmlCode, tooltip, options, profile)
+    html_d = html.HtmlTags.HtmlGeneric(self.page, 'del', text, width,  height, html_code, tooltip, options, profile)
     html_d.style.clear()
     return html_d
 
-  def figcaption(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def figcaption(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
+                 profile=None):
     """
     Description:
     ------------
@@ -243,16 +260,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_f = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                           height, htmlCode, tooltip, options, profile)
+    html_f = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
+                                           height, html_code, tooltip, options, profile)
     html_f.style.clear()
     return html_f
 
-  def u(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def u(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -272,16 +291,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_u = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                       height, htmlCode, tooltip, options, profile)
+    html_u = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                       height, html_code, tooltip, options, profile)
     html_u.style.clear()
     return html_u
 
-  def p(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def p(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -301,16 +322,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_p = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                       height, htmlCode, tooltip, options, profile)
+    html_p = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                       height, html_code, tooltip, options, profile)
     html_p.style.clear()
     return html_p
 
-  def bdi(self, text, width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def bdi(self, text, width=(100, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -336,15 +359,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_bdi = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_bdi = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_bdi
 
-  def bdo(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def bdo(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -368,15 +393,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_bdo = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_bdo = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_bdo
 
-  def ol(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def ol(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+         profile=None):
     """
     Description:
     ------------
@@ -397,14 +425,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_sup = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width, height, htmlCode, tooltip, options, profile)
+    html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width, height, html_code,
+                                         tooltip, options, profile)
     return html_sup
 
-  def em(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def em(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -423,15 +454,18 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_em = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_em = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_em
 
-  def strong(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def strong(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+             profile=None):
     """
     Description:
     ------------
@@ -450,15 +484,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_strong = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_strong = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_strong
 
-  def samp(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def samp(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -475,18 +511,19 @@ class Tags(object):
     Attributes:
     ----------
     :param text: String with the content to be added to the component
-    :param size: Tuple with the size value and its unit
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_samp = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_samp = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_samp
 
-  def kbd(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def kbd(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -505,15 +542,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_kbd = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_kbd = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_kbd
 
-  def var(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def var(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -532,19 +571,22 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_var = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_var = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_var
 
-  def sup(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def sup(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
-    The <sup> tag defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
+    The <sup> tag defines superscript text. Superscript text appears half a character above the normal line,
+    and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
     Underlying HTML Objects:
 
@@ -559,15 +601,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_sup = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_sup
 
-  def wbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def wbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -586,15 +630,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_wbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_wbr = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_wbr
 
-  def time(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def time(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -613,19 +659,22 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_time = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_time = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_time
 
-  def sub(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def sub(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
-    The <sub> tag defines subscript text. Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font.
+    The <sub> tag defines subscript text. Subscript text appears half a character below the normal line,
+    and is sometimes rendered in a smaller font.
     Subscript text can be used for chemical formulas, like H2O.
 
     Underlying HTML Objects:
@@ -641,15 +690,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_sub = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_sub = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_sub
 
-  def small(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def small(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -668,15 +719,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_small = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_small = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_small
 
-  def s(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def s(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -695,19 +748,22 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param tooltip: String. The tooltip to be display on the component
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_s = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_s = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_s
 
-  def i(self, text, width=(None, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def i(self, text, width=(None, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
-    The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
+    The <i> tag defines a part of text in an alternate voice or mood. The content of the <i>
+    tag is usually displayed in italic.
 
     Underlying HTML Objects:
 
@@ -722,15 +778,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_i = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                        height, htmlCode, tooltip, options, profile)
+    html_i = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_i
 
-  def q(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def q(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -751,15 +809,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_q = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                       height, htmlCode, tooltip, options, profile)
+    html_q = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                       height, html_code, tooltip, options, profile)
     return html_q
 
-  def mark(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def mark(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -780,19 +840,23 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_mark = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                          height, htmlCode, tooltip, options, profile)
+    html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                          height, html_code, tooltip, options, profile)
     return html_mark
 
-  def nav(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def nav(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+          profile=None):
     """
     Description:
     ------------
-    The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents.
+    The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within
+    the current document or to other documents.
     Common examples of navigation sections are menus, tables of contents, and indexes.
 
     Underlying HTML Objects:
@@ -809,15 +873,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_mark = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                          height, htmlCode, tooltip, options, profile)
+    html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                          height, html_code, tooltip, options, profile)
     return html_mark
 
-  def ins(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def ins(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -836,15 +902,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_ins = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_ins = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_ins
 
-  def dfn(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def dfn(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -863,15 +931,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_dfn = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_dfn = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                         height, html_code, tooltip, options, profile)
     return html_dfn
 
-  def cite(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def cite(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -890,15 +960,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_cite = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                          height, htmlCode, tooltip, options, profile)
+    html_cite = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
+                                          height, html_code, tooltip, options, profile)
     return html_cite
 
-  def abbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def abbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -917,15 +989,17 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_abbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_abbr = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_abbr
 
-  def meter(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  @html.Html.css_skin()
+  def meter(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -945,14 +1019,16 @@ class Tags(object):
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
-    :param htmlCode: String. The code reference of the component
+    :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
-    html_abbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
-                                         height, htmlCode, tooltip, options, profile)
+    html_abbr = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     return html_abbr
 
+  @html.Html.css_skin()
   def comment(self, text):
     """
     Description:
@@ -967,5 +1043,5 @@ class Tags(object):
     ----------
     :param text: String with the content to be added to the component
     """
-    html_comm = html.HtmlTags.HtmlComment(self.context.rptObj, text)
+    html_comm = html.HtmlTags.HtmlComment(self.page, text)
     return html_comm

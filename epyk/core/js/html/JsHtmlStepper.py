@@ -11,7 +11,7 @@ from epyk.core.html import Defaults
 from epyk.core.js.primitives import JsObjects
 
 
-class JsShapes(object):
+class JsShapes:
   shapes = ['triangle', 'rectangle', 'circle', 'arrow']
 
   def _svg(self, shape_def):
@@ -442,7 +442,7 @@ class Step(JsNodeDom.JsDoms):
       }
       ''' % {"comp": self.varName, 'colors': self.colors([color, border], clear_gradient=False)})
 
-  def click(self, jsFncs):
+  def click(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -453,8 +453,10 @@ class Step(JsNodeDom.JsDoms):
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsObjects.get('%s.addEventListener("click", function(){%s})' % (self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return JsObjects.JsObjects.get('%s.addEventListener("click", function(){%s})' % (
+      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
 
 
 class Stepper(JsHtml.JsHtmlRich):

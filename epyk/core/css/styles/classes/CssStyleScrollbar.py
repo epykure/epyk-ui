@@ -10,25 +10,25 @@ class CssWebkitScrollbarTrack(CssStyle.Style):
   classname = "::-webkit-scrollbar-track"
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[0]})
+    self.css({'background-color': self.page.theme.colors[0]})
 
 
 class CssWebkitScrollbarThumb(CssStyle.Style):
   classname = "::-webkit-scrollbar-thumb"
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[2]})
+    self.css({'background-color': self.page.theme.colors[2]})
 
 
 class CssWebkitSelection(CssStyle.Style):
   classname = "::selection"
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[1]})
+    self.css({'background-color': self.page.theme.colors[1]})
 
 
 class CssWebkitMozSelection(CssStyle.Style):
   classname = "::-moz-selection"
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[1]})
+    self.css({'background-color': self.page.theme.colors[1]})

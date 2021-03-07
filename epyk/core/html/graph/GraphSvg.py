@@ -7,11 +7,12 @@ from epyk.core.html import Html
 class SVG(Html.Html):
   name = 'SVG'
 
-  def __init__(self, report, width, height, htmlCode=None):
-    super(SVG, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height})
+  def __init__(self, report, width, height, html_code=None):
+    super(SVG, self).__init__(report, "", html_code=html_code, css_attrs={"width": width, "height": height})
     self.origine = None
     if width is not None:
-      self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1', 'preserveAspectRatio': 'xMinYMin meet'})
+      self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1',
+                      'preserveAspectRatio': 'xMinYMin meet'})
     self.css({"display": 'inline-block'})
     self.html_objs = []
 
@@ -22,18 +23,21 @@ class SVG(Html.Html):
   def __getitem__(self, i):
     return self.html_objs[i]
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
     Description:
     ------------
     Add an event on the SVG.
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param js_funcs: List of Js Functions. A Javascript Python function
+    :param js_funcs: List of Js Functions. A Javascript Python function.
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.css({"cursor": 'pointer'})
     return self.on("click", js_funcs, profile, source_event)
@@ -44,9 +48,10 @@ class SVG(Html.Html):
     ------------
     The <defs> element is used to store graphical objects that will be used at a later time.
     Objects created inside a <defs> element are not rendered directly.
-    To display them you have to reference them (with a <use> element for exampl
+    To display them you have to reference them (with a <use> element for example
 
-    Usage::
+    Usage:
+    -----
 
       defs = poly.defs()
 
@@ -64,7 +69,8 @@ class SVG(Html.Html):
     The <text> element can be arranged in any number of sub-groups with the <tspan> element.
     Each <tspan> element can contain different formatting and position.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -72,7 +78,7 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The text to be added to the container
+    :param text: String. The text to be added to the container.
     :param x: Float. The x coordinate of the starting point of the text baseline.
     :param y: Float. The y coordinate of the starting point of the text baseline.
     :param fill:
@@ -88,9 +94,10 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <rect> element is used to create a rectangle and variations of a rectangle shape
+    The <rect> element is used to create a rectangle and variations of a rectangle shape.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -116,9 +123,10 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <line> element is used to create a line
+    The <line> element is used to create a line.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -126,10 +134,10 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param x1: Float. The x1 attribute defines the start of the line on the x-axis
-    :param y1: Float. The y1 attribute defines the start of the line on the y-axis
-    :param x2: Float. The x2 attribute defines the end of the line on the x-axis
-    :param y2: Float. The y2 attribute defines the end of the line on the y-axis
+    :param x1: Float. The x1 attribute defines the start of the line on the x-axis.
+    :param y1: Float. The y1 attribute defines the start of the line on the y-axis.
+    :param x2: Float. The x2 attribute defines the end of the line on the x-axis.
+    :param y2: Float. The y2 attribute defines the end of the line on the y-axis.
     :param stroke:
     :param stroke_width:
 
@@ -146,9 +154,10 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <circle> element is used to create a circle
+    The <circle> element is used to create a circle.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -156,9 +165,9 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param x: Float. The x coordinate of the circle
-    :param y: Float. The y coordinate of the circle
-    :param r: Float. The r attribute defines the radius of the circle
+    :param x: Float. The x coordinate of the circle.
+    :param y: Float. The y coordinate of the circle.
+    :param r: Float. The r attribute defines the radius of the circle.
     :param fill:
     :param stroke:
     :param stroke_width:
@@ -176,9 +185,10 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <ellipse> element is used to create an ellipse
+    The <ellipse> element is used to create an ellipse.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -186,10 +196,10 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param cx: Float. The cx attribute defines the x coordinate of the center of the ellipse
-    :param cy: Float. The cy attribute defines the y coordinate of the center of the ellipse
-    :param rx: Float. The rx attribute defines the horizontal radius
-    :param ry: Float. The ry attribute defines the vertical radius
+    :param cx: Float. The cx attribute defines the x coordinate of the center of the ellipse.
+    :param cy: Float. The cy attribute defines the y coordinate of the center of the ellipse.
+    :param rx: Float. The rx attribute defines the horizontal radius.
+    :param ry: Float. The ry attribute defines the vertical radius.
 
     :rtype: Ellipse
     """
@@ -203,7 +213,8 @@ class SVG(Html.Html):
     ------------
     The <polygon> element is used to create a graphic that contains at least three sides.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -211,7 +222,7 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon
+    :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon.
     :param fill:
 
     :rtype: Polygone
@@ -224,9 +235,11 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <polyline> element is used to create any shape that consists of only straight lines (that is connected at several points)
+    The <polyline> element is used to create any shape that consists of only straight lines (that is connected at
+    several points).
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -248,9 +261,10 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    A polyline element with three points
+    A polyline element with three points.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -274,7 +288,8 @@ class SVG(Html.Html):
     ------------
     The <g> SVG element is a container used to group other SVG elements.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -282,9 +297,9 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param fill: String. The color for the component background
-    :param stroke: String. The color for the border
-    :param stroke_width: Float. The width of the component's border
+    :param fill: String. Optional. The color for the component background.
+    :param stroke: String. Optional. The color for the border.
+    :param stroke_width: Float. Optional. The width of the component's border.
 
     :rtype: G
     """
@@ -326,9 +341,11 @@ class SVG(Html.Html):
     """
     Description:
     ------------
-    The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser, it is most likely (X)HTML.
+    The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser,
+    it is most likely (X)HTML.
 
-    Usage::
+    Usage:
+    -----
 
     Related Pages:
 
@@ -353,9 +370,9 @@ class SVG(Html.Html):
 
 
 class LinearGradient(Html.Html):
-  def __init__(self, report, htmlCode, x1, y1, x2, y2, gradientTransform):
-    super(LinearGradient, self).__init__(report, "", htmlCode=htmlCode)
-    self.set_attrs({'gradientTransform': gradientTransform, "x1": x1, "y1": y1, "x2": x2, "y2": y2})
+  def __init__(self, report, html_code, x1, y1, x2, y2, gradient_transform):
+    super(LinearGradient, self).__init__(report, "", html_code=html_code)
+    self.set_attrs({'gradientTransform': gradient_transform, "x1": x1, "y1": y1, "x2": x2, "y2": y2})
     self.items = []
 
   @property
@@ -372,19 +389,26 @@ class LinearGradient(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param offset:
     :param styles:
     """
-    self.items.append('<stop offset="%s" style="%s" />' % (offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
+    self.items.append('<stop offset="%s" style="%s" />' % (
+      offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
     return self
 
   def __str__(self):
-    return "<linearGradient %s>%s</linearGradient>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
+    return "<linearGradient %s>%s</linearGradient>" % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
 
 
 class RadialGradient(Html.Html):
-  def __init__(self, report, htmlCode):
-    super(RadialGradient, self).__init__(report, "", htmlCode=htmlCode)
+  def __init__(self, report, html_code):
+    super(RadialGradient, self).__init__(report, "", html_code=html_code)
     self.items = []
 
   @property
@@ -401,21 +425,28 @@ class RadialGradient(Html.Html):
     Description:
     -----------
 
+    Usage:
+    -----
+
+    Attributes:
+    ----------
     :param offset:
     :param styles:
     """
-    self.items.append('<stop offset="%s" style="%s" />' % (offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
+    self.items.append('<stop offset="%s" style="%s" />' % (
+      offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
     return self
 
   def __str__(self):
-    return "<radialGradient %s>%s</radialGradient>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
+    return "<radialGradient %s>%s</radialGradient>" % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
 
 
 class Marker(SVG):
 
-  def __init__(self, report, htmlCode, viewBox, refX, refY):
-    super(Marker, self).__init__(report, None, None, htmlCode=htmlCode)
-    self.set_attrs({'id': htmlCode, "viewBox": viewBox, "refX": refX, "refY": refY})
+  def __init__(self, report, html_code, viewBox, refX, refY):
+    super(Marker, self).__init__(report, None, None, html_code=html_code)
+    self.set_attrs({'id': html_code, "viewBox": viewBox, "refX": refX, "refY": refY})
     self.html_objs = []
 
   @property
@@ -424,7 +455,12 @@ class Marker(SVG):
     Description:
     -----------
 
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
     """
     return "url(#%s)" % self.htmlCode
 
@@ -433,6 +469,8 @@ class Marker(SVG):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param orientation:
     """
     self.set_attrs(name="orient", value=orientation)
@@ -443,6 +481,8 @@ class Marker(SVG):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param value:
     """
     self.set_attrs(name="markerWidth", value=value)
@@ -453,6 +493,8 @@ class Marker(SVG):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param value:
     """
     self.set_attrs(name="markerHeight", value=value)
@@ -463,9 +505,13 @@ class Marker(SVG):
     Description:
     -----------
 
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+    Related Pages:
 
-    :para, size:
+      https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+
+    Attributes:
+    ----------
+    :param size:
     """
     self.html_objs.append("<path d='M 0 0 L 10 5 L 0 10 z' />")
     if size is not None:
@@ -484,11 +530,12 @@ class Defs(Html.Html):
     super(Defs, self).__init__(report, "")
     self.html_objs = []
 
-  def linearGradient(self, htmlCode, x1="0%", y1="0%", x2="100%", y2="0%", gradientTransform=None):
+  def linearGradient(self, html_code, x1="0%", y1="0%", x2="100%", y2="0%", gradient_transform=None):
     """
     Description:
     ------------
-    The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of graphical elements.
+    The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of
+    graphical elements.
 
     Related Pages:
 
@@ -496,23 +543,24 @@ class Defs(Html.Html):
 
     Attributes:
     ----------
-    :param htmlCode: String. The HTML id of the component
+    :param html_code: String. The HTML id of the component
     :param x1: Float.
     :param y1: Float.
     :param x2: Float.
     :param y2: Float.
-    :param gradientTransform:
+    :param gradient_transform:
 
     :rtype: LinearGradient
     """
-    self.html_objs.append(LinearGradient(self._report, htmlCode, x1, y1, x2, y2, gradientTransform))
+    self.html_objs.append(LinearGradient(self._report, html_code, x1, y1, x2, y2, gradient_transform))
     return self.html_objs[-1]
 
-  def radialGradient(self, htmlCode):
+  def radialGradient(self, html_code):
     """
     Description:
     ------------
-    The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of graphical elements.
+    The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of
+    graphical elements.
 
     Related Pages:
 
@@ -520,18 +568,19 @@ class Defs(Html.Html):
 
     Attributes:
     ----------
-    :param htmlCode: String. The HTML id of the component
+    :param html_code: String. The HTML id of the component.
 
     :rtype: radialGradient
     """
-    self.html_objs.append(RadialGradient(self._report, htmlCode))
+    self.html_objs.append(RadialGradient(self._report, html_code))
     return self.html_objs[-1]
 
-  def marker(self, htmlCode, viewBox, refX, refY):
+  def marker(self, html_code, viewBox, refX, refY):
     """
     Description:
     -----------
-    The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+    The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given
+    <path>, <line>, <polyline> or <polygon> element.
 
     Related Pages:
 
@@ -539,14 +588,14 @@ class Defs(Html.Html):
 
     Attributes:
     ----------
-    :param htmlCode:
+    :param html_code:
     :param viewBox:
     :param refX:
     :param refY:
 
     :rtype: Marker
     """
-    self.html_objs.append(Marker(self._report, htmlCode, viewBox, refX, refY))
+    self.html_objs.append(Marker(self._report, html_code, viewBox, refX, refY))
     return self.html_objs[-1]
 
   def __str__(self):
@@ -565,6 +614,8 @@ class ForeignObject(SVG):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param components:
     """
     if not isinstance(components, list):
@@ -604,21 +655,22 @@ class SVGItem(Html.Html):
     self.set_attrs(name="fill", value=color)
     return self
 
-  def transform(self, attributeName, type, from_pos, to_pos, duration=4, repeatCount="indefinite"):
+  def transform(self, attribute_name, type, from_pos, to_pos, duration=4, repeat_count="indefinite"):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param attributeName:
+    :param attribute_name:
     :param type:
     :param from_pos:
     :param to_pos:
     :param duration:
-    :param repeatCount:
+    :param repeat_count:
     """
-    self.html_objs.append(AnimateTransform(self._report, attributeName, type, from_pos, to_pos, duration, repeatCount))
+    self.html_objs.append(AnimateTransform(
+      self._report, attribute_name, type, from_pos, to_pos, duration, repeat_count))
     return self
 
 
@@ -1049,10 +1101,10 @@ class Path(SVGItem):
 
 class AnimateTransform(Html.Html):
 
-  def __init__(self, report, attributeName, type,  from_pos, to_pos, duration, repeatCount):
+  def __init__(self, report, attribute_name, type,  from_pos, to_pos, duration, repeat_count):
     super(AnimateTransform, self).__init__(report, "")
-    self.set_attrs({"attributeName": attributeName, "type": type, "from": from_pos, "to": to_pos,
-                    "dur": "%ss" % duration, "repeatCount": repeatCount})
+    self.set_attrs({"attributeName": attribute_name, "type": type, "from": from_pos, "to": to_pos,
+                    "dur": "%ss" % duration, "repeatCount": repeat_count})
 
   def __str__(self):
     return "<animateTransform %s />" % self.get_attrs(pyClassNames=self.style.get_classes())
@@ -1064,10 +1116,10 @@ class AnimateTransform(Html.Html):
 class Animate(Html.Html):
   # https://css-tricks.com/guide-svg-animations-smil/
 
-  def __init__(self, report, attributeName, type,  from_pos, to_pos, duration, repeatCount):
+  def __init__(self, report, attribute_name, type, from_pos, to_pos, duration, repeat_count):
     super(Animate, self).__init__(report, "")
-    self.set_attrs({"attributeName": attributeName, "type": type, "from": from_pos, "to": to_pos,
-                    "dur": "%ss" % duration, "repeatCount": repeatCount})
+    self.set_attrs({"attributeName": attribute_name, "type": type, "from": from_pos, "to": to_pos,
+                    "dur": "%ss" % duration, "repeatCount": repeat_count})
 
   def __str__(self):
     return "<animateTransform %s />" % self.get_attrs(pyClassNames=self.style.get_classes())

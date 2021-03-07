@@ -22,8 +22,9 @@ class PivotTable(Html.Html):
   requirements = ('pivottable', )
   name = 'Pivot Table'
 
-  def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
-    super(PivotTable, self).__init__(report, recordSet, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+  def __init__(self, report, records, rows, cols, width, height, html_code, helper, options, profile):
+    super(PivotTable, self).__init__(report, records, html_code=html_code, profile=profile,
+                                     css_attrs={"width": width, "height": height})
     # Add the extra HTML components
     self.add_helper(helper)
     self.__options = OptTable.OptionsPivot(self, options)
@@ -39,6 +40,7 @@ class PivotTable(Html.Html):
     """
     Description:
     ------------
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -100,14 +102,16 @@ class PivotTable(Html.Html):
     self.options.rendererName = 'Table With Subtotal'
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %(strAttr)s></div>%(helper)s' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), "helper": self.helper}
+    self.page.properties.js.add_builders(self.refresh())
+    return '<div %(strAttr)s></div>%(helper)s' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), "helper": self.helper}
 
 
 class PivotUITable(PivotTable):
 
-  def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
-    super(PivotUITable, self).__init__(report, recordSet or [], rows, cols, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, records, rows, cols, width, height, html_code, helper, options, profile):
+    super(PivotUITable, self).__init__(report, records or [], rows, cols, width, height, html_code, helper, options,
+                                       profile)
     self.__options = OptTable.OptionsPivotUI(self, options)
     # to add all the columns in the table if nothing defined
     self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
@@ -131,7 +135,7 @@ class PivotUITable(PivotTable):
         ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
-class PivotAggregator(object):
+class PivotAggregator:
 
   def __init__(self, report, options):
     self.report, self.options = report, options
@@ -314,7 +318,7 @@ class PivotAggregator(object):
     self.options.aggregatorName = name
 
 
-class PivotRendererC3(object):
+class PivotRendererC3:
   def __init__(self, report, options):
     self._report, self.options = report, options
 
@@ -422,7 +426,7 @@ class PivotRendererC3(object):
     self.options.rendererName = "Stacked Bar Chart"
 
 
-class PivotRendererPlotly(object):
+class PivotRendererPlotly:
 
   def __init__(self, report, options):
     self._report, self.options = report, options
@@ -530,7 +534,7 @@ class PivotRendererPlotly(object):
     self.options.rendererName = "Horizontal Bar Chart"
 
 
-class PivotRenderer(object):
+class PivotRenderer:
 
   def __init__(self, report, options):
     self._report, self.options = report, options

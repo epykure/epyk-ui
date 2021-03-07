@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-class Buttons(object):
+class Buttons:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def block(self, text, category="primary", format='sm'):
+  def block(self, text, category="primary", fmt='sm'):
     """
     Description:
     ------------
@@ -16,12 +16,12 @@ class Buttons(object):
     ----------
     :param text:
     :param category:
-    :param format:
+    :param fmt:
     """
     schema = {"type": 'button', 'class': 'btn', 'arias': {'pressed': False}, 'css': None, 'args': {'text': text}}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['class'].add("btn-%s" % category)
-    button.attr['class'].add("btn-%s" % format)
+    button.attr['class'].add("btn-%s" % fmt)
     button.attr['class'].add("btn-block")
     button.attr['data-toggle'] = "button"
     return button
@@ -37,7 +37,7 @@ class Buttons(object):
     :param category:
     """
     schema = {"type": 'button', 'class': 'btn btn-sm', 'arias': {'pressed': False}, 'css': None, 'args': {'text': text}}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['class'].add("btn-%s" % category)
     button.attr['data-toggle'] = "button"
     return button
@@ -53,7 +53,7 @@ class Buttons(object):
     :param category:
     """
     schema = {"type": 'button', 'class': 'btn btn-lg', 'arias': {'pressed': False}, 'css': None, 'args': {'text': text}}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['class'].add("btn-%s" % category)
     button.attr['data-toggle'] = "button"
     return button
@@ -70,13 +70,13 @@ class Buttons(object):
     :param format:
     """
     schema = {"type": 'button', 'class': 'btn', 'arias': {'pressed': False}, 'css': None, 'args': {'text': text}}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['class'].add("btn-%s" % category)
     button.attr['class'].add("btn-%s" % format)
     button.attr['data-toggle'] = "button"
     return button
 
-  def checked(self, text, category="primary"):
+  def checked(self, text, category="primary", width=(None, "%"), height=(None, "px")):
     """
     Description:
     ------------
@@ -86,12 +86,12 @@ class Buttons(object):
     :param text:
     :param category:
     """
-    schema = {"type": 'div', 'class': 'btn-group-toggle', 'arias': {'pressed': False}, 'css': None, 'children': [
+    schema = {"type": 'div', 'args': {"width": width, "height": height}, 'class': 'btn-group-toggle', 'arias': {'pressed': False}, 'css': None, 'children': [
       {"type": 'label', 'css': None, 'class': 'btn btn-%s active' % category, 'children': [
         {'type': 'checkbox', 'css': None, 'args': {'flag': True, 'label': text}}
       ]}
     ]}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['data-toggle'] = "button"
     return button
 
@@ -105,7 +105,7 @@ class Buttons(object):
 
       https://getbootstrap.com/docs/4.4/components/button-group/
     """
-    container = self.context.rptObj.web.std.div()
+    container = self.page.web.std.div()
     container.attr['class'].add('btn-toolbar')
     container.attr['role'] = 'toolbar'
     return container
@@ -124,7 +124,7 @@ class Buttons(object):
     ----------
     :param vertical:
     """
-    container = self.context.rptObj.web.std.div()
+    container = self.page.web.std.div()
     if vertical:
       container.attr['class'].add('btn-group-vertical')
     else:
@@ -149,7 +149,7 @@ class Buttons(object):
 
     for v in values:
       schema['children'][1]['children'].append({'type': 'link', 'css': None, 'class': 'dropdown-item', 'args': {'text': v, 'url': '#'}})
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['data-toggle'] = "button"
     return button
 
@@ -281,5 +281,5 @@ class Buttons(object):
     """
     schema = {"type": 'button', 'class': 'close', 'attrs': {'data-dismiss': dismiss}, 'arias': {'label': 'Close'}, 'css': None, 'children': [
       {"type": 'span', 'css': None, 'arias': {"hidden": True}, 'args': {"text": '&times;'}}]}
-    button = self.context.rptObj.web.bs.composite(schema, options={"reset_class": True})
+    button = self.page.web.bs.composite(schema, options={"reset_class": True})
     return button

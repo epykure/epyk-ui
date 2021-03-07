@@ -14,10 +14,10 @@ from epyk.interfaces.mt import MtSelects
 from epyk.fwk.mt.html import MdcHtml
 
 
-class Materials(object):
+class Materials:
 
-  def __init__(self, rptObj):
-    self.rptObj = rptObj
+  def __init__(self, page):
+    self.page = page
     self.navbar = self.navigation.top_bar #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
 
     # Shortcut for the main components
@@ -32,14 +32,15 @@ class Materials(object):
     self.slider = self.sliders.slider
     self.tabs = self.navigation.tabs
     self.drawers = self.navigation.drawers
-    self.new_line = self.rptObj.web.std.layouts.new_line
+    self.new_line = self.page.web.std.layouts.new_line
 
   @property
   def selects(self):
     """
     Description:
     ------------
-    MDC Select provides Material Design single-option select menus, using the MDC menu. The Select component is fully accessible, and supports RTL rendering.
+    MDC Select provides Material Design single-option select menus, using the MDC menu. The Select component is fully
+    accessible, and supports RTL rendering.
 
     Related Pages:
 
@@ -52,7 +53,8 @@ class Materials(object):
     """
     Description:
     ------------
-    A menu displays a list of choices on a temporary surface. They appear when users interact with a button, action, or other control.
+    A menu displays a list of choices on a temporary surface. They appear when users interact with a button, action,
+    or other control.
 
     Related Pages:
 
@@ -92,7 +94,8 @@ class Materials(object):
     """
     Description:
     ------------
-    The MDC Linear Progress component is a spec-aligned linear progress indicator component adhering to the Material Design progress & activity requirements.
+    The MDC Linear Progress component is a spec-aligned linear progress indicator component adhering to the Material
+    Design progress & activity requirements.
 
     Related Pages:
 
@@ -145,6 +148,7 @@ class Materials(object):
     Related Pages:
 
       https://material.io/develop/web/components/input-controls/form-fields/
+      http://google.github.io/material-design-icons/
     """
     return MtIcons.Icon(self)
 
@@ -154,7 +158,8 @@ class Materials(object):
     Description:
     ------------
     MDC Slider provides an implementation of the Material Design slider component.
-    It is modeled after the browser’s <input type="range"> element. Sliders are fully RTL-aware, and conform to the WAI-ARIA slider authoring practices.
+    It is modeled after the browser’s <input type="range"> element. Sliders are fully RTL-aware, and conform to the
+    WAI-ARIA slider authoring practices.
 
     Related Pages:
 
@@ -162,7 +167,8 @@ class Materials(object):
     """
     return MtSliders.Slider(self)
 
-  def composite(self, schema, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def composite(self, schema, width=(None, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
+                profile=None):
     """
     Description:
     ------------
@@ -183,11 +189,11 @@ class Materials(object):
     :param schema: Dictionary. The schema of the composite item with the different sub items
     :param width: Optional. Tuple. The component width in pixel or percentage
     :param height: Optional. Tuple. The component height in pixel or percentage
-    :param htmlCode: Optional. String. The component identifier code (for both Python and Javascript)
+    :param html_code: Optional. String. The component identifier code (for both Python and Javascript)
     :param helper: Optional. String. Optional. The helper message
     :param options: Optional. Dictionary. the component specific items
     :param profile: Optional. Not yet available
     """
-    html_help = MdcHtml.MdcComposite(self.rptObj, schema, width=width, height=height, htmlCode=htmlCode,
+    html_help = MdcHtml.MdcComposite(self.page, schema, width=width, height=height, html_code=html_code,
                                      profile=profile, options=options or {}, helper=helper)
     return html_help

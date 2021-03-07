@@ -6,10 +6,12 @@ from epyk.core import html
 from epyk.interfaces import Arguments
 
 
-class Modals(object):
-  def __init__(self, context):
-    self.context = context
+class Modals:
 
+  def __init__(self, ui):
+    self.page = ui.page
+
+  @html.Html.css_skin()
   def forms(self, components, action, method, header=None, footer=None, helper=None):
     """
     Description:
@@ -36,19 +38,24 @@ class Modals(object):
     Attributes:
     ----------
     :param html_objs components:
+    :param action:
     :param method:
+    :param header:
+    :param footer:
     :param helper:
     """
     if not type(components) == list:
       components = [components]
-    form = html.HtmlContainer.Form(self.context.rptObj, components, helper)
+    form = html.HtmlContainer.Form(self.page, components, helper)
     form.submit(method, action)
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, False, helper)
+    modal = html.HtmlContainer.Modal(self.page, [], header, footer, False, helper)
     modal += form
     modal.form = form
     return modal
 
-  def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
+  @html.Html.css_skin()
+  def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None,
+                 add_buttons=None, to_html=True, helper=None):
     """
     Description:
     ------------
@@ -82,12 +89,12 @@ class Modals(object):
     for obj in disc_list:
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
 
-    modal = html.HtmlContainer.Modal(self.context.rptObj, disc_list, header, footer, False, helper)
+    modal = html.HtmlContainer.Modal(self.page, disc_list, header, footer, False, helper)
     modal.col.css({'width': '450px', 'height': '700px'})
     if add_buttons or submit:
-      submitRow = self.context.rptObj.ui.row([]) if not add_buttons else self.context.rptObj.ui.row(add_buttons)
+      submitRow = self.page.ui.row([]) if not add_buttons else self.page.ui.row(add_buttons)
       if submit:
-        submitBtn = self.context.rptObj.ui.buttons.important(validation_text)
+        submitBtn = self.page.ui.buttons.important(validation_text)
         if action:
           submitBtn.click(action)
         else:
@@ -96,7 +103,8 @@ class Modals(object):
       modal.col + submitRow
     return modal
 
-  def dialog(self, text, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def dialog(self, text, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -116,21 +124,20 @@ class Modals(object):
 
     Attributes:
     ----------
-    :param text:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param attrs:
-    :param helper:
-    :param options:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_pr = html.HtmlEvent.Dialog(self.context.rptObj, text, width, height,  attrs or {}, helper,
-                                         options or {}, htmlCode, profile)
+    html_pr = html.HtmlEvent.Dialog(self.page, text, width, height, helper, options or {}, html_code, profile)
     return html_pr
 
+  @html.Html.css_skin()
   def icon(self, components=None, icon=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -172,23 +179,24 @@ class Modals(object):
     if not isinstance(components, list):
       components = [components]
     if icon is not None:
-      icon_success = self.context.rptObj.ui.icon(icon)
+      icon_success = self.page.ui.icon(icon)
       icon_success.style.css.font_size = 50
       icon_success.style.css.margin_bottom = 20
       icon_success.style.css.margin_top = 10
-      success_div = self.context.rptObj.ui.div(icon_success)
+      success_div = self.page.ui.div(icon_success)
       success_div.style.css.text_align = "center"
       components.insert(0, success_div)
-    acknowledgement = self.context.rptObj.ui.button("Ok", align="center", options=dfl_options.get("button", {}))
+    acknowledgement = self.page.ui.button("Ok", align="center", options=dfl_options.get("button", {}))
     acknowledgement.style.css.margin_top = 10
     components.append(acknowledgement)
 
-    popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.acknowledgement = acknowledgement
 
     acknowledgement.click([popup.dom.hide()])
     return popup
 
+  @html.Html.css_skin()
   def validation(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -227,18 +235,19 @@ class Modals(object):
       dfl_options.update(options)
     if not isinstance(components, list):
       components = [components]
-    validate = self.context.rptObj.ui.buttons.validate("Validate")
-    cancel = self.context.rptObj.ui.buttons.cancel()
-    row = self.context.rptObj.ui.row([validate, cancel], position="top", align="center")
+    validate = self.page.ui.buttons.validate("Validate")
+    cancel = self.page.ui.buttons.cancel()
+    row = self.page.ui.row([validate, cancel], position="top", align="center")
     row.options.autoSize = False
     components.append(row)
 
-    popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.validate = validate
     popup.cancel = cancel
     cancel.click([popup.dom.hide()])
     return popup
 
+  @html.Html.css_skin()
   def acknowledge(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -278,14 +287,15 @@ class Modals(object):
       dfl_options.update(options)
     if not isinstance(components, list):
       components = [components]
-    acknowledgement = self.context.rptObj.ui.button("Ok", align="center")
+    acknowledgement = self.page.ui.button("Ok", align="center")
     components.append(acknowledgement)
 
-    popup = html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.acknowledgement = acknowledgement
     acknowledgement.click([popup.dom.hide()])
     return popup
 
+  @html.Html.css_skin()
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -323,8 +333,9 @@ class Modals(object):
     dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
     if options is not None:
       dfl_options.update(options)
-    return html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
+    return html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
 
+  @html.Html.css_skin()
   def error(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -360,12 +371,13 @@ class Modals(object):
     dfl_options = {"button": {"category": "delete"}}
     if options is not None:
       dfl_options.update(options)
-    popup = self.icon(components=components, icon="fas fa-exclamation-triangle", width=width, height=height, options=dfl_options,
-                      profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.context.rptObj.theme.danger[0]
-    popup.container[0].style.css.color = self.context.rptObj.theme.danger[1]
+    popup = self.icon(components=components, icon="fas fa-exclamation-triangle", width=width, height=height,
+                      options=dfl_options, profile=profile)
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.danger[0]
+    popup.container[0].style.css.color = self.page.theme.danger[1]
     return popup
 
+  @html.Html.css_skin()
   def info(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -402,6 +414,7 @@ class Modals(object):
                       profile=profile)
     return popup
 
+  @html.Html.css_skin()
   def success(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -435,10 +448,11 @@ class Modals(object):
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     popup = self.icon(components=components, icon="fas fa-check", width=width, height=height, options=options, profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.context.rptObj.theme.success[0]
-    popup.container[0].style.css.color = self.context.rptObj.theme.success[1]
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
+    popup.container[0].style.css.color = self.page.theme.success[1]
     return popup
 
+  @html.Html.css_skin()
   def loading(self, text="", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -471,10 +485,11 @@ class Modals(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.context.rptObj.ui.text(text)
-    popup = self.icon(components=[component], icon="fas fa-spinner fa-pulse", width=width, height=height, options=options, profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.context.rptObj.theme.success[0]
-    popup.container[0].style.css.color = self.context.rptObj.theme.success[1]
+    component = self.page.ui.text(text)
+    popup = self.icon(components=[component], icon="fas fa-spinner fa-pulse", width=width, height=height,
+                      options=options, profile=profile)
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
+    popup.container[0].style.css.color = self.page.theme.success[1]
     popup.text = component
 
     def build_text(data=None, options=None, profile=False):
@@ -483,6 +498,7 @@ class Modals(object):
     popup.build = build_text
     return popup
 
+  @html.Html.css_skin()
   def stepper(self, records=None, components=None, shape="arrow", title=None, width=(100, '%'), height=(None, 'px'),
               options=None, profile=None):
     """
@@ -501,14 +517,14 @@ class Modals(object):
         components = [components]
     else:
       components = []
-    stepper = getattr(self.context.rptObj.ui.steppers, shape)(records)
+    stepper = getattr(self.page.ui.steppers, shape)(records)
     stepper.style.css.inline_block()
     stepper.style.css.margin = "auto"
     stepper.style.css.width = "auto"
     stepper.options.line = False
-    components.insert(0, self.context.rptObj.ui.div([stepper], align="center"))
+    components.insert(0, self.page.ui.div([stepper], align="center"))
     if title is not None:
-      title = self.context.rptObj.ui.title(title)
+      title = self.page.ui.title(title)
       components.insert(0, title)
     popup = self.popup(components=components, width=width, height=height, options=options, profile=profile)
     popup.title = title

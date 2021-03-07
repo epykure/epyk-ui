@@ -6,19 +6,21 @@ from epyk.core.css import Colors
 from epyk.interfaces import Arguments
 
 
-class Images(object):
+class Images:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def img(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
+  @html.Html.css_skin()
+  def img(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", html_code=None,
           profile=None, tooltip=None, options=None):
     """
     Description:
     ------------
     Add an HTML image to the page. The path can be defined either in a absolute or relative format.
 
-    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
+    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the
+    server.
 
     Usage:
     -----
@@ -45,7 +47,7 @@ class Images(object):
     :param width: Tuple. Optional. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Optional. Tuple. The component height in pixel or percentage.
     :param align: String. Optional. A string with the horizontal position of the component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -54,15 +56,18 @@ class Images(object):
     height = Arguments.size(height, unit="px")
     if height[0] not in [None, 'auto'] and width[1] == '%':
       width = ("auto", '')
-    html_image = html.HtmlImage.Image(self.context.rptObj, self.context.rptObj.py.encode_html(image), self.context.rptObj.py.encode_html(path), align, htmlCode, width, height, profile, options or {})
+    html_image = html.HtmlImage.Image(self.page, self.page.py.encode_html(image),
+                                      self.page.py.encode_html(path), align, html_code, width, height,
+                                      profile, options or {})
     if tooltip is not None:
       html_image.tooltip(tooltip)
     if width[0] is None:
       html_image.style.css.max_width = '100%'
     return html_image
 
-  def figure(self, image=None, caption=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
-          profile=None, tooltip=None, options=None):
+  @html.Html.css_skin()
+  def figure(self, image=None, caption=None, path=None, width=(100, "%"), height=(None, "px"), align="center",
+             html_code=None, profile=None, tooltip=None, options=None):
     """
     Description:
     ------------
@@ -75,34 +80,38 @@ class Images(object):
     Usage:
     -----
 
-      page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption", path=picture_path, width=(100, 'px'))
+      page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption",
+        path=picture_path, width=(100, 'px'))
 
     Attributes:
     ----------
-    :param image:
+    :param image: String. Optional. The url path of the image.
     :param caption:
     :param path: String. Optional. String. The image file path.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. A string with the horizontal position of the component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    container = html.HtmlImage.Figure(self.context.rptObj, [], None, None, width, None, height, False, align, None, htmlCode, "figure", None, options or {}, profile)
-    container.img = self.context.rptObj.ui.img(image=image, path=path, width=(100, "%"), height=(None, "px"), align="center",
-                                               htmlCode=htmlCode, profile=profile, tooltip=tooltip, options=options)
+    container = html.HtmlImage.Figure(self.page, [], None, None, width, None, height, False, align, None,
+                                      html_code, "figure", None, options or {}, profile)
+    container.img = self.page.ui.img(
+      image=image, path=path, width=(100, "%"), height=(None, "px"), align="center", html_code=html_code,
+      profile=profile, tooltip=tooltip, options=options)
     container.add(container.img)
     if caption is not None:
-      container.caption = self.context.rptObj.ui.tags.figcaption(caption)
+      container.caption = self.page.ui.tags.figcaption(caption)
       container.add(container.caption)
     if width[0] == 'auto':
       container.style.css.display = "inline-block"
     return container
 
+  @html.Html.css_skin()
   def container(self, components, max_width=(900, 'px'), align="center", profile=None, options=None):
     """
     Description:
@@ -122,18 +131,20 @@ class Images(object):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     max_width = Arguments.size(max_width, unit="%")
-    container = self.context.rptObj.ui.div(components, profile=profile, options=options)
+    container = self.page.ui.div(components, profile=profile, options=options)
     container.style.css.max_width = max_width[0]
     container.style.css.text_align = align
     if align == 'center':
       container.style.css.margin = "0 auto"
     return container
 
-  def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center", htmlCode=None,
-                 position="middle", profile=None, options=None):
+  @html.Html.css_skin()
+  def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center",
+                 html_code=None, position="middle", profile=None, options=None):
     """
     Description:
     ------------
+    Add a background image.
 
     Usage:
     -----
@@ -144,23 +155,28 @@ class Images(object):
     :param url: String. Optional. The link to the gallery.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param size:
-    :param margin: Integer. Optional. The CSS margin properties are used to create space around elements, outside of any defined borders.
+    :param size: String. Optional. The type of background in
+    :param margin: Integer. Optional. The CSS margin properties are used to create space around elements,
+                            outside of any defined borders.
     :param align: String. Optional. A string with the horizontal position of the component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param position: String. Optional. A string with the vertical position of the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width), htmlCode=htmlCode, options=options, profile=profile)
-    div.style.css.background_url(self.context.rptObj.py.encode_html(url), size=size, margin=margin)
+    div = self.page.ui.div(
+      height=Arguments.size(height, "px"), width=Arguments.size(width), html_code=html_code, options=options,
+      profile=profile)
+    div.style.css.background_url(self.page.py.encode_html(url), size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
     div.style.css.vertical_align = position
     div.style.css.padding = "auto"
     return div
 
-  def wallpaper(self, url=None, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center", htmlCode=None,
-                position="middle", profile=None, options=None):
+  @html.Html.css_skin()
+  def wallpaper(self, url=None, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center",
+                html_code=None, position="middle", profile=None, options=None):
     """
     Description:
     ------------
@@ -178,27 +194,29 @@ class Images(object):
     :param height: Optional. Tuple. The component height in pixel or percentage.
     :param size:
     :param margin:
-    :param align:
-    :param position:
+    :param align: String. The text-align property within this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param position: String. Optional. The position compared to the main component tag.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    # report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
-    #                helper, options, profile
     options = options or {}
-    div = html.HtmlImage.Background(self.context.rptObj, [], label=None, color=None, width=Arguments.size(width), icon=None,
-                                    height=Arguments.size(height), editable=False, align='left', padding=None, htmlCode=htmlCode,
-                                    tag='div', helper=None, options=options, profile=profile)
-    div.style.css.background_url(self.context.rptObj.py.encode_html(url) if url is not None else None, size=size, margin=margin)
+    div = html.HtmlImage.Background(self.page, [], label=None, color=None, width=Arguments.size(width),
+                                    icon=None, height=Arguments.size(height), editable=False, align='left', padding=None,
+                                    html_code=html_code, tag='div', helper=None, options=options, profile=profile)
+    div.style.css.background_url(self.page.py.encode_html(url) if url is not None else None, size=size,
+                                 margin=margin)
     div.style.css.background_position = "center center"
     div.style.css.display = "block"
     div.style.css.text_align = align
     div.style.css.vertical_align = position
     div.style.css.padding = "auto"
-    self.context.rptObj.body.style.css.height = "100%"
+    self.page.body.style.css.height = "100%"
     return div
 
-  def logo(self, url, width=(160, "px"), height=(60, "px"), top=(16, "px"), left=(16, "px"), profile=None, options=None):
+  @html.Html.css_skin()
+  def logo(self, url, width=(160, "px"), height=(60, "px"), top=(16, "px"), left=(16, "px"), profile=None,
+           options=None):
     """
     Description:
     ------------
@@ -210,16 +228,17 @@ class Images(object):
     Attributes:
     ----------
     :param url: String. Optional. The link to the gallery.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param top:
-    :param left:
+    :param width: Tuple. Optional. The component width in pixel or percentage.
+    :param height: Tuple. Optional. The component height in pixel or percentage.
+    :param top: Tuple. Optional. A tuple with the integer for the component's distance to the top of the page.
+    :param left: Tuple. Optional. A tuple with the integer for the component's distance to the left of the page.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     top = Arguments.size(top, 'px')
     left = Arguments.size(left, 'px')
-    div = self.context.rptObj.ui.div(height=Arguments.size(height, 'px'), width=Arguments.size(width), options=options, profile=profile)
+    div = self.page.ui.div(
+      height=Arguments.size(height, 'px'), width=Arguments.size(width), options=options, profile=profile)
     div.style.css.background_url(url)
     div.style.css.display = "block"
     div.style.css.position = "absolute"
@@ -230,7 +249,9 @@ class Images(object):
     div.style.css.padding = "auto"
     return div
 
-  def youtube(self, video_id=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None, profile=None, options=None):
+  @html.Html.css_skin()
+  def youtube(self, video_id=None, width=(100, "%"), height=(None, "px"), align="center", html_code=None, profile=None,
+              options=None):
     """
     Description:
     ------------
@@ -246,20 +267,23 @@ class Images(object):
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
     :param align: String. Optional. A string with the horizontal position of the component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width), Arguments.size(height, 'px'), align, htmlCode, profile, options)
+    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width),
+                    Arguments.size(height, 'px'), align, html_code, profile, options)
 
-  def circular(self, image=None, path=None, width=(200, "px"), height=(200, "px"), align="center", htmlCode=None,
-              profile=None, options=None):
+  @html.Html.css_skin()
+  def circular(self, image=None, path=None, width=(200, "px"), height=(200, "px"), align="center", html_code=None,
+               profile=None, options=None):
     """
     Description:
     ------------
     Add an HTML image to the page. The path can be defined either in a absolute or relative format.
 
-    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
+    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of
+    the server.
 
     Usage:
     -----
@@ -286,7 +310,7 @@ class Images(object):
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
     :param align: String. Optional. A string with the horizontal position of the component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -294,15 +318,17 @@ class Images(object):
     height = Arguments.size(height, unit="px")
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
-    html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
+    html_image = html.HtmlImage.Image(self.page, image, path, align, html_code, width, height, profile,
+                                      options or {})
     # add the css styles
     html_image.style.css.padding = 5
     html_image.style.css.borders_light()
     html_image.style.css.border_radius = width[0]
     return html_image
 
-  def avatar(self, text="", image="", path=None, status=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
-               profile=None, options=None):
+  @html.Html.css_skin()
+  def avatar(self, text="", image="", path=None, status=None, width=(30, "px"), height=(30, "px"), align="center",
+             html_code=None, profile=None, options=None):
     """
     Description:
     ------------
@@ -325,14 +351,14 @@ class Images(object):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the component.
     :param image:
     :param path: String. Optional. String. The image file path.
     :param status:
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
     :param align: String. Optional. A string with the horizontal position of the component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -340,22 +366,23 @@ class Images(object):
     height = Arguments.size(height, "px")
     options = options or {}
     status_map = {
-      True: self.context.rptObj.theme.success[1],
-      'available': self.context.rptObj.theme.success[1],
-      False: self.context.rptObj.theme.danger[1],
-      'busy': self.context.rptObj.theme.danger[1],
-      'out': self.context.rptObj.theme.warning[1]
+      True: self.page.theme.success[1],
+      'available': self.page.theme.success[1],
+      False: self.page.theme.danger[1],
+      'busy': self.page.theme.danger[1],
+      'out': self.page.theme.warning[1]
     }
 
     bgcolor, margin_top = None, -5
     if image is not None:
-      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align="center", htmlCode=htmlCode, profile=profile, options=options)
+      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align="center", html_code=html_code,
+                     profile=profile, options=options)
       img.style.css.border_radius = width[0]
       img.style.css.margin = 2
       margin_top = -8
     else:
-      bgcolor = Colors.randColor(self.context.rptObj.py.hash(text))
-      img = self.context.rptObj.ui.layouts.div(text[0].upper())
+      bgcolor = Colors.randColor(self.page.py.hash(text))
+      img = self.page.ui.layouts.div(text[0].upper())
       img.style.css.line_height = width[0] - 5
       img.style.css.color = "white"
       img.style.css.font_size = width[0]
@@ -363,18 +390,18 @@ class Images(object):
       img.style.css.padding = 0
     img.style.css.middle()
     if options.get('status', True):
-      status_o = self.context.rptObj.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
+      status_o = self.page.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
       status_o.style.css.position = 'relative'
 
-      status_o.style.css.background_color = status_map.get(status, self.context.rptObj.theme.greys[5])
+      status_o.style.css.background_color = status_map.get(status, self.page.theme.greys[5])
       status_o.style.css.border_radius = 10
       status_o.style.css.margin_top = margin_top
       status_o.style.css.float = 'right'
 
-      div = self.context.rptObj.ui.layouts.div([img, status_o], width=width, height=height)
+      div = self.page.ui.layouts.div([img, status_o], width=width, height=height)
       div.status = status_o
     else:
-      div = self.context.rptObj.ui.layouts.div([img], width=width, height=height)
+      div = self.page.ui.layouts.div([img], width=width, height=height)
     if bgcolor is not None:
       div.style.css.background_color = bgcolor
       div.style.css.text_stoke = "1px %s" % bgcolor
@@ -387,8 +414,9 @@ class Images(object):
       div.style.css.display = "block"
     return div
 
-  def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px"), htmlCode=None,
-               profile=None, options=None):
+  @html.Html.css_skin()
+  def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px"), profile=None,
+              options=None):
     """
     Description:
     ------------
@@ -411,32 +439,36 @@ class Images(object):
     :param image:
     :param name:
     :param title:
-    :param text:
+    :param text: String. Optional. The value to be displayed to the component.
     :param url: String. Optional. The link to the gallery.
     :param path: String. Optional. String. The image file path.
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-    img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path, profile=profile)
-    title = self.context.rptObj.ui.title(title, level=2)
-    highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'), profile=profile)
-    paragraph = self.context.rptObj.ui.texts.paragraph(text)
-    div = self.context.rptObj.ui.layouts.div([highlight, img, title, paragraph], width=width, height=height, profile=profile)
-    highlight.css({"position": "absolute", 'left': 0, "background-color": self.context.rptObj.theme.colors[-1],
-                   "color": self.context.rptObj.theme.greys[0], 'padding': "0 2px"})
+    img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path, options=options, profile=profile)
+    title = self.page.ui.title(title, level=2, options=options)
+    highlight = self.page.ui.texts.span(name, width=(50, "px"), height=(20, 'px'), options=options, profile=profile)
+    paragraph = self.page.ui.texts.paragraph(text, options=options)
+    div = self.page.ui.layouts.div([
+      highlight, img, title, paragraph], width=width, height=height, options=options, profile=profile)
+    highlight.css({"position": "absolute", 'left': 0, "background-color": self.page.theme.colors[-1],
+                   "color": self.page.theme.greys[0], 'padding': "0 2px"})
     div.style.css.margin = 2
+    div.img = img
+    div.title = title
     if url is not None:
       div.style.css.cursor = 'pointer'
-      div.click([self.context.rptObj.js.location.href(url)])
+      div.click([self.page.js.location.href(url)])
     div.style.add_classes.div.border_bottom()
     return div
 
-  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"), options=None, profile=None):
+  @html.Html.css_skin()
+  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
+               html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -446,7 +478,7 @@ class Images(object):
     Usage:
     -----
 
-      c = page.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
+      c = page.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#")
       c.style.css.borders()
 
     Underlying HTML Objects:
@@ -466,14 +498,17 @@ class Images(object):
     :param path: String. Optional. String. The image file path.
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-    html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, options, profile)
+    html_id = html.HtmlImage.AnimatedImage(
+      self.page, image, text, title, html_code, url, path, width, height, options, profile)
     return html_id
 
+  @html.Html.css_skin()
   def carousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
     """
     Description:
@@ -514,9 +549,11 @@ class Images(object):
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
-    html_i = html.HtmlImage.ImgCarousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
+    html_i = html.HtmlImage.ImgCarousel(
+      self.page, images, path, selected, width, height, options or {}, profile)
     return html_i
 
+  @html.Html.css_skin()
   def emoji(self, symbol=None, top=(20, 'px'), options=None, profile=None):
     """
     Description:
@@ -547,10 +584,12 @@ class Images(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     top = Arguments.size(top, "px")
-    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbol, top, options, profile)
+    html_emoji = html.HtmlImage.Emoji(self.page, symbol, top, options, profile)
     return html_emoji
 
-  def icon(self, icon=None, family=None, width=(None, 'px'), htmlCode=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
+  @html.Html.css_skin()
+  def icon(self, icon=None, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
+           tooltip=None, align="left", options=None, profile=None):
     """
     Description:
     ------------
@@ -571,13 +610,13 @@ class Images(object):
     Attributes:
     ----------
     :param icon: String. Optional. The component icon content from font-awesome references
-    :param family:
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param family: String. Optional. The Icon framework reference.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional.
+    :param align: String. The text-align property within this component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -585,12 +624,16 @@ class Images(object):
     height = Arguments.size(height, "px")
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
-    html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height,
-         color=color, tooltip=tooltip, options=options, htmlCode=htmlCode, profile=profile)
+    html_icon = html.HtmlImage.Icon(self.page, icon, width=width, height=height, color=color, tooltip=tooltip,
+                                    options=options, html_code=html_code, profile=profile)
+    if align == "center":
+      html_icon.style.css.margin = "auto"
+      html_icon.style.css.display = "block"
     return html_icon
 
-  def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,
-            tooltip=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None,
+            color=None, url=None, tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -636,13 +679,14 @@ class Images(object):
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
     if background_color is None:
-      background_color = self.context.rptObj.theme.greys[0]
+      background_color = self.page.theme.greys[0]
     if color is None:
-      color = self.context.rptObj.theme.success[1]
-    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, width, height, label, icon, background_color, color, url,
-                                      tooltip, options or {}, profile)
+      color = self.page.theme.success[1]
+    html_badge = html.HtmlImage.Badge(self.page, text, width, height, label, icon, background_color, color,
+                                      url, tooltip, options or {}, profile)
     return html_badge
 
+  @html.Html.css_skin()
   def color(self, code, color=None, width=(110, 'px'), height=(25, 'px'), options=None, helper=None, profile=None):
     """
     Description:
@@ -672,10 +716,10 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-    div = self.context.rptObj.ui.div(code, width=width, height=height, options=options, helper=helper, profile=profile)
+    div = self.page.ui.div(code, width=width, height=height, options=options, helper=helper, profile=profile)
     div.style.css.background_color = code
     div.style.css.line_height = "%s%s" % (height[0], height[1])
-    div.style.css.color = color or self.context.rptObj.theme.greys[0]
+    div.style.css.color = color or self.page.theme.greys[0]
     div.style.css.text_align = "center"
     div.style.css.border = "1px solid black"
     div.style.css.vertical_align = "middle"

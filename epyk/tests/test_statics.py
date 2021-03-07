@@ -21,23 +21,30 @@ MAP_COLS = {'flights.txt': {"distance": float, 'delay': float}}
 
 def open_url(url):
   """
+  Description:
+  ------------
   Small utilities to open the browser to a specific web page.
-  Some url are predefined and they are there to facilitate the testing of the generated Html pages
+  Some url are predefined and they are there to facilitate the testing of the generated Html pages.
 
-  :param url: A url
-
+  Attributes:
+  ----------
+  :param url: String. A url
   """
   webbrowser.open(url)
 
 
 def get_data(name, n=None, map_cols_type=None):
   """
+  Description:
+  ------------
   Load the static files used to test the different function.
   Files can be json or txt file (with header and delimited with a ,)
 
-  :param name: THe filename
-  :param n: Integer the max number of records
-  :param map_cols_type: Dictionary. Special column type mapping
+  Attributes:
+  ----------
+  :param name: String. The filename.
+  :param n: Integer. Optional. the max number of records.
+  :param map_cols_type: Dictionary. Optional. Special column type mapping.
 
   :return: A record (A list of dictionaries)
   """

@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.html import Defaults_html
 from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 
 
-class Texts(object):
+class Texts:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
+  @html.Html.css_skin()
   def text(self, text="", color=None, align='left', width=('auto', ""), height=(None, "px"),
-           htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
+           html_code=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -47,7 +47,7 @@ class Texts(object):
     :param align: String. Optional. The position of the icon in the line (left, right, center).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param options: Dictionary. Optional. The component options.
     :param helper: String. Optional. A tooltip helper.
@@ -58,8 +58,9 @@ class Texts(object):
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
       dfl_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
+    text = self.page.py.encode_html(text)
+    text_comp = html.HtmlText.Text(
+      self.page, text, color, align, width, height, html_code, tooltip, dfl_options, helper, profile)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
     if align in ["center", 'right']:
@@ -67,8 +68,9 @@ class Texts(object):
       text_comp.style.css.display = "block"
     return text_comp
 
+  @html.Html.css_skin()
   def block(self, text="", color=None, align='left', width=(100, "%"), height=(None, "px"),
-           htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
+            html_code=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -98,23 +100,24 @@ class Texts(object):
     Attributes:
     ----------
     :param text: String. Optional. The string value to be displayed in the component.
-    :param color: Optional. The color of the text.
-    :param align: Optional. The position of the icon in the line (left, right, center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. The component options.
-    :param helper: String. Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    text_comp = self.text(text, color, align, width, height, htmlCode, tooltip, options, helper, profile)
+    text_comp = self.text(text, color, align, width, height, html_code, tooltip, options, helper, profile)
     text_comp.style.css.display = "inline-block"
     text_comp.style.css.text_align = "left"
     return text_comp
 
-  def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""),
-               height=(None, "px"), htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left',
+               width=('auto', ""), height=(None, "px"), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -124,17 +127,17 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the component.
     :param size_notch:
-    :param top:
-    :param left:
-    :param bottom:
-    :param align:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param top: Tuple. Optional. A tuple with the integer for the component's distance to the top of the page.
+    :param left: Tuple. Optional. A tuple with the integer for the component's distance to the left of the page.
+    :param bottom: Tuple. Optional. A tuple with the integer for the component's distance to the bottom of the page.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     left = Arguments.size(left, unit="%")
     top = Arguments.size(top, unit="%")
@@ -143,30 +146,34 @@ class Texts(object):
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
       dfl_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, None, align, width, height, htmlCode, None, dfl_options, None, profile)
-    text_comp.style.position = "absolute"
-    text_comp.style.display = "block"
+    text = self.page.py.encode_html(text)
+    text_comp = html.HtmlText.Text(
+      self.page, text, None, align, width, height, html_code, None, dfl_options, None, profile)
+    text_comp.style.css.position = "absolute"
+    text_comp.style.css.display = "block"
     if bottom is not None:
-      text_comp.style.bottom = "%s%s" % (bottom[0], bottom[1])
+      text_comp.style.css.bottom = "%s%s" % (bottom[0], bottom[1])
     else:
       text_comp.style.top = "%s%s" % (top[0], top[1])
-    text_comp.style.left = "%s%s" % (left[0], left[1])
-    text_comp.style.transform = "translate(-%s, -%s)" % (text_comp.style.left, text_comp.style.top)
+    text_comp.style.css.left = "%s%s" % (left[0], left[1])
+    text_comp.style.css.transform = "translate(-%s, -%s)" % (text_comp.style.css.left, text_comp.style.css.top)
     if size_notch is not None:
-      text_comp.style.font_size = Defaults_css.font(size_notch)
+      text_comp.style.css.font_size = Defaults_css.font(size_notch)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
     return text_comp
 
-  def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
+  @html.Html.css_skin()
+  def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), html_code=None,
             tooltip='', profile=None, options=None):
     """
     Description:
     ------------
-    The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>, or <textarea> element...
+    The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>,
+    or <textarea> element...
 
-    The for attribute of the <label> tag should be equal to the id attribute of the related element to bind them together.
+    The for attribute of the <label> tag should be equal to the id attribute of the related element to bind
+    them together.
 
     Usage:
     -----
@@ -184,27 +191,28 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param color: Optional. The color of the text
-    :param align: Optional. The position of the icon in the line (left, right, center)
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param profile: Optional. A flag to set the component performance storage
-    :param options:
+    :param text: Optional. The string value to be displayed in the component.
+    :param color: Optional. The color of the text.
+    :param align: Optional. The position of the icon in the line (left, right, center).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    html_label = html.HtmlText.Label(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
+    text = self.page.py.encode_html(text)
+    html_label = html.HtmlText.Label(self.page, text, color, align, width, height, html_code, tooltip,
                                      profile, dflt_options)
     return html_label
 
-  def span(self, text="", color=None, align='center', width=None, height=None, htmlCode=None,
+  @html.Html.css_skin()
+  def span(self, text="", color=None, align='center', width=None, height=None, html_code=None,
            tooltip=None, options=None, profile=None):
     """
     Description:
@@ -230,33 +238,35 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param color: Optional. The color of the text
-    :param align: Optional. The position of the icon in the line (left, right, center)
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param options:
-    :param profile: Optional. A flag to set the component performance storage
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
+    html_label = html.HtmlText.Span(self.page, text, color, align, width, height, html_code, tooltip, options, profile)
     return html_label
 
+  @html.Html.css_skin()
   def highlights(self, text=None, title=None, icon=None, type="danger", color=None, width=('auto', ""),
-                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+                 height=(None, "px"), html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible
+    alert messages.
 
     Usage:
     -----
 
       page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
-      page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
+      page.ui.texts.highlights("Server configuration at: %s" % SERVER_PATH, icon="fas fa-exclamation-triangle")
 
     Underlying HTML Objects:
 
@@ -276,24 +286,26 @@ class Texts(object):
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    text = self.context.rptObj.py.encode_html(text)
-    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
-                                          height, htmlCode, helper, options or {}, profile)
+    text = self.page.py.encode_html(text)
+    html_light = html.HtmlText.Highlights(self.page, text, title, icon, type, color, width,
+                                          height, html_code, helper, options or {}, profile)
     return html_light
 
-  def note(self, text=None, title="", icon=None, type="success", color=None, width=(None, "%"),
-                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def note(self, text=None, title="", icon=None, type="success", color=None, width=(None, "%"), height=(None, "px"),
+           html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible
+    alert messages.
 
     Usage:
     -----
@@ -317,29 +329,31 @@ class Texts(object):
     ----------
     :param text: Optional. The string value to be displayed in the component
     :param title:
-    :param icon:
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
-                 dark). Default danger
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param options:
-    :param profile:
+                 dark). Default danger.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if type not in ['success', 'warning', 'danger']:
       raise Exception("This type %s is not recognised" % type)
 
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
-                                          height, htmlCode, helper, options or {}, profile)
-    html_light.style.css.border_left = "4px solid %s" % getattr(self.context.rptObj.theme, type)[1]
+    html_light = html.HtmlText.Highlights(self.page, text, title, icon, type, color, width,
+                                          height, html_code, helper, options or {}, profile)
+    html_light.style.css.border_left = "4px solid %s" % getattr(self.page.theme, type)[1]
     html_light.style.css.border_radius = 0
     return html_light
 
-  def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):
+  @html.Html.css_skin()
+  def formula(self, text=None, width=(100, "%"), height=(None, 'px'), html_code=None, color=None, helper=None,
+              options=None, profile=None):
     """
     Description:
     ------------
@@ -360,17 +374,22 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param color: Optional. The color of the text
-    :param helper:
-    :param profile: Optional. A flag to set the component performance storage
+    :param text: String. Optional. The string value to be displayed in the component
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, width, color, helper, profile)
+    height = Arguments.size(height, unit="%")
+    html_formula = html.HtmlTextComp.Formula(self.page, text, width, height, color, html_code, helper, options, profile)
     return html_formula
 
-  def code(self, text="", language='python', color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None,
+  @html.Html.css_skin()
+  def code(self, text="", language='python', color=None, width=(90, '%'), height=(200, 'px'), html_code=None,
            options=None, helper=None, profile=None):
     """
     Description:
@@ -392,26 +411,29 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
-    :param language:
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param helper:
-    :param profile:
+    :param text: String. Optional. The string value to be displayed in the component
+    :param language: String. Optional. The language used in the code cell.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
+    dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True,
+                    'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
+    html_code = html.HtmlTextEditor.Code(
+      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
     return html_code
 
+  @html.Html.css_skin()
   def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
-                height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, options=None, profile=None):
+                height=(None, 'px'), html_code=None, encoding="UTF-8", helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -436,38 +458,42 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
-    :param color:
+    :param text: String. Optional. The string value to be displayed in the component
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param background_color:
     :param border:
-    :param width:
-    :param height:
-    :param htmlCode:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param encoding:
-    :param dataSrc:
-    :param profile:
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"reset": True, 'markdown': False, "classes": []}
     if options is not None:
       dflt_options.update(options)
-    text = self.context.rptObj.py.encode_html(text.strip())
+    text = self.page.py.encode_html(text.strip())
     text = text.replace("\n\n", "<br><br>")
     if dflt_options.get("initial-letter", False):
-      text = '<span style="line-height:%spx;font-size:%spx;vertical-align:bottom">%s</span>%s' % (dflt_options.get("initial-letter"), options.get("initial-letter"), text[0], text[1:])
-    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border, width, height,
-                                             htmlCode, encoding, dataSrc, helper, dflt_options, profile)
+      text = '<span style="line-height:%spx;font-size:%spx;vertical-align:bottom">%s</span>%s' % (
+        dflt_options.get("initial-letter"), options.get("initial-letter"), text[0], text[1:])
+    html_paragraph = html.HtmlText.Paragraph(self.page, text, color, background_color, border, width, height,
+                                             html_code, encoding, helper, dflt_options, profile)
     return html_paragraph
 
-  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None,
-                options=None, helper=None, profile=None):
+  @html.Html.css_skin()
+  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), html_code=None, options=None,
+                helper=None, profile=None):
     """
     Description:
     ------------
     Preformatted text:
     The <pre> tag defines preformatted text.
-    Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.
+    Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces
+    and line breaks.
 
     Usage:
     -----
@@ -485,27 +511,28 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param dataSrc:
-    :param options:
-    :param helper:
-    :param profile:
+    :param text: String. Optional. The string value to be displayed in the component
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    html_pre = html.HtmlText.Pre(self.context.rptObj, text, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
+    text = self.page.py.encode_html(text)
+    html_pre = html.HtmlText.Pre(
+      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
     return html_pre
 
+  @html.Html.css_skin()
   def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
-                 htmlCode=None, helper=None, options=None, profile=None):
+                 html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -528,21 +555,24 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
-    :param author:
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param profile:
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param author: String. Optional. The quote's author.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    text = self.context.rptObj.py.encode_html(text)
-    html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, options, profile)
+    text = self.page.py.encode_html(text)
+    html_blockquote = html.HtmlText.BlockQuote(
+      self.page, text, author, color, width, height, html_code, helper, options, profile)
     return html_blockquote
 
+  @html.Html.css_skin()
   def up_down(self, rec=None, color=None, label=None, options=None, helper=None, profile=None):
     """
     Description:
@@ -565,21 +595,22 @@ class Texts(object):
     Attributes:
     ----------
     :param rec:
-    :param color:
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param label:
-    :param options:
-    :param helper:
-    :param profile:
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': Defaults_css.font(),
-                    'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
-                    'orange': self.context.rptObj.theme.warning[1]}
+                    'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
+                    'orange': self.page.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
-    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, color, label, dflt_options, helper, profile)
+    html_up_down = html.HtmlTextComp.UpDown(self.page, rec, color, label, dflt_options, helper, profile)
     return html_up_down
 
-  def number(self, number=0, title=None, label=None, icon=None, color=None, align="left", tooltip='', htmlCode=None,
+  @html.Html.css_skin()
+  def number(self, number=0, title=None, label=None, icon=None, color=None, align="left", tooltip='', html_code=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
     Description:
@@ -600,30 +631,33 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
+    :param number: Optional. The value to be displayed to the component. Default 0.
     :param title:
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param htmlCode:
-    :param options:
-    :param helper:
-    :param profile:
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
       dflt_options.update(options)
-    html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
+    html_number = html.HtmlText.Numeric(self.page, number, title, label, icon, color, tooltip, html_code,
                                         dflt_options, helper, width, profile)
     if align == "center":
       html_number.style.css.margin = "auto"
       html_number.style.css.display = "block"
     return html_number
 
+  @html.Html.css_skin()
   def title(self, text="", level=None, name=None, contents=None, color=None, picture=None, icon=None,
-            marginTop=5, htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
+            marginTop=5, html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -653,7 +687,7 @@ class Texts(object):
     :param picture:
     :param icon:
     :param marginTop:
-    :param htmlCode:
+    :param html_code:
     :param width:
     :param height:
     :param align:
@@ -665,12 +699,13 @@ class Texts(object):
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    text = self.context.rptObj.py.encode_html(text)
-    html_title = html.HtmlText.Title(self.context.rptObj, text, level, name, contents, color, picture, icon,
-                                     marginTop, htmlCode, width, height, align, dflt_options, profile)
+    text = self.page.py.encode_html(text)
+    html_title = html.HtmlText.Title(self.page, text, level, name, contents, color, picture, icon,
+                                     marginTop, html_code, width, height, align, dflt_options, profile)
     html_title.style.css.text_transform = "uppercase"
     return html_title
 
+  @html.Html.css_skin()
   def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, options=None, profile=None):
     """
     Description:
@@ -694,19 +729,22 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param legend:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param legend: String. Optional. The legend value.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
+    html_fieldset = html.HtmlText.Fieldset(self.page, legend, width=width, height=height, helper=helper,
                                            options=options, profile=profile)
     return html_fieldset
 
-  def col(self, text, label, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def col(self, text, label, align='left', width=('auto', ""), height=(None, "px"), html_code=None, options=None,
+          profile=None):
     """
     Description:
     ------------
@@ -716,21 +754,23 @@ class Texts(object):
 
     Attributes:
     ----------
-    :param text:
-    :param label:
-    :param align:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param label: String. Optional. The text of label to be added to the component
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    div = self.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
-    div.label = self.context.rptObj.ui.text(label, options=options, htmlCode=htmlCode if htmlCode is None else "%s_label" % htmlCode, profile=profile)
+    div = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    div.label = self.page.ui.text(
+      label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
     div.label.style.css.display = 'block'
     div.label.style.css.margin_bottom = 10
-    div.label.style.css.color = self.context.rptObj.theme.greys[6]
-    div.text = self.context.rptObj.ui.text(text, options=options, htmlCode=htmlCode if htmlCode is None else "%s_text" % htmlCode, profile=profile)
+    div.label.style.css.color = self.page.theme.greys[6]
+    div.text = self.page.ui.text(
+      text, options=options, html_code=html_code if html_code is None else "%s_text" % html_code, profile=profile)
     div.text.style.css.bold()
     div.text.style.css.margin_bottom = 10
     div.text.style.css.display = 'block'
@@ -740,18 +780,20 @@ class Texts(object):
     div.add(div.text)
     return div
 
-  def alert(self, text=None, title=None, icon=None, type=None, color=None, width=('400', "px"),
-                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  @html.Html.css_skin()
+  def alert(self, text=None, title=None, icon=None, type=None, color=None, width=('400', "px"), height=(None, "px"),
+            html_code=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible
+    alert messages.
 
     Usage:
     -----
 
       page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
-      page.ui.texts.highlights("A server need to be configured at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
+      page.ui.texts.highlights("Server configuration at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
 
     Underlying HTML Objects:
 
@@ -771,23 +813,23 @@ class Texts(object):
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    text = self.context.rptObj.py.encode_html(text)
-    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type or "info", color, width,
-                                          height, htmlCode, helper, options or {}, profile)
+    text = self.page.py.encode_html(text)
+    html_light = html.HtmlText.Highlights(
+      self.page, text, title, icon, type or "info", color, width, height, html_code, helper, options or {}, profile)
     html_light.style.css.position = "fixed"
     html_light.style.css.bottom = 10
     html_light.style.css.padding = "15px 20px"
     html_light.style.css.border_radius = 10
     if type is None:
-      html_light.style.css.color = self.context.rptObj.theme.greys[0]
-      html_light.style.css.background_color = self.context.rptObj.theme.colors[-1]
+      html_light.style.css.color = self.page.theme.greys[0]
+      html_light.style.css.background_color = self.page.theme.colors[-1]
     html_light.style.css.right = 10
     html_light.style.css.z_index = 1500
     return html_light
@@ -799,10 +841,11 @@ class Texts(object):
     ------------
     More custom toggles icons.
     """
-    return TextReferences(self.context)
+    return TextReferences(self)
 
-  def button(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), htmlCode=None, profile=None,
-           options=None):
+  @html.Html.css_skin()
+  def button(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), html_code=None, profile=None,
+             options=None):
     """
     Description:
     -----------
@@ -815,17 +858,17 @@ class Texts(object):
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
-    :param icon:
+    :param icon: String. Optional. The component icon content from font-awesome references
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    c = self.context.rptObj.ui.text(text, tooltip=tooltip, width=width, htmlCode=htmlCode, height=height,
-                                    profile=profile, options=options)
-    c.add_icon(icon, htmlCode=c.htmlCode)
+    c = self.page.ui.text(
+      text, tooltip=tooltip, width=width, html_code=html_code, height=height, profile=profile, options=options)
+    c.add_icon(icon, html_code=c.html_code)
     c.style.add_classes.div.background_hover()
     c.style.css.border_radius = 5
     c.style.css.font_size = Defaults_css.font(-2)
@@ -833,11 +876,12 @@ class Texts(object):
     return c
 
 
-class TextReferences(object):
+class TextReferences:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 
+  @html.Html.css_skin()
   def book(self, text, author=None, name=None, edition=None, year=None, page=None):
     """
     Description:
@@ -859,10 +903,12 @@ class TextReferences(object):
     :param year:
     :param page:
     """
-    text = self.context.rptObj.ui.text("« %s » <sup style='cursor:pointer;color:blue;text-decoration:underline' title='%s. %s, %s. %s, p. %s'>&#x2a;</sup>" % (text, author, name, edition, year, page))
-    text.style.css.color = self.context.rptObj.theme.colors[4]
+    content = "« %s » <sup style='cursor:pointer;color:blue;text-decoration:underline' title='%s. %s, %s. %s, p. %s'>&#x2a;</sup>"
+    text = self.page.ui.text(content % (text, author, name, edition, year, page))
+    text.style.css.color = self.page.theme.colors[4]
     return text
 
+  @html.Html.css_skin()
   def website(self, author=None, name=None, site=None, url=None):
     """
     Description:
@@ -879,11 +925,12 @@ class TextReferences(object):
 
     Attributes:
     ----------
-    :param author: String. The author.
-    :param name: String. The name of the page
-    :param site: String. The website name
-    :param url: String. The url link to the data.
+    :param author: String. Optional. The author.
+    :param name: String. Optional. The name of the page
+    :param site: String. Optional. The website name
+    :param url: String. Optional. The url link to the data.
     """
-    text = self.context.rptObj.ui.text("%s, %s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (author, name, site.upper(), url, url), align="right")
-    text.style.css.color = self.context.rptObj.theme.colors[4]
+    text = self.page.ui.text("%s, %s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (
+      author, name, site.upper(), url, url), align="right")
+    text.style.css.color = self.page.theme.colors[4]
     return text

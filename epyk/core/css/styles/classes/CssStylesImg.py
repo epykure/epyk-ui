@@ -13,7 +13,7 @@ class CssImgParagraph(CssStyle.Style):
   _selectors = {'child': 'p'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.colors[0]})
+    self.css({'color': self.page.theme.colors[0]})
 
 
 class CssImgH2(CssStyle.Style):
@@ -23,7 +23,7 @@ class CssImgH2(CssStyle.Style):
   _selectors = {'child': 'h2'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.colors[0]})
+    self.css({'color': self.page.theme.colors[0]})
 
 
 class CssImgMask(CssStyle.Style):
@@ -32,7 +32,9 @@ class CssImgMask(CssStyle.Style):
   _hover = {'opacity': 0.8}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.success[0], 'border': '1px solid %s' % self.rptObj.theme.success[1]})
+    self.css({
+      'background-color': self.page.theme.success[0],
+      'border': '1px solid %s' % self.page.theme.success[1]})
 
 
 class CssImgAInfo(CssStyle.Style):
@@ -42,12 +44,12 @@ class CssImgAInfo(CssStyle.Style):
   _hover = {'transform': 'translateY(0px)', 'box-shadow': '0 0 5px #000', 'transition-delay': '0.2s'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]})
+    self.css({'background-color': self.page.theme.colors[0], 'color': self.page.theme.colors[-1]})
 
 
 class CssImg(CssStyle.Style):
-  _attrs = {'transition': 'all 0.2s linear', 'display': 'block', 'height': 'auto', 'margin': 'auto', 'max-height': '100%',
-            'max-width': '100%', 'position': 'relative'}
+  _attrs = {'transition': 'all 0.2s linear', 'display': 'block', 'height': 'auto', 'margin': 'auto',
+            'max-height': '100%', 'max-width': '100%', 'position': 'relative'}
   _hover = {'transform': 'scale(1.1)'}
   _selectors = {'child': 'img'}
 
@@ -62,8 +64,8 @@ class CssView(CssStyle.Style):
             'text-align': 'center', 'cursor': 'default'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[5]})
-    self.hover.css({'border': "1px solid %s" % self.rptObj.theme.success[1]})
+    self.css({'border': '1px solid %s' % self.page.theme.greys[5]})
+    self.hover.css({'border': "1px solid %s" % self.page.theme.success[1]})
 
 
 class CssCarrouselLi(CssStyle.Style):

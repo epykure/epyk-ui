@@ -120,7 +120,7 @@ class Annotations(DataClass):
   def borderWidth(self, num):
     self.set(num)
 
-  def onClick(self, jsFncs):
+  def onClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -133,12 +133,13 @@ class Annotations(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._attrs["onClick"] = JsObjects.JsVoid(
-      "function(event) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+      "function(event) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
 
 class Annotation(DataClass):

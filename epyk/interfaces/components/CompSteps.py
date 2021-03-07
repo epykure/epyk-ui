@@ -1,7 +1,7 @@
 
 
-class Steppers(object):
+class Steppers:
 
-  def __init__(self, context):
-    self.context = context
+  def __init__(self, ui):
+    self.page = ui.page
 

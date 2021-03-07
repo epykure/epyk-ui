@@ -20,8 +20,8 @@ class DragOptions(DataClass):
     return self.get(True)
 
   @showTooltip.setter
-  def showTooltip(self, bool):
-    self.set(bool)
+  def showTooltip(self, flag):
+    self.set(flag)
 
 
 class DragData(DataClass):
@@ -35,8 +35,8 @@ class DragData(DataClass):
     return self.get(False)
 
   @dragX.setter
-  def dragX(self, bool):
-    self.set(bool)
+  def dragX(self, flag):
+    self.set(flag)
 
   @property
   def dragDataRound(self):
@@ -58,7 +58,7 @@ class DragData(DataClass):
     """
     return self.sub_data("dragOptions", DragOptions)
 
-  def onDragStart(self, jsFncs):
+  def onDragStart(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -70,13 +70,15 @@ class DragData(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onDragStart"] = JsObjects.JsVoid("function(event, element) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onDragStart"] = JsObjects.JsVoid("function(event, element) { %s }" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
-  def onDrag(self, jsFncs):
+  def onDrag(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -88,13 +90,15 @@ class DragData(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onDrag"] = JsObjects.JsVoid("function(event, datasetIndex, index, value) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onDrag"] = JsObjects.JsVoid("function(event, datasetIndex, index, value) {%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
 
-  def onDragEnd(self, jsFncs):
+  def onDragEnd(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -106,8 +110,10 @@ class DragData(DataClass):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["onDragEnd"] = JsObjects.JsVoid("function(event, datasetIndex, index, value) { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._attrs["onDragEnd"] = JsObjects.JsVoid(
+      "function(event, datasetIndex, index, value) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))

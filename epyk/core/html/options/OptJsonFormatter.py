@@ -13,12 +13,12 @@ class OptionsJsonFmt(Options):
     Set it to 0 to make the whole tree collapsed or set it to Infinity to expand the tree deeply
 
     Related Pages:
-"""
+    """
     return self._config_get(1)
 
   @open.setter
-  def open(self, bool):
-    self._config(bool)
+  def open(self, flag):
+    self._config(flag)
 
   @property
   def hoverPreviewEnabled(self):
@@ -33,20 +33,21 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param bool:
+    :param flag:
     """
     return self._config_group_get('opts', False)
 
   @hoverPreviewEnabled.setter
-  def hoverPreviewEnabled(self, bool):
-    self._config_group('opts', bool)
+  def hoverPreviewEnabled(self, flag):
+    self._config_group('opts', flag)
 
   @property
   def hoverPreviewArrayCount(self):
     """
     Description:
     ------------
-    Number of array items to show in preview Any array larger than this number will be shown as Array[XXX] where XXX is length of the array.
+    Number of array items to show in preview Any array larger than this number will be shown as Array[XXX]
+    where XXX is length of the array.
 
     Related Pages:
 
@@ -67,7 +68,8 @@ class OptionsJsonFmt(Options):
     """
     Description:
     ------------
-    Number of object properties to show for object preview. Any object with more properties that thin number will be truncated.
+    Number of object properties to show for object preview. Any object with more properties that thin number
+    will be truncated.
 
     Related Pages:
 
@@ -96,13 +98,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param bool:
+    :param flag:
     """
     return self._config_group_get('opts', True)
 
   @animateOpen.setter
-  def animateOpen(self, bool):
-    self._config_group('opts', bool)
+  def animateOpen(self, flag):
+    self._config_group('opts', flag)
 
   @property
   def animateClose(self):
@@ -117,13 +119,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param bool:
+    :param flag:
     """
     return self._config_group_get('opts', True)
 
   @animateClose.setter
-  def animateClose(self, bool):
-    self._config_group('opts', bool)
+  def animateClose(self, flag):
+    self._config_group('opts', flag)
 
   @property
   def useToJSON(self):
@@ -131,7 +133,8 @@ class OptionsJsonFmt(Options):
     Description:
     ------------
     use the toJSON method to render an object as a string as available.
-    Usefull for objects like Date or Mongo's ObjectID that migh make more sense as a strign than as empty objects. True by default.
+    Usefull for objects like Date or Mongo's ObjectID that migh make more sense as a strign than as empty objects.
+    True by default.
 
     Related Pages:
 
@@ -139,13 +142,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param bool:
+    :param flag:
     """
     return self._config_group_get('opts', True)
 
   @useToJSON.setter
-  def useToJSON(self, bool):
-    self._config_group('opts', bool)
+  def useToJSON(self, flag):
+    self._config_group('opts', flag)
 
   @property
   def sortPropertiesBy(self):
@@ -160,13 +163,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param bool:
+    :param flag:
     """
     return self._config_group_get('opts', None)
 
   @sortPropertiesBy.setter
-  def sortPropertiesBy(self, bool):
-    self._config_group('opts', bool)
+  def sortPropertiesBy(self, flag):
+    self._config_group('opts', flag)
 
 
 class OptionsLegend(Options):

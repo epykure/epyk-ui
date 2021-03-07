@@ -25,21 +25,23 @@ class Output(Html.Html):
   name = 'Output'
 
   def __str__(self):
-    return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
+    return '<output %(strAttr)s>%(val)s</output>' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
 
 
 class Input(Html.Html):
   name = 'Input'
+  _option_cls = OptInputs.OptionsInput
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
-    super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
-                                profile=profile, options=options)
+  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
+    super(Input, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+                                css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
     self.style.css.padding = 0
-    self.__options, self.__focus = OptInputs.OptionsInput(self, options), False
-    if self.options.background:
+    self.__options, self.__focus = self._option_cls(self, options), False
+    if self.__options.background:
       self.style.css.background_color = report.theme.colors[0]
     if width[0] is None:
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
@@ -67,8 +69,6 @@ class Input(Html.Html):
 
     Usage:
     -----
-
-    :return: A Javascript Dom object
 
     :rtype: JsHtmlField.InputText
     """
@@ -103,7 +103,7 @@ class Input(Html.Html):
       else { htmlObj.value = data; }
       '''
 
-  def focus(self, js_funcs=None, profile=False, options=None, source_event=None, onReady=False):
+  def focus(self, js_funcs=None, profile=None, options=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -114,11 +114,11 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.__focus = True
     if js_funcs is None:
@@ -134,7 +134,7 @@ class Input(Html.Html):
       js_funcs.append(self.dom.empty())
     if self.options.select:
       js_funcs.append(self.dom.select())
-    return self.on("focus", js_funcs, profile, source_event, onReady)
+    return self.on("focus", js_funcs, profile, source_event, on_ready)
 
   def validation(self, pattern, required=True):
     """
@@ -160,7 +160,7 @@ class Input(Html.Html):
     self.style.add_classes.input.is_valid()
     return self
 
-  def enter(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -176,18 +176,17 @@ class Input(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
-    :return: The python object itself
+    :return: The python object itself.
     """
-
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     js_funcs.append(self.dom.select())
     self.keydown.enter(js_funcs, profile, source_event=source_event)
     return self
 
-  def change(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -196,6 +195,8 @@ class Input(Html.Html):
     Usage:
     -----
 
+    Related Pages:
+
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
 
     Attributes:
@@ -203,9 +204,9 @@ class Input(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if onReady:
+    if on_ready:
       self._report.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
@@ -217,15 +218,20 @@ class Input(Html.Html):
     Usage:
     -----
 
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_input_readonly.asp
+
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param flag: Boolean. Optional. Add the HTML readonly tag to the component.
     """
     if flag:
       self.attr["readonly"] = "readonly"
     else:
       if "readonly" in self.attr:
         del self.attr["readonly"]
+
     return self
 
   def __str__(self):
@@ -239,8 +245,8 @@ class Input(Html.Html):
 class InputRadio(Input):
   name = 'Input'
 
-  def __init__(self, report, flag, group_name, placeholder, width, height, htmlCode, options, attrs, profile):
-    super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, options, attrs, profile)
+  def __init__(self, report, flag, group_name, placeholder, width, height, html_code, options, attrs, profile):
+    super(InputRadio, self).__init__(report, "", placeholder, width, height, html_code, options, attrs, profile)
     self.set_attrs({"type": 'radio'})
     if flag:
       self.set_attrs({"checked": json.dumps(flag)})
@@ -249,27 +255,26 @@ class InputRadio(Input):
 
 
 class AutoComplete(Input):
-  name = 'Input Time'
+  name = 'Input Autocomplete'
   requirements = ('jqueryui', )
+  _option_cls = OptInputs.OptionAutoComplete
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    self._jsStyles = {}
-    self.__options = OptInputs.OptionAutoComplete(self, options)
-    super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options, self.__focus = OptInputs.OptionAutoComplete(self, options), False
+    super(AutoComplete, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
+    self.__focus = False
 
   _js__builder__ = '''
-    if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))} else{%(jqId)s.autocomplete(options)};
-    ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))}
+    else{%(jqId)s.autocomplete(options)}''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def options(self):
     """
     Description:
     ------------
-    Property to set all the input timepicker component properties.
+    Property to set all the input TimePicker component properties.
 
     Usage:
     -----
@@ -280,9 +285,9 @@ class AutoComplete(Input):
 
     :rtype: OptInputs.OptionAutoComplete
     """
-    return self.__options
+    return super().options
 
-  def focus(self, js_funcs=None, profile=False, options=None, source_event=None, onReady=False):
+  def focus(self, js_funcs=None, profile=None, options=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -293,11 +298,11 @@ class AutoComplete(Input):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.__focus = True
     if js_funcs is None:
@@ -313,7 +318,7 @@ class AutoComplete(Input):
       js_funcs.append(self.dom.empty())
     if self.options.select:
       js_funcs.append(self.dom.select())
-    return self.on("focus", js_funcs, profile, source_event, onReady)
+    return self.on("focus", js_funcs, profile, source_event, on_ready)
 
   @property
   def style(self):
@@ -336,13 +341,11 @@ class AutoComplete(Input):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    Attributes:
-    ----------
-    :return: A Javascript Dom object
 
     :rtype: JsQueryUi.Autocomplete
     """
@@ -353,19 +356,19 @@ class AutoComplete(Input):
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
       self.focus()
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class InputTime(Input):
   name = 'Input Time'
   requirements = ('timepicker', )
+  _option_cls = OptInputs.OptionsTimePicker
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options = OptInputs.OptionsTimePicker(self, options)
+    super(InputTime, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
     self.style.css.background_color = report.theme.colors[0]
     self.style.css.line_height = Defaults.LINE_HEIGHT
     self.style.css.text_align = "center"
@@ -375,7 +378,7 @@ class InputTime(Input):
     """
     Description:
     ------------
-    Property to set all the input timepicker component properties.
+    Property to set all the input TimePicker component properties.
 
     Usage:
     -----
@@ -386,7 +389,7 @@ class InputTime(Input):
 
     :rtype: OptInputs.OptionsTimePicker
     """
-    return self.__options
+    return super().options
 
   @property
   def style(self):
@@ -425,11 +428,11 @@ class InputTime(Input):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    :return: A Javascript Dom object
 
     :rtype: JsTimepicker.Timepicker
     """
@@ -441,7 +444,7 @@ class InputTime(Input):
       if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)} 
       %(jqId)s.timepicker(options); ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def change(self, js_fncs, profile=False):
+  def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -459,28 +462,28 @@ class InputTime(Input):
 
     Attributes:
     ----------
-    :param js_fncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event:
+    :param on_ready:
     """
-    if not isinstance(js_fncs, list):
-      js_fncs = [js_fncs]
-    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(js_fncs, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
     return self
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class InputDate(Input):
   requirements = ('jqueryui', )
   name = 'Input Time'
+  _option_cls = OptInputs.OptionsDatePicker
 
-  def __init__(self, report, records, placeholder, width, height, htmlCode, options, attrs, profile):
-    self._jsStyles = {}
-    self.__options = OptInputs.OptionAutoComplete(self, options)
-    super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options = OptInputs.OptionsDatePicker(self, options)
+  def __init__(self, report, records, placeholder, width, height, html_code, options, attrs, profile):
+    super(InputDate, self).__init__(report, records, placeholder, width, height, html_code, options, attrs, profile)
     if options.get("date_if_null", None) is None:
       self._jsStyles["date_if_null"] = "new Date()"
     elif options["date_if_null"] == "COB":
@@ -492,7 +495,7 @@ class InputDate(Input):
     """
     Description:
     ------------
-    Property to set all the input Datepicker component properties
+    Property to set all the input DatePicker component properties.
 
     Usage:
     -----
@@ -503,20 +506,18 @@ class InputDate(Input):
 
     :rtype: OptInputs.OptionsDatePicker
     """
-    return self.__options
+    return super().options
 
   @property
   def js(self):
     """
     Description:
     -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
-
-    Attributes:
-    ----------
-    :return: A Javascript Dom object
 
     :rtype: JsQueryUi.Datepicker
     """
@@ -529,7 +530,7 @@ class InputDate(Input):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -545,7 +546,7 @@ class InputDate(Input):
     """
     Description:
     ------------
-    The Javascript Dom object
+    The Javascript Dom object.
 
     Usage:
     -----
@@ -556,47 +557,53 @@ class InputDate(Input):
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
     return self._dom
 
-  def excluded_dates(self, dts=None, js_funcs=None):
+  def excluded_dates(self, dts=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
+    List of dates to be excluded from the available dates in the DatePicker component.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param dts:
-    :param js_funcs:
+    :param dts: List. Optional. Dates excluded format YYYY-MM-DD.
+    :param js_funcs: List | String. Optional. Javascript functions.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self._jsStyles['beforeShowDay'] = '''function (date) {
             var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-            %(jsFnc)s; if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
-          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True)}
+            %(jsFnc)s; if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
+            else {return [true, '', '']}
+          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}
 
-  def included_dates(self, dts=None, js_funcs=None):
+  def included_dates(self, dts=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
+    Define some specific date to be the only ones available from the DatePicker component.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param dts:
-    :param js_funcs:
+    :param dts: List. Optional. Dates included format YYYY-MM-DD.
+    :param js_funcs: List | String. Optional. Javascript functions.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self._jsStyles['beforeShowDay'] = '''function (date) {
         var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-        %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
-      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True)}
+        %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
+        else {return [true, '', '']}
+      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}
 
   def format_dates(self, class_name, dts=None, css=None, tooltip=""):
     """
     Description:
     ------------
-    Change the CSS style for some selected dates in the datepicker.
+    Change the CSS style for some selected dates in the DateIicker.
     This function can be also used on the Javascript side from the js property.
 
     Usage:
@@ -605,25 +612,26 @@ class InputDate(Input):
     Attributes:
     ----------
     :param class_name: String. The name of the CSS added to the page with the CSS attributes.
-    :param dts: List. A list of dates format YYYY-MM-DD.
-    :param css: Dictionary. The CSS Attributes for the CSS class.
-    :param tooltip: String. The tooltip when the mouse is hover
+    :param dts: List. Optional. A list of dates format YYYY-MM-DD.
+    :param css: Dictionary. Optional. The CSS Attributes for the CSS class.
+    :param tooltip: String. Optional. The tooltip when the mouse is hover.
     """
     dts = dts or []
     if css is not None:
       self._report.body.style.custom_class(css, classname="%s a" % class_name)
     self._jsStyles['beforeShowDay'] = '''function (date) {
         var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-        if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
+        if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} 
+        else {return [true, '', '']}
       }''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name}
 
   _js__builder__ = '''
       if(data == null){data = eval(options.date_if_null)}
-      %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+      %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {
+    "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
-    # Javascript builder is mandatory for this object
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     if self.options.inline:
       return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
@@ -632,50 +640,52 @@ class InputDate(Input):
 
 class InputInteger(Input):
   name = 'Input Number'
+  _option_cls = OptInputs.OptionsInputInteger
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
-    super(InputInteger, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options = OptInputs.OptionsInputInteger(self, options)
+  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
+    super(InputInteger, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
 
   @property
   def options(self):
     """
     Description:
     -----------
-    Property to set all the input component properties
+    Property to set all the input component properties.
 
     Usage:
     -----
 
     :rtype: OptInputs.OptionsInputInteger
     """
-    return self.__options
+    return super().options
 
   def quantity(self):
     """
+    Description:
+    -----------
 
     Usage:
     -----
 
     """
-    factors, strFcts = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
+    factors, units_lookup = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
     for f, val in factors.items():
-      strFcts.append("if(event.key.toUpperCase() == '%s'){this.value *= %s}" % (f, val))
-    self.on('keydown', ";".join(strFcts))
+      units_lookup.append("if(event.key.toUpperCase() == '%s'){this.value *= %s}" % (f, val))
+    self.on('keydown', ";".join(units_lookup))
     return self
 
 
 class InputRange(Input):
   name = 'Input Range'
+  _option_cls = OptInputs.OptionsInputRange
 
-  def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, options, attrs, profile):
-    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.__options = OptInputs.OptionsInputRange(self, options)
-    #
-    self.input = report.ui.inputs.input(text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
+  def __init__(self, report, text, min_val, max_val, step, placeholder, width, height, html_code, options, attrs,
+               profile):
+    super(InputRange, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
+    self.input = report.ui.inputs.input(text, width=(None, "px"),
+                                        placeholder=placeholder).css({"vertical-align": 'middle'})
     self.append_child(self.input)
-    #
-    self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step})
+    self.input.set_attrs(attrs={"type": "range", "min": min_val, "max": max_val, "step": step})
     if self.options.output:
       self.output = self._report.ui.inputs._output(text).css({
         "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
@@ -688,21 +698,21 @@ class InputRange(Input):
     """
     Description:
     ------------
-    Property to set input range properties
+    Property to set input range properties.
 
     Usage:
     -----
 
     :rtype: OptSelect.OptionsInputRange
     """
-    return self.__options
+    return super().options
 
   @property
   def style(self):
     """
     Description:
     ------------
-    Property to the CSS Style of the component
+    Property to the CSS Style of the component.
 
     Usage:
     -----
@@ -711,7 +721,7 @@ class InputRange(Input):
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputRange(self)
-    return self._styleObj#
+    return self._styleObj
 
   def __str__(self):
     if hasattr(self, 'output'):
@@ -722,17 +732,19 @@ class InputRange(Input):
 class Field(Html.Html):
   name = 'Field'
 
-  def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, html_input, label, icon, width, height, html_code, helper, options, profile):
+    super(Field, self).__init__(report, "", html_code=html_code, profile=profile,
+                                css_attrs={"width": width, "height": height})
     self._vals = ""
     # Add the component predefined elements
-    self.add_label(label, htmlCode=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, position=options.get("position", 'before'),  options=options)
+    self.add_label(label, html_code=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
+                   position=options.get("position", 'before'),  options=options)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
-    self.input = input
+    self.input = html_input
     self.append_child(self.input)
-    self.add_icon(icon, htmlCode=self.htmlCode, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]},
-                  family=options.get("icon_family"))
+    self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
+                  css={"margin-left": '5px', 'color': self._report.theme.success[1]})
     self.css({"margin-top": '2px'})
 
   @property
@@ -740,13 +752,10 @@ class Field(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
+    The HTML Dom object linked to this component.
 
     Usage:
     -----
-
-    Return all the Javascript functions defined for an HTML Component.
-    Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
 
@@ -764,25 +773,30 @@ class Field(Html.Html):
 class FieldInput(Field):
   name = 'Field Input'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.input(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.input(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+                                        options=options)
+    super(FieldInput, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+                                     profile)
 
 
 class FieldAutocomplete(Field):
   name = 'Field Autocomplete'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.autocomplete(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.autocomplete(report.inputs.get(html_code, value), width=(None, "%"),
+                                               placeholder=placeholder, options=options)
+    super(FieldAutocomplete, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+                                            profile)
 
-  def change(self, jsFnc, profile=None):
+  def change(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Event triggerd when the value of the input field changes.
+    Event triggered when the value of the input field changes.
+
     A Date object containing the selected time is passed as the first argument of the callback.
-    Note: the variable time is a function parameter received in the Javascript side
+    Note: the variable time is a function parameter received in the Javascript side.
 
     Usage:
     -----
@@ -791,14 +805,17 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-change
 
-    :param jsFnc:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["change"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["change"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def search(self, jsFnc, profile=None):
+  def search(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -812,19 +829,23 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-search
 
-    :param jsFnc:
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["search"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["search"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def focus(self, jsFnc, profile=None):
+  def focus(self, js_funcs, profile=None):
     """
     Description:
     -----------
     Triggered when focus is moved to an item (not selecting).
-    The default action is to replace the text field's value with the value of the focused item, though only if the event was triggered by a keyboard interaction.
+    The default action is to replace the text field's value with the value of the focused item, though only
+    if the event was triggered by a keyboard interaction.
     Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
 
     Usage:
@@ -836,15 +857,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["focus"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["focus"] = "function( event, ui ){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def close(self, jsFnc, profile=None):
+  def close(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -859,15 +880,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["close"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["close"] = "function( event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def select(self, jsFnc, profile=None):
+  def select(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -884,21 +905,23 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["select"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["select"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def response(self, jsFnc, profile=None):
+  def response(self, js_funcs, profile=None):
     """
     Description:
     -----------
     Triggered after a search completes, before the menu is shown.
+
     Useful for local manipulation of suggestion data, where a custom source option callback is not required.
-    This event is always triggered when a search completes, even if the menu will not be shown because there are no results or the Autocomplete is disabled.
+    This event is always triggered when a search completes, even if the menu will not be shown because there are no
+    results or the Autocomplete is disabled.
 
     Usage:
     -----
@@ -909,28 +932,34 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param profile:
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    self._jsStyles["response"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._jsStyles["response"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile)
+    return self
 
 
 class FieldRange(Field):
   name = 'Field Range'
 
-  def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.d_range(report.inputs.get(htmlCode, value), min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, min_val, max_val, step, label, placeholder, icon, width, height, html_code, helper,
+               options, profile):
+    html_input = report.ui.inputs.d_range(report.inputs.get(html_code, value), min_val=min_val, max_val=max_val, step=step,
+                                     width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldRange, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
+                                     options, profile)
 
 
 class FieldCheckBox(Field):
   name = 'Field Checkbox'
 
-  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.checkbox(report.inputs.get(htmlCode, value), width=(None, "%"), options=options)
-    super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.checkbox(report.inputs.get(html_code, value), width=(None, "%"), options=options)
+    super(FieldCheckBox, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+                                        profile)
     if label is not None and options.get('position') == 'after':
       self.label.style.css.float = None
       self.label.style.css.width = 'auto'
@@ -942,42 +971,52 @@ class FieldCheckBox(Field):
 class FieldInteger(Field):
   name = 'Field Integer'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.d_int(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.d_int(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+                                        options=options)
+    super(FieldInteger, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
+                                       options, profile)
 
 
 class FieldFile(Field):
   name = 'Field Integer'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.file(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.file(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+                                       options=options)
+    super(FieldFile, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+                                    profile)
 
 
 class FieldPassword(Field):
   name = 'Field Password'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.password(report.inputs.get(htmlCode, value), width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.password(report.inputs.get(html_code, value), width=(None, "%"),
+                                           placeholder=placeholder, options=options)
+    super(FieldPassword, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
+                                        options, profile)
 
 
 class FieldTextArea(Field):
   name = 'Field Textarea'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.inputs.textarea(report.inputs.get(htmlCode, value), width=(100, "%"), placeholder=placeholder, options=options)
-    super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.inputs.textarea(report.inputs.get(html_code, value), width=(100, "%"),
+                                           placeholder=placeholder, options=options)
+    super(FieldTextArea, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
+                                        options, profile)
 
 
 class FieldSelect(Field):
   name = 'Field Select'
 
-  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
-    input = report.ui.select(report.inputs.get(htmlCode, value), "%s_input" % htmlCode if htmlCode is not None else htmlCode,
-                             width=(100, "%"), options=options)
-    super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
+  def __init__(self, report, value, label, icon, width, height, html_code, helper, options, profile):
+    html_input = report.ui.select(report.inputs.get(html_code, value),
+                                  "%s_input" % html_code if html_code is not None else html_code,
+                                  width=(100, "%"), options=options)
+    super(FieldSelect, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+                                      profile)
     if label is not None:
       self.label.style.css.line_height = None
 
@@ -985,9 +1024,9 @@ class FieldSelect(Field):
 class Checkbox(Html.Html):
   name = 'Checkbox'
 
-  def __init__(self, report, flag, label, group_name, width, height, htmlCode, options, attrs, profile):
-    super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
-                                   profile=profile, options=options)
+  def __init__(self, report, flag, label, group_name, width, height, html_code, options, attrs, profile):
+    super(Checkbox, self).__init__(report, {"value": flag}, html_code=html_code, profile=profile, options=options,
+                                   css_attrs={"width": width, "height": height})
     self.set_attrs(attrs={"type": "checkbox"})
     self.set_attrs(attrs=attrs)
     self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
@@ -999,13 +1038,11 @@ class Checkbox(Html.Html):
     """
     Description:
     -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
     Usage:
     -----
-
-    Attributes:
-    ----------
-    :return: A Javascript Dom object
 
     :rtype: JsHtmlField.Check
     """
@@ -1019,17 +1056,19 @@ class Checkbox(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<input %(strAttr)s>%(label)s' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'label': self._label}
+    return '<input %(strAttr)s>%(label)s' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'label': self._label}
 
 
 class Radio(Html.Html):
   name = 'Radio'
 
-  def __init__(self, report, flag, label, group_name, icon, width, height, htmlCode, helper, options, profile):
-    super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
-                                         css_attrs={"width": width, 'height': height}, profile=profile)
+  def __init__(self, report, flag, label, group_name, icon, width, height, html_code, helper, options, profile):
+    super(Radio, self).__init__(report, {"value": flag, 'text': label}, html_code=html_code,
+                                css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
-    self.add_label(label, htmlCode=self.htmlCode, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
+    self.add_label(label, html_code=self.htmlCode, position="after",
+                   css={"display": 'inline-block', "width": "None", 'float': 'none'})
     self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
@@ -1042,19 +1081,19 @@ class Radio(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
-    self.add_icon(icon, htmlCode=self.htmlCode, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]},
-                  family=options.get("icon_family"))
+    self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
+                  css={"margin-left": '5px', 'color': self._report.theme.success[1]})
 
   @property
   def dom(self):
     """
     Description:
     -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
     Usage:
     -----
-
-    :return: A Javascript Dom object
 
     :rtype: JsHtmlField.Radio
     """
@@ -1067,7 +1106,8 @@ class Radio(Html.Html):
     """
     Description:
     -----------
-    Javascript Functions
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
 
     Usage:
     -----
@@ -1084,14 +1124,16 @@ class Radio(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<div %(strAttr)s>%(helper)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+    return '<div %(strAttr)s>%(helper)s</div>' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class TextArea(Html.Html):
   name = 'Text Area'
 
-  def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
-    super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, 'box-sizing': 'border-box'}, profile=profile)
+  def __init__(self, report, text, width, rows, placeholder, background_color, html_code, options, profile):
+    super(TextArea, self).__init__(report, text, html_code=html_code, profile=profile,
+                                   css_attrs={"width": width, 'box-sizing': 'border-box'})
     self.rows, self.backgroundColor = rows, background_color
     self.style.add_classes.input.textarea()
     self.set_attrs({"rows": rows, "placeholder": placeholder or ""})
@@ -1102,7 +1144,7 @@ class TextArea(Html.Html):
     """
     Description:
     -----------
-    Property to set all the input component properties
+    Property to set all the input component properties.
 
     Usage:
     -----
@@ -1111,7 +1153,7 @@ class TextArea(Html.Html):
     """
     return self.__options
 
-  def selectable(self, js_funcs=None, profile=False):
+  def selectable(self, js_funcs=None, profile=None):
     """
     Description:
     -----------
@@ -1121,14 +1163,14 @@ class TextArea(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
+    :param js_funcs: List | String. Optional. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: self. to allow the function chaining
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.attr['onclick'] = "this.blur();this.select();%s" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self.attr['onclick'] = "this.blur();this.select();%s" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   @property
@@ -1136,7 +1178,8 @@ class TextArea(Html.Html):
     """
     Description:
     -----------
-    Return the HTML DOM object
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
     Usage:
     -----
@@ -1151,7 +1194,7 @@ class TextArea(Html.Html):
       self._dom = JsHtmlField.Textarea(self, report=self._report)
     return self._dom
 
-  def change(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
@@ -1167,23 +1210,24 @@ class TextArea(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if onReady:
+    if on_ready:
       self._report.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
   _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):
-    return '<textarea %(strAttr)s>%(val)s</textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
+    return '<textarea %(strAttr)s>%(val)s</textarea>' % {
+      "strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
 
 
 class Search(Html.Html):
   name = 'Search'
 
-  def __init__(self, report, text, placeholder, color, width, height, htmlCode, tooltip, extensible, options, profile):
-    super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)
+  def __init__(self, report, text, placeholder, color, width, height, html_code, tooltip, extensible, options, profile):
+    super(Search, self).__init__(report, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
     #
@@ -1193,7 +1237,8 @@ class Search(Html.Html):
     else:
       self.style.add_classes.layout.search_extension()
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
-    self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, htmlCode=self.htmlCode, family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+    self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, html_code=self.htmlCode,
+                  family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
     self.icon.style.css.z_index = 10
     self.style.css.position = "relative"
     self.style.css.border_bottom_width = options["border"]
@@ -1212,6 +1257,10 @@ class Search(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
     Usage:
     -----
@@ -1224,46 +1273,46 @@ class Search(Html.Html):
 
   _js__builder__ = '''htmlObj.find('input').val(data)'''
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
 
     Usage:
     -----
-
-    Attributes:
-    ----------
-    :param js_funcs: String or List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
-    """
-    return self.icon.click(js_funcs, profile, source_event, onReady=onReady)
-
-  def enter(self, js_funcs, profile=False, source_event=None, onReady=False):
-    """
-    Description:
-    -----------
-    Add an javascript action when the key enter is pressed on the keyboard
-
-    Usage:
-    -----
-
-      htmlObj.enter(" alert() ")
 
     Attributes:
     ----------
     :param js_funcs: String | List. The Javascript functions
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    """
+    return self.icon.click(js_funcs, profile, source_event, on_ready=on_ready)
+
+  def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    """
+    Description:
+    -----------
+    Add an javascript action when the key enter is pressed on the keyboard.
+
+    Usage:
+    -----
+
+      component.enter(" alert() ")
+
+    Attributes:
+    ----------
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The python object itself
     """
     self.click(js_funcs)
-    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {"jsFnc": self.icon.dom.events.trigger("click")}],
-                   profile=profile, source_event=source_event, onReady=onReady)
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
+      "jsFnc": self.icon.dom.events.trigger("click")}], profile=profile, source_event=source_event, on_ready=on_ready)
 
   def __str__(self):
     return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}

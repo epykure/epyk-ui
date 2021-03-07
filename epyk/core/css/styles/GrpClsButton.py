@@ -2,7 +2,6 @@
 from epyk.core.css.styles import GrpCls
 from epyk.core.css.styles.attributes import AttrClsButtons
 
-from epyk.core.css import Properties
 from epyk.core.css import Classes
 
 
@@ -18,7 +17,7 @@ class ClassButton(GrpCls.ClassHtml):
     :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsButtons.AttrButton(self.htmlObj)
+      self._css_struct = AttrClsButtons.AttrButton(self.component)
     return self._css_struct
 
   @property
@@ -32,10 +31,12 @@ class ClassButton(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_class is None:
-      if self.htmlObj.name == 'button' and self.htmlObj.options.category in ["delete"]:
-        self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).reset()
+      if self.component.name == 'button' and self.component.options.category in ["delete"]:
+        self._css_class = Classes.CatalogButton.CatalogButton(
+          self.component.page, self.classList['main'], html_id=self.component.htmlCode).reset()
       else:
-        self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).basic()
+        self._css_class = Classes.CatalogButton.CatalogButton(
+          self.component.page, self.classList['main'], html_id=self.component.htmlCode).basic()
     return self._css_class
 
 
@@ -51,7 +52,7 @@ class ClassBadge(GrpCls.ClassHtml):
     :rtype: AttrClsButtons.AttrBadge
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsButtons.AttrBadge(self.htmlObj)
+      self._css_struct = AttrClsButtons.AttrBadge(self.component)
     return self._css_struct
 
 
@@ -67,7 +68,7 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
     :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsButtons.AttrButton(self.htmlObj)
+      self._css_struct = AttrClsButtons.AttrButton(self.component)
     return self._css_struct
 
 
@@ -90,8 +91,8 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_btn_content_hover is None:
-      self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
-                                                            html_id=self.htmlObj.htmlCode).content()
+      self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).content()
     return self._css_btn_content_hover
 
   @property
@@ -105,6 +106,6 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_btn_link_hover is None:
-      self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
-                                                                     html_id=self.htmlObj.htmlCode).content_link()
+      self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).content_link()
     return self._css_btn_link_hover

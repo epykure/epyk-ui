@@ -16,7 +16,7 @@ from epyk.core.js.objects import JsEvents
 from epyk.core.js import JsUtils
 
 
-class JsVoid(object):
+class JsVoid:
   def __init__(self, data):
     self._data = data
 
@@ -24,7 +24,7 @@ class JsVoid(object):
     return self._data
 
 
-class JsObjects(object):
+class JsObjects:
   def __init__(self, jsObj=None):
     self._jsObj = jsObj
 
@@ -369,7 +369,7 @@ class JsObjects(object):
       return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (", ".join(params), returns, ", ".join(values)))
 
 
-class JsPromise(object):
+class JsPromise:
 
   def __init__(self, jsObj):
     self._jsObj = jsObj
@@ -419,78 +419,91 @@ class JsPromise(object):
     return self.toStr()
 
 
-class XMLHttpRequestErrors(object):
+class XMLHttpRequestErrors:
 
   def __init__(self, onerrors, report, http_request):
     self.__onerrors = onerrors
     self._src = report
     self._http = http_request
 
-  def e404(self, jsFncs=None, default=True):
+  def e404(self, jsFncs=None, default=True, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
     :param default:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
     if default:
-      jsFncs.append(self._src.js.msg.text("Service [%s] not found" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
-    self.__onerrors.append("if(%s == 404){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+      jsFncs.append(self._src.js.msg.text(
+        "Service [%s] not found" % self._http.url,
+        cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+    self.__onerrors.append("if(%s == 404){%s}" % (
+      self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self._http
 
-  def e405(self, jsFncs=None, default=True):
+  def e405(self, jsFncs=None, default=True, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
     :param default:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
     if default:
-      jsFncs.append(self._src.js.msg.text("Service [%s] failed to return response" % self._http.url, cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
-    self.__onerrors.append("if(%s == 405){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+      jsFncs.append(
+        self._src.js.msg.text("Service [%s] failed to return response" % self._http.url,
+                              cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+    self.__onerrors.append("if(%s == 405){%s}" % (
+      self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self._http
 
-  def e200(self, jsFncs=None, default=True):
+  def e200(self, jsFncs=None, default=True, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
     :param default:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
     if default:
-      jsFncs.append(self._src.js.msg.text("Service [%s] completed successfully" % self._http.url, cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
-    self.__onerrors.append("if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+      jsFncs.append(
+        self._src.js.msg.text("Service [%s] completed successfully" % self._http.url,
+                              cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
+    self.__onerrors.append(
+      "if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
     return self._http
 
-  def commons(self, jsFncs=None, default=True):
+  def commons(self, jsFncs=None, default=True, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
     :param default:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self.e405(jsFncs, default)
-    self.e404(jsFncs, default)
-    self.e200(jsFncs, default)
+    self.e405(jsFncs, default, profile)
+    self.e404(jsFncs, default, profile)
+    self.e200(jsFncs, default, profile)
     return self._http
 
 
-class XMLHttpRequest(object):
+class XMLHttpRequest:
 
   def __init__(self, report, varName, method_type, url, data=None):
     self.data = JsData.Datamap() if data is None else data
@@ -499,7 +512,7 @@ class XMLHttpRequest(object):
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
-    self.varId = varName
+    self.varId, self.profile = varName, False
     if url is not None:
       self.open(method_type, url)
 
@@ -549,7 +562,8 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The XMLHttpRequest property responseType is an enumerated string value specifying the type of data contained in the response.
+    The XMLHttpRequest property responseType is an enumerated string value specifying the type of data contained in
+    the response.
 
     Related Pages:
 
@@ -582,7 +596,8 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The XMLHttpRequest.timeout property is an unsigned long representing the number of milliseconds a request can take before automatically being terminated.
+    The XMLHttpRequest.timeout property is an unsigned long representing the number of milliseconds a request can take
+    before automatically being terminated.
 
     Related Pages:
 
@@ -597,7 +612,8 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The abort event is fired when a request has been aborted, for example because the program called XMLHttpRequest.abort().
+    The abort event is fired when a request has been aborted, for example because the program called
+    XMLHttpRequest.abort().
 
     Related Pages:
 
@@ -608,8 +624,10 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The EventTarget method addEventListener() sets up a function that will be called whenever the specified event is delivered to the target.
-    Common targets are Element, Document, and Window, but the target may be any object that supports events (such as XMLHttpRequest).
+    The EventTarget method addEventListener() sets up a function that will be called whenever the specified event
+    is delivered to the target.
+    Common targets are Element, Document, and Window, but the target may be any object that supports
+    events (such as XMLHttpRequest).
 
     Related Pages:
 
@@ -762,7 +780,8 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The XMLHttpRequestEventTarget.onloadstart is the function called when an XMLHttpRequest transaction starts transferring data.
+    The XMLHttpRequestEventTarget.onloadstart is the function called when an XMLHttpRequest transaction starts
+    transferring data.
 
     Attributes:
     ----------
@@ -777,7 +796,10 @@ class XMLHttpRequest(object):
     """
     Description:
     ------------
-    The XMLHttpRequest.withCredentials property is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
+    The XMLHttpRequest.withCredentials property is a Boolean that indicates whether or not cross-site Access-Control
+    requests should be made using credentials such as cookies, authorization headers or TLS client certificates.
+
+    Setting withCredentials has no effect on same-site requests.
 
     Related Pages:
 
@@ -793,7 +815,8 @@ class XMLHttpRequest(object):
     Description:
     ------------
     The XMLHttpRequest method send() sends the request to the server.
-    If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the result is delivered using events.
+    If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the
+    result is delivered using events.
     If the request is synchronous, this method doesn't return until the response has arrived.
 
     Related Pages:
@@ -834,8 +857,9 @@ class XMLHttpRequest(object):
     return self
 
   def toStr(self):
-    request = ["var %s = new XMLHttpRequest()" % self.varId]
-    request.append("%s.responseType = '%s'" % (self.varId, self.__responseType))
+    request = [
+      "var %s = new XMLHttpRequest()" % self.varId,
+      "%s.responseType = '%s'" % (self.varId, self.__responseType)]
     if self.__url_prefix:
       request.append("%s.open(%s, %s+'%s')" % (self.varId, self.method, self.url, self.__url_prefix))
     else:
@@ -846,11 +870,14 @@ class XMLHttpRequest(object):
       if self.__req_fail is not None:
         request.append("%s.onload = function(){}" % self.varId)
       else:
-        request.append("%(varId)s.onload = function(){var data = %(varId)s.response; %(jsFncs)s}" % {'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True)})
+        request.append("%(varId)s.onload = function(){var data = %(varId)s.response; %(jsFncs)s}" % {
+          'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True, profile=self.profile)})
     if self.__req_end is not None:
-      request.append("%(varId)s.onloadend = function(){%(jsFncs)s}" % {'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_end, toStr=True)})
+      request.append("%(varId)s.onloadend = function(){%(jsFncs)s}" % {
+        'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_end, toStr=True, profile=self.profile)})
     for k, fncs in self.__on.items():
-      request.append("%(varId)s.%(name)s = function(){%(jsFncs)s}" % {'name': k, 'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(fncs, toStr=True)})
+      request.append("%(varId)s.%(name)s = function(){%(jsFncs)s}" % {
+        'name': k, 'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(fncs, toStr=True, profile=self.profile)})
     if self.__req_send is None:
       raise Exception("The send method must be called")
     request.append(self.__req_send)

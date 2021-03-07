@@ -865,6 +865,10 @@ class Dialog(JQueryUI):
       div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
       %s.append(div)''' % self._src.dom.jquery.varId)
 
+  def dialog(self, event):
+    event = JsUtils.jsConvertData(event, None)
+    return JsObjects.JsVoid("%s.dialog(%s)" % (self._src.dom.jquery.varId, event))
+
   def option(self, jsData=None, jsValue=None):
     """
     Description:

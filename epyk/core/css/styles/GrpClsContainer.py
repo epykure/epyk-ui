@@ -6,17 +6,18 @@ from epyk.core.css import Classes
 
 
 class ClassDiv(GrpCls.ClassHtml):
+
   @property
   def css(self):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrDiv
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsContainer.AttrDiv(self.htmlObj)
+      self._css_struct = AttrClsContainer.AttrDiv(self.component)
     return self._css_struct
 
   @property
@@ -25,12 +26,13 @@ class ClassDiv(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
 
@@ -41,12 +43,12 @@ class ClassModal(GrpCls.ClassHtml):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrModal
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsContainer.AttrModal(self.htmlObj)
+      self._css_struct = AttrClsContainer.AttrModal(self.component)
     return self._css_struct
 
   @property
@@ -55,19 +57,20 @@ class ClassModal(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).modal()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).modal()
     return self._css_class
 
 
 class ClassDrawer(GrpCls.ClassHtml):
 
-  def __init__(self, htmlObj):
-    super(ClassDrawer, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(ClassDrawer, self).__init__(component)
     self._css_class_drawer, self._css_class_handle, self._css_class_content, self._css_class_nav = 4 * [None]
     self.classList['main'].add(self.css_class_drawer)
     self.classList['main'].add(self.css_class_handle)
@@ -79,12 +82,12 @@ class ClassDrawer(GrpCls.ClassHtml):
     """
     Description:
     ------------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrDiv
     """
     if self._css_struct is None:
-      self._css_struct = AttrClsContainer.AttrDiv(self.htmlObj)
+      self._css_struct = AttrClsContainer.AttrDiv(self.component)
     return self._css_struct
 
   @property
@@ -93,12 +96,13 @@ class ClassDrawer(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDrawer
     """
     if self._css_class_drawer is None:
-      self._css_class_drawer = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).drawer()
+      self._css_class_drawer = Classes.CatalogDiv.CatalogDrawer(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).drawer()
     return self._css_class_drawer
 
   @property
@@ -107,13 +111,13 @@ class ClassDrawer(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDrawer
     """
     if self._css_class_nav is None:
-      self._css_class_nav = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlCode).drawer()
+      self._css_class_nav = Classes.CatalogDiv.CatalogDrawer(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).drawer()
     return self._css_class_nav
 
   @property
@@ -122,13 +126,13 @@ class ClassDrawer(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDrawer
     """
     if self._css_class_handle is None:
-      self._css_class_handle = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlCode).handle()
+      self._css_class_handle = Classes.CatalogDiv.CatalogDrawer(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).handle()
     return self._css_class_handle
 
   @property
@@ -137,12 +141,11 @@ class ClassDrawer(GrpCls.ClassHtml):
     Description:
     ------------
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object
+    Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDrawer
     """
     if self._css_class_content is None:
-      self._css_class_content = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlCode).content()
+      self._css_class_content = Classes.CatalogDiv.CatalogDrawer(
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode).content()
     return self._css_class_content
-

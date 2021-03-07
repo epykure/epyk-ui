@@ -14,11 +14,12 @@ from epyk.core.js.html import JsHtmlStepper
 
 class Drawer(Html.Html):
   name = 'Drawer'
+  _option_cls = OptPanel.OptionDrawer
 
   def __init__(self, report, width, height, options, helper, profile):
-    super(Drawer, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
+    super(Drawer, self).__init__(report, None, profile=profile, options=options,
+                                 css_attrs={"width": width, "height": height})
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
-    self.__options = OptPanel.OptionDrawer(self, options)
     self.style.css.position = 'relative'
 
     self.panels = report.ui.div()
@@ -67,7 +68,7 @@ class Drawer(Html.Html):
 
     :rtype: OptPanel.OptionDrawer
     """
-    return self.__options
+    return super().options
 
   def add_panel(self, link, container, display=False):
     """
@@ -146,19 +147,22 @@ class Drawer(Html.Html):
       <div %(attr)s>
         %(panels)s
         <div name='drawer' style='clear:both;%(side)s:0;overflow-y:hidden'>
+          %(helper)s
           %(handle)s%(drawer)s
         </div>
       </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
-                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(), 'side': position[self.options.side]}
+                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
+                   'side': position[self.options.side], 'helper': self.helper}
 
 
 class DrawerMulti(Html.Html):
   name = 'Multi Drawers'
+  _option_cls = OptPanel.OptionDrawer
 
   def __init__(self, report, component, width, height, options, helper, profile):
-    super(DrawerMulti, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
+    super(DrawerMulti, self).__init__(report, None, options=options, css_attrs={"width": width, "height": height},
+                                      profile=profile)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
-    self.__options = OptPanel.OptionDrawer(self, options)
     self.style.css.position = 'relative'
 
     self.panels = component
@@ -209,7 +213,7 @@ class DrawerMulti(Html.Html):
 
     :rtype: OptPanel.OptionDrawer
     """
-    return self.__options
+    return super().options
 
   def add_drawer(self, link, container):
     """
@@ -241,14 +245,17 @@ class DrawerMulti(Html.Html):
     self.handle += link
     self.drawers += container
     link.click([
-      self._report.js.querySelectorAll(Selector.Selector(self.drawers).with_child_element("div").excluding(container)).css({"display": 'none'}),
+      self._report.js.querySelectorAll(
+        Selector.Selector(self.drawers).with_child_element("div").excluding(container)).css({"display": 'none'}),
       expr.if_(self.panels.dom.getAttribute("data-panel") == container.htmlCode, [
-        self.drawers.dom.toggle_transition("margin-right" if self.options.side == 'left' else "margin-left", "-%s" % self.options.width, "0px"),
+        self.drawers.dom.toggle_transition(
+          "margin-right" if self.options.side == 'left' else "margin-left", "-%s" % self.options.width, "0px"),
         container.dom.css({"display": 'none'}),
         self.panels.dom.setAttribute("data-panel", '')])
       .else_([
         expr.if_(self._report.js.querySelector(Selector.Selector(self.drawers)).css("margin-left") != "0px", [
-          self.drawers.dom.toggle_transition("margin-right" if self.options.side == 'left' else "margin-left", "0px", "-%s" % self.options.width),
+          self.drawers.dom.toggle_transition(
+            "margin-right" if self.options.side == 'left' else "margin-left", "0px", "-%s" % self.options.width),
         ]),
         self.panels.dom.setAttribute("data-panel", container.htmlCode),
         container.dom.css({'display': 'block'})
@@ -287,6 +294,5 @@ class DrawerMulti(Html.Html):
         </div>
         %(handle)s
       </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
-                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(), 'side': self.options.side}
-
-
+                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
+                   'side': self.options.side}

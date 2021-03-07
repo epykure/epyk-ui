@@ -667,7 +667,7 @@ class NVD3:
     if data is None or y_columns is None:
       return is_data
 
-    agg_data = {}
+    agg_data, result = {}, []
     for rec in data:
       for y in y_columns:
         if y in rec:
@@ -677,10 +677,10 @@ class NVD3:
       for x, y in agg_data.get(c, {}).items():
         is_data["labels"].add(x)
         series.append({"x": x, "y": y})
-      data.append(series)
+      result.append(series)
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
+      is_data["datasets"].append(result[i])
       is_data["series"].append(l)
     return is_data
 
@@ -704,7 +704,7 @@ class NVD3:
     if data is None or y_columns is None:
       return is_data
 
-    agg_data = {}
+    agg_data, result = {}, []
     for rec in data:
       for y in y_columns:
         if y in rec:
@@ -714,10 +714,10 @@ class NVD3:
       for x, y in agg_data.get(c, {}).items():
         is_data["labels"].add(x)
         series.append({"label": x, "y": y})
-      data.append(series)
+      result.append(series)
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
+      is_data["datasets"].append(result[i])
       is_data["series"].append(l)
     return is_data
 
@@ -807,6 +807,57 @@ class Google:
     return is_data
 
 
+class Checkbox:
+
+  @staticmethod
+  def from_records(data, column, all_checked=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param column:
+    :param all_checked:
+    """
+    result = [{"value": rec[column], "checked": all_checked} for rec in data]
+    return result
+
+  @staticmethod
+  def from_df(df, column, all_checked=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param df:
+    :param column:
+    :param all_checked:
+    """
+    result = [{"value": rec[column], "checked": all_checked} for rec in df[column].unique().tolist()]
+    return result
+
+  @staticmethod
+  def from_list(data, checked=None, all_checked=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param all_checked:
+    """
+    result = []
+    for value in data:
+      result.append({"value": value})
+      if checked is not None and value == checked:
+        result[-1]["checked"] = True
+    return result
+
+
 class HtmlComponents:
 
   def markdown(self, content, tooltips=None, case_sensitive=False):
@@ -845,6 +896,29 @@ class HtmlComponents:
             line = insensitive_replace.sub(tooltip, line)
         new_content.append(line)
     return "\n".join(new_content)
+
+  @property
+  def checkboxes(self):
+    """
+    Description:
+    ------------
+    Property to provide standard ways to build the data for the Checkboxes.
+    Those transformation will be done on the Python side and they will not have any impact on the JavaScript side.
+
+    The purpose here is the prepare the data before passing it to the HTML container.
+
+    Those functions can be used in the interface but also in the build method to ensure the format for the
+    JavaScript processing.
+    """
+    return Checkbox
+
+  @property
+  def radio(self):
+    return Checkbox
+
+  @property
+  def check(self):
+    return Checkbox
 
 
 class Tree:

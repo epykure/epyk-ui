@@ -13,7 +13,7 @@ from epyk.core.js import JsUtils
 _JSVARS = 0
 
 
-class JsKeyword(object):
+class JsKeyword:
   def __init__(self, keyword):
     self.__keyword = keyword
 
@@ -24,7 +24,7 @@ class JsKeyword(object):
     return self.__keyword
 
 
-class JsObject(object):
+class JsObject:
   _jsClass = "Object"
 
   def __init__(self, data, varName=None, setVar=False, isPyData=False, report=None):
@@ -59,9 +59,10 @@ class JsObject(object):
     """
     Description:
     ------------
-    Create a Python Javascript Object
+    Create a Python Javascript Object.
 
-    Usage::
+    Usage:
+    -----
 
       JsDate.new("2019-05-03", varName="MyDate")
 
@@ -88,9 +89,10 @@ class JsObject(object):
     """
     Description:
     ------------
-    Get the object this
+    Get the object this.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.object.this
 
@@ -100,7 +102,7 @@ class JsObject(object):
 
     Attributes:
     ----------
-    :param report: The internal report object
+    :param report: The internal report object.
 
     :return: The python Javascript object
     """
@@ -111,9 +113,10 @@ class JsObject(object):
     """
     Description:
     ------------
-    Get the Javascript Object by its reference
+    Get the Javascript Object by its reference.
 
-    Usage::
+    Usage:
+    -----
 
       JsDate.new("2019-05-03", varName="MyDate")
       JsDate.get("MyDate")
@@ -124,8 +127,8 @@ class JsObject(object):
 
     Attributes:
     ----------
-    :param varName: The Javascript object reference
-    :param report: The internal report object
+    :param varName: The Javascript object reference.
+    :param report: The internal report object.
 
     :return: The python Javascript object
     """
@@ -136,7 +139,7 @@ class JsObject(object):
     """
     Description:
     ------------
-    The Javascript and Python reference ID
+    The Javascript and Python reference ID.
 
     :return: The Javascript String of the object variable name
     """
@@ -146,7 +149,10 @@ class JsObject(object):
     """
     Description:
     ------------
-    The setVar() method will defined the variable name and use this reference in the future
+    The setVar() method will defined the variable name and use this reference in the future.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -328,14 +334,15 @@ class JsObject(object):
     ------------
     The Object.isFrozen() determines if an object is frozen.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject").isFrozen()
 
     Related Pages:
 
       https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen
 
     :return: A Python Javascript Boolean
     """
@@ -350,16 +357,19 @@ class JsObject(object):
     Description:
     ------------
     The Object.freeze() method freezes an object.
-    A frozen object can no longer be changed; freezing an object prevents new properties from being added to it, existing properties from being removed, prevents changing the enumerability, configurability, or writability of existing properties, and prevents the values of existing properties from being changed.
+    A frozen object can no longer be changed; freezing an object prevents new properties from being added to it,
+    existing properties from being removed, prevents changing the enumerability, configurability,
+    or writability of existing properties, and prevents the values of existing properties from being changed.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject").freeze()
 
     Related Pages:
 
       https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 
     :return: The object that was passed to the function
     """
@@ -373,17 +383,19 @@ class JsObject(object):
     """
     Description:
     ------------
-    The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing properties as non-configurable.
+    The Object.seal() method seals an object, preventing new properties from being added to it and marking all
+    existing properties as non-configurable.
     Values of present properties can still be changed as long as they are writable
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject").isSealed()
 
     Related Pages:
 
       https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
     :return: A Javascript Boolean
     """
@@ -396,7 +408,8 @@ class JsObject(object):
     """
     Description:
     ------------
-    The static method Object.defineProperty() defines a new property directly on an object, or modifies an existing property on an object, and returns the object.
+    The static method Object.defineProperty() defines a new property directly on an object, or modifies an existing
+    property on an object, and returns the object.
 
     Related Pages:
 
@@ -410,13 +423,16 @@ class JsObject(object):
 
     :return: The object that was passed to the function.
     """
-    return JsObject("Object.defineProperty(%s, %s, %s)" % (obj.varId, JsUtils.jsConvertData(prop, None), JsUtils.jsConvertData(descriptor, None)))
+    return JsObject(
+      "Object.defineProperty(%s, %s, %s)" % (
+        obj.varId, JsUtils.jsConvertData(prop, None), JsUtils.jsConvertData(descriptor, None)))
 
   def getOwnPropertyNames(self, obj):
     """
     Description:
     ------------
-    The Object.getOwnPropertyNames() method returns an array of all properties (including non-enumerable properties except for those which use Symbol) found directly in a given object.
+    The Object.getOwnPropertyNames() method returns an array of all properties (including non-enumerable properties
+    except for those which use Symbol) found directly in a given object.
 
     Related Pages:
 
@@ -436,14 +452,15 @@ class JsObject(object):
     """
     Description:
     ------------
-    The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing properties as non-configurable.
+    The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing
+    properties as non-configurable.
     Values of present properties can still be changed as long as they are writable.
 
     Related Pages:
 
       https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
-    https://www.w3schools.com/Js/js_object_es5.asp
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
+      https://www.w3schools.com/Js/js_object_es5.asp
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
     :return: The Python Javascript object being sealed.
     """
@@ -456,7 +473,8 @@ class JsObject(object):
     """
     Description:
     ------------
-    The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object.
+    The Object.assign() method is used to copy the values of all enumerable own properties from one or more source
+    objects to a target object.
     It will return the target object.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
@@ -483,7 +501,8 @@ class JsObject(object):
     """
     Description:
     ------------
-    The Object.create() method creates a new object, using an existing object as the prototype of the newly created object.
+    The Object.create() method creates a new object, using an existing object as the prototype of the newly
+    created object.
 
     Related Pages:
 
@@ -511,7 +530,7 @@ class JsObject(object):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_entries.asp
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
 
     :return: A new Array, containing the selected elements
     """
@@ -531,7 +550,7 @@ class JsObject(object):
     Related Pages:
 
       https://www.w3schools.com/js/js_objects.asp
-    https://www.w3schools.com/js/js_object_es5.asp
+      https://www.w3schools.com/js/js_object_es5.asp
 
     Attributes:
     ----------
@@ -546,7 +565,8 @@ class JsObject(object):
     if getattr(self, '_frozen', False):
       print("Warning, try to change a frozen variable")
 
-    return JsObject("%s[%s] = %s" % (self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), setVar=False)
+    return JsObject("%s[%s] = %s" % (
+      self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), setVar=False)
 
   def addItem(self, key, value):
     """
@@ -562,7 +582,8 @@ class JsObject(object):
     ------------
     Return the value for a given key defined in the object
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject")["test"]
 
@@ -582,16 +603,17 @@ class JsObject(object):
     """
     Description:
     ------------
-    Returns an array of enumerable properties
+    Returns an array of enumerable properties.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject").keys()
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-    https://www.w3schools.com/js/js_object_es5.asp
+      https://www.w3schools.com/js/js_object_es5.asp
 
     :return: A new Array, containing the selected elements
     """
@@ -603,7 +625,10 @@ class JsObject(object):
     """
     Description:
     ------------
-    This might not be supported by all the browser
+    This might not be supported by all the browser.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -613,7 +638,8 @@ class JsObject(object):
     if jsObj is not None:
       # Add a polyfill to ensure the browser compatibility
       jsObj._addImport("babel-polyfill")
-    return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (self.varId, dico)
+    return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (
+      self.varId, dico)
 
   def toString(self, explicit=True):
     """
@@ -685,7 +711,7 @@ class JsObject(object):
     result = list(self._js)
     self._js = []
     if len(result) > 0:
-      return ";".join(JsUtils.jsConvertFncs(result))
+      return JsUtils.jsConvertFncs(result, toStr=True)
 
     return self.varData if self.varName is None else self.varName
 
@@ -729,7 +755,8 @@ class JsObject(object):
     fncs = JsFunctions([
       self.toString().split("\\n").setVar("rows"), JsArray.JsArray.set(varName),
       JsArray.JsArray.get("rows").forEach([
-        JsArray.JsArray.get(JsData.JsData(self._report).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
+        JsArray.JsArray.get(
+          JsData.JsData(self._report).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
         JsArray.JsArray.get(varName).push(JsObject.get("row"))])])
     record = JsObject.get(varName)
     record._js = [fncs.toStr()] + record._js
@@ -740,9 +767,8 @@ class JsObject(object):
     """
     Description:
     -----------
-
     Return the String representation of the Js object.
-    This will produce the chain, empty the internal buffer and produce the string
+    This will produce the chain, empty the internal buffer and produce the string.
     """
     return self.toStr()
 
@@ -772,7 +798,8 @@ class JsObject(object):
     """
     Description:
     -----------
-    Returns object after filling in its undefined properties with the first value present in the following list of defaults objects.
+    Returns object after filling in its undefined properties with the first value present in the following list
+    of defaults objects.
 
     Related Pages:
 
@@ -788,7 +815,8 @@ class JsObject(object):
     if self.varName is None:
       return JsObject("_.defaults(%s, %s)" % (self.toStr(), attrs), isPyData=False)
 
-    return JsObject("(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), isPyData=False)
+    return JsObject(
+      "(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), isPyData=False)
 
   def pick(self, keys, report=None):
     """
@@ -841,7 +869,8 @@ class JsObject(object):
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     return JsObject('''(function(){var results = []; 
-      %s.split('\\n').forEach(function(rec){ results.push(String(rec).replace(/^\s+|\s+$/g, '').split(%s)); }); return results})()''' % (self.varName, delimiter))
+      %s.split('\\n').forEach(function(rec){ results.push(String(rec).replace(/^\s+|\s+$/g, '').split(%s)); }); 
+      return results})()''' % (self.varName, delimiter))
 
   def fileToDict(self, delimiter, columns=None):
     """
@@ -851,7 +880,8 @@ class JsObject(object):
     columns = JsUtils.jsConvertData(columns, None)
     return JsObject('''(function(){var results = []; 
           var delimiter = %(delimiter)s; if (delimiter == 'TAB'){delimiter = '\\t'};
-          var rows = %(varName)s.split('\\n'); var results = []; var header = String(rows[0]).replace(/^\s+|\s+$/g, '').split(delimiter);
+          var rows = %(varName)s.split('\\n'); var results = []; 
+          var header = String(rows[0]).replace(/^\s+|\s+$/g, '').split(delimiter);
           for(var i = 1; i < rows.length; i++){
             var row = {}; var line = String(rows[i]).replace(/^\s+|\s+$/g, '');
             if(line != ""){

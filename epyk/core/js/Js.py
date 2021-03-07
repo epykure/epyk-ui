@@ -33,11 +33,11 @@ from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsFor
 
 
-class JsConsole(object):
+class JsConsole:
   """
   Description:
   ------------
-  This is a wrapper to the Console
+  This is a wrapper to the Console.
 
   Related Pages:
 
@@ -50,17 +50,18 @@ class JsConsole(object):
     Description:
     ------------
     Trigger a Javascript debugger from this point.
-    The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12
+    The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.js.console.debugger
+      page.js.console.debugger
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_debugger.asp
 
-    :return: The Javascript Keyword to trigger the browser debugger
+    :return: The Javascript Keyword to trigger the browser debugger.
     """
     return JsObject.JsKeyword("debugger")
 
@@ -71,27 +72,29 @@ class JsConsole(object):
     ------------
     The console.clear() method clears the console.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.js.console.clear
+      page.js.console.clear
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_console_clear.asp
 
-    :return: The Javascript String used to clear the console (F12 in standard browsers)
+    :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
     return JsFncs.JsFunction("console.clear()")
 
-  def log(self, jsData, jsFnc=None, skip_data_convert=False):
+  def log(self, jsData, jsConvFnc=None, skip_data_convert=False):
     """
     Description:
     ------------
     The console.log() method writes a message to the console.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.js.console.log("Test")
+      page.js.console.log("Test")
 
     Related Pages:
 
@@ -99,22 +102,22 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param jsData: The Javascript fragment
-    :param jsFnc:
-    :param skip_data_convert:
+    :param jsData: String | Object. The Javascript fragment.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param skip_data_convert: Boolean. Optional. Flag to specify to the framework if a Json conversion is needed.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if skip_data_convert:
       return JsFncs.JsFunction("console.log(%s)" % jsData)
 
+    # display directly the content of the component
     if hasattr(jsData, 'dom'):
-      # display directly the content of the component
-      return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData.dom.content, jsFnc))
+      return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData.dom.content, jsConvFnc))
 
-    return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def info(self, jsData, jsFnc=None):
+  def info(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
@@ -126,14 +129,14 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param data: The Javascript fragment
-    :param jsFnc:
+    :param jsData: String | Object. The Javascript fragment.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def warn(self, jsData, jsFnc=None):
+  def warn(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
@@ -145,14 +148,14 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param data: The Javascript fragment
-    :param jsFnc:
+    :param jsData: String | Object. The Javascript fragment.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def error(self, jsData, jsFnc=None):
+  def error(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
@@ -164,12 +167,12 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param data: The Javascript fragment
-    :param isPyData:
+    :param jsData: String | Object. The Javascript fragment.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
   def table(self, jsData, jsHeader=None):
     """
@@ -183,9 +186,10 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param jsData: Required. The data to fill the table with
-    :param jsHeader: Optional. An array containing the names of the columns to be included in the table
-    :return: The Javascript String used to clear the console (F12 in standard browsers)
+    :param jsData: String | Object. Required. The data to fill the table with.
+    :param jsHeader: List. Optional. An array containing the names of the columns to be included in the table.
+
+    :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
     if jsHeader is not None:
       return JsFncs.JsFunction("console.table(%s, %s)" % (jsData, jsHeader))
@@ -196,7 +200,7 @@ class JsConsole(object):
     """
     Description:
     ------------
-    The console.time() method starts a timer in the console view
+    The console.time() method starts a timer in the console view.
 
     Related Pages:
 
@@ -204,8 +208,9 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param htmlCode: Use the label parameter to give the timer a name
-    :return: A Python Javascript Number
+    :param htmlCode: String. Use the label parameter to give the timer a name.
+
+    :return: A Python Javascript Number.
     """
     return JsNumber.JsNumber("console.time('%s')" % htmlCode, isPyData=False)
 
@@ -221,13 +226,13 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param htmlCode: The name of the timer to end
+    :param htmlCode: String. The name of the timer to end.
 
-    :return: The Javascript String used to clear the console (F12 in standard browsers)
+    :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
     return JsFncs.JsFunction("console.timeEnd('%s')" % htmlCode)
 
-  def _assert(self, jsData, strInfo, jsFnc=None):
+  def _assert(self, jsData, strInfo, jsConvFnc=None):
     """
     Description:
     ------------
@@ -239,17 +244,17 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param jsData:
-    :param strInfo:
-    :param isPyData:
+    :param jsData: String | Object. The Javascript fragment.
+    :param strInfo: String. The JavaScript result.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsFncs.JsFunction("console.assert('%s', '%s')" % (JsUtils.jsConvertData(jsData, jsFnc), strInfo))
+    return JsFncs.JsFunction("console.assert('%s', '%s')" % (JsUtils.jsConvertData(jsData, jsConvFnc), strInfo))
 
-  def tryCatch(self, jsFncs, jsFncsErrs="console.warn(err.message)"):
+  def tryCatch(self, jsFncs, jsFncsErrs="console.warn(err.message)", profile=False):
     """
     Description:
     ------------
-    Javascript Try Catch Exceptions
+    Javascript Try Catch Exceptions.
 
     Related Pages:
 
@@ -257,14 +262,16 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param jsFncsErrs:
+    :param jsFncs: String or List. The Javascript functions.
+    :param jsFncsErrs: String or List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return JsFncs.JsFunction("try{%s} catch(err){%s}" % (";".join(jsFncs), jsFncsErrs))
+    return JsFncs.JsFunction(
+      "try{%s} catch(err){%s}" % (JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), jsFncsErrs))
 
   def perf(self, varName, label=None):
     """
@@ -275,8 +282,8 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param varName: String. The variable var name use to compute the performance
-    :param label: String. Optional. The description
+    :param varName: String. The variable var name use to compute the performance.
+    :param label: String. Optional. The description.
     """
     if label is not None:
       return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, varName))
@@ -284,24 +291,25 @@ class JsConsole(object):
     return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % varName)
 
 
-class JsJson(object):
+class JsJson:
   """
   Description:
   ------------
-  Wrapper around the Javascript Json module
+  Wrapper around the Javascript Json module.
+
   This wrapper will only wrapper the different functions available in the underlying library.
-  The documentation can be found in each function or are available on the Javascript Official documentation
+  The documentation can be found in each function or are available on the Javascript Official documentation.
 
   Related Pages:
 
     https://www.w3schools.com/js/js_json_intro.asp
   """
 
-  def parse(self, jsData, jsResultFnc=None, jsFnc=None):
+  def parse(self, jsData, jsResultFnc=None, jsConvFnc=None):
     """
     Description:
     ------------
-    Parses a JSON string and returns a JavaScript object
+    Parses a JSON string and returns a JavaScript object.
 
     Related Pages:
 
@@ -310,18 +318,20 @@ class JsJson(object):
 
     Attributes:
     ----------
-    :param jsData: Required. A string written in JSON format
-    :param jsResultFnc: Optional. A function used to transform the result. The function is called for each item. Any nested objects are transformed before the parent.
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsResultFnc: Optional. A function used to transform the result. The function is called for each item.
+                                  Any nested objects are transformed before the parent.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript string method
     """
-    jsData = JsUtils.jsConvertData(jsData, jsFnc)
+    jsData = JsUtils.jsConvertData(jsData, jsConvFnc)
     if jsResultFnc is not None:
       return JsFncs.JsFunction("JSON.parse(%s, %s)" % (jsData, jsResultFnc))
 
     return JsFncs.JsFunction("JSON.parse(%s)" % jsData)
 
-  def stringify(self, jsData, replacer=None, space=0, jsFnc=None):
+  def stringify(self, jsData, replacer=None, space=0, jsConvFnc=None):
     """
     Description:
     ------------
@@ -333,61 +343,64 @@ class JsJson(object):
 
     Attributes:
     ----------
-    :param jsData: Required. The value to convert to a string
-    :param replacer: Optional. Either a function or an array used to transform the result. The replacer is called for each item.
+    :param jsData: String. Required. The value to convert to a string.
+    :param replacer: Optional. Either a function or an array used to transform the result.
+                               The replacer is called for each item.
     :param space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
       or a Number, from 0 to 10, to indicate how many space characters to use as white space.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: The Javascript string method
+    :return: The Javascript string method.
     """
-    return JsString.JsString("JSON.stringify(%s, %s, %s)" % (JsUtils.jsConvertData(jsData, jsFnc), json.dumps(replacer), space), isPyData=False)
+    return JsString.JsString(
+      "JSON.stringify(%s, %s, %s)" % (
+        JsUtils.jsConvertData(jsData, jsConvFnc), json.dumps(replacer), space), isPyData=False)
 
 
-class JsBreadCrumb(object):
+class JsBreadCrumb:
 
   def __init__(self, src=None):
     self._src = src
     self._selector = "breadcrumb"
     self._anchor = None
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.inputs)))
+    self._src.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.inputs)))
 
-  def add(self, key, jsData):
+  def add(self, key, jsData, jsConvFnc=None):
     """
     Description:
     ------------
-    Add an entry to the Javascript breadcrumb dictionary
+    Add an entry to the Javascript breadcrumb dictionary.
 
     Attributes:
     ----------
-    :param key: The key in the Breadcrumb dictionary
-    :param jsData:
-
-    :return: Nothing
+    :param key: String. The key in the Breadcrumb dictionary.
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, JsUtils.jsConvertData(jsData, None)))
+    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, JsUtils.jsConvertData(jsData, jsConvFnc)))
 
   def get(self, key=None):
     """
     Description:
     ------------
-    returns the object stored in the breadcrumb dictionary
+    returns the object stored in the breadcrumb dictionary.
 
     Attributes:
     ----------
-    :param key: Optinal. The key in the Breadcrumb dictionary
+    :param key: String. Optional. The key in the Breadcrumb dictionary.
 
-    :return: A Python object
+    :return: A Python object.
     """
     if key is None:
       return JsObject.JsObject("%s" % self._selector)
 
     return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
 
-  def hash(self, jsData):
+  def hash(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
-    Add an anchor to the URL after the hash tag
+    Add an anchor to the URL after the hash tag.
 
     Related Pages:
 
@@ -395,16 +408,17 @@ class JsBreadCrumb(object):
 
     Attributes:
     ----------
-    :param jsData:
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
+    return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, jsConvFnc)))
 
   @property
   def url(self):
     """
     Description:
     ------------
-    Get the full URL
+    Get the full URL.
     """
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
@@ -415,14 +429,15 @@ class JsBreadCrumb(object):
     return '%s(%s)' % (JsFncs.FncOnRecords(self._src._props['js']).url(), self._selector)
 
 
-class JsScreen(object):
+class JsScreen:
 
   @property
   def availHeight(self):
     """
     Description:
     ------------
-    The availHeight property returns the height of the user's screen, in pixels, minus interface features like the Windows Taskbar.
+    The availHeight property returns the height of the user's screen, in pixels, minus interface features
+    like the Windows Task bar.
 
     Related Pages:
 
@@ -435,7 +450,8 @@ class JsScreen(object):
     """
     Description:
     ------------
-    The availWidth property returns the width of the user's screen, in pixels, minus interface features like the Windows Taskbar.
+    The availWidth property returns the width of the user's screen, in pixels, minus interface features like the
+    Windows Task bar.
 
     Related Pages:
 
@@ -496,13 +512,14 @@ class JsScreen(object):
     return JsNumber.JsNumber("screen.width")
 
 
-class JsBase(object):
-  class __internal(object):
+class JsBase:
+  class __internal:
     _props, _context, http = {}, {}, []
     jsImports, cssImport = set([]), set([])
 
   def __init__(self, src=None):
-    self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
+    # The underlying source object is not supposed to be touched in the underlying classes
+    self._src = src if src else self.__internal()
     self.console = JsConsole()
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
@@ -522,7 +539,7 @@ class JsBase(object):
     """
     Description:
     -----------
-    Return the current View port height visible in the browser
+    Return the current View port height visible in the browser.
     """
     return JsNumber.JsNumber("Math.max(%s, %s)" % (self.documentElement.clientHeight, self.window.innerHeight))
 
@@ -531,7 +548,8 @@ class JsBase(object):
     """
     Description:
     -----------
-    Document.documentElement returns the Element that is the root element of the document (for example, the <html> element for HTML documents).
+    Document.documentElement returns the Element that is the root element of the document (for example,
+    the <html> element for HTML documents).
 
     Related Pages:
 
@@ -557,12 +575,13 @@ class JsBase(object):
     """
     Description:
     ------------
-    The information from the navigator object can often be misleading, and should not be used to detect browser versions because:
+    The information from the navigator object can often be misleading, and should not be used to detect
+    browser versions because:
 
-      - Different browsers can use the same name
-      - The navigator data can be changed by the browser owner
-      - Some browsers misidentify themselves to bypass site tests
-      - Browsers cannot report new operating systems, released later than the browser
+      - Different browsers can use the same name.
+      - The navigator data can be changed by the browser owner.
+      - Some browsers misidentify themselves to bypass site tests.
+      - Browsers cannot report new operating systems, released later than the browser.
     """
     return JsNavigator.JsNavigator(self)
 
@@ -571,7 +590,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    Property to the Javascript Location functions
+    Property to the Javascript Location functions.
 
     Related Pages:
 
@@ -588,7 +607,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    Interface to the main Javascript Classes and Primitives
+    Interface to the main Javascript Classes and Primitives.
 
     :rtypw: JsObjects.JsObjects
     """
@@ -600,8 +619,11 @@ class JsBase(object):
     Description:
     ------------
     jQuery is a fast, small, and feature-rich JavaScript library.
-    It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
-    With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+
+    It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler
+    with an easy-to-use API that works across a multitude of browsers.
+    With a combination of versatility and extensibility, jQuery has changed the way that millions of
+    people write JavaScript.
 
     Related Pages:
 
@@ -611,7 +633,7 @@ class JsBase(object):
 
     return JsQuery.JQuery(self._jquery_ref)
 
-  def eval(self, jsData, jsFnc=None):
+  def eval(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
@@ -626,10 +648,10 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsData: String. Data to be evaluated
-    :param jsFnc:
+    :param jsData: String. Data to be evaluated.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
   def socketio(self, htmlCode=None):
     """
@@ -646,7 +668,7 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. The websocket id (variable name) on the JavaScript side
+    :param htmlCode: String. Optional. The WebSocket id (variable name) on the JavaScript side.
     """
     from epyk.core.js.packages import JsSocketIO
 
@@ -656,7 +678,8 @@ class JsBase(object):
     """
     Description:
     ------------
-    WebSocket client applications use the WebSocket API to communicate with WebSocket servers using the WebSocket protocol.
+    WebSocket client applications use the WebSocket API to communicate with WebSocket servers
+    using the WebSocket protocol.
 
     Related Pages:
 
@@ -665,8 +688,8 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. The websocket id (variable name) on the JavaScript side
-    :param secured: Boolean. To define the right protocol for the websocket connection we or wss
+    :param htmlCode: String. Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param secured: Boolean. Optional. To define the right protocol for the WebSocket connection we or wss.
     """
     return JsWebSocket.WebSocket(htmlCode, self._src, secured)
 
@@ -682,7 +705,7 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. The webworker id (variable name) on the JavaScript side
+    :param htmlCode: String. The WebSocket id (variable name) on the JavaScript side.
     :param server: Boolean.
     """
     return JsWebSocket.Worker(htmlCode, self._src, server)
@@ -691,8 +714,10 @@ class JsBase(object):
     """
     Description:
     ------------
-    SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data changes to the client.
-    Server-sent Streaming is really ideal for server-push notifications, device monitoring and all other tasks that do not require real-time push back from the client.
+    SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data
+    changes to the client.
+    Server-sent Streaming is really ideal for server-push notifications, device monitoring and all other tasks
+    that do not require real-time push back from the client.
 
     Related Pages:
 
@@ -702,7 +727,7 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param htmlCode: String. The EventSource id (variable name) on the JavaScript side
+    :param htmlCode: String. The EventSource id (variable name) on the JavaScript side.
     """
     return JsWebSocket.ServerSentEvent(htmlCode, self._src)
 
@@ -713,7 +738,9 @@ class JsBase(object):
     ------------
     D3.js is a JavaScript library for manipulating documents based on data.
     D3 helps you bring data to life using HTML, SVG, and CSS.
-    D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
+
+    D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a
+    proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
 
     Related Pages:
 
@@ -723,14 +750,15 @@ class JsBase(object):
 
     return JsD3.JsD3(self._src, "d3")
 
-  def not_(self, data):
+  def not_(self, data, jsConvFnc=None):
     """
     Description:
     ------------
     Add the Symbol (!) for the boolean negation.
-    This feature is also available directly to any JsBoolean objects
+    This feature is also available directly to any JsBoolean objects.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
@@ -740,13 +768,14 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param data: The Javascript Object considered as a boolean
+    :param data: String. A String corresponding to a JavaScript object.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: The Javascript fragment string
+    :return: The Javascript fragment string.
     """
-    return JsFncs.JsFunction("!%s" % JsUtils.jsConvertData(data, None))
+    return JsFncs.JsFunction("!%s" % JsUtils.jsConvertData(data, jsConvFnc))
 
-  def if_(self, jsCond, jsFnc):
+  def if_(self, jsCond, jsFncs, profile=False):
     """
     Description:
     ------------
@@ -758,15 +787,16 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsCond:
-    :param jsFnc:
+    :param jsCond: String. The Javascript condition. Can be a JsBoolean object.
+    :param jsFncs: List | String. Optional. The Javascript functions.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     if isinstance(jsCond, list):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
-    self.__if = JsIf.JsIf(jsCond, jsFnc, self._src)
+    self.__if = JsIf.JsIf(jsCond, jsFncs, self._src, profile)
     return self.__if
 
-  def while_(self, jsCond, jsFnc, options=None):
+  def while_(self, jsCond, jsFnc, options=None, profile=False):
     """
     Description:
     ------------
@@ -778,46 +808,54 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsCond:
-    :param jsFnc:
-    :param options:
+    :param jsCond: String. The JavaScript condition.
+    :param jsFnc: List | String. Javascript functions.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     if isinstance(jsCond, list):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
-    self.__while = JsWhile.JsWhile(jsCond, options, self._src).fncs(jsFnc)
+    self.__while = JsWhile.JsWhile(jsCond, options, self._src).fncs(jsFnc, profile=profile)
     return self.__while
 
-  def for_(self, jsFnc, step=1, start=0, end=10, options=None):
+  def for_(self, jsFnc, step=1, start=0, end=10, options=None, profile=False):
     """
     Description:
     ------------
-    Shortcut to a for loop
+    Shortcut to a for loop.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_loop_for.asp
 
     Attributes:
     ----------
-    :param jsFnc:
-    :param step:
-    :param start:
-    :param end:
-    :param options:
+    :param jsFnc: List | String. Javascript functions.
+    :param step: Integer. The increment index. Default 1.
+    :param start: Integer. The first index in the for loop.
+    :param end: Integer. The last index in the for loop.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     for_statment = JsFor.JsFor(end, options)
     for_statment.start = start
     for_statment.end = end
     for_statment.step = step
-    return for_statment.fncs(jsFnc)
+    return for_statment.fncs(jsFnc, profile=profile)
 
   def return_(self, jsData):
     """
     Description:
     ------------
-    Javascript return keyword
+    Javascript return keyword.
 
-    :param jsData: The Javascript expression
+    Attributes:
+    ----------
+    :param jsData: The Javascript expression.
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
-  def switch(self, variable):
+  def switch(self, variable, jsConvFnc=None):
     """
     Description:
     ------------
@@ -829,36 +867,46 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param variable: String or Js Object. Variable on which we will apply the switch
+    :param variable: String | Js Object. Variable on which we will apply the switch.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
     if hasattr(variable, 'dom'):
       variable = variable.dom.content
-    variable = JsUtils.jsConvertData(variable, None)
+    variable = JsUtils.jsConvertData(variable, jsConvFnc)
     self.__switch = JsSwitch.JsSwitch(variable)
     return self.__switch
 
-  def clipboard(self, jsData):
+  def clipboard(self, jsData, jsConvFnc=None):
     """
     Description:
     ------------
-    Copy the full URL to rhe clipboard
+    Copy the full URL to rhe clipboard.
 
     Related Pages:
 
       https://isabelcastillo.com/hidden-input-javascript
+
+    Attributes:
+    ----------
+    :param jsData: Object | String. The Javascript expression.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction('''
-        var elInput = document.createElement('input'); 
-        elInput.setAttribute('type', 'text');
+        var elInput = document.createElement('input'); elInput.setAttribute('type', 'text');
         elInput.setAttribute('value', %s); document.body.appendChild(elInput);
-        document.execCommand('copy', false, elInput.select()); elInput.remove()''' % JsUtils.jsConvertData(jsData, None))
+        document.execCommand('copy', false, elInput.select()); elInput.remove()
+        ''' % JsUtils.jsConvertData(jsData, jsConvFnc))
 
   def _addImport(self, importAlias):
     """
     Description:
     ------------
+    Internal function to include an external JavaScript module.
+    This can only use pre defined modules. This will fail during the resolution if it does not exist.
 
-    :param importAlias:
+    Attributes:
+    ----------
+    :param importAlias: String. Alias reference of a JavaScript module.
     """
     self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
     return self
@@ -868,7 +916,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    The typeof function
+    The typeof function.
 
     Related Pages:
 
@@ -876,8 +924,8 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object
-    :param type: String. The type of object
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param type: String. Optional. The type of object.
     """
     if type is None:
       return JsObjects.JsBoolean.JsBoolean("typeof %s" % jsData)
@@ -888,7 +936,14 @@ class JsBase(object):
     """
     Description:
     ------------
-    Allow the definition of bespoke javascript strings
+    Allow the definition of bespoke javascript strings.
+
+    Attributes:
+    ----------
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsDataKey: String. Optional. A key reference in the JavaScript object.
+    :param isPyData: Boolean. Optional. Specify if the data is in Python and should be jsonify first.
+    :param jsFnc: List | String. Optional. Javascript functions.
     """
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
@@ -897,16 +952,16 @@ class JsBase(object):
     """
     Description:
     ------------
-    Javascript fragment added at the begining of the page.
-    This will be called before any function in the framework
+    Javascript fragment added at the beginning of the page.
+    This will be called before any function in the framework.
 
     Attributes:
     ----------
-    :param text: String. The Javascript fragment
+    :param text: String. The Javascript fragment.
 
-    :return: self to allow the chaning
+    :return: self to allow the chaining.
     """
-    self._src._jsText.append(text)
+    self._src.properties.js.add_text(text)
     return self
 
   def customFile(self, filename, path=None):
@@ -914,14 +969,14 @@ class JsBase(object):
     Description:
     ------------
     This will load your local javascript file when the report will be built.
-    Then you will be able to use the new features in the different Javascript wrappers
+    Then you will be able to use the new features in the different Javascript wrappers.
 
     Attributes:
     ----------
-    :param filename: String. The file name
-    :param path: String. optional. The file path
+    :param filename: String. The file name.
+    :param path: String. optional. The file path.
 
-    :return: self
+    :return: The Js Object to allow the chaining.
     """
     if path is None:
       self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
@@ -929,15 +984,15 @@ class JsBase(object):
       self._src.jsLocalImports.add("%s/%s" % (path, filename))
     return self
 
-  def extendProto(self, pyClass, fncName, jsFncs, pmts=None):
+  def extendProto(self, pyClass, fncName, jsFncs, pmts=None, profile=False):
     """
     Description:
     ------------
-    Javascript Framework extension
+    Javascript Framework extension.
 
     Hook in the base class to allow the definition of specific function to add extra primitive features.
-    Usual this function should be used in a wrapper function with the same name in order to have a coherent bridge between
-    Python and Javascript.
+    Usual this function should be used in a wrapper function with the same name in order to have a coherent
+    bridge between Python and Javascript.
 
     Related Pages:
 
@@ -945,15 +1000,17 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param pyClass: The PyJs Classname
-    :param fncName: The Javascript function name
-    :param jsFncs: The Javascript function definition
-    :param pmts: The Javascript function parameters
+    :param pyClass: String. The PyJs Classname.
+    :param fncName: String. The Javascript function name.
+    :param jsFncs: List | String. Javascript functions.
+    :param pmts: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
-    :return: The JsObject
+    :return: The Js Object to allow the chaining.
     """
-    jsData = JsUtils.jsConvertFncs(jsFncs)
-    self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
+    jsData = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (
+      pyClass._jsClass, fncName)] = {"content": jsData, 'pmts': pmts}
     return self
 
   def request_http(self, method_type, url, varName="response", is_json=True, components=None):
@@ -966,16 +1023,19 @@ class JsBase(object):
 
       https://www.w3schools.com/xml/xml_http.asp
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
-      rptObj.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
+      page.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
+      page.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
 
     Attributes:
     ----------
-    :param varName: String. The variable name created in the Javascript
-    :param method_type: String. The method of the HTTP Request
-    :param url: String. The url path of the HTTP request
+    :param method_type: String. The method of the HTTP Request.
+    :param url: String. The url path of the HTTP request.
+    :param varName: String. Optional. The variable name created in the Javascript.
+    :param is_json: Boolean. Optional. Specify the type of object passed.
+    :param components: List. Optional. A list of HTML objects values to be passed in the request.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -986,14 +1046,18 @@ class JsBase(object):
     """
     Description:
     ------------
+    Create a GET HTTP request.
+
+    Usage:
+    -----
 
     Attributes:
     ----------
-    :param url: String. The url path of the HTTP request
-    :param jsData:
-    :param varName: String. Optional. The variable name created in the Javascript (default response)
-    :param is_json:
-    :param components: HTML component. This will add the component value to the request object
+    :param url: String. The url path of the HTTP request.
+    :param jsData: String. Optional. A String corresponding to a JavaScript object.
+    :param varName: String. Optional. The variable name created in the Javascript (default response).
+    :param is_json: Boolean. Optional. Specify the type of object passed.
+    :param components: HTML component. Optional. This will add the component value to the request object.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1007,7 +1071,6 @@ class JsBase(object):
         for c in components:
           request.data.add(c)
     request.send(jsData, stringify=is_json)
-
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request
@@ -1016,14 +1079,15 @@ class JsBase(object):
     """
     Description:
     ------------
+    Create a POST HTTP request.
 
     Attributes:
     ----------
-    :param url: String. The url path of the HTTP request
-    :param jsData:
-    :param varName: String. Optional. The variable name created in the Javascript (default response)
-    :param is_json:
-    :param components: HTML component. This will add the component value to the request object
+    :param url: String. The url path of the HTTP request.
+    :param jsData: String. Optional. Corresponding to a JavaScript object.
+    :param varName: String. Optional. The variable name created in the Javascript (default response).
+    :param is_json: Boolean. Optional. Specify the type of object passed.
+    :param components: HTML component. Optional. This will add the component value to the request object.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1040,7 +1104,6 @@ class JsBase(object):
           else:
             request.data.add(c)
     request.send(jsData, stringify=is_json)
-
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request
@@ -1049,14 +1112,15 @@ class JsBase(object):
     """
     Description:
     ------------
-    Internal RPC to trigger services
+    Internal RPC to trigger services.
 
     Attributes:
     ----------
-    :param varName: String. The variable name created in the Javascript
+    :param varName: String. The variable name created in the Javascript.
     :param method_type: String. The method type
-    :param fnc: Fnc. A python function
+    :param fnc: Fnc. A python function.
     :param url: String. The service url
+    :param extra_params: Dictionary. Optional.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1084,7 +1148,7 @@ class JsBase(object):
 
     :rtype: JsFncs.JsRegisteredFunctions
 
-    :return: The predefined functions
+    :return: The predefined functions.
     """
     return JsFncs.JsRegisteredFunctions(self._src)
 
@@ -1101,7 +1165,7 @@ class JsBase(object):
 
     :rtype: JsBreadCrumb
 
-    :return: A Python breadcumb object
+    :return: A Python breadcrumb object.
     """
     if self._breadcrumb is None:
       self._breadcrumb = JsBreadCrumb(self._src)
@@ -1111,11 +1175,12 @@ class JsBase(object):
     """
     Description:
     ------------
-    Navigator to another URL like NodeJs
+    Navigator to another URL like NodeJs.
 
-    Usage::
+    Usage:
+    -----
 
-      icon.click([self.context.rptObj.js.navigateTo(url)])
+      icon.click([self.context.page.js.navigateTo(url)])
 
     Related Pages:
 
@@ -1123,34 +1188,36 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param url:
-    :param options:
+    :param url: String. The target url.
+    :param options: Dictionary. Optional. The property of the location object.
     """
     options = options or {}
-    if options.get("name", '') != "_blank":
+    if options.get("target", '') != "_blank":
       return self.location.href(href=url)
 
     return self.location.open_new_tab(url=url)
 
-  def registerFunction(self, fncName, jsFncs, pmts=None):
+  def registerFunction(self, fncName, jsFncs, pmts=None, profile=False):
     """
     Description:
     ------------
-    Javascript Framework extension
+    Javascript Framework extension.
 
-    Register a predefined Javascript function
-    This is only dedicated to specific Javascript transformation functions
+    Register a predefined Javascript function.
+    This is only dedicated to specific Javascript transformation functions.
 
     Description:
     ------------
-    :param fncName: The function name
-    :param jsFncs: Optional. The Javascript function definition
-    :param pmts: Optional
+    :param fncName: String. The function name.
+    :param jsFncs: List | String. Optional. The Javascript function definition.
+    :param pmts: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The JsObject
     """
-    jsData = JsUtils.jsConvertFncs(jsFncs)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
+    jsData = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {
+      'content': jsData, 'pmt': pmts}
     return self
 
   @property
@@ -1166,7 +1233,7 @@ class JsBase(object):
 
     :rtype: KeyCodes.KeyCode
     """
-    keydown = KeyCodes.KeyCode(component=self, source_event='document')
+    keydown = KeyCodes.KeyCode(page=self._src, source_event='document')
     self._src._props['js'].setdefault('events', {})['keydown'] = keydown
     return keydown
 
@@ -1183,7 +1250,7 @@ class JsBase(object):
 
     :rtype: KeyCodes.KeyCode
     """
-    keypress = KeyCodes.KeyCode(component=self, source_event='document')
+    keypress = KeyCodes.KeyCode(page=self._src, source_event='document')
     self._src._props['js'].setdefault('events', {})['keypress'] = keypress
     return keypress
 
@@ -1192,7 +1259,7 @@ class JsBase(object):
     """
     Description:
     -----------
-    The onkeypress event occurs when the user presses a key (on the keyboard)
+    The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
 
@@ -1200,11 +1267,11 @@ class JsBase(object):
 
     :rtype: KeyCodes.KeyCode
     """
-    keyup = KeyCodes.KeyCode(component=self, source_event='document')
+    keyup = KeyCodes.KeyCode(page=self._src, source_event='document')
     self._src._props['js'].setdefault('events', {})['keyup'] = keyup
     return keyup
 
-  def onReady(self, jsFncs):
+  def onReady(self, jsFncs, profile=False):
     """
     Description:
     ------------
@@ -1216,9 +1283,10 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript functions to be added to this section
+    :param jsFncs: List | String. The Javascript functions to be added to this section.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._src._props['js']['onReady'].add(";".join(JsUtils.jsConvertFncs(jsFncs)))
+    self._src._props['js']['onReady'].add(JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
     return self
 
   def profile(self, type, htmlCode, mark, recordsCount=""):
@@ -1228,15 +1296,18 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param type:
-    :param htmlCode:
-    :param mark:
-    :param recordsCount:
+    :param type: String. The type of profile tag.
+    :param htmlCode: String. The HTML component ID.
+    :param mark: String. The mark reference.
+    :param recordsCount: Integer. Optional. The records count.
     """
-    return "profileObj.push({type: '%s', htmlCode: '%s', mark: '%s', records: %s})" % (type, htmlCode, mark, recordsCount)
+    type = JsUtils.jsConvertData(type, None)
+    mark = JsUtils.jsConvertData(mark, None)
+    return "profileObj.push({type: %s, htmlCode: '%s', mark: %s, records: %s})" % (
+      type, htmlCode, mark, recordsCount)
 
   @staticmethod
-  def getElementById(idName):
+  def getElementById(idName, jsConvFnc=None):
     """
     Description:
     ------------
@@ -1248,20 +1319,25 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param idName: Required. The ID attribute's value of the element you want to get
+    :param idName: String. Required. The ID attribute's value of the element you want to get.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
+    :return: An Element Object, representing an element with the specified ID. Returns null if no elements with
+    the specified ID exists
     """
-    return JsNodeDom.JsDoms("document.getElementById(%s)" % JsUtils.jsConvertData(idName, None).toStr().replace("'", '"'))
+    return JsNodeDom.JsDoms(
+      "document.getElementById(%s)" % JsUtils.jsConvertData(idName, jsConvFnc).toStr().replace("'", '"'))
 
   @staticmethod
-  def getElementsByName(name):
+  def getElementsByName(name, jsConvFnc=None):
     """
     Description:
     ------------
-    The getElementsByName() method returns a collection of all elements in the document with the specified name (the value of the name attribute), as a NodeList object.
+    The getElementsByName() method returns a collection of all elements in the document with the specified name
+    (the value of the name attribute), as a NodeList object.
 
-    The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
+    The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
+    The index starts at 0.
 
     Related Pages:
 
@@ -1269,22 +1345,26 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param name: Required. The name attribute value of the element you want to access/manipulate
+    :param name: String. Required. The name attribute value of the element you want to access/manipulate.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
     :return: A NodeList object, representing a collection of elements with the specified name.
              The elements in the returned collection are sorted as they appear in the source code.
+
     :rtype: JsNodeDom.JsDomsList
     """
-    return JsNodeDom.JsDomsList.get(varName="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, None))
+    return JsNodeDom.JsDomsList.get(varName="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, jsConvFnc))
 
   @staticmethod
-  def getElementsByTagName(tagName, i=0):
+  def getElementsByTagName(tagName, i=0, jsConvFnc=None):
     """
     Description:
     ------------
-    The getElementsByTagName() method returns a collection of an elements's child elements with the specified tag name, as a NodeList object.
+    The getElementsByTagName() method returns a collection of an elements's child elements with the specified tag name,
+    as a NodeList object.
 
-    The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
+    The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
+    The index starts at 0.
 
     Related Pages:
 
@@ -1292,17 +1372,20 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param tagName: Required. The tagname of the child elements you want to get
-    :param i:
+    :param tagName: String. Required. The tag name of the child elements you want to get.
+    :param i: Integer. Optional. The index of the element.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (JsUtils.jsConvertData(tagName, None), i), varName="%s_%s" % (tagName, i), setVar=True)
+    return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (
+      JsUtils.jsConvertData(tagName, jsConvFnc), i), varName="%s_%s" % (tagName, i), setVar=True)
 
   @staticmethod
   def getElementsByClassName(clsName):
     """
     Description:
     ------------
-    The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
+    The getElementsByClassName() method returns a collection of all elements in the document with the specified
+    class name, as a NodeList object.
 
     Related Pages:
 
@@ -1329,10 +1412,10 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param tagName: Required. The name of the element you want to create
-    :param varName: Optional. The variable name to be set. Default random name
-    :param setVar: Optional. Create a variable for the new object. Default True
-    :param dom_id:
+    :param tagName: String. Required. The name of the element you want to create.
+    :param varName: String. Optional. The variable name to be set. Default random name.
+    :param setVar: Boolean. Optional. Create a variable for the new object. Default True.
+    :param dom_id: String. Optional. The Dom ID reference for the object.
     """
     dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar, report=self._src)
     if dom_id is not None:
@@ -1340,7 +1423,7 @@ class JsBase(object):
     return dom_obj
 
   @staticmethod
-  def createTextNode(self, jsString=None):
+  def createTextNode(jsString=None, jsConvFnc=None):
     """
     Description:
     ------------
@@ -1352,17 +1435,18 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsString: Required. The text of the Text node
+    :param jsString: String. Optional. The text of the Text node.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: A Text Node object with the created Text Node
+    :return: A Text Node object with the created Text Node.
     """
-    return JsObject.JsObject("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, None), isPyData=False)
+    return JsObject.JsObject("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, jsConvFnc), isPyData=False)
 
-  def encodeURIComponent(self, uri):
+  def encodeURIComponent(self, uri, jsConvFnc=None):
     """
     Description:
     ------------
-    The encodeURIComponent() function encodes a URI component
+    The encodeURIComponent() function encodes a URI component.
 
     Related Pages:
 
@@ -1370,13 +1454,14 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param uri: Required. The URI to be encoded
+    :param uri: String. Required. The URI to be encoded.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: A String, representing the encoded URI
+    :return: A String, representing the encoded URI.
     """
-    return JsObject.JsObject("encodeURIComponent(%s)" % JsUtils.jsConvertData(uri, None))
+    return JsObject.JsObject("encodeURIComponent(%s)" % JsUtils.jsConvertData(uri, jsConvFnc))
 
-  def decodeURIComponent(self, url_enc):
+  def decodeURIComponent(self, url_enc, jsConvFnc=None):
     """
     Description:
     ------------
@@ -1388,14 +1473,22 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param url_enc: Required. The URI to be decoded
+    :param url_enc: String. Required. The URI to be decoded.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
-    :return: A String, representing the decoded URI
+    :return: A String, representing the decoded URI.
     """
-    return JsObject.JsObject("decodeURIComponent(%s)" % JsUtils.jsConvertData(url_enc, None))
+    return JsObject.JsObject("decodeURIComponent(%s)" % JsUtils.jsConvertData(url_enc, jsConvFnc))
 
   @property
   def body(self):
+    """
+    Description:
+    ------------
+    Get the DOM object object.
+
+    This will return the object and it will not create any variable.
+    """
     return JsNodeDom.JsDoms("document.body", setVar=False, isPyData=False)
 
   @property
@@ -1414,14 +1507,14 @@ class JsBase(object):
     """
     Description:
     ------------
-    Shortcut to the Javascript String primitives
+    Shortcut to the Javascript String primitives.
 
     Attributes:
     ----------
-    :param data:
-    :param varName:
-    :param setVar:
-    :param isPyData:
+    :param data: String | Object. The String data.
+    :param varName: String. Optional. The specific name to be used for this JavaScript String.
+    :param setVar: Boolean. Optional. Set a variable. Default False.
+    :param isPyData: Boolean. Optional. Specify the type of data.
     """
     return JsString.JsString(data, varName, setVar, isPyData, report=self._src)
 
@@ -1429,14 +1522,14 @@ class JsBase(object):
     """
     Description:
     ------------
-    Shortcut to the Javascript Number primitives
+    Shortcut to the Javascript Number primitives.
 
     Attributes:
     ----------
-    :param data:
-    :param varName:
-    :param setVar:
-    :param isPyData:
+    :param data: String | Object. The String data.
+    :param varName: String. Optional. The specific name to be used for this JavaScript String.
+    :param setVar: Boolean. Optional. Set a variable. Default False.
+    :param isPyData: Boolean. Optional. Specify the type of data.
     """
     return JsNumber.JsNumber(data, varName, setVar, isPyData, report=self._src)
 
@@ -1444,22 +1537,23 @@ class JsBase(object):
     """
     Description:
     ------------
-    Shortcut to the Javascript Object primitives
+    Shortcut to the Javascript Object primitives.
 
     Attributes:
     ----------
-    :param data:
-    :param varName:
-    :param setVar:
-    :param isPyData:
+    :param data: String | Object. The String data.
+    :param varName: String. Optional. The specific name to be used for this JavaScript String.
+    :param setVar: Boolean. Optional. Set a variable. Default False.
+    :param isPyData: Boolean. Optional. Specify the type of data.
     """
     return JsObject.JsObject(data, varName, setVar, isPyData, report=self._src)
 
-  def querySelectorAll(self, selector):
+  def querySelectorAll(self, selector, jsConvFnc=None):
     """
     Description:
     ------------
-    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+    as a static NodeList object.
 
     Related Pages:
 
@@ -1467,11 +1561,13 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param selector: String. CSS selectors
+    :param selector: String. CSS selectors.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsNodeDom.JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
+    return JsNodeDom.JsDomsList(
+      "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, jsConvFnc), isPyData=False)
 
-  def querySelector(self, selector):
+  def querySelector(self, selector, jsConvFnc=None):
     """
     Description:
     ------------
@@ -1483,9 +1579,10 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param selector: String. CSS selectors
+    :param selector: String. CSS selectors.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
-    return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
+    return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, jsConvFnc))
 
   def activeElement(self):
     """
@@ -1497,12 +1594,12 @@ class JsBase(object):
 
       https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
-    :return: A reference to the element object in the document that has focus
+    :return: A reference to the element object in the document that has focus.
     """
     return JsNodeDom.JsDoms("document.activeElement")
 
   @staticmethod
-  def title(text=None):
+  def title(text=None, jsConvFnc=None):
     """
     Description:
     ------------
@@ -1514,12 +1611,13 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param text: A String, representing the title of the document
+    :param text: String. Optional. Representing the title of the document.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     """
     if text is None:
       return JsString.JsString("document.title")
 
-    return JsObjects.JsVoid("document.title = %s" % JsUtils.jsConvertData(text, None))
+    return JsObjects.JsVoid("document.title = %s" % JsUtils.jsConvertData(text, jsConvFnc))
 
   def execCommand(self, command, showUI, value):
     """
@@ -1533,11 +1631,11 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param command:	 Specifies the name of the command to execute on the selected section
-    :param showUI: A Boolean, specifies if the UI should be shown or not
-    :param value: Some commands need a value to be completed
+    :param command:	 String. Specifies the name of the command to execute on the selected section.
+    :param showUI: Boolean. specifies if the UI should be shown or not.
+    :param value: String. Some commands need a value to be completed.
 
-    :return: A Boolean, false if the command is not supported, otherwise true
+    :return: A Boolean, false if the command is not supported, otherwise true.
     """
     return JsObjects.JsVoid("document.execCommand('%s')" % command)
 
@@ -1568,7 +1666,8 @@ class JsBase(object):
     """
     Description:
     ------------
-    The createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object.
+    The createAttribute() method creates an attribute with the specified name, and returns the attribute as an
+    Attr object.
 
     Related Pages:
 
@@ -1576,9 +1675,9 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param attributename: Required. The name of the attribute you want to create
+    :param attributename: String. Required. The name of the attribute you want to create.
 
-    :return: A Node object, representing the created attribute
+    :return: A Node object, representing the created attribute.
     """
     return JsNodeAttributes.JsAttributes(attributename)
 
@@ -1586,7 +1685,8 @@ class JsBase(object):
     """
     Description:
     ------------
-    The writeln() method is identical to the document.write() method, with the addition of writing a newline character after each statement.
+    The writeln() method is identical to the document.write() method, with the addition of writing a newline character
+    after each statement.
 
     Related Pages:
 
@@ -1612,9 +1712,9 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsString: Required. The string to be parsed
+    :param jsString: String. Required. The string to be parsed.
 
-    :return: A Number. If the first character cannot be converted to a number, NaN is returned
+    :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
     return JsNumber.JsNumber("parseFloat(%s)" % jsString, isPyData=False)
 
@@ -1631,9 +1731,9 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsString: Required. The string to be parsed
+    :param jsString: Required. The string to be parsed.
 
-    :return: A Number. If the first character cannot be converted to a number, NaN is returned
+    :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
     return JsNumber.JsNumber("parseInt(%s)" % jsString, isPyData=False)
 
@@ -1642,7 +1742,8 @@ class JsBase(object):
     """
     Description:
     ------------
-    The parse() method parses a date string and returns the number of milliseconds between the date string and midnight of January 1, 1970.
+    The parse() method parses a date string and returns the number of milliseconds between the date string and midnight
+    of January 1, 1970.
 
     Related Pages:
 
@@ -1650,10 +1751,9 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsString: Required. A string representing a date
+    :param jsString: Required. A string representing a date.
 
-    :return: A Number, representing the number of milliseconds between the specified date-time and midnight January 1, 1970
-
+    :return: Number. Representing the milliseconds between the specified date-time and midnight January 1, 1970.
     """
     return JsNumber.JsNumber("Date.parse(%s)" % jsString, isPyData=False)
 
@@ -1661,14 +1761,14 @@ class JsBase(object):
     """
     Description:
     ------------
-    Get the Javascript Variable name
+    Get the Javascript Variable name.
 
     Attributes:
     ----------
-    :param varName: The Variable name
-    :param varType: The scope of the variable
+    :param varName: String. The Variable name.
+    :param varType: String. Optional. The scope of the variable.
 
-    :return: Return the piece of script to be added to the Javascript
+    :return: Return the piece of script to be added to the Javascript.
     """
     if varType == 'var':
       return "window['%s']" % varName
@@ -1679,7 +1779,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    Display a message
+    Display a message.
 
     Related Pages:
 
@@ -1687,20 +1787,22 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsData:
-    :param cssStyle:
-    :param icon:
-    :param seconds:
+    :param jsData: String. A String corresponding to a JavaScript object
+    :param cssStyle: Dictionary. Optional. The CSS attributes to be added to the HTML component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param seconds: Integer. Optional. The number of second the info will be visible.
     """
     if cssStyle is None:
-      cssStyle = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px', "border": "1px solid black"}
+      cssStyle = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px',
+                  "border": "1px solid black"}
     if icon is not None:
       self._src.jsImports.add('font-awesome')
       self._src.cssImport.add('font-awesome')
       return [
-        self.createElement("i", varName="popup_icon").setAttribute("aria-hidden", True).css({"display": "inline-block",
-                           "width": "auto", "height": "auto", "margin-right": '5px'}).className(icon),
-        self.createElement("div", varName="popup_info").appendChild(self.objects.dom("popup_icon")).css(cssStyle).text(jsData),
+        self.createElement("i", varName="popup_icon").setAttribute("aria-hidden", True).css(
+          {"display": "inline-block", "width": "auto", "height": "auto", "margin-right": '5px'}).className(icon),
+        self.createElement("div", varName="popup_info").appendChild(
+          self.objects.dom("popup_icon")).css(cssStyle).text(jsData),
         self.body.appendChild(self.objects.dom("popup_info")),
         self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 
@@ -1713,16 +1815,17 @@ class JsBase(object):
     """
     Description:
     ------------
-    Print a temporary message
+    Print a temporary message.
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param timer: Number. The time the popup will be displayed
-    :param cssAttrs: Dictionary. The CSS attributes for the popup
+    :param content: String. The content of the popup.
+    :param timer: Number. Optional. The time the popup will be displayed.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
-                  "top": JsObject.JsObject.get('event.clientY + "px"'), 'left': JsObject.JsObject.get('event.clientX + "px"')}
+                  "top": JsObject.JsObject.get('event.clientY + "px"'),
+                  'left': JsObject.JsObject.get('event.clientX + "px"')}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
       if 'bottom' in cssAttrs:
@@ -1740,7 +1843,7 @@ class JsBase(object):
     """
     Description:
     ------------
-    Create an email
+    Create an email.
 
     Related Pages:
 
@@ -1787,6 +1890,8 @@ class JsBase(object):
   @property
   def msg(self):
     """
+    Description:
+    ------------
     Shortcut to predefined temporary messages displayed to the UI.
     """
     return JsMsgAlerts.Msg(self._src)

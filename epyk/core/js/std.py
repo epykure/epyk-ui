@@ -46,7 +46,8 @@ def querySelectorAll(selector):
   """
   Description:
   ------------
-  The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+  The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+  as a static NodeList object.
 
   Related Pages:
 

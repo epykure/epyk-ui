@@ -5,8 +5,8 @@ from epyk.core.css import Classes
 
 class Code(GrpCls.ClassHtml):
 
-  def __init__(self, htmlObj):
-    super(Code, self).__init__(htmlObj)
+  def __init__(self, component):
+    super(Code, self).__init__(component)
     self._css_cm, self._css_cm_gutters, self._css_cm_active = 3 * [None]
     self.classList['main'].add(self.cls_cm)
     self.classList['main'].add(self.cls_cm_gutters)
@@ -22,7 +22,7 @@ class Code(GrpCls.ClassHtml):
     :rtype: Classes.CatalogText.CatalogEditor
     """
     if self._css_cm is None:
-      self._css_cm = Classes.CatalogText.CatalogEditor(self.htmlObj._report, self.classList['main']).cm()
+      self._css_cm = Classes.CatalogText.CatalogEditor(self.component.page, self.classList['main']).cm()
     return self._css_cm
 
   @property
@@ -35,7 +35,8 @@ class Code(GrpCls.ClassHtml):
     :rtype: Classes.CatalogText.CatalogEditor
     """
     if self._css_cm_gutters is None:
-      self._css_cm_gutters = Classes.CatalogText.CatalogEditor(self.htmlObj._report, self.classList['main']).cm_gutter()
+      self._css_cm_gutters = Classes.CatalogText.CatalogEditor(
+        self.component.page, self.classList['main']).cm_gutter()
     return self._css_cm_gutters
 
   @property
@@ -48,5 +49,6 @@ class Code(GrpCls.ClassHtml):
     :rtype: Classes.CatalogText.CatalogEditor
     """
     if self._css_cm_active is None:
-      self._css_cm_active = Classes.CatalogText.CatalogEditor(self.htmlObj._report, self.classList['main']).cm_activeline()
+      self._css_cm_active = Classes.CatalogText.CatalogEditor(
+        self.component.page, self.classList['main']).cm_activeline()
     return self._css_cm_active

@@ -27,8 +27,9 @@ class CssTableExcelCell(CssStyle.Style):
 
 
 class CssTableExcelTitle(CssStyle.Style):
-  _attrs = {'border': '1px solid #cecece', 'cursor': 'pointer', 'padding': '1px 20px 1px 20px',
-           'background-color': '#F3F3F3'}
+  _attrs = {
+    'border': '1px solid #cecece', 'cursor': 'pointer', 'padding': '1px 20px 1px 20px',
+    'background-color': '#F3F3F3'}
   _hover, _active = {'cursor': 'pointer'}, {'background-color': '#8EB0E7'}
   _selectors = {'child': 'td.rows'}
 

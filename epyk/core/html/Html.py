@@ -26,7 +26,7 @@ from epyk.core.html.options import Options
 try:  # For python 3
   import urllib.request as urllib2
   import urllib.parse as parse
-except:  # For Python 2
+except ImportError:  # For Python 2
   import urllib2
   import urllib as parse
 
@@ -47,8 +47,7 @@ def deprecated(func):
   """
   Description:
   -----------
-  This is a decorator which can be used to mark functions
-  as deprecated. It will result in a warning being emitted
+  This is a decorator which can be used to mark functions as deprecated. It will result in a warning being emitted
   when the function is used.
 
   Attributes:
@@ -98,29 +97,29 @@ def css_skin():
   def decorator(func):
     @functools.wraps(func)
     def decorated(*args, **kwargs):
-      html_obj = func(*args, **kwargs)
-      if html_obj._report.ui.components_skin is not None:
-        if "button" in html_obj._report.ui.components_skin:
-          html_obj._report.ui.components_skin["buttons.button"] = html_obj._report.ui.components_skin["button"]
+      component = func(*args, **kwargs)
+      if component.page.ui.components_skin is not None:
+        if "button" in component.page.ui.components_skin:
+          component.page.ui.components_skin["buttons.button"] = component.page.ui.components_skin["button"]
         alias = func.__qualname__.lower()
-        if alias in html_obj._report.ui.components_skin:
-          comp_skin = html_obj._report.ui.components_skin[alias]
+        if alias in component.page.ui.components_skin:
+          comp_skin = component.page.ui.components_skin[alias]
           if 'clear' in comp_skin:
             if comp_skin["clear"].get("css"):
-              html_obj.style.clear_style()
+              component.style.clear_style()
             if comp_skin["clear"].get("cls"):
-              html_obj.style.clear(True)
-          html_obj.css(html_obj._report.ui.components_skin[alias].get('css', {}))
+              component.style.clear(True)
+          component.css(component.page.ui.components_skin[alias].get('css', {}))
           for cls in comp_skin.get("cls", []):
-            html_obj.attr["class"].add(cls)
-      return html_obj
+            component.attr["class"].add(cls)
+      return component
 
     return decorated
 
   return decorator
 
 
-class Required(object):
+class Required:
   js, css = None, None
 
   def __init__(self, page):
@@ -158,7 +157,7 @@ class Required(object):
       logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
 
 
-class EventTouch(object):
+class EventTouch:
 
   def __init__(self, page):
     self._page = page
@@ -186,7 +185,7 @@ class EventTouch(object):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchstart", js_funcs, profile)
+    self._page.on("touchstart", js_funcs, profile, source_event=source_event)
     return self._page
 
   def move(self, js_funcs, profile=False, source_event=None):
@@ -195,7 +194,8 @@ class EventTouch(object):
     ------------
     The touchmove event occurs when the user moves the finger across the screen.
 
-    The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger is released.
+    The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger
+    is released.
 
     Usage:
     -----
@@ -210,7 +210,7 @@ class EventTouch(object):
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchmove", js_funcs, profile)
+    self._page.on("touchmove", js_funcs, profile, source_event=source_event)
     return self._page
 
   def cancel(self, js_funcs, profile=False, source_event=None):
@@ -219,7 +219,8 @@ class EventTouch(object):
     ------------
     The touchcancel event occurs when the touch event gets interrupted.
 
-    Different devices will interrupt a touch event at different actions, and it is considered good practice to include this event to clean up code if this "error" should occur.
+    Different devices will interrupt a touch event at different actions, and it is considered good practice to include
+    this event to clean up code if this "error" should occur.
 
     Usage:
     -----
@@ -234,7 +235,7 @@ class EventTouch(object):
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchcancel", js_funcs, profile)
+    self._page.on("touchcancel", js_funcs, profile, source_event=source_event)
     return self._page
 
   def end(self, js_funcs, profile=False, source_event=None):
@@ -260,47 +261,50 @@ class EventTouch(object):
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
-    self._page.on("touchend", js_funcs, profile)
+    self._page.on("touchend", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def swap(self, js_funcsLeft, js_funcsRight, profile=False, source_event=None):
+  def swap(self, js_funcs_left, js_funcs_right, profile=False, source_event=None):
     """
     Description:
     ------------
+    Add swap event functions.
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param js_funcsLeft: List | String. Javascript functions.
-    :param js_funcsRight: List | String. Javascript functions.
+    :param js_funcs_left: List | String. Javascript functions.
+    :param js_funcs_right: List | String. Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
-    self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"])
-    self.move(self._page.js.if_("window.longTouch != null", ["let swap =  (event.touches[0].clientX || event.originalEvent.touches[0].clientX) - window.longTouch",
-      "window.longTouch = null", self._page.js.if_("swap < 0", js_funcsLeft).else_(js_funcsRight)]))
+    self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"],
+               profile=profile, source_event=source_event)
+    self.move(self._page.js.if_("window.longTouch != null", [
+      "let swap =  (event.touches[0].clientX || event.originalEvent.touches[0].clientX) - window.longTouch",
+      "window.longTouch = null", self._page.js.if_("swap < 0", js_funcs_left).else_(js_funcs_right)], profile=profile),
+              source_event=source_event)
     return self
 
 
-class Html(object):
+class Html:
   """
   Description:
   -----------
   Parent class for all the HTML components. All the function defined here are available in the children classes.
-  Child class can from time to time re implement the logic but the function will always get the same meaning (namely the same signature and return)
+  Child class can from time to time re implement the logic but the function will always get the same meaning (namely
+  the same signature and return).
   """
-  #cssCls = None
-  # Those variables should not be used anymore and should be replaced by the __ ones
-  # This is done in order to avoid having users to change them. Thanks to the name
-  # mangling technique Python will make the change more difficult and easier to see
   requirements = None
   builder_name, _js__builder__ = None, None
+  _option_cls = Options
 
-  def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
-    self.components = collections.OrderedDict() # Child component for this component
+    # Child component for this component
+    self.components = collections.OrderedDict()
     self.require = Required(report)
     for package in self.requirements or []:
       if isinstance(package, tuple):
@@ -309,45 +313,72 @@ class Html(object):
         self.require.add(package)
 
     self.profile = profile
-    self._report = report # Should be renamed by page / and component
-    self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None # For sortable items
+    # Should be renamed by page / and component
+    self._report = report
+    self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None
     self._dom, self._sub_htmls, self._js, self.helper, self._styleObj, self.__htmlCode = None, [], None, "", None, None
 
     self._browser_data = {"mouse": collections.OrderedDict(), 'component_ready': [],
                           'page_ready': collections.OrderedDict(), 'keys': collections.OrderedDict()}
 
-    self.jsImports = report.jsImports # to be deleted - because changed should be done only on the component self.require
-    self.cssImport = report.cssImport # to be deleted - because changed should be done only on the component self.require
+    # to be deleted - because changed should be done only on the component self.require
+    self.jsImports = report.jsImports
+    self.cssImport = report.cssImport
 
     self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles should be renamed
 
-    self.innerPyHTML = None  # to be reviewed - not sure this is still usefull
+    self.innerPyHTML = None  # to be reviewed - not sure this is still useful
 
-    self.__options = Options(self, options)
+    self.__options = self._option_cls(self, options)
 
     self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
     if css_attrs is not None:
       self.css(css_attrs)
 
-    if htmlCode is not None:
-      if htmlCode[0].isdigit() or cleanData(htmlCode) != htmlCode:
-        raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
+    if html_code is not None:
+      if html_code[0].isdigit() or cleanData(html_code) != html_code:
+        raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (
+          html_code, cleanData(html_code)))
 
-      if htmlCode in self._report.components:
-        if htmlCode in ["content", "content_page", "page_nav_bar"]:
-          raise Exception("Duplicated Html code '%s', this is used internally in the framework !" % htmlCode)
+      if html_code in self._report.components:
+        if html_code in ["content", "content_page", "page_nav_bar"]:
+          raise Exception("Duplicated Html code '%s', this is used internally in the framework !" % html_code)
 
-        raise Exception("Duplicated Html code '%s' in the script !" % htmlCode)
+        raise Exception("Duplicated Html code '%s' in the script !" % html_code)
 
-      self.__htmlCode = htmlCode
-      # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
-      if htmlCode in self._report.inputs:
-        vals = self._report.inputs[htmlCode]
+      self.__htmlCode = html_code
+      if html_code in self._report.inputs:
+        vals = self._report.inputs[html_code]
 
     self._report.components[self.htmlCode] = self
     self._vals = vals
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
     self._internal_components = [self.htmlCode]
+
+  def with_profile(self, profile, event=None, element_id=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param profile:
+    :param event:
+    :param element_id:
+    """
+    if profile is None and self.profile:
+      if event is None:
+        return {"name": element_id or self.htmlCode}
+
+      return {"name": "%s[%s]" % (element_id or self.htmlCode, event)}
+
+    if profile is None and self.page.profile:
+      if event is None:
+        return {"name": element_id or self.htmlCode}
+
+      return {"name": "%s[%s]" % (element_id or self.htmlCode, event)}
+
+    return profile
 
   def add(self, component):
     """
@@ -410,13 +441,13 @@ class Html(object):
     """
     Description:
     -----------
-    Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be changed
-    in the report.
+    Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be
+    changed in the report.
 
     This reference can be used in the Python to get the html object from components in the page but it is also
     used in any web framework by the JavaScript to get the DOM object and apply the necessary transformations.
 
-    There is not setter for this property in order to ensure a consistancy in Python and JavaScript.
+    There is not setter for this property in order to ensure a consistency in Python and JavaScript.
 
     Usage:
     -----
@@ -430,11 +461,22 @@ class Html(object):
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
+  def page(self):
+    """
+    Description:
+    -----------
+    The unique page on which all the components will be attached to.
+
+    :rtype: Page
+    """
+    return self._report
+
+  @property
   def js(self):
     """
     Description:
     -----------
-    Javascript base function
+    Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
@@ -461,7 +503,7 @@ class Html(object):
     Description:
     -----------
     Return all the Javascript functions defined for an HTML Component.
-    Those functions will use plain javascript by default.
+    Those functions will use plain javascript available for a DOM element by default.
     
     Usage:
     -----
@@ -469,7 +511,7 @@ class Html(object):
       div = page.ui.div(htmlCode="testDiv")
       print(div.dom.content)
 
-    :return: A Javascript Dom object
+    :return: A Javascript Dom object.
 
     :rtype: JsHtml.JsHtml
     """
@@ -494,7 +536,7 @@ class Html(object):
     """
     return self.__options
 
-  def prepend_child(self, component):
+  def prepend_child(self, component, profile=None):
     """
     Description:
     -----------
@@ -504,7 +546,7 @@ class Html(object):
     -----
 
       for i in range(10):
-        comp = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
+        comp = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
         select.prepend_child(comp)
 
     Related Pages:
@@ -514,29 +556,30 @@ class Html(object):
     Attributes:
     ----------
     :param component: HTML. The html component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
-    :return: The htmlObj
+    :return: The HTML component.
     """
     self._sub_htmls.append(component)
     self.components[component.htmlCode] = component
-    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.insertBefore(component.dom)], toStr=True))
+    self.page.properties.js.add_builders(JsUtils.jsConvertFncs([
+      self.dom.insertBefore(component.dom)], toStr=True, profile=profile))
     return self
 
-  def append_child(self, component):
+  def append_child(self, component, profile=None):
     """
     Description:
     -----------
-    Wrapper to the Javascript method appendChild to append an HTML component
+    Wrapper to the Javascript method appendChild to append an HTML component.
 
     Usage:
     -----
 
       for i in range(10):
-        component = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
+        component = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
         select.append_child(component)
 
     Related Pages:
@@ -546,18 +589,19 @@ class Html(object):
     Attributes:
     ----------
     :param component: HTML. The html component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
-    :return: The htmlObj
+    :return: The HTML component.
     """
     self._sub_htmls.append(component)
-    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(component.dom)], toStr=True))
+    self.page.properties.js.add_builders(JsUtils.jsConvertFncs([
+      self.dom.appendChild(component.dom)], toStr=True, profile=profile))
     return self
 
-  def onReady(self, js_funcs):
+  def onReady(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -567,7 +611,7 @@ class Html(object):
     Usage:
     -----
 
-      network = rptObj.ui.charts.vis.network()
+      network = page.ui.charts.vis.network()
       network.onReady([
         network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
       ])
@@ -575,10 +619,13 @@ class Html(object):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if not profile and self.page.profile:
+      profile = {"name": "%s[onReady" % self.htmlCode}
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(js_funcs))
+    self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(js_funcs, profile=profile))
 
   def add_menu(self, context_menu):
     """
@@ -598,7 +645,7 @@ class Html(object):
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
-  def add_icon(self, text, css=None, position="before", family=None, htmlCode=None):
+  def add_icon(self, text, css=None, position="before", family=None, html_code=None):
     """
     Description:
     ------------
@@ -618,9 +665,9 @@ class Html(object):
     :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     :param family: String. Optional. The icon framework to be used (preferred one is font-awesome).
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
 
-    :return: The Html object
+    :return: The Html object.
     """
     self.icon = ""
     defined_families = ('office-ui-fabric-core', 'material-design-icons')
@@ -628,7 +675,8 @@ class Html(object):
       logging.warning("Family %s not defined in %s" % (family, defined_families))
 
     if text is not None:
-      self.icon = self._report.ui.images.icon(text, htmlCode="%s_icon" % htmlCode if htmlCode is not None else htmlCode,
+      html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
+      self.icon = self._report.ui.images.icon(text, html_code=html_code_icon,
                                               family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
       if position == "before":
         self.prepend_child(self.icon)
@@ -638,7 +686,7 @@ class Html(object):
         self.icon.css(css)
     return self
 
-  def add_label(self, text, css=None, position="before", for_=None, htmlCode=None, options=None):
+  def add_label(self, text, css=None, position="before", for_=None, html_code=None, options=None):
     """
     Description:
     -----------
@@ -656,12 +704,14 @@ class Html(object):
     :param text: String. The label content.
     :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param for_: String. Optional. Specifies which form element a label is bound to.
     """
     self.label = ""
     if text is not None:
-      self.label = self._report.ui.texts.label(text, options=options, htmlCode="%s_label" % htmlCode if htmlCode is not None else htmlCode)
+      html_code_label = "%s_label" % html_code if html_code is not None else html_code
+      self.label = self._report.ui.texts.label(text, options=options, html_code=html_code_label)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_
@@ -675,7 +725,7 @@ class Html(object):
         self.label.css(css)
     return self
 
-  def add_span(self, text, css=None, position="before", htmlCode=None, i=None):
+  def add_span(self, text, css=None, position="before", html_code=None, i=None):
     """
     Description:
     -----------
@@ -691,18 +741,16 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The Span content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param css: Dictionary. Optional. The CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param i: Integer. Optional.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param i: Integer. Optional. The index of the span element to be created.
     """
-    if i is not None:
-      key_attr = 'span_%s' % i
-    else:
-      key_attr = 'span'
+    key_attr = 'span_%s' % i if i is not None else 'span'
     setattr(self, key_attr, '')
     if text is not None:
-      setattr(self, key_attr, self._report.ui.texts.span(text, htmlCode="%s_span" % htmlCode if htmlCode is not None else htmlCode))
+      html_code_span = "%s_span" % html_code if html_code is not None else html_code
+      setattr(self, key_attr, self._report.ui.texts.span(text, html_code=html_code_span))
       span = getattr(self, key_attr)
       if position == "before":
         self.prepend_child(span)
@@ -719,12 +767,12 @@ class Html(object):
     """
     Description:
     -----------
-    Add an elementary label component
+    Add an elementary label component.
 
     Usage:
     -----
 
-      div = rptObj.ui.div()
+      div = page.ui.div()
       div.add_link("test.py", name="Click to go to the test report")
 
     Attributes:
@@ -737,16 +785,17 @@ class Html(object):
     :param icon:
     :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
+    :param options:
     """
     self.link = ""
     if url is not None or script_name is not None:
-      dflt_options = {"name": name} if name is not None else {}
+      dfl_options = {"name": name} if name is not None else {}
       if options is not None:
-        dflt_options.update(options)
+        dfl_options.update(options)
       if url is not None:
-        self.link = self._report.ui.links.external(text, url, options=dflt_options)
+        self.link = self._report.ui.links.external(text, url, options=dfl_options)
       else:
-        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=dflt_options)
+        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=dfl_options)
       if position == "before":
         self.prepend_child(self.link)
       else:
@@ -769,7 +818,7 @@ class Html(object):
     ----------
     :param text: String. The title content.
     :param level: Integer. Optional. The level of title.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param css: Dictionary. Optional. The CSS style to be added to the component.
     :param position: String. Optional. The position compared to the main component tag.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -802,9 +851,10 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The title content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param css: Dictionary. Optional. The CSS style to be added to the component.
     :param attrs: Dictionary. Optional. The HTML tag attributes.
     :param position: Dictionary. Optional. Specific Python options available for this component.
+    :param options:
     """
     self.input = ""
     if text is not None:
@@ -841,7 +891,7 @@ class Html(object):
     Attributes:
     ----------
     :param flag: Boolean. The state of the checkbox component.
-    :param css: Optional. A dictionary with the CSS style to be added to the component.
+    :param css: Dictionary. Optional. The CSS style to be added to the component.
     :param attrs: Dictionary. Optional. The HTML tag attributes.
     :param position: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -872,7 +922,7 @@ class Html(object):
     Attributes:
     ----------
     :param text: String. The helper content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
+    :param css: Dictionary. Optional. The CSS style to be added to the component.
 
     :rtype: self._report.ui.rich.info
     """
@@ -947,6 +997,8 @@ class Html(object):
   @property
   def aria(self):
     """
+    Description:
+    -----------
     Accessible Rich Internet Applications is a [HTML] specification module.
     Web developers MAY use the ARIA role and aria-* attributes on HTML elements.
 
@@ -1024,7 +1076,7 @@ class Html(object):
     :param value: String. Optional. The value corresponding to the key style.
     :param reset: Boolean. Optional. Specify if the CSS styles need to be emptied first.
 
-    :return: The python object itself
+    :return: The python object itself.
     """
     if key is None and value is None:
       return self.attr['css']
@@ -1032,8 +1084,8 @@ class Html(object):
     if reset:
       self.style.css.attrs = {}
       self.attr['css'] = self.style.css.attrs
+    # Do not add None value to the CSS otherwise it will break the page on the front end side
     if value is None and isinstance(key, dict):
-      # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
     elif value is None and not isinstance(key, dict):
       return self.attr['css'].get(key)
@@ -1081,13 +1133,14 @@ class Html(object):
     :param location: String. Optional. The position of the tooltip.
     :param options: Dictionary. Optional. Specific Python options available for this component.
 
-    :return: The Python object self
+    :return: The Python object self.
     """
     if value is not None:
       self.attr.update({'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
       if options is not None:
         self.attr.update(options)
-      self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+      self.page.properties.js.add_on_ready(
+        "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
       if hasattr(value, 'toStr'):
         self.onReady(self.dom.setattr("title", value))
       else:
@@ -1099,6 +1152,7 @@ class Html(object):
     """
     Description:
     -----------
+    Add a tooltip using Bootstrap Popover feature.
 
     Usage:
     -----
@@ -1121,10 +1175,11 @@ class Html(object):
         for k, v in options.items():
           self.attr["data-%s" % k] = title
       self.attr["data-toggle"] = 'popover'
-      self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
+      self.page.properties.js.add_on_ready(
+        "%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
-  def draggable(self, js_funcs=None, options=None, profile=False, source_event=None):
+  def draggable(self, js_funcs=None, options=None, profile=None, source_event=None):
     """
     Description:
     ------------
@@ -1143,7 +1198,34 @@ class Html(object):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.attr["draggable"] = True
-    return self.on("dragstart", js_funcs + ['event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
+    return self.on("dragstart", js_funcs + [
+      'event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
+
+  def sticky(self, anchor, css_attrs=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param anchor:
+    :param css_attrs:
+    """
+    if anchor.htmlCode == self.htmlCode:
+      raise Exception("Anchor cannot be the moving component")
+
+    css_attrs = css_attrs or {"bottom": "10px", "left": "10px", "height": "200px !IMPORTANT"}
+    css_attrs["position"] = "fixed"
+    css_vals = "{%s}" % "; ".join(["%s: %s" % (k, v) for k, v in css_attrs.items()])
+    cls_name = "sticky_component_%s" % self.page.py.hash(css_vals)
+    self.page.properties.css.add_text(".%s %s\n" % (cls_name, css_vals))
+    self.page.body.scroll([
+      self.page.js.if_(anchor.dom.isInViewPort, [
+        self.dom.classList.remove(cls_name)
+      ]).else_([
+        self.page.js.if_(self.dom.classList.is_missing(cls_name), [
+          self.dom.classList.add(cls_name)])])
+    ])
 
   def add_options(self, options=None, name=None, value=None):
     """
@@ -1158,8 +1240,8 @@ class Html(object):
     Attributes:
     ----------
     :param options: Dictionary. Optional. the extra options to be added to the component.
-    :param name: String. Optional. The key.
-    :param value: String. Optional. The value.
+    :param name: String. Optional. The key. The option name.
+    :param value: String. Optional. The value. The option value.
 
     :return: self to allow the chains
     """
@@ -1176,7 +1258,8 @@ class Html(object):
     """
     Description:
     -----------
-    Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML component will be defined.
+    Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML
+    component will be defined.
     Basically all sort of attributes can be defined here: CSS attributes, but also data, name...
     Either the attrs or the tuple (name, value) can be used to add information to the dom object.
 
@@ -1185,12 +1268,16 @@ class Html(object):
 
     Tips: It is possible to use the data- attributes to store any kind of information in the dom.
 
+    Related Pages:
+
+      https://www.w3schools.com/html/html_attributes.asp
+
     Usage:
     -----
 
     Attributes:
     ----------
-    :param attrs: Dictionary. Optional. A python dictionary with the attributes.
+    :param attrs: Dictionary. Optional. All the HTML tags attributes.
     :param name: String. Optional. A python string with the name of the attribute.
     :param value: String. Optional. A python string with the value of the attribute.
     """
@@ -1244,42 +1331,46 @@ class Html(object):
 
     :return: A string with the dom attributes
     """
-    cssStyle, cssClass, classData = '', '', ''
+    css_style, css_class, class_data = '', '', ''
     if 'css' in self.attr:
       styles = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
       if styles:
-        cssStyle = 'style="%s"' % styles
-    if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
+        css_style = 'style="%s"' % styles
+    if 'class' in self.attr and len(self.attr['class']) > 0 and class_data:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
         # and the static python classes defined on demand in the header of your report
         # self._report.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
-        cssClass = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
-        if cssClass:
-          cssClass %= classData
+        css_class = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
+        if css_class:
+          css_class %= class_data
         else:
-          cssClass = 'class="%s"' % classData
+          css_class = 'class="%s"' % class_data
       else:
-        cssClass = 'class="%s"' % classData
+        css_class = 'class="%s"' % class_data
     elif pyClassNames is not None:
-      pyClsNames = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in pyClassNames['main']]
-      cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
+      py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in pyClassNames['main']]
+      css_class = 'class="%s"' % " ".join(py_cls_names) if len(py_cls_names) > 0 else ""
 
     if withId:
       self.attr['id'] = self.htmlCode
     html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
-    for tag in [cssStyle, cssClass]:
+    for tag in [css_style, css_class]:
       if tag:
         html_tags.append(tag)
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  def on(self, event, js_funcs, profile=False, source_event=None, onReady=False):
+  def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
     Add an event to the document ready function.
     This is to mimic the Jquery on function.
+
+    Tip: use the r function to not have side effects when Python is building the JavaScript:
+      span.on("mouseover", span.dom.css("color", "red").r)
+      span.on("mouseleave", span.dom.css("color", "blue"))
 
     Usage:
     -----
@@ -1292,29 +1383,28 @@ class Html(object):
 
     Attributes:
     ----------
-    :param event: String. A string with the Javascript event type from the dom_obj_event.asp.
+    :param event: String. The Javascript event type from the dom_obj_event.asp.
     :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. A Boolean. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. A String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
 
-    :return: self to allow the chains
+    :return: self to allow the chains.
     """
+    profile = self.with_profile(profile, event=event)
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
-    # span.on("mouseover", span.dom.css("color", "red").r)
-    # span.on("mouseleave", span.dom.css("color", "blue"))
     source_event = source_event or self.dom.varId
     if event not in self._browser_data['mouse']:
       self._browser_data['mouse'][event] = {}
-    self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(js_funcs))
+    self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(
+      JsUtils.jsConvertFncs(js_funcs))
     self._browser_data['mouse'][event][source_event]['profile'] = profile
-    if onReady:
+    if on_ready:
       self._report.body.onReady([self.dom.events.trigger(event)])
     return self
 
-  def drop(self, js_funcs, prevent_default=True, profile=False):
+  def drop(self, js_funcs, prevent_default=True, profile=None):
     """
     Description:
     -----------
@@ -1323,8 +1413,8 @@ class Html(object):
     Usage:
     -----
 
-      d = rptObj.ui.div()
-      d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+      d = page.ui.div()
+      d.drop([page.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     Attributes:
     ----------
@@ -1334,19 +1424,25 @@ class Html(object):
 
     :return: Return self to allow the chaining
     """
+    if not profile and self.page.profile:
+      profile = {"name": "%s[drop]" % self.htmlCode}
     dft_fnc = ""
     if prevent_default:
       dft_fnc = self._report.js.objects.event.preventDefault()
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.text] + js_funcs, toStr=True)
+    str_funcs = JsUtils.jsConvertFncs(
+      ["var data = %s" % self._report.js.objects.event.dataTransfer.text] + js_funcs, toStr=True, profile=profile)
     # By default change the box shadow of this component
-    self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (dft_fnc, str_fncs, self.dom.css('box-shadow', 'none').r)
-    self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self._report.theme.success[1]).r)
-    self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'none').r)
+    self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (
+      dft_fnc, str_funcs, self.dom.css('box-shadow', 'none').r)
+    self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (
+      dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self._report.theme.success[1]).r)
+    self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (
+      dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
 
-  def hover(self, js_funcs, profile=False, source_event=None):
+  def hover(self, js_funcs, profile=None, source_event=None):
     """
     Description:
     -----------
@@ -1364,11 +1460,11 @@ class Html(object):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. A String. Optional. The source target for the event.
+    :param source_event: String. Optional. The source target for the event.
     """
     return self.on("mouseover", js_funcs, profile, source_event)
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -1391,13 +1487,13 @@ class Html(object):
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if onReady:
+    if on_ready:
       self._report.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, source_event)
 
-  def focusout(self, js_funcs, profile=False, source_event=None):
+  def focusout(self, js_funcs, profile=None, source_event=None):
     """
     Description:
     -----------
@@ -1423,10 +1519,10 @@ class Html(object):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    js_funcs.insert(0, '''if(%(dom)s.contains(event.relatedTarget)) {return ;}; ''' % {"dom": source_event or self.dom.varId})
+    js_funcs.insert(0, "if(%(dom)s.contains(event.relatedTarget)) {return ;}" % {"dom": source_event or self.dom.varId})
     return self.on("focusout", js_funcs, profile, source_event)
 
-  def dblclick(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def dblclick(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -1444,22 +1540,24 @@ class Html(object):
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if onReady:
+    if on_ready:
       self._report.body.onReady([self.dom.events.trigger("dblclick")])
     return self.on("dblclick", js_funcs, profile, source_event)
 
-  def scroll(self, js_funcs, profile=False, source_event=None):
+  def scroll(self, js_funcs, profile=None, source_event=None):
     """
     Description:
     -----------
+    The onscroll event occurs when an element's scrollbar is being scrolled.
 
     Usage:
     -----
 
     Related Pages:
 
+      https://www.w3schools.com/jsref/event_onscroll.asp
 
     Attributes:
     ----------
@@ -1469,7 +1567,7 @@ class Html(object):
     """
     return self.on("scroll", js_funcs, profile, source_event)
 
-  def mouse(self, on_funcs=None, out_funcs=None, profile=False, source_event=None):
+  def mouse(self, on_funcs=None, out_funcs=None, profile=None, source_event=None):
     """
     Description:
     -----------
@@ -1478,24 +1576,25 @@ class Html(object):
 
     More specific events are possible using the generic out function.
 
-    Tip: As function are defined to be chaining in most of the components use .r to get the string representation and clean the cache.
+    Tip: As function are defined to be chaining in most of the components use .r to get the string representation and
+    clean the cache.
 
     Usage:
     -----
 
       span.mouse([
-      span.dom.css("color", "red"),
-      span.dom.css("cursor", "pointer").r],
-      span.dom.css("color", "blue").r)
+          span.dom.css("color", "red"),
+          span.dom.css("cursor", "pointer").r],
+        span.dom.css("color", "blue").r)
 
     Attributes:
     ----------
-    :param on_funcs: List | String. The Javascript events.
-    :param out_funcs: List | String. The Javascript events.
+    :param on_funcs: List | String. Optional. The Javascript events.
+    :param out_funcs: List | String. Optional. The Javascript events.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
 
-    :return: self to allow the chains
+    :return: self to allow the chains.
     """
     self.style.css.cursor = 'pointer'
     if on_funcs is not None:
@@ -1504,7 +1603,7 @@ class Html(object):
       self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, js_funcs, profile=False, source_event=None):
+  def paste(self, js_funcs, profile=None, source_event=None):
     """
     Description:
     -----------
@@ -1517,14 +1616,15 @@ class Html(object):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. A String. Optional. The source target for the event.
+    :param source_event: String. Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + js_funcs, toStr=True)
+    str_fncs = JsUtils.jsConvertFncs(
+      ["var data = %s" % self._report.js.objects.event.clipboardData.text] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
-  def contextMenu(self, menu, js_funcs=None, profile=False):
+  def contextMenu(self, menu, js_funcs=None, profile=None):
     """
     Description:
     -----------
@@ -1536,17 +1636,18 @@ class Html(object):
     Attributes:
     ----------
     :param menu:
-    :param js_funcs: List | String. The Javascript functions.
+    :param js_funcs: List | String. Optional. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
     self.context_menu = menu
     menu.source = self
-    new_js_funcs = (js_funcs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
-                                    self.context_menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
-                                  'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
-                   self._report.js.objects.mouseEvent.preventDefault()]
+    new_js_funcs = (js_funcs or []) + [
+      self._report.js.objects.mouseEvent.stopPropagation(),
+      self.context_menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
+                                 'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
+      self._report.js.objects.mouseEvent.preventDefault()]
     self.on("contextmenu", new_js_funcs, profile)
     return self
 
@@ -1555,6 +1656,13 @@ class Html(object):
     """
     Description:
     -----------
+    Shortcut property to all the Touch event.
+
+    Events that occur when user touches a touch-based device, belongs to the TouchEvent Object.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_touchevent.asp
 
     Usage:
     -----
@@ -1562,50 +1670,27 @@ class Html(object):
     """
     return EventTouch(self)
 
-  def build(self, data=None, options=None, profile=False):
-    """
-    Description:
-    -----------
-    Return the JavaScript fragment to refresh the component content.
-
-    Usage:
-    -----
-
-    Attributes:
-    ----------
-    :param data: String | object. The component expected content.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
+  def build(self, data=None, options=None, profile=None, component_id=None):
     if not self.builder_name or self._js__builder__ is None:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
+    self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
+      self.builder_name, self._js__builder__))
     self.options.builder = self.builder_name
+
+    # check if there is no nested HTML components in the data
     if isinstance(data, dict):
-      # check if there is no nested HTML components in the data
       tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or self._jsStyles, []
-    for k, v in options.items():
-      if isinstance(v, dict):
-        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
-      else:
-        if self.options.isJsContent(k) or str(v).strip().startswith("function"):
-          js_options.append("%s: %s" % (k, v))
-        else:
-          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    fnc_call = "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
+    fnc_call = "%s(%s, %s, %s)" % (self.builder_name, component_id or self.dom.varId, js_data, self.options.config_js(options))
+    profile = self.with_profile(profile, event="Builder")
     if profile:
-      if isinstance(profile, dict):
-        return "(function(){var t0 = performance.now(); %s; console.log('%s: ' + (performance.now() - t0) + ' ms' )})()" % (fnc_call, profile['name'])
-
-      return "(function(){var t0 = performance.now(); %s; console.log(performance.now() - t0)})()" % fnc_call
-
+      fnc_call = JsUtils.jsConvertFncs(
+        ["var result = %s(htmlObj, data, options)" % self.builder_name], toStr=True, profile=profile)
+      fnc_call = "(function(htmlObj, data, options){%s; return result})(%s, %s, %s)" % (
+        fnc_call, self.dom.varId, js_data, self.options.config_js(options))
     return fnc_call
 
   def refresh(self):
@@ -1614,13 +1699,15 @@ class Html(object):
     -----------
     Component refresh function. Javascript function which can be called in any Javascript event.
 
+    Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
+
     Usage:
     -----
 
     """
-    return self.build(self.val, self._jsStyles)
+    return self.build(self.val, None)
 
-  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=False):
+  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -1642,7 +1729,7 @@ class Html(object):
     :param channel: String. The channel on which events will be received.
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param js_funcs: List | String. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data is None:
@@ -1678,21 +1765,14 @@ class Html(object):
     self._sort_propagate = propagate
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
-        self._on_ready_js['sortable'] = JsSortable.Sortable(self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self._report)
+        self._on_ready_js['sortable'] = JsSortable.Sortable(
+          self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self._report)
         dflt_options = {"group": self.htmlCode}
         dflt_options.update(options or {})
         self._sort_options = dflt_options
         self._on_ready_js['sortable'].create(self.dom.varId, dflt_options)
       return self._on_ready_js['sortable']
 
-  # def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
-  #   filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
-  #   self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
-  #   return self
-
-  # -------------------------------------------------------------------------------------------------------------------
-  #                    OUTPUT METHODS
-  # -------------------------------------------------------------------------------------------------------------------
   def __str__(self):
     """
     Description:
@@ -1744,14 +1824,15 @@ class Html(object):
 
   def export(self, mode):
     return {'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
-            'styleUrls': "", "externalVars": "", "componentFunctions": [], 'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
+            'styleUrls': "", "externalVars": "", "componentFunctions": [],
+            'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
 
 
 class Body(Html):
   name = "Body"
 
-  def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
-    super(Body, self).__init__(report, vals, htmlCode, options, profile, css_attrs)
+  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+    super(Body, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if Defaults_css.BODY_STYLE is not None:
       for attrs in Defaults_css.BODY_STYLE.split(";"):
         k, v = attrs.split(":")
@@ -1794,10 +1875,11 @@ class Body(Html):
       self._dom.varName = "document.body"
     return self._dom
 
-  def scroll(self, js_funcs, profile=False, source_event=None):
+  def scroll(self, js_funcs, profile=None, source_event=None):
     """
     Description:
     -----------
+    The onscroll event occurs when an element's scrollbar is being scrolled.
 
     Usage:
     -----
@@ -1810,9 +1892,10 @@ class Body(Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._report.js.onReady(self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self._report.js.onReady(
+      self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
 
-  def onReady(self, js_funcs):
+  def onReady(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -1822,7 +1905,7 @@ class Body(Html):
     Usage:
     -----
 
-      network = rptObj.ui.charts.vis.network()
+      network = page.ui.charts.vis.network()
       network.onReady([
         network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
       ])
@@ -1830,15 +1913,17 @@ class Body(Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript function to be added once the object is built.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._report.js.onReady(js_funcs)
+    self.page.js.onReady(js_funcs)
 
-  def onLoad(self, js_funcs):
+  def onLoad(self, js_funcs, profile=None):
     """
     Description:
     -----------
+    Add a JavaScript function in the builder section which correspond to the JavaScript onload.
 
     Usage:
     -----
@@ -1846,10 +1931,11 @@ class Body(Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(js_funcs, toStr=True))
+    self.page.properties.js.add_builders(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
   def fromConfig(self, js_funcs=None, components=None, lang="eng", end_point="/static/configs", sync=True):
     """
@@ -1863,10 +1949,15 @@ class Body(Html):
     Usage:
     -----
 
+      title = page.ui.title(html_code="title")
+      page.body.onReady([
+        page.body.fromConfig(components=[title], end_point="/static", lang=None)
+      ])
+
     Attributes:
     ----------
     :param js_funcs: List | String. Optional. The various transformations to be triggered from the configuration data.
-    :param components: List. Optional. The various HTML Components to be updated fro the configuration file.
+    :param components: List. Optional. The various HTML Components to be updated from the configuration file.
     :param lang: String. Optional. The default lang for the configuration.
     :param end_point: String. Optional. The url for the configuration files.
     :param sync: Boolean. Optional. Specify if the type of loading event.
@@ -1881,16 +1972,20 @@ class Body(Html):
     return '''
       if (typeof window['page_config'] === 'undefined'){
         var rawFile = new XMLHttpRequest(); const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString); var lang = urlParams.get('lang') || '%(lang)s'; 
-        rawFile.overrideMimeType("application/json"); rawFile.open("GET", "%(url)s/"+ lang +"/%(json)s.json", %(sync)s);
+        const urlParams = new URLSearchParams(queryString); var lang = urlParams.get('lang') || %(lang)s; 
+        rawFile.overrideMimeType("application/json"); 
+        if(lang != null){ rawFile.open("GET", "%(url)s/"+ lang +"/%(json)s.json", %(sync)s)}
+        else{rawFile.open("GET", "%(url)s/%(json)s.json", %(sync)s)};
         rawFile.onreadystatechange = function() {
             if (rawFile.readyState === 4 && rawFile.status == "200") {
                var data = JSON.parse(rawFile.responseText); window['page_config'] = data; %(fncs)s}}
         rawFile.send(null)} 
-      else {var data = window['page_config']; %(fncs)s}''' % {"sync": JsUtils.jsConvertData(not sync, None), "lang": lang, 'url': end_point, 'json': self._report.json_config_file,
-            'fncs': JsUtils.jsConvertFncs(js_funcs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
+      else {var data = window['page_config']; %(fncs)s}''' % {
+      "sync": JsUtils.jsConvertData(not sync, None), "lang": JsUtils.jsConvertData(lang, None), 'url': end_point,
+      'json': self._report.json_config_file,
+      'fncs': JsUtils.jsConvertFncs(js_funcs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
 
-  def set_content(self, report, page_content):
+  def set_content(self, page, page_content):
     """
     Description:
     ------------
@@ -1902,7 +1997,7 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param report: Report. The main report object.
+    :param page: Report. The main report object.
     :param page_content: String. The html content of the page.
 
     :return: The Body HTML object
@@ -1919,15 +2014,17 @@ class Body(Html):
     Usage:
     -----
 
-      rptObj.body.set_background("#101626", "#374F67")
+      page.body.set_background("#101626", "#374F67")
 
     Attributes:
     ----------
-    :param start_color: String. Optional.
-    :param end_color: String. Optional.
+    :param start_color: String. Optional. The first code color.
+    :param end_color: String. Optional. The last code color.
+    :param from_theme: Boolean. Optional. Default to the code colors defined in the theme.
     """
     if from_theme or (start_color is None and end_color is None):
-      self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (self._report.theme.colors[-1], self._report.theme.colors[2])
+      self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (
+        self._report.theme.colors[-1], self._report.theme.colors[2])
     elif end_color is not None:
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (start_color, end_color)
     else:
@@ -1944,9 +2041,9 @@ class Body(Html):
     Usage:
     -----
 
-    page.body.loading(),
-    ...
-    page.body.loading(False)
+      page.body.loading(),
+      ...
+      page.body.loading(False)
 
     Attributes:
     ----------
@@ -1977,7 +2074,7 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param css: Dictionary.
+    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component
     """
     self.header = self._report.ui.div()
     self.header.options.managed = False
@@ -1994,6 +2091,9 @@ class Body(Html):
   def __str__(self):
     if hasattr(self, 'template'):
       self.template._vals = str(self._html_content)
-      return '<body %s>%s%s%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(), self.footer.html())
+      return '<body %s>%s%s%s</body>' % (
+        self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(),
+        self.footer.html())
 
-    return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
+    return '<body %s>%s</body>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)

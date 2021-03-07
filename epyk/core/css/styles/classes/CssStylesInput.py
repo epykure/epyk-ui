@@ -13,12 +13,12 @@ class CssInput(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.attrs.css({"color": self.rptObj.theme.greys[-1],
+    self.attrs.css({"color": self.page.theme.greys[-1],
                     'font-family': Defaults_css.Font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-                    'border': '1px solid %s' % self.rptObj.theme.colors[0],
+                    'border': '1px solid %s' % self.page.theme.colors[0],
                     'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
-    self.hover.css({'color': self.rptObj.theme.colors[6]})
+    self.hover.css({'color': self.page.theme.colors[6]})
 
 
 class CssInputRange(CssStyle.Style):
@@ -31,7 +31,7 @@ class CssInputRange(CssStyle.Style):
   _selectors = {'child': 'input'}
 
   def customize(self):
-    self.attrs.css({"background": self.rptObj.theme.colors[0]})
+    self.attrs.css({"background": self.page.theme.colors[0]})
 
 
 class CssInputRangeThumb(CssStyle.Style):
@@ -43,9 +43,10 @@ class CssInputRangeThumb(CssStyle.Style):
   _selectors = {'child': 'input'}
 
   def customize(self):
-    self.webkit_slider_thumb.css({"background": self.rptObj.theme.success[1],
-                    'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
-                    'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
+    self.webkit_slider_thumb.css({
+      "background": self.page.theme.success[1],
+      'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
+      'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 
 
 class CssInputLabel(CssStyle.Style):
@@ -84,51 +85,57 @@ class CssInputTextArea(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
-              'border': '1px solid %s' % self.rptObj.theme.colors[1]})
-    self.hover.css({'color': self.rptObj.theme.greys[-1]})
+    self.css({"background-color": self.page.theme.colors[0], "color": self.page.theme.greys[-1],
+              'border': '1px solid %s' % self.page.theme.colors[1]})
+    self.hover.css({'color': self.page.theme.greys[-1]})
 
 
 class CssInputValid(CssStyle.Style):
   _valid = {'color': 'red'}
-  _invalid = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
-            "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
+  _invalid = {
+    'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
+    "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
 
 
 class CssUIActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1],
-                    'background-color': self.rptObj.theme.success[1]})
+    self.css({"border": "1px solid %s" % self.page.theme.success[1],
+              'background-color': self.page.theme.success[1]}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.page.theme.success[1],
+                    'background-color': self.page.theme.success[1]})
 
 
 class CssUIMenuActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]})
+    self.css({"border": "1px solid %s" % self.page.theme.success[1],
+              'background-color': self.page.theme.success[1]}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.page.theme.success[1],
+                    'background-color': self.page.theme.success[1]})
 
 
 class CssAutocomplete(CssStyle.Style):
   classname = "ui-autocomplete"
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.greys[5]}, important=True)
+    self.css({'background-color': self.page.theme.colors[0], 'color': self.page.theme.greys[5]}, important=True)
 
 
 class CssAutocompleteMenu(CssStyle.Style):
   classname = "ui-menu"
 
   def customize(self):
-    self.css({'border': self.rptObj.theme.greys[0]}, important=True)
+    self.css({'border': self.page.theme.greys[0]}, important=True)
 
 
 class CssAutocompleteItemActive(CssStyle.Style):
   classname = "ui-menu .ui-state-active"
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[4], 'background': self.rptObj.theme.colors[7], "color":  self.rptObj.theme.greys[0]}, important=True)
-    #self.css({'border': self.rptObj.theme.greys[0]}, important=True)
+    self.css({
+      'border': "1px solid %s" % self.page.theme.greys[4],
+      'background': self.page.theme.colors[7],
+      "color":  self.page.theme.greys[0]}, important=True)

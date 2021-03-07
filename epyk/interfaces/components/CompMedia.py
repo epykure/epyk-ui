@@ -5,11 +5,14 @@ from epyk.core import html
 from epyk.interfaces import Arguments
 
 
-class Media(object):
-  def __init__(self, context):
-    self.context = context
+class Media:
 
-  def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  def __init__(self, ui):
+    self.page = ui.page
+
+  @html.Html.css_skin()
+  def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), html_code=None,
+            profile=None, options=None):
     """
     Description:
     -----------
@@ -40,7 +43,7 @@ class Media(object):
     :param align: String. Optional. A string with the horizontal position of the component.
     :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -49,13 +52,15 @@ class Media(object):
     dft_options = {"autoplay": True}
     if options is not None:
       dft_options.update(options)
-    html_media = html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
+    html_media = html.HtmlMedia.Media(self.page, value, path, width, height, html_code, profile, dft_options)
     if align == "center":
       html_media.style.css.margin = "auto"
       html_media.style.css.display = "block"
     return html_media
 
-  def audio(self, value="", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  @html.Html.css_skin()
+  def audio(self, value="", path=None, width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
+            options=None):
     """
     Description:
     -----------
@@ -85,7 +90,7 @@ class Media(object):
     :param path: String. Optional. THe path to the audio object.
     :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -94,10 +99,12 @@ class Media(object):
     dft_options = {"autoplay": True}
     if options is not None:
       dft_options.update(options)
-    html_audio = html.HtmlMedia.Audio(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
+    html_audio = html.HtmlMedia.Audio(self.page, value, path, width, height, html_code, profile, dft_options)
     return html_audio
 
-  def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  @html.Html.css_skin()
+  def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
+              options=None):
     """
     Description:
     -----------
@@ -126,7 +133,7 @@ class Media(object):
     :param align: String. Optional. A string with the horizontal position of the component.
     :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. A dictionary with the components properties.
     """
@@ -137,11 +144,12 @@ class Media(object):
       link = html.HtmlMedia.Youtube.get_embed_link(link)
     if options is not None:
       dflt_options.update(options)
-    html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
+    html_youtube = html.HtmlMedia.Youtube(self.page, link, width, height, html_code, profile, dflt_options)
     html_youtube.style.css.text_align = align
     return html_youtube
 
-  def camera(self, align="center", width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  @html.Html.css_skin()
+  def camera(self, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None, options=None):
     """
     Description:
     -----------
@@ -171,7 +179,7 @@ class Media(object):
     :param align: String. Optional. A string with the horizontal position of the component.
     :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. The component identifier code (for both Python and Javascript).
+    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -180,7 +188,7 @@ class Media(object):
     dft_options = {"autoplay": True}
     if options is not None:
       dft_options.update(options)
-    html_media = html.HtmlMedia.Camera(self.context.rptObj, width, height, htmlCode, profile, dft_options)
+    html_media = html.HtmlMedia.Camera(self.page, width, height, html_code, profile, dft_options)
     if align == "center":
       html_media.style.css.margin = "auto"
       html_media.style.css.display = "block"

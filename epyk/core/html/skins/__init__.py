@@ -7,7 +7,7 @@ from epyk.core.html.skins import Winter
 class Skins:
 
   def __init__(self, page):
-    self.rptObj = page
+    self.page = page
 
   def winter(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
     """
@@ -24,7 +24,7 @@ class Skins:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     """
-    component = Winter.WinterSnow(self.rptObj, width, height, "snow_skin", options, profile)
+    component = Winter.WinterSnow(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "absolute"
     return component

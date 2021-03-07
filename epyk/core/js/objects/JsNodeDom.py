@@ -360,7 +360,7 @@ class JsDomEvents(object):
     self._js.append('addEventListener("mouseout", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
-  def trigger(self, event, withFocus=True, options=None):
+  def trigger(self, event, with_focus=True, options=None, event_name="clickEvent"):
     """
     Description:
     ------------
@@ -380,26 +380,38 @@ class JsDomEvents(object):
     Attributes:
     ----------
     :param event: The event name
-    :param withFocus: Optional, a boolean to define if the focus needs to be set to this component
-    :param options: Dictionary. Possibility to pass timr option in second to set an implicit interval on the event
+    :param with_focus: Boolean. Optional. a boolean to define if the focus needs to be set to this component
+    :param options: Dictionary. Optional. Possibility to pass time option in second to set an implicit interval on the event
+    :param event_name: String.  Optional.
 
     :return: The Javascript string of this function
     """
+    if event == 'enter':
+      event = "new Event('keypress'); %s.keyCode = 13" % event_name
+    else:
+      event = "new Event(%s)" % JsUtils.jsConvertData(event, None)
     item = "document.getElementById('%(htmlCode)s')" % {'htmlCode': self._src.htmlCode}
-    if withFocus:
+    if with_focus:
       if options is not None and 'timer' in options:
         return JsFncs.JsFunction(
-          "window['%(htmlCode)s_timer'] = setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {
-            "htmlCode": self._src.htmlCode, "event": event, "elem": item, 'timer': options['timer'] * 1000})
+          "window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)" % {
+            "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": item, 'timer': options['timer'] * 1000})
 
       else:
-        return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
+        return JsFncs.JsFunction(
+          "(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)})()" % {
+            "event": event, "event_name": event_name, "elem": item})
 
     if options is not None and 'timer' in options:
-      return JsFncs.JsFunction("window['%(htmlCode)s_timer'] = setInterval(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)}, %(timer)s)" % {"htmlCode": self._src.htmlCode, "event": event, "elem": item, 'timer': options['timer'] * 1000})
+      return JsFncs.JsFunction('''
+        window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; 
+          %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)''' % {
+        "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": item, 'timer': options['timer'] * 1000})
 
     else:
-      return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
+      return JsFncs.JsFunction(
+        "(function(){var %(event_name)s = %(event)s; %(elem)s.dispatchEvent(%(event_name)s)})()" % {
+          "event": event, "event_name": event_name, "elem": item})
 
   def toStr(self):
     if self._src.htmlCode is None:
@@ -763,7 +775,7 @@ class JsDomEffects(object):
     return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
 
 
-class JsClassList(object):
+class JsClassList:
 
   def __init__(self, varId, component=None):
     self.varId = varId
@@ -836,6 +848,10 @@ class JsClassList(object):
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean.get("%s.contains(%s)" % (self.varId, cls_name))
 
+  def is_missing(self, cls_name):
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    return JsBoolean.JsBoolean.get("!%s.contains(%s)" % (self.varId, cls_name))
+
   def item(self, index):
     """
     Description:
@@ -853,6 +869,14 @@ class JsClassList(object):
     :param index: Integer. The index of the class.
     """
     return JsNumber.JsNumber.get("%s.item(%s)" % (self.varId, index))
+
+  def items(self):
+    """
+    Description:
+    ------------
+    Return all the CSS classes for a given DOM object.
+    """
+    return JsNumber.JsNumber.get("%s" % self.varId)
 
   def remove(self, cls_names):
     """

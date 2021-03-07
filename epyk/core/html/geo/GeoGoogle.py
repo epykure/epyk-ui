@@ -12,18 +12,19 @@ from epyk.core.html.options import OptGoogle
 class ChartGeoGoogle(Html.Html):
   name = 'Google Chart'
   requirements = ('google-maps', )
+  _option_cls = OptGoogle.OptionMaps
 
-  def __init__(self,  report, width, height, options, htmlCode, profile):
-    super(ChartGeoGoogle, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self,  report, width, height, options, html_code, profile):
+    super(ChartGeoGoogle, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+                                         css_attrs={"width": width, "height": height})
     self.style.css.margin = "10px 0"
-    self.__options = OptGoogle.OptionMaps(self, options)
 
   @property
   def chartId(self):
     """
     Description:
     -----------
-    Return the Javascript variable of the chart
+    Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
@@ -32,12 +33,12 @@ class ChartGeoGoogle(Html.Html):
     """
     Description:
     -----------
-    Javascript base function
+    Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    :return: A Javascript object
+    :return: A Javascript object.
 
     :rtype: JsGoogleAPI.GoogleMapsAPI
     """
@@ -50,20 +51,28 @@ class ChartGeoGoogle(Html.Html):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptGoogle.OptionMaps
     """
-    return self.__options
+    return super().options
 
-  def build(self, data=None, options=None, profile=False):
-    js_options = []
-    for k, v in self._jsStyles.items():
-      if self.options.isJsContent(k) or str(v).strip().startswith("function"):
-        js_options.append("%s: %s" % (k, v))
-      else:
-        js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    return '%s = new google.maps.Map(%s, {%s})' % (self.chartId, self.dom.varId, ",".join(js_options))
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    """
+    Description:
+    -----------
+
+    :param data:
+    :param options:
+    :param profile:
+    :param component_id:
+    """
+    return '%s = new google.maps.Map(%s, {%s})' % (
+      self.chartId, component_id or self.dom.varId, self.options.config_js(options))
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())

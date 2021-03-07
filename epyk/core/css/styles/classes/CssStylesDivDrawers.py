@@ -17,11 +17,11 @@ class CssDrawerNav(CssStyle.Style):
 class CssDrawerHandle(CssStyle.Style):
   _selectors = {'child': 'div[name="drawer_handle"]'}
 
-  _attrs = {"width": "15px", 'height': '100%', 'display': 'inline-block'}
+  _attrs = {"width": "10px", 'height': '100%', 'display': 'inline-block'}
   _after = {'position': 'absolute', 'top': '50%', 'padding': '2px', 'height': '100%'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.success[1]})
+    self.css({'background-color': self.page.theme.colors[-1]})
 
 
 class CssDrawerContent(CssStyle.Style):
@@ -30,4 +30,4 @@ class CssDrawerContent(CssStyle.Style):
   _attrs = {'height': '100%', 'display': 'inline-block'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.success[0]})
+    self.css({'background-color': self.page.theme.colors[0]})

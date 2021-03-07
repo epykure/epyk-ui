@@ -9,14 +9,16 @@ class CssDataTable(CssStyle.Style):
   _attrs = {'border-collapse': 'collapse !IMPORTANT'}
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
+    self.css({'border': "1px solid %s" % self.page.theme.greys[3]}, important=True)
 
 
 class CssDataTableHeader(CssStyle.Style):
   _selectors = {'child': 'thead'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], "background": self.rptObj.theme.greys[-1], 'white-space': 'nowrap'})
+    self.css({
+      'color': self.page.theme.greys[0],
+      "background": self.page.theme.greys[-1], 'white-space': 'nowrap'})
 
 
 class CssDataTableFooter(CssStyle.Style):
@@ -24,27 +26,34 @@ class CssDataTableFooter(CssStyle.Style):
   classname = False
 
   def customize(self):
-    self.css({"color": "red", 'background-color': "%s" % self.rptObj.theme.colors[2]}, important=True)
+    self.css({
+      "color": "red",
+      'background-color': "%s" % self.page.theme.colors[2]}, important=True)
 
 
 class CssDataTableEven(CssStyle.Style):
   _selectors = {'child': 'tbody tr:nth-child(even)'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
-              'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.greys[0]})
-    self.hover.css({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
-                    'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
+              'border-top': "1px solid %s !IMPORTANT" % self.page.theme.greys[0]})
+    self.hover.css({
+      'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
+      'color': self.page.theme.greys[-1], 'background-color': self.page.theme.colors[3]})
 
 
 class CssDataTableOdd(CssStyle.Style):
   _selectors = {'child': 'tbody tr:nth-child(odd)'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
-              'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.colors[1]})
-    self.hover.css({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
-                    'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
+    self.css({
+      'color': self.page.theme.greys[-1],
+      'background-color': self.page.theme.colors[1],
+      'border-top': "1px solid %s !IMPORTANT" % self.page.theme.colors[1]})
+    self.hover.css({
+      'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
+      'color': self.page.theme.greys[-1],
+      'background-color': self.page.theme.colors[3]})
 
 
 class CssTableBasic(CssStyle.Style):
@@ -76,7 +85,9 @@ class CssTdEditor(CssStyle.Style):
             'vertical-align': 'middle'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[5], 'border-color': self.rptObj.theme.greys[5]})
+    self.css({
+      "color": self.page.theme.colors[5],
+      'border-color': self.page.theme.greys[5]})
 
 
 class CssTdDetails(CssStyle.Style):
@@ -110,12 +121,14 @@ class CssTdGridVals(CssStyle.Style):
   _focus = {"outline": "0px solid transparent"}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.colors[0],
-              "border-bottom": '1px solid %s' % self.rptObj.theme.greys[4]})
-    self.focus.css({"border-bottom": '1px solid %s' % self.rptObj.theme.success[1]})
+    self.css({
+      "background-color": self.page.theme.colors[0],
+      "border-bottom": '1px solid %s' % self.page.theme.greys[4]})
+    self.focus.css({
+      "border-bottom": '1px solid %s' % self.page.theme.success[1]})
 
 
 class CssTrHover(CssStyle.Style):
 
   def customize(self):
-    self.hover.css({"background": self.rptObj.theme.colors[2]})
+    self.hover.css({"background": self.page.theme.colors[2]})

@@ -19,8 +19,8 @@ class Msg(object):
 
     Attributes:
     ----------
-    :param timer: Number. Optional. The time the popup will be displayed
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param timer: Number. Optional. The time the popup will be displayed.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "fixed", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "10px", 'right': "10px"}
@@ -53,12 +53,13 @@ class Msg(object):
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param timer: Number. Optional. The time the popup will be displayed
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param content: String. The content of the popup.
+    :param timer: Number. Optional. The time the popup will be displayed.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
-                  "top": JsObject.JsObject.get('event.clientY + "px"'), 'left': JsObject.JsObject.get('event.clientX + "px"')}
+                  "top": JsObject.JsObject.get('event.clientY + "px"'),
+                  'left': JsObject.JsObject.get('event.clientX + "px"')}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
       if 'bottom' in cssAttrs:
@@ -86,8 +87,8 @@ class Msg(object):
     :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
-                  "bottom": "10px", 'right': "10px"}
+    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px",
+                  'border-radius': "5px", "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
       if 'top' in cssAttrs:
@@ -101,10 +102,13 @@ class Msg(object):
     return '''
       (function(event, content, options){
         var popup = document.createElement("div"); %s;
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(content)};
+        if(options.showdown){
+          var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(content)};
         popup.innerHTML = content; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
-      })(event, %s, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None),  JsUtils.jsConvertData(options, None))
+      })(event, %s, %s)''' % (
+      JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, timer, JsUtils.jsConvertData(content, None),
+      JsUtils.jsConvertData(options, None))
 
   def count(self, value, content=None, cssAttrs=None):
     """
@@ -155,7 +159,8 @@ class Msg(object):
         document.body.removeChild(window['globalPoopup']);
         window['globalPoopup'] = undefined;
       }
-      })(event, %s, %s)''' % (JsNodeDom.JsDoms.get("window['globalPoopup']").css(dflt_attrs).r, value, JsUtils.jsConvertData(content, None))
+      })(event, %s, %s)''' % (
+      JsNodeDom.JsDoms.get("window['globalPoopup']").css(dflt_attrs).r, value, JsUtils.jsConvertData(content, None))
 
   def fixed(self, content, fixed=True, cssAttrs=None):
     """
@@ -169,8 +174,8 @@ class Msg(object):
     :param fixed: Boolean. Optional.
     :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
     """
-    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
-                  "bottom": "10px", 'right': "10px"}
+    dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px",
+                  'border-radius': "5px", "bottom": "10px", 'right': "10px"}
     if cssAttrs is not None:
       dflt_attrs.update(cssAttrs)
       if 'top' in cssAttrs:

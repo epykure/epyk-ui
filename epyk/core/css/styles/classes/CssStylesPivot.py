@@ -12,23 +12,23 @@ class CssPivotHead(CssStyle.Style):
   _selectors = {'child': "tr th"}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1]}, important=True)
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.colors[1]}, important=True)
 
 
 class CssPivotCells(CssStyle.Style):
   classname = "pvtRows, .pvtCols"
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.colors[0], 'color': self.rptObj.theme.greys[-1],
-              'border': '1px solid %s' % self.rptObj.theme.colors[0]}, important=True)
+    self.css({"background-color": self.page.theme.colors[0], 'color': self.page.theme.greys[-1],
+              'border': '1px solid %s' % self.page.theme.colors[0]}, important=True)
 
 
 class CssPivotLabel(CssStyle.Style):
   classname = "pvtColLabel, .pvtAxisLabel, .pvtRowLabel, .pvtTotalLabel,  th"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
-              'border': '1px solid %s' % self.rptObj.theme.colors[1]}, important=True)
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.colors[1],
+              'border': '1px solid %s' % self.page.theme.colors[1]}, important=True)
 
 
 class CssPivotAxis(CssStyle.Style):
@@ -36,7 +36,7 @@ class CssPivotAxis(CssStyle.Style):
   classname = "pvtAxisContainer li span.pvtAttr, .c3-tooltip"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background': self.rptObj.theme.greys[0],
+    self.css({'color': self.page.theme.greys[-1], 'background': self.page.theme.greys[0],
               #'border': '1px solid %s' % self.rptObj.theme.colors[1]
               }, important=True)
 
@@ -45,8 +45,8 @@ class CssPivotFilterBox(CssStyle.Style):
   classname = "pvtAxisContainer"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], #'background': self.rptObj.theme.greys[0],
-              'border': '1px solid %s' % self.rptObj.theme.colors[1]
+    self.css({'color': self.page.theme.greys[-1], #'background': self.rptObj.theme.greys[0],
+              'border': '1px solid %s' % self.page.theme.colors[1]
               }, important=True)
 
 
@@ -54,9 +54,9 @@ class CssPivotFilterVals(CssStyle.Style):
   classname = "pvtVals, .pvtUiCell"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1],#'border': '1px solid %s' % self.rptObj.theme.colors[1]
-              'background-color': self.rptObj.theme.greys[0],
-              'border': "1px solid %s" % self.rptObj.theme.colors[1],
+    self.css({'color': self.page.theme.greys[-1],#'border': '1px solid %s' % self.rptObj.theme.colors[1]
+              'background-color': self.page.theme.greys[0],
+              'border': "1px solid %s" % self.page.theme.colors[1],
               })
 
 
@@ -64,7 +64,7 @@ class CssPivotFilterBoxPopUp(CssStyle.Style):
   classname = "pvtFilterBox"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
               }, important=True)
 
 
@@ -86,9 +86,11 @@ class CssPivotFilterBoxPopUpButton(CssStyle.Style):
   _disabled = {'cursor': 'none'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[4], 'color': 'white',
-              'background-color': self.rptObj.theme.colors[-1]})
-    self.hover.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]}, important=True)
+    self.css({'border': '1px solid %s' % self.page.theme.greys[4], 'color': 'white',
+              'background-color': self.page.theme.colors[-1]})
+    self.hover.css({
+      'background-color': self.page.theme.colors[0],
+      'color': self.page.theme.colors[-1]}, important=True)
 
 
 class CssPivotFilterBoxPopUpCheck(CssStyle.Style):

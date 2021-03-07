@@ -91,7 +91,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").isWeedend
     """
     from epyk.core.js.primitives import JsBoolean
-    return JsBoolean.JsBoolean("(%(varId)s.getDay() === 6) || (%(varId)s.getDay() === 0)" % {"varId": self.varId}, isPyData=False)
+    return JsBoolean.JsBoolean("(%(varId)s.getDay() === 6) || (%(varId)s.getDay() === 0)" % {
+      "varId": self.varId}, isPyData=False)
 
   @staticmethod
   def now():
@@ -424,7 +425,8 @@ class JsDate(JsObject.JsObject):
     Description:
     -----------
     To get the unix timestamp using JavaScript you need to use the getTime() function of the build in Date object.
-    As this returns the number of milliseconds then we must divide the number by 1000 and round it in order to get the timestamp in seconds.
+    As this returns the number of milliseconds then we must divide the number by 1000 and round it in order to get the
+    timestamp in seconds.
 
     Usage:
     -----

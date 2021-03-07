@@ -12,7 +12,7 @@ class CssCommHeader(CssStyle.Style):
   _selectors = {'child': 'span'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'font-family': Defaults_css.Font.family,
+    self.css({'color': self.page.theme.greys[-1], 'font-family': Defaults_css.Font.family,
               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
@@ -23,8 +23,8 @@ class CssCommInput(CssStyle.Style):
   _selectors = {'child': 'input'}
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
-              'border-bottom': '1px solid %s' % self.rptObj.theme.success[1], 'font-family': Defaults_css.Font.family,
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
+              'border-bottom': '1px solid %s' % self.page.theme.success[1], 'font-family': Defaults_css.Font.family,
               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
@@ -33,7 +33,7 @@ class CssContentEditable(CssStyle.Style):
   _selector = "[contenteditable]"
 
   def customize(self):
-    self.focus.css({'outline': "1px solid %s" % self.rptObj.theme.success[1]})
+    self.focus.css({'outline': "1px solid %s" % self.page.theme.success[1]})
 
 
 class CssSpeechBubble(CssStyle.Style):

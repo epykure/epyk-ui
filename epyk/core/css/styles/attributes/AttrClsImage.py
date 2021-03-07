@@ -4,8 +4,9 @@ from epyk.core.css.styles.attributes import Attrs
 
 
 class AttrIcon(Attrs):
-  def __init__(self, rptObj):
-    super(AttrIcon, self).__init__(rptObj)
+
+  def __init__(self, component):
+    super(AttrIcon, self).__init__(component)
     self.font_size = Defaults_css.font()
     self.vertical_align = "middle"
     self.display = "inline-block"

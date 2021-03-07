@@ -9,9 +9,10 @@ class Choropleth(GraphChartJs.Chart):
   name = 'ChartJs Choropleth'
   requirements = ('chartjs-chart-geo', )
   geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
+  _option_cls = OptChartJs.OptionsGeo
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
-    super(Choropleth, self).__init__(report, width, height, htmlCode, options, profile)
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(Choropleth, self).__init__(report, width, height, html_code, options, profile)
     self._attrs['type'] = 'choropleth'
 
   @property
@@ -19,14 +20,16 @@ class Choropleth(GraphChartJs.Chart):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptChartJs.OptionsGeo
     """
-    if self._options is None:
-      self._options = OptChartJs.OptionsGeo(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     # https://unpkg.com/world-atlas/countries-50m.json
     return '''
         fetch('%(map)s').then(
@@ -36,32 +39,36 @@ class Choropleth(GraphChartJs.Chart):
               const countries = ChartGeo.topojson.feature(geoData, geoData.objects.countries).features;
               countries.forEach(function(g){
                   chartContext.data.labels.push(g.properties.name);
-                  if (g.properties.name in chartData){ chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
+                  if (g.properties.name in chartData){
+                    chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
               })
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
-        )
-        ''' % {"chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
+        )''' % {
+      "chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
 
 
 class ChoroplethUs(Choropleth):
   name = 'ChartJs Choropleth US'
   geo_map = "https://unpkg.com/us-atlas/states-10m.json"
+  _option_cls = OptChartJs.OptionsGeo
 
   @property
   def options(self):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptChartJs.OptionsGeo
     """
-    if self._options is None:
-      self._options = OptChartJs.OptionsGeo(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     return '''
         fetch('%(map)s').then(
           function(r){r.json().then(function(geoData){
@@ -71,32 +78,36 @@ class ChoroplethUs(Choropleth):
               chartContext.data = {labels: [], datasets: [{label: 'Countries', outline: nation, data: []}]};
               states.forEach(function(g){
                   chartContext.data.labels.push(g.properties.name);
-                  if (g.properties.name in chartData){ chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
+                  if (g.properties.name in chartData){ 
+                    chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
               })
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
-        )
-        ''' % {"chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
+        )''' % {
+      "chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
 
 
 class ChoroplethCountry(Choropleth):
   name = 'ChartJs Choropleth Country'
   geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/fra.json"
+  _option_cls = OptChartJs.OptionsGeo
 
   @property
   def options(self):
     """
     Description:
     -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
 
     :rtype: OptChartJs.OptionsGeo
     """
-    if self._options is None:
-      self._options = OptChartJs.OptionsGeo(self._report, attrs=self._options_init)
-    return self._options
+    return super().options
 
-  def build(self, data=None, options=None, profile=False):
+  def build(self, data=None, options=None, profile=False, component_id=None):
     return '''
         fetch('%(map)s').then(
           function(r){r.json().then(function(geoData){
@@ -108,6 +119,4 @@ class ChoroplethCountry(Choropleth):
               })
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
-        )
-        ''' % {"chartId": self.chartId, "varId": self.dom.varId, "ctx": self.getCtx(), 'map': self.geo_map}
-
+        )''' % {"chartId": self.chartId, "varId": self.dom.varId, "ctx": self.getCtx(), 'map': self.geo_map}

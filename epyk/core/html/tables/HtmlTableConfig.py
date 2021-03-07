@@ -11,7 +11,7 @@ class ConfigTable(Html.Html):
   requirements = ('tabulator', )
   name = 'Config Table'
 
-  def __init__(self, report, htmlCode, visible, profile):
+  def __init__(self, report, html_code, visible, profile):
     pass
 
   def load(self):
@@ -23,6 +23,5 @@ class ConfigTable(Html.Html):
   def get(self):
     """
 
-    :param htmlCode:
     :return:
     """

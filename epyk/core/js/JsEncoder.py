@@ -15,13 +15,17 @@ import datetime
 
 class Encoder(json.JSONEncoder):
   """
-  Python to Js Encoding
+  Description:
+  ------------
+  Python to Js Encoding.
 
   Class in charge of encoding the data to be written on the Javascript side.
   In most of the function the simple json module is used but this module is there to encode more complex object
-  frequently coming from Pandas
+  frequently coming from Pandas.
 
-  Example
+  Usage:
+  -----
+
   >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
   '{"test": ""}'
 
@@ -39,13 +43,13 @@ class Encoder(json.JSONEncoder):
           return ''
 
         return obj.strftime('%Y-%m-%d')
-    except: pass
+    except ImportError: pass
 
     try:
       import numpy
 
-      if isinstance(obj, (numpy.int_, numpy.intc, numpy.intp, numpy.int8, numpy.int16, numpy.int32, numpy.int64, numpy.uint8,
-                          numpy.uint16, numpy.uint32, numpy.uint64, numpy.integer)):
+      if isinstance(obj, (numpy.int_, numpy.intc, numpy.intp, numpy.int8, numpy.int16, numpy.int32, numpy.int64,
+                          numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.integer)):
         return int(obj)
 
       elif isinstance(obj, (numpy.float_, numpy.float16, numpy.float32, numpy.float64, numpy.floating)):
@@ -54,7 +58,7 @@ class Encoder(json.JSONEncoder):
       elif isinstance(obj, numpy.ndarray):
         return obj.tolist()
 
-    except: pass
+    except ImportError: pass
 
     return super(Encoder, self).default(obj)
 

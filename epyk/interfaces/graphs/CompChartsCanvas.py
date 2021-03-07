@@ -2,12 +2,12 @@
 from epyk.core.html import graph
 
 
-class Canvas(object):
+class Canvas:
 
-  def __init__(self, context):
-    self.parent = context
+  def __init__(self, ui):
+    self.page = ui.page
 
-  def new(self, height=(400, "px"), width=(100, "%"), profile=None, options=None, htmlCode=None):
+  def new(self, height=(400, "px"), width=(100, "%"), profile=None, options=None, html_code=None):
     """
     Description:
     ------------
@@ -30,11 +30,11 @@ class Canvas(object):
     ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if not isinstance(width, tuple):
       width = (width, "px")
-    html_svg = graph.GraphCanvas.Canvas(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    html_svg = graph.GraphCanvas.Canvas(self.page, width, height, html_code, options, profile)
     return html_svg

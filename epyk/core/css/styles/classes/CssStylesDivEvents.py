@@ -12,7 +12,7 @@ class CssDivOnHover(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.colors[-1]}, important=True)
+    self.hover.css({"color": self.page.theme.colors[-1]}, important=True)
 
 
 class CssDivOnDangerHover(CssStyle.Style):
@@ -22,7 +22,7 @@ class CssDivOnDangerHover(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.danger[1]}, important=True)
+    self.hover.css({"color": self.page.theme.danger[1]}, important=True)
 
 
 class CssDivOnHoverBackgroundLight(CssStyle.Style):
@@ -33,9 +33,11 @@ class CssDivOnHoverBackgroundLight(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[0]})
-    self.hover.css({'border': "1px solid %s" % self.rptObj.theme.colors[1], "background-color": self.rptObj.theme.colors[0], "text-decoration": 'underline'})
-    self.hover.css('color', self.rptObj.theme.greys[-1], important=True)
+    self.css({'border': "1px solid %s" % self.page.theme.greys[0]})
+    self.hover.css({
+      'border': "1px solid %s" % self.page.theme.colors[1],
+      "background-color": self.page.theme.colors[0], "text-decoration": 'underline'})
+    self.hover.css('color', self.page.theme.greys[-1], important=True)
 
 
 class CssDivOnHoverColor(CssStyle.Style):
@@ -46,8 +48,8 @@ class CssDivOnHoverColor(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"background-color": self.rptObj.theme.colors[-3]}, important=True)
-    self.hover.css('color', self.rptObj.theme.colors[0], important=True)
+    self.hover.css({"background-color": self.page.theme.colors[-3]}, important=True)
+    self.hover.css('color', self.page.theme.colors[0], important=True)
 
 
 class CssDivOnHoverLightColor(CssStyle.Style):
@@ -58,7 +60,7 @@ class CssDivOnHoverLightColor(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"background-color": self.rptObj.theme.colors[1]}, important=True)
+    self.hover.css({"background-color": self.page.theme.colors[1]}, important=True)
 
 
 class CssDivOnHoverWidth(CssStyle.Style):
@@ -69,11 +71,11 @@ class CssDivOnHoverWidth(CssStyle.Style):
   _hover = {"cursor": 'pointer', 'width': '150px'}
 
   def customize(self):
-    self.hover.css({"background-color": self.rptObj.theme.greys[2], "font-weight": 'bold'})
-    self.hover.css('color', self.rptObj.theme.greys[-1], important=True)
+    self.hover.css({"background-color": self.page.theme.greys[2], "font-weight": 'bold'})
+    self.hover.css('color', self.page.theme.greys[-1], important=True)
 
 
 class CssDivOnHoverBorder(CssStyle.Style):
   def customize(self):
-    self.css({"border": "2px solid %s" % self.rptObj.theme.colors[0]})
-    self.hover.css({'border': "2px solid %s" % self.rptObj.theme.colors[-1]})
+    self.css({"border": "2px solid %s" % self.page.theme.colors[0]})
+    self.hover.css({'border': "2px solid %s" % self.page.theme.colors[-1]})

@@ -17,8 +17,9 @@ from epyk.core.html.options import OptList
 class HtmlNavBar(Html.Html):
   name = 'Nav Bar'
 
-  def __init__(self, report, components, width, height, options, htmlCode, profile):
-    super(HtmlNavBar, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, components, width, height, options, html_code, profile):
+    super(HtmlNavBar, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+                                     profile=profile, options=options)
     self.scroll, self.background = None, True
     if components is not None:
       if not isinstance(components, list):
@@ -66,7 +67,8 @@ class HtmlNavBar(Html.Html):
       component.style.css.margin_left = 5
       component.style.css.margin_right = 5
       component.style.css.cursor = "pointer"
-    component.options.managed = False # Has to be defined here otherwise it is set to late
+    # Has to be defined here otherwise it is set to late
+    component.options.managed = False
     component.style.css.display = 'inline'
     if component.css('height') is None:
       component.style.css.vertical_align = 'middle'
@@ -98,6 +100,11 @@ class HtmlNavBar(Html.Html):
     return self
 
   def set_theme(self):
+    """
+    Description:
+    -----------
+
+    """
     self.style.css.background_color = self._report.theme.colors[0]
     self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
 
@@ -122,18 +129,9 @@ class HtmlNavBar(Html.Html):
       component.style.css.user_select = "none"
       component.style.css.margin_right = 5
       component.style.css.cursor = "pointer"
-      component.options.managed = False # Has to be defined here otherwise it is set to late
+      component.options.managed = False
       if css is not None:
         component.css(css)
-
-    # if self.background and component.htmlCode == 'theme':
-    #   # hack for the theme compoent
-    #   # TODO move this component to the core
-    #   self.style.css.background_color = self._report.theme.colors[0]
-    #   self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
-    #   for c in self.buttons:
-    #     c.style.css.background_color = self._report.theme.colors[0]
-
     if not hasattr(self, '_right'):
       self._right = self._report.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
@@ -155,7 +153,7 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param text: String | HTML. The link to be added to the navbar
+    :param text: String | HTML. The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
       text = self._report.ui.text(text)
@@ -179,7 +177,8 @@ class HtmlFooter(Html.Html):
   name = 'footer'
 
   def __init__(self, report, components, width, height, options, profile):
-    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, options=options, profile=profile)
+    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height},
+                                     options=options, profile=profile)
     self.__col_lst = None
     if components is not None:
       if not isinstance(components, list):
@@ -235,12 +234,13 @@ class HtmlFooter(Html.Html):
       self._styleObj = GrpClsMenu.ClassFooter(self)
     return self._styleObj
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to the footer """
-    if not hasattr(htmlObj, 'options'):
-      htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
+    if not hasattr(component, 'options'):
+      component = self._report.ui.div(component)
+    # Has to be defined here otherwise it is set to late
+    component.options.managed = False
+    self.val.append(component)
     return self
 
   def __getitem__(self, i):
@@ -254,7 +254,7 @@ class HtmlFooter(Html.Html):
 
     Attributes:
     ----------
-    :param i: the column index
+    :param i: Integer. the column index
     """
     return self.val[i]
 
@@ -269,17 +269,18 @@ class HtmlFooter(Html.Html):
 class ContextMenu(Html.Html):
 
   name = 'Context Menu'
-  source = None # The container
+  source = None
+  _option_cls = OptList.OptionsLi
 
-  def __init__(self, report, recordSet, width, height, visible, options, profile):
-    super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptList.OptionsLi(self, options)
+  def __init__(self, report, components, width, height, visible, options, profile):
+    super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height},
+                                      profile=profile, options=options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
               'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'})
     self.style.css.shadow_box()
-    for rec in recordSet:
-      self.__add__(rec)
+    for component in components:
+      self.__add__(component)
 
   @property
   def options(self):
@@ -294,7 +295,7 @@ class ContextMenu(Html.Html):
 
     :rtype: OptList.OptionsLi
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
       var contextMenu = htmlObj.querySelector('ul'); contextMenu.innerHTML = '';
@@ -308,7 +309,7 @@ class ContextMenu(Html.Html):
     """
     Description:
     ------------
-    Add Item to the context menu
+    Add Item to the context menu.
 
     Usage:
     -----
@@ -317,7 +318,7 @@ class ContextMenu(Html.Html):
     Attributes:
     ----------
     :param value: String.
-    :param icon: String. Optional. The Font awesome icon
+    :param icon: String. Optional. The Font awesome icon.
     """
     self += {"value": value, 'icon': icon}
     return self
@@ -374,13 +375,13 @@ class ContextMenu(Html.Html):
     return self.val[i].val
 
   def __str__(self):
-    #self._report._scroll.add("$('nav[name=context_menus]').hide()")
     # TODO: Add a condition in the init to display the context menu only for some columns or rows when table for example
     if getattr(self, 'source') is None:
       raise Exception("Context Menu should be added to a component with the function contextMenu")
 
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    self.mouse(out_funcs=[self.dom.hide()]) # hide when mouse leave the component
+    # hide when mouse leave the component
+    self.mouse(out_funcs=[self.dom.hide()])
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>
@@ -392,6 +393,7 @@ class PanelsBar(Html.Html):
 
   def __init__(self, report, width, height, options, helper, profile):
     super(PanelsBar, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
+    self.add_helper(helper)
     self.menus = report.ui.div(options={'inline': True})
     self.menus.options.managed = False
     self.panels = report.ui.div()
@@ -430,8 +432,8 @@ class PanelsBar(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. Required. The anchor visible linked to a panel
-    :param content: HTML. Required. The panel
+    :param text: String. Required. The anchor visible linked to a panel.
+    :param content: HTML. Required. The panel.
     """
     content.style.css.padding = "0 5px"
     if not hasattr(text, 'options'):
@@ -449,9 +451,11 @@ class PanelsBar(Html.Html):
     css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options['position'] == 'top' else {"height": "auto", 'display': 'block', 'margin-bottom': '30px'}
     for menu_item, panel in self.menu_mapping.items():
       menu_item.click([
-        self._report.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css({"display": 'none'}),
+        self._report.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css(
+          {"display": 'none'}),
         #
-        expr.if_(self._report.js.querySelector(Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
+        expr.if_(self._report.js.querySelector(
+          Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
           self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
           self._report.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
         ]).else_([
@@ -461,14 +465,16 @@ class PanelsBar(Html.Html):
         ])
       ])
 
-    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html())
+    return "<div %s>%s%s</div>%s" % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html(), self.helper)
 
 
 class Shortcut(Html.Html):
   name = 'shortcut'
 
-  def __init__(self, report, components, logo, width, height, htmlCode, options, profile):
-    super(Shortcut, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, components, logo, width, height, html_code, options, profile):
+    super(Shortcut, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+                                   profile=profile)
     self.logo = logo
     if hasattr(self.logo, 'options'):
       self.logo.options.managed = False
@@ -489,6 +495,7 @@ class Shortcut(Html.Html):
     """
     Description:
     -----------
+    Property to the CSS Style of the component.
 
     Usage:
     -----

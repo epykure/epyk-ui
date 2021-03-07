@@ -5,21 +5,24 @@ from epyk.core.css import Properties
 
 
 class Data(Properties.CssMixin):
+
   def __init__(self, css_ovrs, selector):
-    self.htmlObj = self
     self._content = css_ovrs or {}
     self.__selector = selector
     self.has_changed = False
 
   def css(self, k, v=None, important=False, change=True):
     """
+    Description:
+    ------------
+    Set multiple CSS attributes to the HTML component.
 
-    :param k:
-    :param v:
-    :param important:
-    :param change:
-
-    :return:
+    Attributes:
+    ----------
+    :param k: Dictionary | String. optional. The attributes to be added.
+    :param v: String. Optional. The value for a given item.
+    :param important: Boolean. Optional. Specify if the style is important.
+    :param change: Boolean. Optional. State of the CSS group from the creation.
     """
     if change:
       self.has_changed = True
@@ -33,9 +36,11 @@ class Data(Properties.CssMixin):
 
   def clear(self):
     """
-    Clear all the CSS attributes defined for this class
+    Description:
+    ------------
+    Clear all the CSS attributes defined for this class.
 
-    :return: Self to allow the chaining
+    :return: Self to allow the chaining.
     """
     self.has_changed = True
     self._content = {}
@@ -52,7 +57,8 @@ class Data(Properties.CssMixin):
     return ""
 
 
-class Selector(object):
+class Selector:
+
   def __init__(self, selector_ovrs):
     map_fncs = {"parent": "parent_element", "child": "sub_element"}
     self.__this, self._suffix = selector_ovrs["classname"], ''
@@ -63,14 +69,17 @@ class Selector(object):
 
   def elements(self, element_types):
     """
-    Selects all <div> elements and all <p> elements
+    Description:
+    ------------
+    Selects all <div> elements and all <p> elements.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_element_comma.asp
+      https://www.w3schools.com/cssref/sel_element_comma.asp
 
-    :param element_types:
-    :return:
+    Attributes:
+    ----------
+    :param element_types: List. All the element tags.
     """
     if not isinstance(element_types, list):
       element_types = [element_types]
@@ -83,12 +92,19 @@ class Selector(object):
 
   def sub_element(self, element, direct_parent=False, class_name=None):
     """
-    Selects all <p> elements inside <div> elements
+    Description:
+    ------------
+    Selects all <p> elements inside <div> elements.
 
     Related Pages:
-	    https://www.w3schools.com/cssref/sel_element_element.asp
 
-    :param element:
+      https://www.w3schools.com/cssref/sel_element_element.asp
+
+    Attributes:
+    ----------
+    :param element: String. The element tag.
+    :param direct_parent: Boolean. Optional. the link with the main component.
+    :param class_name: String. Optional. The CSS class name.
     """
     if direct_parent:
       self.__this = "%s > %s" % (self.__this, element)
@@ -98,14 +114,19 @@ class Selector(object):
 
   def parent_element(self, element, direct_parent=False, class_name=None):
     """
-    Selects all <p> elements inside <div> elements
+    Description:
+    ------------
+    Selects all <p> elements inside <div> elements.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_element_element.asp
+      https://www.w3schools.com/cssref/sel_element_element.asp
 
-    :param element:
-    :return:
+    Attributes:
+    ----------
+    :param element: String. The element tag.
+    :param direct_parent: Boolean. Optional. the link with the main component.
+    :param class_name: String. Optional. The CSS class name.
     """
     if direct_parent:
       self.__this = "%s > %s" % (element, self.__this)
@@ -115,64 +136,80 @@ class Selector(object):
 
   def with_next_element(self, element, class_name=None):
     """
+    Description:
+    ------------
     Selects all <p> elements that are placed immediately after <div> elements
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_element_pluss.asp
+      https://www.w3schools.com/cssref/sel_element_pluss.asp
 
-    :param element:
-    :return:
+    Attributes:
+    ----------
+    :param element: The element tag.
+    :param class_name: String. Optional. The CSS class name.
     """
     self.__this = "%s + %s" % (self.__this, element)
     return self
 
   def with_prev_element(self, element, class_name=None):
     """
-    Selects every <ul> element that are preceded by a <p> element
+    Description:
+    ------------
+    Selects every <ul> element that are preceded by a <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_gen_sibling.asp
+      https://www.w3schools.com/cssref/sel_gen_sibling.asp
 
-    :param element:
-    :return:
+    Attributes:
+    ----------
+    :param element: String. The element tag.
+    :param class_name: String. Optional. The CSS class name.
     """
     self.__this = "%s ~ %s" % (self.__this, element)
     return self
 
   def join_class(self, class_name):
     """
-    Selects all elements with both name1 and name2 set within its class attribute
+    Description:
+    ------------
+    Selects all elements with both name1 and name2 set within its class attribute.
 
-    Documentation
-
-    :param class_name:
-    :return:
+    Attributes:
+    ----------
+    :param class_name: String. Optional. The CSS class name.
     """
     self.__this = "%s.%s" % (self.__this, class_name)
     return self
 
   def add_class(self, class_name):
     """
-    Selects all elements with name2 that is a descendant of an element with name1
+    Description:
+    ------------
+    Selects all elements with name2 that is a descendant of an element with name.
 
-    :param class_name:
-    :return:
+    Attributes:
+    ----------
+    :param class_name: String. Optional. The CSS class name.
     """
     self.__this = "%s .%s" % (self.__this, class_name)
     return self
 
   def sub_class(self, class_name, direct_parent=False):
     """
-    Selects all <p> elements inside <div> elements
+    Description:
+    ------------
+    Selects all <p> elements inside <div> elements.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_element_element.asp
+      https://www.w3schools.com/cssref/sel_element_element.asp
 
-    :param class_name:
-    :return:
+    Attributes:
+    ----------
+    :param class_name: String. Optional. The CSS class name.
+    :param direct_parent: Boolean. Optional. the link with the main component.
     """
     if direct_parent:
       self.__this = "%s > .%s" % (self.__this, class_name)
@@ -180,283 +217,315 @@ class Selector(object):
       self.__this = "%s .%s" % (self.__this, class_name)
     return self
 
-  def element(self, bool=None):
+  def element(self, flag=None):
     """
+    Description:
+    ------------
+    Add a flag to put the element tag when the CSS class will be built.
 
-    :param element:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional. Define if the element tag needs to be added.
     """
-    if bool is None:
+    if flag is None:
       return self.__element
 
-    self.__element = bool
+    self.__element = flag
     return self
 
-  def add_element_id(self, htmlObj):
+  def add_element_id(self, component):
     """
-    Selects the element with id="firstname"
+    Description:
+    ------------
+    Selects the element with id="firstname".
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_id.asp
+      https://www.w3schools.com/cssref/sel_id.asp
 
-    :param htmlObj:
-    :return:
+    Attributes:
+    ----------
+    :param component: HTML. The component.
     """
-    self.__this = "%s%s" % (htmlObj.htmlCode, self.__this)
+    self.__this = "%s%s" % (component.htmlCode, self.__this)
     return self
 
   def not_element(self, element):
     """
-    Selects every element that is not a <p> element
+    Description:
+    ------------
+    Selects every element that is not a <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_not.asp
+       https://www.w3schools.com/cssref/sel_not.asp
 
-    :param element:
-    :return:
+    Attributes:
+    ----------
+    :param element: String. The element reference (tag).
     """
     self.__this = "%s:not(%s)" % (self.__this, element)
     return self
 
   def first_child(self):
     """
-    Selects every <p> element that is the first child of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the first child of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_firstchild.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_firstchild.asp
     """
     self.__this = "%s:first-child" % self.__this
     return self
 
   def first_letter(self):
     """
-    Selects the first letter of every <p> element
+    Description:
+    ------------
+    Selects the first letter of every <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_firstletter.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_firstletter.asp
     """
     self.__this = "%s::first-letter" % self.__this
     return self
 
   def first_line(self):
     """
-    Selects the first line of every <p> element
+    Description:
+    ------------
+    Selects the first line of every <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_firstline.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_firstline.asp
     """
     self.__this = "%s::first-line" % self.__this
     return self
 
   def first_of_type(self):
     """
-    Selects every <p> element that is the first <p> element of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the first <p> element of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_first-of-type.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_first-of-type.asp
     """
     self.__this = "%s:first-of-type" % self.__this
     return self
 
   def in_range(self):
     """
-    Selects input elements with a value within a specified range
+    Description:
+    ------------
+    Selects input elements with a value within a specified range.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_in-range.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_in-range.asp
     """
     self.__this = "%s:in-range" % self.__this
     return self
 
   def last_child(self):
     """
-    Selects every <p> element that is the last child of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the last child of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_last-child.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_last-child.asp
     """
     self.__this = "%s:last-child" % self.__this
     return self
 
   def last_of_type(self):
     """
-    Selects every <p> element that is the last <p> element of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the last <p> element of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_last-of-type.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_last-of-type.asp
     """
     self.__this = "%s:last-of-type" % self.__this
     return self
 
   def link(self):
     """
-    Selects all unvisited links
+    Description:
+    ------------
+    Selects all unvisited links.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_link.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_link.asp
     """
     self.__this = "%s:link" % self.__this
     return self
 
   def nth_child(self, n):
     """
-    Selects every <p> element that is the second child of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the second child of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_nth-child.asp
+      https://www.w3schools.com/cssref/sel_nth-child.asp
 
+    Attributes:
+    ----------
     :param n:
-    :return:
     """
     self.__this = "%s:nth-child(%s)" % (self.__this, n)
     return self
 
   def nth_last_child(self, n):
     """
-    Selects every <p> element that is the second child of its parent, counting from the last child
+    Description:
+    ------------
+    Selects every <p> element that is the second child of its parent, counting from the last child.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_nth-last-child.asp
+      https://www.w3schools.com/cssref/sel_nth-last-child.asp
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Integer. The index from the end for a list of elements.
     """
     self.__this = "%s:nth-last-child(%s)" % (self.__this, n)
     return self
 
   def nth_last_of_type(self, n):
     """
-    Selects every <p> element that is the second <p> element of its parent, counting from the last child
+    Description:
+    ------------
+    Selects every <p> element that is the second <p> element of its parent, counting from the last child.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
+      https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Integer. The index from the end for a list of element types.
     """
     self.__this = "%s:nth-last-of-type(%s)" % (self.__this, n)
     return self
 
   def nth_of_type(self, n):
     """
-    Selects every <p> element that is the second <p> element of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the second <p> element of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_nth-of-type.asp
+      https://www.w3schools.com/cssref/sel_nth-of-type.asp
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Integer. The index from the start for a list of element types.
     """
     self.__this = "%s:nth-of-type(%s)" % (self.__this, n)
     return self
 
   def only_of_type(self):
     """
-    Selects every <p> element that is the only <p> element of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the only <p> element of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_only-of-type.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_only-of-type.asp
     """
     self.__this = "%s:only-of-type" % self.__this
     return self
 
   def only_child(self):
     """
-    Selects every <p> element that is the only child of its parent
+    Description:
+    ------------
+    Selects every <p> element that is the only child of its parent.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_only-child.asp
-
-    :return:
+      ttps://www.w3schools.com/cssref/sel_only-child.asp
     """
     self.__this = "%s:only-child" % self.__this
     return self
 
   def placeholder(self):
     """
-    Selects input elements with placeholder text
+    Description:
+    ------------
+    Selects input elements with placeholder text.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_placeholder.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_placeholder.asp
     """
     self.__this = "%s::placeholder" % self.__this
     return self
 
   def read_only(self):
     """
-    Selects input elements with the "readonly" attribute specified
+    Description:
+    ------------
+    Selects input elements with the "readonly" attribute specified.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_read-only.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_read-only.asp
     """
     self.__this = "%s:read-only" % self.__this
     return self
 
   def read_write(self):
     """
-    Selects input elements with the "readonly" attribute NOT specified
+    Description:
+    ------------
+    Selects input elements with the "readonly" attribute NOT specified.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_read-write.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_read-write.asp
     """
     self.__this = "%s:read-write" % self.__this
     return self
 
   def suffix(self, data):
+    """
+    Description:
+    ------------
+    Add a bespoke prefix to a class name.
+
+    Attributes:
+    ----------
+    :param data: String. The class name reference.
+    """
     self._suffix = "%s " % data.strip()
 
   def __str__(self):
     return self.__this
 
 
-class Style(object):
+class Style:
   classname, classnames, is_class = None, None, True
 
-  def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
-    self.rptObj, self.html_id, self.cls_ref, self.__has_changed = rptObj, html_id, None, False
+  def __init__(self, page, css_ovrs=None, selector_ovrs=None, html_id=None):
+    self.html_id, self.cls_ref, self.__has_changed = html_id, None, False
+    self.page = page
     css_ovrs = css_ovrs or {}
     self.__keyframes, self.__media = {}, {}
     selector_ids = dict(getattr(self, '_selectors', {}))
@@ -490,7 +559,8 @@ class Style(object):
 
     # More bespoke items
     self.__webkit_slider_thumb = dict(getattr(self, '_webkit_slider_thumb', {}))
-    self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled", "invalid", "active"]
+    self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled",
+                             "invalid", "active"]
     self.customize()
     for k in self.__internal_props:
       s = getattr(self, k)
@@ -504,24 +574,34 @@ class Style(object):
           self.attrs.css(k, v)
 
   def customize(self):
+    """
+    Description:
+    ------------
+
+    """
     pass
 
   def transition(self, attribute, duration=2, delay=None, iteration=None, timing_fnc=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param attribute:
     :param duration:
     :param delay:
     :param iteration:
     :param timing_fnc:
     """
+    timing_fncs = ("ease", "linear", "ease-in", "ease-out", "ease-in-out")
     css_transition = {"transition-property": attribute, "transition-duration": "%ss" % duration}
     if delay:
       css_transition["transition-delay"] = "%ss" % delay
     if iteration:
       css_transition["transition-iteration-count"] = iteration
     if timing_fnc is not None:
-      if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
+      if timing_fnc not in timing_fncs and not timing_fnc.startswith("cubic-bezier"):
         raise Exception("%s missing from the list" % timing_fnc)
 
       css_transition["transition-timing-function"] = timing_fnc
@@ -531,23 +611,30 @@ class Style(object):
     self.css(css_transition, change=False)
     return self
 
-  def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None, effect=None, fill_mode=None):
+  def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None,
+                effect=None, fill_mode=None):
     """
+    Description:
+    ------------
     The @keyframes rule specifies the animation code.
 
     The animation is created by gradually changing from one set of CSS classes to another.
 
-    Example
-    rptObj.ui.button("Ok").style.css_class.animation('test', {
-      "from": {"border-color": "white"},
-      "to": {"border-color": "red"},
-    })
+    Usage:
+    -----
+
+      page.ui.button("Ok").style.css_class.animation('test', {
+        "from": {"border-color": "white"},
+        "to": {"border-color": "red"},
+      })
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
-    https://www.w3schools.com/css/css3_animations.asp
+      https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+      https://www.w3schools.com/css/css3_animations.asp
 
+    Attributes:
+    ----------
     :param effect: Effect Class.
     :param name: String. Required. Defines the name of the animation.
     :param attrs: String. Required. Percentage of the animation duration.
@@ -590,13 +677,13 @@ class Style(object):
   @property
   def hover(self):
     """
-    Selects links on mouse over
+    Description:
+    ------------
+    Selects links on mouse over.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_hover.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_hover.asp
     """
     if self.__hover is None or isinstance(self.__hover, dict):
       self.__hover = Data(self.__hover or {}, self.selector)
@@ -605,13 +692,13 @@ class Style(object):
   @property
   def checked(self):
     """
-    Selects every checked <input> element
+    Description:
+    ------------
+    Selects every checked <input> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_checked.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_checked.asp
     """
     if self.__checked is None or isinstance(self.__checked, dict):
       self.__checked = Data(self.__checked or {}, self.selector)
@@ -620,13 +707,13 @@ class Style(object):
   @property
   def disabled(self):
     """
-    Selects every disabled <input> element
+    Description:
+    ------------
+    Selects every disabled <input> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_disabled.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_disabled.asp
     """
     if self.__disabled is None or isinstance(self.__disabled, dict):
       self.__disabled = Data(self.__disabled or {}, self.selector)
@@ -635,13 +722,13 @@ class Style(object):
   @property
   def focus(self):
     """
-    Selects the input element which has focus
+    Description:
+    ------------
+    Selects the input element which has focus.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_focus.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_focus.asp
     """
     if self.__focus is None or isinstance(self.__focus, dict):
       self.__focus = Data(self.__focus or {}, self.selector)
@@ -650,13 +737,13 @@ class Style(object):
   @property
   def empty(self):
     """
-    Selects every <p> element that has no children (including text nodes)
+    Description:
+    ------------
+    Selects every <p> element that has no children (including text nodes).
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_empty.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_empty.asp
     """
     if self.__empty is None or isinstance(self.__empty, dict):
       self.__empty = Data(self.__empty or {}, self.selector)
@@ -665,13 +752,13 @@ class Style(object):
   @property
   def enabled(self):
     """
-    Selects every enabled <input> element
+    Description:
+    ------------
+    Selects every enabled <input> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_enabled.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_enabled.asp
     """
     if self.__enabled is None or isinstance(self.__enabled, dict):
       self.__enabled = Data(self.__enabled or {}, self.selector)
@@ -680,13 +767,13 @@ class Style(object):
   @property
   def invalid(self):
     """
-    Selects all input elements with an invalid value
+    Description:
+    ------------
+    Selects all input elements with an invalid value.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_invalid.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_invalid.asp
     """
     if self.__invalid is None or isinstance(self.__invalid, dict):
       self.__invalid = Data(self.__invalid or {}, self.selector)
@@ -695,13 +782,13 @@ class Style(object):
   @property
   def valid(self):
     """
-    Selects all input elements with a valid value
+    Description:
+    ------------
+    Selects all input elements with a valid value.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_valid.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_valid.asp
     """
     if self.__valid is None or isinstance(self.__valid, dict):
       self.__valid = Data(self.__valid or {}, self.selector)
@@ -710,13 +797,13 @@ class Style(object):
   @property
   def visited(self):
     """
-    Selects all visited links
+    Description:
+    ------------
+    Selects all visited links.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_visited.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_visited.asp
     """
     if self.__visited is None or isinstance(self.__visited, dict):
       self.__visited = Data(self.__visited or {}, self.selector)
@@ -725,13 +812,13 @@ class Style(object):
   @property
   def before(self):
     """
-    Insert something before the content of each <p> element
+    Description:
+    ------------
+    Insert something before the content of each <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_before.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_before.asp
     """
     if self.__before is None or isinstance(self.__before, dict):
       self.__before = Data(self.__before or {}, self.selector)
@@ -740,13 +827,13 @@ class Style(object):
   @property
   def after(self):
     """
-    Insert something after the content of each <p> element
+    Description:
+    ------------
+    Insert something after the content of each <p> element.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_after.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_after.asp
     """
     if self.__after is None or isinstance(self.__after, dict):
       self.__after = Data(self.__after or {}, self.selector)
@@ -755,7 +842,8 @@ class Style(object):
   @property
   def webkit_slider_thumb(self):
     """
-    :return:
+    Description:
+    ------------
     """
     if self.__webkit_slider_thumb is None or isinstance(self.__webkit_slider_thumb, dict):
       self.__webkit_slider_thumb = Data(self.__webkit_slider_thumb or {}, self.selector)
@@ -764,13 +852,13 @@ class Style(object):
   @property
   def active(self):
     """
-    Selects the active link
+    Description:
+    ------------
+    Selects the active link.
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/sel_active.asp
-
-    :return:
+      https://www.w3schools.com/cssref/sel_active.asp
     """
     if self.__active is None or isinstance(self.__active, dict):
       self.__active = Data(self.__active or {}, self.selector)
@@ -779,8 +867,15 @@ class Style(object):
   @property
   def has_changed(self):
     """
+    Description:
+    ------------
+    Set an internal flag to specify if the class has changed from the creation in the framework.
 
-    :return:
+    If the state of the class has changed, the class will not be generic anymore so it will change the CSS class
+    reference by adding the Component id in order to make it specific.
+
+    This is a trick in order to be able to change common CSS classes for a specific component without impacting
+    the other ones in the page.
     """
     for e in self.__internal_props:
       s = getattr(self, e)
@@ -789,49 +884,59 @@ class Style(object):
 
   def css(self, key, value=None, important=False, change=True):
     """
+    Description:
+    ------------
+    Add a CSS attribute to a class.
 
-    :param key:
-    :param value:
-    :param important:
-    :param change:
+    Attributes:
+    ----------
+    :param key: String. The CSS attribute.
+    :param value: String. Optional. The CSS value.
+    :param important: Boolean. Optional. The level of priority for this attribute.
+    :param change: Boolean. Optional. A flag to specify the state of the CSS class.
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, attrs, rule=None, mediatype=None, mediafeature=None, change=True, thisClass=False):
+  def media(self, attrs, rule=None, media_type=None, media_feature=None, change=True, this_class=False):
     """
     Description:
+    ------------
     The @media is used in media queries to apply different styles for different media types/devices.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.style.media({"body": {"background-color": "lightblue"}}, "only", "screen",
+      page.style.media({"body": {"background-color": "lightblue"}}, "only", "screen",
     {'and': [{'height': '100px'}, {'min-width': '600px'}]})
 
-    The first key of the attributes can be an Epyk html object
+    The first key of the attributes can be an Epyk html object.
 
     Related Pages:
-	    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+
+      https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
 
     Attributes:
     ----------
     :param attrs: String. Required. Percentage of the animation duration.
-    :param rule: not or only or and see documentation for more info
-    :param media_type: the media to which the rule will need to be applied
-    :param mediafeature: Media features provide more specific details to media queries
+    :param rule: String. Optional. not or only or and see documentation for more info.
+    :param media_type: String. Optional. the media to which the rule will need to be applied.
+    :param media_feature: String. Optional. Media features provide more specific details to media queries.
+    :param change: Boolean. Optional. A flag to specify the state of the CSS class.
+    :param this_class: Boolean. Optional. Specify if this should be applied to this class only.
     """
-    if thisClass:
+    if this_class:
       attrs = {".%s" % self.classname: attrs}
 
     if change:
       self.__has_changed = True
     media_props = []
     if rule is not None:
-      if rule in ['only', 'not'] and not mediatype:
+      if rule in ['only', 'not'] and not media_type:
         raise Exception('You need to specify a mediatype when using rules not or only')
 
-      media_props.extend([rule, mediatype])
-      if mediafeature:
-        for op, m_features in mediafeature.items():
+      media_props.extend([rule, media_type])
+      if media_feature:
+        for op, m_features in media_feature.items():
           for feature in m_features:
             features = ['(%s: %s)' % (k, v) for k, v in feature.items()]
           media_props.extend([op, ('%s ' % op).join(features)])
@@ -841,24 +946,31 @@ class Style(object):
 
   def keyframes(self, name, attrs, effects=None, change=True):
     """
+    Description:
+    ------------
     The @keyframes rule specifies the animation code.
 
     The animation is created by gradually changing from one set of CSS styles to another.
 
-    Example
-    rptObj.style.keyframes("test", {
-      "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
-      "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
-      "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
-    })
+    Usage:
+    -----
+
+      page.style.keyframes("test", {
+        "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
+        "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
+        "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
+      })
 
     Related Pages:
 
-	  https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+      https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
 
-    :param effects: Effect Class.
+    Attributes:
+    ----------
+    :param effects: String. Effect Class.
     :param name: String. Required. Defines the name of the animation.
     :param attrs: String. Required. Percentage of the animation duration.
+    :param change: Boolean. Optional. A flag to specify the state of the CSS class.
     """
     if change:
       self.__has_changed = True
@@ -870,11 +982,13 @@ class Style(object):
 
   def get_ref(self):
     """
+    Description:
+    ------------
 
     :return:
     """
+    # dedicated unique ID if it is not the original style
     if self.has_changed and self.cls_ref in [None, self.classname]:
-      # dedicated unique ID if it is not the original style
       if self.html_id is not None:
         self.cls_ref = "%s_%s" % (self.classname, self.html_id)
       else:
@@ -917,6 +1031,10 @@ class Style(object):
     return "\n".join(style)
 
   def _repr_html_(self):
-    """ Display for Jupyter """
+    """
+    Description:
+    ------------
+    Display for Jupyter.
+    """
     value = str(self)
     return value.replace(" ;", " ;\n  ").replace(" {", " {\n  ").replace("  }", "}")

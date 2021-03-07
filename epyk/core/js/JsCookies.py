@@ -6,7 +6,7 @@ from epyk.core.js import Js
 from epyk.core.js import JsUtils
 
 
-class JsCookies(object):
+class JsCookies:
   class __internal(object):
     _context = {}
 
@@ -37,20 +37,19 @@ class JsCookies(object):
 
     return "document.cookies['%s'] = %s" % (jsKey, jsData)
 
-  def get(self, jsData=None, jsDataKey=None, isPyData=True, jsFnc=None):
+  def get(self, jsData=None, jsConvFnc=True, jsResultFnc=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsDataKey:
-    :param isPyData:
-    :param jsFnc:
+    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param jsResultFnc: Optional. A function used to transform the result.
     """
     if jsData is None:
-      return Js.JsJson().parse("decodeURIComponent(document.cookies)", isPyData=False)
+      return Js.JsJson().parse("decodeURIComponent(document.cookies)", jsResultFnc=jsResultFnc)
 
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
-    return Js.JsJson().parse("decodeURIComponent(document.cookies)['%s']" % jsData, isPyData=False)
+    jsData = JsUtils.jsConvertData(jsData, jsConvFnc)
+    return Js.JsJson().parse("decodeURIComponent(document.cookies)['%s']" % jsData, jsResultFnc=jsResultFnc)

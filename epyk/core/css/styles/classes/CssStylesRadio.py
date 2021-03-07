@@ -11,14 +11,14 @@ class CssRadioButton(CssStyle.Style):
   _attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.colors[3], 'font-size': '%spx' % Defaults_css.Font.size})
+    self.css({'border': '1px solid %s' % self.page.theme.colors[3], 'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssRadioButtonSelected(CssStyle.Style):
   _attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.success[1], 'color': self.rptObj.theme.success[1],
+    self.css({'border': '1px solid %s' % self.page.theme.success[1], 'color': self.page.theme.success[1],
               'font-size': '%spx' % Defaults_css.Font.size})
 
 
@@ -33,8 +33,8 @@ class CssRadioSwitchLabel(CssStyle.Style):
             'border-radius': '20px', 'transition': '0.3s', 'margin': 'auto', 'top': '-2.5px'}
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.greys[3]})
-    self.after.css({'background-color': self.rptObj.theme.colors[-1]})
+    self.css({'background': self.page.theme.greys[3]})
+    self.after.css({'background-color': self.page.theme.colors[-1]})
 
 
 class CssRadioSwitchChecked(CssStyle.Style):

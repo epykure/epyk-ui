@@ -1,14 +1,18 @@
 """
 This module get all the functions related to the transformation of the recordset on the Javascript part.
 Each of those functions are in charge of transforming a recordSet in the front end (which means that this cannot be
-seen on the Python side in the scripting interface). The best way to test those changes is to use a report and set the DEBUG flag.
+seen on the Python side in the scripting interface). The best way to test those changes is to use a report and set
+the DEBUG flag.
 """
 
 
-class JsRecFunc(object):
+class JsRecFunc:
   """
   This class cannot be used directly to format a record as the mandatory parameters are not defined and are set to None.
-  Anyway as an interface this will give you the different information which have to be defined to create a new js function.
+
+  Anyway as an interface this will give you the different information which have to be defined to create a new
+  js function.
+
   The objective in this logic is to centralise all the js functions used in the front end in this folder in order
   to limit the use and standardise the implementation.
 
@@ -39,6 +43,8 @@ class JsRecFunc(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -51,6 +57,8 @@ class JsRecFunc(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -65,6 +73,8 @@ class JsRowBuckets(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -78,6 +88,8 @@ class JsRowBuckets(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -112,6 +124,8 @@ class JsRowTotal(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -125,6 +139,8 @@ class JsRowTotal(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -147,6 +163,8 @@ class JsAll(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -167,6 +185,8 @@ class JsSum(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -202,6 +222,8 @@ class JsPercentage(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """
@@ -264,6 +286,8 @@ class JsOperations(JsRecFunc):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param jsSchema:
     :param params:
     """

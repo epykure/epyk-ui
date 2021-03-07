@@ -18,22 +18,24 @@ class DatePicker(Html.Html):
   requirements = ('jqueryui', )
   name = 'Date Picker'
 
-  def __init__(self, report, value, label, icon, width, height, color, htmlCode, profile, options, helper):
-    super(DatePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, value, label, icon, width, height, color, html_code, profile, options, helper):
+    super(DatePicker, self).__init__(report, value, html_code=html_code, profile=profile)
     # Add all the internal components input, label, icon and helper
     if width[0] is not None and width[1] == 'px':
       width = (width[0] - 30, width[1])
-    self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
+    self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css(
+      {"padding": 0})
     self.prepend_child(self.input)
     if not self.input.options.inline:
-      self.add_icon(icon, htmlCode=self.htmlCode, css={"margin-top": '-4px', "margin-left": '5px',
-                                                       'color': self._report.theme.colors[-1]},
+      self.add_icon(icon, html_code=self.htmlCode, css={"margin-top": '-4px', "margin-left": '5px',
+                                                        'color': self._report.theme.colors[-1]},
                     position="after", family=options.get("icon_family"))
     else:
       self.icon = None
     if self.icon is not None:
       self.icon.click([self.input.dom.events.trigger("click").toStr()])
-    self.add_label(label, htmlCode=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
+    self.add_label(label, html_code=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
+                   options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
@@ -58,11 +60,11 @@ class DatePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def select(self, js_funcs):
+  def select(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Event trigger when the datepicker component changes.
+    Event trigger when the DatePicker component changes.
 
     Usage:
     -----
@@ -74,17 +76,18 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript events when the datepicker selection changes.
+    :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     if self.icon is not None:
       self.icon.tooltip(self.input.dom.content)
       js_funcs.append(self.icon.dom.setattr("title", self.input.dom.content))
-    self.input.options.onSelect = js_funcs
+    self.input.options.onSelect(js_funcs, profile)
     return self
 
-  def excluded_dates(self, dts=None, js_funcs=None):
+  def excluded_dates(self, dts=None, js_funcs=None, profile=False):
     """
     Description:
     -----------
@@ -101,10 +104,11 @@ class DatePicker(Html.Html):
     ----------
     :param dts: List. Optional. A list of dates format YYYY-MM-DD.
     :param js_funcs: List | String. Optional. Javascript functions.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    return self.input.excluded_dates(dts, js_funcs)
+    return self.input.excluded_dates(dts, js_funcs, profile)
 
-  def included_dates(self, dts=None, js_funcs=None):
+  def included_dates(self, dts=None, js_funcs=None, profile=False):
     """
     Description:
     -----------
@@ -121,8 +125,9 @@ class DatePicker(Html.Html):
     ----------
     :param dts: List. Optional. A list of dates format YYYY-MM-DD.
     :param js_funcs: List | String. Optional. Javascript functions.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    return self.input.included_dates(dts, js_funcs)
+    return self.input.included_dates(dts, js_funcs, profile)
 
   def add_options(self, options=None, name=None, value=None):
     """
@@ -141,7 +146,7 @@ class DatePicker(Html.Html):
     ----------
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param name: String. Optional. String | Python dictionary with the options to set.
-    :param value: Optional.
+    :param value: String. Optional. The option value.
     """
     if options is None and name is None:
       raise Exception("Either the attrs or the name should be specified")
@@ -153,19 +158,20 @@ class DatePicker(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {
+      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class TimePicker(Html.Html):
   requirements = ('timepicker', )
   name = 'Time Picker'
 
-  def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
-    super(TimePicker, self).__init__(report, None, htmlCode=htmlCode, profile=profile)
+  def __init__(self, report, value, label, icon, color, html_code, profile, options, helper):
+    super(TimePicker, self).__init__(report, None, html_code=html_code, profile=profile)
     self.input = self._report.ui.inputs.d_time(value, options=options)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, htmlCode=self.htmlCode, css={"margin-left": '5px', 'color': self._report.theme.success[1]},
+    self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self._report.theme.success[1]},
                   position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
@@ -194,11 +200,12 @@ class TimePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def change(self, js_funcs, profile=False):
+  def change(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Event triggered when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+    Event triggered when the value of the input field changes.
+    A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
 
     Usage:
@@ -222,21 +229,24 @@ class TimePicker(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {
+      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height,
-               htmlCode, helper, options, profile):
-    super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour, 'minute': minute, 'second': second},
-      htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timestamp, width, height,
+               html_code, helper, options, profile):
+    super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour,
+                                                 'minute': minute, 'second': second}, html_code=html_code,
+                                        profile=profile, css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True, 'reload': False}
-    self.timeInMilliSeconds = timeInMilliSeconds
+    # timestamp in milliseconds
+    self.timeInMilliSeconds = timestamp
     # Add the underlying components
-    self.add_label(label, htmlCode=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
-    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
     self._jquery_ref = '#%s span' % self.htmlCode
 
@@ -256,7 +266,7 @@ class CountDownDate(Html.Html):
         clearInterval(window[htmlObj.id +"_interval"])
       }'''
 
-  def end(self, js_funcs):
+  def end(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -268,26 +278,28 @@ class CountDownDate(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def __str__(self):
     self.jsUpdateDataFnc = '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
-              ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
+          ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class LastUpdated(Html.Html):
   name = 'Last Update'
 
-  def __init__(self, report, label, color, width, height, htmlCode, profile):
+  def __init__(self, report, label, color, width, height, html_code, profile):
     self._label = label or "Last update: "
     super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
-                                      htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+                                      html_code, profile=profile,
+                                      css_attrs={"width": width, "height": height, "color": color})
 
   def refresh(self):
     """
@@ -306,15 +318,18 @@ class LastUpdated(Html.Html):
     return self.dom.innerHTML(self._report.js.objects.date().getStrTimeStamp().prepend(self._label))
 
   def __str__(self):
-    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'content': self.val}
+    return '<div %(strAttr)s>%(content)s</div>' % {
+      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'content': self.val}
 
 
 class Calendar(Html.Html):
   name = 'Calendar'
+  requirements = ('jquery', )
+  _option_cls = OptCalendars.OptionDays
 
-  def __init__(self, report, content, width, height, align, options, htmlCode, profile):
-    super(Calendar, self).__init__(report,  content, htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptCalendars.OptionDays(self, options)
+  def __init__(self, report, content, width, height, align, options, html_code, profile):
+    super(Calendar, self).__init__(report,  content, html_code, css_attrs={"width": width, "height": height},
+                                   profile=profile, options=options)
     self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     self.tasks, self.caption = {}, ""
     self.style.css.border_collapse = "collapse"
@@ -336,12 +351,13 @@ class Calendar(Html.Html):
 
     :rtype: OptCalendars.OptionDays
     """
-    return self.__options
+    return super().options
 
-  def click(self, js_funcs, profile=False, source_event=None, onReady=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
+    Add a click event to the Calendar component.
 
     Usage:
     -----
@@ -351,11 +367,11 @@ class Calendar(Html.Html):
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
-    :param onReady: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.__click = JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self.__click = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def task(self, name, start, capacity, end=None, weekend=False, options=None):
@@ -368,7 +384,7 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param name: String.
+    :param name: String. The task name.
     :param start:
     :param capacity: Float. A figure in percentage.
     :param end:
@@ -400,10 +416,10 @@ class Calendar(Html.Html):
                 value = capacity[i]
             if end is not None and end >= dt['date']:
               dt['tasks'].append({"name": name, 'capacity': value, 'color': self.tasks[name]})
-              i +=1
+              i += 1
             elif end is None:
               dt['tasks'].append({"name": name, 'capacity': value, 'color': self.tasks[name]})
-              i +=1
+              i += 1
     else:
       i = 0
       for dt in self._vals:
@@ -462,7 +478,8 @@ class Calendar(Html.Html):
     self.task(name, start, c, weekend=weekend, options=options)
 
   def __str__(self):
-    header = ["<th style='width:%s%%;%s'>%s</th>" % (100 / len(self.labels), Defaults.inline(self.options.header), d) for d in self.labels]
+    header = ["<th style='width:%s%%;%s'>%s</th>" % (
+      100 / len(self.labels), Defaults.inline(self.options.header), d) for d in self.labels]
     body, row = [], []
     for i, day in enumerate(self.val):
       if 'number' in day:
@@ -493,15 +510,16 @@ class Calendar(Html.Html):
       for i in range(7 - len(row)):
         row.append("<td style='padding:0'></td>")
       body.append("<tr>%s</tr>" % "".join(row))
-    self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+    #self.page.properties.js.add_on_ready(
+    #  "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
 
 
 class Timer(Html.Html):
   name = 'Timer'
 
-  def __init__(self, report, minutes, text, width, height, align, options, htmlCode, profile):
-    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, htmlCode, options=options,
+  def __init__(self, report, minutes, text, width, height, align, options, html_code, profile):
+    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, html_code, options=options,
                                 css_attrs={"width": width, "height": height}, profile=profile)
     if align is not None:
       if align == 'center':
@@ -519,7 +537,7 @@ class Timer(Html.Html):
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
         tmp != 0 || (tmp=0)}, 1000)'''
 
-  def end(self, js_funcs):
+  def end(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -531,26 +549,27 @@ class Timer(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self.page.properties.js.add_builders(self.refresh())
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Elapsed(Html.Html):
   name = 'elapsed'
 
-  def __init__(self, report, day, month, year, label, icon, width, height, htmlCode, helper, options, profile):
-    super(Elapsed, self).__init__(report, {'day': day, 'month': month, 'year': year},
-      htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+  def __init__(self, report, day, month, year, label, icon, width, height, html_code, helper, options, profile):
+    super(Elapsed, self).__init__(report, {'day': day, 'month': month, 'year': year}, html_code=html_code,
+                                  profile=profile, css_attrs={"width": width, "height": height})
     # Add the underlying components
-    self.add_label(label, htmlCode=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
-    self.add_icon(icon, htmlCode=self.htmlCode, family=options.get("icon_family"))
+    self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
 
   _js__builder__ = '''
@@ -562,5 +581,6 @@ class Elapsed(Html.Html):
       else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}'''
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s><span name="clock"></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    self.page.properties.js.add_builders(self.refresh())
+    return '<div %s><span name="clock"></span>%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)

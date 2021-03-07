@@ -19,7 +19,8 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 
 
-class JsLocalStorage(object):
+class JsLocalStorage:
+
   def key(self, i):
     """
     Description:
@@ -29,7 +30,8 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.localStorage.key(0)
 
@@ -39,7 +41,7 @@ class JsLocalStorage(object):
 
     Attributes:
     ----------
-    :param i: Required. A Number representing the index of the key you want to get the name of
+    :param i: Integer. Required. A Number representing the index of the key you want to get the name of.
 
     :return: A String, representing the name of the specified key
     """
@@ -51,12 +53,14 @@ class JsLocalStorage(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      :param key:
+
+    Attributes:
+    ----------
+    :param key:
     :param data:
-
-    :return:
     """
     self.setItem(key, data)
 
@@ -64,9 +68,10 @@ class JsLocalStorage(object):
     """
     Description:
     ------------
-    Python wrapper to getItem
+    Python wrapper to getItem.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.console.log(jsObj.sessionStorage["lastname"])
 
@@ -80,12 +85,13 @@ class JsLocalStorage(object):
     """
     Description:
     ------------
-    Syntax for SAVING data to localStorage
+    Syntax for SAVING data to localStorage.
 
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.localStorage.getItem("lastname", "test")
 
@@ -95,10 +101,10 @@ class JsLocalStorage(object):
 
     Attributes:
     ----------
-    :param key: Required. A String specifying the name of the key you want to set the value of
-    :param data: Required. A String specifying the value of the key you want to set the value of
+    :param key: String. Required. A String specifying the name of the key you want to set the value of.
+    :param data: String. Required. A String specifying the value of the key you want to set the value of.
 
-    :return: A String, representing the inserted value
+    :return: A String, representing the inserted value.
     """
     key = JsUtils.jsConvertData(key, None)
     data = JsUtils.jsConvertData(data, None)
@@ -113,7 +119,8 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.localStorage.getItem("lastname")
 
@@ -123,7 +130,7 @@ class JsLocalStorage(object):
 
     Attributes:
     ----------
-    :param key: Required. A String specifying the name of the key you want to get the value of
+    :param key: String. Required. A String specifying the name of the key you want to get the value of.
 
     :return: A String, representing the value of the specified key
     """
@@ -139,7 +146,8 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.localStorage.removeItem("lastname")
 
@@ -149,7 +157,7 @@ class JsLocalStorage(object):
 
     Attributes:
     ----------
-    :param key: Required. A String specifying the name of the item you want to remove
+    :param key: String. Required. A String specifying the name of the item you want to remove.
 
     :return: Void
     """
@@ -165,7 +173,8 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.localStorage.clear()
 
@@ -178,7 +187,7 @@ class JsLocalStorage(object):
     return JsFncs.JsFunction("localStorage.clear()")
 
 
-class JsSessionStorage(object):
+class JsSessionStorage:
   """
   Description:
   ------------
@@ -188,7 +197,8 @@ class JsSessionStorage(object):
 
   Related Pages:
   --------------
-  https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
+
+    https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
   """
 
   def key(self, i):
@@ -197,9 +207,12 @@ class JsSessionStorage(object):
     ------------
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
+    Usage:
+    -----
+
     Attributes:
     ----------
-    :param i: The key number
+    :param i: Integer. The key number.
     """
     i = JsUtils.jsConvertData(i, None)
     return JsObject.JsObject("sessionStorage.key(%s)" % i)
@@ -208,6 +221,9 @@ class JsSessionStorage(object):
     """
     Description:
     ------------
+
+    Usage:
+    -----
 
     Attributes:
     ----------
@@ -220,9 +236,10 @@ class JsSessionStorage(object):
     """
     Description:
     ------------
-    Python wrapper to getItem
+    Python wrapper to getItem.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.console.log(jsObj.sessionStorage["lastname"])
 
@@ -236,11 +253,12 @@ class JsSessionStorage(object):
     """
     Description:
     ------------
-    Syntax for SAVING data to sessionStorage
+    Syntax for SAVING data to sessionStorage.
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.sessionStorage.setItem("lastname", "Smith")
       jsObj.sessionStorage.setItem("lastname", jsObj.objects.get("bin")),
@@ -251,7 +269,7 @@ class JsSessionStorage(object):
 
     Attributes:
     ----------
-    :param key: The key used to store the data in the session cache
+    :param key: The key used to store the data in the session cache.
     :param data:
     """
     key = JsUtils.jsConvertData(key, None)
@@ -266,7 +284,8 @@ class JsSessionStorage(object):
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.sessionStorage.getItem("lastname")
       jsObj.console.log(jsObj.sessionStorage.getItem("lastname"))
@@ -282,11 +301,12 @@ class JsSessionStorage(object):
     """
     Description:
     ------------
-    Syntax for REMOVING ALL saved data from sessionStorage
+    Syntax for REMOVING ALL saved data from sessionStorage.
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.sessionStorage.removeItem("lastname")
 
@@ -319,15 +339,16 @@ class JsSessionStorage(object):
     return JsFncs.JsFunction("sessionStorage.clear()")
 
 
-class JsHistory(object):
+class JsHistory:
   """
   Description:
   ------------
-  Interface to the Javascript history module
+  Interface to the Javascript history module.
 
   Related Pages:
   --------------
-  https://www.w3schools.com/js/js_window_history.asp
+
+    https://www.w3schools.com/js/js_window_history.asp
   """
 
   def __init__(self, context):
@@ -340,7 +361,8 @@ class JsHistory(object):
     ------------
     The length property returns the number of URLs in the history list of the current browser window.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.js.window.history.length
 
@@ -358,7 +380,8 @@ class JsHistory(object):
     ------------
     The back() method loads the previous URL in the history list.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.js.window.history.back()
 
@@ -380,7 +403,7 @@ class JsHistory(object):
 
       https://www.w3schools.com/jsref/met_his_forward.asp
 
-    :return: The Javascript String to be added to the page
+    :return: The Javascript String to be added to the page.
     """
     return JsFncs.JsFunction("window.history.forward()")
 
@@ -406,9 +429,10 @@ class JsHistory(object):
     """
     Description:
     ------------
-    Pushes the given data onto the session history stack with the specified title and, if provided, URL
+    Pushes the given data onto the session history stack with the specified title and, if provided, URL.
 
-    Note that pushState() never causes a hashchange event to be fired, even if the new URL differs from the old URL only in its hash
+    Note that pushState() never causes a hashchange event to be fired, even if the new URL differs from the old URL
+    only in its hash
 
     Related Pages:
 
@@ -416,7 +440,7 @@ class JsHistory(object):
 
     Attributes:
     ----------
-    :param stateObj: he state object is a JavaScript object which is associated with the new history entry created by pushState()
+    :param stateObj: The state object is a JavaScript object which is associated with the new history entry created by pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
                   Passing the empty string here should be safe against future changes to the method.
                   Alternatively, you could pass a short title for the state to which you're moving.
@@ -431,7 +455,8 @@ class JsHistory(object):
     """
     Description:
     ------------
-    history.replaceState() operates exactly like history.pushState() except that replaceState() modifies the current history entry instead of creating a new one.
+    history.replaceState() operates exactly like history.pushState() except that replaceState() modifies the current
+    history entry instead of creating a new one.
 
     Related Pages:
 
@@ -457,7 +482,8 @@ class JsHistory(object):
     This function is a simple wrapping function on top of the pushState history method.
     The purpose of this method is to make easier the update of the url whenever a component in the framework is updated.
 
-    Usage::
+    Usage:
+    -----
 
       htmlObj.js.js.window.history.updateState(self.htmlCode, self.val)
 
@@ -467,10 +493,10 @@ class JsHistory(object):
 
     Attributes:
     ----------
-    :param key: The key to be added or updated in the current URL
-    :param val: The value to be changed to the current URL
+    :param key: String. The key to be added or updated in the current URL.
+    :param val: String. The value to be changed to the current URL.
 
-    :return: The Javascript String for the method
+    :return: The Javascript String for the method.
     """
     self.__jsObj.registerFunction("updateUrl", [
       self.__jsObj.objects.new([], varName="newPmts"),
@@ -478,7 +504,8 @@ class JsHistory(object):
         self.__jsObj.if_(self.__jsObj.data.loop().val.toString(explicit=False).includes("=", jsObj=self.__jsObj), [
           self.__jsObj.objects.array.new(self.__jsObj.data.loop().val.toString().split("="), varName="urlPmts"),
           self.__jsObj.objects.array.get("urlPmts")[0].toString(),
-          self.__jsObj.objects.get("newPmts").addItem(self.__jsObj.objects.array.get("urlPmts")[0], self.__jsObj.objects.array.get("urlPmts")[1])
+          self.__jsObj.objects.get("newPmts").addItem(
+            self.__jsObj.objects.array.get("urlPmts")[0], self.__jsObj.objects.array.get("urlPmts")[1])
         ])
       ]),
 
@@ -486,15 +513,19 @@ class JsHistory(object):
       # Then we concatenate the URL
       self.__jsObj.objects.array.new([], varName="pmts"),
       self.__jsObj.objects.get("newPmts").entries().forEach([
-        self.__jsObj.objects.array.get("pmts").push(self.__jsObj.data.loop().val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop().val[1]))
+        self.__jsObj.objects.array.get("pmts").push(
+          self.__jsObj.data.loop().val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop().val[1]))
       ]),
-      self.__jsObj.return_(self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get("pmts").join("&"))
+      self.__jsObj.return_(
+        self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get("pmts").join("&"))
       ], ["urlKey", "urlValue"])
-    return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
+    return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (
+      JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
 
 
-class JsWindowEvent(object):
-  def addEventListener(self, eventType, jsFncs, windowId="window", subEvents=None):
+class JsWindowEvent:
+
+  def addEventListener(self, eventType, jsFncs, windowId="window", subEvents=None, profile=False):
     """
     Description:
     ------------
@@ -504,11 +535,12 @@ class JsWindowEvent(object):
     :param eventType:
     :param jsFncs:
     :param windowId:
-    :param subEvents: List of names you want your underlying function to have as arguments
+    :param subEvents: List of names you want your underlying function to have as arguments.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     subEvents = '' if not subEvents else ','.join(subEvents)
     eventType = JsUtils.jsConvertData(eventType, None)
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     return JsFncs.JsFunction("%s.addEventListener(%s, function(%s){%s})" % (windowId, eventType, subEvents, jsFncs))
 
   def addScrollListener(self, jsFncs, windowId="window"):
@@ -527,7 +559,8 @@ class JsWindowEvent(object):
     """
     Description:
     ------------
-    The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+    The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed,
+    without waiting for stylesheets, images, and subframes to finish loading.
 
     Usage::
 
@@ -559,7 +592,7 @@ class JsWindowEvent(object):
     return self.addEventListener("click", jsFncs, windowId, subEvents)
 
 
-class JsWindow(object):
+class JsWindow:
   """
   Description:
   ------------
@@ -577,7 +610,8 @@ class JsWindow(object):
     """
     Description:
     ------------
-    The read-only scrollY property of the Window interface returns the number of pixels that the document is currently scrolled vertically.
+    The read-only scrollY property of the Window interface returns the number of pixels that the document is
+    currently scrolled vertically.
 
     Related Pages:
 
@@ -585,7 +619,7 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: String. The window reference
+    :param windowId: String. Optional. The window reference.
     """
     return JsNumber.JsNumber("%s.scrollY" % windowId)
 
@@ -602,7 +636,7 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: String. The window reference
+    :param windowId: String. Optional. The window reference.
     """
     return JsNumber.JsNumber("%s.innerHeight" % windowId)
 
@@ -611,40 +645,48 @@ class JsWindow(object):
     """
     Description:
     ------------
-    The scrollEndPage property indicates if the page is scrolled to the end
+    The scrollEndPage property indicates if the page is scrolled to the end.
 
     Attributes:
     ----------
-    :param windowId: String. The window reference
+    :param windowId: String. Optional. The window reference.
     """
-    return JsBoolean.JsBoolean("(%s.scrollY + %s.innerHeight > document.body.clientHeight)? true: false" % (windowId, windowId), isPyData=False)
+    return JsBoolean.JsBoolean("(%s.scrollY + %s.innerHeight > document.body.clientHeight)? true: false" % (
+      windowId, windowId), isPyData=False)
 
   @property
   def scrollPercentage(self, windowId="window"):
     """
     Description:
     ------------
-    The scrollPercentage property return the percentage of the page scrolled
+    The scrollPercentage property return the percentage of the page scrolled.
 
     Attributes:
     ----------
-    :param windowId: String. The window reference
+    :param windowId: String. Optional. The window reference.
     """
     return JsNumber.JsNumber(
-      "Math.min((%s.scrollY + %s.innerHeight)/ document.body.clientHeight * 100, 100)" % (windowId, windowId), isPyData=False)
+      "Math.min((%s.scrollY + %s.innerHeight)/ document.body.clientHeight * 100, 100)" % (
+        windowId, windowId), isPyData=False)
 
   @property
   def scrollMaxY(self, windowId="window"):
     """
     Description:
     ------------
-    The Window.scrollMaxY read-only property returns the maximum number of pixels that the document can be scrolled vertically.
+    The Window.scrollMaxY read-only property returns the maximum number of pixels that the document can be
+    scrolled vertically.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
+
+    Attributes:
+    ----------
+    :param windowId: String. Optional. The window reference.
     """
-    return JsNumber.JsNumber("(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
+    return JsNumber.JsNumber(
+      "(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
 
   def __init__(self, src=None):
     """
@@ -665,9 +707,9 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Interface to the DOM object on the current window
+    Interface to the DOM object on the current window.
 
-    :return: A Python JsDoms object wrapping the DOM Js interface
+    :return: A Python JsDoms object wrapping the DOM Js interface.
     """
     return JsNodeDom.JsDoms(self.__src)
 
@@ -676,9 +718,9 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Interface to the History object
+    Interface to the History object.
 
-    :return: A Python Js History object
+    :return: A Python Js History object.
     """
     return JsHistory(self.__src)
 
@@ -686,7 +728,7 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Closes the current window
+    Closes the current window.
 
     Related Pages:
 
@@ -694,9 +736,9 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
 
-    :return: The String representing the Javascript function
+    :return: The String representing the Javascript function.
     """
     return JsFncs.JsFunction("%s.close()" % windowId)
 
@@ -705,11 +747,11 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Property to all the events
+    Property to all the events.
     """
     return JsWindowEvent()
 
-  def addEventListener(self, eventType, jsFncs, windowId="window"):
+  def addEventListener(self, eventType, jsFncs, windowId="window", profile=False):
     """
     Description:
     ------------
@@ -718,10 +760,11 @@ class JsWindow(object):
     ----------
     :param eventType:
     :param jsFncs:
-    :param windowId:
+    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     eventType = JsUtils.jsConvertData(eventType, None)
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
 
   def open(self, url, name="_self", specs=None, replace=None, windowId="window"):
@@ -740,7 +783,7 @@ class JsWindow(object):
     :param name: Optional. Specifies the target attribute or the name of the window.
     :param specs: Optional. A comma-separated list of items, no whitespaces.
     :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
@@ -761,13 +804,14 @@ class JsWindow(object):
     if not isinstance(jsData, list):
       jsData = [jsData]
 
-  def download(self, data, fileName):
+  def download(self, data, fileName, profile=False):
     """
     Description:
     ------------
-    Download the data from a flat file
+    Download the data from a flat file.
 
-    Usage::
+    Usage:
+    -----
 
       rptObj.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("test")), fileName="test.txt")
 
@@ -775,16 +819,18 @@ class JsWindow(object):
     ----------
     :param data:
     :param fileName:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: Void,
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsFncs.JsFunction(";".join(JsUtils.jsConvertFncs([
-      self.__src.createElement("a", varName="a_temp").setAttribute("download", fileName).setAttribute("href", JsFncs.JsFunction("'data:text/csv;base64,'+ %s" % data)),
+    return JsFncs.JsFunction(JsUtils.jsConvertFncs([
+      self.__src.createElement("a", varName="a_temp").setAttribute("download", fileName).setAttribute(
+        "href", JsFncs.JsFunction("'data:text/csv;base64,'+ %s" % data)),
       self.__src.body.appendChild(self.__src.objects.get("a_temp")),
       self.__src.objects.dom.get("a_temp").click(),
       #self.__src.objects.dom.get("a_temp").remove()
-    ])))
+    ], toStr=True, profile=profile))
     #return JsFncs.JsFunction("%s.open('data:text/csv;base64,'+ %s, '_self')" % (windowId, data))
 
   def moveBy(self, x, y, windowId="window"):
@@ -799,9 +845,9 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param x: The horizontal move in pixel
-    :param y: The vertical move in pixel
-    :param windowId: The JavaScript window object
+    :param x: Integer. The horizontal move in pixel.
+    :param y: Integer. The vertical move in pixel.
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     x = JsUtils.jsConvertData(x, None)
     y = JsUtils.jsConvertData(y, None)
@@ -819,7 +865,7 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
     """
@@ -837,8 +883,9 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param x: The pixel along the horizontal axis of the document that you want displayed in the upper left
-    :param y: The pixel along the vertical axis of the document that you want displayed in the upper left
+    :param x: Integer. The pixel along the horizontal axis of the document that you want displayed in the upper left.
+    :param y: Integer. The pixel along the vertical axis of the document that you want displayed in the upper left.
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     return JsFncs.JsFunction("%s.scroll(%s, %s)" % (windowId, x, y))
 
@@ -846,13 +893,13 @@ class JsWindow(object):
     """
     Description:
     ------------
-    The window.scrollTo() go to a particular point
+    The window.scrollTo() go to a particular point.
 
     Attributes:
     ----------
-    :param x:
-    :param y:
-    :param windowId:
+    :param x: Integer. Optional.
+    :param y: Integer. Optional.
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     y = y or "document.body.scrollHeight"
     x = x or "document.body.scrollWidth"
@@ -865,7 +912,7 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId:
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     return JsFncs.JsFunction("%s.scrollTo(0, 0)" % windowId)
 
@@ -873,7 +920,7 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Prints the content of the current window
+    Prints the content of the current window.
 
     Related Pages:
 
@@ -881,7 +928,7 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
     """
@@ -893,10 +940,11 @@ class JsWindow(object):
     ------------
     The alert() method displays an alert box with a specified message and an OK button.
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.js.window.alert("Test")
-      rptObj.js.alert("Test 2")
+      page.js.window.alert("Test")
+      page.js.alert("Test 2")
 
     Related Pages:
 
@@ -905,8 +953,8 @@ class JsWindow(object):
     Attributes:
     ----------
     :param jsData: Optional. Specifies the text to display in the alert box, or an object converted into a string and displayed
-    :param jsFnc: A JsFnc or a list of JsFncs
-    :param windowId: The JavaScript window object
+    :param jsFnc: A JsFnc or a list of JsFncs.
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     if skip_data_convert:
       return JsFncs.JsFunction("%s.alert(%s)" % (windowId, jsData))
@@ -919,9 +967,10 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Decodes a base-64 encoded string
+    Decodes a base-64 encoded string.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.window.btoa("Test").setVar("bin")
       jsObj.window.atob(jsObj.objects.get("bin"))
@@ -934,7 +983,7 @@ class JsWindow(object):
     ----------
     :param jsData: Required. The string which has been encoded by the btoa() method
     :param jsFnc: A JsFnc or a list of JsFncs
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     return JsFncs.JsFunction("%s.atob(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
 
@@ -942,9 +991,10 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Encodes a string in base-64
+    Encodes a string in base-64.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.window.btoa("Test").setVar("bin")
 
@@ -956,19 +1006,21 @@ class JsWindow(object):
     ----------
     :param jsData: Required. The string to be encoded
     :param jsFnc: A JsFnc or a list of JsFncs
-    :param windowId: The JavaScript window object
+    :param windowId: String. Optional. The JavaScript window object reference variable.
     """
     return JsObject.JsObject("%s.btoa(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)), isPyData=False)
 
-  def setInterval(self, jsFncs, varId, milliseconds, windowId="window", setVar=True):
+  def setInterval(self, jsFncs, varId, milliseconds, windowId="window", setVar=True, profile=False):
     """
     Description:
     ------------
     The setInterval() method calls a function or evaluates an expression at specified intervals (in milliseconds).
 
-    The setInterval() method will continue calling the function until clearInterval() is called, or the window is closed.
+    The setInterval() method will continue calling the function until clearInterval() is called, or the window
+    is closed.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 5000)
 
@@ -985,8 +1037,9 @@ class JsWindow(object):
     :param milliseconds: Required. The intervals (in milliseconds) on how often to execute the code. If the value is less than 10, the value 10 is used
     :param windowId: The JavaScript window object
     :param setVar: Boolean.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     if setVar:
       if windowId == 'window':
         # To make the variable scope as global
@@ -994,9 +1047,10 @@ class JsWindow(object):
       else:
         varId = "var %s" % varId
 
-      return JsFncs.JsFunction("%s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, ";".join(jsFncs), milliseconds))
+      return JsFncs.JsFunction(
+        "%s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, jsFncs, milliseconds))
 
-    return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds))
+    return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (windowId, jsFncs, milliseconds))
 
   def clearInterval(self, varId, windowId="window"):
     """
@@ -1006,7 +1060,8 @@ class JsWindow(object):
 
     The ID value returned by setInterval() is used as the parameter for the clearInterval() method.
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 500).setVar("interva1"),
       jsObj.window.clearInterval(jsObj.objects.get("interva1"))
@@ -1032,11 +1087,12 @@ class JsWindow(object):
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
-      rptObj.ui.button("Interval Toggle").click([
-      rptObj.js.window.toggleInterval(rptObj.js.console.log('Print called'), 'test', 400),
-    ])
+      page.ui.button("Interval Toggle").click([
+        page.js.window.toggleInterval(rptObj.js.console.log('Print called'), 'test', 400),
+      ])
 
     Attributes:
     ----------
@@ -1049,7 +1105,7 @@ class JsWindow(object):
     clear = self.clearInterval(varId, windowId)
     return JsFncs.JsFunction("if(%s){%s = %s} else{%s}" % (JsUtils.isNotDefined(varId), varId, interval, clear))
 
-  def setTimeout(self, jsFncs, milliseconds=0, windowId="window"):
+  def setTimeout(self, jsFncs, milliseconds=0, windowId="window", profile=False):
     """
     Description:
     ------------
@@ -1061,12 +1117,15 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param jsFncs: Required. The function that will be executed
-    :param milliseconds: 	Optional. The number of milliseconds to wait before executing the code. If omitted, the value 0 is used
-    :param windowId: The JavaScript window object
+    :param jsFncs: List. Required. The function that will be executed
+    :param milliseconds: Integer. Optional. The number of milliseconds to wait before executing the code.
+    :param windowId: String. Optional. The JavaScript window object.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return JsObject.JsObject("%s.setTimeout(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds), setVar=True, isPyData=False)
+    return JsObject.JsObject(
+      "%s.setTimeout(function(){%s}, %s)" % (
+        windowId, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), milliseconds),
+      setVar=True, isPyData=False)
 
   def clearTimeout(self, jsData, jsFnc=None, windowId="window"):
     """
@@ -1081,7 +1140,9 @@ class JsWindow(object):
 
     Attributes:
     ----------
-    :param windowId: The JavaScript window object
+    :param jsData:
+    :param jsFnc:
+    :param windowId: The JavaScript window object.
     """
     return JsFncs.JsFunction("%s.clearTimeout(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
 
@@ -1111,7 +1172,7 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Returns a Selection object representing the range of text selected by the user
+    Returns a Selection object representing the range of text selected by the user.
 
     Attributes:
     ----------
@@ -1123,14 +1184,14 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Get the Javascript Variable name
+    Get the Javascript Variable name.
 
     Attributes:
     ----------
-    :param varName: The Variable name
-    :param windowId: The JavaScript window object
+    :param varName: The Variable name.
+    :param windowId: The JavaScript window object.
 
-    :return: Return the piece of script to be added to the Javascript
+    :return: Return the piece of script to be added to the Javascript.
     """
     return "%s['%s']" % (windowId, varName)
 
@@ -1164,12 +1225,12 @@ class JsWindow(object):
     """
     Description:
     ------------
-    Change the window and open the page specify by the url
+    Change the window and open the page specify by the url.
 
     Attributes:
     ----------
-    :param url: String. The new page url
-    :param windowId: String. Optional. The JavaScript window object
+    :param url: String. The new page url.
+    :param windowId: String. Optional. The JavaScript window object.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("%s.location = %s" % (windowId, url))
