@@ -975,7 +975,7 @@ class Buttons:
     height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.ButtonMenu(self.page, record, text, icon, width, height,
                                              html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    html_button.container.style.css({"display": "none", "position": "absolute", "z-index": 5})
+    html_button.container.css({"display": "none", "position": "absolute", "z-index": 5})
     return html_button
 
   @html.Html.css_skin()

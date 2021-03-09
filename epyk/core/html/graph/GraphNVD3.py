@@ -2,14 +2,17 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
+from epyk.core.html.options import OptChart
 
 
 class Chart(Html.Html):
   name = 'NVD3'
   requirements = ('nvd3', )
+  _option_cls = OptChart.OptionsChart
 
   def __init__(self,  report, width, height, options, html_code, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -113,6 +116,37 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
+  def colors(self, hex_values):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    """
+    line_colors, bg_colors = [], []
+    for h in hex_values:
+      if not isinstance(h, tuple):
+        line_colors.append(h)
+        bg_colors.append("rgba(%s, %s, %s, %s" % (
+          Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+          Colors.getHexToRgb(h)[2], self.options.opacity))
+      else:
+        line_colors.append(h[0])
+        bg_colors.append(h[0])
+    self.options.colors = line_colors
+    self.options.background_colors = bg_colors
+    for i, rec in enumerate(self._datasets):
+      rec['color'] = self.options.colors[i]
+
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
@@ -127,6 +161,7 @@ class Chart(Html.Html):
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Optional. Not used for this component.
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.name)
@@ -143,8 +178,9 @@ class Chart(Html.Html):
         'htmlCode': self.htmlCode, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
         "options":  self.options.config_js(options), 'chart': self.dom.var}
 
-    return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis, self.d3.datum(self._datasets).call(self.dom.var),
-                "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
+    return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis,
+                                  self.d3.datum(self._datasets).call(self.dom.var),
+                                  "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
@@ -435,7 +471,7 @@ class ChartPie(Chart):
     :param data:
     :param name:
     """
-    self.dom.color(self._report.theme.colors)
+    self.dom.color(self.options.colors)
     self._datasets = data
     return self
 
@@ -577,7 +613,7 @@ class ChartSunbrust(Chart):
     for i, rec in enumerate(data):
       rec['color'] = self._report.theme.colors[i+1]
       self.set_rcolors(rec['color'], rec['children'])
-    self._datasets = [{'name': name, 'children': data, 'color': self._report.theme.colors[0]}]
+    self._datasets = [{'name': name, 'children': data, 'color': self.options.colors[0]}]
     return self
 
   _js__builder__ = '''
@@ -646,7 +682,7 @@ class ChartBoxPlot(Chart):
       elif names[i] == 'outlData':
         row['outlData'] = []
     series_id = len(self._datasets) - 1
-    row['seriesColor'] = self._report.theme.colors[series_id]
+    row['seriesColor'] = self.options.colors[series_id]
     row['title'] = title or "Series %s" % series_id
     self._datasets.append(row)
     return self
@@ -735,6 +771,6 @@ class ChartForceDirected(Chart):
     :param name:
     """
     for d in data.get('nodes', []):
-      d['color'] = self._report.theme.colors[d.get('group', 1)]
+      d['color'] = self.options.colors[d.get('group', 1)]
     self._datasets = data
     return self

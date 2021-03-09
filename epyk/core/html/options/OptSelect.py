@@ -6,6 +6,40 @@ from epyk.core.html.options import Options
 class OptionsSelect(Options):
 
   @property
+  def all(self):
+    """
+    Description:
+    ------------
+    Specify if the all item should be added to the items.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("all", False)
+
+  @all.setter
+  def all(self, flag):
+    self._report.attr["all"] = flag
+
+  @property
+  def empty(self):
+    """
+    Description:
+    ------------
+    Specify if the Empty item should be added to the items.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/examples/
+    """
+    return self._report.attr.get("empty", False)
+
+  @empty.setter
+  def empty(self, flag):
+    self._report.attr["empty"] = flag
+
+  @property
   def disabled(self):
     """
     Description:
@@ -18,8 +52,8 @@ class OptionsSelect(Options):
     return self._report.attr.get("disabled", False)
 
   @disabled.setter
-  def disabled(self, bool):
-    self._report.attr["disabled"] = bool
+  def disabled(self, flag):
+    self._report.attr["disabled"] = flag
 
   @property
   def drop_up(self):
@@ -71,8 +105,8 @@ class OptionsSelect(Options):
     return self._report.attr.get("data-live-search", False)
 
   @live_search.setter
-  def live_search(self, bool):
-    self._report.attr["data-live-search"] = bool
+  def live_search(self, flag):
+    self._report.attr["data-live-search"] = flag
 
   @property
   def max_options(self):
@@ -259,8 +293,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @actionsBox.setter
-  def actionsBox(self, bool):
-    self._config(bool)
+  def actionsBox(self, flag):
+    self._config(flag)
 
   @property
   def auto_select(self):
@@ -550,6 +584,12 @@ class OptionsSelectJs(OptionsSelect):
 
   @selected.setter
   def selected(self, value):
+    if hasattr(self.component, "_vals"):
+      for rec in self.component._vals:
+        if rec.get("selected"):
+          rec["selected"] = False
+        if rec["value"] == value:
+          rec["selected"] = True
     self.set(value)
 
   @property

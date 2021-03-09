@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 from epyk.core.html.options import OptPlotly
 
 from epyk.core.js import JsUtils
@@ -204,6 +205,40 @@ class Chart(Html.Html):
             if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
           }); result.push(dataSet)})
       }; return result'''
+
+  def colors(self, hex_values):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    """
+    line_colors, bg_colors = [], []
+    for h in hex_values:
+      if not isinstance(h, tuple):
+        line_colors.append(h)
+        bg_colors.append("rgba(%s, %s, %s, %s" % (
+          Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+          Colors.getHexToRgb(h)[2], self.options.opacity))
+      else:
+        line_colors.append(h[0])
+        bg_colors.append(h[0])
+    self.options.colors = line_colors
+    self.options.background_colors = bg_colors
+    for i, rec in enumerate(self._traces):
+      rec.fillcolor = self.options.background_colors[i]
+      rec.line.color = self.options.colors[i]
+      rec.marker.line.color = self.options.colors[i]
+      rec.marker.color = self.options.colors[i]
 
   @property
   def js(self):
@@ -1746,6 +1781,10 @@ class DataXY(DataChart):
   def text(self, val):
     self._attrs["text"] = val
 
+  @property
+  def line(self):
+    return self.sub_data("line", DataLine)
+
 
 class DataPie(DataChart):
 
@@ -1891,6 +1930,14 @@ class DataLine(DataChart):
   @color.setter
   def color(self, val):
     self._attrs["color"] = val
+
+  @property
+  def width(self):
+    return self._attrs["width"]
+
+  @width.setter
+  def width(self, val):
+    self._attrs["width"] = val
 
 
 class DataMove(DataChart):

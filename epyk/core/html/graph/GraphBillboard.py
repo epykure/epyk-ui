@@ -4,10 +4,12 @@
 from epyk.core.data.DataClass import DataClass
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 
 from epyk.core.js.packages import JsBillboard
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
+from epyk.core.html.options import OptChart
 
 from epyk.core.js.packages import JsD3
 
@@ -15,6 +17,7 @@ from epyk.core.js.packages import JsD3
 class Chart(Html.Html):
   name = 'Billboard'
   requirements = ('billboard.js', )
+  _option_cls = OptChart.OptionsChart
 
   def __init__(self, report, width, height, html_code, options, profile):
     self.height = height[0]
@@ -63,6 +66,40 @@ class Chart(Html.Html):
     """
     self.data.onclick(js_funcs, profile)
     return self
+
+  def colors(self, hex_values):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    """
+    line_colors, bg_colors = [], []
+    for h in hex_values:
+      if not isinstance(h, tuple):
+        line_colors.append(h)
+        bg_colors.append("rgba(%s, %s, %s, %s" % (
+          Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+          Colors.getHexToRgb(h)[2], self.options.opacity))
+      else:
+        line_colors.append(h[0])
+        bg_colors.append(h[0])
+    self.options.colors = line_colors
+    self.options.background_colors = bg_colors
+    series_count = 0
+    for name in self.data._attrs.get('columns', []):
+      if name[0] in self.data._attrs.get("colors", {}):
+        self.data._attrs["colors"][name[0]] = self.options.colors[series_count]
+        series_count += 1
 
   @property
   def d3(self):
@@ -555,7 +592,7 @@ class ChartLine(Chart):
 
   def add_dataset(self, name, data, type=None):
     self.data.columns.append([name] + data)
-    self.data.colors[name] = self._report.theme.colors[len(self.data.colors)]
+    self.data.colors[name] = self.options.colors[len(self.data.colors)]
     if type is None:
       self.data.add_type(name, self._type)
     return self._attrs
@@ -731,7 +768,7 @@ class ChartPie(ChartLine):
   def add_dataset(self, name, values, type=None):
     for i, value in enumerate(values):
       self.data.columns.append([self._labels[i], value])
-      self.data.colors[self._labels[i]] = self._report.theme.colors[i]
+      self.data.colors[self._labels[i]] = self.options.colors[i]
       self.data.add_type(self._labels[i], type or self._type)
     return self._attrs
 
@@ -761,7 +798,7 @@ class ChartGauge(ChartPie):
     :param type:
     """
     self.data.columns.append(["data", value])
-    self.data.colors["data"] = self._report.theme.colors[len(self.data.colors)]
+    self.data.colors["data"] = self.options.colors[len(self.data.colors)]
     if type is None:
       self.data.add_type("data", self._type)
     return self._attrs

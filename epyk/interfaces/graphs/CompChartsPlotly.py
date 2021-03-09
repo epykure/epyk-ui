@@ -38,6 +38,7 @@ class Plotly2D:
     data = self.page.data.plotly.xy(records, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.page, width, height, options or {}, html_code, profile)
     line_chart.options.responsive = True
+    line_chart.colors(self.page.theme.charts)
     for d in data['datasets']:
       line_chart.add_trace(d)
     return line_chart
@@ -70,6 +71,7 @@ class Plotly2D:
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
     data = self.page.data.plotly.xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.page, width, height, options, html_code, profile)
+    bar_chart.colors(self.page.theme.charts)
     for d in data['datasets']:
       bar_chart.add_trace(d)
     return bar_chart

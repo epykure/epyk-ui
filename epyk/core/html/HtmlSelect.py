@@ -54,7 +54,7 @@ class Select(Html.Html):
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
-  def __init__(self, report, records, html_code, width, height, filter, profile, multiple, options):
+  def __init__(self, report, records, html_code, width, height, profile, multiple, options):
     super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
     self._vals = records
@@ -219,8 +219,18 @@ class Select(Html.Html):
 
   def __str__(self):
     options, opt_groups = [], {}
+    if self.options.all:
+      opt = Option(self._report, "all", "All", None,
+                   self.options.selected is not None and self.options.selected == "all")
+      opt.options.managed = False
+      options.append(opt.html())
+    if self.options.empty:
+      opt = Option(self._report, "", "", None,
+                   self.options.selected is not None and self.options.selected == "")
+      opt.options.managed = False
+      options.append(opt.html())
     for val in self.val:
-      opt = Option(self._report, val['value'], val['name'], None,
+      opt = Option(self._report, val['value'], val.get('name', val.get('text', '')), None,
                    self.options.selected is not None and self.options.selected == val['value'],
                    options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
@@ -253,8 +263,8 @@ class Select(Html.Html):
 class Lookup(Select):
   requirements = ('bootstrap-select', )
 
-  def __init__(self, report, records, html_code, width, height, filter, profile, multiple, options):
-    super(Lookup, self).__init__(report, records, html_code, width, height, filter, profile, multiple, options)
+  def __init__(self, report, records, html_code, width, height, profile, multiple, options):
+    super(Lookup, self).__init__(report, records, html_code, width, height, profile, multiple, options)
     self._jsStyles['lookups'] = records
 
   _js__builder__ = '''

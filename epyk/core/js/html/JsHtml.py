@@ -19,7 +19,7 @@ from epyk.core.js.packages import JsCrossFilter
 from epyk.core.js.packages import packageImport
 
 
-class FmtNumber(object):
+class FmtNumber:
 
   def __init__(self, report, selector, value):
     self._report, self._val = report, value
@@ -85,7 +85,7 @@ class FmtNumber(object):
     return JsObjects.JsObjects.get("%s = %s.toExponential()" % (self.selector, self._val))
 
 
-class Formatters(object):
+class Formatters:
 
   def __init__(self, report, selector):
     self._report = report
@@ -156,7 +156,7 @@ class Formatters(object):
     return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s, %s, %s, %s, %s)" % (self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
 
 
-class ContentFormatters(object):
+class ContentFormatters:
 
   def __init__(self, report, selector):
     self._report = report
@@ -855,6 +855,18 @@ class JsHtmlRich(JsHtml):
 
     """
     return ContentFormatters(self._report, "(function(domObl){if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} else {return domObl.innerHTML}})(%(varName)s)" % {"varName": self.varName})
+
+  @property
+  def format(self):
+    """
+    Description:
+    ------------
+    Specific formatters for the HTML components.
+
+    Usage:
+    -----
+    """
+    return Formatters(self._report, "%s.innerHTML" % self.varName)
 
   def toggleContent(self, currentVal, newVal, currentJsFncs=None, newJsFncs2=None, profile=None):
     """

@@ -142,7 +142,7 @@ class OptionsItems(Options):
   @items_type.setter
   def items_type(self, text):
     self._config(text)
-    self._config(text not in ('link', 'badge', 'text', 'icon', 'check'), name="items_space")
+    self._config(text not in ('link', 'badge', 'text', 'icon', 'check', 'radio'), name="items_space")
 
   @property
   def items_space(self):
@@ -298,6 +298,19 @@ class OptionsItems(Options):
 
   @prefix.setter
   def prefix(self, value):
+    self._config(value)
+
+  @property
+  def group(self):
+    """
+    Description:
+    ------------
+    Set the group name for radio boxes
+    """
+    return self._config_get(None)
+
+  @group.setter
+  def group(self, value):
     self._config(value)
 
 

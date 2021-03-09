@@ -41,6 +41,7 @@ class Nvd3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartScatter(self.page, width, height, options, html_code, profile)
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
     line_chart.dom.x(column="x").y(column="y")
@@ -76,6 +77,7 @@ class Nvd3:
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
     line_chart.dom.x(column="x").y(column="y")
@@ -111,6 +113,7 @@ class Nvd3:
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartCumulativeLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
     line_chart.dom.x(column="x").y(column="y")
@@ -146,6 +149,7 @@ class Nvd3:
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartFocusLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
     line_chart.dom.x(column="x").y(column="y")
@@ -180,6 +184,7 @@ class Nvd3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartBar(self.page, width, height, options, html_code, profile)
+    bar_chart.colors(self.page.theme.charts)
     if y_columns is not None and len(y_columns) > 1:
       bar_chart.dom._selector = "nv.models.multiBarChart()"
     bar_chart.dom.x(column="label").y(column="y")
@@ -217,6 +222,7 @@ class Nvd3:
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartHorizontalBar(self.page, width, height, options, html_code, profile)
     bar_chart.dom.x(column="label").y(column="y")
+    bar_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       bar_chart.add_trace(d, data['labels'][i])
     return bar_chart
@@ -250,6 +256,7 @@ class Nvd3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartBar(self.page, width, height, options, html_code, profile)
+    bar_chart.colors(self.page.theme.charts)
     if y_columns is not None and len(y_columns) > 1:
       bar_chart.dom._selector = "nv.models.multiBarChart()"
     bar_chart.dom.x(column="label").y(column="y")
@@ -287,6 +294,7 @@ class Nvd3:
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.page, width, height, options, html_code, profile)
     histo_chart.dom.x(column="label").y(column="y")
+    histo_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       histo_chart.add_trace(d, data['labels'][i])
     return histo_chart
@@ -322,6 +330,7 @@ class Nvd3:
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.page, width, height, options, html_code, profile)
     histo_chart.dom.x(column="label").y(column="y")
+    histo_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       histo_chart.add_trace(d, data['labels'][i])
     return histo_chart
@@ -355,6 +364,7 @@ class Nvd3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     area_chart = graph.GraphNVD3.ChartArea(self.page, width, height, options, html_code, profile)
+    area_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       area_chart.add_trace(d, data['labels'][i])
     area_chart.dom.x(column="label").y(column="y")
@@ -389,6 +399,7 @@ class Nvd3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options, html_code, profile)
+    pie_chart.colors(self.page.theme.charts)
     pie_chart.dom.x(column="x").y(column="y")
     for i, d in enumerate(data['datasets']):
       pie_chart.add_trace(d, data['labels'][i])
@@ -424,6 +435,7 @@ class Nvd3:
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options, html_code, profile)
     pie_chart.dom.x(column="x").y(column="y").donut(True)
+    pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_trace(d, data['labels'][i])
     return pie_chart
@@ -456,6 +468,7 @@ class Nvd3:
       value = value / total * 100
       total = 100
     pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options or {}, html_code, profile)
+    pie_chart.colors(self.page.theme.charts)
     pie_chart.dom.x(column="x").y(column="y").donut(True).title(text or "%s%%" % value)
     pie_chart.dom.arcsRadius([
       {"inner": 0.7, "outer": 1},
@@ -489,6 +502,7 @@ class Nvd3:
     """
     chart = graph.GraphNVD3.ChartParallelCoord(self.page, width, height, options or {}, html_code, profile)
     chart.set_dimension_names(dimensions)
+    chart.colors(self.page.theme.charts)
     chart.add_trace(record)
     return chart
 
@@ -513,6 +527,7 @@ class Nvd3:
     options = options or {}
     chart = graph.GraphNVD3.ChartSunbrust(self.page, width, height, options, html_code, profile)
     chart.add_trace(record, name=name)
+    chart.colors(self.page.theme.charts)
     return chart
 
   def candlestick(self, record, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
@@ -555,6 +570,7 @@ class Nvd3:
 
     candle_chart = graph.GraphNVD3.ChartCandlestick(self.page, width, height, options, html_code, profile)
     candle_chart.dom.x(column='date').y(column='close')
+    candle_chart.colors(self.page.theme.charts)
     candle_chart.dom.xAxis.tickDateFormat()
     for s in all_series:
       candle_chart.add_trace(s)
@@ -595,6 +611,7 @@ class Nvd3:
       all_series.append(data_set)
     ohlc_chart = graph.GraphNVD3.ChartOhlcBar(self.page, width, height, options or {}, html_code, profile)
     ohlc_chart.dom.x(column='date').y(column='close')
+    ohlc_chart.colors(self.page.theme.charts)
     ohlc_chart.dom.xAxis.tickDateFormat()
     for s in all_series:
       ohlc_chart.add_trace(s)
@@ -640,4 +657,5 @@ class Nvd3:
     """
     force_chart = graph.GraphNVD3.ChartForceDirected(self.page, width, height, options or {}, html_code, profile)
     force_chart.dom.width(width[0]).height(height[0]).nodeExtras("name").color('color')
+    force_chart.colors(self.page.theme.charts)
     return force_chart

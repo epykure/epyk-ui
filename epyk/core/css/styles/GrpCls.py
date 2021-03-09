@@ -421,7 +421,7 @@ class ClassHtml:
       self.css.margin_left = "%s%%" % percent
       self.css.margin_right = "%s%%" % percent
 
-  def doc(self, percent=5, max_width=650, paddings=20):
+  def doc(self, percent=5, max_width=650, padding=True, background="white"):
     """
     Description:
     ------------
@@ -432,13 +432,15 @@ class ClassHtml:
     ----------
     :param percent: Integer. Optional. The percentage of space on the left and right.
     :param max_width: Integer. Optional. The max size of the page in pixel.
-    :param paddings: Integer. Optional. The top and bottom padding in the doc.
+    :param padding: Boolean. Optional. The top and bottom padding in the doc.
     """
     self.css.max_width = max_width
     self.css.min_height = 150
-    self.css.padding_top = paddings
-    self.css.padding_bottom = paddings
+    if padding:
+      self.css.padding = "20px 10px"
     self.css.shadow_box(radius=0)
+    if background is not None:
+      self.css.background = background
     self.css.margin = "20px auto"
     self.component.page.body.style.css.padding_left = "%s%%" % percent
     self.component.page.body.style.css.padding_right = "%s%%" % percent

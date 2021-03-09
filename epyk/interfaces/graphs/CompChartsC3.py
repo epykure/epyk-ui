@@ -39,6 +39,7 @@ class C3:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartLine(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -72,6 +73,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -105,6 +107,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart._type = 'step'
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -139,6 +142,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -172,6 +176,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart._type = "area-step"
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -235,6 +240,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartBar(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -296,6 +302,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartScatter(self.page, width, height, html_code, options, profile)
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -330,6 +337,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartPie(self.page, width, height, html_code, options, profile)
+    pie_chart.colors(self.page.theme.charts)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])
     return pie_chart
@@ -362,6 +370,7 @@ class C3:
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartDonut(self.page, width, height, html_code, options, profile)
+    pie_chart.colors(self.page.theme.charts)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])
     return pie_chart
@@ -421,6 +430,7 @@ class C3:
 
     line_chart = graph.GraphC3.ChartStanford(self.page, width, height, html_code, options, profile)
     line_chart.labels(labels)
+    line_chart.colors(self.page.theme.charts)
     line_chart.epoch(epoch, epoch_col)
     for i, y in enumerate(y_columns):
       line_chart.add_dataset(y, series[i])

@@ -152,17 +152,19 @@ class JsItemsDef:
     input.setAttribute('type', 'checkbox');
     input.setAttribute('name', 'input_box');
     input.style.verticalAlign = "middle";
-    input.onchange = function(event){ event.stopPropagation(); event.cancelBubble = true; span.setAttribute('data-valid', this.checked ); 
-      var value = span.innerHTML; if(options.click != null){options.click(event, value)} };
+    input.onchange = function(event){ 
+      event.stopPropagation(); event.cancelBubble = true; span.setAttribute('data-valid', this.checked); 
+      var value = span.innerHTML; if(options.click != null){options.click(event, value)}};
     
     var span = document.createElement("span"); span.style.marginLeft = '5px'; 
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', false); 
     
     if(typeof data === 'object'){ 
-      if(typeof data.text !== 'undefined'){ span.innerHTML = data.text} else { span.innerHTML = data.value } } 
-    else { span.innerHTML = data };
-    if(options.checked){ input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked) };
-    if(data.checked){ input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked) };
+      if(typeof data.text !== 'undefined'){ span.innerHTML = data.text} else {span.innerHTML = data.value}} 
+    else { span.innerHTML = data};
+    if(options.checked){ 
+      input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked)};
+    if(data.checked){input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked)};
     
     span.style.verticalAlign = "middle";
     item.appendChild(input); item.appendChild(span);
@@ -182,7 +184,6 @@ class JsItemsDef:
     item_def = '''
     var item = document.createElement("DIV");  
     item.style.padding = 0; item.style.whiteSpace = "nowrap";  item.style.display = "block";
-    
     var span = document.createElement("span");  
     var input = document.createElement("input");    
     input.setAttribute('type', 'radio'); input.setAttribute('name', options.group);
@@ -190,12 +191,11 @@ class JsItemsDef:
     input.onchange = function(event){ 
       this.parentNode.parentNode.parentNode.querySelectorAll('[name=value]').forEach(function(node){
         node.setAttribute('data-valid', false); }); var value = span.innerHTML; 
-        span.setAttribute('data-valid', this.checked ); if(options.click != null){options.click(event, value)} };
-    
+        span.setAttribute('data-valid', this.checked ); if(options.click != null){options.click(event, value)}};  
     var span = document.createElement("span");  
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', false);
     span.style.marginLeft = "5px";
-    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data};
     span.style.verticalAlign = "middle";
     
     item.appendChild(input); item.appendChild(span);
@@ -218,8 +218,8 @@ class JsItemsDef:
     item.appendChild(span);
     if(typeof data.value !== 'undefined'){ 
       var badge = document.createElement("span"); badge.innerHTML = data.value;
-      badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; badge.style.padding = '0 3px';
-      badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
+      badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; 
+      badge.style.padding = '0 3px'; badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
       for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
       item.appendChild(badge)}''' % Defaults.font(-2)
     return self._item(item_def)
@@ -265,15 +265,13 @@ class JsItemsDef:
     """
     item_def = '''
     var item = document.createElement("DIV"); var text = document.createElement("div");
-    item.style.clear = 'both'; 
-    text.style.display = 'inline-block';
-    text.style.padding = 0;
+    item.style.clear = 'both'; text.style.display = 'inline-block'; text.style.padding = 0;
     text.setAttribute('name', 'value'); text.setAttribute('data-valid', false);
     text.innerHTML = data.text ; var button = document.createElement("button"); 
     button.classList.add("cssbuttonbasic"); button.style.float = 'right'; button.style.padding = '0 5px';
     button.style.display = 'inline-block'; button.style.margin = 0; button.style.lineHeight = "18px";
     button.innerHTML = data.button; item.appendChild(text); item.appendChild(button);
-    if(typeof data.tooltip !=='undefined'){ button.setAttribute('title', data.tooltip) }
+    if(typeof data.tooltip !=='undefined'){ button.setAttribute('title', data.tooltip)}
     if(typeof data.event !=='undefined'){
       button.addEventListener("click", function() {
         var xhttp = new XMLHttpRequest();
@@ -283,8 +281,7 @@ class JsItemsDef:
         xhttp.open(event_method, data.event.url, true);
         xhttp.send(JSON.stringify(event_data));
       });
-    }
-    '''
+    }'''
     return self._item(item_def)
 
   def box(self, report):
@@ -300,39 +297,25 @@ class JsItemsDef:
     report.jsImports.add('font-awesome')
     report.cssImport.add('font-awesome')
     item_def = '''
-    var item = document.createElement("DIV"); 
-    item.style.borderRadius = "5px";
-    item.style.padding = "2px";
-    
+    var item = document.createElement("DIV"); item.style.borderRadius = "5px"; item.style.padding = "2px";
     item.setAttribute('data-valid', true);
-    var title = document.createElement("DIV"); 
-    title.setAttribute('name', 'value');
+    var title = document.createElement("DIV"); title.setAttribute('name', 'value');
     if (typeof data.color !== 'undefined'){
-      item.style.border = "1px solid " + data.color;
-      title.style.color = data.color;
-    }
-    title.style.fontWeight = 'bold';
-    title.innerHTML = data.title;
-    var text = document.createElement("DIV"); 
-    text.innerHTML = data.text;
-    
+      item.style.border = "1px solid " + data.color; title.style.color = data.color}
+    title.style.fontWeight = 'bold'; title.innerHTML = data.title;
+    var text = document.createElement("DIV"); text.innerHTML = data.text;
     item.appendChild(title); item.appendChild(text);
-    var icons = document.createElement("DIV"); 
-    icons.style.textAlign = 'right';
+    var icons = document.createElement("DIV"); icons.style.textAlign = 'right';
     if(typeof data.icons !== 'undefined') {
       data.icons.forEach(function(rec){
-          var icon_dom = document.createElement("I"); 
-          icon_dom.style.marginRight = '5px';
+          var icon_dom = document.createElement("I"); icon_dom.style.marginRight = '5px';
           rec.icon.split(" ").forEach(function(s){icon_dom.classList.add(s)}); 
           if(typeof rec.color !== 'undefined'){ icon_dom.style.color = rec.color}
           if(typeof rec.tooltip !== 'undefined'){ icon_dom.setAttribute('title', rec.tooltip)}
           if(rec.click != null){ icon_dom.style.cursor = 'pointer';
             icon_dom.onclick = function(event){ var value = data.title; eval(rec.click)}};
-          icons.appendChild(icon_dom)
-      })
-    }
-    item.appendChild(icons);
-    '''
+          icons.appendChild(icon_dom)})}
+    item.appendChild(icons)'''
     return self._item(item_def)
 
   def custom(self, item_def):
@@ -422,7 +405,9 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsVoid('''(function(){
       var source = this; if (typeof this.querySelector === 'undefined'){source = event.target || event.srcElement}
-      if(source.getAttribute("name")){return source.innerHTML} else {return source.querySelector('[name=value]').innerHTML} 
+      if(source.getAttribute("name")){
+        return source.innerHTML} 
+      else {return source.querySelector('[name=value]').innerHTML} 
       })(event, this)''')
 
   @property
@@ -447,7 +432,8 @@ class JsItem(JsHtml.JsHtmlRich):
     value = JsUtils.jsConvertData(value, None)
     return JsNodeDom.JsDoms.get('''
       (function(dom, value){var children = dom.childNodes; var values = null;
-        for (var i = 0; i < children.length; i++) { if(children[i].querySelector('[name=value]').innerHTML == value){ values = children[i]; break} };
+        for (var i = 0; i < children.length; i++) { 
+          if(children[i].querySelector('[name=value]').innerHTML == value){ values = children[i]; break} };
         return values })(%s, %s)''' % (self.varName, value))
 
   def selectAll(self, with_input_box=False):
@@ -534,7 +520,9 @@ class JsItem(JsHtml.JsHtmlRich):
           content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>");
           item.content = content
       };
-      var li = document.createElement("LI"); %(shape)s(li, item, %(options)s); li.style.margin = "5px 0"; %(comp)s.%(event)s(li)
+      var li = document.createElement("LI"); %(shape)s(li, item, %(options)s); 
+      if(itemOptions.items_space){li.style.margin = "5px 0"; li.style.padding = "2px 0"};
+      %(comp)s.%(event)s(li)
       if(itemOptions.delete){
         var close = document.createElement("i");
         close.classList.add("fas"); close.classList.add(itemOptions.delete_icon);

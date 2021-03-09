@@ -407,6 +407,8 @@ class LinearGradient(Html.Html):
 
 
 class RadialGradient(Html.Html):
+  name = "SVG RadialGradient"
+
   def __init__(self, report, html_code):
     super(RadialGradient, self).__init__(report, "", html_code=html_code)
     self.items = []
@@ -1100,6 +1102,7 @@ class Path(SVGItem):
 
 
 class AnimateTransform(Html.Html):
+  name = "SVG AnimateTransform"
 
   def __init__(self, report, attribute_name, type,  from_pos, to_pos, duration, repeat_count):
     super(AnimateTransform, self).__init__(report, "")
@@ -1114,6 +1117,7 @@ class AnimateTransform(Html.Html):
 
 
 class Animate(Html.Html):
+  name = "SVG Animate"
   # https://css-tricks.com/guide-svg-animations-smil/
 
   def __init__(self, report, attribute_name, type, from_pos, to_pos, duration, repeat_count):

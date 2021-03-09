@@ -40,6 +40,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -74,6 +75,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-line-range"
+    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -109,6 +111,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     bubble_chart = graph.GraphBillboard.ChartBubble(self.page, width, height, html_code, options, profile)
     bubble_chart.labels(data['labels'])
+    bubble_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       bubble_chart.add_dataset(data['series'][i], d)
       bubble_chart.data.labels = True
@@ -144,6 +147,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     radar_chart = graph.GraphBillboard.ChartRadar(self.page, width, height, html_code, options, profile)
     radar_chart.labels(data['labels'])
+    radar_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(data['series'][i], d)
       radar_chart.data.labels = True
@@ -179,6 +183,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -214,6 +219,7 @@ class Billboard:
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.options.type = 'step'
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -248,6 +254,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -283,6 +290,7 @@ class Billboard:
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-step"
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -347,6 +355,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -381,6 +390,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     line_chart.data.groups = [data['series']]
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
@@ -445,6 +455,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartScatter(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
+    line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
     return line_chart
@@ -479,6 +490,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartPie(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
+    pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
@@ -513,6 +525,7 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartDonut(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
+    pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
     return pie_chart
