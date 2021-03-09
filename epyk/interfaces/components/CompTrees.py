@@ -109,7 +109,7 @@ class Trees:
     return html_tree
 
   @html.Html.css_skin()
-  def dropdown(self, record=None, text="", width=(100, "%"), height=(32, 'px'), html_code=None, helper=None,
+  def dropdown(self, record=None, text="", width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
                options=None, profile=None):
     """
     Description:

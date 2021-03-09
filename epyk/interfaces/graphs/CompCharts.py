@@ -3,7 +3,6 @@
 
 
 from epyk.core import html
-from epyk.core.html import graph
 
 from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
@@ -17,6 +16,7 @@ from epyk.interfaces.graphs import CompChartsVis
 from epyk.interfaces.graphs import CompChartsSvg
 from epyk.interfaces.graphs import CompChartsCanvas
 from epyk.interfaces.graphs import CompChartsGoogle
+from epyk.interfaces.graphs import CompChartsSparkline
 
 
 class Graphs:
@@ -66,8 +66,8 @@ class Graphs:
     return html_skillbar
 
   @html.Html.css_skin()
-  def sparkline(self, chart_type, data, title=None, options=None, column=None, width=(None, "%"),
-                height=(None, "px"), profile=False):
+  def sparkline(self, chart_type, data, title=None, options=None, width=(None, "%"), height=(None, "px"),
+                profile=False):
     """
     Description:
     ------------
@@ -86,23 +86,41 @@ class Graphs:
     Attributes:
     ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
-    :param data: A list of values
+    :param data: String. A String corresponding to a JavaScript object.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param column:
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: A python Sparkline object
     """
-    if column is not None:
-      if isinstance(data, list):
-        pass
-
+    dfl_options = {"type": chart_type}
+    if options is not None:
+      dfl_options.update(options)
     html_chart = html.graph.GraphSparklines.Sparklines(
-      self.page, data, chart_type, title, width, height, options or {}, profile)
+      self.page, data, title, width, height, dfl_options, profile)
+    html_chart.color(self.page.theme.charts[0])
     return html_chart
+
+  @property
+  def sparklines(self):
+    """
+    Description:
+    ------------
+    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://plotly.com/javascript/
+
+    :return: A Python Plolty object
+    """
+    return CompChartsSparkline.Sparkline(self)
 
   @property
   def plotly(self):
@@ -178,6 +196,27 @@ class Graphs:
     :return: A Python C3 object
     """
     return CompChartsC3.C3(self)
+
+  @property
+  def bb(self):
+    """
+    Description:
+    ------------
+    Interface to the Javascript Billboard module.
+
+    This will propose various charts for data analysis and visualisation based on D£.
+    This project has been forked from C3.js.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/
+
+    :return: A Python Billboard Object
+    """
+    return CompChartsBillboard.Billboard(self)
 
   @property
   def billboard(self):

@@ -188,12 +188,12 @@ class ClassDropDown(GrpCls.ClassHtml):
     super(ClassDropDown, self).__init__(component)
     self._css_base, self._css_menu, self._css_menu_after, self._css_menu_link = 4 * [None]
     self._css_menu_hover, self._css_menu_pull_left, self._css_menu_li, self._css_caret = 4 * [None]
-    self.classList['main'].add(self.cls_base)
-    self.classList['main'].add(self.cls_menu)
-    self.classList['main'].add(self.cls_menu_li)
-    self.classList['main'].add(self.cls_menu_after)
-    self.classList['main'].add(self.cls_menu_hover)
-    self.classList['main'].add(self.cls_menu_pull_left)
+    self.classList['other'].add(self.cls_base)
+    self.classList['other'].add(self.cls_menu)
+    self.classList['other'].add(self.cls_menu_li)
+    self.classList['other'].add(self.cls_menu_after)
+    self.classList['other'].add(self.cls_menu_hover)
+    self.classList['other'].add(self.cls_menu_pull_left)
     self.classList['other'].add(self.cls_caret)
 
   @property
@@ -205,7 +205,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_base is None:
-      self._css_base = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['main']).base()
+      self._css_base = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).base()
     return self._css_base
 
   @property
@@ -217,7 +217,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_menu is None:
-      self._css_menu = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['main']).menu()
+      self._css_menu = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).menu()
     return self._css_menu
 
   @property
@@ -229,7 +229,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_menu_li is None:
-      self._css_menu_li = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['main']).menu_li()
+      self._css_menu_li = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).menu_li()
     return self._css_menu_li
 
   @property
@@ -242,7 +242,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_after is None:
       self._css_menu_after = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['main']).menu_after()
+        self.component.page, self.classList['other']).menu_after()
     return self._css_menu_after
 
   @property
@@ -255,7 +255,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_hover is None:
       self._css_menu_hover = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['main']).menu_hover()
+        self.component.page, self.classList['other']).menu_hover()
     return self._css_menu_hover
 
   @property
@@ -268,7 +268,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_pull_left is None:
       self._css_menu_pull_left = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['main']).menu_pull_left()
+        self.component.page, self.classList['other']).menu_pull_left()
     return self._css_menu_pull_left
 
   @property

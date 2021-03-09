@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.html import JsHtmlJqueryUI
@@ -10,16 +11,18 @@ from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.css.styles import GrpChart
 from epyk.core.html.options import OptSparkline
 
+# TODO add event and tooltip style
+
 
 class Sparklines(Html.Html):
   requirements = ('jquery-sparkline', )
   name = 'Sparkline'
   _option_cls = OptSparkline.OptionsSparkLine
 
-  def __init__(self, report, data, chart_type, title, width, height, options, profile):
+  def __init__(self, report, data, title, width, height, options, profile):
     super(Sparklines, self).__init__(report, data, css_attrs={'width': width, 'height': height},
                                      options=options, profile=profile)
-    self._jsStyles, self.title = {"type": chart_type}, None
+    self.title = None
     if title is not None:
       self.title = self._report.ui.title(title, level=4)
       self.title.options.managed = False
@@ -125,6 +128,31 @@ class Sparklines(Html.Html):
       self.dom.jquery.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
+  def color(self, hex_value, background=None):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    """
+    if background is None:
+      self.options.fillColor = "rgba(%s, %s, %s, %s" % (
+        Colors.getHexToRgb(hex_value)[0], Colors.getHexToRgb(hex_value)[1],
+        Colors.getHexToRgb(hex_value)[2], self.options.opacity)
+    else:
+      self.options.fillColor = background
+    self.options.lineColor = hex_value
+    self.options.spotColor = hex_value
+
   _js__builder__ = '%s.sparkline(data, options)' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
@@ -134,3 +162,39 @@ class Sparklines(Html.Html):
         self.title, self.get_attrs(pyClassNames=self.style.get_classes()))
 
     return "<span %s>Loading..</span>" % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class SparklinesBar(Sparklines):
+  requirements = ('jquery-sparkline', )
+  name = 'Sparkline Bar'
+  _option_cls = OptSparkline.OptionsSparkLineBar
+
+
+class SparklinesTristate(Sparklines):
+  requirements = ('jquery-sparkline', )
+  name = 'Sparkline Tristate'
+  _option_cls = OptSparkline.OptionsSparkLineTristate
+
+
+class SparklinesDiscrete(Sparklines):
+  requirements = ('jquery-sparkline', )
+  name = 'Sparkline Discrete'
+  _option_cls = OptSparkline.OptionsSparkLineDiscrete
+
+
+class SparklinesBullet(Sparklines):
+  requirements = ('jquery-sparkline', )
+  name = 'Sparkline Bullet'
+  _option_cls = OptSparkline.OptionsSparkLineBullet
+
+
+class SparklinesPie(Sparklines):
+  requirements = ('jquery-sparkline', )
+  name = 'Sparkline Pie'
+  _option_cls = OptSparkline.OptionsSparkLinePie
+
+
+class SparklinesBoxPlot(Sparklines):
+  requirements = ('jquery-sparkline',)
+  name = 'Sparkline BoxPlot'
+  _option_cls = OptSparkline.OptionsSparkLineBoxPlot

@@ -596,7 +596,7 @@ class Lists:
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options, profile)
     return html_tree
 
-  def dropdown(self, records=None, text="", width=('auto', ""), height=(32, 'px'), html_code=None, helper=None,
+  def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
                options=None, profile=None):
     """
     Description:

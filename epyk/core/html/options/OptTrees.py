@@ -1,5 +1,6 @@
 
 from epyk.core.html.options import Options
+from epyk.core.js import JsUtils
 
 
 class OptionsTree(Options):
@@ -129,3 +130,45 @@ class OptDropDown(Options):
     #
     self._config_group_get("a", value)
     self._config_group_get("ul", value, name="left")
+
+  @property
+  def a(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @a.setter
+  def a(self, css):
+    self._config(css)
+
+  @property
+  def ul(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @ul.setter
+  def ul(self, css):
+    self._config(css)
+
+  def onClick(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+      js_type=True, name="click")

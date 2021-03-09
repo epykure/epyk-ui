@@ -77,11 +77,10 @@ class Tree(Html.Html):
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
             if(ulDisplay == 'none'){ 
               this.parentNode.querySelector('ul').style.display = 'block';
-              icon.setAttribute("class", options.icon_open);
-              }
+              icon.setAttribute("class", options.icon_open)}
             else{
               this.parentNode.querySelector('ul').style.display = 'none';
-              icon.setAttribute("class", options.icon_close);}
+              icon.setAttribute("class", options.icon_close)}
           };
           icon.style.cursor = "pointer";
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
@@ -204,16 +203,18 @@ class DropDown(Html.Html):
   name = 'DropDown Select'
   _option_cls = OptTrees.OptDropDown
 
-  def __init__(self, report, data, text, width, height, html_code, helper, options, profile):
-    super(DropDown, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page, data, text, width, height, html_code, helper, options, profile):
+    options.update({"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT,
+                          'padding': '0 10px', "min-width": '%spx' % options.get("width")},
+                    "ul": {"left": "%spx" % options.get("width")}})
+    super(DropDown, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height})
     self.add_helper(helper)
     self._vals, self.text = data, text
+    self.attr["class"].add("menu")
     self.css(
       {'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
-    self._jsStyles = {"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT,
-                            'padding': '0 10px', "width": '%spx' % options.get("width")},
-                      "ul": {"left": "%spx" % options.get("width")}}
+    self.style.css.border = "1px solid %s" % page.theme.greys[2]
 
   @property
   def style(self):
@@ -262,15 +263,13 @@ class DropDown(Html.Html):
     :param source_event: String. Optional. The source target for the event.
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._jsStyles['click'] = "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self.options.onClick(js_funcs)
     return self
 
   _js__builder__ = '''
       if(options.clearDropDown){htmlObj.innerHTML = ""};
       data.forEach(function(rec){
-        if (rec.items != undefined) {
+        if ((rec.items != undefined) && (rec.items.length > 0)) {
           var li = document.createElement("li"); li.classList.add("dropdown"); li.style.listStyleType = 'none'; 
           li.style.display = 'list-item'; li.style.textAlign = '-webkit-match-parent'; 
           var a = document.createElement("a"); a.setAttribute('tabindex', -1); 
@@ -289,7 +288,7 @@ class DropDown(Html.Html):
           if(typeof options.a !== "undefined"){
             Object.keys(options.a).forEach(function(key){a.style[key] = options.a[key]})}
           if(typeof options.click !== "undefined"){
-            a.onclick = function(event){const value = a.html(); options.click(event, value)}};
+            a.onclick = function(event){const value = a.innerText; options.click(event, value)}};
           var li = document.createElement("li"); li.style.listStyleType = 'none'; li.style.display = 'list-item';
           li.style.textAlign = '-webkit-match-parent'; li.appendChild(a); htmlObj.appendChild(li)}
       })'''
