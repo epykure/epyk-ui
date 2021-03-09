@@ -554,5 +554,6 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     g_chart = graph.GraphBillboard.ChartGauge(self.page, width, height, html_code, options, profile)
+    g_chart.colors(self.page.theme.charts)
     g_chart.add_dataset(text, value)
     return g_chart

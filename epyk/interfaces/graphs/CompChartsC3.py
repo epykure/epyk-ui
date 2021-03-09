@@ -399,10 +399,12 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     g_chart = graph.GraphC3.ChartGauge(self.page, width, height, html_code, options or {}, profile)
+    g_chart.colors(self.page.theme.charts)
     g_chart.add_dataset(text, value)
     return g_chart
 
-  def stanford(self, record=None, y_columns=None, x_axis=None, epoch_col=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
+  def stanford(self, record=None, y_columns=None, x_axis=None, epoch_col=None, profile=None, width=(100, "%"),
+               height=(330, "px"), options=None, html_code=None):
     """
     Description:
     ------------

@@ -526,8 +526,8 @@ class Nvd3:
     """
     options = options or {}
     chart = graph.GraphNVD3.ChartSunbrust(self.page, width, height, options, html_code, profile)
-    chart.add_trace(record, name=name)
     chart.colors(self.page.theme.charts)
+    chart.add_trace(record, name=name)
     return chart
 
   def candlestick(self, record, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
@@ -634,6 +634,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     box_chart = graph.GraphNVD3.ChartBoxPlot(self.page, width, height, options or {}, html_code, profile)
+    box_chart.colors(self.page.theme.charts)
     box_chart.dom.q1('q1').q2('median').q3('q3').wh(
       'maxRegularValue').wl('minRegularValue').outliers('outliers').staggerLabels(True)
     box_chart.dom.itemColor("seriesColor").x('title')
