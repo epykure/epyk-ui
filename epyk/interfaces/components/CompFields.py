@@ -6,6 +6,7 @@ import datetime
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
+from epyk.core.data import components as cpn
 
 
 class Fields:
@@ -1331,7 +1332,7 @@ class Timelines:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    values = ["Documentation", 'Analysis', 'Design', 'Implementation', 'Training']
+    values = cpn.select.from_list(["Documentation", 'Analysis', 'Design', 'Implementation', 'Training'])
     html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
                                             options or {}, profile)
     if html_input.input.options.selected is None:
