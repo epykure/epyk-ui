@@ -48,7 +48,8 @@ class OptionsInput(Options):
     Format any number into currency
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -68,7 +69,8 @@ http://openexchangerates.github.io/accounting.js/
     Format a number with custom precision and localisation
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -86,7 +88,8 @@ http://openexchangerates.github.io/accounting.js/
     Better rounding for floating point numbers
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -151,7 +154,8 @@ http://openexchangerates.github.io/accounting.js/
     """
     Description:
     ------------
-    The placeholder attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format).
+    The placeholder attribute specifies a short hint that describes the expected value of an input field
+    (e.g. a sample value or a short description of the expected format).
 
     Related Pages:
 
@@ -189,7 +193,7 @@ http://openexchangerates.github.io/accounting.js/
     """
     Description:
     ------------
-    Specifies how the text in a text area is to be wrapped when submitted in a form
+    Specifies how the text in a text area is to be wrapped when submitted in a form.
 
     Related Pages:
 
@@ -248,8 +252,8 @@ http://openexchangerates.github.io/accounting.js/
     return self.get(False)
 
   @reset.setter
-  def reset(self, bool):
-    self.set(bool)
+  def reset(self, flag):
+    self.set(flag)
 
   @property
   def select(self):
@@ -260,8 +264,8 @@ http://openexchangerates.github.io/accounting.js/
     return self.get(False)
 
   @select.setter
-  def select(self, bool):
-    self.set(bool)
+  def select(self, flag):
+    self.set(flag)
 
 
 class OptionsInputRange(OptionsInput):
@@ -275,8 +279,8 @@ class OptionsInputRange(OptionsInput):
     return self._attrs.get('output', True)
 
   @output.setter
-  def output(self, bool):
-    self.set(bool)
+  def output(self, flag):
+    self.set(flag)
 
 
 class OptionsInputInteger(OptionsInput):
@@ -290,9 +294,9 @@ class OptionsInputInteger(OptionsInput):
     return self.get(False)
 
   @quantity.setter
-  def quantity(self, bool):
-    self.set(bool)
-    if bool:
+  def quantity(self, flag):
+    self.set(flag)
+    if flag:
       self._report.quantity()
 
 
@@ -303,7 +307,8 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    string The format of the time string displayed in the input and the menu items in the combobox. Available modifiers are:
+    string The format of the time string displayed in the input and the menu items in the combobox.
+    Available modifiers are:
 
     Related Pages:
 
@@ -372,7 +377,8 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    A Date object or string. Only the time parts (getHours, getMinutes) of the object are important. Time entries after minTime won't be displayed/allowed.
+    A Date object or string. Only the time parts (getHours, getMinutes) of the object are important.
+    Time entries after minTime won't be displayed/allowed.
 
     Related Pages:
 
@@ -441,7 +447,7 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    int The 24-hour part of the first item in the combobox when the input field is emptye.
+    int The 24-hour part of the first item in the combobox when the input field is empty.
     If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
 
     Related Pages:
@@ -459,7 +465,7 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    int The minutes part of the first item in the combobox when the input field is emptye.
+    int The minutes part of the first item in the combobox when the input field is empty.
     If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
 
     Related Pages:
@@ -494,7 +500,8 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    boolean If a date is already selected and dynamic is true, the items in the dropdown will be arranged so that the first item is chronologically right after the selected time entry.
+    boolean If a date is already selected and dynamic is true, the items in the dropdown will be arranged so that
+    the first item is chronologically right after the selected time entry.
 
     Related Pages:
 
@@ -503,8 +510,8 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(True)
 
   @dynamic.setter
-  def dynamic(self, bool):
-    self._config(bool)
+  def dynamic(self, flag):
+    self._config(flag)
 
   @property
   def scrollbar(self):
@@ -520,8 +527,8 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(True)
 
   @scrollbar.setter
-  def scrollbar(self, bool):
-    self._config(bool)
+  def scrollbar(self, flag):
+    self._config(flag)
 
   @property
   def zindex(self):
@@ -605,7 +612,8 @@ class OptionAutoComplete(OptionsInput):
     Description:
     ------------
     The delay in milliseconds between when a keystroke occurs and when a search is performed.
-    A zero-delay makes sense for local data (more responsive), but can produce a lot of load for remote data, while being less responsive.
+    A zero-delay makes sense for local data (more responsive), but can produce a lot of load for remote data,
+    while being less responsive.
 
     Related Pages:
 
@@ -640,7 +648,8 @@ class OptionAutoComplete(OptionsInput):
     Description:
     ------------
     The minimum number of characters a user must type before a search is performed.
-    Zero is useful for local data with just a few items, but a higher value should be used when a single character search could match a few thousand items.
+    Zero is useful for local data with just a few items, but a higher value should be used when a single character
+    search could match a few thousand items.
 
     Related Pages:
 
@@ -692,8 +701,8 @@ class OptionAutoComplete(OptionsInput):
     return self.get(False)
 
   @reset.setter
-  def reset(self, bool):
-    self.set(bool)
+  def reset(self, flag):
+    self.set(flag)
 
   def on_select(self, js_funcs, profile=None):
     """
@@ -780,7 +789,7 @@ class OptionsDatePicker(OptionsInput):
     ------------
     The dateFormat to be used for the altField option.
     This allows one date format to be shown to the user for selection purposes, while a different format is actually
-    sent behind the scenes. For a full list of the possible formats see the formatDate function
+    sent behind the scenes. For a full list of the possible formats see the formatDate function.
 
     Related Pages:
 
@@ -1363,7 +1372,7 @@ class OptionsDatePicker(OptionsInput):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
-    self._config("function(dateText, inst){let data = dateText; %s}" % values)
+    self._config("function(dateText, inst){let data = dateText; %s}" % values, js_type=True)
 
   def onSelect(self, values, profile=False):
     """
@@ -1378,14 +1387,15 @@ class OptionsDatePicker(OptionsInput):
       https://api.jqueryui.com/datepicker/#option-onSelect
     """
     values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
-    self._config("function(dateText, inst){let data = dateText; %s}" % values)
+    self._config("function(dateText, inst){let data = dateText; %s}" % values, js_type=True)
 
   @property
   def prevText(self):
     """
     Description:
     ------------
-    The text to display for the previous month link. With the standard ThemeRoller styling, this value is replaced by an icon.
+    The text to display for the previous month link. With the standard ThemeRoller styling, this value is replaced
+    by an icon.
 
     Related Pages:
 
@@ -1402,7 +1412,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether days in other months shown before or after the current month are selectable. This only applies if the showOtherMonths option is set to true.
+    Whether days in other months shown before or after the current month are selectable. This only applies if
+    the showOtherMonths option is set to true.
 
     Related Pages:
 
@@ -1419,7 +1430,9 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The cutoff year for determining the century for a date (used in conjunction with dateFormat 'y'). Any dates entered with a year value less than or equal to the cutoff year are considered to be in the current century, while those greater than it are deemed to be in the previous century.
+    The cutoff year for determining the century for a date (used in conjunction with dateFormat 'y'). Any dates
+    entered with a year value less than or equal to the cutoff year are considered to be in the current century,
+    while those greater than it are deemed to be in the previous century.
 
     Related Pages:
 
@@ -1436,7 +1449,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The name of the animation used to show and hide the datepicker. Use "show" (the default), "slideDown", "fadeIn", any of the jQuery UI effects. Set to an empty string to disable animation.
+    The name of the animation used to show and hide the datepicker. Use "show" (the default), "slideDown", "fadeIn",
+    any of the jQuery UI effects. Set to an empty string to disable animation.
 
     Related Pages:
 
@@ -1453,7 +1467,9 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether to display a button pane underneath the calendar. The button pane contains two buttons, a Today button that links to the current day, and a Done button that closes the datepicker. The buttons' text can be customized using the currentText and closeText options respectively.
+    Whether to display a button pane underneath the calendar. The button pane contains two buttons, a Today button
+    that links to the current day, and a Done button that closes the datepicker. The buttons' text can be customized
+    using the currentText and closeText options respectively.
 
     Related Pages:
 
@@ -1470,7 +1486,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    When displaying multiple months via the numberOfMonths option, the showCurrentAtPos option defines which position to display the current month in.
+    When displaying multiple months via the numberOfMonths option, the showCurrentAtPos option defines which position
+    to display the current month in.
 
     Related Pages:
 
@@ -1504,7 +1521,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    When the datepicker should appear. The datepicker can appear when the field receives focus ("focus"), when a button is clicked ("button"), or when either event occurs ("both").
+    When the datepicker should appear. The datepicker can appear when the field receives focus ("focus"),
+    when a button is clicked ("button"), or when either event occurs ("both").
 
     Related Pages:
 
@@ -1521,7 +1539,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    If using one of the jQuery UI effects for the showAnim option, you can provide additional properties for that animation using this option.
+    If using one of the jQuery UI effects for the showAnim option, you can provide additional properties for
+    that animation using this option.
 
     Related Pages:
 
@@ -1538,7 +1557,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    Whether to display dates in other months (non-selectable) at the start or end of the current month. To make these days selectable use the selectOtherMonths option.
+    Whether to display dates in other months (non-selectable) at the start or end of the current month.
+    To make these days selectable use the selectOtherMonths option.
 
     Related Pages:
 
@@ -1555,7 +1575,8 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    When true, a column is added to show the week of the year. The calculateWeek option determines how the week of the year is calculated. You may also want to change the firstDay option.
+    When true, a column is added to show the week of the year. The calculateWeek option determines how the week of
+    the year is calculated. You may also want to change the firstDay option.
 
     Related Pages:
 
@@ -1606,7 +1627,10 @@ class OptionsDatePicker(OptionsInput):
     """
     Description:
     ------------
-    The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.
+    The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"),
+    relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"),
+    or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down,
+    to restrict which dates may be selected use the minDate and/or maxDate options.
 
     Related Pages:
 
