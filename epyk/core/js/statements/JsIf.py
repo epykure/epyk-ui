@@ -67,8 +67,7 @@ class JsIf:
 
     :return: The If object to allow the chaining.
     """
-    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
-    self.__jsElse = js_funcs
+    self.__jsElse = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
     return self
 
   def toStr(self):
@@ -76,7 +75,7 @@ class JsIf:
     for condition, funcs in self._js[1:]:
       str_data.append("else if(%s){%s}" % (condition, ";".join(funcs)))
     if self.__jsElse is not None:
-      str_data.append("else{%s}" % ";".join(map(lambda x: str(x),  self.__jsElse)))
+      str_data.append("else {%s}" % self.__jsElse)
     # empty the stack
     self._js, self.__jsElse = [], None
     return "".join(str_data)

@@ -548,6 +548,7 @@ class Rich:
     :param by: List. Optional. Name of JavaScript library aliases.
     """
     container = self.page.ui.div()
+    container.style.css.font_factor(-4)
     if by is None:
       by = sorted(list(self.page.jsImports))
     for i, b in enumerate(by):
@@ -564,7 +565,7 @@ class Rich:
         badge[0].style.css.border_right = "1px solid black"
         badge[1].style.css.padding = "0 5px 0 0"
         badge.style.css.border = "1px solid black"
-        badge.style.css.margin = "0 2px"
+        badge.style.css.margin = 2
         badge.style.css.border_radius = "0 10px 10px 0"
         container.add(badge)
     return container

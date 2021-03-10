@@ -1,5 +1,6 @@
 
 from epyk.core.html import geo
+from epyk.interfaces import Arguments
 
 
 class ChartJs:
@@ -24,7 +25,7 @@ class BubbleMaps:
     self.chartFamily = "ChartJs"
 
   def world(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+            height=(330, "px"), html_code=None):
     """
     Description:
     ------------
@@ -44,6 +45,8 @@ class BubbleMaps:
     :param height:
     :param html_code:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.Choropleth(self.page, width, height, html_code, options or {}, profile)
     geo_chart._attrs['type'] = "bubbleMap"
     geo_chart.options.scale.projection = "mercator"
@@ -75,6 +78,8 @@ class BubbleMaps:
     :param height:
     :param html_code:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.ChoroplethUs(
       self.page, width, height, html_code, options or {}, profile)
     geo_chart._attrs['type'] = "bubbleMap"
@@ -114,6 +119,8 @@ class Choropleth:
     :param height:
     :param html_code:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.ChoroplethUs(
       self.page, width, height, html_code, options or {}, profile)
     geo_chart.options.scale.projection = "albersUsa"
@@ -147,6 +154,8 @@ class Choropleth:
     :param height:
     :param html_code:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.Choropleth(self.page, width, height, html_code, options or {}, profile)
     geo_chart.options.scale.projection = "equalEarth"
     geo_chart.options.scale.projection = "equirectangular"
@@ -177,6 +186,8 @@ class Choropleth:
     :param height:
     :param html_code:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.ChoroplethCountry(self.page, width, height, html_code, options or {}, profile)
     geo_chart.options.scale.projection = "equalEarth"
     geo_chart.options.geo.colorScale.display = True

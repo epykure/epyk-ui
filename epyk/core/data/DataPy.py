@@ -6,6 +6,7 @@ import os
 import logging
 
 from epyk.core.py import OrderedSet
+from epyk.core.data.recs import RecItems
 
 
 class Plotly:
@@ -494,7 +495,7 @@ class ChartJs:
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': False}
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
       return is_data
 
@@ -525,8 +526,7 @@ class ChartJs:
         value = agg_data.get(y, {}).get(x)
         series.append(value)
       is_data["datasets"].append({"data": series, 'label': y})
-      #is_data["datasets"].append(series)
-      #is_data["series"].append(y)
+      is_data["series"].append(y)
     return is_data
 
   @staticmethod
@@ -566,7 +566,7 @@ class ChartJs:
     is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
+      is_data["datasets"].append({"data": data[i], 'label': l})
       is_data["series"].append(l)
     return is_data
 
@@ -603,10 +603,10 @@ class ChartJs:
       series = []
       for x, y in agg_data.get(c, {}).items():
         is_data["labels"].add(x)
-        series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
+        series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 2)})
       data.append(series)
     for i, l in enumerate(y_columns):
-      is_data["datasets"].append(data[i])
+      is_data["datasets"].append({"data": data[i], 'label': l})
       is_data["series"].append(l)
     return is_data
 
@@ -858,6 +858,83 @@ class Checkbox:
     return result
 
 
+class SelectionBox:
+
+  @staticmethod
+  def from_records(records, column):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param records:
+    :param column:
+    """
+    result = {}
+    for rec in records:
+      result[rec[column]] = {'name': rec[column], 'value': rec[column].strip()}
+    return [result[k] for k in sorted(result.keys())]
+
+  @staticmethod
+  def from_df(df, column, all_checked=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param df:
+    :param column:
+    :param all_checked:
+    """
+    return [{'name': r, 'value': r} for r in df[column].unique().tolist()]
+
+  @staticmethod
+  def from_list(values, all_checked=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param values:
+    :param all_checked:
+    """
+    return [{'name': r, 'value': r} for r in values]
+
+
+class ListData:
+
+  @staticmethod
+  def from_records(records, column):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param records:
+    :param column:
+    """
+    result = set()
+    for rec in records:
+      result.add(rec[column].strip())
+    return sorted(list(result))
+
+
 class HtmlComponents:
 
   def markdown(self, content, tooltips=None, case_sensitive=False):
@@ -871,8 +948,9 @@ class HtmlComponents:
 
     Attributes:
     ----------
-    :param content: String. The markdown content
-    :param tooltips: Dictionary. The words to be replaced
+    :param content: String. The markdown content.
+    :param tooltips: Dictionary. Optional. The words to be replaced.
+    :param case_sensitive: Boolean. Optional. Case sensitive flag.
     """
     if tooltips is None:
       return content
@@ -914,11 +992,39 @@ class HtmlComponents:
 
   @property
   def radio(self):
+    """
+    Description:
+    ------------
+
+    """
     return Checkbox
 
   @property
   def check(self):
+    """
+    Description:
+    ------------
+
+    """
     return Checkbox
+
+  @property
+  def select(self):
+    """
+    Description:
+    ------------
+
+    """
+    return SelectionBox
+
+  @property
+  def list(self):
+    """
+    Description:
+    ------------
+
+    """
+    return ListData
 
 
 class Tree:
@@ -979,3 +1085,78 @@ class Tree:
     if path is not None:
       self.__add_level(path, result[0]["items"], path, excluded_folders, make_url, options={"styles": {"leaf": style_leaf, "node": style_node}})
     return result
+
+
+class ListItems:
+
+  @property
+  def text(self):
+    """
+    Description:
+    ------------
+    """
+    return ListData
+
+  @property
+  def link(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsLinkRec
+
+  @property
+  def box(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsBoxRec
+
+  @property
+  def tweet(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsTweetRec
+
+  @property
+  def icon(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsIconRec
+
+  @property
+  def check(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsCheckRec
+
+  @property
+  def radio(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsBoxRec
+
+  @property
+  def badge(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsBoxRec
+
+  @property
+  def button(self):
+    """
+    Description:
+    ------------
+    """
+    return RecItems.ItemsBoxRec

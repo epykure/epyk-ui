@@ -734,10 +734,11 @@ class ChartLine(Chart):
   _js__builder__ = '''
       if(data.python){
         result = {datasets: [], labels: data.labels};
-        data.datasets.forEach(function(rec, i){
-          result.datasets.push({label: data.series[i], data: rec, backgroundColor: options.colors[i], 
-            borderColor: options.colors[i]})})}
-      else{
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          result.datasets.push(dataset) })
+      } else{
         var temp = {}; var labels = []; var uniqLabels = {}; 
         options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 
@@ -823,8 +824,10 @@ class ChartBubble(Chart):
   _js__builder__ = '''
       if(data.python){
         result = {datasets: [], labels: data.series};
-        data.datasets.forEach(function(rec, i){
-          result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors[i]})})
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = [];
         options.y_columns.forEach(function(series){temp[series] = []});
@@ -1011,9 +1014,9 @@ class ChartPolar(Chart):
   _js__builder__ = '''
       if(data.python){
         result = {datasets: [], labels: data.series};
-        data.datasets.forEach(function(rec, i){
-          var dataset = {label: data.series[i], data: rec, backgroundColor: options.colors, 
-             borderColor: options.colors};
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
           for(var attr in options.attrs){dataset[attr] = options.attrs[attr]};
           result.datasets.push(dataset)})
       } else {
@@ -1107,8 +1110,10 @@ class ChartPie(Chart):
   _js__builder__ = ''' 
       if(data.python){
         result = {datasets: [], labels: data.series};
-        data.datasets.forEach(function(rec, i){
-          result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors} ) })
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
+          result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});
@@ -1182,11 +1187,11 @@ class ChartRadar(Chart):
   _js__builder__ = '''
       if(data.python){
         result = {datasets: [], labels: data.series};
-        data.datasets.forEach(function(rec, i){
-          var dataset = {label: data.series[i], data: rec, backgroundColor: options.colors, 
-                         borderColor: options.colors[i]};
-          for(var attr in options.props){dataset[attr] = options.props[attr]};
-          result.datasets.push(dataset)})
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          if(typeof dataset.borderWidth === "undefined"){dataset.borderWidth  = 1};
+          result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});
@@ -1257,8 +1262,10 @@ class ChartScatter(Chart):
   _js__builder__ = ''' 
       if(data.python){
         result = {datasets: [], labels: data.series};
-        data.datasets.forEach(function(rec, i){
-          result.datasets.push( {label: data.series[i], data: rec, backgroundColor: options.colors[i]})})
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = [];
         options.y_columns.forEach(function(series){temp[series] = []});
