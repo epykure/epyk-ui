@@ -912,6 +912,10 @@ class SelectionBox:
     """
     return [{'name': r, 'value': r} for r in values]
 
+  @staticmethod
+  def from_dict(values, all_checked=False):
+    return [{'name': values[k], 'value': k} for k in sorted(values.keys())]
+
 
 class ListData:
 

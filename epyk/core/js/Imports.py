@@ -2629,6 +2629,23 @@ class ImportManager:
           versions.append(v)
         import_cict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
 
+  def add(self, alias):
+    """
+    Description:
+    ------------
+    Add package to the page external required modules.
+
+    Usage:
+
+    Attributes:
+    ----------
+    :param alias:
+    """
+    if alias in JS_IMPORTS:
+      self._report.jsImports.add(alias)
+    if alias in CSS_IMPORTS:
+      self._report.cssImport.add(alias)
+
   @property
   def requirements(self):
     """

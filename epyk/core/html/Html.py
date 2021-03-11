@@ -2056,10 +2056,10 @@ class Body(Html):
           window['popup_loading_body'] = document.createElement("div"); 
           window['popup_loading_body'].style.width = '100%%'; window['popup_loading_body'].style.height = '100%%'; window['popup_loading_body'].style.opacity = 0.3;
           window['popup_loading_body'].style.position = 'fixed'; window['popup_loading_body'].style.top = 0; window['popup_loading_body'].style.left = 0; window['popup_loading_body'].style.zIndex = %s;
-          window['popup_loading_body'].style.background = 'green'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
+          window['popup_loading_body'].style.background = '%s'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
           window['popup_loading_body'].innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
           document.body.appendChild(window['popup_loading_body'])
-        } ''' % z_index
+        } ''' % (z_index, self.page.theme.colors[5])
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
