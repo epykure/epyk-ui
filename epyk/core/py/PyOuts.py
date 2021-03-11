@@ -612,6 +612,8 @@ class PyOuts(object):
         htmlParts.append(component.html())
       cssParts.update(component.style.get_classes_css())
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+    for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
+      body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
     results['body'] = body
     results['header'] = self._report.headers
     return self.html_tmpl.strip() % results
