@@ -33,15 +33,13 @@ class AgGrid:
     cols = cols or []
     rows = rows or []
     if not cols and not rows:
-      if records is not None:
+      if records is not None and records:
         cols = list(records[0].keys())
 
     table_options_dfls = {'headerHeight': 30, 'rowHeight': '50'}
     if options is not None:
       table_options_dfls.update(options)
-
-    table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code,
-                                              table_options_dfls, profile)
+    table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code, table_options_dfls, profile)
     for c in cols + rows:
       table.add_column(c)
     return table

@@ -7,7 +7,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 
-class ColumnApi(object):
+class ColumnApi:
 
   def __init__(self, report, varId):
     self.varId = varId
