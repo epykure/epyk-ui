@@ -222,7 +222,7 @@ class Pivottable:
     return table
 
   def plotly(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            helper=None, options=None, profile=False):
+             helper=None, options=None, profile=False):
     """
     Description:
     -----------
@@ -251,7 +251,7 @@ class Pivottable:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    table = html_tables.HtmlTablePivot.PivotUITable(self.page, records, rows, cols, width, height, html_code,
-                                                    helper, options, profile)
+    table = html_tables.HtmlTablePivot.PivotUITable(
+      self.page, records, rows, cols, width, height, html_code, helper, options, profile)
     table.renderers.plotly.bar()
     return table

@@ -19,17 +19,19 @@ from epyk.core.css.styles import GrpClsTable
 
 
 class PivotTable(Html.Html):
+
   requirements = ('pivottable', )
   name = 'Pivot Table'
+  _option_cls = OptTable.OptionsPivot
 
   def __init__(self, report, records, rows, cols, width, height, html_code, helper, options, profile):
     super(PivotTable, self).__init__(report, records, html_code=html_code, profile=profile,
                                      css_attrs={"width": width, "height": height})
     # Add the extra HTML components
     self.add_helper(helper)
-    self.__options = OptTable.OptionsPivot(self, options)
     # to add all the columns in the table if nothing defined
-    self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
+    self.options.cols = cols or []
+    self.options.rows = rows or []
     self.style.css.display = 'inline-block'
     self.style.css.position = 'relative'
     self.style.css.overflow = 'auto'
@@ -63,7 +65,7 @@ class PivotTable(Html.Html):
 
     :rtype: OptTable.OptionsPivot
     """
-    return self.__options
+    return super().options
 
   @property
   def aggregators(self):
@@ -108,13 +110,14 @@ class PivotTable(Html.Html):
 
 
 class PivotUITable(PivotTable):
+  _option_cls = OptTable.OptionsPivotUI
 
   def __init__(self, report, records, rows, cols, width, height, html_code, helper, options, profile):
     super(PivotUITable, self).__init__(report, records or [], rows, cols, width, height, html_code, helper, options,
                                        profile)
-    self.__options = OptTable.OptionsPivotUI(self, options)
     # to add all the columns in the table if nothing defined
-    self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
+    self.options.cols = cols or []
+    self.options.rows = rows or []
 
   @property
   def options(self):
@@ -128,7 +131,7 @@ class PivotUITable(PivotTable):
 
     :rtype: OptTable.OptionsPivotUI
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
         %(jqId)s.pivotUI(data, options)

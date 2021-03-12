@@ -1,7 +1,3 @@
-"""
-
-https://github.com/nicolaskruchten/pivottable/wiki/Parameters
-"""
 
 from epyk.core.html.options import Options
 
@@ -14,7 +10,7 @@ class OptionsPivot(Options):
     """
     Description:
     ------------
-    constructor for an object which will aggregate results per cell (see documentation)
+    Constructor for an object which will aggregate results per cell (see documentation)
 
     Related Pages:
 
@@ -32,7 +28,7 @@ class OptionsPivot(Options):
     """
     Description:
     ------------
-    Name of the aggregator, used for display purposes in some renderers
+    Name of the aggregator, used for display purposes in some renderers.
 
     Related Pages:
 
@@ -43,6 +39,23 @@ class OptionsPivot(Options):
   @aggregatorName.setter
   def aggregatorName(self, attrs):
     self._config(attrs)
+
+  @property
+  def cols(self):
+    """
+    Description:
+    ------------
+    Array of attribute names for use as columns.
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+    """
+    return self._config_get([])
+
+  @cols.setter
+  def cols(self, values):
+    self._config(values)
 
   @property
   def showUI(self):
@@ -66,7 +79,8 @@ class OptionsPivot(Options):
     """
     Description:
     ------------
-    The order in which row data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z", "value_z_to_a", ordering by value orders by row total
+    The order in which row data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z",
+    "value_z_to_a", ordering by value orders by row total
 
     Related Pages:
 
@@ -79,11 +93,29 @@ class OptionsPivot(Options):
     self._config(attrs)
 
   @property
+  def rows(self):
+    """
+    Description:
+    ------------
+    Array of attribute names to use as rows.
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+    """
+    return self._config_get([])
+
+  @rows.setter
+  def rows(self, values):
+    self._config(values)
+
+  @property
   def colOrder(self):
     """
     Description:
     ------------
-    the order in which column data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z", "value_z_to_a", ordering by value orders by column total
+    the order in which column data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z",
+    "value_z_to_a", ordering by value orders by column total
 
     Related Pages:
 
@@ -135,7 +167,8 @@ class OptionsPivot(Options):
     """
     Description:
     ------------
-    Called on each record, returns false if the record is to be excluded from the input before rendering or true otherwise
+    Called on each record, returns false if the record is to be excluded from the input before rendering or
+    true otherwise
 
     Related Pages:
 
@@ -153,7 +186,8 @@ class OptionsPivot(Options):
     """
     Description:
     ------------
-    accessed or called with an attribute name and can return a function which can be used as an argument to array.sort for output purposes.
+    accessed or called with an attribute name and can return a function which can be used as an argument to array.sort
+    for output purposes.
     If no function is returned, the default sorting mechanism is a built-in "natural sort" implementation.
     Useful for sorting attributes like month names, see example 1 and example 2.
 
@@ -186,17 +220,21 @@ class OptionsPivot(Options):
 
 
 class OptionsPivotUI(OptionsPivot):
-  component_properties = ('aggregator', 'aggregatorName', 'showUI', 'derivedAttributes',
-    'dataClass', 'sorters', 'rendererOptions',
-    'inclusions', 'exclusions', 'hiddenAttributes', 'hiddenFromAggregators', 'hiddenFromDragDrop',
-    'menuLimit', 'autoSortUnusedAttrs', 'unusedAttrsVertical', 'rendererOptions')
+  component_properties = (
+    'aggregator', 'aggregatorName', 'showUI',
+    #'derivedAttributes',
+    #'dataClass', 'sorters', 'rendererOptions',
+    #'inclusions', 'exclusions', 'hiddenAttributes', 'hiddenFromAggregators', 'hiddenFromDragDrop',
+    #'menuLimit', 'autoSortUnusedAttrs', 'unusedAttrsVertical', 'rendererOptions'
+  )
 
   @property
   def inclusions(self):
     """
     Description:
     ------------
-    object whose keys are attribute names and values are arrays of attribute values which denote records to include in rendering; used to prepopulate the filter menus that appear on double-click (overrides exclusions below)
+    Object whose keys are attribute names and values are arrays of attribute values which denote records to include in
+    rendering; used to prepopulate the filter menus that appear on double-click (overrides exclusions below).
 
     Related Pages:
 
@@ -213,7 +251,8 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    object whose keys are attribute names and values are arrays of attribute values which denote records to exclude from rendering; used to prepopulate the filter menus that appear on double-click
+    Object whose keys are attribute names and values are arrays of attribute values which denote records to exclude
+    from rendering; used to prepopulate the filter menus that appear on double-click.
 
     Related Pages:
 
@@ -230,7 +269,8 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    object whose keys are attribute names and values are arrays of attribute values which denote records to exclude from rendering; used to prepopulate the filter menus that appear on double-click
+    Object whose keys are attribute names and values are arrays of attribute values which denote records to exclude
+    from rendering; used to prepopulate the filter menus that appear on double-click.
 
     Related Pages:
 
@@ -247,7 +287,7 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    contains attribute names to omit from the aggregator arguments dropdowns
+    Contains attribute names to omit from the aggregator arguments dropdowns.
 
     Related Pages:
 
@@ -264,7 +304,7 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    contains attribute names to omit from the drag'n'drop portion of the UI
+    Contains attribute names to omit from the drag'n'drop portion of the UI.
 
     Related Pages:
 
@@ -281,7 +321,7 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    called upon renderer refresh with an object representing the current UI settings (see example)
+    Called upon renderer refresh with an object representing the current UI settings (see example).
 
     Related Pages:
 
@@ -299,7 +339,7 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    maximum number of values to list in the double-click menu
+    maximum number of values to list in the double-click menu.
 
     Related Pages:
 
@@ -316,7 +356,7 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    controls whether or not unused attributes are kept sorted in the UI
+    controls whether or not unused attributes are kept sorted in the UI.
 
     Related Pages:
 
@@ -333,7 +373,10 @@ class OptionsPivotUI(OptionsPivot):
     """
     Description:
     ------------
-    Controls whether or not unused attributes are shown vertically instead of the default which is horizontally. true means always vertical, false means always horizontal. If set to a number (as is the default) then if the attributes' names' combined length in characters exceeds the number then the attributes will be shown vertically
+    Controls whether or not unused attributes are shown vertically instead of the default which is horizontally.
+    true means always vertical, false means always horizontal. If set to a number (as is the default) then
+    if the attributes' names' combined length in characters exceeds the number then the attributes will be shown
+    vertically.
 
     Related Pages:
 
@@ -342,8 +385,8 @@ class OptionsPivotUI(OptionsPivot):
     return self._config_get(85)
 
   @unusedAttrsVertical.setter
-  def unusedAttrsVertical(self, bool):
-    self._config(bool)
+  def unusedAttrsVertical(self, flag):
+    self._config(flag)
 
   @property
   def rendererOptions(self):
@@ -359,8 +402,8 @@ class OptionsPivotUI(OptionsPivot):
     return self._config_get({})
 
   @rendererOptions.setter
-  def rendererOptions(self, bool):
-    self._config(bool)
+  def rendererOptions(self, flag):
+    self._config(flag)
 
   @property
   def renderer(self):

@@ -582,7 +582,11 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'plotly_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/',
        'cdnjs': CDNJS_REPO}
-    ]},
+    ],
+    'assets': [
+      {'script': 'plotly_renderers.min.js.map', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]
+  },
 
   # Pivot Table pivot D3 renderer
   'pivot-d3': {
@@ -904,7 +908,7 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'repository': 'https://github.com/plotly/plotly.js',
     'version': '1.58.4',
-    'req': [{'alias': 'd3'}],
+    #'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
