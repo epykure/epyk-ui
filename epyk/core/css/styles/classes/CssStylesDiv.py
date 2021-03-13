@@ -232,3 +232,15 @@ class CssDivHorizontalRotate(CssStyle.Style):
 
 class CssDivNoFocusOutline(CssStyle.Style):
   _focus = {'outline': 0}
+
+
+class CssDivCutCorner(CssStyle.Style):
+  _attrs = {"position": 'relative'}
+  _before = {'content': "''", 'position': 'absolute', 'top': "-4px",
+             'right': "-4px", 'width': 0}
+
+  def customize(self):
+    self.before.css({
+      'border-top': '20px solid %s' % self.page.theme.greys[0],
+      'border-left': '20px solid %s' % self.page.theme.colors[2],
+    })

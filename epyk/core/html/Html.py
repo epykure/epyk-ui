@@ -670,14 +670,14 @@ class Html:
     :return: The Html object.
     """
     self.icon = ""
-    defined_families = ('office-ui-fabric-core', 'material-design-icons')
+    defined_families = ('office-ui-fabric-core', 'material-design-icons', 'font-awesome', 'bootstrap-icons')
     if family is not None and self.options.verbose and family not in defined_families:
       logging.warning("Family %s not defined in %s" % (family, defined_families))
 
     if text is not None:
       html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
-      self.icon = self._report.ui.images.icon(text, html_code=html_code_icon,
-                                              family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
+      self.icon = self._report.ui.images.icon(
+        text, html_code=html_code_icon, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
       if position == "before":
         self.prepend_child(self.icon)
       else:

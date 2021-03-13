@@ -178,7 +178,7 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsVoid("%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
-  def data(self, datasets):
+  def data(self, datasets, options=None, profile=None):
     """
     Description:
     -----------
@@ -190,52 +190,12 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param datasets: Dictionary of dictionary. Teh full datasets object expected by ChartJs
+    :param datasets: Dictionary of dictionary. Teh full datasets object expected by ChartJs.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not hasattr(datasets, 'toStr') and isinstance(datasets, dict):
-      for i, dataset in enumerate(datasets['datasets']):
-        if dataset.get("type") in ['line', 'scatter', 'bubble']:
-          if not 'backgroundColor' in dataset:
-            dataset['backgroundColor'] = self.src.colors[i]
-          if not 'borderColor' in dataset:
-            dataset['borderColor'] = self.src.colors[i]
-          if not 'fillOpacity' in dataset:
-            dataset['fillOpacity'] = 0.8
-          if dataset["type"] == 'line':
-            if not 'fill' in dataset:
-              dataset['fill'] = False
-            if not 'pointRadius' in dataset:
-              dataset['pointRadius'] = 1
-        elif dataset.get("type") in ['bar', 'horizontalBar']:
-          if not 'backgroundColor' in dataset:
-            dataset['backgroundColor'] = self.src.colors[i]
-          if not 'fillOpacity' in dataset:
-            dataset['fillOpacity'] = 0.8
-        elif dataset.get("type") in ['polarArea', 'pie']:
-          if not 'backgroundColor' in dataset:
-            dataset['backgroundColor'] = self.src.colors
-    datasets = JsUtils.jsConvertData(datasets, None)
-    return JsObjects.JsVoid('''
-      var chartData = %(data)s; var chartColors = %(colors)s; var chartBgColors = %(bgcolors)s;
-      chartData.datasets.forEach(function(dataset, i){
-        if (typeof dataset.type !== 'undefined'){
-          if (['line', 'scatter', 'bubble', null].includes(dataset.type)){
-            if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
-            if (typeof dataset.borderColor === 'undefined'){dataset.borderColor = chartColors[i]}
-            if (dataset.type == 'line'){if (typeof dataset.borderColor === 'undefined'){dataset.fill = false}}}
-          else if (['bar', 'horizontalBar'].includes(dataset.type)){
-            if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
-            if (typeof dataset.fillOpacity === 'undefined'){dataset.fillOpacity = 0.8}}
-          else if (['polarArea', 'pie', 'donut'].includes(dataset.type)){
-            if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors} 
-            if (typeof dataset.fillOpacity === 'undefined'){dataset.fillOpacity = 0.8}}
-        } else if (['polarArea', 'pie', 'donut'].includes(chartData.type)){
-          if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors}}
-        else {
-          if (typeof dataset.backgroundColor === 'undefined'){dataset.backgroundColor = chartBgColors[i]}
-          if (typeof dataset.borderColor === 'undefined'){dataset.borderColor = chartColors[i]}}})
-      %(varName)s.config.data = chartData; %(varName)s.update()''' % {"data": datasets, "varName": self.varName,
-              'colors': self.src.colors, 'bgcolors': self.src.bgColors})
+    return self.src.build(
+      JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
   def load(self, name, points, options=None):
     """

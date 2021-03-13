@@ -348,6 +348,22 @@ class Catalog:
     return self.__ctx['div']
 
   @property
+  def shapes(self):
+    """
+    Description:
+    ------------
+    CSS Classes specific to Div / Container components.
+
+    Usage:
+    -----
+
+    :rtype: CatalogDiv.CatalogShapes
+    """
+    if "shapes" not in self.__ctx:
+      self.__ctx['shapes'] = CatalogDiv.CatalogShapes(self.page, self.__class_list_type)
+    return self.__ctx['shapes']
+
+  @property
   def radio(self):
     """
     Description:

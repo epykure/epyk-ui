@@ -1,22 +1,26 @@
 
 
-## Added
--
-- ChangeLog file.
-- Add Bootstrap icons.
-- Add Bootstrap styles shortcuts.
-- Add styles to the breadcrumb.
-- Add proper Options for the breadcrumb HTML component.
+### Added
 
-## Changed
+- Icons menu.
+- Add Bootstrap icon family from standard components.
 
-- Improved BreadCrumb component JavaScript function.
-- Improved documentation in functions.
-- Changed click events on switch component
+### Changed
 
-## Fixed
+- ChartJs JavaScript data() interface => align with build method.
+- ChartJs common series attributes.
 
-- Fixed Tree component.
-- Fixed Theme color in the Menu.
-- Fixed Select component.
-- Fixed color theme display for the scrollbar.
+### Fixed
+
+- Fixed PivotTableJs component renderers.
+- Fixed Icon familiy use.
+
+## [1.5.3] - 2021-03-12
+
+### Changed
+
+- Improved ChartJsGeo interface.
+
+### Fixed
+
+- Fixed webworkers integration from Flask.

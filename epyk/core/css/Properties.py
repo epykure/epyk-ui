@@ -2615,7 +2615,7 @@ class CssMixin:
     Related Pages:
 
       https://www.w3schools.com/css/css3_shadows.asp
-  https://gist.github.com/ocean90/1268328
+      https://gist.github.com/ocean90/1268328
 
     Attributes:
     ----------
@@ -2630,11 +2630,14 @@ class CssMixin:
     rgb = Colors.getHexToRgb(self.component.page.theme.greys[-1] if hexa_color is None else hexa_color)
     #self.box_shadow = "0 2px 4px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 3px 10px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
     if position == 'right':
-      self.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+      self.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
+        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
     elif position == 'left':
-      self.box_shadow = "-%(size)spx 0 5px -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+      self.box_shadow = "-%(size)spx 0 5px -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
+        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
     else:
-      self.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+      self.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
+        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
     self.border_radius = radius
     return self
 

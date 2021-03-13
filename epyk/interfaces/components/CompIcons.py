@@ -1534,6 +1534,46 @@ class Icons:
       self.page.ui.div(icon, align="center")
     return icon
 
+  @html.Html.css_skin()
+  def menu(self, data, width=(100, '%'), height=(None, 'px'), align="left", options=None, profile=False):
+    """
+    Description:
+    ------------
+    Add a menu bar with multiple icons.
+
+    Usage:
+    -----
+
+      menu = page.ui.icons.menu([
+        {"icon": "fab fa-github-square", "tooltip": "Github path", 'url': 'test'},
+        {"icon": "far fa-eye"},
+        {"icon": "fas fa-file-code"}
+      ])
+
+    Attributes:
+    ----------
+    :param data: List. The icons definition.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. Optional. A string with the horizontal position of the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    """
+    dflt_options = {"margin-right": 5}
+    if options is not None:
+      dflt_options.update(options)
+    div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
+    for d in data:
+      div.add(self.page.ui.icons.awesome(
+        icon=d["icon"], tooltip=d.get("tooltip", ""), width=self.page.body.style.globals.icon.normal,
+        options=options, profile=profile))
+      div[-1].style.css.margin_right = dflt_options["margin-right"]
+      div[-1].style.css.color = self.page.theme.greys[5]
+      div[-1].style.add_classes.div.color_hover()
+      if 'url' in d:
+        div[-1].goto(d["url"], target="_blank")
+    return div
+
   @property
   def toggles(self):
     """

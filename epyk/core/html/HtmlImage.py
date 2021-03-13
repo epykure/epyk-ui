@@ -15,6 +15,7 @@ from epyk.core.css.styles import GrpClsImage
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlTinySlider
 from epyk.core.js import JsUtils
+from epyk.core.js import Imports
 from epyk.core.js.packages import JsTinySlider
 
 from epyk.core import data
@@ -265,7 +266,8 @@ class Icon(Html.Html):
   name = 'Icon'
 
   def __init__(self, report, value, width, height, color, tooltip, options, html_code, profile):
-    self.requirements = (options['icon_family'], )
+    if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
+      self.requirements = (options['icon_family'],)
     super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height},
                                html_code=html_code, profile=profile)
     if options['icon_family'] == 'office-ui-fabric-core':
@@ -276,6 +278,11 @@ class Icon(Html.Html):
       self.attr['class'].add("material-icons")
       self._vals = value
       value = ""
+    elif options['icon_family'] == 'bootstrap-icons':
+      if self.page.ext_packages is None:
+        self.page.ext_packages = {}
+      self.page.ext_packages.update(Imports.BOOTSTRAP)
+      self.page.cssImport.add("bootstrap-icons")
     if value is not None:
       self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'

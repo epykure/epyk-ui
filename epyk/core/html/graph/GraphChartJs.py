@@ -493,7 +493,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param data:
+    :param data: Dictionary of dictionary. Teh full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -505,7 +505,8 @@ class Chart(Html.Html):
       if profile:
         js_func_builder = JsUtils.jsConvertFncs(["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
-      return "Object.assign(window['%(chartId)s'].data, %(chartFnc)s(%(data)s, %(options)s)); window['%(chartId)s'].update()" % {
+      return """Object.assign(window['%(chartId)s'].data, %(chartFnc)s(%(data)s, %(options)s)); 
+        window['%(chartId)s'].update()""" % {
         'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
         "options":  self.options.config_js(options)}
 
@@ -737,6 +738,8 @@ class ChartLine(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          if(typeof dataset.hoverBackgroundColor === "undefined"){dataset.hoverBackgroundColor = options.background_colors[i]};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else{
         var temp = {}; var labels = []; var uniqLabels = {}; 
@@ -827,6 +830,7 @@ class ChartBubble(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = [];
@@ -1017,6 +1021,7 @@ class ChartPolar(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           for(var attr in options.attrs){dataset[attr] = options.attrs[attr]};
           result.datasets.push(dataset)})
       } else {
@@ -1113,6 +1118,7 @@ class ChartPie(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
@@ -1191,6 +1197,7 @@ class ChartRadar(Chart):
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
           if(typeof dataset.borderWidth === "undefined"){dataset.borderWidth  = 1};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
@@ -1265,6 +1272,8 @@ class ChartScatter(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          if(typeof dataset.hoverBackgroundColor === "undefined"){dataset.hoverBackgroundColor = options.colors[i]};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else {
         var temp = {}; var labels = [];

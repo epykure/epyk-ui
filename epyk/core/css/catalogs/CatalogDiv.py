@@ -6,6 +6,7 @@ from epyk.core.css.catalogs import Catalog
 from epyk.core.css.styles.classes import CssStylesDrop
 from epyk.core.css.styles.classes import CssStylesDivEvents
 from epyk.core.css.styles.classes import CssStylesDiv
+from epyk.core.css.styles.classes import CssStylesDivShape
 from epyk.core.css.styles.classes import CssStylesCommon
 from epyk.core.css.styles.classes import CssStylesDivComms
 from epyk.core.css.styles.classes import CssStylesDivDrawers
@@ -156,6 +157,10 @@ class CatalogDiv(Catalog.CatalogGroup):
     """"""
     return self._set_class(CssStylesDiv.CssDivNoFocusOutline)
 
+  def cut_corner(self):
+    """"""
+    return self._set_class(CssStylesDiv.CssDivCutCorner)
+
 
 class CatalogDrawer(Catalog.CatalogGroup):
 
@@ -174,3 +179,50 @@ class CatalogDrawer(Catalog.CatalogGroup):
   def content(self):
     """  """
     return self._set_class(CssStylesDivDrawers.CssDrawerContent)
+
+
+class CatalogShapes(Catalog.CatalogGroup):
+
+  def page(self):
+    """
+    Description:
+    -----------
+    Create a file look and feel display for a container.
+    """
+    return self._set_class(CssStylesDivShape.CssDivPage)
+
+  def circle(self):
+    """
+    Description:
+    -----------
+    Create a circle look and feel display for a container.
+
+    Related Pages:
+
+      https://css-tricks.com/the-shapes-of-css/
+    """
+    return self._set_class(CssStylesDivShape.CssDivCircle)
+
+  def parallelogram(self):
+    """
+    Description:
+    -----------
+    Create a parallelogram look and feel display for a container.
+
+    Related Pages:
+
+      https://css-tricks.com/the-shapes-of-css/
+    """
+    return self._set_class(CssStylesDivShape.Parallelogram)
+
+  def octagon(self):
+    """
+    Description:
+    -----------
+    Create a Octagon and feel display for a container.
+
+    Related Pages:
+
+      https://css-tricks.com/the-shapes-of-css/
+    """
+    return self._set_class(CssStylesDivShape.Octagon)
