@@ -2,6 +2,14 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.5.4] - 2021-03-15
+
+### Added
+
 - Icons menu.
 - Add Bootstrap icon family from standard components.
 - Add paragraph as an Interface shortcut.
