@@ -246,7 +246,7 @@ class Span(Html.Html):
       else{htmlObj.innerHTML = data}'''
 
   def __str__(self):
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
@@ -584,7 +584,7 @@ class Pre(Html.Html):
       htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}'''
 
   def __str__(self):
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
@@ -827,7 +827,7 @@ class Title(Html.Html):
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     if self.picture is not None:
       path = Default_html.SERVER_PATH or os.path.split(self.picture)[0]
       return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (
@@ -1004,6 +1004,7 @@ class Numeric(Html.Html):
 class Highlights(Html.Html):
   name = 'Highlights'
   requirements = ('bootstrap', )
+  _option_cls = OptText.OptionsHighlights
 
   def __init__(self, report, text, title, icon, type, color, width, height, html_code, helper, options, profile):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height},
@@ -1013,27 +1014,48 @@ class Highlights(Html.Html):
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0},
                    options={'content_table': False})
-    self.add_icon(icon, {"float": "left", 'padding-top': '3px', "color": 'inherit'}, html_code=self.htmlCode,
+    self.add_icon(icon, {"float": "left", "color": 'inherit'}, html_code=self.htmlCode,
                   family=options.get("icon_family"))
-    if self.icon is not None and self.icon != "" and self.title:
-      self.icon.style.css.font_factor(10)
+    if self.icon is not None and self.icon != "":
+      self.icon.style.css.font_factor(2)
     # Change the style of the component
     self.css({"margin": "5px 0", 'padding': "5px"})
-    self.style.css.font_factor(5)
     self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
     self.dom.display_value = "block"
 
   _js__builder__ = '''
       if(typeof data === 'undefined'){htmlObj.remove()}
-      else {htmlObj.querySelector('div[name=content]').innerHTML = data} '''
+      else {
+        if(options.reset){htmlObj.querySelector('div[name=content]').innerHTML = ""}; 
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+        htmlObj.querySelector('div[name=content]').innerHTML = data} '''
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
+
+    :rtype: OptText.OptionsHighlights
+    """
+    return super().options
 
   def __str__(self):
-    return '''
-      <div %s>
-        <span aria-hidden='true' style='float:right;font-size:25px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
-        <div name='content'>%s</div></div>%s
-    ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
+    if self.options.close:
+      return '''
+        <div %s>
+          <span aria-hidden='true' style='float:right;font-size:20px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
+          <div name='content'>%s</div></div>%s
+      ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+
+    return '''<div %s><div name='content'>%s</div></div>%s
+          ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
 class Fieldset(Html.Html):
@@ -1081,6 +1103,6 @@ class Fieldset(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components.values()])
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (
       self.get_attrs(pyClassNames=self.style.get_classes()), val, str_div, self.helper)

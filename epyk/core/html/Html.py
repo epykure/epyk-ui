@@ -2077,13 +2077,13 @@ class Body(Html):
     :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component.
     :param defined_style: String. Optional. A predefined style attached to the style property.
     """
-    self.header = self._report.ui.div()
+    self.header = self.page.ui.div()
     self.header.options.managed = False
     self.header.style.clear_all()
-    self.footer = self._report.ui.div()
+    self.footer = self.page.ui.div()
     self.footer.options.managed = False
     self.footer.style.clear_all()
-    self.template = self._report.ui.div()
+    self.template = self.page.ui.div()
     self.template.options.managed = False
     self.template.style.clear_all()
     if css is not None:

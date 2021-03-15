@@ -6,6 +6,23 @@
 
 ### Fixed
 
+
+## [1.5.5] - 2021-03-15
+
+### Added
+
+- Markdown Python conversion function.
+
+### Changed
+
+- markdown all check.
+
+### Fixed
+
+- Highlights builder improvement.
+- Highlights Options definition.
+- Fix the CSS style of the print component.
+
 ## [1.5.4] - 2021-03-15
 
 ### Added

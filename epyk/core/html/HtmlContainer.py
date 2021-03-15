@@ -727,7 +727,7 @@ class Caption(Html.Html):
     return super().options
 
   def __str__(self):
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     return '<caption %s>%s</caption>' % (self.get_attrs(pyClassNames=self.style.get_classes()), val)
 
 

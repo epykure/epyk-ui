@@ -150,7 +150,6 @@ class Components:
       else:
         div = self.text(text, html_code=html_code, options=options, profile=profile)
       div.style.css.padding = 5
-      div.style.css.white_space = 'pre'
       div.style.css.font_family = 'Courier'
     else:
       div = self.layouts.new_line()

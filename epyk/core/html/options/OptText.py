@@ -21,10 +21,10 @@ class OptionsText(Options):
     return self._report.attr.get("contenteditable", False)
 
   @editable.setter
-  def editable(self, bool):
-    self._report._report.body.style.contenteditable()
-    self._report.attr["contenteditable"] = bool
-    if bool:
+  def editable(self, flag):
+    self.component.page.body.style.contenteditable()
+    self.component.attr["contenteditable"] = flag
+    if flag:
       self.spellcheck = False
 
   @property
@@ -41,9 +41,9 @@ class OptionsText(Options):
     return self._report.attr.get("spellcheck", False)
 
   @spellcheck.setter
-  def spellcheck(self, bool):
-    self._report._report.body.style.contenteditable()
-    self._report.attr["spellcheck"] = bool
+  def spellcheck(self, flag):
+    self.component.page.body.style.contenteditable()
+    self.component.attr["spellcheck"] = flag
 
   @property
   def reset(self):
@@ -56,8 +56,8 @@ class OptionsText(Options):
     return self._config_get(False)
 
   @reset.setter
-  def reset(self, bool):
-    self._config(bool)
+  def reset(self, flag):
+    self._config(flag)
 
   @property
   def markdown(self):
@@ -397,8 +397,8 @@ class OptionsStatus(Options):
     return self.get(False)
 
   @states.setter
-  def states(self, bool):
-    self.set(bool)
+  def states(self, flag):
+    self.set(flag)
 
   @property
   def color(self):
@@ -437,8 +437,8 @@ class OptContents(Options):
     return self.get("manual", False)
 
   @manual.setter
-  def manual(self, bool):
-    self.set(bool)
+  def manual(self, flag):
+    self.set(flag)
 
 
 class OptBreadCrumb(Options):
@@ -526,4 +526,80 @@ class OptBreadCrumb(Options):
 
   @style_selected.setter
   def style_selected(self, values):
+    self._config(values)
+
+
+class OptionsHighlights(Options):
+  component_properties = ("close", "markdown")
+
+  @property
+  def close(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(True)
+
+  @close.setter
+  def close(self, flag):
+    self._config(flag)
+
+  @property
+  def reset(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(False)
+
+  @reset.setter
+  def reset(self, flag):
+    self._config(flag)
+
+  @property
+  def markdown(self):
+    """
+    Description:
+    ------------
+    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    Showdown can be used client side (in the browser) or server side (with NodeJs).
+
+    Related Pages:
+
+      https://github.com/showdownjs/showdown
+    """
+    return self._config_get(False)
+
+  @markdown.setter
+  @packageImport("showdown")
+  def markdown(self, values):
+    if isinstance(values, bool):
+      self._config(values)
+      self._config({} if values is True else values, 'showdown')
+    else:
+      self._config(True)
+      self._config(values, 'showdown')
+
+  @property
+  def showdown(self):
+    """
+    Description:
+    ------------
+    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    Showdown can be used client side (in the browser) or server side (with NodeJs).
+
+    Related Pages:
+
+      https://github.com/showdownjs/showdown
+    """
+    return self._config_get(False)
+
+  @showdown.setter
+  @packageImport("showdown")
+  def showdown(self, values):
+    self._config(True, 'markdown')
     self._config(values)

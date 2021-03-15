@@ -465,7 +465,7 @@ WINDOWS_1252_TO_UTF8 = {
     }
 
 
-class PyExt(object):
+class PyExt:
   class __internal(object):
     _props = {}
 

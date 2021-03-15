@@ -7,8 +7,9 @@ import json
 
 RULES = {
   '\!\[(.*)\]\((.*)\)': {'cls': 'ui.img', 'attrs': ["tooltip", "text"], 'pattern': "![%s](%s)"},
-  '\[(.*)\]\((.*)\)': {'cls': 'ui.link', 'attrs': ["text", "url"], 'pattern': "[%s](%s)"},
-  '\*\*(.*)\*\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "**%s**"},
+  '\[(.*)\]\((.*)\)': {'cls': 'ui.link', 'attrs': ["text", "url"], 'pattern': "[%s](%s)", 'tag': "<a href='%s'>%s</a>"},
+  '\*(.*)\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "*%s*", 'tag': "<i>%s</i>"},
+  '\*\*(.*)\*\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "**%s**", 'tag': "<b>%s</b>"},
   '\_\_(.*)\_\_': {'cls': 'ui.tags.b', 'attrs': ["text"], 'pattern': "__%s__"},
   '^## (.*)$': {'cls': 'ui.subtitle', 'attrs': ["text"], 'pattern': "## %s"},
   '^=======': {'cls': 'ui.layouts.underline', 'attrs': None, 'pattern': "======="},
@@ -78,7 +79,7 @@ def doc_string_attrs(func):
       print(":param %s:" % arg)
 
 
-class MarkDown(object):
+class MarkDown:
 
   def __init__(self, page):
     self.page = page
@@ -100,7 +101,8 @@ class MarkDown(object):
       if m is not None:
         for g in m:
           attrs = dict(zip(interface['attrs'], g))
-          map_objs["%s_%s" % (interface['cls'], count)] = "%s(%s)" % (interface['cls'], ", ".join(["%s=%s" % (k, json.dumps(v)) for k, v in attrs.items()]))
+          map_objs["%s_%s" % (interface['cls'], count)] = "%s(%s)" % (
+            interface['cls'], ", ".join(["%s=%s" % (k, json.dumps(v)) for k, v in attrs.items()]))
           if "%s" in interface['pattern']:
             convert_data = convert_data.replace(interface['pattern'] % g, "||%s_%s||" % (interface['cls'], count))
           else:
@@ -163,3 +165,23 @@ class MarkDown(object):
         else:
           components.append(self.page.ui.layouts.br())
     return components
+
+  def all(self, data):
+    """
+    Description:
+    -----------
+
+    TODO: Improve this function.
+
+    Attributes:
+    ----------
+    :param data: String. The data to be parsed.
+    """
+    for r, interface in RULES.items():
+      if 'tag' not in interface:
+        continue
+
+      m = re.findall(r, data, re.MULTILINE)
+      for v in m:
+        data = data.replace(interface["pattern"] % v, interface["tag"] % v)
+    return data

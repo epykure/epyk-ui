@@ -444,7 +444,6 @@ class ClassHtml:
     self.css.margin = "20px auto"
     self.component.page.body.style.css.padding_left = "%s%%" % percent
     self.component.page.body.style.css.padding_right = "%s%%" % percent
-    self.component.page.body.style.css.text_align = "center"
     self.component.page.body.style.css.background = self.component.page.theme.greys[2]
 
   def selector(self, suffix, attrs):
