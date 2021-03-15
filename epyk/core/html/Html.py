@@ -2063,7 +2063,7 @@ class Body(Html):
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
-  def add_template(self, css):
+  def add_template(self, css=None, defined_style=None):
     """
     Description:
     ------------
@@ -2074,7 +2074,8 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component
+    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component.
+    :param defined_style: String. Optional. A predefined style attached to the style property.
     """
     self.header = self._report.ui.div()
     self.header.options.managed = False
@@ -2085,7 +2086,10 @@ class Body(Html):
     self.template = self._report.ui.div()
     self.template.options.managed = False
     self.template.style.clear_all()
-    self.template.css(css)
+    if css is not None:
+      self.template.css(css)
+    if defined_style is not None:
+      getattr(self.template.style, defined_style)()
     return self
 
   def __str__(self):

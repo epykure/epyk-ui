@@ -325,6 +325,7 @@ class JsHtml(JsNodeDom.JsDoms):
     self.htmlCode = varName if varName is not None else htmlObj.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
     self._src, self._report = htmlObj, report
+    self.component, self.page = htmlObj, report
     self._js = []
     self._jquery, self._jquery_ui, self._d3 = None, None, None
 
@@ -339,7 +340,9 @@ class JsHtml(JsNodeDom.JsDoms):
     -----
 
     """
-    return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.content.toStr()))
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlCode, self.content.toStr()))
 
   @property
   def by_name(self):
@@ -353,7 +356,8 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsNodeDom.JsDomsList
     """
     if self._src.attr.get('name') is not None:
-      return JsNodeDom.JsDomsList(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
+      return JsNodeDom.JsDomsList(
+        None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
 
     return self
 
@@ -391,6 +395,24 @@ class JsHtml(JsNodeDom.JsDoms):
     :param js_funcs: List | String. The Javascript events.
     """
     return self._src.js.if_(self.isInViewPort, js_funcs)
+
+  def copyToClipboard(self, include_html=False):
+    """
+    Description:
+    -----------
+    Copy the component content to the clipboard.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param include_html: Boolean. Optional. Store the full HTML (Default False).
+    """
+    if include_html:
+      return self.page.js.clipboard(self.innerHTML())
+
+    return self.page.js.clipboard(self.innerText())
 
   @property
   def content(self):
@@ -440,7 +462,8 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
+      self._jquery = JsQuery.JQuery(
+        src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
     return self._jquery
 
   @property
@@ -472,7 +495,8 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
+      self._jquery_ui = JsQueryUi.JQueryUI(
+        self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
     return self._jquery_ui
 
   @property
@@ -561,6 +585,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :param fnc_name: String. The function name.
     :param js_funcs: String | List. The Javascript function definition.
     :param pmts: List. Optional. The parameters for the function.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The JsObject
     """
@@ -635,7 +660,8 @@ class JsHtml(JsNodeDom.JsDoms):
     :param display_value: String. Optional. The default CSS attribute for this component.
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsVoid("if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
+    return JsObjects.JsVoid("if(%s){%s} else{%s}" % (
+      data, self.show(inline, display_value=display_value).r, self.hide().r))
 
   def visible(self, data=True, inverse=False):
     """
@@ -643,7 +669,8 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     The visibility property specifies whether or not an element is visible.
 
-    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from the document layout!
+    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
+    the document layout!
 
     Related Pages:
 
@@ -664,9 +691,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     data = JsUtils.jsConvertData(data, None)
     if inverse:
-      return self.css("visibility", JsObjects.JsVoid("(function(flag){if(flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
+      return self.css("visibility", JsObjects.JsVoid(
+        "(function(flag){if(flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
 
-    return self.css("visibility", JsObjects.JsVoid("(function(flag){if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
+    return self.css("visibility", JsObjects.JsVoid(
+      "(function(flag){if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % data)).r
 
   def invisible(self):
     """
@@ -674,7 +703,8 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     The visibility property specifies whether or not an element is visible.
 
-    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from the document layout!
+    Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
+    the document layout!
 
     Related Pages:
 
@@ -907,7 +937,8 @@ class JsHtmlRich(JsHtml):
     """
     return JsObjects.JsObjects.get('''
      (function(node){
-      if (document.body.createTextRange) {const range = document.body.createTextRange(); range.moveToElementText(node); range.select();
+      if (document.body.createTextRange) {
+        const range = document.body.createTextRange(); range.moveToElementText(node); range.select();
       } else if (window.getSelection) {
         const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents(node);
         selection.removeAllRanges(); selection.addRange(range); }

@@ -33,7 +33,7 @@ class CssContentEditable(CssStyle.Style):
   _selector = "[contenteditable]"
 
   def customize(self):
-    self.focus.css({'outline': "1px solid %s" % self.page.theme.success[1]})
+    self.focus.css({'outline': "1px solid %s" % self.page.theme.colors[5]})
 
 
 class CssSpeechBubble(CssStyle.Style):

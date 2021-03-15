@@ -515,7 +515,8 @@ class JsItem(JsHtml.JsHtmlRich):
       value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid('''
       var item = %(value)s; var itemOptions = %(options)s;
-      if(itemOptions.showdown){var converter = new showdown.Converter({}); converter.setOption("display", "inline-block");
+      if(itemOptions.showdown){
+          var converter = new showdown.Converter({}); converter.setOption("display", "inline-block");
           var content = item; if(typeof item.content !== 'undefined'){content = item.content};
           content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>");
           item.content = content

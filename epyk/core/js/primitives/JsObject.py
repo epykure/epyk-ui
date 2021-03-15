@@ -47,6 +47,7 @@ class JsObject:
     global _JSVARS
 
     self.varName, self.varData, self._js, self._report = varName, str(data), [], report
+    self.page = report
     self._frozen, self._sealed = False, False
     if varName is None and setVar:
       _JSVARS += 1

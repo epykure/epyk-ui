@@ -51,8 +51,8 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    html_edit = html.HtmlButton.IconEdit(self.page, position, icon, text, tooltip, width, height, html_code,
-                                         options or {}, profile)
+    html_edit = html.HtmlButton.IconEdit(
+      self.page, position, icon, text, tooltip, width, height, html_code, options or {}, profile)
     html_edit.css({"margin": 0, 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"

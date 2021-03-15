@@ -621,6 +621,8 @@ class Paragraph(Html.Html):
     if border:
       self.css('border', '1px solid %s' % self._report.theme.greys[9])
     self.css({'text-align': 'justify', 'margin-top': '3px', "text-justify": 'distribute'})
+    self.style.css.margin_top = 10
+    self.style.css.margin_bottom = 10
 
   @property
   def options(self):
@@ -641,8 +643,10 @@ class Paragraph(Html.Html):
       if (typeof data === 'string' || data instanceof String){data = data.split('\\n')}; 
       if(typeof data !== 'undefined'){
       data.forEach(function(line, i){
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); line = converter.makeHtml(line)} 
-        var p = document.createElement('p'); p.innerHTML = line;
+        if(options.showdown){
+          var converter = new showdown.Converter(options.showdown); 
+          line = converter.makeHtml(line).replace("<p>", "<p style='margin:0'>")} 
+        var p = document.createElement('p'); p.style.margin = 0; p.innerHTML = line;
         htmlObj.appendChild(p)})}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       '''

@@ -94,6 +94,7 @@ class Components:
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
+    self.paragraph = self.texts.paragraph
     self.textarea = self.inputs.textarea
     self.header = self.layouts.header
     self.section = self.layouts.section
