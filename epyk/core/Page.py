@@ -41,7 +41,7 @@ class JsProperties:
     ------------
     Return the extra JavaScript function manually added.
     """
-    return "\n".join(self._context["text"])
+    return self._context["text"]
 
   def add_text(self, text):
     """

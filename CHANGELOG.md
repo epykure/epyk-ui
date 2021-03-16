@@ -6,6 +6,24 @@
 
 ### Fixed
 
+## [1.5.6] - 2021-03-16
+
+### Added
+
+- Add better management of the Interfaces skins
+- Add min-height to the Highlight component
+- Add is_true options to the automatic import manager
+
+### Changed
+
+- Change icon colors for input fields.
+
+### Fixed
+
+- Fix slider component.
+- Align slider with the new options model.
+- fix external JavaScript text injection.
+
 
 ## [1.5.5] - 2021-03-15
 

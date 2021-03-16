@@ -3,25 +3,44 @@ from epyk.core.html.options import Options
 
 
 class OptionsSlider(Options):
+  component_properties = ("css", )
 
   @property
   def animate(self):
     """
     Description:
     ------------
-    Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation
+    Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#option-animate
-
-		:param animate:
     """
     return self._config_get(False)
 
   @animate.setter
   def animate(self, value):
     self._config(value)
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
+
+    Related Pages:
+
+      https://api.jqueryui.com/slider/#option-animate
+    """
+    return self._config_get({"background": self.component.page.theme.success[0]})
+
+  @css.setter
+  def css(self, value):
+    self._config(value)
+
+  def change(self, jsFncs):
+    self._config(jsFncs, js_type=True)
 
   @property
   def classes(self):
@@ -452,7 +471,8 @@ class OptionDialog(Options):
     """
     Description:
     ------------
-    If set to true, the dialog will be draggable by the title bar. Requires the jQuery UI Draggable widget to be included.
+    If set to true, the dialog will be draggable by the title bar. Requires the jQuery UI Draggable widget to
+    be included.
 
     Related Pages:
 
@@ -570,7 +590,8 @@ class OptionDialog(Options):
     """
     Description:
     ------------
-    Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
+    Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much
+    of the dialog is visible as possible.
 
     Related Pages:
 
@@ -588,7 +609,8 @@ class OptionDialog(Options):
     """
     Description:
     ------------
-    If set to true, the dialog will have modal behavior; other items on the page will be disabled, i.e., cannot be interacted with.
+    If set to true, the dialog will have modal behavior; other items on the page will be disabled, i.e.,
+    cannot be interacted with.
     Modal dialogs create an overlay below the dialog but above other page elements.
 
     Related Pages:
@@ -623,7 +645,8 @@ class OptionDialog(Options):
     """
     Description:
     ------------
-    Specifies the title of the dialog. If the value is null, the title attribute on the dialog source element will be used.
+    Specifies the title of the dialog. If the value is null, the title attribute on the dialog source element will
+    be used.
 
     Related Pages:
 

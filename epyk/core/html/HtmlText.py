@@ -1019,7 +1019,7 @@ class Highlights(Html.Html):
     if self.icon is not None and self.icon != "":
       self.icon.style.css.font_factor(2)
     # Change the style of the component
-    self.css({"margin": "5px 0", 'padding': "5px"})
+    self.css({"margin": "5px 0", 'padding': "5px", "min-height": "25px"})
     self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
     self.dom.display_value = "block"

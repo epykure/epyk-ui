@@ -3,12 +3,13 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
-def packageImport(jsPackage=None, cssPackage=None):
+def packageImport(jsPackage=None, cssPackage=None, if_true=False):
   """
   Description
   ---------------
-  Simple decorator to allow people to declare packages that need to be imported when they are manipulating HTML compponents
-  The alias for the package needs to be defined in the Import.py module
+  Simple decorator to allow people to declare packages that need to be imported when they are manipulating
+  HTML components.
+  The alias for the package needs to be defined in the Import.py module/
 
   Usage::
 
@@ -18,24 +19,27 @@ def packageImport(jsPackage=None, cssPackage=None):
       pass
   """
   def wrap(func):
-    def inner(rptObj, *args, **kwargs):
-      report = getattr(rptObj, '_report') if getattr(rptObj, '_report', None) else rptObj
-      if jsPackage:
+    def inner(page, *args, **kwargs):
+      report = getattr(page, '_report') if getattr(page, '_report', None) else page
+      add_package = True
+      if if_true and not args[0]:
+        add_package = False
+      if add_package and jsPackage:
         report.jsImports.add(jsPackage)
-      if cssPackage:
+      if add_package and cssPackage:
         report.cssImport.add(cssPackage)
-      return func(rptObj, *args, **kwargs)
+      return func(page, *args, **kwargs)
 
     return inner
 
   return wrap
 
 
-class JsPackage(object):
+class JsPackage:
   lib_alias, lib_selector, lib_set_var = None, None, True
 
-  class __internal(object):
-    # By default it will attach eveything to the body
+  class __internal:
+    # By default it will attach everything to the body
     jqId, jsImports, cssImport = '', set([]), set([])
 
   def __init__(self, src=None, varName=None, selector=None, data=None, setVar=None, parent=None):
@@ -304,7 +308,7 @@ class JsPackage(object):
     return "; ".join(obj_content)
 
 
-class DataAttrs(object):
+class DataAttrs:
   def __init__(self, report, attrs=None, oprions=None):
     self._report, self.oprions, self._attrs = report, oprions, attrs or {}
 

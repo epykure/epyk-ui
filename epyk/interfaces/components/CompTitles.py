@@ -307,8 +307,8 @@ class Titles:
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.border_bottom = '2px solid %s' % self.page.theme.colors[-1]
     return html_title

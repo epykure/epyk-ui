@@ -345,7 +345,6 @@ class Slider(Html.Html):
     options.update({'max': max_val, 'min': min_val})
     super(Slider, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
-    self._jsStyles = {'css': {"background": self._report.theme.success[0]}}
     self.style.css.padding = "0 10px"
     self.style.css.margin = "15px 0"
     self.add_helper(helper)
@@ -428,7 +427,7 @@ class Slider(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._jsStyles["change"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    self.options.change("function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
   def start(self, js_funcs, profile=None):

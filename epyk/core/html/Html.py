@@ -99,8 +99,10 @@ def css_skin():
     def decorated(*args, **kwargs):
       component = func(*args, **kwargs)
       if component.page.ui.components_skin is not None:
-        if "button" in component.page.ui.components_skin:
-          component.page.ui.components_skin["buttons.button"] = component.page.ui.components_skin["button"]
+        shortcuts = {"button": "buttons.button", "title": "texts.title"}
+        for sc, msc in shortcuts.items():
+          if sc in component.page.ui.components_skin:
+            component.page.ui.components_skin[msc] = component.page.ui.components_skin[sc]
         alias = func.__qualname__.lower()
         if alias in component.page.ui.components_skin:
           comp_skin = component.page.ui.components_skin[alias]

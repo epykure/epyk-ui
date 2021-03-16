@@ -52,7 +52,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
+    """
     return self._config_get(False)
 
   @reset.setter
@@ -74,7 +74,7 @@ class OptionsText(Options):
     return self._config_get(False)
 
   @markdown.setter
-  @packageImport("showdown")
+  @packageImport("showdown", if_true=True)
   def markdown(self, values):
     if isinstance(values, bool):
       self._config(values)
@@ -210,12 +210,13 @@ class OptionsTitle(OptionsText):
     ------------
 
     Related Pages:
-"""
+
+    """
     return self._config_get(True)
 
   @content_table.setter
-  def content_table(self, bool):
-    self._config(bool)
+  def content_table(self, flag):
+    self._config(flag)
 
 
 class OptionsNumber(OptionsText):

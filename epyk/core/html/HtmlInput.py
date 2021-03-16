@@ -744,7 +744,7 @@ class Field(Html.Html):
     self.input = html_input
     self.append_child(self.input)
     self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
-                  css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+                  css={"margin-left": '5px', 'color': self._report.theme.colors[-1]})
     self.css({"margin-top": '2px'})
 
   @property
