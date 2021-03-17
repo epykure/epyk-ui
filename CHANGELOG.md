@@ -2,9 +2,18 @@
 
 ### Added
 
+- Add standard menu bar for HTML components 
+- Add the options to get all the components in powered.
+- Add standard function for copy, download and clear.
+
 ### Changed
 
+- Change color allocation for powered by component.
+
 ### Fixed
+
+- Fix ChartJs builder function names.
+
 
 ## [1.5.6] - 2021-03-16
 

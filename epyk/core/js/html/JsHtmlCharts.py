@@ -385,3 +385,15 @@ class ChartJs(JsCanvas.Canvas):
     if options is not None:
       opt.update(options)
     return opt
+
+  def copyToClipboard(self, clipboardCopySelector=None, with_header=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param clipboardCopySelector:
+    :param with_header:
+    """
+    return JsObjects.JsVoid("(function(canvas){var image = new Image(); image.src = canvas.toDataURL('image/png'); return image})(%s)" % self.varName)

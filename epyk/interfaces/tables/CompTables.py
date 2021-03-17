@@ -212,7 +212,7 @@ class Tables:
     # table.style.add_classes.table.grid_no_header()
     return table
 
-  def menu(self, table=None, options=None):
+  def menu(self, table=None, height=(18, 'px'), options=None, post=None, profile=None):
     """
     Description:
     -----------
@@ -224,28 +224,30 @@ class Tables:
     Attributes:
     ----------
     :param table:
+    :param height:
     :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param post:
+    :param profile:
     """
+    commands = [("Csv", "fas fa-file-csv"), ("Clear", "fas fa-trash-alt")]
+    menu_items = []
     options = options or {}
-    copy_file = self.page.ui.icons.awesome("fas fa-copy", text="Copy", width=(32, 'px'))
-    copy_file.icon.style.css.font_factor(-5)
-    copy_file.style.css.font_factor(-5)
-    copy_file.span.style.css.margin = "0 0 -3px -3px"
-    copy_file.click([table.js.copyToClipboard()])
-    csv_file = self.page.ui.icons.awesome("fas fa-file-csv", text="Csv", width=(32, 'px'))
-    csv_file.icon.style.css.font_factor(-5)
-    csv_file.style.css.font_factor(-5)
-    csv_file.span.style.css.margin = "0 0 -3px -3px"
-    csv_file.click([table.js.download("csv", "data.csv")])
-    add_row = self.page.ui.icons.awesome("fas fa-plus", text="New", width=(35, 'px'))
-    add_row.icon.style.css.font_factor(-5)
-    add_row.style.css.font_factor(-5)
-    add_row.span.style.css.margin = "0 3px -3px -3px"
-    add_row.click([table.js.addRow(options.get("add", {}), True)])
-    del_row = self.page.ui.icons.awesome("fas fa-trash-alt", text="Delete", width=(37, 'px'))
-    del_row.icon.style.css.font_factor(-5)
-    del_row.style.css.font_factor(-5)
-    del_row.span.style.css.margin = "0 0 -3px -3px"
-    del_row.click([table.js.clearData()])
-    container = self.page.ui.div([copy_file, csv_file, add_row, del_row], align="right")
+    for typ, icon in commands:
+      if icon:
+        if isinstance(icon, tuple):
+          icon = icon[0]
+        r = self.page.ui.icons.awesome(
+          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+        r.span.style.css.line_height = r.style.css.height
+        r.icon.style.css.font_factor(-5)
+        r.style.css.font_factor(-5)
+        r.span.style.css.margin = "0 2px -3px -3px"
+        if typ == "Csv":
+          r.click([table.js.download("csv", "data.csv")])
+        elif typ == "New":
+          r.click([table.js.addRow(options.get("add", {}), True)])
+        elif typ == "Clear":
+          r.click([table.js.clearData()])
+        menu_items.append(r)
+    container = self.page.ui.menu(table, menu_items=menu_items, post=post, editable=False)
     return container

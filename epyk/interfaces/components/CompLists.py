@@ -874,26 +874,52 @@ class Lists:
     return html_f
 
   @html.Html.css_skin()
-  def menu(self, component, editable="fas fa-edit", refresh="fas fa-redo-alt", visible="fas fa-eye", height=(15, 'px'),
+  def menu(self, component, add="fas fa-plus", height=(18, 'px'), save_funcs=None, update_funcs=None,
            options=None, profile=None):
 
+    commands = [("Add&nbsp;", add)]
     options = options or {}
     menu_items = []
-    for typ, icon in [("Edit", editable), ("Add", visible), ("View", visible)]:
+    for typ, icon in commands:
       if icon:
+        if isinstance(icon, tuple):
+          icon = icon[0]
         r = self.page.ui.icons.awesome(
           icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)
         r.span.style.css.margin = "0 0 -3px -3px"
-        if typ == "Edit":
-          r.click([component.dom.setAttribute("contenteditable", True).r])
-        elif typ == "Add":
+        if typ == "Add&nbsp;":
           r.click([
-            component.dom.add("test")])
-        elif typ == "View":
-          r.click([component.dom.toggle()])
+            component.dom.add(""),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+          ])
         menu_items.append(r)
-    container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
+    if save_funcs is not None:
+      r = self.page.ui.icons.awesome(
+        "fas fa-save", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
+      r.span.style.css.line_height = r.style.css.height
+      r.icon.style.css.font_factor(-5)
+      r.style.css.font_factor(-5)
+      r.span.style.css.margin = "0 2px -3px -3px"
+      r.click([
+        r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+        self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+      ] + save_funcs, profile=profile)
+      menu_items.append(r)
+    if update_funcs is not None:
+      r = self.page.ui.icons.awesome(
+        "fas fa-sync-alt", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
+      r.span.style.css.line_height = r.style.css.height
+      r.icon.style.css.font_factor(-5)
+      r.style.css.font_factor(-5)
+      r.span.style.css.margin = "0 2px -3px -3px"
+      r.click([
+        r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+        self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+      ] + update_funcs, profile=profile)
+      menu_items.append(r)
+    container = self.page.ui.menu(component, menu_items=menu_items)
     return container

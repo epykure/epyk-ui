@@ -498,12 +498,13 @@ class Chart(Html.Html):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if data is not None:
-      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      js_convertor = "%s%s" % (self.name, self._chart__type)
       self.page.properties.js.add_constructor(
         js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
       profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
       if profile:
-        js_func_builder = JsUtils.jsConvertFncs(["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
+        js_func_builder = JsUtils.jsConvertFncs([
+          "var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
       return """Object.assign(window['%(chartId)s'].data, %(chartFnc)s(%(data)s, %(options)s)); 
         window['%(chartId)s'].update()""" % {
@@ -738,7 +739,8 @@ class ChartLine(Chart):
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
-          if(typeof dataset.hoverBackgroundColor === "undefined"){dataset.hoverBackgroundColor = options.background_colors[i]};
+          if(typeof dataset.hoverBackgroundColor === "undefined"){
+            dataset.hoverBackgroundColor = options.background_colors[i]};
           if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
           result.datasets.push(dataset) })
       } else{
@@ -1112,14 +1114,16 @@ class ChartPie(Chart):
     self._datasets.append(data)
     return data
 
-  _js__builder__ = ''' 
+  _js__builder__ = '''
       if(data.python){
-        result = {datasets: [], labels: data.series};
+        result = {datasets: [], labels: data.labels};
         data.datasets.forEach(function(dataset, i){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
-          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
-          result.datasets.push(dataset) })
+          if(typeof dataset.hoverBackgroundColor === "undefined"){
+            dataset.hoverBackgroundColor = options.background_colors};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)};
+          result.datasets.push(dataset)})
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});

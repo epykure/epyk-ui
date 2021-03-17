@@ -1125,6 +1125,150 @@ class Components:
     component.style.css.color = self.page.theme.greys[5]
     return component
 
+  @html.Html.css_skin()
+  def menu(self, component, copy="fas fa-copy", editable=("fas fa-user-edit", "fas fa-user-lock"),
+           refresh="fas fa-redo-alt", visible=('fas fa-eye-slash', "fas fa-eye"), post=None,
+           height=(18, 'px'), save_funcs=None, update_funcs=None, menu_items=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+
+
+    TODO: Improve the editable feature for Markdown.
+
+    Usage:
+    -----
+
+        p2 = page.ui.paragraph("paragraph", options={"markdown": True})
+        menu2 = page.ui.texts.menu(p2, save_funcs=[
+          page.js.alert(p2.dom.content)
+        ], update_funcs=[
+          p2.build("Updated paragraph")
+        ], profile=True)
+
+    Attributes:
+    ----------
+    :param component:
+    :param copy:
+    :param editable:
+    :param refresh:
+    :param visible:
+    :param post:
+    :param height:
+    :param save_funcs:
+    :param update_funcs:
+    :param menu_items:
+    :param options:
+    :param profile:
+    """
+    options, link = options or {}, None
+    menu_items = menu_items or []
+    component.style.css.margin_top = 0
+    commands = [("Copy", copy), ("Edit", editable), ("Hide", visible)]
+    if post is not None:
+      link = "fas fa-link"
+      commands.extend([('ReSt', link), ("Build", refresh)])
+    for typ, icon in commands:
+      if icon:
+        if isinstance(icon, tuple):
+          icon = icon[0]
+        r = self.page.ui.icons.awesome(
+          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+        r.span.style.css.line_height = r.style.css.height
+        r.icon.style.css.font_factor(-5)
+        r.style.css.font_factor(-5)
+        r.span.style.css.margin = "0 2px -3px -3px"
+        if typ == "Edit":
+          r.click([
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+            self.page.js.if_(r.span.dom.innerText() == "Edit", [
+              r.span.build("Lock"),
+              component.dom.setAttribute("contenteditable", True).r,
+              r.icon.build(editable[1])]).else_([
+                r.span.build("Edit"),
+                component.dom.setAttribute("contenteditable", False).r,
+                r.icon.build(editable[0]),
+                component.build(component.dom.innerText())
+              ]),
+          ], profile=profile)
+        elif typ == "Copy":
+          r.click([
+            component.dom.copyToClipboard(options.get("include_html", False)),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
+          ], profile=profile)
+        elif typ == "Build":
+          r.click([self.page.js.post(self.page.components["%s_rest" % component.htmlCode].dom.content).onSuccess([
+            component.build(self.page.js.objects.data),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
+          ])], profile=profile)
+        elif typ == "Hide":
+          r.click([
+            component.dom.toggle(),
+            self.page.js.if_(r.span.dom.innerText() == "Hide", [
+              r.span.build("View"),
+              r.icon.build(visible[1])]).else_([
+              r.span.build("Hide"),
+              r.icon.build(visible[0])
+            ], profile=profile),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
+          ])
+        elif typ == "ReSt":
+          input_rest = self.page.ui.input(post, width=(200, 'px'), html_code="%s_rest" % component.htmlCode)
+          input_rest.style.css.text_align = "left"
+          input_rest.style.css.padding_left = 5
+          input_rest.style.css.hide()
+          input_rest.style.css.margin_bottom = 0
+          input_rest.style.css.border_radius = 0
+          input_rest.style.css.background_color = 'none'
+          input_rest.style.css.border_bottom = "1px solid %s" % self.page.theme.colors[-1]
+          input_rest.style.css.line_height = self.page.body.style.globals.font.size
+          input_rest.style.css.font_factor(-2)
+          menu_items.append(input_rest)
+          r.click([
+            input_rest.dom.toggle(),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)], profile=profile)
+          input_rest.enter([r.dom.events.trigger("click")])
+        menu_items.append(r)
+    if save_funcs is not None:
+      r = self.page.ui.icons.awesome(
+        "fas fa-save", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
+      r.span.style.css.line_height = r.style.css.height
+      r.icon.style.css.font_factor(-5)
+      r.style.css.font_factor(-5)
+      r.span.style.css.margin = "0 2px -3px -3px"
+      r.click([
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+          ] + save_funcs, profile=profile)
+      menu_items.append(r)
+    if update_funcs is not None:
+      r = self.page.ui.icons.awesome(
+        "fas fa-sync-alt", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
+      r.span.style.css.line_height = r.style.css.height
+      r.icon.style.css.font_factor(-5)
+      r.style.css.font_factor(-5)
+      r.span.style.css.margin = "0 2px -3px -3px"
+      r.click([
+                r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+                self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+              ] + update_funcs, profile=profile)
+      menu_items.append(r)
+    dots = self.page.ui.icons.awesome(
+      "fas fa-ellipsis-v", height=height, width=(10, 'px'), options=options, profile=profile)
+    dots.icon.style.css.font_factor(-5)
+    dots.style.css.font_factor(-5)
+    dots.style.css.margin_left = 10
+    menu_items.append(dots)
+    container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
+    dots.click([container.dom.hide()])
+    component.move()
+    return container
+
 
 class WebComponents:
 

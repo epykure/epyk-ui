@@ -5,6 +5,7 @@ from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
+from epyk.core.js import Imports
 
 
 class Rich:
@@ -253,7 +254,7 @@ class Rich:
     if options is not None:
       dflt_options.update(options)
     html_div = html.HtmlTextEditor.Console(self.page, content, width, height, html_code, None, dflt_options, profile)
-    html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
+    html_div.css({"border": "1px solid %s" % self.page.theme.greys[4], "background": self.page.theme.greys[2],
                   'padding': '5px'})
     return html_div
 
@@ -287,6 +288,7 @@ class Rich:
     :param html_code:
     :param tooltip:
     :param extensible:
+    :param options:
     :param profile:
     """
     width = Arguments.size(width, unit="px")
@@ -294,8 +296,8 @@ class Rich:
     dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)
-    html_s = html.HtmlInput.Search(self.page, text, placeholder, color, width, height, html_code, tooltip,
-                                   extensible, dflt_options, profile)
+    html_s = html.HtmlInput.Search(
+      self.page, text, placeholder, color, width, height, html_code, tooltip, extensible, dflt_options, profile)
     return html_s
 
   @html.Html.css_skin()
@@ -435,6 +437,7 @@ class Rich:
     :param section:
     :param title:
     :param content:
+    :param background:
     """
     container = self.page.ui.div()
     if section is not None:
@@ -551,6 +554,11 @@ class Rich:
     container.style.css.font_factor(-4)
     if by is None:
       by = sorted(list(self.page.jsImports))
+    elif by is True:
+      by = []
+      for alias, pkg in Imports.JS_IMPORTS.items():
+        if "node_folder" not in pkg:
+          by.append(alias)
     for i, b in enumerate(by):
       if b in self.page.imports.jsImports:
         badge = self.page.ui.div([
@@ -558,7 +566,7 @@ class Rich:
           self.page.ui.text("v%s" % self.page.imports.jsImports[b]["versions"][0])], width="auto")
         badge[0].style.css.margin_right = 5
         badge[0].goto(self.page.imports.website(b), target="_blank")
-        badge[0].style.css.background = self.page.theme.charts[i]
+        badge[0].style.css.background = Colors.randColor(self.page.py.hash(b))
         badge[0].style.css.color = "white"
         badge[0].style.css.text_shadow = "1px 1px black"
         badge[0].style.css.padding = "0 5px"

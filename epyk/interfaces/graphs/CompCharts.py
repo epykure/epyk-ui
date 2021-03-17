@@ -363,6 +363,46 @@ class Graphs:
     """
     return CompChartsCanvas.Canvas(self)
 
+  @html.Html.css_skin()
+  def menu(self, chart, height=(18, 'px'), options=None, post=None, profile=None):
+    """
+    Description:
+    -----------
+    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param chart:
+    :param height:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param post:
+    :param profile:
+    """
+    # ("Csv", "fas fa-file-csv")
+    commands = [("Clear", "fas fa-trash-alt")]
+    menu_items = []
+    options = options or {}
+    for typ, icon in commands:
+      if icon:
+        if isinstance(icon, tuple):
+          icon = icon[0]
+        r = self.page.ui.icons.awesome(
+          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+        r.span.style.css.line_height = r.style.css.height
+        r.icon.style.css.font_factor(-5)
+        r.style.css.font_factor(-5)
+        r.span.style.css.margin = "0 2px -3px -3px"
+        if typ == "Csv":
+          r.click([chart.js.download("csv", "data.csv")])
+        elif typ == "Clear":
+          r.click([chart.js.clearData()])
+        menu_items.append(r)
+    container = self.page.ui.menu(chart, menu_items=menu_items, copy=False, post=post, editable=False)
+    return container
+
 
 class Chart2d:
 

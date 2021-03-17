@@ -491,6 +491,12 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())
 
+  def download(self, format, filename, options=None):
+    return self.toBase64Image()
+
+  def clearData(self):
+    return self.clear()
+
   def toStr(self):
     """
     Javascript representation
