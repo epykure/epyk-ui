@@ -481,7 +481,7 @@ class Items(Html.Html):
         if(options.delete){
           var close = document.createElement("i");
           close.classList.add(...options.delete_icon.split(" ")); close.style.position = 'absolute';
-          close.style.top = "10px"; close.style.right = "0"; close.style.cursor = 'pointer';
+          close.style.right = "0"; close.style.cursor = 'pointer';
           close.onclick = function(event){this.parentNode.remove()};
           li.style.position = "relative";
           for (const [key, value] of Object.entries(options.delete_position)){

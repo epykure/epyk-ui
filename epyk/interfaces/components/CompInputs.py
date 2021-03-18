@@ -445,10 +445,49 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
+
+  @html.Html.css_skin()
+  def left(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+           attrs=None, profile=None):
+    """
+    Description:
+    ------------
+    Add a standard input component.
+
+    Usage:
+    -----
+
+      page.ui.inputs.input("Test")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.Input`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the component.
+    :param placeholder: String. Optional. Text visible when the input component is empty.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    component = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
+    component.style.css.text_align = "left"
+    component.style.css.padding_left = 5
+    return component
 
   @html.Html.css_skin()
   def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,

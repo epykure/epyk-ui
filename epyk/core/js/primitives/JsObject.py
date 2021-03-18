@@ -544,7 +544,8 @@ class JsObject:
     Description:
     ------------
 
-    Usage::
+    Usage:
+    -----
 
       jsObj.objects.get("MyObject").setattr("tesr", jsObj.objects.number.get("MyNumber"))
 
@@ -573,9 +574,20 @@ class JsObject:
     """
     Description:
     ------------
-    Wrapper to the setattr method
+    Wrapper to the setattr method.
     """
     return self.setattr(key, value)
+
+  def addComponent(self, component):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component:
+    """
+    return self.setattr(component.htmlCode, component.dom.content)
 
   def __getitem__(self, key):
     """
@@ -857,6 +869,20 @@ class JsObject:
       https://www.w3schools.com/js/js_json_parse.asp
     """
     return JsObject("JSON.parse(%s)" % self.varName)
+
+  def stringify(self):
+    """
+    Description:
+    -----------
+    The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values
+    if a replacer function is specified or optionally including only the specified properties if a replacer array
+    is specified.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+    """
+    return JsObject("JSON.stringify(%s)" % self.varName)
 
   def fileParse(self, delimiter):
     """

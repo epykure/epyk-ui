@@ -874,10 +874,12 @@ class Lists:
     return html_f
 
   @html.Html.css_skin()
-  def menu(self, component, add="fas fa-plus", height=(18, 'px'), save_funcs=None, update_funcs=None,
-           options=None, profile=None):
+  def menu(self, component, add=False, height=(18, 'px'), save_funcs=None, update_funcs=None, editable=False,
+           options=None, profile=None, checks=("fas fa-check-square", "far fa-square")):
 
-    commands = [("Add&nbsp;", add)]
+    commands = [("Add&nbsp;", "fas fa-plus")] if add else []
+    if getattr(component.options, 'items_type', "") in ('check',):
+      commands.append(("Check", checks))
     options = options or {}
     menu_items = []
     for typ, icon in commands:
@@ -896,6 +898,17 @@ class Lists:
             r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
           ])
+        if typ == "Check":
+          r.click([
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+            self.page.js.if_(r.span.dom.innerText() == "Check", [
+              r.span.build("None"), component.dom.selectAll(),
+              r.icon.build(checks[1])]).else_([
+              r.span.build("Check"), component.dom.unSelectAll(),
+              r.icon.build(checks[0]),
+            ]),
+          ], profile=profile)
         menu_items.append(r)
     if save_funcs is not None:
       r = self.page.ui.icons.awesome(
@@ -921,5 +934,10 @@ class Lists:
         self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
       ] + update_funcs, profile=profile)
       menu_items.append(r)
-    container = self.page.ui.menu(component, menu_items=menu_items)
+    if not editable:
+      container = self.page.ui.menu(component, menu_items=menu_items, editable=editable)
+    elif editable is True:
+      container = self.page.ui.menu(component, menu_items=menu_items)
+    else:
+      container = self.page.ui.menu(component, menu_items=menu_items, editable=editable)
     return container

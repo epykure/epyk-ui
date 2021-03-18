@@ -1167,6 +1167,12 @@ class Components:
     commands = [("Copy", copy), ("Edit", editable), ("Hide", visible)]
     if post is not None:
       link = "fas fa-link"
+      if isinstance(post, dict):
+        post_url = post["url"]
+      else:
+        post_url = post
+        post = {}
+      #, jsData = None, varName = "response", is_json = True, components
       commands.extend([('ReSt', link), ("Build", refresh)])
     for typ, icon in commands:
       if icon:
@@ -1199,7 +1205,7 @@ class Components:
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ], profile=profile)
         elif typ == "Build":
-          r.click([self.page.js.post(self.page.components["%s_rest" % component.htmlCode].dom.content).onSuccess([
+          r.click([self.page.js.post(**post).onSuccess([
             component.build(self.page.js.objects.data),
             r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
@@ -1217,7 +1223,7 @@ class Components:
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ])
         elif typ == "ReSt":
-          input_rest = self.page.ui.input(post, width=(200, 'px'), html_code="%s_rest" % component.htmlCode)
+          input_rest = self.page.ui.input(post_url, width=(200, 'px'), html_code="%s_rest" % component.htmlCode)
           input_rest.style.css.text_align = "left"
           input_rest.style.css.padding_left = 5
           input_rest.style.css.hide()
@@ -1227,6 +1233,7 @@ class Components:
           input_rest.style.css.border_bottom = "1px solid %s" % self.page.theme.colors[-1]
           input_rest.style.css.line_height = self.page.body.style.globals.font.size
           input_rest.style.css.font_factor(-2)
+          post["url"] = input_rest.dom.content
           menu_items.append(input_rest)
           r.click([
             input_rest.dom.toggle(),
@@ -1242,9 +1249,9 @@ class Components:
       r.style.css.font_factor(-5)
       r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
-            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
-          ] + save_funcs, profile=profile)
+          r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+          self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+        ] + save_funcs, profile=profile)
       menu_items.append(r)
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(

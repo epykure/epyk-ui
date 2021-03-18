@@ -1635,6 +1635,8 @@ class Html:
     Usage:
     -----
 
+    TODO Test context menu
+
     Attributes:
     ----------
     :param menu:
@@ -1651,7 +1653,7 @@ class Html:
                                  'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
       self._report.js.objects.mouseEvent.preventDefault()]
     self.on("contextmenu", new_js_funcs, profile)
-    return self
+    return menu
 
   @property
   def touch(self):

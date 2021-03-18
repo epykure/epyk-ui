@@ -97,6 +97,17 @@ class Icons:
     return html_edit
 
   @html.Html.css_skin()
+  def fixed(self, icon=None, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
+            tooltip=None, align="left", options=None, profile=None):
+    options = options or {}
+    component = self.page.ui.icon(icon, family, width, html_code, height, color, tooltip, align, options, profile)
+    component.style.css.fixed(bottom=options.get("bottom", 20), right=options.get("right", 20))
+    component.style.add_classes.div.background_hover()
+    component.style.css.border_radius = 15
+    component.style.css.padding = 8
+    return component
+
+  @html.Html.css_skin()
   def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), html_code=None,
            options=None, profile=None):
     """

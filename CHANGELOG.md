@@ -5,14 +5,25 @@
 - Add standard menu bar for HTML components 
 - Add the options to get all the components in powered.
 - Add standard function for copy, download and clear.
+- Add url JavaScript attribute.
+- Add options in the Item list add() method.
+- Add getUrlFromData() method in the Js core module to convert variable to url.
+- Add URL property to window JS core module.
+- Add Stringify function for objects.
+- Add predefined fixed icon component.
+- Add predefined left input component.
+- Add align argument to formula component.
 
 ### Changed
 
 - Change color allocation for powered by component.
+- Change List menu component.
 
 ### Fixed
 
 - Fix ChartJs builder function names.
+- Fix context menu for Lists.
+- Fix add JavaScript function for Items list.
 
 
 ## [1.5.6] - 2021-03-16

@@ -29,15 +29,17 @@ class CssDivOnHoverBackgroundLight(CssStyle.Style):
   """
   Change the background color when the mouse is on the component
   """
-  _attrs = {"background-color": "inherit"}
+
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.page.theme.greys[0]})
+    self.css({
+      "background-color": self.page.theme.colors[0],
+      'border': "1px solid %s" % self.page.theme.greys[0]})
     self.hover.css({
-      'border': "1px solid %s" % self.page.theme.colors[1],
-      "background-color": self.page.theme.colors[0], "text-decoration": 'underline'})
-    self.hover.css('color', self.page.theme.greys[-1], important=True)
+      'border': "1px solid %s" % self.page.theme.colors[4],
+      "background-color": self.page.theme.colors[4], "text-decoration": 'underline'})
+    self.hover.css('color', self.page.theme.greys[0], important=True)
 
 
 class CssDivOnHoverColor(CssStyle.Style):
@@ -77,5 +79,10 @@ class CssDivOnHoverWidth(CssStyle.Style):
 
 class CssDivOnHoverBorder(CssStyle.Style):
   def customize(self):
-    self.css({"border": "2px solid %s" % self.page.theme.colors[0]})
-    self.hover.css({'border': "2px solid %s" % self.page.theme.colors[-1]})
+    self.css({
+      "border": "1px solid %s" % self.page.theme.colors[0],
+    })
+    self.hover.css({
+      'border': "1px solid %s" % self.page.theme.colors[5],
+      'color': self.page.theme.colors[5]
+    })

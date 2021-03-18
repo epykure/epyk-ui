@@ -19,6 +19,25 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 
 
+class JsUrl:
+
+  def createObjectURL(self, jsData):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObject.JsObject.get("window.URL.createObjectURL(%s)" % jsData)
+
+
 class JsLocalStorage:
 
   def key(self, i):
@@ -1234,3 +1253,12 @@ class JsWindow:
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("%s.location = %s" % (windowId, url))
+
+  @property
+  def URL(self):
+    """
+    Description:
+    ------------
+
+    """
+    return JsUrl

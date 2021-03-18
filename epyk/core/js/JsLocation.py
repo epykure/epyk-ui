@@ -18,7 +18,7 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 
 
-class URLSearchParams(object):
+class URLSearchParams:
 
   def __init__(self, queryString):
     self.queryString = queryString
@@ -111,7 +111,8 @@ class URLSearchParams(object):
       "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.queryString, key, value))
 
 
-class JsLocation(object):
+class JsLocation:
+
   @property
   def hostname(self):
     """
@@ -464,3 +465,25 @@ class JsLocation(object):
     return ''' 
       var form = document.createElement("form"); form.method = "%s"; form.target = "%s"; form.action = "%s"; %s;
       document.body.appendChild(form); form.submit()''' % (method, target, url, "".join(inputs))
+
+  def getUrlFromData(self, data, options=None):
+    """
+    Description:
+    ------------
+    Convert data to a URL.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
+    Attributes:
+    ----------
+    :param data: Dictionary | JsData. Input data to be converted.
+    :param options: Dictionary | JsData. Optional. Blob definition properties.
+    """
+    data = JsUtils.jsConvertData(data, None)
+    if options is not None:
+      options = JsUtils.jsConvertData(options, None)
+      return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s], %s))" % (data, options))
+
+    return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s]))" % data)

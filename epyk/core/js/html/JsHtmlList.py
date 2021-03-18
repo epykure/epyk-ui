@@ -492,7 +492,7 @@ class JsItem(JsHtml.JsHtmlRich):
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
       })''' % (self.varName, self._src.options.items_type))
 
-  def add(self, value, css_attrs=None, css_cls=None, before=False):
+  def add(self, value, css_attrs=None, css_cls=None, before=False, options=None):
     """
     Description:
     ------------
@@ -526,16 +526,15 @@ class JsItem(JsHtml.JsHtmlRich):
       %(comp)s.%(event)s(li)
       if(itemOptions.delete){
         var close = document.createElement("i");
-        close.classList.add("fas"); close.classList.add(itemOptions.delete_icon);
-        close.style.cursor = 'pointer'; close.style.position = 'absolute';
-        close.style.top = "10px"; close.style.right = "0";
+        close.setAttribute("class", itemOptions.delete_icon);
+        close.style.cursor = 'pointer'; close.style.position = 'absolute'; close.style.right = "0";
         li.style.position = "relative";
         close.onclick = function(event){this.parentNode.remove()};
         for (const [key, value] of Object.entries(itemOptions.delete_position)){close.style[key] = value}
         li.lastChild.style.display = 'inline-block'; li.appendChild(close);
         const cls = %(cls)s;
         if (cls != null){li.classList.add(cls)}
-      } ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value,
+      } ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'value': value,
                'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
                'shape': "%s%s" % (self._src.options.prefix, self._src.options.items_type)})
 
@@ -577,7 +576,7 @@ class JsItem(JsHtml.JsHtmlRich):
       })}''' % {'comp': self.varName, 'css': JsUtils.jsConvertData(css_attrs, None),
                 'cls': JsUtils.jsConvertData(css_cls, None), 'values': JsUtils.jsConvertData(values, None)})
 
-  def contextMenu(self, menu, jsFncs=None, profile=False):
+  def contextMenu(self, menu, jsFncs=None, menuJsFncs=None, profile=False):
     """
     Description:
     ------------
@@ -591,6 +590,19 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     if not hasattr(menu, 'source'):
       menu = self._src._report.ui.menus.contextual(menu)
+    for i, item in enumerate(menu):
+      menuFncs = ['''
+        var data = {"action": event.srcElement.innerText};
+        if(window.context_menu_source.getAttribute("name")){
+          data["source"] = window.context_menu_source.innerHTML} 
+        else {data["source"] = window.context_menu_source.querySelector('[name=value]').innerHTML} 
+        ''']
+      if menuJsFncs is not None:
+        if not isinstance(menuJsFncs[i], list):
+          menuJsFncs[i] = [menuJsFncs[i]]
+        menuFncs.extend(menuJsFncs[i])
+      menuFncs.append(menu.dom.hide())
+      item.click(menuFncs)
     self.context_menu = menu
     menu.source = self
     new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
@@ -599,7 +611,8 @@ class JsItem(JsHtml.JsHtmlRich):
              'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
           self._report.js.objects.mouseEvent.preventDefault()]
     return JsObjects.JsVoid('''
-      %s.lastChild.addEventListener("contextmenu", function(event){%s});
+      %s.lastChild.addEventListener("contextmenu", function(event){
+        window.context_menu_source = this; %s});
       ''' % (self.varName, JsUtils.jsConvertFncs(new_js_fncs, toStr=True, profile=profile)))
 
   def clear(self):

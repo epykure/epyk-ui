@@ -353,7 +353,7 @@ class Texts:
 
   @html.Html.css_skin()
   def formula(self, text=None, width=(100, "%"), height=(None, 'px'), html_code=None, color=None, helper=None,
-              options=None, profile=None):
+              align="left", options=None, profile=None):
     """
     Description:
     ------------
@@ -380,12 +380,17 @@ class Texts:
     :param color: String. Optional. The font color in the component. Default inherit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param align: String. Optional. The text-align property within this component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
     html_formula = html.HtmlTextComp.Formula(self.page, text, width, height, color, html_code, helper, options, profile)
+    html_formula.style.css.text_align = align
+    if align in ["center", 'right']:
+      html_formula.style.css.margin = "auto"
+      html_formula.style.css.display = "block"
     return html_formula
 
   @html.Html.css_skin()
