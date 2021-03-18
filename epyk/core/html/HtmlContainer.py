@@ -255,10 +255,15 @@ class PanelSlide(Panel):
     self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 0',
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT,
                                               'font-size': "%spx" % Defaults.BIG_ICONS})
-    self.text = self._report.ui.text(title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block',
-                                                                                      'margin': 0})
-    self.text.style.css.bold()
-    self.text.style.css.font_factor(2)
+    if hasattr(title, 'options'):
+      self.text = title
+      self.text.options.managed = False
+      self.text.style.css.display = "inline-block"
+    else:
+      self.text = self._report.ui.text(
+        title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
+      self.text.style.css.bold()
+      self.text.style.css.font_factor(2)
     self.title = self._report.ui.div([self.icon, self.text])
     self.title.options.managed = False
     self.title.style.css.cursor = "pointer"
