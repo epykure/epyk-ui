@@ -2,6 +2,15 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+
+## [1.5.7] - 2021-03-19
+
+### Added
+
 - Add standard menu bar for HTML components 
 - Add the options to get all the components in powered.
 - Add standard function for copy, download and clear.
