@@ -17,6 +17,9 @@ class Forms:
     ------------
     Creates an new empty form.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -36,6 +39,9 @@ class Forms:
     Description:
     ------------
     Create a DatePicker object.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -72,6 +78,9 @@ class Forms:
     ------------
     Create two datepicker objects for current and previous.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -107,6 +116,9 @@ class Forms:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -138,6 +150,9 @@ class Forms:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -182,6 +197,9 @@ class Forms:
     Description:
     ------------
 
+    :tags:
+    :categories:
+    
     Usage:
     -----
 

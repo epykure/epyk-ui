@@ -100,8 +100,8 @@ class Numbers:
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
       dflt_options.update(options)
-    html_number = html.HtmlText.Numeric(self.page, number, title, label, icon, color, tooltip, html_code,
-                                        dflt_options, helper, width, profile)
+    html_number = html.HtmlText.Numeric(
+      self.page, number, title, label, icon, color, tooltip, html_code, dflt_options, helper, width, profile)
     html_number.style.css.text_align = align
     html_number.style.css.font_factor(5)
     return html_number
@@ -343,7 +343,8 @@ class Numbers:
     return ind
 
   @html.Html.css_skin()
-  def move(self, current, previous, color=None, label=None, options=None, helper=None, profile=None):
+  def move(self, current, previous, components=None, width=(100, '%'), height=(None, "px"), color=None, label=None,
+           options=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -351,7 +352,7 @@ class Numbers:
     Usage:
     -----
 
-      page.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+      page.ui.numbers.move(100, 60, helper="test")
 
     Underlying HTML Objects:
 
@@ -359,19 +360,25 @@ class Numbers:
 
     Attributes:
     ----------
-    :param current:
-    :param previous:
-    :param color:
-    :param label:
+    :param current: Integer.
+    :param previous: Integer.
+    :param components: HTML Component. List of HTML component to be added.
+    :param color: String. Optional. The text color.
+    :param label: String. Optional. The label for the up and down component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param profile:
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
                     'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
                     'orange': self.page.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
-    html_up_down = html.HtmlTextComp.UpDown(self.page, {"value": current, 'previous': previous}, color, label,
-                                            dflt_options, helper, profile)
+    html_up_down = html.HtmlTextComp.UpDown(
+      self.page, {"value": current, 'previous': previous}, components, color, label, width, height, dflt_options,
+      helper, profile)
     return html_up_down

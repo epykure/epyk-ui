@@ -22,6 +22,9 @@ class Fields:
     ------------
     Add the HTML text component to the page.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -46,10 +49,10 @@ class Fields:
     Attributes:
     ----------
     :param text: String. Optional. The string value to be displayed in the component.
-    :param label: Optional. The text of label to be added to the component.
-    :param color: Optional. The color of the text.
-    :param align: Optional. The position of the icon in the line (left, right, center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: Optional. A string with the value of the tooltip.
@@ -97,6 +100,9 @@ class Fields:
     Description:
     ------------
     This component is based on the Jquery Date Picker object.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -149,6 +155,9 @@ class Fields:
     ------------
     This component is based on the Jquery Date Picker object.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -200,6 +209,9 @@ class Fields:
     ------------
     This component is based on the Jquery Date Picker object.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -247,6 +259,9 @@ class Fields:
     ------------
     This component is based on the Jquery Time Picker object.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -289,6 +304,9 @@ class Fields:
     ------------
     This component is based on the Jquery Time Picker object.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -330,6 +348,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -370,6 +391,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -408,6 +432,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -451,6 +478,9 @@ class Fields:
     Create a hidden HTML component.
     This is used to store values which are not visible on the page.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -492,6 +522,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -530,6 +563,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -570,6 +606,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -609,6 +648,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -647,6 +689,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -693,6 +738,9 @@ class Fields:
     Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of
     related options).
     Only one radio button in a group can be selected at the same time.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -745,6 +793,9 @@ class Fields:
     - step - specifies the legal number intervals
     - value - Specifies the default value
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -790,6 +841,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -841,6 +895,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -889,6 +946,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -943,6 +1003,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -989,6 +1052,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -1039,6 +1105,9 @@ class Fields:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -1076,6 +1145,9 @@ class Fields:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -1117,7 +1189,10 @@ class Fields:
     """
     Description:
     ------------
-    Add a toggle component
+    Add a toggle component.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -1182,6 +1257,9 @@ class Timelines:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -1225,6 +1303,9 @@ class Timelines:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -1272,6 +1353,9 @@ class Timelines:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -1314,6 +1398,9 @@ class Timelines:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -1345,6 +1432,9 @@ class Timelines:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -1389,6 +1479,9 @@ class Timelines:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -1417,6 +1510,9 @@ class Timelines:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----

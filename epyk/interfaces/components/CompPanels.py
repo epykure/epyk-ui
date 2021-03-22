@@ -17,6 +17,9 @@ class Panels:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
@@ -52,6 +55,9 @@ class Panels:
     Description:
     ------------
     Python wrapper to the Bootstrap Pills interface.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -102,6 +108,9 @@ class Panels:
     Description:
     ------------
     Python wrapper to the Bootstrap rectangle boxes interface.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -154,6 +163,9 @@ class Panels:
     ------------
     Python wrapper for a multi Tabs component.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -197,6 +209,9 @@ class Panels:
     Description:
     ------------
     Python wrapper for a multi Tabs component.
+
+    :tags:
+    :categories:
 
     Underlying HTML Objects:
 
@@ -244,6 +259,9 @@ class Panels:
     ------------
     Python wrapper for a multi Tabs component.
 
+    :tags:
+    :categories:
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.TabsArrowsDown`
@@ -290,6 +308,9 @@ class Panels:
     ------------
     Python wrapper to the Bootstrap Pills interface.
 
+    :tags:
+    :categories:
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
@@ -332,6 +353,9 @@ class Panels:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -379,6 +403,9 @@ class Panels:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -419,6 +446,9 @@ class Panels:
     Description:
     -----------
     Chip component with only the filtering section.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -464,6 +494,9 @@ class Panels:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -473,10 +506,10 @@ class Panels:
 
     Attributes:
     ----------
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param options: Optional. A dictionary with the components properties
-    :param profile: Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
     :param helper: String. Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
@@ -493,7 +526,6 @@ class Panels:
     Description:
     ------------
     More custom sliding panels.
-
     """
     return Slidings(self)
 
@@ -511,13 +543,16 @@ class Slidings:
     ------------
     Sliding panels with the arrow on the right.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param align: String. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -543,13 +578,16 @@ class Slidings:
     ------------
     Sliding panels with the arrow on the left.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param align: String. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -574,13 +612,16 @@ class Slidings:
     ------------
     Same component than sliding with a different style.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
     :param components: List. The different HTML objects to be added to the component.
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param align: String. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

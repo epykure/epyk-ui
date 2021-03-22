@@ -16,6 +16,9 @@ class Drawers:
     ------------
     Bespoke drawer with handle on the right.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -47,6 +50,9 @@ class Drawers:
     ------------
     Bespoke drawer with handle on the left.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -71,6 +77,9 @@ class Drawers:
     Description:
     ------------
     Bespoke drawer with handle on the left.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -102,6 +111,9 @@ class Drawers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -132,6 +144,9 @@ class Drawers:
     ------------
     Bespoke drawer without handle.
     The event to display the panel will be attached to the component.
+
+    :tags:
+    :categories:
 
     Usage:
     -----

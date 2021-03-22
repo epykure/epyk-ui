@@ -18,6 +18,9 @@ class Layouts:
 
     The <br> tag inserts a single line break.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -46,6 +49,9 @@ class Layouts:
     Wrapper around the Br html tag.
 
     The <br> tag inserts a single line break.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -81,6 +87,9 @@ class Layouts:
     Wrapper around the HT html tag.
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -131,6 +140,9 @@ class Layouts:
     ------------
     Add a styles hr component to underline another component.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -160,6 +172,9 @@ class Layouts:
     Description:
     ------------
     Add a styles hr component to lightly underline another component.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -193,6 +208,9 @@ class Layouts:
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -242,6 +260,9 @@ class Layouts:
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -289,6 +310,9 @@ class Layouts:
     ------------
     table layout for HTML components.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -322,6 +346,9 @@ class Layouts:
     Description:
     ------------
     Python wrapper to the HTML Bootstrap Grid.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -365,6 +392,9 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -398,6 +428,9 @@ class Layouts:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -452,6 +485,9 @@ class Layouts:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -480,6 +516,9 @@ class Layouts:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -506,6 +545,9 @@ class Layouts:
     Description:
     ------------
     Add a generic popup component to the page.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -545,6 +587,9 @@ class Layouts:
     ------------
     Add a iframe component to the page.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -576,6 +621,9 @@ class Layouts:
     Description:
     ------------
     Simple Jquery UI modal with a text.
+
+    :tags:
+    :categories:
 
     Underlying HTML Objects:
 
@@ -609,6 +657,9 @@ class Layouts:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -649,6 +700,9 @@ class Layouts:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -674,6 +728,9 @@ class Layouts:
     ------------
     The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
     It may contain some heading elements but also a logo, a search form, an author name, and other elements.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -718,6 +775,9 @@ class Layouts:
     The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections
     of the document.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -758,6 +818,9 @@ class Layouts:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -802,6 +865,9 @@ class Delimiter:
     ------------
     Wrapper around the HT html tag.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -825,6 +891,9 @@ class Delimiter:
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -850,6 +919,9 @@ class Delimiter:
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -877,6 +949,9 @@ class Delimiter:
     Description:
     ------------
     Wrapper around the HT html tag.
+
+    :tags:
+    :categories:
 
     Usage:
     -----

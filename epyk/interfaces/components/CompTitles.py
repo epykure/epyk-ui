@@ -18,6 +18,10 @@ class Titles:
     Description:
     ------------
 
+
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -27,14 +31,14 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -60,6 +64,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -70,14 +77,14 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -100,6 +107,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -110,14 +120,14 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -141,19 +151,22 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
-    :param text:
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -177,6 +190,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -186,21 +202,21 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.border_left = '3px solid %s' % self.page.theme.colors[2]
     html_title.style.css.padding_left = 5
     html_title.style.css.font_size = Defaults_css.font(2)
@@ -213,6 +229,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -222,21 +241,21 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.border_bottom = '3px solid %s' % self.page.theme.colors[-1]
     html_title.style.css.font_size = Defaults_css.font(5)
     html_title.style.css.margin_bottom = 5
@@ -250,6 +269,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -259,21 +281,21 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(2)
     html_title.style.css.color = self.page.theme.colors[-1]
     return html_title
@@ -285,6 +307,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -294,13 +319,13 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -320,6 +345,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -330,56 +358,60 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(4)
     html_title.style.css.font_weight = "bold"
     html_title.style.css.color = self.page.theme.colors[-1]
     return html_title
 
   @html.Html.css_skin()
-  def subtitle(self, text="", name=None, contents=None, color=None, picture=None, icon=None, marginTop=5,
+  def subtitle(self, text="", name=None, contents=None, color=None, picture=None, icon=None, top=5,
                html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the component.
     :param name:
     :param contents:
     :param color:
     :param picture:
     :param icon:
-    :param marginTop:
-    :param html_code:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param top:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     title = self.page.ui.title(text=text, name=name, contents=contents, color=color, picture=picture, icon=icon,
-            marginTop=marginTop, html_code=html_code, width=width, height=height, align=align, options=options, profile=profile)
+                               top=top, html_code=html_code, width=width, height=height, align=align, options=options,
+                               profile=profile)
     title.style.css.font_size = Defaults_css.font(2)
     title.style.css.bold()
     return title
@@ -391,6 +423,9 @@ class Titles:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -401,22 +436,22 @@ class Titles:
 
     Attributes:
     ----------
-    :param text:
-    :param options:
-    :param tooltip:
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10

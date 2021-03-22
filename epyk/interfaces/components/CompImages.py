@@ -22,6 +22,9 @@ class Images:
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the
     server.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -73,6 +76,9 @@ class Images:
     ------------
     Display a picture as a figure component with an attached caption object.
 
+    :tags:
+    :categories:
+
     Related Pages:
 
       https://www.w3schools.com/tags/tag_figcaption.asp
@@ -86,7 +92,7 @@ class Images:
     Attributes:
     ----------
     :param image: String. Optional. The url path of the image.
-    :param caption:
+    :param caption: String. Optional.
     :param path: String. Optional. String. The image file path.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -118,6 +124,9 @@ class Images:
     ------------
     Empty container for images.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -145,6 +154,9 @@ class Images:
     Description:
     ------------
     Add a background image.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -181,7 +193,8 @@ class Images:
     Description:
     ------------
 
-    tags: Background
+    :tags: Background
+    :categories:
 
     Usage:
     -----
@@ -192,8 +205,9 @@ class Images:
     :param url: String. Optional. The link to the gallery.
     :param width: Optional. Tuple. The component width in pixel or percentage.
     :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param size:
-    :param margin:
+    :param size: String. Optional. The type of background in
+    :param margin: Integer. Optional. The CSS margin properties are used to create space around elements,
+                            outside of any defined borders.
     :param align: String. The text-align property within this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param position: String. Optional. The position compared to the main component tag.
@@ -202,8 +216,9 @@ class Images:
     """
     options = options or {}
     div = html.HtmlImage.Background(self.page, [], label=None, color=None, width=Arguments.size(width),
-                                    icon=None, height=Arguments.size(height), editable=False, align='left', padding=None,
-                                    html_code=html_code, tag='div', helper=None, options=options, profile=profile)
+                                    icon=None, height=Arguments.size(height), editable=False, align='left',
+                                    padding=None, html_code=html_code, tag='div', helper=None, options=options,
+                                    profile=profile)
     div.style.css.background_url(self.page.py.encode_html(url) if url is not None else None, size=size,
                                  margin=margin)
     div.style.css.background_position = "center center"
@@ -220,6 +235,10 @@ class Images:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
+
 
     Usage:
     -----
@@ -257,6 +276,9 @@ class Images:
     ------------
     Get teh picture used by youtube.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -284,6 +306,9 @@ class Images:
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of
     the server.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -334,6 +359,9 @@ class Images:
     ------------
     Generate or load an avatar.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -352,9 +380,9 @@ class Images:
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the component.
-    :param image:
+    :param image: String. Optional. The url of the image.
     :param path: String. Optional. String. The image file path.
-    :param status:
+    :param status: String. Optional. The avatar status code. Default no status.
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel or percentage.
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -421,6 +449,9 @@ class Images:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -436,9 +467,9 @@ class Images:
 
     Attributes:
     ----------
-    :param image:
-    :param name:
-    :param title:
+    :param image: String. The url of the image.
+    :param name:  String. The name of the image.
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param text: String. Optional. The value to be displayed to the component.
     :param url: String. Optional. The link to the gallery.
     :param path: String. Optional. String. The image file path.
@@ -474,6 +505,9 @@ class Images:
     ------------
     Advance image with mask and gallery link.
     This will display some details when the mouse is on the container.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -514,6 +548,9 @@ class Images:
     Description:
     ------------
     Carousel component for pictures.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -559,6 +596,9 @@ class Images:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -578,8 +618,8 @@ class Images:
 
     Attributes:
     ----------
-    :param symbol: String. Optional.
-    :param top: Tuple. Optional.
+    :param symbol: String. Optional. The emoji code.
+    :param top: Tuple. Optional. The number of pixel from the top of the page.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -593,6 +633,9 @@ class Images:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -639,6 +682,9 @@ class Images:
     ------------
     Display a badge component using Bootstrap.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -646,7 +692,8 @@ class Images:
       page.ui.images.badge("This is a badge", background_color="red", color="white")
       page.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 
-      b = page.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
+      b = page.ui.images.badge(
+        7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
       b.options.badge_css = {"background": 'green'}
 
     Underlying HTML Objects:
@@ -694,6 +741,9 @@ class Images:
     Simple vignette to display a color with it is code.
 
     TODO: Return the hex code of the color when dom.content used
+
+    :tags:
+    :categories:
 
     Usage:
     -----

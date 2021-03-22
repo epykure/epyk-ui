@@ -256,6 +256,10 @@ class Buttons:
     :tags:
     :categories:
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
     Usage:
     -----
 
@@ -310,6 +314,10 @@ class Buttons:
     :tags:
     :categories:
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
     Usage:
     -----
 
@@ -351,6 +359,10 @@ class Buttons:
     :tags:
     :categories:
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
     Usage:
     -----
 
@@ -390,6 +402,10 @@ class Buttons:
 
     :tags:
     :categories:
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Usage:
     -----
@@ -460,7 +476,7 @@ class Buttons:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the button.
+    :param text: String. Optional. The value to be displayed to the button.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -488,6 +504,10 @@ class Buttons:
     :tags:
     :categories:
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
     Usage:
     -----
 
@@ -508,7 +528,7 @@ class Buttons:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the button.
+    :param text: String. Optional. The value to be displayed to the button.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. The text-align property within this component.
@@ -992,6 +1012,10 @@ class Buttons:
 
     Usage:
     -----
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
 

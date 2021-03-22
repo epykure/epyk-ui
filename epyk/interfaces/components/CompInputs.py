@@ -400,7 +400,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
@@ -514,14 +514,14 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :rtype: html.HtmlInput.Input
     """
-    input = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
-    input.style.css.display = None
-    return input
+    component = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
+    component.style.css.display = None
+    return component
 
   @html.Html.css_skin()
   def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"), html_code=None,

@@ -76,6 +76,9 @@ class Texts:
     ------------
     Add the HTML text component to the page.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -122,6 +125,9 @@ class Texts:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -151,12 +157,13 @@ class Texts:
       self.page, text, None, align, width, height, html_code, None, dfl_options, None, profile)
     text_comp.style.css.position = "absolute"
     text_comp.style.css.display = "block"
+    text_comp.style.css.left = "%s%s" % (left[0], left[1])
     if bottom is not None:
       text_comp.style.css.bottom = "%s%s" % (bottom[0], bottom[1])
+      text_comp.style.css.transform = "translate(%s%s, %s)" % (-left[0], left[1], text_comp.style.css.bottom)
     else:
-      text_comp.style.top = "%s%s" % (top[0], top[1])
-    text_comp.style.css.left = "%s%s" % (left[0], left[1])
-    text_comp.style.css.transform = "translate(-%s, -%s)" % (text_comp.style.css.left, text_comp.style.css.top)
+      text_comp.style.css.top = "%s%s" % (top[0], top[1])
+      text_comp.style.css.transform = "translate(%s%s, -%s)" % (-left[0], left[1], text_comp.style.css.top)
     if size_notch is not None:
       text_comp.style.css.font_size = Defaults_css.font(size_notch)
     if width[0] == 'auto':
@@ -175,6 +182,9 @@ class Texts:
     The for attribute of the <label> tag should be equal to the id attribute of the related element to bind
     them together.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -191,13 +201,13 @@ class Texts:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component.
-    :param color: Optional. The color of the text.
-    :param align: Optional. The position of the icon in the line (left, right, center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -222,6 +232,9 @@ class Texts:
     The <span> tag provides no visual change by itself.
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -262,6 +275,9 @@ class Texts:
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -278,8 +294,8 @@ class Texts:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param title:
+    :param text: String. Optional. The string value to be displayed in the component
+    :param title: String. Optional.
     :param icon: String. Optional. The component icon content from font-awesome references
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
                  dark). Default danger
@@ -307,6 +323,9 @@ class Texts:
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -327,10 +346,10 @@ class Texts:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
+    :param text: String. Optional. The string value to be displayed in the component.
     :param title:
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
+    :param type: Optional. The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
                  dark). Default danger.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -359,6 +378,9 @@ class Texts:
     ------------
     Interface to the mathjax Formulas object.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -385,7 +407,7 @@ class Texts:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="%")
+    height = Arguments.size(height, unit="px")
     html_formula = html.HtmlTextComp.Formula(self.page, text, width, height, color, html_code, helper, options, profile)
     html_formula.style.css.text_align = align
     if align in ["center", 'right']:
@@ -400,6 +422,9 @@ class Texts:
     Description:
     ------------
     Python Wrapper to the Bootstrap CODE Tag.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -444,6 +469,9 @@ class Texts:
     ------------
     Python Wrapper to the HTML P Tag.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -465,12 +493,12 @@ class Texts:
     ----------
     :param text: String. Optional. The string value to be displayed in the component
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param background_color:
+    :param background_color: String.
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param encoding:
+    :param encoding: String. Optional.
     :param helper: String. Optional. The value to be displayed to the helper icon.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -499,6 +527,9 @@ class Texts:
     The <pre> tag defines preformatted text.
     Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces
     and line breaks.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -544,6 +575,9 @@ class Texts:
     The <blockquote> tag specifies a section that is quoted from another source.
     Browsers usually indent <blockquote> elements.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -578,11 +612,15 @@ class Texts:
     return html_blockquote
 
   @html.Html.css_skin()
-  def up_down(self, rec=None, color=None, label=None, options=None, helper=None, profile=None):
+  def up_down(self, record=None, components=None, color=None, label=None, width=(100, "%"), height=(330, "px"),
+              options=None, helper=None, profile=None):
     """
     Description:
     ------------
     Up and down Text component.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -599,19 +637,25 @@ class Texts:
 
     Attributes:
     ----------
-    :param rec:
+    :param record: Dictionary. Optional. The component inputs.
+    :param components: HTML Component. List of HTML component to be added.
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param label:
+    :param label: String. Optional.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param helper: String. Optional. The value to be displayed to the helper icon.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': Defaults_css.font(),
                     'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
                     'orange': self.page.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
-    html_up_down = html.HtmlTextComp.UpDown(self.page, rec, color, label, dflt_options, helper, profile)
+    html_up_down = html.HtmlTextComp.UpDown(
+      self.page, record, components, color, label, width, height, dflt_options, helper, profile)
     return html_up_down
 
   @html.Html.css_skin()
@@ -620,6 +664,9 @@ class Texts:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -636,12 +683,12 @@ class Texts:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default 0.
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param number: Integer. Optional. The value to be displayed to the component. Default 0.
+    :param title: String. Optional. The text title.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -662,11 +709,14 @@ class Texts:
 
   @html.Html.css_skin()
   def title(self, text="", level=None, name=None, contents=None, color=None, picture=None, icon=None,
-            marginTop=5, html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
+            top=5, html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
     ------------
-    Add a title
+    Add a title.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -684,20 +734,20 @@ class Texts:
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the component.
     :param level:
     :param name:
     :param contents:
-    :param color:
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param picture:
-    :param icon:
-    :param marginTop:
-    :param html_code:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param top: Integer. Optional. The margin top in pixel.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -706,7 +756,7 @@ class Texts:
       dflt_options.update(options)
     text = self.page.py.encode_html(text)
     html_title = html.HtmlText.Title(self.page, text, level, name, contents, color, picture, icon,
-                                     marginTop, html_code, width, height, align, dflt_options, profile)
+                                     top, html_code, width, height, align, dflt_options, profile)
     html_title.style.css.text_transform = "uppercase"
     return html_title
 
@@ -717,6 +767,9 @@ class Texts:
     ------------
     The <fieldset> tag is used to group related elements in a form.
     The <fieldset> tag draws a box around the related elements.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -754,13 +807,16 @@ class Texts:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the component.
-    :param label: String. Optional. The text of label to be added to the component
+    :param label: String. Optional. The text of label to be added to the component.
     :param align: String. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -794,6 +850,9 @@ class Texts:
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -810,18 +869,18 @@ class Texts:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param title:
-    :param icon: String. Optional. The component icon content from font-awesome references
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param title: String. Optional.
+    :param icon: String. Optional. The component icon content from font-awesome references.
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
-                 dark). Default danger
+                 dark). Default danger.
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
     :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -855,6 +914,9 @@ class Texts:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -863,7 +925,7 @@ class Texts:
     Attributes:
     ----------
     :param text: String. Optional. The value to be displayed to the button.
-    :param icon: String. Optional. The component icon content from font-awesome references
+    :param icon: String. Optional. The component icon content from font-awesome references.
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -887,11 +949,15 @@ class TextReferences:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def book(self, text, author=None, name=None, edition=None, year=None, page=None):
+  def book(self, text, author=None, name=None, edition=None, year=None, page=None, html_code=None, profile=None,
+           options=None):
     """
     Description:
     ------------
     Shortcut to quote an extra from a book.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -901,24 +967,31 @@ class TextReferences:
 
     Attributes:
     ----------
-    :param text: String. The text of the quote
-    :param author: String. The author.
-    :param name:
+    :param text: String. Optional. The text of the quote.
+    :param author: String. Optional. The author.
+    :param name: String. Optional.
     :param edition:
     :param year:
     :param page:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     content = "« %s » <sup style='cursor:pointer;color:blue;text-decoration:underline' title='%s. %s, %s. %s, p. %s'>&#x2a;</sup>"
-    text = self.page.ui.text(content % (text, author, name, edition, year, page))
+    text = self.page.ui.text(content % (text, author, name, edition, year, page), html_code=html_code, options=options,
+                             profile=profile)
     text.style.css.color = self.page.theme.colors[4]
     return text
 
   @html.Html.css_skin()
-  def website(self, author=None, name=None, site=None, url=None):
+  def website(self, author=None, name=None, site=None, url=None, html_code=None, profile=None, options=None):
     """
     Description:
     ------------
     Shortcut to data reference from another website.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -931,11 +1004,14 @@ class TextReferences:
     Attributes:
     ----------
     :param author: String. Optional. The author.
-    :param name: String. Optional. The name of the page
-    :param site: String. Optional. The website name
+    :param name: String. Optional. The name of the page.
+    :param site: String. Optional. The website name.
     :param url: String. Optional. The url link to the data.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     text = self.page.ui.text("%s, %s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (
-      author, name, site.upper(), url, url), align="right")
+      author, name, site.upper(), url, url), align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
     return text

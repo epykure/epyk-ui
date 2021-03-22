@@ -15,16 +15,19 @@ class Vignets:
 
   @html.Html.css_skin()
   def bubble(self, records=None, width=(50, "px"), height=(110, 'px'), color=None, background_color=None,
-             helper=None, profile=None):
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
     The bubbles event property returns a Boolean value that indicates whether or not an event is a bubbling event.
     Event bubbling directs an event to its intended target, it works like this:
     A button is clicked and the event is directed to the button
-    If an event handler is set for that object, the event is triggered
-    If no event handler is set for that object, the event bubbles up (like a bubble in water) to the objects parent
+    If an event handler is set for that object, the event is triggered.
+    If no event handler is set for that object, the event bubbles up (like a bubble in water) to the objects parent.
     The event bubbles up from parent to parent until it is handled, or until it reaches the document object.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -43,17 +46,18 @@ class Vignets:
 
     Attributes:
     ----------
-    :param records: Optional. The list of dictionaries
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: Optional. The font color in the component. Default inherit
-    :param background_color:
-    :param helper: Optional. A tooltip helper
-    :param profile: Optional. A flag to set the component performance storage
+    :param records: List. Optional. The list of dictionaries.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param background_color: String. Optional. The hexadecimal color code.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    div = self.page.ui.div(width=width, height=height, profile=profile, helper=helper)
+    div = self.page.ui.div(width=width, height=height, profile=profile, options=options, helper=helper)
     bubble = self.page.ui.div(width=width, height=(height[0]-60, height[1]), profile=profile)
     div.number = self.page.ui.text(records["value"], width=width)
     if records.get("url") is not None:
@@ -77,7 +81,8 @@ class Vignets:
     return div
 
   @html.Html.css_skin()
-  def number(self, number, label="", width=('auto', ""), height=(None, "px"), profile=None, options=None):
+  def number(self, number, label="", components=None, width=('auto', ""), height=(None, "px"), profile=None,
+             options=None, helper=None):
     """
     Description:
     ------------
@@ -87,6 +92,9 @@ class Vignets:
     min - specifies the minimum value allowed
     step - specifies the legal number intervals
     value - Specifies the default value
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -105,12 +113,14 @@ class Vignets:
 
     Attributes:
     ----------
-    :param number:
-    :param label:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param number: Integer. The value.
+    :param label: String. Optional. The label text.
+    :param components: List. Optional. The HTML components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -123,7 +133,8 @@ class Vignets:
         number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
     else:
       number = self.page.py.format_number(number, digits=dflt_options.get('digits', 0))
-    html_number = html.HtmlTextComp.Number(self.page, number, label, width, height, profile, dflt_options)
+    html_number = html.HtmlTextComp.Number(
+      self.page, number, components, label, width, height, profile, dflt_options, helper)
     return html_number
 
   @html.Html.css_skin()
@@ -134,6 +145,9 @@ class Vignets:
     ------------
     Every HTML element has a default display value depending on what type of element it is.
     The two display values are: block and inline.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -151,14 +165,14 @@ class Vignets:
 
     Attributes:
     ----------
-    :param records:
-    :param color: Optional. The font color in the component. Default inherit
+    :param records: List. Optional. The list of dictionaries with the input data.
+    :param color: Optional. The font color in the component. Default inherit.
     :param border:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param helper: Optional. A tooltip helper
-    :param options:
-    :param profile: Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_blocktext = html.HtmlTextComp.BlockText(
       self.page, records, color, border, width, height, helper, options, profile)
@@ -170,6 +184,9 @@ class Vignets:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -183,13 +200,13 @@ class Vignets:
 
     Attributes:
     ----------
-    :param records:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align:
-    :param helper: Optional. A tooltip helper
-    :param options:
-    :param profile: Optional. A flag to set the component performance storage
+    :param records: List. Optional. The list of dictionaries with the input data.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_text = html.HtmlTextComp.TextWithBorder(self.page, records, width, height, align, helper, options, profile)
     return html_text
@@ -201,20 +218,23 @@ class Vignets:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param image:
     :param render:
-    :param align:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
     if render == "row":
@@ -277,7 +297,10 @@ class Vignets:
     """
     Description:
     ------------
-    Component to allow creation of a vignet embedding a video
+    Component to allow creation of a vignet embedding a video.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -292,15 +315,15 @@ class Vignets:
 
     Attributes:
     ----------
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param video:
     :param render:
-    :param align:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     def get_video(page, video_link):
       if video_link is not None:
@@ -356,20 +379,23 @@ class Vignets:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
-    :param url:
-    :param width:
-    :param height:
-    :param size:
-    :param margin:
-    :param align:
-    :param position:
-    :param options:
-    :param profile:
+    :param url: String. The url string.
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param size: String. Optional.
+    :param margin: Integer. Optional.
+    :param position: String. Optional.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     div = self.page.ui.div(height=height, width=width, options=options, profile=profile)
     div.style.css.background_url(url, size=size, margin=margin)
@@ -389,19 +415,22 @@ class Vignets:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
-    :param title:
-    :param content:
-    :param icon:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
+    :param content: String. Optional. The value to be displayed to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param render:
-    :param align:
-    :param width:
-    :param options:
-    :param profile:
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {"position": 'left'}
     if render == "col":
@@ -448,11 +477,14 @@ class Vignets:
     return container
 
   @html.Html.css_skin()
-  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), currency="£", options=None,
-            profile=None):
+  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), height=(None, 'px'), currency="£",
+            options=None, profile=None, helper=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -462,16 +494,19 @@ class Vignets:
     Attributes:
     ----------
     :param value:
-    :param title:
+    :param title: String. Optional. A panel title. This will be attached to the title property.
     :param items:
     :param url:
-    :param align:
-    :param width:
-    :param currency:
-    :param options:
-    :param profile:
+    :param align: String. The text-align property within this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param currency: String. Optional. The currency value.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
     """
-    container = self.page.ui.div(align=align, width=width, options=options, profile=profile)
+    container = self.page.ui.div(
+      align=align, width=width, height=height, options=options, profile=profile, helper=helper)
     container.style.css.border = "1px solid %s" % self.page.theme.greys[3]
     container.style.css.margin = "auto"
     if not hasattr(title, 'options'):
@@ -503,16 +538,19 @@ class Vignets:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
     Attributes:
     ----------
     :param start:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     TODO: Fix layout issue with F11 (full screen)
     """

@@ -327,7 +327,7 @@ class Calendar:
     :param end: String. Date format YYYYMMDD
     :param details:
     :param location:
-    :param icon:
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param text: String. Optional. The value to be displayed to the button.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -377,7 +377,7 @@ class Calendar:
     :param end:
     :param details:
     :param location:
-    :param icon:
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param text: String. Optional. The value to be displayed to the button.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
