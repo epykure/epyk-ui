@@ -433,6 +433,7 @@ class ClassHtml:
     :param percent: Integer. Optional. The percentage of space on the left and right.
     :param max_width: Integer. Optional. The max size of the page in pixel.
     :param padding: Boolean. Optional. The top and bottom padding in the doc.
+    :param background: String. Optional.
     """
     self.css.max_width = max_width
     self.css.min_height = 150
