@@ -12,7 +12,6 @@ class CssSearchExt(CssStyle.Style):
 
   def customize(self):
     self.css({
-      "background-color": self.page.theme.greys[0],
       "border-bottom": '1px solid %s' % self.page.theme.greys[3]})
     self.hover.css({
       'color': self.page.theme.greys[-1],
@@ -27,7 +26,6 @@ class CssSearch(CssStyle.Style):
 
   def customize(self):
     self.css({
-      "background-color": self.page.theme.greys[0],
       "border-bottom-color": self.page.theme.greys[3],
       'color': self.page.theme.greys[-1]})
     self.hover.css({
