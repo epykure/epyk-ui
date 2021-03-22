@@ -1,13 +1,13 @@
 import os
-import importlib, inspect
-
+import importlib
+import inspect
 import sys
-sys.path.append(r'C:\Users\nelso\PycharmProjects\epyk-ui')
 
-output_path = r'C:\Users\nelso\PycharmProjects\epyk-ui\doc\report\ui'
+sys.path.append(os.path.join('..', '..'))
+output_path = os.path.join(os.path.dirname(__file__), "report", "ui")
 
 for fol in ['components', 'geo', 'graphs', 'tables']:
-  for f in os.listdir(os.path.join(r'C:\Users\nelso\PycharmProjects\epyk-ui\epyk\interfaces', fol)):
+  for f in os.listdir(os.path.join('..', 'epyk', 'interfaces', fol)):
     if f.startswith('__'):
       continue
       

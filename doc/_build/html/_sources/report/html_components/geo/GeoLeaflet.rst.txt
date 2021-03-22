@@ -1,3 +1,0 @@
-GeoLeaflet Module
-=================
-

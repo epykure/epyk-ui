@@ -1,3 +1,0 @@
-SymbCurrencies Module
-=====================
-

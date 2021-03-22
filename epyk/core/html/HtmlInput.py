@@ -1246,13 +1246,15 @@ class Search(Html.Html):
 
     if options.get("position", 'left') == 'left':
       self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '2px 5px 10px 0px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
+      self.icon.css({"margin": '5px 5px 5px 0px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
                      'vertical-align': 'top'})
     else:
       self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
       self.icon.css({"margin": '5px 5px 5px 0px', 'cursor': 'pointer', "right": 0,
                      'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
+    self.input.style.css.background = "inherit"
+    self.input.attr["type"] = "search"
 
   @property
   def dom(self):

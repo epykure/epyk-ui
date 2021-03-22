@@ -295,10 +295,10 @@ class CountDownDate(Html.Html):
 class LastUpdated(Html.Html):
   name = 'Last Update'
 
-  def __init__(self, report, label, color, width, height, html_code, profile):
+  def __init__(self, report, label, color, width, height, html_code, options, profile):
     self._label = label or "Last update: "
     super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
-                                      html_code, profile=profile,
+                                      html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, "color": color})
 
   def refresh(self):

@@ -12,7 +12,7 @@ class OptionsText(Options):
     """
     Description:
     ------------
-    Set the content of the component editable
+    Set the content of the component editable.
 
     Related Pages:
 
@@ -110,7 +110,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
+
+    """
     return self._config_get(None, 'limit_char')
 
   @limit_char.setter
@@ -124,7 +125,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
+
+    """
     return self._config_get(self._report.theme.danger[1])
 
   @red.setter
@@ -138,8 +140,9 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
-    return self._config_get(self._report._report.theme.success[1])
+
+    """
+    return self._config_get(self.component.page.theme.success[1])
 
   @green.setter
   def green(self, value):
@@ -152,8 +155,9 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
-    return self._config_get(self._report._report.theme.warning[1])
+
+    """
+    return self._config_get(self.component.page.theme.warning[1])
 
   @orange.setter
   def orange(self, value):
@@ -166,7 +170,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-"""
+
+    """
     return self._config_get('none')
 
   @font_size.setter
@@ -179,10 +184,10 @@ class OptionsText(Options):
 
   @status.setter
   def status(self, value):
-    if hasattr(self._report._report.theme, str(value)):
-      color = getattr(self._report._report.theme, str(value))[1]
+    if hasattr(self.component.page.theme, str(value)):
+      color = getattr(self.component.page.theme, str(value))[1]
     else:
-      color = self._report._report.theme.colors[-1]
+      color = self.component.page.theme.colors[-1]
     self._report.style.css.border_left = '5px solid %s' % color
     self._report.style.css.padding_left = 5
     self._config(value)
@@ -193,7 +198,7 @@ class OptionsText(Options):
     Description:
     ------------
     Internal CSS class name to be used when the component is selected.
-"""
+    """
     return self._config_get(None)
 
   @style_select.setter
@@ -222,14 +227,32 @@ class OptionsTitle(OptionsText):
 class OptionsNumber(OptionsText):
 
   @property
+  def label(self):
+    """
+    Description:
+    ------------
+    The label attached to a number component.
+
+    Attributes:
+    ----------
+    :prop text: String. The value.
+    """
+    return self._config_get("")
+
+  @label.setter
+  def label(self, text):
+    self._config(text)
+
+  @property
   def digits(self):
     """
     Description:
     ------------
-    decimal point separator
+    decimal point separator.
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(0)
 
@@ -242,10 +265,11 @@ http://openexchangerates.github.io/accounting.js/
     """
     Description:
     ------------
-    controls output: %s = symbol, %v = value/number
+    controls output: %s = symbol, %v = value/number.
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get("%s%v")
 
@@ -258,10 +282,11 @@ http://openexchangerates.github.io/accounting.js/
     """
     Description:
     ------------
-    default currency symbol is ''
+    default currency symbol is ''.
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/#documentation
+
+      http://openexchangerates.github.io/accounting.js/#documentation
     """
     return self._config_get("")
 
@@ -275,10 +300,11 @@ http://openexchangerates.github.io/accounting.js/#documentation
     """
     Description:
     ------------
-    thousands separator
+    thousands separator.
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(",")
 
@@ -291,10 +317,11 @@ http://openexchangerates.github.io/accounting.js/
     """
     Description:
     ------------
-    decimal point separator
+    decimal point separator.
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(".")
 
@@ -368,8 +395,8 @@ class OptionsConsole(OptionsText):
     return self.get(False)
 
   @timestamp.setter
-  def timestamp(self, bool):
-    self.set(bool)
+  def timestamp(self, flag):
+    self.set(flag)
 
 
 class OptionsComposite(Options):
@@ -383,8 +410,8 @@ class OptionsComposite(Options):
     return self.get(False)
 
   @reset_class.setter
-  def reset_class(self, bool):
-    self.set(bool)
+  def reset_class(self, flag):
+    self.set(flag)
 
 
 class OptionsStatus(Options):
@@ -459,14 +486,20 @@ class OptBreadCrumb(Options):
     defined_styles = {
       'pills': {
         "delimiter": '',
-        "style": {"border-radius": "10px", "border": "1px solid %s" % self._report._report.theme.greys[4],
-                  "background": self._report._report.theme.greys[0],
+        "style": {"border-radius": "10px", "border": "1px solid %s" % self.component.page.theme.greys[4],
+                  "background": self.component.page.theme.greys[0],
                   "margin": "0 2px", "width": '80px', "display": 'inline-block', "text-align": "center"},
-        'selected': {"color": self._report._report.theme.greys[0], "background": self._report._report.theme.colors[-1]}},
+        'selected': {"color": self.component.page.theme.greys[0], "background": self.component.page.theme.colors[-1]}},
       'tabs': {
         "delimiter": '',
-        "style": {"border-bottom": "5px solid inherit", "margin": "0 2px", "width": '80px', "display": 'inline-block', "text-align": "center"},
-        'selected': {"color": self._report._report.theme.success[1], "border-bottom": "5px solid %s" % self._report._report.theme.success[1]}},
+        "style": {
+          "border-bottom": "5px solid inherit",
+          "margin": "0 2px", "width": '80px',
+          "display": 'inline-block',
+          "text-align": "center"},
+        'selected': {
+          "color": self.component.page.theme.success[1],
+          "border-bottom": "5px solid %s" % self.component.page.theme.success[1]}},
 
     }
     self.style = defined_styles[name]["style"]

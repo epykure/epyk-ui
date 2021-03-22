@@ -1,3 +1,0 @@
-SymbArrows Module
-=================
-

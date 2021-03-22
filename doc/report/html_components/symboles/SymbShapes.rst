@@ -1,3 +1,0 @@
-SymbShapes Module
-=================
-

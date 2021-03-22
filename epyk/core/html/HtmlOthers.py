@@ -84,8 +84,8 @@ class Stars(Html.Html):
   name = 'Stars'
   requirements = ('font-awesome', )
 
-  def __init__(self, report, val, label, color, align, best, html_code, helper, profile):
-    super(Stars, self).__init__(report, val, html_code=html_code, profile=profile)
+  def __init__(self, report, val, label, color, align, best, html_code, helper, options, profile):
+    super(Stars, self).__init__(report, val, html_code=html_code, profile=profile, options=options)
     # Add the HTML components
     self._spans = []
     self._jsStyles = {'color': self._report.theme.success[1] if color is None else color}

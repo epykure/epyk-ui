@@ -1,3 +1,0 @@
-HtmlTmplBase Module
-===================
-

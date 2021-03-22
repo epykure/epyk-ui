@@ -22,15 +22,23 @@ class UpDown(Html.Html):
   requirements = ('font-awesome', 'accounting')
   _option_cls = OptText.OptionsNumber
 
-  def __init__(self, report, rec, color, label, options, helper, profile):
-    if rec is None:
-      rec = {'value': 0, 'previous': 0}
+  def __init__(self, report, record, components, color, label, width, height, options, helper, profile):
+    if record is None:
+      record = {'value': 0, 'previous': 0}
     if label is not None:
-      rec["label"] = label
-    super(UpDown, self).__init__(report, rec, profile=profile, options=options)
+      record["label"] = label
+    super(UpDown, self).__init__(
+      report, record, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.add_helper(helper)
+    self.style.css.position = "relative"
+    self.helper.style.css.position = "absolute"
+    self.helper.style.css.bottom = 5
+    self.helper.style.css.right = 5
+    if components is not None:
+      for component in components:
+        self.add(component)
     self.val['color'] = self._report.theme.colors[9] if color is None else color
-    self._jsStyles["label"] = rec.get('label', '')
+    self.options.label = record.get('label', '')
 
   @property
   def options(self):
@@ -50,8 +58,10 @@ class UpDown(Html.Html):
     return super().options
 
   _js__builder__ = '''
+      htmlObj = htmlObj.querySelector("#" + htmlObj.id + "_content");
       var delta = data.value - data.previous; htmlObj.innerHTML = "";
-      if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
+      if(data.previous == 0) {var relMove = 'N/A'} 
+      else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
       if(data.label != undefined){var span = document.createElement("span");
         span.style.fontSize = options.font_size; span.innerHTML = data.label; htmlObj.appendChild(span)}
@@ -76,6 +86,13 @@ class UpDown(Html.Html):
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
       '''
 
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'options'):
+      component.options.managed = False
+    self.components[component.htmlCode] = component
+    return self
+
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
@@ -97,7 +114,11 @@ class UpDown(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    rows = []
+    for component in self.components.values():
+      rows.append(str(component))
+    return '<div %s>%s<div id="%s_content"></div>%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.htmlCode,  self.helper)
 
 
 class BlockText(Html.Html):
@@ -204,34 +225,58 @@ class TextWithBorder(Html.Html):
 class Number(Html.Html):
   name = 'Number'
 
-  def __init__(self, report, number, label, width, height, profile, options):
+  def __init__(self, report, number, components, label, width, height, profile, options, helper):
     super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     if options.get('url', None) is not None:
       self.add_link(number, url=options['url'], css={
-                      "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
-                      'margin': 0, 'color': 'inherit', 'padding': 0}, options=options)
+        "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
+        'margin': 0, 'color': 'inherit', 'padding': 0}, options=options)
       self.span = self.link
     else:
       self.add_link(number, url="#", options=options, css={
-                     "width": "100%", 'text-decoration': 'none', 'cursor': 'default',
-                     'display': 'inline-block', "text-align": 'center', 'margin': 0, 'color': 'inherit', 'padding': 0})
+         "width": "100%", 'text-decoration': 'none', 'cursor': 'default',
+         'display': 'inline-block', "text-align": 'center', 'margin': 0, 'color': 'inherit', 'padding': 0})
       self.link.attr['target'] = '_self'
       self.span = self.link
     self.link.style.css.font_factor(10)
     self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "100%", "margin": 0},
                    position=options.get('label', 'before'), html_code=self.htmlCode)
-    self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
+    self.css({"display": "inline-block", 'padding': '5%', 'clear': 'both', 'margin': '2px'})
+    self.style.css.text_align = "center"
+    self.__comps = []
+    self.add_helper(helper)
+    if helper is not None:
+      self.helper.style.css.position = "absolute"
+      self.helper.style.css.bottom = 10
+      self.helper.style.css.right = 25
+    if components is not None:
+      for component in components:
+        self.add(component)
+
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    return self.span.click(js_funcs, profile, source_event, on_ready)
+
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'options'):
+      component.options.managed = False
+    self.components[component.htmlCode] = component
+    self.__comps.append(component.htmlCode)
+    return self
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    rows = [str(self.components[htmlCode]) for htmlCode in self.__comps]
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
 
 
 class Delta(Html.Html):
   requirements = ('jqueryui', 'accounting')
   name = 'Delta Figures'
+  _option_cls = OptText.OptionsNumber
 
-  def __init__(self, report, records, width, height, options, helper, profile):
-    super(Delta, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, records, components, width, height, options, helper, profile):
+    super(Delta, self).__init__(report, records, options=options,
+                                css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     if 'color' not in self.val:
       self.val['color'] = self._report.theme.colors[9]
@@ -240,10 +285,23 @@ class Delta(Html.Html):
     if 'thresold2' not in self.val:
       self.val['thresold2'] = 50
     self.css({"color": self.val['color']})
-    self.__options = OptText.OptionsNumber(self, options)
-    self._jsStyles["label"] = records.get('label', '')
+    self.options.label = records.get('label', '')
+    self.style.css.position = "relative"
+    self.helper.style.css.position = "absolute"
+    self.helper.style.css.bottom = 5
+    self.helper.style.css.right = 5
     if 'url' in records:
       self._jsStyles["url"] = records['url']
+    if components is not None:
+      for component in components:
+        self.add(component)
+
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'options'):
+      component.options.managed = False
+    self.components[component.htmlCode] = component
+    return self
 
   @property
   def options(self):
@@ -257,7 +315,7 @@ class Delta(Html.Html):
 
     :rtype: OptText.OptionsNumber
     """
-    return self.__options
+    return super().options
 
   _js__builder__ = '''
        jHtmlObj = jQuery(htmlObj);
@@ -279,13 +337,15 @@ class Delta(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '''<div %(strAttr)s>
+    rows = [str(component) for component in self.components.values()]
+    return '''<div %(strAttr)s> 
+      %(components)s
       <div style="width:100%%;text-align:right;font-size:%(size)s"></div>
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(6),
-                   'htmlCode': self.htmlCode, "color": self.val['color'],
+                   'htmlCode': self.htmlCode, "color": self.val['color'], "components": "".join(rows),
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
 
@@ -349,10 +409,11 @@ class Formula(Html.Html):
 class TrafficLight(Html.Html):
   name = 'Light'
 
-  def __init__(self, report, color, label, height, tooltip, helper, profile):
+  def __init__(self, report, color, label, height, tooltip, helper, options, profile):
     # Small change to allow the direct use of boolean and none to define the color
     # Those standards will simplify the creation of themes going forward
-    super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height}, profile=profile)
+    super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height},
+                                       options=options, profile=profile)
     self.add_helper(helper, css={"margin-top": "-17px"})
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
                                "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'},
@@ -458,10 +519,10 @@ class TrafficLight(Html.Html):
     return super(TrafficLight, self).click(js_funcs, profile, source_event, on_ready)
 
   _js__builder__ = '''
-      if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
-      else if (data === true){htmlObj.querySelector('div').style.backgroundColor = options.green}
-      else if (data === null){htmlObj.querySelector('div').style.backgroundColor = options.orange}
-      else {htmlObj.style.backgroundColor = data}'''
+      if(data === false){htmlObj.firstChild.style.backgroundColor = options.red}
+      else if (data === true){htmlObj.firstChild.style.backgroundColor = options.green}
+      else if (data === null){htmlObj.firstChild.style.backgroundColor = options.orange}
+      else {htmlObj.firstChild.style.backgroundColor = data}'''
 
   def __str__(self):
     if self.action is not None:
@@ -698,11 +759,16 @@ class SearchResult(Html.Html):
   requirements = ('jquery', )
 
   def __init__(self, report, records, pageNumber, width, height, options, profile):
-    super(SearchResult, self).__init__(report, records, profile=profile, css_attrs={"width": width, "height": height})
-    self._jsStyles = {'title': {'color': self._report.theme.colors[7], 'font-size': '18px'}, 'dsc': {'color': self._report.theme.greys[6]},
-                      'url': {'color': self._report.theme.success[1], 'font-size': '14px'}, 'visited': {'color': self._report.theme.greys[5]},
-                      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber,
-                      'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
+    super(SearchResult, self).__init__(report, records, options=options, profile=profile,
+                                       css_attrs={"width": width, "height": height})
+    self._jsStyles = {
+      'title': {'color': self._report.theme.colors[7], 'font-size': '18px'},
+      'dsc': {'color': self._report.theme.greys[6]},
+      'url': {'color': self._report.theme.success[1], 'font-size': '14px'},
+      'visited': {'color': self._report.theme.greys[5]},
+      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'},
+      'pageNumber': pageNumber,
+      'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
 
   _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();

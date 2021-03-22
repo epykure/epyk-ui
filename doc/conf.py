@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, r'C:\Users\nelso\PycharmProjects\epyk-ui')
+sys.path.insert(0, r'..')
 
 
 # -- Project information -----------------------------------------------------

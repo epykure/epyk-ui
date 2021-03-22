@@ -1,3 +1,0 @@
-SymbEmojis Module
-=================
-

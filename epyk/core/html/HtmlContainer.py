@@ -402,7 +402,10 @@ class Div(Html.Html):
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_label(label, html_code=self.htmlCode)
     self.add_helper(helper)
-
+    if helper is not None:
+      self.helper.style.css.position = "absolute"
+      self.helper.style.css.bottom = 10
+      self.helper.style.css.right = 25
     self.css({'text-align': align})
     if padding is not None:
       self.css('padding', '%s' % padding)
