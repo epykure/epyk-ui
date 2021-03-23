@@ -11,7 +11,8 @@ class Pictogram:
   def __init__(self, ui):
     self.page = ui.page
 
-  def path(self, path, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100)):
+  def path(self, path, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100), options=None,
+           profile=None):
     """
     Description:
     ------------
@@ -27,6 +28,8 @@ class Pictogram:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param viewbox:
+    :param options:
+    :param profile:
     """
     x, y = path.split(",", 1)
     width = Arguments.size(width, unit='px')
