@@ -665,7 +665,7 @@ class Rich:
         badge[0].style.css.padding = "0 5px"
         badge[0].style.css.border_right = "1px solid black"
         badge[1].style.css.padding = "0 5px 0 0"
-        badge.style.css.border = "1px solid black"
+        badge.style.css.border = "1px solid %s" % self.page.theme.greys[5]
         badge.style.css.margin = 2
         badge.style.css.border_radius = "0 10px 10px 0"
         container.add(badge)

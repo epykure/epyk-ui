@@ -13,11 +13,11 @@ from epyk.core.css.themes import Theme
 
 
 class Blue(Theme.Theme):
+
   _charts = ['#293342', '#334D6B', '#aabbee', '#6677bb', '#8B98E8', '#005566', '#269493', '#66bbaa', '#bbeeee',
              '#4e1c72', '#bb88ff', '#d1b3ff', '#d15f32', '#ffccaa', '#ffeebb', '#485d8c']
-  _colors = ["#e3f2fd", '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3', '#1e88e5', '#1976d2', '#1565c0', '#0d47a1']
-  _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
-            '#212121', '#000000']
+  _colors = ["#e3f2fd", '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#2196f3', '#1e88e5', '#1976d2', '#1565c0',
+             '#0d47a1']
   _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
 
 
@@ -37,8 +37,6 @@ class BlueGrey(Theme.Theme):
   ]
   _colors = ['#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
              '#37474f', '#263238']
-  _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
-            '#212121', '#000000']
   _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
 
 
@@ -56,7 +54,6 @@ class LightBlue(Theme.Theme):
     '#fff3e0', '#ffe0b2', '#ffcc80', # orange
     '#efebe9', '#d7ccc8', '#bcaaa4', # brown
   ]
-  _colors = ['#E1F5FE', '#B3E5FC', '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4', '#039BE5', '#0288D1', '#0277BD', '#01579B']
-  _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
-            '#212121', '#000000']
+  _colors = ['#E1F5FE', '#B3E5FC', '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4', '#039BE5', '#0288D1', '#0277BD',
+             '#01579B']
   _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')

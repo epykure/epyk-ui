@@ -5,20 +5,20 @@ from . import ThemeGreen as greens
 from . import ThemeBlue as blues
 
 
-DIV_STYLE = '<div style="display:block;background-color:%s;width:20px;height:18px;margin-top:3px !IMPORTANT;border:1px solid black;margin:auto;vertical-align:middle">&nbsp;</div>'
+DIV_STYLE = '<div style="display:block;background-color:%s;width:20px;height:18px;margin-top:3px !IMPORTANT;border:1px solid black;margin:auto;vertical-align:middle" title="%s">&nbsp;</div>'
 
 REGISTERED_THEMES = [
-  {"value": 'Theme.ThemeDefault', 'name': '', 'content': DIV_STYLE % '#1b5e20'},
-  {"value": 'ThemeBlue.Blue', 'name': '', 'content': DIV_STYLE % '#0d47a1'},
-  {"value": 'ThemeBlue.BlueGrey', 'name': '', 'content': DIV_STYLE % '#263238'},
-  {"value": 'ThemeBlue.LightBlue', 'name': '', 'content': DIV_STYLE % '#01579B'},
-  {"value": 'ThemeDark.Dark', 'name': '', 'content': DIV_STYLE % '#eceff1'},
-  {"value": 'ThemeDark.Grey', 'name': '', 'content': DIV_STYLE % '#eceff1'},
-  {"value": 'ThemeGreen.Green', 'name': '', 'content': DIV_STYLE % '#1b5e20'},
-  {"value": 'ThemeGreen.Teal', 'name': '', 'content': DIV_STYLE % '#004D40'},
-  {"value": 'ThemeGreen.LightGreen', 'name': '', 'content': DIV_STYLE % '#33691E'},
-  {"value": 'ThemeRed.Red', 'name': '', 'content': DIV_STYLE % '#B71C1C'},
-  {"value": 'ThemeRed.Pink', 'name': '', 'content': DIV_STYLE % '#d598a3'},
+  {"value": 'Theme.ThemeDefault', 'name': '', 'content': DIV_STYLE % ('#1b5e20', "Default")},
+  {"value": 'ThemeBlue.Blue', 'name': '', 'content': DIV_STYLE % ('#0d47a1', "Blue")},
+  {"value": 'ThemeBlue.BlueGrey', 'name': '', 'content': DIV_STYLE % ('#263238', "Grey blue")},
+  {"value": 'ThemeBlue.LightBlue', 'name': '', 'content': DIV_STYLE % ('#01579B', "Light blue")},
+  {"value": 'ThemeDark.Dark', 'name': '', 'content': DIV_STYLE % ('#eceff1', "Dark")},
+  {"value": 'ThemeDark.Grey', 'name': '', 'content': DIV_STYLE % ('#eceff1', "Grey")},
+  {"value": 'ThemeGreen.Green', 'name': '', 'content': DIV_STYLE % ('#1b5e20', "Green")},
+  {"value": 'ThemeGreen.Teal', 'name': '', 'content': DIV_STYLE % ('#004D40', "Teal")},
+  {"value": 'ThemeGreen.LightGreen', 'name': '', 'content': DIV_STYLE % ('#33691E', "Light green")},
+  {"value": 'ThemeRed.Red', 'name': '', 'content': DIV_STYLE % ('#B71C1C', "Red")},
+  {"value": 'ThemeRed.Pink', 'name': '', 'content': DIV_STYLE % ('#d598a3', "Pink")},
 ]
 
 
