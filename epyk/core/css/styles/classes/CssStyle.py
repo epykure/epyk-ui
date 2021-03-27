@@ -521,7 +521,7 @@ class Selector:
 
 
 class Style:
-  classname, classnames, is_class = None, None, True
+  classname, classnames, is_class, is_page_scope = None, None, True, True
 
   def __init__(self, page, css_ovrs=None, selector_ovrs=None, html_id=None):
     self.html_id, self.cls_ref, self.__has_changed = html_id, None, False

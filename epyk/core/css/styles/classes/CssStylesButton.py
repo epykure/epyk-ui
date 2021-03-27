@@ -15,12 +15,14 @@ class CssButtonBasic(CssStyle.Style):
   _disabled = {'cursor': 'none'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.greys[4], 'color': 'inherit',
+    self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit',
               'background-color': self.page.theme.greys[0]})
     self.hover.css(
-      {'background-color': self.page.theme.colors[1], 'color': self.page.theme.colors[-1]}, important=True)
-    self.disabled.css({'background-color': self.page.theme.colors[-1], 'color': self.page.theme.colors[6],
-                       'font-style': 'italic'})
+      {'background-color': self.page.theme.colors[0],
+       'color': self.page.theme.notch(),
+       'border': '1px solid %s' % self.page.theme.notch()}, important=True)
+    self.disabled.css({
+      'background-color': self.page.theme.colors[-1], 'color': self.page.theme.notch(2), 'font-style': 'italic'})
 
 
 class CssButtonImportant(CssStyle.Style):
@@ -35,8 +37,8 @@ class CssButtonImportant(CssStyle.Style):
     self.css({'border': '1px solid', 'color': self.page.theme.greys[0],
               'background-color': self.page.theme.colors[-2]})
     self.hover.css({'background-color': self.page.theme.colors[-1], 'color': self.page.theme.greys[0]})
-    self.disabled.css({'background-color': self.page.theme.colors[-1], 'color': self.page.theme.colors[6],
-                       'font-style': 'italic'})
+    self.disabled.css({
+      'background-color': self.page.theme.colors[-1], 'color': self.page.theme.notch(1), 'font-style': 'italic'})
 
 
 class CssButtonReset(CssStyle.Style):
@@ -57,9 +59,9 @@ class CssButtonSuccess(CssStyle.Style):
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
 
   def customize(self):
-    self.css({'color': self.page.theme.colors[9], 'background-color': self.page.theme.greys[0],
-              'border': '1px solid %s' % self.page.theme.colors[9]})
-    self.hover.css({'color': self.page.theme.greys[0], 'background-color': self.page.theme.colors[9]})
+    self.css({'color': self.page.theme.colors[-1], 'background-color': self.page.theme.greys[0],
+              'border': '1px solid %s' % self.page.theme.colors[-1]})
+    self.hover.css({'color': self.page.theme.greys[0], 'background-color': self.page.theme.colors[-1]})
 
 
 class CssButtonContentHover(CssStyle.Style):

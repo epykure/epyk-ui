@@ -8,7 +8,7 @@ from epyk.core.js.packages import JsQuery
 from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
-from epyk.core.css.styles import GrpChart
+from epyk.core.css.styles import GrpClsChart
 from epyk.core.html.options import OptSparkline
 
 # TODO add event and tooltip style
@@ -38,10 +38,10 @@ class Sparklines(Html.Html):
     Usage:
     -----
 
-    :rtype: GrpChart.ClassBSpartlines
+    :rtype: GrpClsChart.ClassBSpartlines
     """
     if self._styleObj is None:
-      self._styleObj = GrpChart.ClassBSpartlines(self)
+      self._styleObj = GrpClsChart.ClassBSpartlines(self)
     return self._styleObj
 
   @property

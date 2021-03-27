@@ -32,21 +32,20 @@ class Dark(Theme.Theme):
     '#fff3e0', '#ffe0b2', '#ffcc80', # orange
     '#efebe9', '#d7ccc8', '#bcaaa4', # brown
   ]
-
-  _colors = ['#263238', '#37474f', '#455a64', '#546e7a', '#607d8b', '#78909c','#90a4ae', '#b0bec5', '#cfd8dc', '#eceff1']
-  _greys = ['#000000', '#212121', '#424242', '#616161', '#757575', '#9e9e9e', '#bdbdbd', '#e0e0e0', '#eeeeee',
-            '#f5f5f5', '#FFFFFF']
+  _colors = [
+    '#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b',
+    '#546e7a', '#455a64', '#37474f', '#263238']
   _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
 
 
 class Grey(Theme.Theme):
-  _colors = ['#263238', '#37474f', '#455a64', '#546e7a',
-            '#607d8b', '#78909c', '#90a4ae', '#b0bec5',
-            '#cfd8dc', '#eceff1']
+  _colors = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae',
+             '#78909c', '#607d8b', '#546e7a', '#455a64',
+             '#37474f', '#263238']
 
-  _greys = ['#273037', '#212121', '#273037', '#3F484D',
-           '#757575', '#9e9e9e', '#bdbdbd', '#e0e0e0',
-           '#eeeeee', '#f5f5f5', '#FFFFFF']
+  # _greys = ['#273037', '#212121', '#273037', '#3F484D',
+  #          '#757575', '#9e9e9e', '#bdbdbd', '#e0e0e0',
+  #          '#eeeeee', '#f5f5f5', '#FFFFFF']
 
   _charts = ['#009999', '#336699', '#ffdcb9',
             '#cc99ff', '#b3d9ff', '#ffff99',

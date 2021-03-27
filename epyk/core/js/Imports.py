@@ -137,7 +137,7 @@ def installed_packages():
   Returns the list of packages installed on the running Python distribution
 
   This will require an internet connection as it will run the pip command behind the scene.
-  It will return in the console a table with the status of the obsolescence of all the python packages
+  It will return in the console a table with the status of the obsolescence of all the python packages.
 
   Example
   installed_packages()
@@ -493,7 +493,8 @@ JS_IMPORTS = {
       {'script': 'buttons.html5.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
       {'script': 'buttons.jqueryui.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
       {'script': 'buttons.print.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.semanticui.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'buttons.semanticui.min.js', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}
+    ]},
 
   # Datatable column reordering modules
   'datatables-col-order': {
@@ -584,7 +585,8 @@ JS_IMPORTS = {
        'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'plotly_renderers.min.js.map', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'plotly_renderers.min.js.map', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -662,10 +664,6 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'jquery.bracket.min.js', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/',
        'cdnjs': CDNJS_REPO}]},
-
-  # Jquery UI package
-  # Attempt to try to solve conflict with Bootstrap
-  #'jquery-ui': {'req': ['jquery', 'bootstrap'], 'modules': ['jquery-ui.min.js']},
 
   # Jquery timepicker width CDN links
   'timepicker': {
@@ -745,7 +743,8 @@ JS_IMPORTS = {
     'repository': 'https://github.com/mrrio/jspdf',
     'version': '2.3.0',
     'modules': [
-      {'reqAlias': 'jspdf', 'node_path': 'dist/',  'script': 'jspdf.umd.min.js',  'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'jspdf', 'node_path': 'dist/',  'script': 'jspdf.umd.min.js',  'path': 'jspdf/%(version)s/',
+       'cdnjs': CDNJS_REPO},
       {'script': 'polyfills.umd.min.js', 'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
 
@@ -753,17 +752,15 @@ JS_IMPORTS = {
   'clipboard': {
     'website': 'https://clipboardjs.com/',
     'version': '2.0.6',
-    #'register': {'alias': 'clipboard', 'module': 'clipboard.min'},
     'modules': [
-      {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'node_path': 'dist/', 'path': 'clipboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'node_path': 'dist/', 'path': 'clipboard.js/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # Javascript dependencies for D3 and NVD2 components width CDN links
   'd3': {
     'website': 'https://d3js.org/',
     'v_prefix': 'v',
     'version': '6.3.1',
-    #'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
-    #'req': [{'alias': 'jquery'}],
     'modules': [
       {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
@@ -813,7 +810,8 @@ JS_IMPORTS = {
       'v_prefix': 'v',
       'version': '1.0.3',
       'modules': [
-        {'script': 'd3-dispatch.min.js', 'node_path': 'dist/', 'path': 'd3-dispatch/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-dispatch.min.js', 'node_path': 'dist/', 'path': 'd3-dispatch/%(version)s/',
+         'cdnjs': CDNJS_REPO}]},
 
   # D3 transition
   'd3-transition': {
@@ -822,7 +820,9 @@ JS_IMPORTS = {
       'version': '1.1.1',
       'req': [{'alias': 'd3-dispatch'}],
       'modules': [
-        {'script': 'd3-transition.min.js', 'node_path': 'dist/', 'path': 'd3-transition/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-transition.min.js', 'node_path': 'dist/', 'path': 'd3-transition/%(version)s/',
+         'cdnjs': CDNJS_REPO}
+      ]},
 
   # D3 Selection
   'd3-selection': {
@@ -830,7 +830,8 @@ JS_IMPORTS = {
       'v_prefix': 'v',
       'version': '1.2.0',
       'modules': [
-        {'script': 'd3-selection.min.js', 'node_path': 'dist/', 'path': 'd3-selection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-selection.min.js', 'node_path': 'dist/', 'path': 'd3-selection/%(version)s/',
+         'cdnjs': CDNJS_REPO}]},
 
   # D3 Interpolate
   'd3-interpolate': {
@@ -839,7 +840,8 @@ JS_IMPORTS = {
       'version': '1.3.0',
       'req': [{'alias': 'd3-color'}],
       'modules': [
-        {'script': 'd3-interpolate.js', 'node_path': 'dist/', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-interpolate.js', 'node_path': 'dist/', 'path': 'd3-interpolate/%(version)s/',
+         'cdnjs': CDNJS_REPO}]},
 
   # D3 Time format
   'd3-time-format': {
@@ -848,7 +850,8 @@ JS_IMPORTS = {
       'version': '2.1.1',
       'req': [{'alias': 'd3-time'}],
       'modules': [
-        {'script': 'd3-time-format.min.js', 'node_path': 'dist/', 'path': 'd3-time-format/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-time-format.min.js', 'node_path': 'dist/', 'path': 'd3-time-format/%(version)s/',
+         'cdnjs': CDNJS_REPO}]},
 
   # D3 Time
   'd3-time': {
@@ -880,7 +883,8 @@ JS_IMPORTS = {
       'version': '1.0.5',
       'v_prefix': 'v',
       'modules': [
-        {'script': 'd3-collection.min.js', 'node_path': 'dist/', 'path': 'd3-collection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+        {'script': 'd3-collection.min.js', 'node_path': 'dist/', 'path': 'd3-collection/%(version)s/',
+         'cdnjs': CDNJS_REPO}]},
 
   # D3 Scale
   'd3-scale': {
@@ -908,13 +912,14 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'repository': 'https://github.com/plotly/plotly.js',
     'version': '1.58.4',
-    #'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'africa_50m.json', 'node_path': 'dist/topojson/', 'path': '/', 'cdnjs': "https://www.hpcoders.com.au/ravel/plotly.js/dist/topojson"},
-      {'script': 'europe_50m.json', 'node_path': 'dist/topojson/', 'path': '/', 'cdnjs': "https://www.hpcoders.com.au/ravel/plotly.js/dist/topojson"},
+      {'script': 'africa_50m.json', 'node_path': 'dist/topojson/', 'path': '/',
+       'cdnjs': "https://www.hpcoders.com.au/ravel/plotly.js/dist/topojson"},
+      {'script': 'europe_50m.json', 'node_path': 'dist/topojson/', 'path': '/',
+       'cdnjs': "https://www.hpcoders.com.au/ravel/plotly.js/dist/topojson"},
     ]
   },
 
@@ -924,7 +929,6 @@ JS_IMPORTS = {
     'repository': 'https://github.com/novus/nvd3',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
     'version': '1.8.6',
-    #'register': {'alias': 'nv', 'module': 'nv.d3.min', 'npm': 'nvd3'},
     'modules': [
       {'script': 'nv.d3.min.js', 'node_path': 'build/', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}],
     'assets': [
@@ -997,7 +1001,6 @@ JS_IMPORTS = {
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
-      #{'script': 'Chart.bundle.min.js', 'version': '2.9.4', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'script': 'Chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs Crosshair plugin modules width CDN links
@@ -1015,7 +1018,8 @@ JS_IMPORTS = {
     'version': '0.5.7',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-annotation.min.js', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'chartjs-plugin-annotation.min.js', 'path': 'chartjs-plugin-annotation/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # ChartJs datalabels plugin modules width CDN links
   'chartjs-plugin-datalabels': {
@@ -1023,7 +1027,8 @@ JS_IMPORTS = {
     'website': 'https://chartjs-plugin-datalabels.netlify.app/',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-datalabels.min.js', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+      {'script': 'chartjs-plugin-datalabels.min.js', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
   # ChartJs Labels plugin modules width CDN links
   'chartjs-plugin-labels': {
@@ -1032,7 +1037,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'chart.js'}],
     'v_prefix': 'v',
     'modules': [
-      {'script': 'chartjs-plugin-labels.js', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}]},
+      {'script': 'chartjs-plugin-labels.js', 'path': '/', 'cdnjs': "https://emn178.github.io/chartjs-plugin-labels/src"}
+    ]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-crosshair': {
@@ -1056,7 +1062,8 @@ JS_IMPORTS = {
       'website': 'https://github.com/sgratzl/chartjs-chart-geo',
       'req': [{'alias': 'chart.js'}],
       'modules': [
-        {'script': 'Chart.Geo.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+        {'script': 'Chart.Geo.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/',
+         'cdnjs': 'https://cdn.jsdelivr.net/npm'}
       ]},
 
   # For ChartJs Zoom to get the gesture details.
@@ -1079,10 +1086,12 @@ JS_IMPORTS = {
     'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
     'modules': [
-      {'reqAlias': 'popper', 'script': 'popper.min.js', 'node_path': 'dist/umd/', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}
+      {'reqAlias': 'popper', 'script': 'popper.min.js', 'node_path': 'dist/umd/', 'path': 'popper.js/%(version)s/umd/',
+       'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'popper.min.js.map', 'node_path': 'dist/umd/', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}
+      {'script': 'popper.min.js.map', 'node_path': 'dist/umd/', 'path': 'popper.js/%(version)s/umd/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1097,10 +1106,12 @@ JS_IMPORTS = {
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'node_path': 'dist/js/', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'node_path': 'dist/js/',
+       'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ],
     'assets': [
-      {'script': 'bootstrap-select.min.js.map', 'node_path': 'dist/js/', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'script': 'bootstrap-select.min.js.map', 'node_path': 'dist/js/', 'path': 'bootstrap-select/%(version)s/js/',
+       'cdnjs': CDNJS_REPO},
     ]
   },
 
@@ -1111,7 +1122,8 @@ JS_IMPORTS = {
     'req': [{"alias": 'bootstrap-select'}
     ],
     'modules': [
-      {'script': 'ajax-bootstrap-select.min.js', 'node_path': 'dist/js/', 'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'ajax-bootstrap-select.min.js', 'node_path': 'dist/js/',
+       'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1142,13 +1154,10 @@ JS_IMPORTS = {
     'website': 'https://www.mathjax.org/',
     'version': '3.1.2',
     'repository': 'https://github.com/mathjax/MathJax',
-    'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
+    'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s',
+                'folder': 'mathjax'},
     'modules': [
-      #{'script': 'MathJax.js', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
       {'script': 'tex-mml-chtml.js', 'path': 'mathjax/%(version)s/es5/', 'cdnjs': CDNJS_REPO}],
-    # To use the full module online
-    #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
-    #'config': "config=TeX-AMS-MML_HTMLorMML"
   },
 
   # Socket IO
@@ -1161,7 +1170,8 @@ JS_IMPORTS = {
       {'script': 'socket.io.min.js', 'node_path': 'client-dist/', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'socket.io.min.js.map', 'node_path': 'client-dist/', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'socket.io.min.js.map', 'node_path': 'client-dist/', 'path': 'socket.io/%(version)s/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1173,13 +1183,18 @@ JS_IMPORTS = {
       {'script': 'codemirror.js', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'python.js', 'node_path': 'mode/python/', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': CDNJS_REPO},
+      {'script': 'python.js', 'node_path': 'mode/python/', 'path': 'codemirror/%(version)s/mode/python/',
+       'cdnjs': CDNJS_REPO},
       {'script': 'r.js', 'node_path': 'mode/r/', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': CDNJS_REPO},
       {'script': 'css.js', 'node_path': 'mode/css/', 'path': 'codemirror/%(version)s/mode/css/', 'cdnjs': CDNJS_REPO},
-      {'script': 'javascript.js', 'node_path': 'mode/javascript/', 'path': 'codemirror/%(version)s/mode/javascript/', 'cdnjs': CDNJS_REPO},
-      {'script': 'markdown.js', 'node_path': 'mode/markdown/', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': CDNJS_REPO},
-      {'script': 'php.js', 'node_path': 'mode/php/', 'path': 'codemirror/%(version)s/mode/php/', 'cdnjs': CDNJS_REPO},
-      {'script': 'ruby.js', 'node_path': 'mode/ruby/', 'path': 'codemirror/%(version)s/mode/ruby/', 'cdnjs': CDNJS_REPO},
+      {'script': 'javascript.js', 'node_path': 'mode/javascript/', 'path': 'codemirror/%(version)s/mode/javascript/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'markdown.js', 'node_path': 'mode/markdown/', 'path': 'codemirror/%(version)s/mode/markdown/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'php.js', 'node_path': 'mode/php/', 'path': 'codemirror/%(version)s/mode/php/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'ruby.js', 'node_path': 'mode/ruby/', 'path': 'codemirror/%(version)s/mode/ruby/',
+       'cdnjs': CDNJS_REPO},
     ]
   },
 
@@ -1190,11 +1205,16 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/search.html',
       'modules': [
-        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'search.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'jump-to-line.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'dialog.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/', 'cdnjs': CDNJS_REPO}
+        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'search.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
+         'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'jump-to-line.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'dialog.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/',
+         'cdnjs': CDNJS_REPO}
   ]},
 
   'codemirror-placeholder': {
@@ -1204,7 +1224,8 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/placeholder.html',
       'modules': [
-        {'script': 'placeholder.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+        {'script': 'placeholder.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/display/',
+         'cdnjs': CDNJS_REPO}
   ]},
 
   'codemirror-trailingspace': {
@@ -1214,7 +1235,8 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/trailingspace.html',
       'modules': [
-        {'script': 'trailingspace.js', 'node_path': 'addon/edit/', 'path': 'codemirror/%(version)s/addon/edit/', 'cdnjs': CDNJS_REPO}
+        {'script': 'trailingspace.js', 'node_path': 'addon/edit/', 'path': 'codemirror/%(version)s/addon/edit/',
+         'cdnjs': CDNJS_REPO}
   ]},
 
   'codemirror-fullscreen': {
@@ -1224,7 +1246,8 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/trailingspace.html',
       'modules': [
-        {'script': 'fullscreen.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+        {'script': 'fullscreen.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
+         'cdnjs': CDNJS_REPO}
   ]},
 
   'codemirror-highlighter': {
@@ -1234,10 +1257,14 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/matchhighlighter.html',
       'modules': [
-        {'script': 'annotatescrollbar.js', 'node_path': 'addon/scroll/', 'path': 'codemirror/%(version)s/addon/scroll/', 'cdnjs': CDNJS_REPO},
-        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'match-highlighter.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'annotatescrollbar.js', 'node_path': 'addon/scroll/', 'path': 'codemirror/%(version)s/addon/scroll/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
+         'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'match-highlighter.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+         'cdnjs': CDNJS_REPO},
   ]},
 
   'codemirror-hint': {
@@ -1247,7 +1274,8 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/complete.html',
       'modules': [
-        {'script': 'show-hint.js', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/', 'cdnjs': CDNJS_REPO},
+        {'script': 'show-hint.js', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/',
+         'cdnjs': CDNJS_REPO},
   ]},
 
   'codemirror-panel': {
@@ -1257,7 +1285,8 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/panel.html#',
       'modules': [
-        {'script': 'panel.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO},
+        {'script': 'panel.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
+         'cdnjs': CDNJS_REPO},
   ]},
 
   'codemirror-fold': {
@@ -1267,13 +1296,20 @@ JS_IMPORTS = {
       'node_folder': 'codemirror',
       'website': 'https://codemirror.net/demo/folding.html',
       'modules': [
-        {'script': 'foldcode.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'foldgutter.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'brace-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'xml-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'indent-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'markdown-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
-        {'script': 'comment-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO},
+        {'script': 'foldcode.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'foldgutter.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'brace-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'xml-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'indent-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'markdown-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
+        {'script': 'comment-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+         'cdnjs': CDNJS_REPO},
   ]},
 
   # highlight
@@ -1338,7 +1374,8 @@ JS_IMPORTS = {
     'version': '2.9.3',
     'register': {'alias': 'tns', 'npm': 'tiny-slider'},
     'modules': [
-      {'script': 'tiny-slider.js', 'node_path': 'dist/min/', 'path': 'tiny-slider/%(version)s/min/', 'cdnjs': CDNJS_REPO},
+      {'script': 'tiny-slider.js', 'node_path': 'dist/min/', 'path': 'tiny-slider/%(version)s/min/',
+       'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/ganlanyuan/tiny-slider',
   }
@@ -1365,24 +1402,30 @@ CSS_IMPORTS = {
   # material design icons
   'material-design-icons': {
     'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons', 'npm_path': 'iconfont'},
-    'modules': [{'script': 'material-icons.css', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
+    'modules': [{'script': 'material-icons.css', 'version': '3.0.2',
+                 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
     'assets': [
-        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2',
+         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2',
+         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2',
+         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://google.github.io/material-design-icons/'},
 
   # fluent ui icons
   'office-ui-fabric-core': {
     'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
-    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/',
+                 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
     'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
 
   # fluent ui icons
   'office-ui-fabric-react': {
     'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
-    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/',
+                 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
     'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
 
   # QUnit package width CDN links
@@ -1398,7 +1441,8 @@ CSS_IMPORTS = {
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
     'modules': [
-      {'script': 'jquery.bracket.min.css', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.bracket.min.css', 'node_path': 'dist/', 'path': 'jquery-bracket/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # To display a context menu when right click on an item width CDN links
   # http://swisnl.github.io/jQuery-contextMenu/demo.html#jquery-context-menu-demo-gallery
@@ -1406,7 +1450,8 @@ CSS_IMPORTS = {
     'website': 'https://github.com/swisnl/jQuery-contextMenu/blob/master/dist/jquery.contextMenu.min.css.map',
     'req': [{'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.contextMenu.min.css', 'version': '2.6.4', 'path': 'jquery-contextmenu/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.contextMenu.min.css', 'version': '2.6.4', 'path': 'jquery-contextmenu/%(version)s/',
+       'cdnjs': CDNJS_REPO}]},
 
   # Jquery timepicker width CDN links
   'timepicker': {
@@ -1418,12 +1463,14 @@ CSS_IMPORTS = {
     'website': 'http://manos.malihu.gr/jquery-custom-content-scroller/',
     'req': [{'alias': 'jqueryui'}],
     'modules': [
-      {'script': 'jquery.mCustomScrollbar.min.css', 'version': '3.1.5', 'path': 'malihu-custom-scrollbar-plugin/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery.mCustomScrollbar.min.css', 'version': '3.1.5',
+       'path': 'malihu-custom-scrollbar-plugin/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Tabulator definition
   'tabulator-tables': {
     'modules': [
-      {'script': 'tabulator.min.css', 'node_path': 'dist/css/', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'node_path': 'dist/css/', 'path': 'tabulator/%(version)s/css/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1431,7 +1478,8 @@ CSS_IMPORTS = {
     'website': 'https://datatables.net/',
     'req': [{'alias': 'bootstrap'}],
     'modules': [
-      {'script': 'jquery.dataTables.min.css', 'version': '1.10.19', 'path': '%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}
+      {'script': 'jquery.dataTables.min.css', 'version': '1.10.19', 'path': '%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}
   ]},
 
   # Datatable Buttons
@@ -1439,103 +1487,122 @@ CSS_IMPORTS = {
     'website': 'https://datatables.net/extensions/buttons/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'buttons.dataTables.min.css', 'version': '1.6.1', 'path': 'buttons/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'buttons.dataTables.min.css', 'version': '1.6.1', 'path': 'buttons/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Select
   'datatables-select': {
     'website': 'https://datatables.net/extensions/select/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'select.dataTables.min.css', 'version': '1.3.1', 'path': 'select/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'select.dataTables.min.css', 'version': '1.3.1', 'path': 'select/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Scroller
   'datatables-scroller': {
     'website': 'https://datatables.net/extensions/scroller/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'scroller.dataTables.min.css', 'version': '2.0.1', 'path': 'scroller/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'scroller.dataTables.min.css', 'version': '2.0.1', 'path': 'scroller/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable SearchPanes
   'datatables-searchPanes': {
     'website': 'https://datatables.net/extensions/searchpanes/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'searchPanes.dataTables.min.css', 'version': '1.0.1', 'path': 'searchpanes/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'searchPanes.dataTables.min.css', 'version': '1.0.1', 'path': 'searchpanes/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable Responsive
   'datatables-responsive': {
     'website': 'https://datatables.net/extensions/responsive/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'responsive.dataTables.min.css', 'version': '2.2.3', 'path': 'responsive/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'responsive.dataTables.min.css', 'version': '2.2.3', 'path': 'responsive/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable KeyTable
   'datatables-keytable': {
     'website': 'https://datatables.net/extensions/keytable/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'keyTable.dataTables.min.css', 'version': '2.5.1', 'path': 'keytable/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'keyTable.dataTables.min.css', 'version': '2.5.1', 'path': 'keytable/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable autoFill
   'datatables-autoFill': {
     'website': 'https://datatables.net/extensions/autofill/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'autoFill.dataTables.min.css', 'version': '2.1.0', 'path': 'autofill/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'autoFill.dataTables.min.css', 'version': '2.1.0', 'path': 'autofill/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable group row
   'datatables-row-group': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'rowGroup.dataTables.min.css', 'version': '1.1.1', 'path': 'rowgroup/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'rowGroup.dataTables.min.css', 'version': '1.1.1', 'path': 'rowgroup/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable fixed column
   'datatables-fixed-columns': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'fixedColumns.bootstrap4.min.css', 'version': '3.2.2', 'path': 'fixedcolumns/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'fixedColumns.bootstrap4.min.css', 'version': '3.2.2', 'path': 'fixedcolumns/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable fixed header
   'datatables-fixed-header': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'fixedHeader.bootstrap4.min.css', 'version': '3.1.3', 'path': 'fixedheader/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'fixedHeader.bootstrap4.min.css', 'version': '3.1.3', 'path': 'fixedheader/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable export module
   'datatables-export': {
     'website': 'https://datatables.net/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'buttons.bootstrap4.min.css', 'version': '1.5.2', 'path': 'buttons/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'buttons.bootstrap4.min.css', 'version': '1.5.2', 'path': 'buttons/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable column ordering
   'datatables-col-order': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'colReorder.bootstrap4.min.css', 'version': '1.5.1', 'path': 'colreorder/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'colReorder.bootstrap4.min.css', 'version': '1.5.1', 'path': 'colreorder/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Bootstrap style width CDN links
   'bootstrap': {
     'modules': [
-      {'script': 'bootstrap.min.css', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap.min.css', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/',
+       'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'bootstrap.min.css.map', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap.min.css.map', 'node_path': 'dist/css/', 'path': 'twitter-bootstrap/%(version)s/css/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
 
   # Font awesome style width CDN links
   'font-awesome': {
-    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'css'},
+    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
+                 'npm_path': 'css'},
     'website': 'https://fontawesome.com/',
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'script': 'all.css', 'version': '5.13.1', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}],
+      {'script': 'all.css', 'version': '5.13.1', 'path': 'releases/v%(version)s/css/',
+       'cdnjs': 'https://use.fontawesome.com'}],
     'assets': [
-      {'script': 'fa-brands-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
-      {'script': 'fa-regular-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
-      {'script': 'fa-solid-900.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-brands-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/',
+       'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-regular-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/',
+       'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-solid-900.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/',
+       'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
     ]
   },
 
@@ -1564,26 +1631,28 @@ CSS_IMPORTS = {
       {'script': 'billboard.min.css', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'billboard.min.css.map', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'billboard.min.css.map', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/',
+       'cdnjs': CDNJS_REPO}
     ]
   },
-
-  #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},
 
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
   'bootstrap-select': {
     'modules': [
-      {'script': 'bootstrap-select.min.css', 'node_path': 'dist/css/', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap-select.min.css', 'node_path': 'dist/css/', 'path': 'bootstrap-select/%(version)s/css/',
+       'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'bootstrap-select.css.map', 'node_path': 'dist/css/', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap-select.css.map', 'node_path': 'dist/css/', 'path': 'bootstrap-select/%(version)s/css/',
+       'cdnjs': CDNJS_REPO}
     ]
 
   },
 
   'ajax-bootstrap-select': {
     'modules': [
-          {'script': 'ajax-bootstrap-select.min.css', 'node_path': 'dist/css/', 'version': '1.4.5', 'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+          {'script': 'ajax-bootstrap-select.min.css', 'node_path': 'dist/css/', 'version': '1.4.5',
+           'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1610,18 +1679,22 @@ CSS_IMPORTS = {
 
   'codemirror-search': {
     'modules': [
-      {'script': 'matchesonscrollbar.css', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-      {'script': 'dialog.css', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/', 'cdnjs': CDNJS_REPO}
+      {'script': 'matchesonscrollbar.css', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'dialog.css', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   'codemirror-fullscreen': {
     'modules': [
-      {'script': 'fullscreen.css', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': CDNJS_REPO}
+      {'script': 'fullscreen.css', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   'codemirror-fold': {
     'modules': [
-      {'script': 'foldgutter.css', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/', 'cdnjs': CDNJS_REPO}
+      {'script': 'foldgutter.css', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   'codemirror-hint': {
@@ -1633,7 +1706,8 @@ CSS_IMPORTS = {
   # highlight
   'highlight.js': {
     'modules': [
-      {'script': 'default.min.css', 'node_path': 'styles/', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
+      {'script': 'default.min.css', 'node_path': 'styles/', 'path': 'highlight.js/%(version)s/styles/',
+       'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet
@@ -1644,18 +1718,23 @@ CSS_IMPORTS = {
   #
   'json-formatter-js': {
     'modules': [
-      {'script': 'json-formatter.css', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+      {'script': 'json-formatter.css', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
 
   # AG Grid tables
   'ag-grid-community': {
     'modules': [
-      {'script': 'ag-grid.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
+      {'script': 'ag-grid.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+       'cdnjs': CDNJS_REPO}
     ],
     'assets': [
-      {'script': 'ag-theme-alpine.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO},
-      {'script': 'ag-theme-bootstrap.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO},
-      {'script': 'ag-theme-material.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO},
+      {'script': 'ag-theme-alpine.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'ag-theme-bootstrap.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'ag-theme-material.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+       'cdnjs': CDNJS_REPO},
     ]
   },
 
@@ -1707,7 +1786,8 @@ BOOTSTRAP = {
     'version': '1.3.0',
     'website': 'https://icons.getbootstrap.com/',
     'modules': [
-      {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/', 'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
+      {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
     ]
 
   }
@@ -1754,7 +1834,8 @@ GOOGLE_EXTENSIONS = {
     'website': 'https://developers.google.com/chart'
   },
   'visualization': {'modules': [
-      {'script': 'js?key=%(api_key)s&libraries=visualization', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+      {'script': 'js?key=%(api_key)s&libraries=visualization', 'version': '', 'path': 'api/',
+       'cdnjs': 'https://maps.googleapis.com/maps'},
     ],
     'website': 'https://developers.google.com/chart',
     'launcher': "google.charts.load('current', {'packages':['corechart']})",
@@ -1853,11 +1934,11 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
 
   Related Pages:
   --------------
-  :param reference: String. The internal reference in the framework
-  :param module_path: List of tuple. The different modules and location
-  :param version: String. The version number. Can be an internal module reference to point to follow its version number
-  :param cdnjs_url: String. The CDNJS reference path
-  :param required: List. The list of dependency modules
+  :param reference: String. The internal reference in the framework.
+  :param module_path: List of tuple. The different modules and location.
+  :param version: String. The version number. Can be an internal module reference to point to follow its version number.
+  :param cdnjs_url: String. The CDNJS reference path.
+  :param required: List. The list of dependency modules.
   """
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
@@ -1868,7 +1949,6 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
         if reqs:
           config[reference]['req'] = reqs
     if version in config:
-      # take the version from another registered module
       version = config[version].get('version') or config[version]['modules'][0]['version']
     config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
@@ -1878,7 +1958,7 @@ def extend_imports(extension):
   Description:
   ------------
   Hook to extend the imports in the centralised Import module.
-  The packages definition is quite similar to the one in IMports.py except that CSS and JS are grouped together for
+  The packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
   simplicity
 
   :param extension: Dictionary. The list of packages to be added grouped by alias
@@ -2097,7 +2177,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on large multi-dimensional datasets.
+    dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
+    large multi-dimensional datasets.
 
     Related Pages:
 
@@ -2110,7 +2191,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    This project is an attempt to build re-usable charts and chart components for d3.js without taking away the power that d3.js gives you.
+    This project is an attempt to build re-usable charts and chart components for d3.js without taking away
+    the power that d3.js gives you.
 
     Related Pages:
 
@@ -2240,7 +2322,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.
+    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery
+    JavaScript Library.
 
     Related Pages:
 
@@ -2253,7 +2336,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for tournament play.
+    jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for
+    tournament play.
 
     Related Pages:
 
@@ -2266,7 +2350,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied either inline in the HTML, or via javascript.
+    This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied
+    either inline in the HTML, or via javascript.
 
     Related Pages:
 
@@ -2332,7 +2417,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number, money and currency formatting.
+    accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number,
+    money and currency formatting.
 
     Related Pages:
 
@@ -2422,7 +2508,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    The next generation of our icon library + toolkit is coming with more icons, more styles, more services, and more awesome
+    The next generation of our icon library + toolkit is coming with more icons, more styles,
+    more services, and more awesome
 
     Related Pages:
 
@@ -2461,7 +2548,8 @@ class ImportPackages:
     """
     Description:
     ------------
-    RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node
+    RequireJS is a JavaScript file and module loader.
+    It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node
 
     Related Pages:
 
@@ -2474,7 +2562,7 @@ class ImportPackages:
     """
     Description:
     ------------
-    jQuery Timepicker is a plugin to enhance standard form input fields, helping users to select (or type) times.
+    jQuery TimePicker is a plugin to enhance standard form input fields, helping users to select (or type) times.
 
     Related Pages:
 
@@ -2487,7 +2575,7 @@ class ImportPackages:
     """
     Description:
     ------------
-    Realtime application framework.
+    Real-time application framework.
     Socket.IO enables real-time bidirectional event-based communication.
 
     Related Pages:
@@ -2584,11 +2672,11 @@ class ImportManager:
 
     It will create links to the official online websites or link to an internal copy if no internet connection is
     available. To run a report using the online mode to False it is requires to get all the packages locally
-    saved with the expected structured (basically the one of the CDNJ repository)
+    saved with the expected structured (basically the one of the CDNJS repository)
 
     Attributes:
     ----------
-    :param report: Optional. The internal report object with all the required external modules
+    :param report: Report. Optional. The internal report object with all the required external modules.
     """
     self._report, ovr_version = report, {}
     if report is not None and report.ext_packages is not None:
@@ -2627,9 +2715,9 @@ class ImportManager:
         self.getModules(modules, alias, folder, import_type)
         if 'config' in definition:
           self.moduleConfigs[alias] = definition['config']
-        mainKeys, versions = [], []
+        main_keys, versions = [], []
         for k, v in main.items():
-          mainKeys.append(k)
+          main_keys.append(k)
           versions.append(v)
         import_cict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
 
@@ -2643,7 +2731,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias:
+    :param alias: String. The external module alias.
     """
     if alias in JS_IMPORTS:
       self._report.jsImports.add(alias)
@@ -2681,10 +2769,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param modules: List. The list of modules
-    :param alias: String. The module reference in the above JS and CSS dictionaries
-    :param folder: String. Optional. The folder name
-    :param module_details: Optional. The module definition. Default check in the JavaScipt modules
+    :param modules: List. The list of modules.
+    :param alias: String. The module reference in the above JS and CSS dictionaries.
+    :param folder: String. Optional. The folder name.
+    :param module_details: Optional. The module definition. Default check in the Javascript modules.
 
     :return: The list of modules
     """
@@ -2723,7 +2811,7 @@ class ImportManager:
     ----------
     :param mod: String. The alias of the external package.
     :param modules: List. The list of packages aliases in the inverse dependency order.
-    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript or CSS) from the above import lists.
+    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
 
     """
     import_hierarchy = import_hierarchy or JS_IMPORTS
@@ -2769,7 +2857,7 @@ class ImportManager:
     Attributes:
     ----------
     :param imports: List. An array with the list of aliases for the external packages.
-    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript or CSS) from the above import lists.
+    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
 
     :return: Return the list with the full list of aliases (including dependencies)
     """
@@ -2782,9 +2870,9 @@ class ImportManager:
           raise Exception("Package %s not allowed" % a)
         if self._report is not None and self._report.verbose:
           logging.warning("%s: %s" % (a, PACKAGE_STATUS[a].get("info", "")))
-      occurences = [j for j, x in enumerate(import_resolved) if x == a]
-      if len(occurences) > 1:
-        for j in occurences[::-1][1:]:
+      occurrences = [j for j, x in enumerate(import_resolved) if x == a]
+      if len(occurrences) > 1:
+        for j in occurrences[::-1][1:]:
           import_resolved.pop(j)
     return import_resolved[::-1]
 
@@ -2804,7 +2892,8 @@ class ImportManager:
     ----------
     :param css_aliases: List. An array with the list of aliases for the external packages.
     :param local_css: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
+    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks
+                     already onboarding modules).
 
     :return: The string to be added to the header.
     """
@@ -2830,9 +2919,11 @@ class ImportManager:
           if node_sub_path is not None:
             css_file = os.path.split(urlModule)[1]
             npm_alias = CSS_IMPORTS[css_alias]['register'].get('npm', css_alias)
-            package_path = os.path.join(self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, css_file)
+            package_path = os.path.join(
+              self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, css_file)
             if os.path.exists(package_path):
-              urlModule = os.path.join(self._report._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
+              urlModule = os.path.join(
+                self._report._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
       for localCssFile in local_css:
@@ -2872,7 +2963,8 @@ class ImportManager:
     ----------
     :param js_aliases: List. An array with the list of aliases for the external packages.
     :param local_js: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already onboarding modules).
+    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already
+                     onboarding modules).
 
     :return: The string to be added to the header
     """
@@ -2891,14 +2983,16 @@ class ImportManager:
           if node_sub_path is not None:
             js_file = os.path.split(url_module)[1]
             npm_alias = JS_IMPORTS[js_alias]['register'].get('npm', js_alias)
-            package_path = os.path.join(self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, js_file)
+            package_path = os.path.join(
+              self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, js_file)
             if os.path.exists(package_path):
-              url_module = os.path.join(self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
+              url_module = os.path.join(
+                self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
 
         #if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
-        #else:
-        js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
+        js.append(
+          '<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
     if local_js is not None and len(local_js) > 0:
       for local_js_file in local_js:
         js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)
@@ -2945,13 +3039,15 @@ class ImportManager:
     for alias, details in CSS_IMPORTS.items():
       mod_css[alias] = []
       for module in details['modules']:
-        mod_css[alias].append({'version': module.get('version', ''), 'alias': alias, 'file': module, 'website':
-          details.get('website', ''), 'status': details.get('status', '')})
+        mod_css[alias].append(
+          {'version': module.get('version', ''), 'alias': alias, 'file': module, 'website': details.get('website', ''),
+           'status': details.get('status', '')})
     for alias, details in JS_IMPORTS.items():
       mod_js[alias] = []
       for module in details['modules']:
-        mod_js[alias].append({'version': module.get('version', ''), 'alias': alias, 'file': module, 'website':
-          details.get('website', ''), 'status': details.get('status', '')})
+        mod_js[alias].append(
+          {'version': module.get('version', ''), 'alias': alias, 'file': module, 'website': details.get('website', ''),
+           'status': details.get('status', '')})
     for css_file in self.cleanImports(cssAlias, CSS_IMPORTS):
       files['css'].extend(mod_css[css_file])
     for js_file in self.cleanImports(jsAlias, JS_IMPORTS):
@@ -3083,12 +3179,12 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The package reference in the above list
-    :param version: String. Optional. The package version to retrieve
-    :param static_path: String. Optional. The path in which the files should be copied to
-    :param reload: Boolean. Optional. Flag to force the package reloading if the folder already exists. Default False
+    :param alias: String. The package reference in the above list.
+    :param version: String. Optional. The package version to retrieve.
+    :param static_path: String. Optional. The path in which the files should be copied to.
+    :param reload: Boolean. Optional. Flag to force the package reloading if the folder already exists. Default False.
 
-    :return: The Python Import manager
+    :return: The Python Import manager.
     """
 
     import zipfile
@@ -3105,32 +3201,34 @@ class ImportManager:
     if 'package' in JS_IMPORTS[alias]:
       if 'version' not in JS_IMPORTS[alias]['modules'][0]:
         JS_IMPORTS[alias]['modules'][0]['version'] = JS_IMPORTS[alias]['version']
-      versionDict = {'version': JS_IMPORTS[alias]['modules'][0]['version'] if version is None else version}
-      packagePath = JS_IMPORTS[alias]['package']['zip'] % versionDict
+      version_dict = {'version': JS_IMPORTS[alias]['modules'][0]['version'] if version is None else version}
+      package_path = JS_IMPORTS[alias]['package']['zip'] % version_dict
       if static_path is None:
-        static_path = os.path.join(os.path.dirname(__file__), '..', '..', 'static', JS_IMPORTS[alias]['package']['folder'])
+        static_path = os.path.join(
+          os.path.dirname(__file__), '..', '..', 'static', JS_IMPORTS[alias]['package']['folder'])
       else:
         static_path = os.path.join(static_path, "static")
       if not os.path.exists(static_path):
         # Create the destination folders if missing
         os.makedirs(static_path)
-      dstPath = os.path.join(static_path, JS_IMPORTS[alias]['package'].get('folder', ''), JS_IMPORTS[alias]['package'].get('path', '%(version)s') % versionDict)
-      vReloadPath = True
-      if os.path.exists(dstPath):
+      dst_path = os.path.join(
+        static_path, JS_IMPORTS[alias]['package'].get('folder', ''),
+        JS_IMPORTS[alias]['package'].get('path', '%(version)s') % version_dict)
+      v_reload_path = True
+      if os.path.exists(dst_path):
         if not reload:
-          vReloadPath = False
+          v_reload_path = False
         else:
-          shutil.rmtree(dstPath)
+          shutil.rmtree(dst_path)
 
-      if vReloadPath:
-        logging.warning("  > Downloading package %s" % packagePath)
-        r = webscrapper(packagePath)
+      if v_reload_path:
+        logging.warning("  > Downloading package %s" % package_path)
+        r = webscrapper(package_path)
         z = zipfile.ZipFile(io.BytesIO(r))
-        #z = zipfile.ZipFile(io.BytesIO(r))
         z.extractall(static_path)
         if JS_IMPORTS[alias]['package']['root'] is not None:
-          root = JS_IMPORTS[alias]['package']['root'] % versionDict
-          shutil.copytree(os.path.join(static_path, root), dstPath)
+          root = JS_IMPORTS[alias]['package']['root'] % version_dict
+          shutil.copytree(os.path.join(static_path, root), dst_path)
           shutil.rmtree(os.path.join(static_path, root))
         logging.warning("  < Package %s. Done ! " % alias)
       else:
@@ -3287,12 +3385,11 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param data: Dictionary. The Report modules to resolve
-    :param excluded_packages: Optional. List. The packages to exclude
+    :param data: Dictionary. The Report modules to resolve.
+    :param excluded_packages: List. Optional. The packages to exclude.
     """
     deps_level, alias_to_name, name_to_alias, results = {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
     m_versions = {}
-
     # Check first if some specific versions are required for the packages
     for m in self._report.jsImports:
       for req in JS_IMPORTS[m].get('req', []):
@@ -3311,13 +3408,14 @@ class ImportManager:
           first_module['version'] = JS_IMPORTS[m]['version']
         if m in m_versions:
           first_module['version'] = m_versions[m]
-        results['paths'][alias] = "%s/%s%s" % (first_module['cdnjs'], first_module['path'] % first_module,
-                                     JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
+        results['paths'][alias] = "%s/%s%s" % (
+          first_module['cdnjs'], first_module['path'] % first_module,
+          JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
         alias_to_name[m] = alias
         name_to_alias[alias] = m
         if 'req' in JS_IMPORTS[m]:
-          max_level = max([deps_level[alias['alias']] if alias['alias'] in deps_level else -1 for alias in
-                           JS_IMPORTS[m]['req']])
+          max_level = max(
+            [deps_level[alias['alias']] if alias['alias'] in deps_level else -1 for alias in JS_IMPORTS[m]['req']])
           deps_level[m] = max_level + 1
         else:
           deps_level[m] = 0
@@ -3332,7 +3430,7 @@ class ImportManager:
           if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
             results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
         results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
-        "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
+          "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
         level, group = v, [alias_to_name[k]]
       else:
         group.append(alias_to_name[k])
@@ -3341,7 +3439,7 @@ class ImportManager:
         if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
           results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
-      "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
+        "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
     return results
 
   def show(self, all=False):
@@ -3355,7 +3453,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param all: Boolean. Optional. A flag to specify if only the one requested in the report should be displayed
+    :param all: Boolean. Optional. A flag to specify if only the one requested in the report should be displayed.
     """
     packages = {}
     if not all:
@@ -3363,16 +3461,16 @@ class ImportManager:
         pkg = self.cleanImports(imp, repo)
         for c in pkg:
           for s in repo[c].get('modules', []):
-            if 'version' not in s:
-              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version'] # propagate the version number if not supplied from JS definition
+            if 'version' not in s:   # propagate the version number if not supplied from JS definition
+              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     else:
       for mod in [CSS_IMPORTS, JS_IMPORTS]:
         for c, pkg in mod.items():
           for s in pkg.get('modules', []):
-            if 'version' not in s:
-              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version'] # propagate the version number if not supplied
+            if 'version' not in s:   # propagate the version number if not supplied from JS definition
+              s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     return packages
@@ -3400,7 +3498,7 @@ class ImportManager:
     ----------
     :param products: List. The various Google products to enable in the report.
     :param api_key: String. Optional. The Google developer API key.
-    :param site_key: String. Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3
+    :param site_key: String. Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
     """
     global JS_IMPORTS
 
@@ -3425,8 +3523,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param aliases: List. Mandatory. The list of aliases
-    :param end_points: String. Optional. The end point on the server (The module static_path as default)
+    :param aliases: List. Mandatory. The list of aliases.
+    :param end_points: String. Optional. The end point on the server (The module static_path as default).
     """
     global JS_IMPORTS
     global CSS_IMPORTS

@@ -5,6 +5,7 @@ from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
+from epyk.core.css.styles import GrpConfigs
 from epyk.core.css.styles.attributes import Attrs # for the rtype in the documentation
 from epyk.core.css.styles.attributes import Commons, Body, Empty
 from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesPage
@@ -304,6 +305,15 @@ class ClassHtml:
     return self._css_class
 
   @property
+  def configs(self):
+    """
+    Description:
+    ------------
+    All predefined CSS configurations.
+    """
+    return GrpConfigs.ClsConfigs(self.component)
+
+  @property
   def defaults(self):
     """
     Description:
@@ -364,10 +374,10 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param key:
-    :param name:
-    :param dflt:
-    :param suffix:
+    :param key: String. The attribute key.
+    :param name: String. The attribute value.
+    :param dflt: String. Optional. The default value for the attribute.
+    :param suffix: String. Optional. The suffix for the attribute.
     """
     key_selector = "_%s" % suffix
     if key_selector not in self.__css_virtual:
@@ -390,7 +400,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param name:
+    :param name: String. The attribute content name.
     """
     self.attr("content", name, suffix='before')
 
@@ -401,7 +411,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param attrs:
+    :param attrs: Dictionary. The CSS attributes for the mouse hover style.
     """
     self.selector("hover", attrs)
 
@@ -421,41 +431,16 @@ class ClassHtml:
       self.css.margin_left = "%s%%" % percent
       self.css.margin_right = "%s%%" % percent
 
-  def doc(self, percent=5, max_width=650, padding=True, background="white"):
-    """
-    Description:
-    ------------
-
-    TODO: Find way to set the container to the middle of the page.
-
-    Attributes:
-    ----------
-    :param percent: Integer. Optional. The percentage of space on the left and right.
-    :param max_width: Integer. Optional. The max size of the page in pixel.
-    :param padding: Boolean. Optional. The top and bottom padding in the doc.
-    :param background: String. Optional.
-    """
-    self.css.max_width = max_width
-    self.css.min_height = 150
-    if padding:
-      self.css.padding = "20px 10px"
-    self.css.shadow_box(radius=0)
-    if background is not None:
-      self.css.background = background
-    self.css.margin = "20px auto"
-    self.component.page.body.style.css.padding_left = "%s%%" % percent
-    self.component.page.body.style.css.padding_right = "%s%%" % percent
-    self.component.page.body.style.css.background = self.component.page.theme.greys[2]
-
   def selector(self, suffix, attrs):
     """
     Description:
     ------------
+    Set the selector name.
 
     Attributes:
     ----------
-    :param suffix:
-    :param attrs:
+    :param suffix: String. The selector suffix value.
+    :param attrs: Dictionary. The CSS attributes.
     """
     key_selector = "_%s" % suffix
     if key_selector not in self.__css_virtual:
@@ -593,11 +578,18 @@ class ClassHtml:
       self.css.attrs = {}
       self.classList['main'].add(meta_cls(self.component.page))
       self.component.attr['css'] = {}
-    for css_cls in self.classList.values():
+    computed_classlist = {"main": OrderedSet(), 'other': OrderedSet()}
+    for css_category, css_cls in self.classList.items():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
-          self.component.page._css[c.get_ref()] = c
-    return self.classList
+          c = Classes.get_class_override(c)
+          if not c:
+            continue
+
+          if c.is_page_scope:
+            self.component.page._css[c.get_ref()] = c
+        computed_classlist[css_category].add(c)
+    return computed_classlist
 
   def get_classes_css(self):
     """
@@ -609,7 +601,12 @@ class ClassHtml:
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
-          css_frgs[c.get_ref()] = str(c)
+          c = Classes.get_class_override(c)
+          if not c:
+            continue
+
+          if c.is_page_scope:
+            css_frgs[c.get_ref()] = str(c)
     return css_frgs
 
 

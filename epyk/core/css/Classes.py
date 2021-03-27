@@ -21,6 +21,42 @@ from epyk.core.css.catalogs import CatalogMedia
 from epyk.core.css.catalogs import CatalogImg
 from epyk.core.css.catalogs import CatalogStd
 
+# Change predefined CSS classes.
+# This will allow to fully change the framework in order to align with other CSS classes and attributes.
+OVERRIDES = None
+
+
+def get_class_override(css_cls):
+  """
+  Description:
+  ------------
+  Hook to override predefined CSS classes for all the reports in the project.
+
+  Attributes:
+  ----------
+  :param css_cls: Style. The CSS Class in the framework.
+  """
+  if OVERRIDES is None:
+    return css_cls
+
+  if css_cls.classname in OVERRIDES:
+    css_ovr_def = OVERRIDES[css_cls.classname]
+    if not css_ovr_def:
+      return False
+
+    if isinstance(css_ovr_def, dict):
+      if "css" in css_ovr_def:
+        css_cls.css(css_ovr_def["css"])
+      if "hover" in css_ovr_def:
+        css_cls.hover.css(css_ovr_def["hover"])
+      if "name" in css_ovr_def:
+        css_cls.classname = css_ovr_def["name"]
+        css_cls.cls_ref = css_ovr_def["name"]
+      css_cls.is_page_scope = css_ovr_def.get("defined", True)
+    else:
+      css_cls.classname = css_ovr_def
+  return css_cls
+
 
 class Catalog:
 
