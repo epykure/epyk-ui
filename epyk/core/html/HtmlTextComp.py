@@ -31,9 +31,10 @@ class UpDown(Html.Html):
       report, record, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.add_helper(helper)
     self.style.css.position = "relative"
-    self.helper.style.css.position = "absolute"
-    self.helper.style.css.bottom = 5
-    self.helper.style.css.right = 5
+    if self.helper:
+      self.helper.style.css.position = "absolute"
+      self.helper.style.css.bottom = 5
+      self.helper.style.css.right = 5
     if components is not None:
       for component in components:
         self.add(component)

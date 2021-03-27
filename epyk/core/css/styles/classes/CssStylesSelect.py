@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 from epyk.core.css.styles.classes import CssStyle
 from epyk.core.html import Defaults as Defaults_html
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssSelectStyle(CssStyle.Style):
@@ -13,8 +13,9 @@ class CssSelectStyle(CssStyle.Style):
   def customize(self):
     self.css({
       "background": 'inherit', "color": self.page.theme.greys[-1],
-      'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-      'font-size': '%spx' % Defaults_css.Font.size, #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
+      'font-family': self.page.body.style.globals.font.family,
+      'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+      'font-size': self.page.body.style.globals.font.normal(), #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
     })
     self.css({'display': 'inline-block', 'margin': 0}, important=True)
 
@@ -37,7 +38,7 @@ class CssSelectSearchBoxInput(CssStyle.Style):
   _selectors = {"child": 'input.form-control'}
 
   def customize(self):
-    self.css({"border-color": self.page.theme.colors[5], "height": "%spx" % Defaults_html.LINE_HEIGHT})
+    self.css({"border-color": self.page.theme.notch(), "height": "%spx" % Defaults_html.LINE_HEIGHT})
     self.focus.css({"box-shadow": "0 0 0 0.2em %s" % self.page.theme.colors[0]})
 
 
@@ -46,13 +47,13 @@ class CssSelectToggle(CssStyle.Style):
   def customize(self):
     self.css({
       "background-color": 'inherit',
-      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+      'font-size': self.page.body.style.globals.font.normal()}, important=True)
 
 
 class CssSelectToggleNoBg(CssStyle.Style):
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+    self.css({'font-size': self.page.body.style.globals.font.normal()}, important=True)
 
 
 class CssSelectOption(CssStyle.Style):
@@ -60,7 +61,7 @@ class CssSelectOption(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit),
+      'font-size': self.page.body.style.globals.font.normal(),
       'background-color': self.page.theme.greys[0]}, important=True)
 
 
@@ -76,7 +77,7 @@ class CssSelectOptionItems(CssStyle.Style):
       'color': self.page.theme.greys[-1]}, important=True)
     self.hover.css({
       'color': self.page.theme.colors[0],
-      "background-color": self.page.theme.colors[7]}, important=True)
+      "background-color": self.page.theme.notch(2)}, important=True)
     self.active.css({
       "background-color": self.page.theme.colors[-1],
       "color": self.page.theme.greys[0]}, important=True)
@@ -87,7 +88,7 @@ class CssSelectOptionActive(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'background': self.page.theme.colors[4],
+      'background': self.page.theme.notch(-1),
       "color": self.page.theme.colors[-1]}, important=True)
 
 
@@ -116,4 +117,4 @@ class CssSelectStatus(CssStyle.Style):
   def customize(self):
     self.css({
       "background-color": self.page.theme.greys[0],
-      'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+      'font-size': self.page.body.style.globals.font.normal()})

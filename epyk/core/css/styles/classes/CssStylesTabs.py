@@ -1,6 +1,6 @@
-"""
-CSS Style module for the Tabs components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
 

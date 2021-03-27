@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -49,7 +48,7 @@ class Titles:
                                            dflt_options, profile)
     html_title.style.css.color = self.page.theme.colors[-1]
     # html_title.style.css.border_left = '5px solid %s' % self.page.theme.colors[-1]
-    html_title.style.css.font_size = Defaults_css.font(10)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(10)
     html_title.style.css.text_transform = 'uppercase'
     html_title.style.css.text_align = align
     html_title.style.css.margin_left = 2
@@ -93,7 +92,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
                                            dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(6)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 5
     html_title.style.css.color = self.page.theme.colors[-1]
@@ -136,7 +135,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
                                            dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.color = self.page.theme.colors[-1]
@@ -175,7 +174,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
                                            dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(4)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 20
     html_title.style.css.margin_bottom = 10
@@ -219,7 +218,7 @@ class Titles:
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.border_left = '3px solid %s' % self.page.theme.colors[2]
     html_title.style.css.padding_left = 5
-    html_title.style.css.font_size = Defaults_css.font(2)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(2)
     return html_title
 
   @html.Html.css_skin()
@@ -257,7 +256,7 @@ class Titles:
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.border_bottom = '3px solid %s' % self.page.theme.colors[-1]
-    html_title.style.css.font_size = Defaults_css.font(5)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(5)
     html_title.style.css.margin_bottom = 5
     html_title.style.css.text_transform = "uppercase"
     return html_title
@@ -296,7 +295,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(2)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(2)
     html_title.style.css.color = self.page.theme.colors[-1]
     return html_title
 
@@ -334,7 +333,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(4)
     html_title.style.css.border_bottom = '2px solid %s' % self.page.theme.colors[-1]
     return html_title
 
@@ -373,7 +372,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(4)
     html_title.style.css.font_weight = "bold"
     html_title.style.css.color = self.page.theme.colors[-1]
     return html_title
@@ -412,7 +411,7 @@ class Titles:
     title = self.page.ui.title(text=text, name=name, contents=contents, color=color, picture=picture, icon=icon,
                                top=top, html_code=html_code, width=width, height=height, align=align, options=options,
                                profile=profile)
-    title.style.css.font_size = Defaults_css.font(2)
+    title.style.css.font_size = self.page.body.style.globals.font.normal(2)
     title.style.css.bold()
     return title
 
@@ -452,7 +451,7 @@ class Titles:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.font_size = self.page.body.style.globals.font.normal(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10
     html_title.style.css.padding_bottom = 5

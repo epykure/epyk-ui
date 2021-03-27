@@ -1,16 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
 from epyk.core.css.styles.classes import CssStyle
-from epyk.core.css import Defaults_css
 
 
 class CssDatePickerUI(CssStyle.Style):
   classname = "ui-datepicker"
 
   def customize(self):
-    self.css({"background": self.page.theme.greys[0], "font-size": Defaults_css.font(),
+    self.css({"background": self.page.theme.greys[0],
+              "font-size": self.page.body.style.globals.font.normal(),
               'z-index': "220 !IMPORTANT", 'width': 'auto'})
 
 
@@ -39,7 +38,7 @@ class CssDatesTimePicker(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.page.theme.greys[-1], "background-color": self.page.theme.greys[0],
-              "font-size": Defaults_css.font()})
+              "font-size": self.page.body.style.globals.font.normal()})
 
 
 class CssDatesTimePickerState(CssStyle.Style):

@@ -5,7 +5,6 @@ from epyk.core import html
 from epyk.core.html import graph
 
 from epyk.core.html import Defaults as defaults_html
-from epyk.core.css import Defaults as defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -61,8 +60,8 @@ class Numbers:
       height = (defaults_html.LINE_HEIGHT, 'px')
     html_label = html.HtmlText.Position(self.page, text, color, align, width, height, html_code, tooltip,
                                         options, profile)
-    html_label.position(3, {"font-size": defaults_css.font(5), "font-weight": "bold"})
-    html_label.position(4, {"font-size": defaults_css.font(5), "font-weight": "bold"})
+    html_label.position(3, {"font-size": self.page.body.style.globals.font.normal(5), "font-weight": "bold"})
+    html_label.position(4, {"font-size": self.page.body.style.globals.font.normal(5), "font-weight": "bold"})
     html_label.digits(True)
     return html_label
 

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
 from epyk.core.js import Imports
@@ -128,7 +127,7 @@ class Rich:
     """
     height = Arguments.size(height, unit="px")
     if height is None or height[0] is None:
-      height = (Defaults_css.Font.header_size, "px")
+      height = (self.page.body.style.globals.font.size, "px")
     if isinstance(color, bool):
       color = self.page.theme.success[1] if color else self.page.theme.danger[1]
     html_traffic = html.HtmlTextComp.TrafficLight(self.page, color, label, height, tooltip, helper, options, profile)
@@ -522,8 +521,8 @@ class Rich:
     if section is not None:
       text = self.page.ui.text(section, width=(100, '%'), options=options, profile=profile)
       text.style.css.text_align = "center"
-      text.style.css.font_size = Defaults_css.font(-1)
-      text.style.css.line_height = Defaults_css.font(5)
+      text.style.css.font_size = self.page.body.style.globals.font.normal(-1)
+      text.style.css.line_height = self.page.body.style.globals.font.normal(5)
       text.style.css.font_weight = 500
       text.style.css.letter_spacing = "0.15em"
       text.style.css.text_transform = "uppercase"
@@ -532,7 +531,7 @@ class Rich:
     if title is not None:
       title = self.page.ui.text(title, width=(100, '%'), options=options, profile=profile)
       title.style.css.text_align = "center"
-      title.style.css.font_size = Defaults_css.font(12)
+      title.style.css.font_size = self.page.body.style.globals.font.normal(12)
       title.style.css.font_weight = 300
       title.css({'margin-block-end': '0.67em', 'margin-block-start': '0'})
       container.add(title)
@@ -540,7 +539,7 @@ class Rich:
     if content is not None:
       content = self.page.ui.text(content, width=(80, "%"), options=options, profile=profile)
       content.style.css.text_align = "center"
-      content.style.css.font_size = Defaults_css.font(2)
+      content.style.css.font_size = self.page.body.style.globals.font.normal(2)
       content.style.css.margin = "auto"
 
     container.add(content)

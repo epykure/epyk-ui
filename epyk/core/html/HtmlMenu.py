@@ -278,7 +278,7 @@ class ContextMenu(Html.Html):
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
               'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'})
-    self.style.css.shadow_box()
+    self.style.configs.shadow()
     for component in components:
       self.__add__(component)
 

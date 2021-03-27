@@ -474,7 +474,7 @@ class Layouts:
 
     html_div = html.HtmlContainer.Div(self.page, components or [], label, color, width, icon, height,
                                       editable, align, padding, html_code, tag, helper, options or {}, profile)
-    if width[0] == 'auto':
+    if width[0] == 'auto' or width[1] == 'px':
       html_div.style.css.display = "inline-block"
     return html_div
 

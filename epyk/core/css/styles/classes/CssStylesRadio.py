@@ -1,17 +1,16 @@
-"""
-CSS Style module for the Radio components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssRadioButton(CssStyle.Style):
   _attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.colors[3], 'font-size': '%spx' % Defaults_css.Font.size})
+    self.css({'border': '1px solid %s' % self.page.theme.notch(-3),
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssRadioButtonSelected(CssStyle.Style):
@@ -19,7 +18,7 @@ class CssRadioButtonSelected(CssStyle.Style):
 
   def customize(self):
     self.css({'border': '1px solid %s' % self.page.theme.success[1], 'color': self.page.theme.success[1],
-              'font-size': '%spx' % Defaults_css.Font.size})
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssRadioSwitch(CssStyle.Style):

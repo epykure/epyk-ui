@@ -11,7 +11,7 @@ except NameError:
 
 from epyk.core.js import Imports
 from epyk.interfaces import Interface
-from epyk.core.css.themes import Theme
+from epyk.core.css import themes
 from epyk.core.css import Classes
 
 from epyk.core import html
@@ -307,16 +307,20 @@ class Report:
     :rtype: Theme.ThemeDefault
     """
     if self._theme is None:
-      self._theme = Theme.ThemeDefault()
+      self._theme = themes.Theme.ThemeDefault()
     return self._theme
 
   @theme.setter
   def theme(self, theme):
     if isinstance(theme, dict):
-      self._theme = Theme.ThemeCustome()
+      self._theme = themes.Theme.ThemeCustom()
       self._theme = theme
     else:
       self._theme = theme
+
+  @property
+  def themes(self):
+    return themes.RegisteredThemes(self)
 
   @property
   def skins(self):

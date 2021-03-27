@@ -90,6 +90,6 @@ class Body(Attrs):
 
   def __init__(self, component):
     super(Body, self).__init__(component)
-    self.font_size = Defaults_css.font()
-    self.font_family = Defaults_css.Font.family
+    self.font_size = component.style.globals.font.normal()
+    self.font_family = component.style.globals.font.family
     self.margin = 0

@@ -4,7 +4,6 @@
 import os
 
 from epyk.core import html
-from epyk.core.css import Defaults_css
 from epyk.core.html import Defaults_html
 from epyk.interfaces import Arguments
 
@@ -298,7 +297,7 @@ class Buttons:
     html_button.style.left = "%s%s" % (left[0], left[1])
     html_button.style.transform = "translate(-%s, -%s)" % (html_button.style.left, html_button.style.top)
     if size_notch is not None:
-      html_button.style.font_size = Defaults_css.font(size_notch)
+      html_button.style.font_size = self.page.body.style.globals.font.normal(size_notch)
     if width[0] == 'auto':
       html_button.style.css.display = "inline-block"
     return html_button

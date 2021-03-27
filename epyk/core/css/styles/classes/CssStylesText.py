@@ -1,7 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssTextBold(CssStyle.Style):
@@ -31,7 +32,7 @@ class CssTitle2(CssStyle.Style):
             'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.page.theme.colors[7]})
+    self.css({"color": self.page.theme.notch(2)})
 
 
 class CssTitle3(CssStyle.Style):
@@ -39,7 +40,7 @@ class CssTitle3(CssStyle.Style):
             'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.page.theme.colors[7], 'font-family': Defaults_css.Font.family})
+    self.css({"color": self.page.theme.notch(2), 'font-family': self.page.body.style.globals.font.family})
 
 
 class CssTitle4(CssStyle.Style):
@@ -58,8 +59,8 @@ class CssNumberCenter(CssStyle.Style):
             'font-weight': 'bold'}
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.font(4), Defaults_css.Font.unit),
-              'font-family': Defaults_css.Font.family})
+    self.css({'font-size': self.page.body.style.globals.font.normal(4),
+              'font-family': self.page.body.style.globals.font.family})
 
 
 class CssMarkRed(CssStyle.Style):
@@ -67,15 +68,15 @@ class CssMarkRed(CssStyle.Style):
 
   def customize(self):
     self.css({"color": self.page.theme.danger[1],
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssMarkBlue(CssStyle.Style):
   _attrs = {'background': 'none', 'font-weight': 'bold'}
 
   def customize(self):
-    self.css({"color": self.page.theme.colors[7],
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({"color": self.page.theme.notch(2),
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssTextWithBorder(CssStyle.Style):
@@ -91,8 +92,8 @@ class CssCheckMark(CssStyle.Style):
             'font-family': 'FontAwesome', 'height': '18px', 'width': '18px'}
 
   def customize(self):
-    self.css({"background-color": self.page.theme.greys[0], "color": self.page.theme.greys[9]})
-    self.hover.css({'color': 'white', 'background-color': self.page.theme.colors[9]})
+    self.css({"background-color": self.page.theme.greys[0], "color": self.page.theme.greys[-1]})
+    self.hover.css({'color': 'white', 'background-color': self.page.theme.colors[-1]})
 
 
 class CssTextItem(CssStyle.Style):

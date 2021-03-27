@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.css import Defaults
 from epyk.interfaces import Arguments
 
 
@@ -859,9 +858,10 @@ class Lists:
                                  'border-radius': '5px', 'margin': '2px', "width": 'auto', 'display': 'inline-block',
                                  'background': 'inherit', 'white-space': 'nowrap'},
                     'category': category, 'visible': True,
-                    'value_css': {'font-size': Defaults.font(0), 'font-weight': 'bold', 'vertical-align': 'bottom'},
+                    'value_css': {'font-size': self.page.body.style.globals.font.normal(),
+                                  'font-weight': 'bold', 'vertical-align': 'bottom'},
                     'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top',
-                                     'font-size': Defaults.font(-3)},
+                                     'font-size': self.page.body.style.globals.font.normal(-3)},
                     'icon_css': {'color': self.page.theme.success[1], 'margin-left': '5px',
                                  'cursor': 'pointer'}}
     if not hasattr(category, 'toStr') and category == 'group':

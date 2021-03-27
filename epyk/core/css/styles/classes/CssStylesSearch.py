@@ -16,7 +16,7 @@ class CssSearchExt(CssStyle.Style):
     self.hover.css({
       'color': self.page.theme.greys[-1],
       'width': '350px',
-      'border-bottom-color': self.page.theme.colors[6]})
+      'border-bottom-color': self.page.theme.notch(1)})
 
 
 class CssSearch(CssStyle.Style):
@@ -30,7 +30,7 @@ class CssSearch(CssStyle.Style):
       'color': self.page.theme.greys[-1]})
     self.hover.css({
       'color': self.page.theme.greys[-1],
-      'border-bottom-color': self.page.theme.colors[6]})
+      'border-bottom-color': self.page.theme.notch(1)})
 
 
 class CssSearchButton(CssStyle.Style):

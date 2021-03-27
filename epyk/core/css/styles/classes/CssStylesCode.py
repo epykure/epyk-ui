@@ -35,4 +35,4 @@ class MjxContainer(CssStyle.Style):
   classname = "MathJax:focus, .mjx-chtml:focus, .MathJax_SVG:focus"
 
   def customize(self):
-    self.css({'outline': "1px solid %s" % self.page.theme.colors[5]})
+    self.css({'outline': "1px solid %s" % self.page.theme.notch()})

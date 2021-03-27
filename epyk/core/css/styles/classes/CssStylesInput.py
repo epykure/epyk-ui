@@ -1,7 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Defaults as Defaults_html
-from epyk.core.css import Defaults as Defaults_css
-
 from epyk.core.css.styles.classes import CssStyle
 
 
@@ -14,11 +14,11 @@ class CssInput(CssStyle.Style):
 
   def customize(self):
     self.attrs.css({"color": self.page.theme.greys[-1],
-                    'font-family': Defaults_css.Font.family,
+                    'font-family': self.page.body.style.globals.font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
                     'border': '1px solid %s' % self.page.theme.colors[0],
-                    'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
-    self.hover.css({'color': self.page.theme.colors[6]})
+                    'font-size': self.page.body.style.globals.font.normal()})
+    self.hover.css({'color': self.page.theme.notch(1)})
 
 
 class CssInputRange(CssStyle.Style):
@@ -57,8 +57,8 @@ class CssInputLabel(CssStyle.Style):
   _selectors = {'child': 'label'}
 
   def customize(self):
-    self.attrs.css({'font-family': Defaults_css.Font.family,
-                    'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.attrs.css({'font-family': self.page.body.style.globals.font.family,
+                    'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssInputInteger(CssStyle.Style):
@@ -137,5 +137,5 @@ class CssAutocompleteItemActive(CssStyle.Style):
   def customize(self):
     self.css({
       'border': "1px solid %s" % self.page.theme.greys[4],
-      'background': self.page.theme.colors[7],
+      'background': self.page.theme.notch(2),
       "color":  self.page.theme.greys[0]}, important=True)

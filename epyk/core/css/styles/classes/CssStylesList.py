@@ -1,6 +1,6 @@
-"""
-CSS Style module for the List components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
 
@@ -10,15 +10,15 @@ class CssBasicList(CssStyle.Style):
   _selectors = {'child': 'ul li:first-child'}
 
   def customize(self):
-    self.css({"background": self.page.theme.colors[7], "color": self.page.theme.greys[0]})
+    self.css({"background": self.page.theme.notch(2), "color": self.page.theme.greys[0]})
 
 
 class CssBasicListItems(CssStyle.Style):
   _attrs = {'padding': '15px 0 0 0', 'display': 'block'}
 
   def customize(self):
-    self.css({"color": self.page.theme.greys[-1], "border-bottom": "1px solid %s" % self.page.theme.colors[7]})
-    self.hover.css({'color': self.page.theme.colors[8]})
+    self.css({"color": self.page.theme.greys[-1], "border-bottom": "1px solid %s" % self.page.theme.notch(2)})
+    self.hover.css({'color': self.page.theme.notch(3)})
 
 
 class CssBasicListItemsSelected(CssStyle.Style):
@@ -31,7 +31,7 @@ class CssBasicListItemsDisabled(CssStyle.Style):
   _attrs = {'padding': '15px 0 0 0', 'display': 'block', 'cursor': 'not-allowed'}
 
   def customize(self):
-    self.css({"background-color": self.page.theme.greys[7], "color": self.page.theme.greys[4]})
+    self.css({"background-color": self.page.theme.notch(2), "color": self.page.theme.greys[4]})
 
 
 class CssSquareList(CssStyle.Style):
@@ -40,7 +40,7 @@ class CssSquareList(CssStyle.Style):
   _selectors = {'child': 'li'}
 
   def customize(self):
-    self.before.cess({"color": self.page.theme.colors[7]})
+    self.before.cess({"color": self.page.theme.notch(2)})
 
 
 class CssListBase(CssStyle.Style):

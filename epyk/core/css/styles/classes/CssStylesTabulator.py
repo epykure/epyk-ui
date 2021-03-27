@@ -1,14 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssTabulator(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'background-color': self.page.theme.greys[0], 'font-family': Defaults_css.Font.family})
+      'background-color': self.page.theme.greys[0], 'font-family': self.page.body.style.globals.font.family})
 
 
 class CssTabulatorFooter(CssStyle.Style):
@@ -26,7 +27,7 @@ class CssTabulatorEditing(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'font-family': Defaults_css.Font.family,
+      'font-family': self.page.body.style.globals.font.family,
       'font-size': "inherit", 'background': 'none', 'border': 'none'}, important=True)
 
 

@@ -1,10 +1,7 @@
-"""
-CSS Style module for the common Menu Bar components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssSideBarMenu(CssStyle.Style):
@@ -12,7 +9,7 @@ class CssSideBarMenu(CssStyle.Style):
   _hover = {'text-decoration': 'underline'}
 
   def customize(self):
-    self.css({'color': self.page.theme.colors[9]})
+    self.css({'color': self.page.theme.colors[-1]})
 
 
 class CssSideBarFixed(CssStyle.Style):
@@ -20,7 +17,7 @@ class CssSideBarFixed(CssStyle.Style):
             'z-index': 5, 'top': 0, 'left': 0, 'overflow-x': 'hidden'}
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[-1]})
 
 
 class CssSideBarBubble(CssStyle.Style):
@@ -28,8 +25,9 @@ class CssSideBarBubble(CssStyle.Style):
             'height': '100%', 'min-width': '200px', 'padding': '10px', 'color': 'black'}
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[9], 'font-family': Defaults_css.Font.family,
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({'background-color': self.page.theme.colors[-1],
+              'font-family': self.page.body.style.globals.font.family,
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssSideBar(CssStyle.Style):
@@ -42,7 +40,7 @@ class CssSideBarLiHref(CssStyle.Style):
   _selectors = {'child': 'li ul a'}
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[-1]})
 
 
 class CssSideBarLi(CssStyle.Style):
@@ -50,7 +48,7 @@ class CssSideBarLi(CssStyle.Style):
   _selectors = {'child': 'li'}
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[9]})
+    self.css({'background-color': self.page.theme.colors[-1]})
 
 
 class CssParamsBar(CssStyle.Style):

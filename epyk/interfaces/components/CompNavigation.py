@@ -367,7 +367,7 @@ class Navigation:
     for rec in record[:-1]:
       div += self.page.ui.link(rec['text'], url=rec.get('url', '#')).css({"display": 'inline-block'})
       div += self.page.ui.text(divider).css(
-        {"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
+        {"display": 'inline-block', 'margin': '0 5px', 'font-size': self.page.body.style.globals.font.normal(-2)})
     div += self.page.ui.link(record[-1]['text'], url=record[-1].get('url', '#')).css(
       {"display": 'inline-block'})
     return div
@@ -516,7 +516,7 @@ class Navigation:
     div + h_row
     div.style.css.background_color = self.page.theme.colors[3]
     div.style.css.color = "white"
-    div.style.css.font_size = Defaults_css.font(5)
+    div.style.css.font_size = self.page.body.style.globals.font.normal(5)
     div.style.css.text_align = 'center'
     div.style.css.padding = "5px 15px"
     return div
@@ -590,11 +590,11 @@ class Navigation:
     if position == 'left':
       d.css({
         'left': 0, 'margin-left': "-%spx" % size,
-        'border-right': '1px solid %s' % self.page.theme.colors[5], 'padding': '5px'})
+        'border-right': '1px solid %s' % self.page.theme.notch(), 'padding': '5px'})
     else:
       d.css({
         'right': 0, 'margin-right': "-%spx" % size,
-        'border-left': '1px solid %s' % self.page.theme.colors[5], 'padding': '5px'})
+        'border-left': '1px solid %s' % self.page.theme.notch(), 'padding': '5px'})
     self.page.body.style.custom_class({
       "overflow-x": 'hidden', "position": 'relative', 'min-height': '100%'}, "html, body", is_class=False)
 
@@ -639,7 +639,7 @@ class Navigation:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     p = self.page.ui.div("%s&#182" % text, html_code=html_code, options=options, profile=profile)
-    p.style.css.font_size = Defaults_css.font(5)
+    p.style.css.font_size = self.page.body.style.globals.font.normal(5)
     p.style.css.cursor = "pointer"
     p.click([self.page.js.window.scrollTo(y=self.page.js.objects.this.offsetTop)])
     return p
@@ -910,7 +910,7 @@ class Banners:
     if not hasattr(data, 'options'):
       data = self.page.ui.div(data, width=("auto", ""))
       data.style.css.font_size = "inline-block"
-      data.style.css.font_size = Defaults_css.font(4)
+      data.style.css.font_size = self.page.body.style.globals.font.normal(4)
     if not hasattr(icon, 'options'):
       icon = self.page.ui.icons.awesome(icon)
       icon.style.css.font_size = "inline-block"
@@ -918,7 +918,7 @@ class Banners:
     div.add(data)
     div.style.css.background_color = background or self.page.theme.greys[0]
     div.style.css.padding = "20px 15px"
-    div.style.css.font_size = Defaults_css.font(4)
+    div.style.css.font_size = self.page.body.style.globals.font.normal(4)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
     return div
@@ -953,12 +953,12 @@ class Banners:
       data = self.page.ui.div(self.page.py.encode_html(data), html_code=html_code, width=("auto", ""))
       data.style.css.display = "inline-block"
       data.style.css.text_align = align
-      data.style.css.font_size = Defaults_css.font(size_notch)
+      data.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.add(data)
     div.style.css.background_color = background or self.page.theme.greys[0]
     div.style.css.padding = "20px 15px"
     div.style.css.margin = "auto"
-    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
     return div
@@ -996,17 +996,17 @@ class Banners:
       title.style.css.font_weight = 800
       if 'title_color' in options:
         title.style.css.color = options['title_color']
-      title.style.css.font_size = Defaults_css.font(options.get("title_notch", 20) + size_notch)
+      title.style.css.font_size = self.page.body.style.globals.font.normal(options.get("title_notch", 20) + size_notch)
     div.add(title)
     if not hasattr(content, 'options'):
       content = self.page.ui.div(content, width=("auto", ""))
       content.style.css.text_align = align
       content.style.css.font_size = "inline-block"
-      content.style.css.font_size = Defaults_css.font(size_notch)
+      content.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.add(content)
     div.style.css.background_color = background or self.page.theme.greys[0]
     div.style.css.padding = "20px 15px"
-    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
     return div
@@ -1042,7 +1042,7 @@ class Banners:
       content = self.page.ui.div('"%s"' % content, width=("auto", ""))
       content.style.css.display = "inline-block"
       content.style.css.text_align = align
-      content.style.css.font_size = Defaults_css.font(size_notch)
+      content.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.add(content)
     div.style.css.background_color = background or self.page.theme.greys[0]
     div.style.css.padding = "20px 15px"
@@ -1095,9 +1095,12 @@ class Banners:
     text = self.page.ui.text(copyright)
     text.style.css.color = self.page.theme.greys[-1]
     div.add(text)
-    div.style.css.background_color = self.page.theme.greys[4]
+    div.style.css.background_color = self.page.theme.greys[3]
     div.style.css.color = self.page.theme.greys[6]
     div.style.css.padding = "5px 0"
+    div.style.css.left = 0
+    div.style.css.margin_top = 40
+    div.style.css.position = "absolute"
     return div
 
   @html.Html.css_skin()
@@ -1133,7 +1136,7 @@ class Banners:
     text = self.page.ui.text(text)
     div.add(text)
 
-    icon_size = int(Defaults_css.font(8)[:-2])
+    icon_size = int(self.page.body.style.globals.font.normal(8)[:-2])
     if youtube:
       div.youtube = self.page.ui.icons.youtube(width=(icon_size, 'px'))
       div.youtube.style.css.margin = "0 2px"
@@ -1210,7 +1213,7 @@ class Banners:
     div.style.css.background_color = background or self.page.theme.greys[0]
     div.style.css.padding = "20px 15px"
     div.style.css.margin = "auto"
-    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
     return div
@@ -1294,7 +1297,7 @@ class Banners:
       div.title = self.page.ui.titles.title(title)
       div.title.style.css.text_align = align
       div.title.style.css.font_weight = 800
-      div.title.style.css.font_size = Defaults_css.font(15)
+      div.title.style.css.font_size = self.page.body.style.globals.font.normal(15)
     else:
       div.title = title
     div.add(div.title)

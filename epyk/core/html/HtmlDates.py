@@ -8,7 +8,6 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
 
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsQuery
 from epyk.core.js.html import JsHtmlJqueryUI
 
 from epyk.core.css import Defaults

@@ -1,10 +1,7 @@
-"""
-CSS Style module for the common Div components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssCommHeader(CssStyle.Style):
@@ -12,8 +9,9 @@ class CssCommHeader(CssStyle.Style):
   _selectors = {'child': 'span'}
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1], 'font-family': Defaults_css.Font.family,
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({'color': self.page.theme.greys[-1],
+              'font-family': self.page.body.style.globals.font.family,
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssCommInput(CssStyle.Style):
@@ -24,8 +22,9 @@ class CssCommInput(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
-              'border-bottom': '1px solid %s' % self.page.theme.success[1], 'font-family': Defaults_css.Font.family,
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+              'border-bottom': '1px solid %s' % self.page.theme.success[1],
+              'font-family': self.page.body.style.globals.font.family,
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssContentEditable(CssStyle.Style):
@@ -33,7 +32,7 @@ class CssContentEditable(CssStyle.Style):
   _selector = "[contenteditable]"
 
   def customize(self):
-    self.focus.css({'outline': "1px solid %s" % self.page.theme.colors[5]})
+    self.focus.css({'outline': "1px solid %s" % self.page.theme.notch()})
 
 
 class CssSpeechBubble(CssStyle.Style):

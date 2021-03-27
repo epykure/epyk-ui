@@ -4,7 +4,6 @@
 import datetime
 
 from epyk.core import html
-from epyk.core.css import Defaults
 from epyk.interfaces import Arguments
 
 
@@ -62,11 +61,12 @@ class Calendar:
     month = month or today.month
     content = content or {}
     dfl_options = {
-      'overload': {'font-size': Defaults.font(5), 'text-align': 'center', 'color': self.page.theme.danger[1],
+      'overload': {'font-size': self.page.body.style.globals.font.normal(5), 'text-align': 'center',
+                   'color': self.page.theme.danger[1],
                    'font-weight': 'bold', 'cursor': 'pointer'},
-      'number': {"font-size": Defaults.font(5), "text-align": "center"},
+      'number': {"font-size": self.page.body.style.globals.font.normal(5), "text-align": "center"},
       'today': {"padding": "0 0 5px 0", "border-bottom": "1px solid grey"},
-      'header': {'font-size': Defaults.font(3), "background": self.page.theme.colors[-1],
+      'header': {'font-size': self.page.body.style.globals.font.normal(3), "background": self.page.theme.colors[-1],
                  "color": self.page.theme.colors[0], "padding": "5px 2px", "text-align": "center"}
     }
     factor = 100 / options.get("unit", 100) if options is not None else 1
@@ -187,7 +187,7 @@ class Calendar:
       pie.options.legend.display = False
       pie.options.title.text = labels[i]
       pie.options.title.display = True
-      pie.options.title.fontSize = Defaults.Font.size + 5
+      pie.options.title.fontSize = self.page.body.style.globals.font.normal(5)
       pie.options.title.fontColor = self.page.theme.colors[-1]
       rows.append(pie)
     row = self.page.ui.row(rows, width=width, height=height, align=align, options=options, profile=profile)
@@ -391,7 +391,8 @@ class Calendar:
     str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT"% "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
 
     link = self.page.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (
-      Defaults.font(5), self.page.theme.greys[-1], icon, text), str_calendar % str_event, options=options, profile=profile)
+      self.page.body.style.globals.font.normal(5), self.page.theme.greys[-1], icon, text), str_calendar % str_event,
+                                   options=options, profile=profile)
     link.attr['download'] = 'event.ics'
     link.style.css.background = self.page.theme.greys[0]
     link.style.css.color = self.page.theme.greys[-1]

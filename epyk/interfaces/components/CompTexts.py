@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -165,7 +164,7 @@ class Texts:
       text_comp.style.css.top = "%s%s" % (top[0], top[1])
       text_comp.style.css.transform = "translate(%s%s, -%s)" % (-left[0], left[1], text_comp.style.css.top)
     if size_notch is not None:
-      text_comp.style.css.font_size = Defaults_css.font(size_notch)
+      text_comp.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
     return text_comp
@@ -649,7 +648,8 @@ class Texts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': Defaults_css.font(),
+    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
+                    'font_size': self.page.body.style.globals.font.normal(),
                     'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
                     'orange': self.page.theme.warning[1]}
     if options is not None:
@@ -938,7 +938,7 @@ class Texts:
     c.add_icon(icon, html_code=c.html_code)
     c.style.add_classes.div.background_hover()
     c.style.css.border_radius = 5
-    c.style.css.font_size = Defaults_css.font(-2)
+    c.style.css.font_size = self.page.body.style.globals.font.normal(-2)
     c.style.css.padding = '1px 2px'
     return c
 

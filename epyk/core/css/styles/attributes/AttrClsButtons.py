@@ -1,5 +1,4 @@
 
-from epyk.core.css import Defaults_css
 from epyk.core.css.styles.attributes import Attrs
 
 
@@ -7,7 +6,7 @@ class AttrButton(Attrs):
 
   def __init__(self, component):
     super(AttrButton, self).__init__(component)
-    self.font_size = Defaults_css.font()
+    self.font_size = component.page.body.style.globals.font.normal()
 
 
 class AttrBadge(Attrs):
@@ -17,4 +16,4 @@ class AttrBadge(Attrs):
     self.padding = "1px 3px"
     self.margin = "1px 1px 1px 2px"
     self.vertical_align = "bottom"
-    self.font_size = Defaults_css.font(-3)
+    self.font_size = component.page.body.style.globals.font.normal(-3)

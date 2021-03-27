@@ -1,7 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStyle
-
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssDivNoMargin(CssStyle.Style):
@@ -17,7 +17,8 @@ class CssDivNoBorder(CssStyle.Style):
 
 class CssDivBottomBorder(CssStyle.Style):
   def customize(self):
-    self.css({"border-bottom": '2px solid %s' % self.page.theme.colors[0], 'font-family': Defaults_css.Font.family})
+    self.css({"border-bottom": '2px solid %s' % self.page.theme.colors[0],
+              'font-family': self.page.body.style.globals.font.family})
     self.hover.css({"border-bottom": '2px solid %s' % self.page.theme.success[-1]})
 
 
@@ -25,7 +26,8 @@ class CssDivWithBorder(CssStyle.Style):
   _attrs = {'margin': '0 0 5px 0', 'padding': '5px', 'outline': 'none'}
 
   def customize(self):
-    self.css({'border': "1px solid %s" % self.page.theme.colors[0], 'font-family': Defaults_css.Font.family})
+    self.css({'border': "1px solid %s" % self.page.theme.colors[0],
+              'font-family': self.page.body.style.globals.font.family})
 
 
 class CssDivConsole(CssStyle.Style):
@@ -47,7 +49,8 @@ class CsssDivBoxMarginBorder(CssStyle.Style):
   _attrs = {'margin': 0, 'padding': '0 2px 0 2px', 'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"border": '1px solid %s' % self.page.theme.greys[0], 'font-family': Defaults_css.Font.family})
+    self.css({"border": '1px solid %s' % self.page.theme.greys[0],
+              'font-family': self.page.body.style.globals.font.family})
     self.hover.css({'border': "1px solid %s" % self.page.theme.greys[5]})
 
 
@@ -165,7 +168,7 @@ class CssDivEditor(CssStyle.Style):
       'background-color': self.page.theme.greys[2]})
     self.focus.css({
       'background-color': self.page.theme.greys[0],
-      'border': "2px solid %s" % self.page.theme.colors[5]})
+      'border': "2px solid %s" % self.page.theme.notch()})
 
 
 class CssDivRow(CssStyle.Style):
@@ -179,8 +182,8 @@ class CssPanelTitle(CssStyle.Style):
 
   def customize(self):
     self.css({'border-bottom': "1px solid %s" % self.page.theme.success[1],
-              'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
-              'font-family': Defaults_css.Font.family})
+              'font-size': self.page.body.style.globals.font.header(),
+              'font-family': self.page.body.style.globals.font.family})
 
 
 class CssDivFilter(CssStyle.Style):

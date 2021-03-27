@@ -1,5 +1,4 @@
 
-from epyk.core.css import Colors
 from epyk.core.css import Defaults_css
 from epyk.core.css import FontFamily
 from epyk.interfaces import Arguments
@@ -2606,41 +2605,6 @@ class CssMixin:
     self.css({"box-shadow": "%(size)spx %(size)spx %(size)spx %(color)s" % {'color': color, 'size': size}})
     return self
 
-  def shadow_box(self, hexa_color=None, opacity=0.5, size=10, position=None, radius=10):
-    """
-    Description:
-    ------------
-    Set the box shadow color
-
-    Related Pages:
-
-      https://www.w3schools.com/css/css3_shadows.asp
-      https://gist.github.com/ocean90/1268328
-
-    Attributes:
-    ----------
-    :param hexa_color: String. An hexadecimal color code
-    :param opacity: Integer. Optional. The shadow opacity. Default 0.5
-    :param size: Integer. Optional. The size of the shadow effect
-    :param position: String. Optional. The position for the shadow
-    :param radius: Integer. Optional. The size for the angle rounding
-
-    :return: The CSS object to allow the functions chaining
-    """
-    rgb = Colors.getHexToRgb(self.component.page.theme.greys[-1] if hexa_color is None else hexa_color)
-    #self.box_shadow = "0 2px 4px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 3px 10px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
-    if position == 'right':
-      self.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
-        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
-    elif position == 'left':
-      self.box_shadow = "-%(size)spx 0 5px -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
-        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
-    else:
-      self.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
-        "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
-    self.border_radius = radius
-    return self
-
   def shadow_text(self):
     """
     Description:
@@ -2804,6 +2768,9 @@ class CssMixin:
     ----------
     :param top:
     :param left:
+    :param bottom:
+    :param right:
+    :param transform:
     """
     if top is not None:
       top = Arguments.size(top, unit="px")
@@ -2832,7 +2799,7 @@ class CssMixin:
     ----------
     :param factor:
     """
-    self.font_size = Defaults_css.font(factor)
+    self.font_size = self.component.page.body.style.globals.font.normal(factor)
     return self.component
 
   def margins(self, top=None, right=None, bottom=None, left=None):
@@ -2868,33 +2835,6 @@ class CssMixin:
       self.margin_bottom = "%s%s" % (bottom[0], bottom[1])
     if overall_margin > 0:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
-    return self
-
-  def parallax(self, url):
-    """
-    Description:
-    -----------
-    Parallax scrolling is a web site trend where the background content (i.e. an image) is moved at a different
-    speed than the foreground content while scrolling.
-
-    Usage:
-
-      div = page.ui.div()
-      div.style.css.parallax("https://www.w3schools.com/howto/img_parallax.jpg")
-
-    Related Pages:
-
-      https://www.w3schools.com/howto/howto_css_parallax.asp
-
-    Attributes:
-    ----------
-    :param url: String. The path of the picture visible in the background.
-    """
-    self.background_image = 'url("%s")' % url
-    self.background_attachment = "fixed"
-    self.background_position = "center"
-    self.background_repeat = "no-repeat"
-    self.background_size = "cover"
     return self
 
   def inline_block(self):

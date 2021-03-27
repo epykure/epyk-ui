@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 from epyk.core.css.styles.classes import CssStyle
@@ -32,7 +34,7 @@ class CssAgCellFocus(CssStyle.Style):
   classname = 'ag-cell-focus'
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.colors[5]}, important=True)
+    self.css({'border': '1px solid %s' % self.page.theme.notch()}, important=True)
 
 
 class CssAgRow(CssStyle.Style):
@@ -66,7 +68,6 @@ class CssAgHeaderLabel(CssStyle.Style):
 
 
 class CssAgMFilterPopup(CssStyle.Style):
-  #classname = 'ag-cell-label-container'
   classname = 'ag-popup-child'
 
   def customize(self):

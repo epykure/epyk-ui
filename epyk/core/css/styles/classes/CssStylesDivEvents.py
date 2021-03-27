@@ -1,6 +1,5 @@
-"""
-Module in charge of the Basic CSS events
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStyle
 
@@ -37,8 +36,8 @@ class CssDivOnHoverBackgroundLight(CssStyle.Style):
       "background-color": self.page.theme.colors[0],
       'border': "1px solid %s" % self.page.theme.greys[0]})
     self.hover.css({
-      'border': "1px solid %s" % self.page.theme.colors[4],
-      "background-color": self.page.theme.colors[4], "text-decoration": 'underline'})
+      'border': "1px solid %s" % self.page.theme.notch(),
+      "background-color": self.page.theme.notch(), "text-decoration": 'underline'})
     self.hover.css('color', self.page.theme.greys[0], important=True)
 
 
@@ -50,7 +49,7 @@ class CssDivOnHoverColor(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"background-color": self.page.theme.colors[-3]}, important=True)
+    self.hover.css({"background-color": self.page.theme.notch(1)}, important=True)
     self.hover.css('color', self.page.theme.colors[0], important=True)
 
 
@@ -83,6 +82,6 @@ class CssDivOnHoverBorder(CssStyle.Style):
       "border": "1px solid %s" % self.page.theme.colors[0],
     })
     self.hover.css({
-      'border': "1px solid %s" % self.page.theme.colors[5],
-      'color': self.page.theme.colors[5]
+      'border': "1px solid %s" % self.page.theme.notch(),
+      'color': self.page.theme.notch()
     })

@@ -28,7 +28,7 @@ class CssDataTableFooter(CssStyle.Style):
   def customize(self):
     self.css({
       "color": "red",
-      'background-color': "%s" % self.page.theme.colors[2]}, important=True)
+      'background-color': "%s" % self.page.theme.notch(-3)}, important=True)
 
 
 class CssDataTableEven(CssStyle.Style):
@@ -39,7 +39,7 @@ class CssDataTableEven(CssStyle.Style):
               'border-top': "1px solid %s !IMPORTANT" % self.page.theme.greys[0]})
     self.hover.css({
       'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
-      'color': self.page.theme.greys[-1], 'background-color': self.page.theme.colors[3]})
+      'color': self.page.theme.greys[-1], 'background-color': self.page.theme.notch(-2)})
 
 
 class CssDataTableOdd(CssStyle.Style):
@@ -53,7 +53,7 @@ class CssDataTableOdd(CssStyle.Style):
     self.hover.css({
       'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
       'color': self.page.theme.greys[-1],
-      'background-color': self.page.theme.colors[3]})
+      'background-color': self.page.theme.notch(-2)})
 
 
 class CssTableBasic(CssStyle.Style):
@@ -86,7 +86,7 @@ class CssTdEditor(CssStyle.Style):
 
   def customize(self):
     self.css({
-      "color": self.page.theme.colors[5],
+      "color": self.page.theme.notch(),
       'border-color': self.page.theme.greys[5]})
 
 
@@ -131,4 +131,4 @@ class CssTdGridVals(CssStyle.Style):
 class CssTrHover(CssStyle.Style):
 
   def customize(self):
-    self.hover.css({"background": self.page.theme.colors[2]})
+    self.hover.css({"background": self.page.theme.notch(-3)})

@@ -17,8 +17,9 @@ class CssBody(CssStyle.Style):
         bg_color = self.page.theme.greys[2]
     else:
       bg_color = Defaults.BACKGROUND
-    self.css({"background-color": bg_color, "color": self.page.theme.greys[9], 'font-family':
-      Defaults.Font.family, 'font-size': "%s%s" % (Defaults.Font.size, Defaults.Font.unit)})
+    self.css({"background-color": bg_color, "color": self.page.theme.greys[-1],
+              'font-family': self.page.body.style.globals.font.family,
+              'font-size': self.page.body.style.globals.font.normal()})
 
 
 class CssTextSelection(CssStyle.Style):

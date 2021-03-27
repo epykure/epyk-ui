@@ -6,14 +6,14 @@ class CssHrefNoDecoration(CssStyle.Style):
   _attrs = {'text-decoration': 'none', 'color': 'inherit'}
 
   def customize(self):
-    self.hover.css({'color': self.page.theme.colors[4]})
+    self.hover.css({'color': self.page.theme.notch(-1)})
 
 
 class CssLabelDates(CssStyle.Style):
   _selectors = {'child': 'a'}
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[5], 'background-image': 'none',
+    self.css({'background-color': self.page.theme.notch(), 'background-image': 'none',
               'color': self.page.theme.greys[0]}, important=True)
 
 
@@ -23,7 +23,7 @@ class CssHreftMenu(CssStyle.Style):
   _selectors = {'child': 'a'}
 
   def customize(self):
-    self.css({'background': self.page.theme.colors[5], 'color': self.page.theme.colors[4]})
+    self.css({'background': self.page.theme.notch(), 'color': self.page.theme.notch(-1)})
 
 
 class CssHrefSubMenu(CssStyle.Style):
@@ -32,7 +32,7 @@ class CssHrefSubMenu(CssStyle.Style):
   
   def customize(self):
     self.css({'color': self.page.theme.greys[-1]})
-    self.hover.css({'color': self.page.theme.colors[7]})
+    self.hover.css({'color': self.page.theme.notch(2)})
 
 
 class CssSideBarLinks(CssStyle.Style):

@@ -1467,7 +1467,8 @@ class Tabs(Html.Html):
     if icon is not None:
       tab = self._report.ui.div([
         self._report.ui.icon(icon).css(
-          {"display": 'block', 'color': 'inherit', "width": '100%', "font-size": cssDefaults.font(4)}),
+          {"display": 'block', 'color': 'inherit', "width": '100%',
+           "font-size": self.page.body.style.globals.font.normal(4)}),
         name], width=width)
     else:
       if hasattr(name, "html"):

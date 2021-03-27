@@ -1,13 +1,11 @@
-"""
-CSS Style module for the Pivot components
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core.css.styles.classes import CssStyle
-from epyk.core.css import Defaults as Defaults_css
 
 
 class CssPivotHead(CssStyle.Style):
-  #_attrs = {'font-size': '8pt', 'padding': '5px'}
   classname = "pvtTable"
   _selectors = {'child': "tr th"}
 
@@ -36,43 +34,39 @@ class CssPivotAxis(CssStyle.Style):
   classname = "pvtAxisContainer li span.pvtAttr, .c3-tooltip"
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1], 'background': self.page.theme.greys[0],
-              #'border': '1px solid %s' % self.rptObj.theme.colors[1]
-              }, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1], 'background': self.page.theme.greys[0]}, important=True)
 
 
 class CssPivotFilterBox(CssStyle.Style):
   classname = "pvtAxisContainer"
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1], #'background': self.rptObj.theme.greys[0],
-              'border': '1px solid %s' % self.page.theme.colors[1]
-              }, important=True)
+    self.css({
+      'color': self.page.theme.greys[-1], 'border': '1px solid %s' % self.page.theme.colors[1]}, important=True)
 
 
 class CssPivotFilterVals(CssStyle.Style):
   classname = "pvtVals, .pvtUiCell"
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1],#'border': '1px solid %s' % self.rptObj.theme.colors[1]
-              'background-color': self.page.theme.greys[0],
-              'border': "1px solid %s" % self.page.theme.colors[1],
-              })
+    self.css({
+      'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
+      'border': "1px solid %s" % self.page.theme.colors[1]})
 
 
 class CssPivotFilterBoxPopUp(CssStyle.Style):
   classname = "pvtFilterBox"
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
-              }, important=True)
+    self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0]}, important=True)
 
 
 class CssPivotFilterBoxPopUpHeader(CssStyle.Style):
   classname = "pvtFilterBox h4"
 
   def customize(self):
-    self.css({'font-size': Defaults_css.font(5), "margin": "2px 0"}, important=True)
+    self.css({'font-size': self.page.body.style.globals.font.normal(5), "margin": "2px 0"}, important=True)
 
 
 class CssPivotFilterBoxPopUpButton(CssStyle.Style):
@@ -89,8 +83,7 @@ class CssPivotFilterBoxPopUpButton(CssStyle.Style):
     self.css({'border': '1px solid %s' % self.page.theme.greys[4], 'color': 'white',
               'background-color': self.page.theme.colors[-1]})
     self.hover.css({
-      'background-color': self.page.theme.colors[0],
-      'color': self.page.theme.colors[-1]}, important=True)
+      'background-color': self.page.theme.colors[0], 'color': self.page.theme.colors[-1]}, important=True)
 
 
 class CssPivotFilterBoxPopUpCheck(CssStyle.Style):
@@ -98,7 +91,7 @@ class CssPivotFilterBoxPopUpCheck(CssStyle.Style):
   _attrs = {"margin": 0}
 
   def customize(self):
-    self.css({"font-size": Defaults_css.font(), "vertical-align": "middle", "padding-bottom": 0})
+    self.css({"font-size": self.page.body.style.globals.font.normal(), "vertical-align": "middle", "padding-bottom": 0})
 
 
 class CssPivotFilterBoxPopUpCheckLabel(CssStyle.Style):
@@ -106,4 +99,4 @@ class CssPivotFilterBoxPopUpCheckLabel(CssStyle.Style):
   _attrs = {"margin": 0}
 
   def customize(self):
-    self.css({"font-size": Defaults_css.font()})
+    self.css({"font-size": self.page.body.style.globals.font.normal()})

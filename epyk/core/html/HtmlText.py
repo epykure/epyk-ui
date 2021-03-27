@@ -6,9 +6,7 @@ import os
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptText
-
 from epyk.core.html import Defaults as Default_html
-from epyk.core.css import Defaults as Default_css
 
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
@@ -723,10 +721,10 @@ class Title(Html.Html):
     if level is not None and level < 5:
       getattr(self.style.add_classes.text, "title_%s" % level)()
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop,
-                'font-size': Default_css.font({1: 8, 2: 6, 3: 4, 4: 2}[level])})
+                'font-size': self.page.body.style.globals.font.normal({1: 8, 2: 6, 3: 4, 4: 2}[level])})
     else:
       self.style.add_classes.text.title()
-      self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': Default_css.font(5)})
+      self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': self.page.body.style.globals.font.normal(5)})
     if align == 'center':
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': 'center'})
     elif align is not None:

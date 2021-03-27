@@ -2063,7 +2063,7 @@ class Body(Html):
           window['popup_loading_body'].style.background = '%s'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
           window['popup_loading_body'].innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
           document.body.appendChild(window['popup_loading_body'])
-        } ''' % (z_index, self.page.theme.colors[5])
+        } ''' % (z_index, self.page.theme.notch())
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
@@ -2093,8 +2093,8 @@ class Body(Html):
     if css is not None:
       self.template.css(css)
     if defined_style is not None:
-      getattr(self.template.style, defined_style)()
-    return self
+      getattr(self.template.style.configs, defined_style)()
+    return self.template
 
   def __str__(self):
     if hasattr(self, 'template'):

@@ -40,8 +40,8 @@ class Input(Html.Html):
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
     self.style.css.padding = 0
-    self.__options, self.__focus = self._option_cls(self, options), False
-    if self.__options.background:
+    self.__focus = False
+    if self.options.background:
       self.style.css.background_color = report.theme.colors[0]
     if width[0] is None:
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
@@ -58,7 +58,7 @@ class Input(Html.Html):
 
     :rtype: OptInputs.OptionsInput
     """
-    return self.__options
+    return super().options
 
   @property
   def js(self):
@@ -91,6 +91,10 @@ class Input(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInput(self)
     return self._styleObj
+
+  def value(self, value):
+    self.attr["value"] = value
+    return self
 
   _js__builder__ = '''
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
@@ -237,8 +241,8 @@ class Input(Html.Html):
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
       self.focus()
-    if 'css' in self._jsStyles:
-      self.css(self._jsStyles['css'])
+    if self.options.css:
+      self.css(self.options.css)
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 

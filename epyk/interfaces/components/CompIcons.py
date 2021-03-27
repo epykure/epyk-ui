@@ -3,7 +3,6 @@
 
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
-from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -809,7 +808,7 @@ class Icons:
     icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, html_code, options, profile)
     icon.style.css.color = "#cc9547"
     icon.style.css.display = "inline-block"
-    icon.icon.style.css.font_size = Defaults_css.font(5)
+    icon.icon.style.css.font_size = self.page.body.style.globals.font.normal(5)
     if text is not None:
       icon.span.style.css.text_align = "left"
       icon.span.style.css.float = None
@@ -846,11 +845,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, html_code, options or {"font-factor": 8}, profile)
+    options = options or {"target": "_blank", "font-factor": self.page.body.style.globals.font.size - 6}
+    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
@@ -881,15 +881,16 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    options = options or {"target": "_blank", "font-factor": self.page.body.style.globals.font.size - 6}
     icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0078FF', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
-  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="", width=(25, 'px'),
+  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="", width=(None, 'px'),
               html_code=None, options=None, profile=None):
     """
     Description:
@@ -916,15 +917,18 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, html_code, options or {"font-factor": 8}, profile)
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 6}
+    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
-  def twitch(self, text=None, url="https://www.twitch.tv/", position=None, tooltip="", width=(25, 'px'),
+  def twitch(self, text=None, url="https://www.twitch.tv/", position=None, tooltip="", width=(None, 'px'),
              html_code=None, options=None, profile=None):
     """
     Description:
@@ -951,17 +955,20 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 6}
     icon = self.awesome(
-      'fab fa-twitch', text, tooltip, position, width, width, html_code, options or {"font-factor": 8}, profile)
+      'fab fa-twitch', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#6441a5', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
   def instagram(self, text=None, url="https://www.instagram.com/?hl=en", position=None, tooltip="Twitter",
-                width=(25, 'px'), html_code=None, options=None, profile=None):
+                width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -987,17 +994,20 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 6}
     icon = self.awesome(
-      'fab fa-instagram-square', text, tooltip, position, width, width, html_code, options or {"font-factor": 8}, profile)
+      'fab fa-instagram-square', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
   def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="",
-               width=(30, 'px'), html_code=None, options=None, profile=None):
+               width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -1023,17 +1033,20 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 6}
     icon = self.awesome(
-      'fab fa-linkedin-in', text, tooltip, position, width, width, html_code, options or {"font-factor": 14}, profile)
+      'fab fa-linkedin-in', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
-              width=(30, 'px'), html_code=None, options=None, profile=None):
+              width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -1059,17 +1072,20 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 8}
     icon = self.awesome(
-      'fab fa-youtube', text, tooltip, position, width, width, html_code, options or {"font-factor": 14}, profile)
+      'fab fa-youtube', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px 3px 6px 3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px 3px 8px 3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()
   def github(self, text=None, url="https://github.com/", position=False, tooltip="Go the the Github project",
-             width=(25, 'px'), html_code=None, options=None, profile=None):
+             width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -1094,11 +1110,14 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if width[0] is None:
+      width = (self.page.body.style.globals.font.size, 'px')
+    options = options or {"target": "_blank", "font-factor": 14}
     icon = self.awesome('fab fa-github', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
-    icon.click([self.page.js.navigateTo(url)])
+    icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
 
   @html.Html.css_skin()

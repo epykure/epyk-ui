@@ -4,7 +4,6 @@
 import os
 
 from epyk.core import html
-from epyk.core.css import Defaults as Defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -437,11 +436,11 @@ class Vignets:
       container = self.page.ui.div(align=align, width=width, profile=profile, options=options)
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):
-        title = self.page.ui.titles.title(title)
+        title = self.page.ui.titles.title(title, profile=profile)
         title.style.css.display = "block"
         title.style.css.text_align = align
       if not hasattr(content, 'options'):
-        content = self.page.ui.text(content)
+        content = self.page.ui.text(content, options=options, profile=profile)
         content.style.css.display = "block"
         content.style.css.text_align = align
       if icon is not None:
@@ -516,7 +515,7 @@ class Vignets:
     container.add(title)
     if not hasattr(value, 'options'):
       value = self.page.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency}, profile=profile)
-      value.style.css.font_size = Defaults_css.font(30)
+      value.style.css.font_size = self.page.body.style.globals.font.normal(30)
     container.add(value)
     if url is not None:
       button = self.page.ui.button("Subscribe", align="center", profile=profile)

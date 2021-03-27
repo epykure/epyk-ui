@@ -1,5 +1,4 @@
 
-from epyk.core.css import Defaults_css
 from epyk.core.css.styles.attributes import Attrs
 
 
@@ -7,7 +6,7 @@ class NavBar(Attrs):
 
   def __init__(self, component):
     super(NavBar, self).__init__(component)
-    self.font_size = Defaults_css.font(8)
+    self.font_size = component.page.body.style.globals.font.normal(8)
     self.display = 'block'
     self.margin = 0
     self.vertical_align = 'top'

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
-from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 
 
@@ -572,7 +571,7 @@ class Menus:
       div.texts.append(self.page.ui.link(*rec).css({"display": 'inline-block'}))
       div += div.texts[-1]
       div += self.page.ui.text(divider).css({
-        "display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
+        "display": 'inline-block', 'margin': '0 5px', 'font-size': self.page.body.style.globals.font.normal(-2)})
 
     rec = {"text": data[-1]} if not isinstance(data[-1], dict) else data[-1]
     div += self.page.ui.link(*rec).css({"display": 'inline-block'})
