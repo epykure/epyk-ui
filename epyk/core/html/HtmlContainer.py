@@ -11,8 +11,6 @@ from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
 

@@ -6,7 +6,6 @@ from epyk.core.html import Defaults
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlTree
-from epyk.core.js.packages import JsQuery
 
 from epyk.core.html.options import OptTrees
 

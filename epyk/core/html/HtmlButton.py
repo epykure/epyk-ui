@@ -12,7 +12,6 @@ from epyk.core.js.objects import JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsButton
-from epyk.core.css import Defaults_css
 
 
 class Button(Html.Html):
@@ -408,7 +407,7 @@ class CheckButton(Html.Html):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
-      {"width": Defaults_css.font()})
+      {"width": report.body.style.globals.font.normal()})
     self.input.style.css.color = self._report.theme.success[1] if flag else self._report.theme.danger[1]
     self.input.style.css.middle()
     self.input.options.managed = False
@@ -556,8 +555,8 @@ class IconEdit(Html.Html):
       self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])},
                     html_code=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font(-notches)}, html_code=self.htmlCode,
-                    family=options.get("icon_family"))
+      self.add_icon(icon, {"margin": "2px", 'font-size': self.page.body.style.globals.font.normal(-notches)},
+                    html_code=self.htmlCode, family=options.get("icon_family"))
     self.hover_color = True
 
   def spin(self):

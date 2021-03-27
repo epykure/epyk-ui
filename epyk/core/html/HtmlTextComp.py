@@ -11,7 +11,6 @@ from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
-from epyk.core.css import Defaults_css
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsText
@@ -163,7 +162,8 @@ class BlockText(Html.Html):
 
   def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
-    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlCode, Defaults_css.font(3)))
+    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (
+      self.htmlCode, self.page.body.style.globals.font.normal(3)))
     items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode)
     items.append('</div>')
     self.page.properties.js.add_builders(self.refresh())
@@ -215,9 +215,11 @@ class TextWithBorder(Html.Html):
       self.val['align'] = self.align
       item.append('<i class="%(icon)s fa-5x" style="width:100%%;text-align:%(align)s;margin:2px 0 10px 0;color:%(color)s"></i>' % self.val)
     if 'url' in self.val:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (Defaults_css.font(10), self.val['colorTitle'], self.val['url']))
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (
+        self.page.body.style.globals.font.normal(10), self.val['colorTitle'], self.val['url']))
     else:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (Defaults_css.font(10), self.val['colorTitle']))
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (
+        self.page.body.style.globals.font.normal(10), self.val['colorTitle']))
     item.append(self.helper)
     self.page.properties.js.add_builders(self.refresh())
     return "".join(item)
@@ -345,7 +347,8 @@ class Delta(Html.Html):
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(6),
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()),
+                   "size": self.page.body.style.globals.font.normal(6),
                    'htmlCode': self.htmlCode, "color": self.val['color'], "components": "".join(rows),
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
@@ -546,9 +549,10 @@ class ContentsTable(Html.Html):
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px',
-                                                      'font-size': Defaults_css.font(-5)})
-    self.title[0].style.css.font_size = Defaults_css.font(6)
+    self.title += self._report.ui.text("[hide]").css({
+      "width": '30px', 'display': 'inline-block', 'margin-left': '5px',
+      'font-size': self.page.body.style.globals.font.normal(-5)})
+    self.title[0].style.css.font_size = self.page.body.style.globals.font.normal(6)
     self.title[0].style.css.font_weight = "bold"
     self.title.options.managed = False
     self.title.style.css.white_space = "nowrap"
@@ -619,7 +623,7 @@ class ContentsTable(Html.Html):
     """
     if anchor is not None:
       href = self._report.ui.link(text, url=anchor, options=options)
-      href.style.css.font_size = Defaults_css.font(2)
+      href.style.css.font_size = self.page.body.style.globals.font.normal(2)
       href.style.add_classes.link.no_decoration()
     else:
       min_links = self._report.ui.text("-")

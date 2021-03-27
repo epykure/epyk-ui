@@ -5,7 +5,6 @@ from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js import JsUtils
-from epyk.core.css import Defaults_css
 from epyk.core.js.objects import JsComponents
 
 
@@ -109,7 +108,8 @@ class Tick(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()},
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px",
+                         'font-size': report.body.style.globals.font.normal()},
                   html_code=self.htmlCode, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
