@@ -1,30 +1,92 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 class Font:
-  size, header_size, unit = 14, 16, "px"
+  _size, header_size, unit = 14, 16, "px"
   family = "Calibri"
+
+  def __init__(self, page):
+    self.page = page
+
+  @property
+  def size(self):
+    return self._size
+
+  @size.setter
+  def size(self, value):
+    self.page.body.style.css.font_size = value
+    self.header_size = value + 2
+    self._size = value
+
+  def normal(self, step=0, unit=None):
+    """
+    Description:
+    ------------
+    Font text format.
+
+    Attributes:
+    ----------
+    :param step: Integer. Optional. The value to be added to the default font size.
+    :param unit: String. Optional. The unit code. default px.
+    """
+    return "%s%s" % (self._size + step, unit or self.unit)
+
+  def header(self, step=0, unit=None):
+    """
+    Description:
+    ------------
+    Font header format.
+
+    Attributes:
+    ----------
+    :param step: Integer. Optional. The value to be added to the default font size.
+    :param unit: String. Optional. The unit code. default px.
+    """
+    return "%s%s" % (self.header_size + step, unit or self.unit)
 
 
 class Icon:
-  small, normal, big, unit = 10, 15, 20, 'px'
+  small, normal, big, unit = 10, 15, 25, 'px'
 
+  def small_size(self, step=0, unit=None):
+    """
+    Description:
+    ------------
+    Icon small format.
 
-def font(step=0):
-  """
-  Description:
-  ------------
-  Relative change of the CSS font size based on the default one in the Font class.
-  Changing the value Font.size will impact this function accordingly.
+    Attributes:
+    ----------
+    :param step: Integer. Optional. The value to be added to the default font size.
+    :param unit: String. Optional. The unit code. default px.
+    """
+    return "%s%s" % (self.small+step, unit or self.unit)
 
-  Usage:
-  -----
+  def normal_size(self, step=0, unit=None):
+    """
+    Description:
+    ------------
+    Icon normal format.
 
-    font(2)
+    Attributes:
+    ----------
+    :param step: Integer. Optional. The value to be added to the default font size.
+    :param unit: String. Optional. The unit code. default px.
+    """
+    return "%s%s" % (self.normal+step, unit or self.unit)
 
-  Attributes:
-  ----------
-  :param step: integer. Optional. The value to be added to the default font size.
-  """
-  return "%s%s" % (Font.size+step, Font.unit)
+  def big_size(self, step=0, unit=None):
+    """
+    Description:
+    ------------
+    Icon big format.
+
+    Attributes:
+    ----------
+    :param step: Integer. Optional. The value to be added to the default font size.
+    :param unit: String. Optional. The unit code. default px.
+    """
+    return "%s%s" % (self.big+step, unit or self.unit)
 
 
 def header(step=0):
@@ -37,12 +99,12 @@ def header(step=0):
 
   Attributes:
   ----------
-  :param step:
+  :param step: Integer. Optional. The value to be added to the default font size.
   """
   return "%s%s" % (Font.header_size+step, Font.unit)
 
 
-def inline(cssAttrs):
+def inline(css_attrs):
   """
   Description:
   ------------
@@ -59,9 +121,9 @@ def inline(cssAttrs):
 
   Attributes:
   ----------
-  :param cssAttrs: Dictionary. The CSS Attributes.
+  :param css_attrs: Dictionary. The CSS Attributes.
   """
-  return ";".join(["%s: %s" % (k, v) for k, v in cssAttrs.items()])
+  return ";".join(["%s: %s" % (k, v) for k, v in css_attrs.items()])
 
 
 def px_to_em(value, with_unit=True):
@@ -115,7 +177,7 @@ DEFAULT_STYLE = "no_border"
 
 
 # Default CSS Styles
-BODY_CONTAINER = None # The body CSS dictionary
+BODY_CONTAINER = None   # The body CSS dictionary
 BODY_STYLE = None
 BACKGROUND = ('greys', 0)
 MEDIA = 600
@@ -129,7 +191,7 @@ CSS_EXCEPTIONS_FORMAT = "CSS - %s - invalid %s"
 class GlobalStyle:
 
   def __init__(self, page):
-    self._report = page
+    self.page = page
     self._font = None
     self._icon = None
     self._table = None
@@ -142,7 +204,7 @@ class GlobalStyle:
 
     """
     if self._font is None:
-      self._font = Font()
+      self._font = Font(self.page)
     return self._font
 
   @property
@@ -169,12 +231,12 @@ class GlobalStyle:
     """
     if self._table is None:
       class GlobalTable:
-        header_background = self._report.theme.colors[-1]
+        header_background = self.page.theme.colors[-1]
         header_color = "white"
         header_border = '1px solid white'
-        cell_border_bottom = "1px solid %s" % self._report.theme.colors[4]
+        cell_border_bottom = "1px solid %s" % self.page.theme.colors[4]
         cell_border_right = None
-        sorter_arrow_selected = self._report.theme.success[1]
+        sorter_arrow_selected = self.page.theme.success[1]
         sorter_arrow = "white"
       self._table = GlobalTable()
     return self._table
