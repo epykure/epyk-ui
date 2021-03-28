@@ -7,6 +7,31 @@
 ### Fixed
 
 
+## [1.5.8] - 2021-03-28
+
+### Added
+- New CSS Style configs with predefined CSS inline configurations.
+- Add a themes property to change the themes with auto completion.
+- Add Index and step to be able to create custom themes from the available ones.
+- Add predefined CSS classes overrides.
+- Add white and black themes properties.
+- Introduce first version of skins for websites.
+- data ListItems (first version).
+
+### Changed
+- Default behaviour for icons application links.
+- Rename module GrpChart to GrpClsChart to follow the naming convention.
+- Use of notch to get the main color used instead of an index in the CSS predefined classes.
+- Remove Default.font() function from css.
+
+### Fixed
+- Fix the Input options.
+- Remove the use of the static default CSS module for sizes.
+- Review all the existing themes.
+- Centralise the charts colors codes for themes.
+- Create dark mode and align grey color codes.
+
+
 ## [1.5.7] - 2021-03-19
 
 ### Added
