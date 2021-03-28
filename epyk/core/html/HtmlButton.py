@@ -737,7 +737,7 @@ class ButtonMenuItem:
   name = 'Button Menu Item'
 
   def __init__(self, report, selector, parent):
-    self._report, self._selector = report, selector
+    self._report, self._selector, self.page = report, selector, report
     self._src, self._js, self._events = parent, None, []
 
   @property
@@ -755,7 +755,7 @@ class ButtonMenuItem:
     :rtype: JsComponents.Menu
     """
     if self._js is None:
-      self._js = JsComponents.Menu(self._src, varName=self._selector, report=self._report)
+      self._js = JsComponents.Menu(self._src, varName=self._selector, report=self.page)
     return self._js
 
   def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -780,7 +780,7 @@ class ButtonMenuItem:
     self._events.append("%s.addEventListener('%s', function (event) {%s})" % (
       source_event or self._selector, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     if on_ready:
-      self._report.body.onReady([self._selector.dom.events.trigger(event)])
+      self.page.body.onReady([self._selector.dom.events.trigger(event)])
     return self._src
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -819,7 +819,7 @@ class ButtonMenu(Html.Html):
 
   def __getitem__(self, i):
     if i not in self.components:
-      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (
+      self.components[i] = ButtonMenuItem(self.page, "document.getElementById('%s').querySelectorAll('a')[%s]" % (
         self.htmlCode, i), self)
     return self.components[i]
 

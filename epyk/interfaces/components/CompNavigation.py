@@ -955,7 +955,8 @@ class Banners:
       data.style.css.text_align = align
       data.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.add(data)
-    div.style.css.background_color = background or self.page.theme.greys[0]
+    if background is not None:
+      div.style.css.background_color = background
     div.style.css.padding = "20px 15px"
     div.style.css.margin = "auto"
     div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
