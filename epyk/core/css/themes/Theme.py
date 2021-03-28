@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 
-class Theme(object):
+class Theme:
+  dark = False
+  _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
+            '#212121', '#000000']
 
-  def __init__(self, ovrs_attrs=None):
+  def __init__(self, ovr_attrs=None, index=5, step=1):
     self.__colors = {
       "charts": list(self._charts),
       "colors": list(self._colors),
@@ -13,11 +16,52 @@ class Theme(object):
       "danger": list(self._danger),
       "success": list(self._success),
     }
-    if ovrs_attrs is not None:
-      self.__colors.update(ovrs_attrs)
+    self.index = index
+    self.step = step
+    if ovr_attrs is not None:
+      self.__colors.update(ovr_attrs)
+
+  def notch(self, value=None, step=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value: Integer. Optional. The number of notch from the centered index.
+    :param step: Integer. Optional The value of a move (default 1)
+    """
+    step = step or self.step
+    if value is not None:
+      return self.colors[max(0, min(self.index + value * step, len(self.colors)-1))]
+
+    return self.colors[self.index]
+
+  @property
+  def white(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self.__colors["greys"][0]
+
+  @property
+  def black(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self.__colors["greys"][-1]
 
   @property
   def charts(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.__colors["charts"]
 
   @charts.setter
@@ -26,6 +70,14 @@ class Theme(object):
 
   @property
   def colors(self):
+    """
+    Description:
+    ------------
+
+    """
+    if self.dark:
+      return self.__colors["colors"][::-1]
+
     return self.__colors["colors"]
 
   @colors.setter
@@ -34,6 +86,14 @@ class Theme(object):
 
   @property
   def greys(self):
+    """
+    Description:
+    ------------
+
+    """
+    if self.dark:
+      return self.__colors["greys"][::-1]
+
     return self.__colors["greys"]
 
   @greys.setter
@@ -42,6 +102,11 @@ class Theme(object):
 
   @property
   def warning(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.__colors["warning"]
 
   @warning.setter
@@ -50,6 +115,11 @@ class Theme(object):
 
   @property
   def danger(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.__colors["danger"]
 
   @danger.setter
@@ -58,6 +128,11 @@ class Theme(object):
 
   @property
   def success(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.__colors["success"]
 
   @success.setter
@@ -65,7 +140,7 @@ class Theme(object):
     self.__colors["success"] = colors
 
 
-class ThemeCustome(Theme):
+class ThemeCustom(Theme):
   _charts, _colors, _greys = [], [], []
   _warning, _danger, _success = set(), set(), set()
 
@@ -85,8 +160,6 @@ class ThemeDefault(Theme):
     '#fff3e0', '#ffe0b2', '#ffcc80',  # orange
     '#efebe9', '#d7ccc8', '#bcaaa4',  # brown
   ]
-  _colors = ["#e8f5e9", '#c8e6c9', '#a5d6a7', '#81c784', '#66bb6a', '#4caf50', '#43a047', '#388e3c', '#2e7d32',
-             '#1b5e20']
-  _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
-            '#212121', '#000000']
-  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
+  _colors = ['#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
+             '#37474f', '#263238']
+  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#5DDEAD')

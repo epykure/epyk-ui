@@ -8,9 +8,9 @@ from . import ThemeBlue as blues
 DIV_STYLE = '<div style="display:block;background-color:%s;width:20px;height:18px;margin-top:3px !IMPORTANT;border:1px solid black;margin:auto;vertical-align:middle" title="%s">&nbsp;</div>'
 
 REGISTERED_THEMES = [
-  {"value": 'Theme.ThemeDefault', 'name': '', 'content': DIV_STYLE % ('#1b5e20', "Default")},
+  {"value": 'Theme.ThemeDefault', 'name': '', 'content': DIV_STYLE % ('#607d8b', "Default")},
   {"value": 'ThemeBlue.Blue', 'name': '', 'content': DIV_STYLE % ('#0d47a1', "Blue")},
-  {"value": 'ThemeBlue.BlueGrey', 'name': '', 'content': DIV_STYLE % ('#263238', "Grey blue")},
+  {"value": 'ThemeBlue.BlueGrey', 'name': '', 'content': DIV_STYLE % ('#607d8b', "Grey blue")},
   {"value": 'ThemeBlue.LightBlue', 'name': '', 'content': DIV_STYLE % ('#01579B', "Light blue")},
   {"value": 'ThemeDark.Dark', 'name': '', 'content': DIV_STYLE % ('#eceff1', "Dark")},
   {"value": 'ThemeDark.Grey', 'name': '', 'content': DIV_STYLE % ('#eceff1', "Grey")},
