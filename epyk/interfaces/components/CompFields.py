@@ -385,6 +385,54 @@ class Fields:
     return html_input
 
   @html.Html.css_skin()
+  def number(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
+             html_code=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+      page.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
+    Attributes:
+    ----------
+    :param value: String. Optional. The value to be displayed to this component. Default empty string.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional. The text to be displayed when the input is empty.
+    :param icon: String. Optional. The component icon content from font-awesome references.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    html_input = html.HtmlInput.FieldInput(
+      self.page, value, label, placeholder, icon, width, height, html_code, helper, options, profile)
+    html_input.input.attr["type"] = "number"
+    if not options.get("scroll", True):
+      html_input.style.add_classes.input.textfield_appearance()
+      html_input.style.add_classes.input.textfield_appearance_inner()
+      html_input.style.add_classes.input.textfield_appearance_outer()
+    return html_input
+
+  @html.Html.css_skin()
   def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
                    html_code=None, helper=None, options=None, profile=None):
     """

@@ -29,6 +29,30 @@ class CatalogInput(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesInput.CssInputRange)
 
+  def textfield_appearance_inner(self):
+    """
+    Description:
+    -----------
+    CSS Style for the thumb of the input number component
+    """
+    return self._set_class(CssStylesInput.CssInputNumberNoInnerScroll)
+
+  def textfield_appearance_outer(self):
+    """
+    Description:
+    -----------
+    CSS Style for the thumb of the input number component
+    """
+    return self._set_class(CssStylesInput.CssInputNumberNoOuterScroll)
+
+  def textfield_appearance(self):
+    """
+    Description:
+    -----------
+    CSS Style for the thumb of the input number component
+    """
+    return self._set_class(CssStylesInput.CssInputNumberNoScroll)
+
   def range_thumb(self):
     """
     Description:

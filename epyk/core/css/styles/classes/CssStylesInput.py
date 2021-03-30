@@ -7,7 +7,9 @@ from epyk.core.css.styles.classes import CssStyle
 
 class CssInput(CssStyle.Style):
   """
-  CSS Base style for the input components
+  Description:
+  ------------
+  CSS Base style for the input components.
   """
   _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0, 'border-radius': '5px'}
   _focus = {'outline': 0}
@@ -23,7 +25,9 @@ class CssInput(CssStyle.Style):
 
 class CssInputRange(CssStyle.Style):
   """
-  CSS Style for the input range component
+  Description:
+  ------------
+  CSS Style for the input range component.
   """
   _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
             '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
@@ -34,9 +38,41 @@ class CssInputRange(CssStyle.Style):
     self.attrs.css({"background": self.page.theme.colors[0]})
 
 
+class CssInputNumberNoInnerScroll(CssStyle.Style):
+  """
+  Description:
+  ------------
+
+  """
+  _attrs = {'-webkit-appearance': 'none', "margin": 0}
+  _selectors = {'child': 'input::-webkit-inner-spin-button'}
+
+
+class CssInputNumberNoOuterScroll(CssStyle.Style):
+  """
+  Description:
+  ------------
+
+  """
+  _attrs = {'-webkit-appearance': 'none', "margin": 0}
+  _selectors = {'child': 'input::-webkit-outer-spin-button'}
+
+
+class CssInputNumberNoScroll(CssStyle.Style):
+  """
+  Description:
+  ------------
+
+  """
+  _attrs = {'-moz-appearance': 'textfield'}
+  _selectors = {'child': 'input[type=number]'}
+
+
 class CssInputRangeThumb(CssStyle.Style):
   """
-  CSS Style for the thumb of the input range component
+  Description:
+  ------------
+  CSS Style for the thumb of the input range component.
   """
   _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
   _webkit_slider_thumb = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
@@ -51,7 +87,9 @@ class CssInputRangeThumb(CssStyle.Style):
 
 class CssInputLabel(CssStyle.Style):
   """
-  CSS Style for the label attached to an input component
+  Description:
+  ------------
+  CSS Style for the label attached to an input component.
   """
   _attrs = {'line-height': '1.5', 'margin-left': '10px'}
   _selectors = {'child': 'label'}
@@ -63,6 +101,8 @@ class CssInputLabel(CssStyle.Style):
 
 class CssInputInteger(CssStyle.Style):
   """
+  Description:
+  ------------
 
   """
   cssId = {'reference': 'input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button'}
@@ -71,7 +111,9 @@ class CssInputInteger(CssStyle.Style):
 
 class CssInputText(CssStyle.Style):
   """
-  CSS Style for the input text component (within a field object)
+  Description:
+  ------------
+  CSS Style for the input text component (within a field object).
   """
   _attrs = {'margin-left': '10px'}
   _selectors = {'child': 'input'}
@@ -79,6 +121,8 @@ class CssInputText(CssStyle.Style):
 
 class CssInputTextArea(CssStyle.Style):
   """
+  Description:
+  ------------
   CSS Style for the textarea component.
   """
   _attrs = {'resize': 'none', 'margin-bottom': '5px', 'padding': '5px'}
