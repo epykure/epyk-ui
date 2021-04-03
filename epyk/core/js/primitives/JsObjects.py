@@ -33,9 +33,9 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
-    :return: The Javascript "this" object (which is a dom object very often)
+    :return: The Javascript "this" object (which is a dom object very often).
     """
     return JsNodeDom.JsDoms.get("this")
 
@@ -44,9 +44,9 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
-    :return: The Javascript result object from a post or any other AJAX calls
+    :return: The Javascript result object from a post or any other AJAX calls.
     """
     return JsObject.JsObject.get("result")
 
@@ -55,11 +55,11 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
-    :return: The Javascript result object from a post or any other AJAX calls
+    :return: The Javascript result object from a post or any other AJAX calls.
 
-    :rtype: XMLHttpRequest
+    :rtype: XMLHttpRequest.
     """
     return XMLHttpRequest.get("result")
 
@@ -68,9 +68,9 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
-    :return: The Javascript data object from a post or any other AJAX calls
+    :return: The Javascript data object from a post or any other AJAX calls.
     """
     return JsObject.JsObject.get("data")
 
@@ -79,7 +79,7 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
     :return: The Javascript value in a event
     """
@@ -90,7 +90,7 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the JavaScript MouseEvents
+    Interface to the JavaScript MouseEvents.
 
     Related Pages:
 
@@ -103,7 +103,7 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the JavaScript Events
+    Interface to the JavaScript Events.
 
     Related Pages:
 
@@ -116,7 +116,7 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
     :return: The Javascript "this" object
     """
@@ -132,7 +132,7 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param varName:
+    :param varName: String. Optional. The variable name.
 
     :return: The requested Python JsObject primitive
     """
@@ -143,9 +143,16 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
-    :return: A Python generic JsObject primitive
+    Attributes:
+    ----------
+    :param data: Object. Optional. The value.
+    :param varName: String. Optional. The variable name.
+    :param isPyData: Boolean. Optional. The data type.
+    :param report: Page. Optional. The underlying page object (the context).
+
+    :return: A Python generic JsObject primitive.
     """
     return JsObject.JsObject.new(data, varName, isPyData, report=report)
 
@@ -153,12 +160,12 @@ class JsObjects:
     """
     Description:
     -----------
-    Return a time object from the Javascript function performance.now()
+    Return a time object from the Javascript function performance.now().
 
     Attributes:
     ----------
-    :param varName: String. The variable name
-    :param report: Report. The report object
+    :param varName: String. The variable name.
+    :param report: Report. Optional. The report object.
     """
     return JsObject.JsObject.new("performance.now()", varName, False, report=report)
 
@@ -167,13 +174,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Number primitive
+    Interface to the Javascript Number primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_number.asp
 
-    :return: A Python JsNumber primitive
+    :return: A Python JsNumber primitive.
     """
     return JsNumber.JsNumber
 
@@ -182,13 +189,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript String primitive
+    Interface to the Javascript String primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_string.asp
 
-    :return: A Python JsString primitive
+    :return: A Python JsString primitive.
     """
     return JsString.JsString
 
@@ -197,13 +204,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Array primitive
+    Interface to the Javascript Array primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_array.asp
 
-    :return: A Python JsArray primitive
+    :return: A Python JsArray primitive.
     """
     return JsArray.JsArray
 
@@ -212,13 +219,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Array primitive
+    Interface to the Javascript Array primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_array.asp
 
-    :return: A Python JsArray primitive
+    :return: A Python JsArray primitive.
     """
     return JsArray.JsArray
 
@@ -227,13 +234,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Date primitive
+    Interface to the Javascript Date primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_date.asp
 
-    :return: A Python JsDate object
+    :return: A Python JsDate object.
     """
     return JsDate.JsDate
 
@@ -242,13 +249,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Boolean primitive
+    Interface to the Javascript Boolean primitive.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_boolean.asp
 
-    :return: A Python JsBoolean primitive
+    :return: A Python JsBoolean primitive.
     """
     return JsBoolean.JsBoolean
 
@@ -257,9 +264,9 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Dom class
+    Interface to the Javascript Dom class.
 
-    :return: A Python Document
+    :return: A Python Document.
     """
     return JsNodeDom.JsDoms
 
@@ -268,13 +275,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Similar as None in Python
+    Similar as None in Python.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_datatypes.asp
 
-    :return: A Python Js Null object
+    :return: A Python Js Null object.
     """
     return JsObject.JsObject("null")
 
@@ -283,13 +290,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Similar as the None in Python
+    Similar as the None in Python.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_undefined.asp
 
-    :return: A Python Js undefined object
+    :return: A Python Js undefined object.
     """
     return JsObject.JsObject("undefined", isPyData=False)
 
@@ -313,13 +320,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Similar as True in Python
+    Similar as True in Python.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_booleans.asp
 
-    :return: A Python Js True object
+    :return: A Python Js True object.
     """
     return JsBoolean.JsBoolean.get('true')
 
@@ -328,13 +335,13 @@ class JsObjects:
     """
     Description:
     -----------
-    Similar as False in Python
+    Similar as False in Python.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_booleans.asp
     
-    :return: A Python Js False object
+    :return: A Python Js False object.
     """
     return JsBoolean.JsBoolean.get('false')
 
@@ -342,8 +349,10 @@ class JsObjects:
     """
     Description:
     -----------
-    Get a record object
+    Get a record object.
 
+    Attributes:
+    ----------
     :param varName: A string with of the existing variable name
     """
     return JsData.RawData.get(self._jsObj, varName)
@@ -353,6 +362,8 @@ class JsObjects:
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param incr:
     """
     return JsObject.JsObject("%s++" % incr)
@@ -382,7 +393,7 @@ class JsPromise:
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: String | List. The Javascript functions
     """
     if not isinstance(jsFnc, list):
       jsFnc = []
@@ -396,7 +407,7 @@ class JsPromise:
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: String | List. The Javascript functions
     """
     if not isinstance(jsFnc, list):
       jsFnc = []
@@ -434,7 +445,7 @@ class XMLHttpRequestErrors:
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
-    :param default:
+    :param default: Boolean. Optional. Use the default messages.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
@@ -454,7 +465,7 @@ class XMLHttpRequestErrors:
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
-    :param default:
+    :param default: Boolean. Optional. Use the default messages.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
@@ -474,7 +485,7 @@ class XMLHttpRequestErrors:
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
-    :param default:
+    :param default: Boolean. Optional. Use the default messages.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     jsFncs = list(jsFncs or [])
@@ -494,7 +505,7 @@ class XMLHttpRequestErrors:
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
-    :param default:
+    :param default: Boolean. Optional. Use the default messages.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self.e405(jsFncs, default, profile)
@@ -512,7 +523,7 @@ class XMLHttpRequest:
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
-    self.varId, self.profile = varName, False
+    self.varId, self.profile, self.timeout = varName, False, None
     if url is not None:
       self.open(method_type, url)
 
@@ -521,13 +532,13 @@ class XMLHttpRequest:
     """
     Description:
     ------------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
     Attributes:
     ----------
-    :param varName: String. The variable name on tje JavaScript side
+    :param varName: String. The variable name on tje JavaScript side.
 
-    :return: The requested Python JsObject primitive
+    :return: The requested Python JsObject primitive.
     """
     return XMLHttpRequest(None, varName, None, None)
 
@@ -549,7 +560,8 @@ class XMLHttpRequest:
     """
     Description:
     ------------
-    The read-only XMLHttpRequest.status property returns the numerical HTTP status code of the XMLHttpRequest's response.
+    The read-only XMLHttpRequest.status property returns the numerical HTTP status code of the XMLHttpRequest's
+    response.
 
     Related Pages:
 
@@ -571,7 +583,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. Optional. The response type.
     """
     if value is not None:
       self.__responseType = value
@@ -584,29 +596,14 @@ class XMLHttpRequest:
     """
     Description:
     ------------
-    The read-only XMLHttpRequest property responseText returns the text received from a server following a request being sent.
+    The read-only XMLHttpRequest property responseText returns the text received from a server following a request
+    being sent.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseText
     """
     return JsString.JsString("%s.responseText" % self.varId, isPyData=False)
-
-  def timeout(self, milliSeconds):
-    """
-    Description:
-    ------------
-    The XMLHttpRequest.timeout property is an unsigned long representing the number of milliseconds a request can take
-    before automatically being terminated.
-
-    Related Pages:
-
-      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
-
-    Attributes:
-    ----------
-    :param milliSeconds: Number. The value of milliseconds
-    """
 
   def abort(self):
     """
@@ -637,8 +634,8 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param event: String. A case-sensitive string representing the event type to listen for.
-    :param jsFncs:
-    :param options:
+    :param jsFncs: String | List. Optional. The Javascript functions.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
 
   def open(self, method_type, url, _async=True, user=None, password=None):
@@ -655,9 +652,9 @@ class XMLHttpRequest:
     ----------
     :param method_type: String. The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
     :param url: String. A DOMString representing the URL to send the request to.
-    :param _async: Boolean. An optional Boolean parameter, defaulting to true, indicating whether or not to perform the operation asynchronously.
-    :param user: The optional user name to use for authentication purposes; by default, this is the null value.
-    :param password: The optional password to use for authentication purposes; by default, this is the null value.
+    :param _async: Boolean. Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
+    :param user: String. Optional. The optional user name to use for authentication purposes; by default, this is the null value.
+    :param password: String. Optional. The optional password to use for authentication purposes; by default, this is the null value.
     """
     self.url, self.method = url, method_type
     return self
@@ -674,7 +671,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param headers: Dictionary. The different attributes to be added to the header
+    :param headers: Dictionary. The different attributes to be added to the header.
     """
     self.__headers.update(headers)
     return self
@@ -691,8 +688,8 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param name: String. The header name
-    :param value: String. The header value
+    :param name: String. The header name.
+    :param value: String. The header value.
     """
     self.__headers[name] = value
     return self
@@ -701,13 +698,16 @@ class XMLHttpRequest:
     """
     Description:
     ------------
-    The XMLHttpRequestEventTarget.onload is the function called when an XMLHttpRequest transaction completes successfully.
+    The XMLHttpRequestEventTarget.onload is the function called when an XMLHttpRequest transaction completes
+    successfully.
+
+    callback is the function to be executed when the request completes successfully.
+    It receives a ProgressEvent object as its first argument.
+    The value of this (i.e. the context) is the same XMLHttpRequest this callback is related to.
 
     Attributes:
     ----------
-    :param jsFncs: callback is the function to be executed when the request completes successfully.
-                   It receives a ProgressEvent object as its first argument.
-                   The value of this (i.e. the context) is the same XMLHttpRequest this callback is related to.
+    :param jsFncs: String | List. The Javascript functions
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -718,7 +718,8 @@ class XMLHttpRequest:
     """
     Description:
     ------------
-    The XMLHttpRequestEventTarget.onerror is the function called when an XMLHttpRequest transaction fails due to an error.
+    The XMLHttpRequestEventTarget.onerror is the function called when an XMLHttpRequest transaction fails due to
+    an error.
 
     Related Pages:
 
@@ -726,7 +727,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: callback is the function to be executed when the request fails.
+    :param jsFncs: String | List. The Javascript functions
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -736,13 +737,43 @@ class XMLHttpRequest:
       self.__on["onerror"] = jsFncs
     return self
 
+  def onFail(self, jsFncs, status_code=404, profile=None):
+    """
+    Description:
+    ------------
+    The loadend event is fired when a request has completed, whether successfully (after load) or unsuccessfully
+    (after abort or error).
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/loadend_event
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param status_code: Integer. Optional. The status code for the failure condition.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if "onloadend" not in self.__on:
+      self.__on["onloadend"] = []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__on["onloadend"].append("if(%s.status == %s){%s}" % (
+      self.varId, status_code, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile or self.profile)))
+    return self
+
   @property
   def errors(self):
+    """
+    Description:
+    ------------
+
+    """
     if self.__on.get("onloadend") is None:
       self.__on["onloadend"] = []
     return XMLHttpRequestErrors(self.__on["onloadend"], self._src, self)
 
-  def ontimeout(self, jsFncs):
+  def ontimeout(self, jsFncs, timeout=2000):
     """
     Description:
     ------------
@@ -754,8 +785,10 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
+    :param jsFncs: String | List. The Javascript functions.
+    :param timeout: Integer. Optional. Time in milliseconds.
     """
+    self.timeout = timeout
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__on["ontimeout"] = jsFncs
@@ -769,7 +802,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
+    :param jsFncs: String | List. The Javascript functions.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -785,7 +818,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: callback is the function to be called when the transaction begins to transfer data.
+    :param jsFncs: String | List. The Javascript functions.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -807,7 +840,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param flag: Boolean. Use credentials
+    :param flag: Boolean. Flag to specify the use of credentials.
     """
 
   def send(self, jsonData=None, encodeURIData=None, stringify=True):
@@ -860,6 +893,8 @@ class XMLHttpRequest:
     request = [
       "var %s = new XMLHttpRequest()" % self.varId,
       "%s.responseType = '%s'" % (self.varId, self.__responseType)]
+    if self.timeout is not None:
+      request.append("%s.timeout = %s" % (self.varId, self.timeout))
     if self.__url_prefix:
       request.append("%s.open(%s, %s+'%s')" % (self.varId, self.method, self.url, self.__url_prefix))
     else:

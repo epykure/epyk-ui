@@ -556,15 +556,9 @@ class JsItem(JsHtml.JsHtmlRich):
         if(typeof enumTags === 'string'){ enumTags = [enumTags]};
         enumTags.forEach(function(val){
           var item = document.createElement("DIV"); item.innerHTML = val;
-          item.style.display = "inline-block";
-          item.style.padding = "1px 2px";
-          item.style.margin = "0 1px";
-          item.style.color = "black";
-          item.style.fontSize = "8px";
-          item.style.background = "white";
-          item.style.border = "1px solid white";
-          item.style.borderRadius = "5px";
-          const css = %(css)s;
+          item.style.display = "inline-block"; item.style.padding = "1px 2px"; item.style.margin = "0 1px";
+          item.style.color = "black"; item.style.fontSize = "8px"; item.style.background = "white";
+          item.style.border = "1px solid white"; item.style.borderRadius = "5px"; const css = %(css)s;
           if (css != null){
             for (const [key, value] of Object.entries(css)) {
               item.style[key] = value
@@ -572,7 +566,7 @@ class JsItem(JsHtml.JsHtmlRich):
           }
           const cls = %(cls)s;
           if(cls != null){item.classList.add(cls)}
-          %(comp)s.appendChild(item)
+          %(comp)s.lastChild.appendChild(item)
       })}''' % {'comp': self.varName, 'css': JsUtils.jsConvertData(css_attrs, None),
                 'cls': JsUtils.jsConvertData(css_cls, None), 'values': JsUtils.jsConvertData(values, None)})
 

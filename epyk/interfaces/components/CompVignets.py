@@ -80,8 +80,8 @@ class Vignets:
     return div
 
   @html.Html.css_skin()
-  def number(self, number, label="", components=None, width=('auto', ""), height=(None, "px"), profile=None,
-             options=None, helper=None):
+  def number(self, number, label="", title=None, align="center", components=None, width=('auto', ""),
+             height=(None, "px"), profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -114,6 +114,8 @@ class Vignets:
     ----------
     :param number: Integer. The value.
     :param label: String. Optional. The label text.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param align: String. Optional. The text-align property within this component.
     :param components: List. Optional. The HTML components.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -132,9 +134,21 @@ class Vignets:
         number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
     else:
       number = self.page.py.format_number(number, digits=dflt_options.get('digits', 0))
-    html_number = html.HtmlTextComp.Number(
-      self.page, number, components, label, width, height, profile, dflt_options, helper)
-    return html_number
+    pre_components = []
+    if title is not None:
+      if not hasattr(title, 'options'):
+        title = self.page.ui.titles.title(title)
+        title.style.css.display = "block"
+        title.style.css.text_align = align
+      pre_components.append(title)
+    pre_components.append(html.HtmlTextComp.Number(
+      self.page, number, components, label, width, ("auto", ""), profile, dflt_options, helper))
+
+    container = self.page.ui.div([pre_components], align=align, height=height, width=width, profile=profile, options=options)
+    container.build = pre_components[-1].build
+    if title is not None:
+      container.title = title
+    return container
 
   @html.Html.css_skin()
   def block(self, records=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
@@ -165,7 +179,7 @@ class Vignets:
     Attributes:
     ----------
     :param records: List. Optional. The list of dictionaries with the input data.
-    :param color: Optional. The font color in the component. Default inherit.
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -202,7 +216,7 @@ class Vignets:
     :param records: List. Optional. The list of dictionaries with the input data.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param helper: String. Optional. The value to be displayed to the helper icon.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -229,7 +243,7 @@ class Vignets:
     :param content:
     :param image:
     :param render:
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -387,7 +401,7 @@ class Vignets:
     Attributes:
     ----------
     :param url: String. The url string.
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param size: String. Optional.
@@ -426,7 +440,7 @@ class Vignets:
     :param content: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param render:
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -476,8 +490,8 @@ class Vignets:
     return container
 
   @html.Html.css_skin()
-  def price(self, value, title, items, url=None, align="center", width=(250, 'px'), height=(None, 'px'), currency="£",
-            options=None, profile=None, helper=None):
+  def price(self, value, title, items=None, components=None, url=None, align="center", width=(250, 'px'),
+            height=("auto", ''), currency="£", options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -495,8 +509,9 @@ class Vignets:
     :param value:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param items:
+    :param components:
     :param url:
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param currency: String. Optional. The currency value.
@@ -513,9 +528,13 @@ class Vignets:
       title.style.css.display = "block"
       title.style.css.text_align = align
     container.add(title)
+    if components is not None:
+      for component in components:
+        container.add(component)
     if not hasattr(value, 'options'):
       value = self.page.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency}, profile=profile)
       value.style.css.font_size = self.page.body.style.globals.font.normal(30)
+      container.number = value
     container.add(value)
     if url is not None:
       button = self.page.ui.button("Subscribe", align="center", profile=profile)
@@ -524,11 +543,12 @@ class Vignets:
       button.style.css.margin_top = 10
       button.style.css.margin_bottom = 10
       container.add(button)
-    if not hasattr(items, 'options'):
-      items = self.page.ui.lists.icons(items, profile=profile)
-      items.style.css.margin = "auto 20%"
-      items.style.css.text_align = "left"
-    container.add(items)
+    if items is not None:
+      if not hasattr(items, 'options'):
+        items = self.page.ui.lists.icons(items, profile=profile)
+        items.style.css.margin = "auto 20%"
+        items.style.css.text_align = "left"
+      container.add(items)
     return container
 
   @html.Html.css_skin()

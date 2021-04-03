@@ -75,8 +75,9 @@ COVID_TIME_SERIES = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse
 COVID_DAILY_DATA = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports'
 
 COVID_FRANCE = "https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv"
-
 COVID_US = "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv"
+COVIS_UK = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/country_data/United%20Kingdom.csv"
+COVIS_CTY = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/excess_mortality/excess_mortality.csv"
 
 HEART_FAILURE_RECORDS = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/heart_failure_clinical_records_dataset.csv"
 COUNTRY_WISE_COVID = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/country_wise_covid.csv"

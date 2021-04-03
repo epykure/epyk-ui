@@ -42,6 +42,7 @@ from epyk.interfaces.components import CompSteppers
 from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
 from epyk.interfaces.components import CompPictos
+from epyk.interfaces.components import CompPollers
 
 from epyk.interfaces import Arguments
 
@@ -173,6 +174,15 @@ class Components:
       https://codemirror.net/doc/manual.html
     """
     return CompCodes.Code(self)
+
+  @property
+  def pollers(self):
+    """
+    Description:
+    ------------
+
+    """
+    return CompPollers.Poller(self)
 
   @property
   def network(self):

@@ -19,7 +19,7 @@ from epyk.core.css.styles import GrpClsText
 class UpDown(Html.Html):
   name = 'Up and Down'
   requirements = ('font-awesome', 'accounting')
-  _option_cls = OptText.OptionsNumber
+  _option_cls = OptText.OptionsNumberMoves
 
   def __init__(self, report, record, components, color, label, width, height, options, helper, profile):
     if record is None:
@@ -53,38 +53,52 @@ class UpDown(Html.Html):
     Usage:
     -----
 
-    :rtype: OptText.OptionsNumber
+      move = page.ui.numbers.move(100, 60, height=120, helper="Show delta with yesterday")
+      move.options.digits_percent = 4
+
+    :rtype: OptText.OptionsNumberMoves
     """
     return super().options
 
   _js__builder__ = '''
-      htmlObj = htmlObj.querySelector("#" + htmlObj.id + "_content");
-      var delta = data.value - data.previous; htmlObj.innerHTML = "";
-      if(data.previous == 0) {var relMove = 'N/A'} 
-      else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
-      if(data.digits == undefined){data.digits = 0};
-      if(data.label != undefined){var span = document.createElement("span");
-        span.style.fontSize = options.font_size; span.innerHTML = data.label; htmlObj.appendChild(span)}
-      else {var span = document.createElement("span");
-        span.style.fontSize = options.font_size; span.innerHTML = options.label; htmlObj.appendChild(span)}
-      var valueElt = document.createElement('span'); valueElt.setAttribute('style', 'padding:5px'); 
-      valueElt.innerHTML = accounting.formatNumber(data.value, options.digits, options.thousand_sep, options.decimal_sep); 
-      htmlObj.appendChild(valueElt); var deltaElt = document.createElement('span');
-      var relMoveElt = document.createElement('span'); var icon = document.createElement('i');
-      if (delta < 0){
-        deltaElt.setAttribute('style', 'padding:5px;color:'+ options.red +';font-size:'+ options.font_size);
-        deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.red +';font-size:'+ options.font_size)
-        relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
-        icon.className = 'fas fa-arrow-down'; icon.setAttribute('style', 'color:'+ options.red +';font-size:'+ options.font_size)}
-      else{  
-        deltaElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size);
-        deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size)
-        relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
-        icon.className = 'fas fa-arrow-up'; icon.setAttribute('style', 'color:'+ options.green +';font-size:'+ options.font_size)};
-      htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
-      '''
+    htmlObj = htmlObj.querySelector("#" + htmlObj.id + "_content");
+    if(typeof data === 'number'){data = {value: data, previous: data}};
+    var delta = data.value - data.previous; htmlObj.innerHTML = "";
+    if(data.previous == 0) {var relMove = 'N/A'} 
+    else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
+    if(data.digits == undefined){data.digits = 0};
+    if(data.label != undefined){var span = document.createElement("span");
+      span.innerHTML = data.label; htmlObj.appendChild(span)}
+    else {var span = document.createElement("span");
+      span.innerHTML = options.label; htmlObj.appendChild(span)}
+    var valueElt = document.createElement('span'); valueElt.setAttribute('style', 'padding:5px'); 
+    valueElt.innerHTML = accounting.formatNumber(data.value, options.digits, options.thousand_sep, options.decimal_sep); 
+    htmlObj.appendChild(valueElt); var deltaElt = document.createElement('span');
+    var relMoveElt = document.createElement('span'); var icon = document.createElement('i');
+    if (delta < 0){
+      deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
+      relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, options.digits_percent, options.thousand_sep, options.decimal_sep) +"%)";
+      deltaElt.style["color"] = options.red; relMoveElt.style["color"] = options.red;
+      icon.className = options.icon_down; 
+      icon.style["transform"] = "rotate(-"+ options.rotate + "deg)";
+      icon.style["color"] = options.red;
+    } else{  
+      deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
+      deltaElt.style["color"] = options.green; relMoveElt.style["color"] = options.green;
+      relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, options.digits_percent, options.thousand_sep, options.decimal_sep) +"%)";
+      icon.className = options.icon_up; 
+      icon.style["transform"] = "rotate("+ options.rotate + "deg)";
+      icon.style["color"] = options.green;
+    };
+    relMoveElt.style["font-size"] = options.font_size;
+    deltaElt.style["font-size"] = options.font_size;
+    icon.style["font-size"] = options.font_size; 
+    Object.keys(options.css_stats).forEach(function(attr){
+      relMoveElt.style[attr] = options.css_stats[attr]; deltaElt.style[attr] = options.css_stats[attr];
+      icon.style[attr] = options.css_stats[attr]});
+    htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
+    Object.keys(options.css).forEach(function(attr){htmlObj.style[attr] = options.css[attr]})
+    '''
 
   def __add__(self, component):
     """ Add items to a container """
@@ -161,13 +175,13 @@ class BlockText(Html.Html):
       '''
 
   def __str__(self):
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
-    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (
-      self.htmlCode, self.page.body.style.globals.font.normal(3)))
-    items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode)
-    items.append('</div>')
+    items = [
+      '<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes()),
+      '<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (
+        self.htmlCode, self.page.body.style.globals.font.normal(3)),
+      '<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode,
+      '</div>']
     self.page.properties.js.add_builders(self.refresh())
-    #self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return ''.join(items)
 
 
@@ -177,8 +191,8 @@ class TextWithBorder(Html.Html):
   _option_cls = OptText.OptionsText
 
   def __init__(self, report, record, width, height, align, helper, options, profile):
-    super(TextWithBorder, self).__init__(report, record, options=options,
-                                         css_attrs={"width": width, "height": height}, profile=profile)
+    super(TextWithBorder, self).__init__(
+      report, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.align = align
     if 'colorTitle' not in self.val:
@@ -259,6 +273,9 @@ class Number(Html.Html):
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     return self.span.click(js_funcs, profile, source_event, on_ready)
 
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    return self.span.build(data, options, profile, self.span.htmlCode)
+
   def __add__(self, component):
     """ Add items to a container """
     if hasattr(component, 'options'):
@@ -275,7 +292,7 @@ class Number(Html.Html):
 class Delta(Html.Html):
   requirements = ('jqueryui', 'accounting')
   name = 'Delta Figures'
-  _option_cls = OptText.OptionsNumber
+  _option_cls = OptText.OptionsNumberDelta
 
   def __init__(self, report, records, components, width, height, options, helper, profile):
     super(Delta, self).__init__(report, records, options=options,
@@ -284,15 +301,16 @@ class Delta(Html.Html):
     if 'color' not in self.val:
       self.val['color'] = self._report.theme.colors[9]
     if 'thresold1' not in self.val:
-      self.val['thresold1'] = 100
+      self.options.threshold1 = 100
     if 'thresold2' not in self.val:
-      self.val['thresold2'] = 50
+      self.options.threshold2 = 50
     self.css({"color": self.val['color']})
     self.options.label = records.get('label', '')
     self.style.css.position = "relative"
-    self.helper.style.css.position = "absolute"
-    self.helper.style.css.bottom = 5
-    self.helper.style.css.right = 5
+    if self.helper is not None:
+      self.helper.style.css.position = "absolute"
+      self.helper.style.css.bottom = 1
+      self.helper.style.css.right = 5
     if 'url' in records:
       self._jsStyles["url"] = records['url']
     if components is not None:
@@ -316,26 +334,32 @@ class Delta(Html.Html):
     Usage:
     -----
 
-    :rtype: OptText.OptionsNumber
+    :rtype: OptText.OptionsNumberDelta
     """
     return super().options
 
   _js__builder__ = '''
-       jHtmlObj = jQuery(htmlObj);
+       jHtmlObj = jQuery(htmlObj); 
+       if(typeof data === "number"){data = {number: data}};
+       if(typeof data.prevNumber === 'undefined'){data.prevNumber = accounting.unformat(jHtmlObj.find('div').first().text())};
        var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
        var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
+       if(typeof data.thresold1 === 'undefined'){data.thresold1 = options.thresold1};
+       if(typeof data.thresold2 === 'undefined'){data.thresold2 = options.thresold2};
        if(variation > data.thresold1){warning = '<i style="color:'+ options.red +';" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
        if(typeof data.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
        else if(typeof options.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + options.url+ '">'+ currVal +'</a>'}
        if(typeof data.label !== 'undefined'){currVal = data.label +" "+ currVal} else {currVal = options.label +" "+ currVal}
        var progressElt = jHtmlObj.find('#progress');
-       progressElt.progressbar({value: variation});
+       progressElt.attr("title", variation + "%");
+       progressElt.progressbar({value: variation}).tooltip({track: true});
+
        if(variation > data.thresold1){progressElt.children().css({'background': options.red})} 
        else if(variation > data.thresold2){progressElt.children().css({'background': options.orange})} 
        else{progressElt.children().css({'background': options.green})}
        jHtmlObj.find('div').first().html(warning + currVal);
        jHtmlObj.find('div').first().css({"white-space": "nowrap"});
-       jHtmlObj.find('div').last().html('Previous number: '+ accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
+       jHtmlObj.find('div').last().html(options.previous_label + accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
       '''
 
   def __str__(self):

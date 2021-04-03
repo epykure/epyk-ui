@@ -648,7 +648,7 @@ JS_IMPORTS = {
 
   # Jquery UI package width CDN links
   'jqueryui': {
-    'req': [{'alias': 'jquery'}],
+    'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
     'website': 'http://jquery.com/',
     'repository': 'https://github.com/jquery/jqueryui.com',
     'version': '1.12.1',

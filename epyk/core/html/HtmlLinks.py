@@ -58,7 +58,9 @@ class ExternalLink(Html.Html):
   _js__builder__ = '''
       if(typeof data === 'undefined'){data = {text: ''}}
       var text = "";
-      if((typeof data.text !== 'undefined') && (data.text)){text = data.text} else if (data.text) {text = data}
+      if((typeof data.text !== 'undefined') && (data.text)){text = data.text} 
+      else if (data.text) {text = data.text}
+      else {text = data}
       if (options.type_number == 'money'){
         text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, 
         options.decimal_sep, options.format)}
@@ -120,7 +122,7 @@ class ExternalLink(Html.Html):
     :param data: String | object. The component expected content.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id:
+    :param component_id: String. Optional. The component reference (the htmlCode).
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):

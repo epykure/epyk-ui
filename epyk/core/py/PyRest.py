@@ -7,6 +7,8 @@ This is not using any external Python module.
 Modules wrapped as part of this script
   - https://docs.python.org/3/howto/urllib2.html
   - https://docs.python.org/2/library/urllib2.html
+
+# TODO add pandas to this module when it is available
 """
 
 import hashlib
@@ -25,8 +27,8 @@ except ImportError:
     from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
 
 
-class PyRest(object):
-  class __internal(object):
+class PyRest:
+  class __internal:
     _props, _context = {}, {}
 
   def __init__(self, src=None):

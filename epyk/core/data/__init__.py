@@ -16,6 +16,8 @@ from epyk.core.js.JsLocation import URLSearchParams
 # All those features are available in the report object but this allow a shortcut when the context is not necessary
 chartJs = DataPy.ChartJs()
 
+apexCharts = DataPy.ChartJs()
+
 plotly = DataPy.Plotly()
 
 vis = DataPy.Vis()

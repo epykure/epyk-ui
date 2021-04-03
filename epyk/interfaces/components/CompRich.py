@@ -13,8 +13,8 @@ class Rich:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def delta(self, record=None, components=None, width=('auto', ''), height=('auto', ''), options=None, helper=None,
-            profile=None):
+  def delta(self, record=None, components=None, title=None, align="center", width=('auto', ''), height=('auto', ''),
+            options=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -35,10 +35,12 @@ class Rich:
     ----------
     :param record: Dictionary. Optional. The input data for this component.
     :param components: List. Optional. The HTML components to be added to this component.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param align: String. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper: String. Optional. A tooltip helper
+    :param helper: String. Optional. A tooltip helper.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
@@ -48,9 +50,21 @@ class Rich:
                     'orange': self.page.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
-    html_delta = html.HtmlTextComp.Delta(
-      self.page, record or {}, components, width, height, dflt_options, helper, profile)
-    return html_delta
+    container = self.page.ui.div(align=align, height=height, width=width, profile=profile, options=options)
+
+    if title is not None:
+      if not hasattr(title, 'options'):
+        title = self.page.ui.titles.title(title)
+        title.style.css.display = "block"
+        title.style.css.text_align = align
+      container.add(title)
+    main_component = html.HtmlTextComp.Delta(
+      self.page, record or {}, components, width, ("auto", ''), dflt_options, helper, profile)
+    container.add(main_component)
+    container.build = main_component.build
+    if title is not None:
+      container.title = title
+    return container
 
   @html.Html.css_skin()
   def stars(self, val=None, label=None, color=None, align='left', best=5, html_code=None, helper=None, options=None,
@@ -205,14 +219,14 @@ class Rich:
     :param minute: Integer. Optional. Number of minutes.
     :param second: Integer. Optional. Number of seconds.
     :param label: String. Optional. The component label content.
-    :param icon: String. Optional. The component icon content from font-awesome references
+    :param icon: String. Optional. The component icon content from font-awesome references.
     :param time_ms_factor: Integer. Optional. The format from the format in milliseconds.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript)
+    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
     :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -250,11 +264,11 @@ class Rich:
 
     Attributes:
     ----------
-    :param label: String. Optional. The label to be displayed close to the date. Default Last Update
-    :param color: String. Optional. The color code for the font
+    :param label: String. Optional. The label to be displayed close to the date. Default Last Update.
+    :param color: String. Optional. The color code for the font.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript)
+    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -334,7 +348,7 @@ class Rich:
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: String. Optional. A string with the value of the tooltip.
     :param extensible: Boolean. Optional. Flag to specify the input style.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -511,7 +525,7 @@ class Rich:
     Attributes:
     ----------
     :param section:
-    :param title:
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param background:
     :param options: Dictionary. Optional. Specific Python options available for this component.

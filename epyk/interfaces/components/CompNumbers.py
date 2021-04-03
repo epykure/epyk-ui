@@ -25,6 +25,9 @@ class Numbers:
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -44,15 +47,15 @@ class Numbers:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component
-    :param color: Optional. The color of the text
-    :param align: Optional. The position of the icon in the line (left, right, center)
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param color: String. Optional. The color of the text.
+    :param align: String. Optional. The position of the icon in the line (left, right, center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if width is None:
       width = (defaults_html.TEXTS_SPAN_WIDTH, 'px')
@@ -72,6 +75,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -83,18 +89,18 @@ class Numbers:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The color of the value.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
@@ -112,6 +118,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -123,18 +132,18 @@ class Numbers:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The color of the value.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
@@ -148,6 +157,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -159,18 +171,18 @@ class Numbers:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
@@ -184,6 +196,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -195,18 +210,18 @@ class Numbers:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
@@ -220,6 +235,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -231,18 +249,18 @@ class Numbers:
 
     Attributes:
     ----------
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
@@ -256,6 +274,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -267,19 +288,19 @@ class Numbers:
 
     Attributes:
     ----------
-    :param symbol:
-    :param number: Optional. The value to be displayed to the component. Default now
-    :param title:
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param color:
-    :param tooltip:
-    :param html_code:
+    :param symbol: String. The currency symbol.
+    :param number: Number. Optional. The value to be displayed to the component. Default now.
+    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper:
-    :param width:
-    :param align:
-    :param profile:
+    :param helper: String. Optional. A tooltip helper.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param align: String. The text-align property within this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
@@ -293,6 +314,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -302,12 +326,12 @@ class Numbers:
 
     Attributes:
     ----------
-    :param value:
-    :param profile:
+    :param value: Number. a value.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width:
-    :param height:
-    :param html_code:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number")
@@ -320,6 +344,9 @@ class Numbers:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -330,23 +357,26 @@ class Numbers:
 
     Attributes:
     ----------
-    :param value:
-    :param profile:
+    :param value: Number. a value.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width:
-    :param height:
-    :param html_code:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number+delta")
     return ind
 
   @html.Html.css_skin()
-  def move(self, current, previous, components=None, width=(100, '%'), height=(None, "px"), color=None, label=None,
-           options=None, helper=None, profile=None):
+  def move(self, current, previous=None, components=None, title=None, align="center", width=(100, '%'),
+           height=(None, "px"), color=None, label=None, options=None, helper=None, profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -359,9 +389,11 @@ class Numbers:
 
     Attributes:
     ----------
-    :param current: Integer.
-    :param previous: Integer.
-    :param components: HTML Component. List of HTML component to be added.
+    :param current: Number. The current value.
+    :param previous: Number. Optional. Default the current value and not move.
+    :param components: HTML Component. Optional. List of HTML component to be added.
+    :param title: String | Component. Optional. The title definition.
+    :param align: String. Optional. The text-align property within this component.
     :param color: String. Optional. The text color.
     :param label: String. Optional. The label for the up and down component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -375,9 +407,19 @@ class Numbers:
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
                     'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
                     'orange': self.page.theme.warning[1]}
+    previous = previous or current
     if options is not None:
       dflt_options.update(options)
+    components = components or []
+    if title is not None:
+      if not hasattr(title, 'options'):
+        title = self.page.ui.titles.title(title)
+        title.style.css.display = "block"
+        title.style.css.text_align = align
+      components.insert(0, title)
     html_up_down = html.HtmlTextComp.UpDown(
       self.page, {"value": current, 'previous': previous}, components, color, label, width, height, dflt_options,
       helper, profile)
+    if title is not None:
+      html_up_down.title = title
     return html_up_down

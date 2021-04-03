@@ -856,6 +856,24 @@ class JsHtml(JsNodeDom.JsDoms):
       opt.update(options)
     return opt
 
+  def trigger(self, event):
+    """
+    Description:
+    ------------
+    Shortcut to the trigger event.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Document/createEvent
+
+    Attributes:
+    ----------
+    :param event: String. The event to be triggered for the component.
+
+    :return:
+    """
+    return self.events.trigger(event)
+
 
 class JsHtmlRich(JsHtml):
 
@@ -1375,7 +1393,8 @@ class JsHtmlIcon(JsHtml):
 
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self._src.dom.getAttribute("class")))
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlCode, self._src.dom.getAttribute("class")))
 
   @property
   def content(self):
@@ -1388,6 +1407,21 @@ class JsHtmlIcon(JsHtml):
 
     """
     return self._src.dom.getAttribute("class")
+
+  def spin(self, status=True):
+    """
+    Description:
+    -----------
+    Add spin class to the font awesome.
+
+    Attributes:
+    ----------
+    :param status: Boolean. Optional. The spin status.
+    """
+    if status:
+      return self._src.dom.classList.add("fa-spin")
+
+    return self._src.dom.classList.remove("fa-spin")
 
 
 class JsHtmlList(JsHtml):

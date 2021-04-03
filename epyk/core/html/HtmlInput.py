@@ -1259,6 +1259,7 @@ class Search(Html.Html):
     self.tooltip(tooltip)
     self.input.style.css.background = "inherit"
     self.input.attr["type"] = "search"
+    self.dom.trigger = self.icon.dom.trigger
 
   @property
   def dom(self):

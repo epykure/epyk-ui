@@ -28,7 +28,7 @@ class Mjx(CssStyle.Style):
   is_class = False
 
   def customize(self):
-    self.css({"padding-top": "10px", "padding-bottom": "10px"})
+    self.css({"padding-top": "10px", "padding-bottom": "10px", "margin": "0 !IMPORTANT"})
 
 
 class MjxContainer(CssStyle.Style):

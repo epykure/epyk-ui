@@ -1086,10 +1086,11 @@ class Buttons:
     live.style.css.margin = 0
     live.icon.style.css.font_factor(2)
     live.icon.style.css.margin_right = 0
-    live.icon.style.css.margin = 0
+    live.icon.style.css.margin = "-2px 0 0 -2px"
     live.icon.style.css.padding_bottom = 10
     if dflt_options["started"]:
       live.attr["data-active"] = 1
+      live.icon.style.css.color = self.page.theme.success[1]
       live.icon.style.effects.blink(2)
       live.style.css.border = "1px solid %s" % self.page.theme.success[1]
       self.page.body.onReady([

@@ -330,6 +330,136 @@ class OptionsNumber(OptionsText):
     self._config(value)
 
 
+class OptionsNumberMoves(OptionsNumber):
+  component_properties = ("css", "rotate", "font_size", "css_stats", "icon_up", "icon_down", "digits_percent")
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    The label attached to a number component.
+
+    Attributes:
+    ----------
+    :prop attrs: Dictionary. The CSS attributes.
+    """
+    return self._config_get({"text-align": "center", "margin-top": "5px",
+                             "font-size": self.component.page.body.style.globals.font.normal(10)})
+
+  @css.setter
+  def css(self, attrs):
+    self._config(attrs)
+
+  @property
+  def rotate(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/css3_pr_transform.asp
+    """
+    return self._config_get(40)
+
+  @rotate.setter
+  def rotate(self, value):
+    self._config(value)
+
+  @property
+  def font_size(self):
+    """
+    Description:
+    ------------
+    The font size used by the percentage and difference.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/css3_pr_transform.asp
+    """
+    return self._config_get(self.component.page.body.style.globals.font.normal(2))
+
+  @font_size.setter
+  def font_size(self, value):
+    self._config(value)
+
+  @property
+  def css_stats(self):
+    return self._config_get({})
+
+  @css_stats.setter
+  def css_stats(self, attrs):
+    self._config(attrs)
+
+  @property
+  def icon_up(self):
+    return self._config_get("fas fa-arrow-up")
+
+  @icon_up.setter
+  def icon_up(self, attrs):
+    self._config(attrs)
+
+  @property
+  def icon_down(self):
+    return self._config_get("")
+
+  @icon_down.setter
+  def icon_down(self, attrs):
+    self._config(attrs)
+
+  @property
+  def digits_percent(self):
+    return self._config_get(2)
+
+  @digits_percent.setter
+  def digits_percent(self, num):
+    self._config(num)
+
+
+class OptionsNumberDelta(OptionsNumber):
+  component_properties = ("threshold1", "threshold2", "previous_label")
+
+  @property
+  def threshold1(self):
+    """
+    Description:
+    ------------
+    The first threshold.
+    """
+    return self._config_get(100)
+
+  @threshold1.setter
+  def threshold1(self, value):
+    self._config(value)
+
+  @property
+  def threshold2(self):
+    """
+    Description:
+    ------------
+    The second threshold (smaller than the first one).
+    """
+    return self._config_get(50)
+
+  @threshold2.setter
+  def threshold2(self, value):
+    self._config(value)
+
+  @property
+  def previous_label(self):
+    """
+    Description:
+    ------------
+    Set the label displayed before the previous value in the component.
+    """
+    return self._config_get("Previous number: ")
+
+  @previous_label.setter
+  def previous_label(self, value):
+    self._config(value)
+
+
 class OptionsLink(OptionsText):
 
   @property

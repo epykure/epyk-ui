@@ -15,7 +15,7 @@ class CssSearchExt(CssStyle.Style):
       "border-bottom": '1px solid %s' % self.page.theme.greys[3]})
     self.hover.css({
       'color': self.page.theme.greys[-1],
-      'width': '350px',
+      'width': '100%',
       'border-bottom-color': self.page.theme.notch(1)})
 
 

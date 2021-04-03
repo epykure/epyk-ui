@@ -26,13 +26,18 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+    Add a click event to the Apex chart.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
-    :param source_event:
-    :param on_ready:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -46,7 +51,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param flag:
+    :param flag: Boolean. Optional. Add the zoom option to the chart.
     """
     if flag:
       self.options.chart.zoom.type = "x"
@@ -66,6 +71,9 @@ class Chart(Html.Html):
 
     Usage:
     -----
+
+      line = page.ui.charts.apex.line(height=250)
+      line.colors(["#FFA500", "#FF7F50"])
 
     Attributes:
     ----------
@@ -124,9 +132,15 @@ class Chart(Html.Html):
   _js__builder__ = '''
       if(data.python){
         result = {series: [], labels: data.labels};
-        data.datasets.forEach(function(rec, i){
-          result.series.push({label: data.series[i], data: rec})})}
-      else{
+        data.datasets.forEach(function(dataset, i){
+          if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+          if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+          if(typeof dataset.hoverBackgroundColor === "undefined"){
+            dataset.hoverBackgroundColor = options.background_colors[i]};
+          if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
+          dataset.name = data.series[i];
+          result.series.push(dataset) })
+      } else{
         var temp = {}; var labels = []; var uniqLabels = {}; 
         options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 
