@@ -235,7 +235,7 @@ class JsItemsDef:
     :param report: Page object. The internal page object
     """
     item_def = '''
-    var item = document.createElement("div"); var link = document.createElement("a");
+    var item = document.createElement("div"); var link = document.createElement("a"); item.style.whiteSpace = "nowrap";
     link.style.color = "inherit"; link.setAttribute('name', 'value'); link.setAttribute('data-valid', false);
     link.innerHTML = data.text; if(typeof data.url !== 'undefined'){link.href = data.url} else {link.href = '#'};
     if(typeof data.target !== "undefined"){link.target = data.target}

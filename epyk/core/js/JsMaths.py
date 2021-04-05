@@ -11,7 +11,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
 
 
-class JsMaths(object):
+class JsMaths:
 
   @property
   def E(self):

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# TODO Add JS builder to Button Filter
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptButton
@@ -858,13 +859,188 @@ class ButtonMenu(Html.Html):
                                    self.container.html())
 
 
+class ButtonMore(Html.Html):
+  name = 'Button More'
+
+  def __init__(self, report, record, text, width, height, html_code, tooltip, profile, options):
+    super(ButtonMore, self).__init__(
+      report, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
+    self.text = self.page.ui.text(text, width=("auto", ''), profile=profile)
+    self.text.style.css.font_factor(-4)
+    self.text.style.css.italic()
+    self.text.style.css.display = "inline-block"
+    self.text.style.css.text_align = "center"
+    self.button = self.page.ui.button(
+      text=self.text, icon="fas fa-chevron-down", width=width, height=height, align="center", html_code=html_code,
+      tooltip=tooltip, profile=profile, options=options)
+    self.button.style.css.border_radius = 5
+    self.button.style.css.text_align = 'left'
+    self.button.style.css.display = 'inline-block'
+    self.button.icon.style.add_classes.div.border_hover()
+    self.button.options.managed = False
+    self.button.style.css.padding = "0 5px"
+    self.menu = self.page.ui.lists.links(record, width=("auto", ""), profile=profile)
+    self.menu.options.managed = False
+    self.menu.style.css.background = "white"
+    self.menu.style.css.z_index = 10
+    self.menu.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    self.menu.attr["data-anchor"] = "test_filter"
+    self.menu.style.css.invisible()
+    self.menu.style.css.position = "absolute"
+    self.menu.style.css.top = 25
+    self.menu.style.css.left = 5
+    self.menu.style.css.padding = "2px 5px"
+    self.menu.attr["tabIndex"] = 0
+    self.style.css.position = "relative"
+    self.style.css.display = "inline-block"
+    self.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    self.style.css.border_radius = 10
+    self.button.icon.click([
+      self.page.js.objects.event.stopPropagation(), self.menu.dom.visible(), self.menu.dom.events.trigger("focus")])
+    self.menu.focusout([
+      self.page.js.objects.event.stopPropagation(), self.page.js.objects.event.preventDefault(),
+      self.menu.dom.invisible()])
+
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    return self.text.click(js_funcs, profile, source_event, on_ready)
+
+  def __str__(self):
+    return '<div %s>%s%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.menu.html())
+
+
 class ButtonFilter(Html.Html):
   name = 'Button Filter'
+  _option_cls = OptButton.OptionsButtonFilter
+
+  def __init__(self, report, text, width, height, html_code, tooltip, profile, options):
+    super(ButtonFilter, self).__init__(
+      report, "", html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+    self.text = self.page.ui.text(text, tooltip=tooltip)
+    self.text.draggable()
+    self.text.style.css.margin_right = 5
+    self.text.options.managed = False
+
+    self.icon_filer = self.page.ui.icon(self.options.icon_filer)
+    self.icon_filer.style.css.font_factor(-4)
+    self.icon_filer.style.css.margin_right = 15
+    self.icon_filer.style.css.invisible()
+    self.icon_filer.options.managed = False
+
+    self.icon = self.page.ui.icon(self.options.icon)
+    self.icon.options.managed = False
+    self.icon.style.css.position = "absolute"
+    self.icon.style.css.right = 0
+    self.icon.style.css.padding = 5
+    self.icon.style.css.font_factor(-4)
+
+    filter_categories = [{"text": category, "value": Html.cleanData(category)} for category in options["categories"]]
+    self.select = self.page.ui.select(
+      filter_categories, width=(180, 'px'), options={"empty_selected": False}, html_code="%s_select" % self.htmlCode)
+    self.input = self.page.ui.input(placeholder="Filter", html_code="%s_input" % self.htmlCode)
+    self.input.style.css.text_align = "left"
+    self.input.attr["type"] = "number" if self.options.is_number else "text"
+    self.input.style.css.padding_left = 5
+    self.radios = self.page.ui.radio(
+      [{"value": "and"}, {"value": "or"}], align="center", html_code="%s_radio" % self.htmlCode)
+    self.radios.attr["data-anchor"] = "test_filter"
+    self.radios.style.css.hide()
+
+    self.select2 = self.page.ui.select(
+      filter_categories, width=(180, 'px'), options={"empty_selected": False}, html_code="%s_select2" % self.htmlCode)
+    self.select2.style.css.hide()
+
+    self.input2 = self.page.ui.input(placeholder="Filter", html_code="%s_input2" % self.htmlCode)
+    self.input2.style.css.hide()
+    self.input2.attr["type"] = "number" if self.options.is_number else "text"
+
+    self.menu = self.page.ui.div([self.select, self.input, self.radios, self.select2, self.input2], width=(200, 'px'))
+    self.menu.style.css.background = "white"
+    self.menu.style.css.padding = 10
+    self.menu.style.css.z_index = 10
+    self.menu.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    self.menu.attr["data-anchor"] = "test_filter"
+    self.menu.style.css.invisible()
+    self.menu.style.css.position = "absolute"
+    self.menu.style.css.top = 20
+    self.menu.style.css.right = -180
+    self.menu.attr["tabIndex"] = 0
+    self.menu.options.managed = False
+
+    self.select.change([self.menu.dom.visible()])
+    self.select2.change([self.menu.dom.visible()])
+
+    self.icon_filer.click([
+      self.input.dom.empty(), self.input2.dom.empty(), self.radios.dom.hide(),
+      self.icon_filer.dom.invisible(), self.input2.dom.hide(), self.select2.dom.hide()
+    ])
+    self.icon.click([
+      self.page.js.objects.event.stopPropagation(), self.menu.dom.visible(), self.menu.dom.events.trigger("focus")])
+
+    self.input.enter([self.menu.dom.invisible()])
+
+    self.style.css.position = "relative"
+    self.style.css.display = "inline-block"
+    self.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    self.style.css.border_radius = 10
+    self.style.css.padding = "0 5px"
+
+    self.input.keyup.any([
+      self.input.js.isEmpty([
+        self.icon_filer.dom.invisible(),
+        self.radios.dom.hide(), self.input2.dom.hide(), self.select2.dom.hide()]).else_([
+          self.icon_filer.dom.visible(), self.radios.dom.show(), self.input2.dom.show(), self.select2.dom.show()
+      ])
+    ])
+
+    self.menu.focusout([
+      self.page.js.objects.event.stopPropagation(),
+      self.page.js.objects.event.preventDefault(),
+      self.menu.dom.invisible()])
+
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a button.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      but.options.multiple = False
+
+    :rtype: OptButton.OptionsButtonFilter
+    """
+    return super().options
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage:
+    -----
+
+      but = page.ui.button("Click Me")
+      page.js.console.log(but.dom.content)
+
+    :rtype: JsHtml.JsHtmlButton
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlButtonFilter(self, report=self._report)
+    return self._dom
 
   def __str__(self):
     events = []
     for comp in self.components.values():
       events.extend(comp._events)
     self.onReady(events)
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()),
-                                   self.button.html(), self.container.html())
+    return '<div %s>%s%s%s%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
+      self.menu.html())

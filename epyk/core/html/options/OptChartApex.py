@@ -738,6 +738,14 @@ class OptionValue(Options):
   def fontSize(self, num):
     self._config("%spx" % num)
 
+  def formatter(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile), js_type=True)
+
+  @property
+  def formatters(self):
+    return OptionFormatters(self, "formatter")
+
 
 class OptionTotal(Options):
 
@@ -784,7 +792,23 @@ class OptionFormatters:
       digit, thousand_sep), self.__name, True)
 
   @packageImport("accounting")
-  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s"):
+    """
+
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    :param fmt:
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s, %s)}" % (
+      symbol, digit, thousand_sep, decimal_sep, fmt), self.__name, True)
+
+  @packageImport("accounting")
+  def toPercent(self, symbol="%", digit=0, thousand_sep=".", decimal_sep=","):
     """
 
     :param symbol:
@@ -795,7 +819,7 @@ class OptionFormatters:
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s)}" % (
+    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s, '%%v %%s')}" % (
       symbol, digit, thousand_sep, decimal_sep), self.__name, True)
 
   @packageImport("accounting")
@@ -1297,6 +1321,10 @@ class plotOptionsRadialBar(Options):
   @endAngle.setter
   def endAngle(self, num):
     self._config(num)
+
+  @property
+  def dataLabels(self):
+    return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
 class OptionPlotOptions(Options):

@@ -224,6 +224,8 @@ class Chart(Html.Html):
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
+      if h.upper() in Colors.defined:
+        h = Colors.defined[h.upper()]['hex']
       if not isinstance(h, tuple):
         line_colors.append(h)
         bg_colors.append("rgba(%s, %s, %s, %s" % (

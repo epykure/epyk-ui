@@ -300,8 +300,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def underline(self, text="", options=None, tooltip="", width=(None, "px"), height=('auto', ""), html_code=None,
-                profile=False):
+  def underline(self, text="", options=None, tooltip="", color=None, width=(None, "px"), height=('auto', ""),
+                html_code=None, profile=False):
     """
     Description:
     ------------
@@ -321,6 +321,7 @@ class Titles:
     :param text: String. Optional. The value to be displayed to the component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -334,7 +335,8 @@ class Titles:
     html_title = html.HtmlTags.HtmlGeneric(
       self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = self.page.body.style.globals.font.normal(4)
-    html_title.style.css.border_bottom = '2px solid %s' % self.page.theme.colors[-1]
+    html_title.style.css.border_bottom = '2px solid %s' % (color or self.page.theme.colors[self.page.theme.index])
+    html_title.style.css.margin_bottom = 10
     return html_title
 
   @html.Html.css_skin()

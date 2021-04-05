@@ -2486,6 +2486,25 @@ class CssMixin:
         val = "%spx" % val
       self.css({"width": val})
 
+  def width_calc(self, with_in_px, container_width=100):
+    """
+    Description:
+    ------------
+    Use calc() to calculate the width of a component.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/func_calc.asp
+
+    Attributes:
+    ----------
+    :param with_in_px: Integer. The width used by other components in the line.
+    :param container_width: Integer. The percentage width to be used by the component in total. Default 100%.
+    """
+    self.display = "inline-block"
+    self.width = "calc(%s%% - %spx)" % (container_width, with_in_px)
+    return self
+
   @property
   def word_break(self): return self.css("word-break")
 

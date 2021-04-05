@@ -20,6 +20,10 @@ def size(value, unit="%"):
   elif value == "auto":
     return value, ''
 
+  else:
+    if value > 100 and unit == "%":
+      unit = "px"
+
   return value, unit
 
 

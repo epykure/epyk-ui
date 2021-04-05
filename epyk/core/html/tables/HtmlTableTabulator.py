@@ -198,6 +198,7 @@ class Table(Html.Html):
     :param data: String. A String corresponding to a JavaScript object.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Optional.
     """
     if data:
       return self.js.setData(data)

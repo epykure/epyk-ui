@@ -81,6 +81,8 @@ class Chart(Html.Html):
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
+      if h.upper() in Colors.defined:
+        h = Colors.defined[h.upper()]['hex']
       if not isinstance(h, tuple):
         line_colors.append(h)
         bg_colors.append("rgba(%s, %s, %s, %s" % (
@@ -92,9 +94,10 @@ class Chart(Html.Html):
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
     for i, rec in enumerate(self.options.all_series):
-      rec.backgroundColor = self.options.background_colors[i]
-      rec.borderColor = self.options.colors[i]
-      rec.borderWidth = 1
+      if hasattr(rec, "backgroundColor"):
+        rec.backgroundColor = self.options.background_colors[i]
+        rec.borderColor = self.options.colors[i]
+        rec.borderWidth = 1
 
   @property
   def js(self):
@@ -191,6 +194,7 @@ class Chart(Html.Html):
 
 class Bar(Chart):
   _option_cls = OptChartApex.OptionsBar
+  name = 'ApexCharts'
 
   @property
   def options(self):
@@ -227,6 +231,37 @@ class Area(Chart):
 
 class Pie(Chart):
   _option_cls = OptChartApex.OptionsPie
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
+    :rtype: OptChartApex.OptionsPie
+    """
+    return super().options
+
+
+class RadialBar(Chart):
+  _option_cls = OptChartApex.OptionsPie
+
+  _js__builder__ = '''
+    if (typeof data === 'number'){data = {values: [data]}}
+    else {
+      if (typeof data.values === 'number'){
+        data.values = [data.values];
+        if (typeof data.labels !== 'undefined'){data.labels = [data.labels]}
+      }
+    }
+    result = {series: data.values};
+    if (typeof data.labels !== 'undefined'){result.labels = data.labels}
+    return result;
+    '''
 
   @property
   def options(self):

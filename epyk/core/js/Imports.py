@@ -957,7 +957,7 @@ JS_IMPORTS = {
   'apexcharts': {
     'website': 'https://apexcharts.com/',
     'repository': 'https://github.com/apexcharts/apexcharts.js',
-    'version': '3.23.1',
+    'version': '3.26.0',
     'modules': [
       {'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],

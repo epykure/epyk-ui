@@ -512,3 +512,49 @@ class ApexChart:
     chart.colors(self.page.theme.charts)
     chart.options.chart.type = "treemap"
     return chart
+
+  def gauge(self, values=0, labels="", profile=None, width=(100, "%"), height=(330, "px"),
+            options=None, html_code=None):
+    """
+    Description:
+    ------------
+    Display a gauge chart from ApexCharts.
+
+    Related Pages:
+
+      https://apexcharts.com/javascript-chart-demos/radialbar-charts/multiple-radialbars/
+
+    Attributes:
+    ----------
+    :param values: List | Float. The gauge value.
+    :param labels: List | String. The gauge label.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {"series": []}
+    if options is not None:
+      dfl_options.update(options)
+    chart = graph.GraphApexCharts.RadialBar(self.page, width, height, html_code, dfl_options, profile)
+    chart.colors(self.page.theme.charts)
+    chart.options.chart.type = "radialBar"
+    chart.options.height = height[0]
+    chart.options.series = [values] if not isinstance(values, list) else values
+    chart.options.labels = [labels] if not isinstance(labels, list) else labels
+    if dfl_options.get("half", False):
+      chart.options.plotOptions.radialBar.startAngle = -90
+      chart.options.plotOptions.radialBar.endAngle = 90
+    if not labels:
+      chart.options.plotOptions.radialBar.dataLabels.name.show = False
+    chart.options.plotOptions.radialBar.dataLabels.name.fontSize = self.page.body.style.globals.font.size
+    chart.options.plotOptions.radialBar.dataLabels.name.offsetY = 5
+    chart.options.plotOptions.radialBar.dataLabels.value.show = True
+    chart.options.plotOptions.radialBar.dataLabels.value.offsetY = 0
+    chart.options.plotOptions.radialBar.dataLabels.value.fontSize = self.page.body.style.globals.font.header
+    chart.options.plotOptions.radialBar.dataLabels.value.formatters.toPercent()
+    chart.style.css.margin_top = 0
+    return chart

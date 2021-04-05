@@ -1261,3 +1261,89 @@ class Buttons:
       }, classname="pill_selected", important=True)
       but.attr["data-group"] = group
     return but
+
+  @html.Html.css_skin()
+  def more(self, items, text="More", width=("auto", ""), height=(None, "px"), html_code=None,
+           tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+      b = page.ui.buttons.more([
+        {"text": "Add", "target": "_blank", "icon": "fab fa-500px",
+         "url": "https://stackoverflow.com/questions/5884066/hashing-a-dictionary"},
+        {"text": "Delete", "target": "_blank", "icon": "fab fa-500px",
+         "url": "https://stackoverflow.com/questions/5884066/hashing-a-dictionary"},
+      ])
+      b.click([page.js.console.log("Click event")])
+
+    Templates:
+
+    Related Pages:
+
+    Attributes:
+    ----------
+    :param items: List. List of items to be added to the menu.
+    :param text: String. Optional. The text visible in the button.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    # report, record, text, width, height, html_code, tooltip, profile, options
+    html_button = html.HtmlButton.ButtonMore(
+      self.page, items, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    return html_button
+
+  @html.Html.css_skin()
+  def filter(self, text, is_number=False, width=("auto", ""), height=(None, "px"), html_code=None,
+             tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param text:
+    :param is_number:
+    :param width:
+    :param height:
+    :param html_code:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {
+      "is_number": False,
+      "categories": ["Contains", "Not contains", "Equals", "Not equals", "Starts with", "Ends with"]}
+
+    if is_number:
+      dfl_options = {
+        "is_number": True,
+        "categories": ["Is Lower than", "Inferior or equals", "Equals", "Not equals", "Superior or equals",
+                       "Is Greater than"]}
+    if options is not None:
+      dfl_options.update(options)
+    # report, record, text, width, height, html_code, tooltip, profile, options
+    html_button = html.HtmlButton.ButtonFilter(
+      self.page, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=dfl_options)
+    return html_button

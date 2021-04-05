@@ -295,7 +295,7 @@ class Radio(JsHtml.JsHtmlRich):
     -----
     """
     # the option variable is coming from the Tick class to get the icon details
-    return JsHtml.ContentFormatters(self._report, "%s.querySelector('input:checked').getAttribute('data-content')" % self._src.dom.varName)
+    return JsHtml.ContentFormatters(self._report, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self._src.dom.varName)
 
   @property
   def checked(self):

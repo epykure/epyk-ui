@@ -385,3 +385,31 @@ class OptCheck(Options):
   @red.setter
   def red(self, values):
     self._config(values)
+
+
+class OptionsButtonFilter(Options):
+  component_properties = ("icon", "icon_filer")
+
+  @property
+  def is_number(self):
+    return self.get(False)
+
+  @is_number.setter
+  def is_number(self, flag):
+    self.set(flag)
+
+  @property
+  def icon(self):
+    return self.get("fas fa-align-center")
+
+  @icon.setter
+  def icon(self, value):
+    self.set(value)
+
+  @property
+  def icon_filer(self):
+    return self.get("fas fa-filter")
+
+  @icon_filer.setter
+  def icon_filer(self, value):
+    self.set(value)

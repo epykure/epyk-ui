@@ -1015,3 +1015,35 @@ class TextReferences:
       author, name, site.upper(), url, url), align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
     return text
+
+  def github(self, url=None, html_code=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Shortcut to data reference from github.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://en.wikipedia.org/wiki/Wikipedia:Citing_sources
+      https://apastyle.apa.org/style-grammar-guidelines/references/examples/webpage-website-references
+
+    Attributes:
+    ----------
+    :param url: String. Optional. The url link to the data.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    split_url = url.split("/")
+    author, name = split_url[3], split_url[4]
+    site = "github"
+    text = self.page.ui.text("%s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (
+      author, site, url, name), align="right", html_code=html_code, options=options, profile=profile)
+    text.style.css.color = self.page.theme.colors[4]
+    return text

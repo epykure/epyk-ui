@@ -1,10 +1,34 @@
 ## [Unreleased]
 
 ### Added
+- Add input number styles.
+- Add fields.number interface.
+- Add XMLHttpRequest timeout.
+- Add data apexCharts shortcut for events.
+- Add new input data in data_urls (owid repo)
+- Add trigger shortcut to dom property.
+- Add Poller components.
+- Add CSS calc for width.
+- Add more and filter button.
+- Add Github standard text reference component.
+- New Apex Gauge component.
 
 ### Changed
+- Change button live style.
+- Change Rich, Vignets and number interfaces.
+- Change data default values for Sparkline interfaces.
+- Add nowrap style to list of links.
+- Include the color reference for the standard color names in charts.
+- Fix toMoney formatter for ApexCharts (to be done for other charts).
 
 ### Fixed
+- Link builder function.
+- Extensible search class width.
+- List tag position.
+- Fix jqueryui dependency with popperjs.
+- Handle not checked state for radio.
+- Height for the chart.
+- Update ApexChart package version.
 
 
 ## [1.5.8] - 2021-03-28

@@ -236,7 +236,7 @@ class GlobalStyle:
         header_border = '1px solid white'
         cell_border_bottom = "1px solid %s" % self.page.theme.colors[4]
         cell_border_right = None
-        sorter_arrow_selected = self.page.theme.success[1]
+        sorter_arrow_selected = self.page.theme.colors[-3]
         sorter_arrow = "white"
       self._table = GlobalTable()
     return self._table

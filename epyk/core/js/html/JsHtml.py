@@ -1823,3 +1823,30 @@ class JsMedia(JsHtml):
       window.recorder.start();
       ''' % {"varId": self.varId}
 
+
+class JsHtmlButtonFilter(JsHtml):
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    Usage:
+    -----
+
+    """
+    if self.component.options.is_number:
+      return ContentFormatters(
+        self._report, "{filter: %s, input: parseFloat(%s), radio: %s, filter2: %s, input2: parseFloat(%s)}" % (
+          self.component.select.dom.content.toStr(),
+          self.component.input.dom.content.toStr(),
+          self.component.radios.dom.content.toStr(),
+          self.component.select2.dom.content.toStr(),
+          self.component.input2.dom.content.toStr()))
+    return ContentFormatters(self._report, "{filter: %s, input: %s, radio: %s, filter2: %s, input2: %s}" % (
+      self.component.select.dom.content.toStr(),
+      self.component.input.dom.content.toStr(),
+      self.component.radios.dom.content.toStr(),
+      self.component.select2.dom.content.toStr(),
+      self.component.input2.dom.content.toStr()))
