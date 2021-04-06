@@ -243,7 +243,7 @@ class Chart(Html.Html):
     Usage:
     -----
 
-    :rtype: OptChartJs.Options
+    :rtype: OptChartJs.ChartJsOptions
     """
     return super().options
 
@@ -1272,7 +1272,7 @@ class ChartScatter(Chart):
     self._datasets.append(data)
     return data
 
-  _js__builder__ = ''' 
+  _js__builder__ = '''
       if(data.python){
         result = {datasets: [], labels: data.series};
         data.datasets.forEach(function(dataset, i){
@@ -1280,7 +1280,7 @@ class ChartScatter(Chart):
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
           if(typeof dataset.hoverBackgroundColor === "undefined"){dataset.hoverBackgroundColor = options.colors[i]};
           if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
-          result.datasets.push(dataset) })
+          result.datasets.push(dataset)})
       } else {
         var temp = {}; var labels = [];
         options.y_columns.forEach(function(series){temp[series] = []});

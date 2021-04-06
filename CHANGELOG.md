@@ -1,6 +1,16 @@
 ## [Unreleased]
 
 ### Added
+- Add ek shortcut for Page and events.
+
+### Changed
+
+### Fixed
+
+
+## [1.5.9] - 2021-04-05
+
+### Added
 - Add input number styles.
 - Add fields.number interface.
 - Add XMLHttpRequest timeout.

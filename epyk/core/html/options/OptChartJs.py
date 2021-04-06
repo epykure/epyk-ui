@@ -496,6 +496,19 @@ class OptionAxesScaleLabel(DataClass):
   def labelString(self, val):
     self._attrs["labelString"] = val
 
+  def label(self, value):
+    """
+    Description:
+    ------------
+    Shortcut to the labelString and display property.
+
+    Attributes:
+    ----------
+    :param value: String. The label value.
+    """
+    self._attrs["labelString"] = value
+    self._attrs["display"] = True
+
 
 class OptionDisplayFormats(DataClass):
 
@@ -677,6 +690,28 @@ class OptionAxes(DataClass):
 
 class OptionScales(DataClass):
 
+  @property
+  def xAxes(self):
+    """
+    Description:
+    ------------
+    Shortcut property to the last x_axes definition.
+    Use the function x_axes to be more specific.
+    """
+    return self.x_axes()
+
+  @property
+  def yAxes(self):
+    """
+    Description:
+    ------------
+    Shortcut property to the last y_axis definition.
+    Use the function y_axis to be more specific.
+
+    y_axis is useful when multiple y axes are used for the same chart.
+    """
+    return self.y_axis()
+
   def add_y_axis(self):
     return self.sub_data_enum("yAxes", OptionAxes)
 
@@ -685,7 +720,9 @@ class OptionScales(DataClass):
     Description:
     ------------
 
-    :param i:
+    Attributes:
+    ----------
+    :param i: Integer. optional. Default take the latest one.
 
     :rtype: OptionAxes
     """
@@ -698,9 +735,26 @@ class OptionScales(DataClass):
     return self._attrs["yAxes"][i]
 
   def add_x_axis(self):
+    """
+    Description:
+    ------------
+    Add a X axis to a chart component.
+
+    :rtype: OptionAxes
+    """
     return self.sub_data_enum("xAxes", OptionAxes)
 
   def x_axes(self, i=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer. optional. Default take the latest one.
+
+    :rtype: OptionAxes
+    """
     if "xAxes" not in self._attrs:
       self.add_x_axis()
 

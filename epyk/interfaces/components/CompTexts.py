@@ -1011,8 +1011,17 @@ class TextReferences:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    text = self.page.ui.text("%s, %s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (
-      author, name, site.upper(), url, url), align="right", html_code=html_code, options=options, profile=profile)
+    split_url = url.split("/")
+    if site is None:
+      site = split_url[2]
+    if name is None:
+      name = split_url[-1]
+    if author is not None:
+      text = self.page.ui.text("%s, %s, <a style='font-style:italic' href='%s'>%s</a>" % (
+        author, name, url, site.upper()), align="right", html_code=html_code, options=options, profile=profile)
+    else:
+      text = self.page.ui.text("%s, <a style='font-style:italic' href='%s'>%s</a>" % (
+         name, url, site.upper()), align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
     return text
 

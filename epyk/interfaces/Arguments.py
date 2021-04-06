@@ -21,7 +21,7 @@ def size(value, unit="%"):
     return value, ''
 
   else:
-    if value > 100 and unit == "%":
+    if value is not None and value > 100 and unit == "%":
       unit = "px"
 
   return value, unit

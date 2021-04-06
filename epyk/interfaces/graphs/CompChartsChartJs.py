@@ -463,7 +463,7 @@ class ChartJs:
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(d, data['series'][i])
+      line_chart.add_dataset(d["data"], data['series'][i])
     return line_chart
 
   def bubble(self, records=None, y_columns=None, x_axis=None, r_values=None, profile=None, width=(100, "%"),
