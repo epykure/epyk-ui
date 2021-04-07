@@ -1322,7 +1322,10 @@ class OptionChartJsTooltipsCallbacks(DataClass):
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
+    if self.component._attrs["type"] == 'horizontalBar':
+      self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
+    else:
+      self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
 
   @packageImport("accounting")
   def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -1340,8 +1343,13 @@ class OptionChartJsTooltipsCallbacks(DataClass):
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._attrs["label"] = JsObjects.JsVoid(
-      "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
+    if self.component._attrs["type"] == 'horizontalBar':
+      self._attrs["label"] = JsObjects.JsVoid(
+      "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
+    else:
+      self._attrs["label"] = JsObjects.JsVoid(
+        "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (
+        symbol, digit, thousand_sep, decimal_sep))
 
   @property
   def value(self):
@@ -1399,6 +1407,22 @@ class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
 
 
 class OptionChartJsTooltips(DataClass):
+
+  @property
+  def mode(self):
+    return self._attrs["mode"]
+
+  @mode.setter
+  def mode(self, value):
+    self._attrs["mode"] = value
+
+  @property
+  def intersect(self):
+    return self._attrs["intersect"]
+
+  @intersect.setter
+  def intersect(self, flag):
+    self._attrs["intersect"] = flag
 
   @property
   def callbacks(self):
