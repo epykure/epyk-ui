@@ -1,11 +1,21 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.10] - 2021-04-07
+### Added
 - Add ek shortcut for Page and events.
 
 ### Changed
 
 ### Fixed
+- Fix chartsJs tooltips.
+- Fix chartJs Scatter
 
 
 ## [1.5.9] - 2021-04-05
