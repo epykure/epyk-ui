@@ -31,6 +31,9 @@ class Tables:
     ag-Grid is the industry standard for JavaScript Enterprise Applications.
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -46,6 +49,9 @@ class Tables:
     Description:
     -----------
     Interface to the different Tabulator configurations.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -66,7 +72,7 @@ class Tables:
     In order to use it, the Google products need to be specially enabled.
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
+      raise Exception("Google produce must be added using for example page.imports().google_products(['charts'])")
 
     return CompTableGoogle.Google(self)
 
@@ -76,6 +82,9 @@ class Tables:
     Description:
     -----------
     Interface to the different Pivot Table configurations.
+
+    :tags:
+    :categories:
 
     Related Pages:
 
@@ -89,6 +98,9 @@ class Tables:
     Description:
     -----------
     Interface to the different Tabulator configurations.
+
+    :tags:
+    :categories:
 
     Related Pages:
 
@@ -105,6 +117,9 @@ class Tables:
     -----------
     Interface to the different Tabulator configurations.
 
+    :tags:
+    :categories:
+
     Related Pages:
 
       http://tabulator.info/
@@ -120,6 +135,9 @@ class Tables:
     -----------
     Interface to the different Datatable configurations.
 
+    :tags:
+    :categories:
+
     Related Pages:
 
       https://datatables.net/
@@ -132,6 +150,9 @@ class Tables:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -148,6 +169,9 @@ class Tables:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -166,8 +190,8 @@ class Tables:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    table = html_tables.HtmlTable.Bespoke(self.page, records, cols, rows, width, height, html_code, options,
-                                          profile)
+    table = html_tables.HtmlTable.Bespoke(
+      self.page, records, cols, rows, width, height, html_code, options, profile)
     return table
 
   def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,
@@ -175,6 +199,9 @@ class Tables:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -218,16 +245,22 @@ class Tables:
     -----------
     Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
+      hierarchy = page.ui.tables.tabulators.hierarchy(html_code="hierarchy")
+      menu = page.ui.tables.menu(hierarchy)
+
     Attributes:
     ----------
-    :param table:
-    :param height:
+    :param table: Component. Optional. The HTML table component.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param post:
-    :param profile:
+    :param post: List | String. The event used to update the table.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     commands = [("Csv", "fas fa-file-csv"), ("Clear", "fas fa-trash-alt")]
     menu_items = []

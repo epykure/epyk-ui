@@ -17,6 +17,9 @@ class Pivottable:
     -----------
     Create a HTML Pivot table.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -51,6 +54,9 @@ class Pivottable:
     -----------
     Create a HTML Pivot table
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -83,7 +89,10 @@ class Pivottable:
     """
     Description:
     -----------
-    Create a HTML Pivot table
+    Create a HTML Pivot table.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -118,7 +127,10 @@ class Pivottable:
     """
     Description:
     -----------
-    Create a HTML Pivot table
+    Create a HTML Pivot table.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -152,11 +164,14 @@ class Pivottable:
     return table
 
   def c3(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            helper=None, options=None, profile=False):
+         helper=None, options=None, profile=False):
     """
     Description:
     -----------
-    Create a HTML Pivot table
+    Create a HTML Pivot table.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -181,17 +196,20 @@ class Pivottable:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    table = html_tables.HtmlTablePivot.PivotUITable(self.page, records, rows, cols, width, height, html_code,
-                                                  helper, options, profile)
+    table = html_tables.HtmlTablePivot.PivotUITable(
+      self.page, records, rows, cols, width, height, html_code, helper, options, profile)
     table.renderers.c3.bar()
     return table
 
   def d3(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            helper=None, options=None, profile=False):
+         helper=None, options=None, profile=False):
     """
     Description:
     -----------
-    Create a HTML Pivot table
+    Create a HTML Pivot table.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -216,8 +234,8 @@ class Pivottable:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    table = html_tables.HtmlTablePivot.PivotUITable(self.page, records, rows, cols, width, height, html_code,
-                                                  helper, options, profile)
+    table = html_tables.HtmlTablePivot.PivotUITable(
+      self.page, records, rows, cols, width, height, html_code, helper, options, profile)
     table.renderers.treemap()
     return table
 
@@ -226,7 +244,10 @@ class Pivottable:
     """
     Description:
     -----------
-    Create a HTML Pivot table
+    Create a HTML Pivot table.
+
+    :tags:
+    :categories:
 
     Usage:
     -----

@@ -12,12 +12,46 @@ class Nvd3:
     self.page = ui.page
     self.chartFamily = "NVD3"
 
+  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, html_code=None):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Related Pages:
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The list of dictionaries with the input data.
+    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param kind: String. Optional. The chart type.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    if not isinstance(y, list):
+      y = [y]
+    return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+                               options=options, html_code=html_code)
+
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
               height=(330, "px"), html_code=None):
     """
     Description:
     ------------
     Display a scatter chart from NVD3.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -29,8 +63,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -39,7 +73,7 @@ class Nvd3:
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
+    data = self.page.data.nvd3.xy(record or [], y_columns, x_axis, options={"agg":  options.get('agg', 'distinct')})
     line_chart = graph.GraphNVD3.ChartScatter(self.page, width, height, options, html_code, profile)
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
@@ -54,6 +88,9 @@ class Nvd3:
     ------------
     Display a line chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -64,8 +101,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -90,6 +127,9 @@ class Nvd3:
     ------------
     Display a Cumulative line chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -100,8 +140,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -126,6 +166,9 @@ class Nvd3:
     ------------
     Display a line chart with focus from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -136,8 +179,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -162,6 +205,9 @@ class Nvd3:
     ------------
     Display a bars chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -172,8 +218,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -199,6 +245,9 @@ class Nvd3:
     ------------
     Display a bars chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -209,8 +258,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -234,6 +283,9 @@ class Nvd3:
     ------------
     Display a multi types chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -244,8 +296,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -271,6 +323,9 @@ class Nvd3:
     ------------
     Display a histo chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -281,8 +336,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -306,6 +361,9 @@ class Nvd3:
     ------------
     Display a Timseries chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -316,9 +374,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
-    :param x_axis:
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -342,6 +399,9 @@ class Nvd3:
     ------------
     Display a area chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -352,8 +412,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -377,6 +437,9 @@ class Nvd3:
     ------------
     Display a pie chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -387,8 +450,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -412,6 +475,9 @@ class Nvd3:
     ------------
     Display a donut chart from NVD3.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -422,8 +488,8 @@ class Nvd3:
     Attributes:
     ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -445,6 +511,9 @@ class Nvd3:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -487,8 +556,13 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
+
+    Related Pages:
 
     Attributes:
     ----------
@@ -511,8 +585,13 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
+
+    Related Pages:
 
     Attributes:
     ----------
@@ -536,12 +615,18 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
       data = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
       sc = page.ui.charts.nvd3.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"],
           opens=["AAPL.Open"], x_axis='Date')
+
+    Related Pages:
+
 
     Attributes:
     ----------
@@ -582,8 +667,13 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
+
+    Related Pages:
 
     Attributes:
     ----------
@@ -622,8 +712,13 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
+
+    Related Pages:
 
     Attributes:
     ----------
@@ -645,8 +740,13 @@ class Nvd3:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
+
+    Related Pages:
 
     Attributes:
     ----------

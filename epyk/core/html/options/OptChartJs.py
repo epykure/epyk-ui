@@ -943,8 +943,8 @@ class OptionLegend(DataClass):
     return self._attrs.get("rtl", False)
 
   @rtl.setter
-  def rtl(self, bool):
-    self._attrs["rtl"] = bool
+  def rtl(self, flag):
+    self._attrs["rtl"] = flag
 
 
 class OptionPoint(DataClass):
@@ -962,11 +962,33 @@ class OptionPoint(DataClass):
     self._attrs["radius"] = num
 
 
+class OptionLine(DataClass):
+
+  @property
+  def tension(self):
+    """
+    Description:
+    ------------
+    """
+    return self._attrs.get("tension", None)
+
+  @tension.setter
+  def tension(self, num):
+    self._attrs["tension"] = num
+
+
 class OptionElements(DataClass):
 
   @property
   def point(self):
     return self.sub_data("point", OptionPoint)
+
+
+class OptionElementsLine(OptionElements):
+
+  @property
+  def line(self):
+    return self.sub_data("line", OptionLine)
 
 
 class OptionTitle(DataClass):
@@ -1265,6 +1287,10 @@ class OptionsLine(ChartJsOptions):
   @spanGaps.setter
   def spanGaps(self, val):
     self._attrs["spanGaps"] = val
+
+  @property
+  def elements(self):
+    return self.sub_data("elements", OptionElementsLine)
 
 
 class OptionsPolar(ChartJsOptions):

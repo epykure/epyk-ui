@@ -21,6 +21,20 @@ class Chart(Html.Html):
     self._d3, self.html_items, self._datasets = None, [], []
 
   @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
+    :rtype: OptChart.OptionsChart
+    """
+    return super().options
+
+  @property
   def chartId(self):
     """
     Description:
@@ -96,8 +110,8 @@ class Chart(Html.Html):
     """
     dataset = {"values": data, 'key': name}
     next_index = len(self._datasets)
-    if len(self._report.theme.colors) > next_index:
-      dataset['color'] = self._report.theme.colors[next_index]
+    if len(self.options.colors) > next_index:
+      dataset['color'] = self.options.colors[next_index]
     self._datasets.append(dataset)
     return self
 
@@ -321,6 +335,44 @@ class ChartBar(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
+
+  def colors(self, hex_values, multi=False):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    :param multi: Boolean. Optional. Specify if the chart should be using the same color for a series.
+    """
+    line_colors, bg_colors = [], []
+    for h in hex_values:
+      if h.upper() in Colors.defined:
+        h = Colors.defined[h.upper()]['hex']
+      if not isinstance(h, tuple):
+        line_colors.append(h)
+        bg_colors.append("rgba(%s, %s, %s, %s" % (
+          Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+          Colors.getHexToRgb(h)[2], self.options.opacity))
+      else:
+        line_colors.append(h[0])
+        bg_colors.append(h[0])
+    self.options.colors = line_colors
+    self.options.background_colors = bg_colors
+    if multi:
+      self.dom.color(line_colors)
+    else:
+      self.dom.color([line_colors[0]])
+    for i, rec in enumerate(self._datasets):
+      rec['color'] = self.options.colors[i]
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """

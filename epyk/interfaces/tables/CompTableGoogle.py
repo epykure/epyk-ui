@@ -14,6 +14,9 @@ class Google:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -38,8 +41,8 @@ class Google:
       table_options_dfls.update(options)
 
     data = self.page.data.google.table(records, cols, rows)
-    table = html_tables.HtmlTableGoogle.Table(self.page, data, width, height, html_code,
-                                              table_options_dfls, profile)
+    table = html_tables.HtmlTableGoogle.Table(
+      self.page, data, width, height, html_code, table_options_dfls, profile)
     for c in cols + rows:
       table.add_column(c)
     return table

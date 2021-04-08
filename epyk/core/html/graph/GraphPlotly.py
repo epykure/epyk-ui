@@ -350,7 +350,15 @@ class Line(Chart):
     return DataXY(self._report, attrs=c_data)
 
   def add_trace(self, data, type=None, mode='lines+markers'):
+    """
+
+    :param data:
+    :param type:
+    :param mode:
+    """
     self._traces.append(self.trace(data, type, mode))
+    self.data.line.color = self.options.colors[len(self._traces)-1]
+    self.data.marker.color = self.options.colors[len(self._traces)-1]
     return self
 
 
@@ -381,6 +389,8 @@ class Bar(Chart):
 
   def add_trace(self, data, type='bar', mode=None):
     self._traces.append(self.trace(data, type, mode))
+    self.data.line.color = self.options.colors[len(self._traces)-1]
+    self.data.marker.color = self.options.colors[len(self._traces)-1]
     return self
 
 

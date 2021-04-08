@@ -5,7 +5,7 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.packages import DataAttrs
 
 
-class JsNvd3Axis(object):
+class JsNvd3Axis:
 
   def __init__(self, id):
     self._selector = id
@@ -464,6 +464,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outliers(self, outlData):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -474,6 +476,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outlierValue(self, data):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -484,6 +488,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outlierColor(self, color):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -494,6 +500,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q1(self, q1_col):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -504,6 +512,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q2(self, q2_col):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -514,6 +524,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q3(self, q3_col):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -524,6 +536,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def wl(self, wl_col):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -534,6 +548,8 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def wh(self, wh_col):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -550,6 +566,14 @@ class JsNvd3Bar(JsNvd3):
   chartFnc = "discreteBarChart"
 
   def x(self, column=None, jsFnc=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param column:
+    :param jsFnc:
+    :param profile:
+    """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
@@ -557,6 +581,14 @@ class JsNvd3Bar(JsNvd3):
     return self
 
   def y(self, column=None, jsFnc=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param column:
+    :param jsFnc:
+    :param profile:
+    """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
@@ -565,6 +597,8 @@ class JsNvd3Bar(JsNvd3):
 
   def color(self, colors):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
 
@@ -575,6 +609,8 @@ class JsNvd3Bar(JsNvd3):
 
   def rotateLabels(self, value):
     """
+    Description:
+    ------------
     Rotates the X axis labels by the specified degree.
 
     Related Pages:
@@ -597,6 +633,8 @@ class JsNvd3Bar(JsNvd3):
 
   def showValues(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/discreteBarChart.html
 
@@ -614,6 +652,8 @@ class JsNvd3MultiBar(JsNvd3):
 
   def barColor(self, colors):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart.html
 
@@ -624,6 +664,8 @@ class JsNvd3MultiBar(JsNvd3):
 
   def stacked(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart2.html
 
@@ -638,6 +680,8 @@ class JsNvd3MultiBarHorizontal(JsNvd3Bar):
 
   def yErr(self):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
 
@@ -646,6 +690,8 @@ class JsNvd3MultiBarHorizontal(JsNvd3Bar):
 
   def barColor(self, colors):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
 
@@ -668,6 +714,8 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def showDistX(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
@@ -678,6 +726,8 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def showDistY(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
@@ -688,6 +738,8 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def useVoronoi(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
@@ -702,6 +754,8 @@ class JsNvd3LineWithFocus(JsNvd3Line):
 
   def brushExtent(self, range):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/lineWithFocusChart.html
 
@@ -716,6 +770,8 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
   def average(self, mean):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
 
@@ -726,6 +782,8 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
   def clipVoronoi(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
 
@@ -740,6 +798,8 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def legendRightAxisHint(self, text):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
@@ -750,6 +810,8 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def forceY(self, indices):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
@@ -760,6 +822,8 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def padData(self, flag):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
@@ -774,7 +838,9 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
   def xScale(self, d3fnc):
     """
-    use a time scale instead of plain numbers in order to get nice round default values in the axis
+    Description:
+    ------------
+    Use a time scale instead of plain numbers in order to get nice round default values in the axis
 
     xScale(d3.time.scale())
 
@@ -787,10 +853,11 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
   def forceX(self, values):
     """
+    Description:
+    ------------
     fix half-bar problem on the first and last bars
 
     :param values:
-    :return:
     """
     self.fnc("forceX(%s)" % JsUtils.jsConvertData(values, None))
     return self
@@ -801,6 +868,8 @@ class JsDataArcRadius(DataAttrs):
   @property
   def inner(self):
     """
+    Description:
+    ------------
     """
     return self._attrs["inner"]
 
@@ -811,6 +880,8 @@ class JsDataArcRadius(DataAttrs):
   @property
   def outer(self):
     """
+    Description:
+    ------------
     """
     return self._attrs["outer"]
 
@@ -824,6 +895,8 @@ class JsNvd3Pie(JsNvd3):
 
   def arcsRadius(self, values=None):
     """
+    Description:
+    ------------
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html

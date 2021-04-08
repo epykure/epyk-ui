@@ -13,6 +13,9 @@ class Plotly:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 

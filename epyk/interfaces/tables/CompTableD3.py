@@ -13,6 +13,9 @@ class D3:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 

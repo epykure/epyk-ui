@@ -15,6 +15,9 @@ class Tabulators:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -39,6 +42,9 @@ class Tabulators:
     if options is not None:
       table_options_dflts.update(options)
 
+    if records and len(records) < table_options_dflts["paginationSize"]:
+      del table_options_dflts["pagination"]
+
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
                                                  table_options_dflts, profile)
     table.config.layout.fitColumns()
@@ -53,6 +59,9 @@ class Tabulators:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -114,6 +123,9 @@ class Tabulators:
 
     This configuration will load all the external JavaScript features to allow the full customisation.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -153,6 +165,7 @@ class Tabulators:
     if 'json' in table_options_dflts:
       json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
       del table_options_dflts["json"]
+
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
                                                  table_options_dflts, profile)
     table._json_config = json
@@ -167,6 +180,9 @@ class Tabulators:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -223,6 +239,9 @@ class Tabulators:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -287,6 +306,9 @@ class Tabulators:
     """
     Description:
     -----------
+
+    :tags:
+    :categories:
 
     Usage:
     -----

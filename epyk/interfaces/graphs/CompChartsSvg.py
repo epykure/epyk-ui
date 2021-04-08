@@ -15,6 +15,9 @@ class SVG:
 
     SVG defines vector-based graphics in XML format.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -42,6 +45,9 @@ class SVG:
     ------------
     Entry point to the basic line definition in a SVG HTML Tag.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -53,10 +59,10 @@ class SVG:
 
     Attributes:
     ----------
-    :param x1: The x1 attribute defines the start of the line on the x-axis
-    :param y1: The y1 attribute defines the start of the line on the y-axis
-    :param x2: The x2 attribute defines the end of the line on the x-axis
-    :param y2: The y2 attribute defines the end of the line on the y-axis
+    :param x1: The x1 attribute defines the start of the line on the x-axis.
+    :param y1: The y1 attribute defines the start of the line on the y-axis.
+    :param x2: The x2 attribute defines the end of the line on the x-axis.
+    :param y2: The y2 attribute defines the end of the line on the y-axis.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -67,7 +73,7 @@ class SVG:
       y2 = 0 if height[1] == "%" else height[0] / 2
     if y1 is None:
       y1 = 0 if height[1] == "%" else height[0] / 2
-    html_svg = graph.GraphSvg.SVG(self.page, width, height)
+    html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.line(x1, y1, x2, y2)
     return html_svg
 
@@ -76,6 +82,9 @@ class SVG:
     Description:
     ------------
     Entry point to the basic line definition in a SVG HTML Tag.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -88,22 +97,26 @@ class SVG:
 
     Attributes:
     ----------
-    :param x: The x attribute defines the start of the line on the x-axis
-    :param y: The y attribute defines the start of the line on the y-axis
-    :param r: The r attribute defines the radius
+    :param x: Float. The x attribute defines the start of the line on the x-axis.
+    :param y: Float. The y attribute defines the start of the line on the y-axis.
+    :param r: Float. The r attribute defines the radius.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_svg = graph.GraphSvg.SVG(self.page, width, height)
+    html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.circle(x, y, r)
     return html_svg
 
-  def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), html_code=None, options=None, profile=None):
+  def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), html_code=None,
+                  options=None, profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -114,24 +127,28 @@ class SVG:
     :param y1:
     :param x2:
     :param y2:
-    :param size:
+    :param size: Integer. Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    line = self.line(x1, y1, x2 or width[0]-size, y2, width, height, options)
+    line = self.line(x1, y1, x2 or width[0]-size, y2, width, height, options, profile)
     defs = line.defs()
     m = defs.marker(html_code or "arrow_right", "0 0 10 10", 5, 5)
     m.arrow(size)
     line[0].marker_end(m.url)
     return line
 
-  def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), html_code=None, options=None, profile=None):
+  def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), html_code=None,
+                 options=None, profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -144,14 +161,14 @@ class SVG:
     :param y1:
     :param x2:
     :param y2:
-    :param size:
+    :param size: Integer. Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    line = self.line(x1+size, y1, x2, y2, width, height, options)
+    line = self.line(x1+size, y1, x2, y2, width, height, options, profile)
     defs = line.defs()
     m = defs.marker(html_code or "arrow_left", "0 0 10 10", 5, 5)
     m.arrow(size).orient("auto-start-reverse")
@@ -163,6 +180,9 @@ class SVG:
     Description:
     ------------
     SVG Ellipse - <ellipse>.
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -184,7 +204,7 @@ class SVG:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_svg = graph.GraphSvg.SVG(self.page, width, height)
+    html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.ellipse(cx, cy, rx, ry)
     return html_svg
 
@@ -192,6 +212,9 @@ class SVG:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -204,13 +227,13 @@ class SVG:
 
     Attributes:
     ----------
-    :param points: The points attribute defines the list of points (pairs of x and y coordinates) required to draw the polyline
+    :param points: The points attribute defines the list of points (pairs of coordinates) required to draw the polyline.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_svg = graph.GraphSvg.SVG(self.page, width, height)
+    html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.polyline(points)
     return html_svg
 
@@ -218,6 +241,9 @@ class SVG:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -230,20 +256,24 @@ class SVG:
 
     Attributes:
     ----------
-    :param points: The points attribute defines the list of points (pairs of x and y coordinates) required to draw the polyline
+    :param points: The points attribute defines the list of points (pairs of coordinates) required to draw the polyline.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_svg = graph.GraphSvg.SVG(self.page, width, height)
+    html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.polygon(points)
     return html_svg
 
-  def triangle(self, point1, point2=None, point3=None, fill='None', width=(500, "px"), height=(300, "px"), options=None, profile=None):
+  def triangle(self, point1, point2=None, point3=None, fill='None', width=(500, "px"), height=(300, "px"), options=None,
+               profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -269,7 +299,7 @@ class SVG:
       point2 = (point1[1]/2, point1[0])
     if point3 is None:
       point3 = (point1[1], point1[1])
-    tri = graph.GraphSvg.SVG(self.page, width, height)
+    tri = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     tri.triangle([point1, point2, point3, point1], fill=fill, options=options)
     return tri
 
@@ -277,6 +307,9 @@ class SVG:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -290,13 +323,14 @@ class SVG:
 
     Attributes:
     ----------
-    :param size:
+    :param size: Integer. Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    svg = graph.GraphSvg.SVG(self.page, width, height)
+    svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     svg.origine = (size, height[0]-size)
     defs = svg.defs()
     m = defs.marker(html_code or "arrow", "0 0 10 10", 5, 5)
@@ -311,6 +345,9 @@ class SVG:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -327,7 +364,7 @@ class SVG:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    rect = graph.GraphSvg.SVG(self.page, (900, "px"), (200, "px"))
+    rect = graph.GraphSvg.SVG(self.page, (900, "px"), (200, "px"), options=options, profile=profile)
     rect.rect(x, y, width, height, fill, rx=rx, ry=ry)
     return rect
 
@@ -336,6 +373,8 @@ class SVG:
     Description:
     ------------
 
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -353,15 +392,18 @@ class SVG:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    svg = graph.GraphSvg.SVG(self.page, width, height)
-    svg.polygon([(w, w), (3/4 * h, 3/4 * h), (h, w), (h, 3/4 * w), (9/10 * h, 6/10 * w), (8.5/10 * h, 6/10 * w), (3/4 * h, 3/4 * w),
-                 (2/3 * h, 6/10 * w), (6/10 * h, 6/10 * w), (w, 3/4 * w), (w, w)], fill=fill)
+    svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
+    svg.polygon([(w, w), (3/4 * h, 3/4 * h), (h, w), (h, 3/4 * w), (9/10 * h, 6/10 * w), (8.5/10 * h, 6/10 * w),
+                 (3/4 * h, 3/4 * w), (2/3 * h, 6/10 * w), (6/10 * h, 6/10 * w), (w, 3/4 * w), (w, w)], fill=fill)
     return svg
 
   def star(self, fill='none', width=(500, "px"), height=(300, "px"), options=None, profile=None):
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -378,7 +420,7 @@ class SVG:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    svg = graph.GraphSvg.SVG(self.page, width, height)
+    svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     svg.polygon([(100, 10), (40, 180), (190, 60), (10, 60), (160, 180)], fill=fill)
     svg[-1].css({"stroke": 'none'})
     return svg
@@ -387,6 +429,9 @@ class SVG:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -403,5 +448,5 @@ class SVG:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    path = graph.GraphSvg.Path(self.page, x, y, fill, origin, bespoke_path)
+    path = graph.GraphSvg.Path(self.page, x, y, fill, origin, bespoke_path, options=options, profile=profile)
     return path

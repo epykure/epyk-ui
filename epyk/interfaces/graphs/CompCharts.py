@@ -24,6 +24,34 @@ class Graphs:
   def __init__(self, ui):
     self.page = ui.page
 
+  def plot(self, pkg="apex", record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"),
+           height=(330, "px"), options=None, html_code=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param pkg: String. Optional. The external chart package reference. Default ApexCharts.
+    :param record: List. Optional. The list of dictionaries with the input data.
+    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param kind: String. Optional. The chart type.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    if not isinstance(y, list):
+      y = [y]
+    chart_pkg = getattr(self, pkg)
+    return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+                                    options=options, html_code=html_code)
+
   @html.Html.css_skin()
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
                 height=(None, 'px'), html_code=None, options=None, profile=False):
@@ -324,7 +352,7 @@ class Graphs:
       https://developers.google.com/chart
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
+      raise Exception("Google produce must be added using for example page.imports().google_products(['charts'])")
 
     return CompChartsGoogle.ChartGoogle(self)
 

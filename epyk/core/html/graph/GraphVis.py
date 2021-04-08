@@ -80,6 +80,7 @@ class Chart(Html.Html):
     :param data: String. A String corresponding to a JavaScript object.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Optional.
     """
     profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
     if data:
@@ -312,6 +313,7 @@ class Chart3D(Chart):
     :param data:
     :param options:
     :param profile:
+    :param component_id: String. Optional.
     """
     if data:
       return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {'chartId': self.chartId, 'data': data[0]}

@@ -15,6 +15,9 @@ class Sparkline:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -42,6 +45,9 @@ class Sparkline:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -71,6 +77,9 @@ class Sparkline:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -98,6 +107,9 @@ class Sparkline:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----
@@ -127,6 +139,9 @@ class Sparkline:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -155,6 +170,9 @@ class Sparkline:
     Description:
     ------------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
@@ -182,6 +200,9 @@ class Sparkline:
     """
     Description:
     ------------
+
+    :tags:
+    :categories:
 
     Usage:
     -----

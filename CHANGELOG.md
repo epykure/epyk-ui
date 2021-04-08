@@ -1,13 +1,19 @@
 ## [Unreleased]
 
 ### Added
+- Add plot shortcut with kind to align with matplotlib.
+- Add plot function to the base property charts to switch chart families.
 
 ### Changed
+- Change records name to record in all charts.
 
 ### Fixed
+- Fix data transformation for scatter charts (with distinct agg)
+- Fix color definition for charts. Always rely on theme.charts list.
 
 
 ## [1.5.10] - 2021-04-07
+
 ### Added
 - Add ek shortcut for Page and events.
 
@@ -15,7 +21,7 @@
 
 ### Fixed
 - Fix chartsJs tooltips.
-- Fix chartJs Scatter
+- Fix chartsJs Scatter
 
 
 ## [1.5.9] - 2021-04-05

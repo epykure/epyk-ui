@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -16,16 +18,28 @@ class D3:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
+    Related Pages:
+
+    Templates:
+
     Attributes:
     ----------
-    :param name:
-    :param scripts:
-    :param d3_version:
-    :param dependencies:
+    :param name: String. The module name.
+    :param scripts: List. Optional. The list of scripts.
+    :param data: Object. Optional. The chart input data to be serialised.
+    :param d3_version: String. Optional. Required version for the underlying D3 package.
+    :param dependencies: List. Optional. The required dependency files.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if scripts is not None:
       scripts = [os.path.split(script) for script in scripts]
@@ -50,12 +64,19 @@ class D3:
     Description:
     -----------
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 
+    Related Pages:
+
+    Templates:
+
     Attributes:
     ----------
-    :param data:
+    :param data: Object. Optional. The chart input data to be serialised.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -64,7 +85,8 @@ class D3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     scripts = ["https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"]
-    chart = self.script('cloud', scripts, None, profile=profile, options=options, width=width, height=height, html_code=html_code)
+    chart = self.script(
+      'cloud', scripts, None, profile=profile, options=options, width=width, height=height, html_code=html_code)
     chart.loader('''
     var layout = d3.layout.cloud().size([options.wdith, options.height])
         .words(data.map(function(d) { return {text: d, size: 10 + Math.random() * 90}; }))

@@ -16,6 +16,9 @@ class AgGrid:
     ------------
     Create a generic Angular Grid table.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 

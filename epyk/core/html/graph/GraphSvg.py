@@ -7,8 +7,9 @@ from epyk.core.html import Html
 class SVG(Html.Html):
   name = 'SVG'
 
-  def __init__(self, report, width, height, html_code=None):
-    super(SVG, self).__init__(report, "", html_code=html_code, css_attrs={"width": width, "height": height})
+  def __init__(self, report, width, height, html_code=None, options=None, profile=None):
+    super(SVG, self).__init__(
+      report, "", html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.origine = None
     if width is not None:
       self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1',
@@ -223,7 +224,7 @@ class SVG(Html.Html):
     Attributes:
     ----------
     :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon.
-    :param fill:
+    :param fill: String. Optional.
 
     :rtype: Polygone
     """
@@ -320,9 +321,9 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param x:
-    :param y:
-    :param fill:
+    :param x: Number.
+    :param y: Number.
+    :param fill: String. Optional.
     :param from_origin:
     :param bespoke_path:
     :param stroke:
@@ -905,8 +906,8 @@ class TSpan(SVGItem):
 class Path(SVGItem):
   name = 'SVG Path'
 
-  def __init__(self, report, x, y, fill, origin, bespoke_path, stroke=None):
-    super(Path, self).__init__(report, "")
+  def __init__(self, report, x, y, fill, origin, bespoke_path, stroke=None, options=None, profile=None):
+    super(Path, self).__init__(report, "", options=options, profile=profile)
     self.set_attrs({'fill': fill})
     if stroke is not None:
       self.set_attrs({"stroke": stroke, "stroke-width": 1})
@@ -940,8 +941,8 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x:
-    :param y:
+    :param x: Number.
+    :param y: Number.
     """
     if self.origin is not None:
       x = self.origin[0] + x
@@ -956,7 +957,7 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x:
+    :param x: Number.
     """
     if self.origin is not None:
       x = self.origin[0] + x
@@ -970,7 +971,7 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param y:
+    :param y: Number.
     """
     if self.origin is not None:
       y = self.origin[1] - y
@@ -984,8 +985,8 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x:
-    :param y:
+    :param x: Number.
+    :param y: Number.
     """
     if self.origin is not None:
       x = self.origin[0] + x
@@ -1004,10 +1005,10 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x1:
-    :param y1:
-    :param x2:
-    :param y2:
+    :param x1: Number.
+    :param y1: Number.
+    :param x2: Number.
+    :param y2: Number.
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -1028,10 +1029,10 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x1:
-    :param y1:
-    :param x2:
-    :param y2:
+    :param x1: Number.
+    :param y1: Number.
+    :param x2: Number.
+    :param y2: Number.
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -1052,10 +1053,10 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x1:
-    :param y1:
-    :param x2:
-    :param y2:
+    :param x1: Number.
+    :param y1: Number.
+    :param x2: Number.
+    :param y2: Number.
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -1076,9 +1077,9 @@ class Path(SVGItem):
 
     Attributes:
     ----------
-    :param x:
-    :param y:
-    :param absolute:
+    :param x: Number.
+    :param y: Number.
+    :param absolute: Boolean. Optional.
     """
     if self.origin is not None:
       x = self.origin[0] + x

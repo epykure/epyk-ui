@@ -175,7 +175,7 @@ class Plotly:
     return records
 
   @staticmethod
-  def xy(data, y_columns, x_axis):
+  def xy(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -192,22 +192,31 @@ class Plotly:
     if data is None:
       return {'datasets': [], 'python': True, 'series': y_columns}
 
-    agg_data = {}
-    for rec in data:
+    results = []
+    if options is not None and options.get("agg") == 'distinct':
       for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-    return {'datasets': data, 'python': True, 'series': y_columns}
+        series = {'x': [], 'y': [], 'text': []}
+        for rec in data:
+          series["x"].append(rec[x_axis])
+          series["y"].append(rec[y])
+        results.append(series)
+    else:
+      agg_data = {}
+      for rec in data:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+      results = []
+      for c in y_columns:
+        series = {'x': [], 'y': []}
+        for x, y in agg_data.get(c, {}).items():
+          series['x'].append(x)
+          series['y'].append(y)
+        results.append(series)
+    return {'datasets': results, 'python': True, 'series': y_columns}
 
   @staticmethod
-  def xy_text(data, y_columns, x_axis, text=None):
+  def xy_text(data, y_columns, x_axis, text=None, options=None):
     """
     Description:
     ------------
@@ -223,23 +232,33 @@ class Plotly:
     :param text: String. The column corresponding to the key in the dictionaries in the record
     """
     if text is None:
-      return Plotly.xy(data, y_columns, x_axis)
+      return Plotly.xy(data, y_columns, x_axis, options=options)
 
-    agg_data, texts = {}, {}
-    for rec in data:
+    results = []
+    if options is not None and options.get("agg") == 'distinct':
       for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-          texts.setdefault(y, {})[rec[x_axis]] = rec[text]
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': [], 'text': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-        series['text'].append(texts.get(c, {}).get(x, ''))
-      data.append(series)
-    return {'datasets': data, 'python': True, 'series': y_columns}
+        series = {'x': [], 'y': [], 'text': []}
+        for rec in data:
+          series["x"].append(rec[x_axis])
+          series["y"].append(rec[y])
+          if text is not None:
+            series["text"].append(rec.get(text, ""))
+        results.append(series)
+    else:
+      agg_data, texts = {}, {}
+      for rec in data:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+            texts.setdefault(y, {})[rec[x_axis]] = rec[text]
+      for c in y_columns:
+        series = {'x': [], 'y': [], 'text': []}
+        for x, y in agg_data.get(c, {}).items():
+          series['x'].append(x)
+          series['y'].append(y)
+          series['text'].append(texts.get(c, {}).get(x, ''))
+        results.append(series)
+    return {'datasets': results, 'python': True, 'series': y_columns}
 
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
@@ -595,15 +614,17 @@ class ChartJs:
     for rec in data:
       for i, y in enumerate(y_columns):
         if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+          # agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+          agg_data.setdefault(y, {}).setdefault(rec[x_axis], []).append(float(rec[y]))
         if z_axis is not None and i < len(z_axis):
           agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
     data = []
     for c in y_columns:
       series = []
-      for x, y in agg_data.get(c, {}).items():
+      for x, ys in agg_data.get(c, {}).items():
         is_data["labels"].add(x)
-        series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 2)})
+        for y in ys:
+          series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 2)})
       data.append(series)
     for i, l in enumerate(y_columns):
       is_data["datasets"].append({"data": data[i], 'label': l})
@@ -630,18 +651,28 @@ class C3:
     if data is None or y_columns is None:
       return is_data
 
-    agg_data = {}
-    for rec in data:
+    if options is not None and options.get("agg") == 'distinct':
       for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+        is_data["datasets"].append([])
+        is_data["series"].append(y)
+      is_data["labels"] = []
+      for rec in data:
+        is_data["labels"].append(rec[x_axis])
+        for i, y in enumerate(y_columns):
+          is_data["datasets"][i].append(rec.get(y))
+    else:
+      agg_data = {}
+      for rec in data:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
 
-    for c in y_columns:
-      for x, y in agg_data.get(c, {}).items():
-        is_data["labels"].add(x)
-    for i, y in enumerate(y_columns):
-      is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in is_data["labels"]])
-      is_data["series"].append(y)
+      for c in y_columns:
+        for x, y in agg_data.get(c, {}).items():
+          is_data["labels"].add(x)
+      for i, y in enumerate(y_columns):
+        is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in is_data["labels"]])
+        is_data["series"].append(y)
     return is_data
 
 
@@ -667,21 +698,29 @@ class NVD3:
     if data is None or y_columns is None:
       return is_data
 
-    agg_data, result = {}, []
-    for rec in data:
+    if options is not None and options.get("agg") == 'distinct':
       for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    for c in y_columns:
-      series = []
-      for x, y in agg_data.get(c, {}).items():
-        is_data["labels"].add(x)
-        series.append({"x": x, "y": y})
-      result.append(series)
-    for i, l in enumerate(y_columns):
-      is_data["labels"].append(l)
-      is_data["datasets"].append(result[i])
-      is_data["series"].append(l)
+        is_data["series"].append(y)
+        is_data["labels"].append(y)
+        result = []
+        for rec in data:
+          result.append({"x": rec[x_axis], "y": rec[y]})
+        is_data["datasets"].append(result)
+    else:
+      agg_data, result = {}, []
+      for rec in data:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+      for c in y_columns:
+        series = []
+        for x, y in agg_data.get(c, {}).items():
+          series.append({"x": x, "y": y})
+        result.append(series)
+      for i, l in enumerate(y_columns):
+        is_data["labels"].append(l)
+        is_data["datasets"].append(result[i])
+        is_data["series"].append(l)
     return is_data
 
   @staticmethod
@@ -749,7 +788,7 @@ class Datatable:
 class Google:
 
   @staticmethod
-  def y(data, y_columns, x_axis):
+  def y(data, y_columns, x_axis, options=None):
     """
     Description:
     ------------
@@ -767,18 +806,27 @@ class Google:
     if data is None:
       return is_data
 
-    agg_data = {}
-    for rec in data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = OrderedSet(), []
-    for c in y_columns:
-      for x, y in agg_data.get(c, {}).items():
-        labels.add(x)
-    is_data["labels"] = labels
-    for x in labels:
-      is_data["datasets"].append([x] + [agg_data.get(y, {}).get(x) for y in y_columns])
+    if options is not None and options.get("agg") == 'distinct':
+      labels = OrderedSet()
+      for rec in data:
+        labels.add(rec[x_axis])
+        for y in y_columns:
+          if y in rec:
+            is_data['datasets'].append([str(rec[x_axis]), rec[y]])
+      is_data["labels"] = sorted(list(labels))
+    else:
+      agg_data = {}
+      for rec in data:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+      labels, data = OrderedSet(), []
+      for c in y_columns:
+        for x, y in agg_data.get(c, {}).items():
+          labels.add(x)
+      is_data["labels"] = labels
+      for x in labels:
+        is_data["datasets"].append([str(x)] + [agg_data.get(y, {}).get(x) for y in y_columns])
     is_data["series"] = y_columns
     is_data["x"] = x_axis
     return is_data

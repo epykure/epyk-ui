@@ -67,7 +67,6 @@ class Chart(Html.Html):
         data.addColumn('string', chartData.x);
         chartData.series.forEach(function(col){data.addColumn('number', col)})
         data.addRows(chartData.datasets);
-        
         var chart = new google.visualization.%(type)s(%(varId)s);
         chart.draw(data, {});
         return chart

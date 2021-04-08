@@ -16,6 +16,9 @@ class Datatables:
     ------------
     Create a generic DataTable table.
 
+    :tags:
+    :categories:
+
     Usage:
     -----
 

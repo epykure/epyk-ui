@@ -591,6 +591,8 @@ class ChartLine(Chart):
   def labels(self, labels, series_id='x'):
     self.data.x = series_id
     self.data.columns.append([series_id] + labels)
+    if labels and not isinstance(labels[0], (int, float)):
+      self.axis.x.type = "category"
 
   def add_dataset(self, name, data, type=None):
     self.data.columns.append([name] + data)
