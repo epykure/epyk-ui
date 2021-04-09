@@ -72,7 +72,7 @@ class Tables:
     In order to use it, the Google products need to be specially enabled.
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example page.imports().google_products(['charts'])")
+      raise Exception("Google produce must be added using for example page.imports.google_products(['charts'])")
 
     return CompTableGoogle.Google(self)
 

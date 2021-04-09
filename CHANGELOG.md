@@ -10,6 +10,7 @@
 ### Fixed
 - Fix data transformation for scatter charts (with distinct agg)
 - Fix color definition for charts. Always rely on theme.charts list.
+- FIx bug when using page.imports.google_products(['charts']) without google packages.
 
 
 ## [1.5.10] - 2021-04-07

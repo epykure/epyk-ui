@@ -42,7 +42,7 @@ class Tabulators:
     if options is not None:
       table_options_dflts.update(options)
 
-    if records and len(records) < table_options_dflts["paginationSize"]:
+    if not records or len(records) < table_options_dflts["paginationSize"]:
       del table_options_dflts["pagination"]
 
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,

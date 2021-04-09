@@ -40,7 +40,7 @@ class ChartJs:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
@@ -76,7 +76,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {'fill': None}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
@@ -150,7 +150,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
@@ -190,7 +190,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
-    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns, 'x_axis': x_axis,
+    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns or [], 'x_axis': x_axis,
                     'commons': {"opacity": self.opacity}}
     if options is not None:
       dflt_options.update()
@@ -232,7 +232,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
@@ -273,7 +273,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"fill": None}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"fill": None}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
@@ -314,7 +314,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.page, width, height, html_code, options, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -398,7 +398,7 @@ class ChartJs:
 
     self.page.ext_packages.update(chartjs_defined_package)
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartExts(self.page, width, height, html_code, options, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -439,7 +439,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.page, width, height, html_code, options, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -481,7 +481,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.page, width, height, html_code, options, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -523,7 +523,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'rDim': None, 'commons': {}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'rDim': None, 'commons': {}})
     data = self.page.data.chartJs.xyz(record, y_columns, x_axis, None)
     line_chart = graph.GraphChartJs.ChartScatter(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
@@ -564,7 +564,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'z_columns': r_values, 'rDim': None,
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'z_columns': r_values, 'rDim': None,
                     'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.xyz(record, y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.page, width, height, html_code, options, profile)
@@ -605,7 +605,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     polar_chart = graph.GraphChartJs.ChartPolar(self.page, width, height, html_code, options, profile)
     polar_chart.colors(self.page.theme.charts)
@@ -646,7 +646,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.page, width, height, html_code, options, profile)
     radar_chart.colors(self.page.theme.charts)

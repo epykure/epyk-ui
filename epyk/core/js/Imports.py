@@ -1799,28 +1799,26 @@ GOOGLE_EXTENSIONS = {
       {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
     ],
     'website': 'https://developers.google.com/chart/interactive/docs',
-    'launcher': "google.charts.load('current', {'packages':['corechart']})",
-
+    'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['corechart']})}",
   },
   'geochart': {'modules': [
         {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
       ],
       'website': 'https://developers.google.com/chart/interactive/docs',
-      'launcher': "google.charts.load('current', {'packages':['geochart']})",
-
+      'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['geochart']})}",
   },
   'tables': {'modules': [
           {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
         ],
         'website': 'https://developers.google.com/chart/interactive/docs',
-        'launcher': "google.charts.load('current', {'packages':['table']})",
+        'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['table']})}",
 
     },
   'gauge': {'modules': [
         {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
       ],
       'website': 'https://developers.google.com/chart/interactive/docs',
-      'launcher': "google.charts.load('current', {'packages':['gauge']})",
+      'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['gauge']})}",
 
   },
   'maps': {'modules': [
@@ -1838,7 +1836,7 @@ GOOGLE_EXTENSIONS = {
        'cdnjs': 'https://maps.googleapis.com/maps'},
     ],
     'website': 'https://developers.google.com/chart',
-    'launcher': "google.charts.load('current', {'packages':['corechart']})",
+    'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['corechart']})}",
   },
   'captcha': {'modules': [
       {'script': 'api.js?render=%(site_key)s', 'version': '', 'path': '', 'cdnjs': 'https://www.google.com/recaptcha'},

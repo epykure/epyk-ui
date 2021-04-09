@@ -88,7 +88,7 @@ class Geo:
       https://developers.google.com/chart
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example page.imports().google_products(['charts'])")
+      raise Exception("Google produce must be added using for example page.imports.google_products(['charts'])")
 
     return CompGeoGoogle.GeoGoogle(self)
 
