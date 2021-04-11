@@ -805,7 +805,7 @@ class Buttons:
     return html_radio
 
   @html.Html.css_skin()
-  def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), align="left",
+  def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
              html_code=None, options=None, profile=None):
     """
     Description:
@@ -849,10 +849,19 @@ class Buttons:
     record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_toggle = html.HtmlRadio.Switch(
-      self.page, record, label, color, width, height, html_code, options or {}, profile)
-    self.__align(html_toggle, align)
-    return html_toggle
+    if height[0] is None:
+      height = (Defaults_html.LINE_HEIGHT, height[1])
+    html_toggle = html.HtmlRadio.Switch(self.page, record, color, width, height, html_code, options or {}, profile)
+    if label is not None:
+      label = self.page.ui.texts.label(label, options=options, html_code="%s_label" % html_toggle.htmlCode)
+      html_toggle.style.css.display = "inline-block"
+      html_toggle.style.css.padding_top = 2
+      container = self.page.ui.div([label, html_toggle])
+      container.label = label
+      container.input = html_toggle
+    else:
+      container = self.page.ui.div([html_toggle])
+    return container
 
   @html.Html.css_skin()
   def checkboxes(self, record=None, color=None, width=(100, "%"), height=(None, "px"), align='left',

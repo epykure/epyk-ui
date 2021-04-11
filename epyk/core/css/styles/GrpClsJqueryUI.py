@@ -8,8 +8,9 @@ class ClassSlider(GrpCls.ClassHtml):
 
   def __init__(self, component):
     super(ClassSlider, self).__init__(component)
-    self._css_ui_active = None
+    self._css_ui_active, self._css_ui_header = 2 * [None]
     self.classList['main'].add(self.cls_ui_active)
+    self.classList['main'].add(self.cls_ui_header)
 
   @property
   def css(self):
@@ -49,6 +50,18 @@ class ClassSlider(GrpCls.ClassHtml):
     if self._css_ui_active is None:
       self._css_ui_active = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).active()
     return self._css_ui_active
+
+  @property
+  def cls_ui_header(self):
+    """
+    Description:
+    -----------
+
+    :rtype: Classes.CatalogInput.CatalogInput
+    """
+    if self._css_ui_header is None:
+      self._css_ui_header = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).widget_header()
+    return self._css_ui_header
 
 
 class ClassMenu(GrpCls.ClassHtml):

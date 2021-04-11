@@ -126,7 +126,7 @@ class ClsConfigs:
     :param percent: Integer. Optional. The percentage of space on the left and right.
     :param max_width: Integer. Optional. The max size of the page in pixel.
     :param padding: Boolean. Optional. The top and bottom padding in the doc.
-    :param background: String. Optional.
+    :param background: String. Optional. The background color.
     """
     self.component.style.css.max_width = max_width
     self.component.style.css.min_height = 150
@@ -136,6 +136,7 @@ class ClsConfigs:
     if background is not None:
       self.component.style.css.background = background
     self.component.style.css.margin = "20px auto"
+    self.component.page.body.style.css.padding_bottom = 5
     self.component.page.body.style.css.padding_left = "%s%%" % percent
     self.component.page.body.style.css.padding_right = "%s%%" % percent
     self.component.page.body.style.css.background = self.component.page.theme.greys[2]

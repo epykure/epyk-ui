@@ -2,11 +2,36 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html.options import Options
-
 from epyk.core.js.packages import packageImport
-from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
+
+
+class OptionsChartSharedApex(OptChart.OptionsChartShared):
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.xaxis.title.text = value
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.yaxis.title.text = value
 
 
 class OptionHover(Options):

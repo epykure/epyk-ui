@@ -572,7 +572,7 @@ class Plotly2D:
       spolar_chart.data.marker.color = None
     return spolar_chart
 
-  def box(self, record, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"),
+  def box(self, record=None, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
     Description:
@@ -597,8 +597,9 @@ class Plotly2D:
     """
     axis, cols = ('y', y_columns) if y_columns is not None else ('x', x_columns)
     series = []
-    for c in cols:
-      series.append([rec.get(c) for rec in record])
+    if cols is not None:
+      for c in cols:
+        series.append([rec.get(c) for rec in record])
     box_chart = graph.GraphPlotly.Box(self.page, width, height, options or {}, html_code, profile)
     for s in series:
       box_chart.add_trace({axis: s})

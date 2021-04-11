@@ -35,7 +35,7 @@ class ApexChart:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(records=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)

@@ -16,7 +16,7 @@ from epyk.core.js.objects import JsNodeDomRect
 from epyk.core.js import JsUtils
 
 
-class JsDomEvents(object):
+class JsDomEvents:
 
   class __internal(object):
     htmlCode = None
@@ -425,7 +425,7 @@ class JsDomEvents(object):
     return strData
 
 
-class JsDomsTransforms(object):
+class JsDomsTransforms:
 
   def __init__(self, src, selector):
     self._src, self.selector = src, selector
@@ -752,7 +752,7 @@ class JsDomsTransforms(object):
     return "%s.style.transform = 'rotateZ(%s%s)'" % (self.selector, r, unit)
 
 
-class JsDomEffects(object):
+class JsDomEffects:
 
   def __init__(self, src, component):
     self._effects = Effects.Effects(src)
@@ -1353,7 +1353,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_element_classlist.asp
     """
-    return JsClassList("%s.classList" % self.varId, self._src)
+    return JsClassList("%s.classList" % self.varId, self.page)
 
   def css(self, type, jsObject=None, duration=None):
     """

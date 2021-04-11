@@ -10,6 +10,33 @@ from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
 
+class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.scales.xAxes.scaleLabel.label(value)
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.scales.yAxes.scaleLabel.label(value)
+
+
 class OptionAxesTicks(DataClass):
 
   @property
@@ -1187,7 +1214,7 @@ class OptionsBar(ChartJsOptions):
     """
     x_stacked = self.scales.x_axes().stacked
     y_stacked = self.scales.y_axis().stacked
-    return (x_stacked, y_stacked)
+    return x_stacked, y_stacked
 
   @stacked.setter
   def stacked(self, val):

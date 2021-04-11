@@ -2353,6 +2353,8 @@ class CssMixin:
   @transition.setter
   def transition(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, (float, int)):
+      val = "%ss" % val
     self.css({"transition": val})
 
   @property

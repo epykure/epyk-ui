@@ -13,6 +13,9 @@ class CatalogInput(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesInput.CssUIActive)
 
+  def widget_header(self):
+    return self._set_class(CssStylesInput.CssUIWidgetHeader)
+
   def basic(self):
     """
     Description:

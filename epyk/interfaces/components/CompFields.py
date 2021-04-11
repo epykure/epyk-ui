@@ -1281,8 +1281,7 @@ class Fields:
     if options is not None:
       dfl_options.update(options)
     div = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
-    div.input = html.HtmlRadio.Switch(self.page, record, None, color, ("auto", ''), height, html_code,
-                                      dfl_options, profile)
+    div.input = html.HtmlRadio.Switch(self.page, record, color, ("auto", ''), height, html_code, dfl_options, profile)
     if label is not None:
       div.input.style.css.display = 'inline-block'
       div.label = self.page.ui.text(

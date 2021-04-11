@@ -22,6 +22,22 @@ class Chart(Html.Html):
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
 
+  @property
+  def shared(self):
+    """
+    Description:
+    -----------
+    All the common properties shared between all the charts.
+    This will ensure a compatibility with the plot method.
+
+    Usage:
+    -----
+
+      line = page.ui.charts.chartJs.bar()
+      line.shared.x_label("x axis")
+    """
+    return OptChartApex.OptionsChartSharedApex(self)
+
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
@@ -48,6 +64,7 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+    Set the chart zoomable.
 
     Attributes:
     ----------
@@ -132,6 +149,41 @@ class Chart(Html.Html):
     """
     return super().options
 
+  def labels(self, labels):
+    """
+    Description:
+    -----------
+    Set the labels of the different series in the chart.
+
+    Usage:
+    -----
+
+
+    Attributes:
+    ----------
+    :param labels: List. An array of labels.
+    """
+    self.options.xaxis.categories = labels
+    return self
+
+  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data: List. The list of points (float).
+    :param label: List. Optional. The list of points (float).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Float. Optional. The opacity level for the content.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    """
+    series = self.options.add_series()
+    series.name = label
+    series.data = data
+    return series
+
   _js__builder__ = '''
       if(data.python){
         result = {series: [], labels: data.labels};
@@ -170,6 +222,19 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
+    Description:
+    ------------
+    Update the chart with context and / or data changes.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param data: Dictionary of dictionary. The full datasets object expected by ChartJs.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Not used.
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.name)
@@ -181,7 +246,8 @@ class Chart(Html.Html):
           ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
       return "%s.updateOptions(%s(%s, %s))" % (
-        "window['%s']" % self.chartId, js_convertor, JsUtils.jsConvertData(data, None), self.options.config_js(options).toStr())
+        "window['%s']" % self.chartId, js_convertor, JsUtils.jsConvertData(data, None),
+        self.options.config_js(options).toStr())
 
     return JsUtils.jsConvertFncs([self.js.new(
       self.dom.varId, self.options.config_js(options), "window['%s']" % self.chartId), self.js.render()],
@@ -254,14 +320,10 @@ class RadialBar(Chart):
     if (typeof data === 'number'){data = {values: [data]}}
     else {
       if (typeof data.values === 'number'){
-        data.values = [data.values];
-        if (typeof data.labels !== 'undefined'){data.labels = [data.labels]}
-      }
-    }
+        data.values = [data.values]; if (typeof data.labels !== 'undefined'){data.labels = [data.labels]}}}
     result = {series: data.values};
     if (typeof data.labels !== 'undefined'){result.labels = data.labels}
-    return result;
-    '''
+    return result'''
 
   @property
   def options(self):

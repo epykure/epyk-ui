@@ -1,5 +1,6 @@
 
 from epyk.core.html.options import Options
+import abc
 
 
 class OptionsChart(Options):
@@ -140,3 +141,64 @@ class OptionsChart(Options):
   @commons.setter
   def commons(self, values):
     self._config(values)
+
+
+class OptionsChartShared(abc.ABC):
+
+  def __init__(self, component):
+    self.component = component
+
+  @abc.abstractmethod
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+
+  @abc.abstractmethod
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+
+
+class OptionsChartSharedNVD3(OptionsChartShared):
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-label
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.dom.xAxis.axisLabel(value)
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.dom.yAxis.axisLabel(value)

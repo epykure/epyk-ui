@@ -1583,11 +1583,11 @@ class Icons:
     Attributes:
     ----------
     :param data: List. The icons definition.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dflt_options = {"margin-right": 5}
     if options is not None:
@@ -1603,6 +1603,51 @@ class Icons:
       if 'url' in d:
         div[-1].goto(d["url"], target="_blank")
     return div
+
+  def hamburger(self, width=(15, 'px'), height=(2, 'px'), color=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_menu_icon_js
+
+    Attributes:
+    ----------
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    height = Arguments.size(height, unit="px")
+    bar1 = self.page.ui.div(width=width, height=height, profile=profile)
+    bar1.style.add_classes.external("bar1")
+    bar1.style.css.background_color = color or self.page.theme.colors[-1]
+    bar1.style.css.display = "block"
+    bar1.style.css.transition = 0.4
+    bar1.style.css.margin = "%spx 0" % height[0]
+    bar2 = self.page.ui.div(width=width, height=height, profile=profile)
+    bar2.style.add_classes.external("bar2")
+    bar2.style.css.background_color = color or self.page.theme.colors[-1]
+    bar2.style.css.display = "block"
+    bar2.style.css.margin = "%spx 0" % height[0]
+    bar2.style.css.transition = 0.4
+    bar3 = self.page.ui.div(width=width, height=height, profile=profile)
+    bar3.style.add_classes.external("bar3")
+    bar3.style.css.background_color = color or self.page.theme.colors[-1]
+    bar3.style.css.display = "block"
+    bar3.style.css.margin = "%spx 0" % height[0]
+    bar3.style.css.transition = 0.4
+    component = self.page.ui.div([bar1, bar2, bar3], width=width, options=options, profile=profile)
+    component.style.add_custom_class({"transform": "rotate(-45deg) translate(-3px, 1px)"}, "change-hamburger .bar1")
+    component.style.add_custom_class({"transform": "rotate(45deg) translate(-4px, -3px)"}, "change-hamburger .bar3")
+    component.style.add_custom_class({"opacity": 0}, "change-hamburger .bar2")
+    component.style.css.cursor = "pointer"
+    component.set_icon = str
+    component.click([
+      component.dom.classList.toggle("change-hamburger")
+    ])
+    return component
 
   @property
   def toggles(self):

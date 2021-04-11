@@ -453,6 +453,32 @@ class Slider(JQueryUI):
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.slider("value", %s, %s)' % (self._src.dom.jquery.varId, index, jsData))
 
+  def inRange(self, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value: Number. The value to compare to the selected range.
+    """
+    if self._src.options.range:
+      if self._src.options.range == "max":
+        return JsObjects.JsObjects.get(
+          '''%(compId)s.slider("value") < %(val)s && %(val)s < %(compId)s.slider("option", "max")''' % {
+            "compId": self._src.dom.jquery.varId, "val": value})
+      if self._src.options.range == "min":
+        return JsObjects.JsObjects.get(
+          '''%(compId)s.slider("option", "min") < %(val)s && %(val)s < %(compId)s.slider("value")''' % {
+            "compId": self._src.dom.jquery.varId, "val": value})
+      return JsObjects.JsObjects.get(
+        '''%(compId)s.slider("values")[0] < %(val)s && %(val)s < %(compId)s.slider("values")[1]''' % {
+          "compId": self._src.dom.jquery.varId, "val": value})
+
+    return JsObjects.JsObjects.get(
+      '''%(compId)s.slider("value") == %(val)s''' % {
+        "compId": self._src.dom.jquery.varId, "val": value})
+
 
 class ProgressBar(JQueryUI):
 

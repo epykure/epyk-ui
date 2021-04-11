@@ -180,6 +180,9 @@ class ContentFormatters:
   def __ne__(self, obj):
     return "%s <> %s" % (self.selector, JsUtils.jsConvertData(obj, None))
 
+  def isTrue(self):
+    return JsObjects.JsObjects.get("%s == true" % self.selector)
+
   @packageImport("showdown")
   def fromMarkdown(self, options=None):
     """

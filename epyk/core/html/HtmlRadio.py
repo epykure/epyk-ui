@@ -146,11 +146,10 @@ class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, report, records, label, color, width, height, html_code, options, profile):
+  def __init__(self, report, records, color, width, height, html_code, options, profile):
     self.width, self.jsChange = width[0], ''
     super(Switch, self).__init__(report, records, html_code=html_code, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
-    self.add_label(label, html_code=self.htmlCode)
     self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': [], "profile": False}
 
@@ -217,6 +216,19 @@ class Switch(Html.Html):
     if self._js is None:
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
+
+  def event_fnc(self, event):
+    """
+    Description:
+    ------------
+    Function to get the generated JavaScript method in order to then reuse it in other components.
+    This will return the event function in a string already transpiled.
+
+    Attributes:
+    ----------
+    :param event: String. The event function.
+    """
+    return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """

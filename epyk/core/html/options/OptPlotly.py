@@ -2,6 +2,33 @@
 from epyk.core.html.options import OptChart
 
 
+class OptionsChartSharedPlotly(OptChart.OptionsChartShared):
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    pass
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    pass
+
+
 class OptionConfig(OptChart.OptionsChart):
 
   @property

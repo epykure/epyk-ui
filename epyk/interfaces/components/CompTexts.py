@@ -421,6 +421,7 @@ class Texts:
     Description:
     ------------
     Python Wrapper to the Bootstrap CODE Tag.
+    This entry point compare to the ui.codes will be by default readonly.
 
     :tags:
     :categories:
@@ -453,7 +454,7 @@ class Texts:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True,
-                    'autoRefresh': True}
+                    'autoRefresh': True, 'readOnly': True}
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(

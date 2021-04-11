@@ -36,7 +36,7 @@ class Billboard:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
@@ -70,13 +70,16 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
+    line_chart.options.axis.x.tick.count = 5
+    line_chart.options.axis.x.tick.rotate = 0
+    line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
@@ -108,14 +111,14 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-line-range"
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -147,13 +150,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     bubble_chart = graph.GraphBillboard.ChartBubble(self.page, width, height, html_code, options, profile)
     bubble_chart.labels(data['labels'])
     bubble_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      bubble_chart.add_dataset(data['series'][i], d)
+      bubble_chart.add_dataset(d, data['series'][i])
       bubble_chart.data.labels = True
     return bubble_chart
 
@@ -186,13 +189,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     radar_chart = graph.GraphBillboard.ChartRadar(self.page, width, height, html_code, options, profile)
     radar_chart.labels(data['labels'])
     radar_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      radar_chart.add_dataset(data['series'][i], d)
+      radar_chart.add_dataset(d, data['series'][i])
       radar_chart.data.labels = True
     return radar_chart
 
@@ -225,13 +228,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -263,14 +266,14 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.options.type = 'step'
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -302,13 +305,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -340,14 +343,14 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-step"
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
@@ -379,8 +382,8 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     line = self.line(record, y_columns, x_axis, profile, width, height, options, html_code)
-    line.axis.x.type = "timeseries"
-    line.axis.x.tick.format = "%Y-%m-%d"
+    line.options.axis.x.type = "timeseries"
+    line.options.axis.x.tick.format = "%Y-%m-%d"
     return line
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -412,14 +415,17 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     if data['labels']:
       line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
+    line_chart.options.axis.x.tick.count = 5
+    line_chart.options.axis.x.tick.rotate = 0
+    line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -451,14 +457,14 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
-    line_chart.data.groups = [data['series']]
+    line_chart.options.data.groups = [data['series']]
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -490,7 +496,7 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, html_code)
-    h_bar.axis.rotated = True
+    h_bar.options.axis.rotated = True
     return h_bar
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -522,13 +528,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis, options={"agg":  options.get('agg', 'distinct')})
     line_chart = graph.GraphBillboard.ChartScatter(self.page, width, height, html_code, options, profile)
     line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -560,13 +566,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartPie(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(data['series'][i], d)
+      pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -598,13 +604,13 @@ class Billboard:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartDonut(self.page, width, height, html_code, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(data['series'][i], d)
+      pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
   def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
@@ -635,5 +641,5 @@ class Billboard:
     """
     g_chart = graph.GraphBillboard.ChartGauge(self.page, width, height, html_code, options, profile)
     g_chart.colors(self.page.theme.charts)
-    g_chart.add_dataset(text, value)
+    g_chart.add_dataset(value, text)
     return g_chart

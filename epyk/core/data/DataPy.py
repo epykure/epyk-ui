@@ -607,7 +607,7 @@ class ChartJs:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
-    if y_columns is None:
+    if data is None or y_columns is None:
       return is_data
 
     agg_data, agg_r = {}, {}

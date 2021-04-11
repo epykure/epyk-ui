@@ -180,6 +180,22 @@ class Chart(Html.Html):
     return ChartJsActivePoints(self.chartId, i, self._report)
 
   @property
+  def shared(self):
+    """
+    Description:
+    -----------
+    All the common properties shared between all the charts.
+    This will ensure a compatibility with the plot method.
+
+    Usage:
+    -----
+
+      line = page.ui.charts.chartJs.bar()
+      line.shared.x_label("x axis")
+    """
+    return OptChartJs.OptionsChartSharedChartJs(self)
+
+  @property
   def d3(self):
     """
     Description:
@@ -206,7 +222,10 @@ class Chart(Html.Html):
     Usage:
     -----
 
-    :return: A Javascript object
+      line = page.ui.charts.chartJs.bar()
+      page.ui.button("Load").click([line.js.add(6, {"test 2": 34})])
+
+    :return: A Javascript object.
 
     :rtype: JsChartJs.ChartJs
     """
@@ -268,7 +287,7 @@ class Chart(Html.Html):
     """
     Description:
     -----------
-    A plugin for Chart.js >= 2.4.0
+    A plugin for Chart.js >= 2.4.0.
 
     Makes data points draggable. Supports touch events.
 
@@ -393,9 +412,9 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     tmp_js_funcs = [
@@ -418,9 +437,9 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     tmp_js_funcs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
@@ -442,7 +461,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List. Set of Javascript function to trigger on this event
+    :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     """
@@ -495,9 +514,10 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param data: Dictionary of dictionary. Teh full datasets object expected by ChartJs.
+    :param data: Dictionary of dictionary. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Not used.
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self._chart__type)
@@ -532,9 +552,12 @@ class Chart(Html.Html):
       return ''' 
         if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
           var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
-          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
-          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; divLoading.style.zIndex = 200;
-          divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; divLoading.style.paddingTop = '50vh';
+          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; 
+          divLoading.style.background = '%(background)s';
+          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
+          divLoading.style.zIndex = 200;
+          divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
+          divLoading.style.paddingTop = '50vh';
           divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
           document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
         }''' % {
@@ -556,9 +579,7 @@ class Fabric(Html.Html):
 
   def __init__(self, report, width, height, html_code, options, profile):
     super(Fabric, self).__init__(report, [], html_code=html_code, options=options, profile=profile)
-    self.attr["data-counter"] = 0
-    self.attr["data-next"] = 1
-    self.attr["data-current"] = 0
+    self.attr.update({"data-counter": 0, "data-next": 1, "data-current": 0})
     self.chart = ChartBar(report, width, height, None, options, profile)
     self.chart.colors(self.page.theme.charts)
     self.chart.options.scales.y_axis().ticks.toNumber()
@@ -613,7 +634,7 @@ class Fabric(Html.Html):
     ----------
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs:
+    :param attrs: Dictionary. Optional.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
@@ -675,7 +696,7 @@ class ChartLine(Chart):
     """
     return super().options
 
-  def new_dataset(self, id, data, label, colors=None, opacity=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
     """
     Description:
     ------------
@@ -693,12 +714,12 @@ class ChartLine(Chart):
 
     Attributes:
     ----------
-    :param id: Integer. The index of the dataset in the chart list of datasets.
+    :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
     if opacity is None:
@@ -707,11 +728,11 @@ class ChartLine(Chart):
     opacity = opacity or self.options.opacity
     if not opacity:
       self.options.props[label] = {"fill": False}
-    data.set_style(backgroundColor=self.options.background_colors[id], fillOpacity=opacity or self.options.opacity,
-                   borderWidth=1, borderColor=colors or self.options.colors[id])
+    data.set_style(backgroundColor=self.options.background_colors[index], fillOpacity=opacity or self.options.opacity,
+                   borderWidth=1, borderColor=colors or self.options.colors[index])
     return data
 
-  def add_dataset(self, data, label="", colors=None, opacity=None):
+  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
     """
     Description:
     ------------
@@ -728,10 +749,10 @@ class ChartLine(Chart):
     ----------
     :param data: List. The list of points (float).
     :param label: List. Optional. The list of points (float).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, type=None)
+    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None)
     self._datasets.append(data)
     return data
 
@@ -773,7 +794,7 @@ class ChartLine(Chart):
 class ChartBubble(Chart):
   _chart__type = 'bubble'
 
-  def new_dataset(self, id, data, label, colors=None, opacity=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
     """
     Description:
     ------------
@@ -789,19 +810,19 @@ class ChartBubble(Chart):
 
     Attributes:
     ----------
-    :param id: Integer. The index of the dataset in the chart list of datasets.
+    :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = JsChartJs.DataSetBubble(self._report, attrs={"data": data})
     data.fill = False
     data.label = label
-    data.set_style(backgroundColor=self.options.background_colors[id],
+    data.set_style(backgroundColor=self.options.background_colors[index],
                    fillOpacity=opacity or self.options.opacity,
-                   borderWidth=1, borderColor=colors or self.options.colors[id])
+                   borderWidth=1, borderColor=colors or self.options.colors[index])
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None):
@@ -821,7 +842,7 @@ class ChartBubble(Chart):
     ----------
     :param data: List. The list of points (float).
     :param label: List. The list of points (float).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity)
@@ -877,7 +898,7 @@ class ChartBar(ChartLine):
     """
     return super().options
 
-  def new_dataset(self, id, data, label, colors=None, opacity=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
     """
     Description:
     ------------
@@ -893,25 +914,24 @@ class ChartBar(ChartLine):
 
     Attributes:
     ----------
-    :param id: Integer. The index of the dataset in the chart list of datasets.
+    :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
-    series_attrs = {"data": data, 'type': type or self.options.type}
+    series_attrs = {"data": data, 'type': kind or self.options.type}
     if series_attrs['type'] == 'line':
       data = JsChartJs.DataSetScatterLine(self._report, attrs=series_attrs)
     else:
       data = JsChartJs.DataSetBar(self._report, attrs=series_attrs)
     data.label = label
-    data.set_style(backgroundColor=self.options.background_colors[id],
-                   fillOpacity=opacity or self.options.opacity,
-                   borderWidth=1, borderColor=colors or self.options.colors[id])
+    data.set_style(backgroundColor=self.options.background_colors[index], fillOpacity=opacity or self.options.opacity,
+                   borderWidth=1, borderColor=colors or self.options.colors[index])
     return data
 
-  def add_dataset(self, data, label, type=None, colors=None, opacity=None, alias=None):
+  def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None):
     """
     Description:
     ------------
@@ -928,17 +948,19 @@ class ChartBar(ChartLine):
     ----------
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
+    :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     :param alias: String. The chart alias name visible in the legend. Default the label.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, type=type)
+    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, kind=kind)
     self._datasets.append(data)
     alias = alias or label
     if alias not in self.options.y_columns:
       self.options.y_columns.append(alias)
-      self.options.props[alias] = {"type": type or self.options.type, 'fill': False}
+      self.options.props[alias] = {"type": kind or self.options.type, 'fill': False}
+    if kind == "line":
+      data.fill = None
     return data
 
 
@@ -964,7 +986,7 @@ class ChartPolar(Chart):
     """
     return super().options
 
-  def new_dataset(self, id, data, label, colors=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, kind=None):
     """
     Description:
     -----------
@@ -978,24 +1000,24 @@ class ChartPolar(Chart):
 
     Attributes:
     ----------
-    :param id: Integer. The index of the dataset in the chart list of datasets.
+    :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
-    if type is not None:
-      data = JsChartJs.DataSetPolar(self._report, attrs={"data": data, 'type': type})
+    if kind is not None:
+      data = JsChartJs.DataSetPolar(self._report, attrs={"data": data, 'type': kind})
     else:
       data = JsChartJs.DataSetPolar(self._report, attrs={"data": data})
     data.set_style(
-      backgroundColor=self.options.background_colors[id],
+      backgroundColor=self.options.background_colors[index],
       fillOpacity=self.options.opacity, borderWidth=1,
-      borderColor=colors or self.options.colors[id])
+      borderColor=colors or self.options.colors[index])
     data.label = label
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None, type=None):
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
     """
     Description:
     -----------
@@ -1011,9 +1033,9 @@ class ChartPolar(Chart):
     ----------
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color definition to be used to set the color for this series. Default the global definition.
-    :param opacity:
-    :param type: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = self.new_dataset(len(self._datasets), data, label, colors)
     self._datasets.append(data)
@@ -1040,7 +1062,7 @@ class ChartPolar(Chart):
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, type: options.type, data: [], backgroundColor: options.background_colors, 
-                     borderColor: options.colors};
+                     borderColor: options.colors, hoverBackgroundColor: options.colors};
           for(var attr in options.props){dataSet[attr] = options.props[attr]};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
@@ -1072,7 +1094,7 @@ class ChartPie(Chart):
     """
     return super().options
 
-  def new_dataset(self, id, data, label="", colors=None, opacity=None, type=None):
+  def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None):
     """
     Description:
     ------------
@@ -1082,12 +1104,12 @@ class ChartPie(Chart):
 
     Attributes:
     ----------
-    :param id:
-    :param data:
-    :param label:
-    :param colors:
-    :param opacity:
-    :param type:
+    :param index: Integer.
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = JsChartJs.DataSetPie(self._report, attrs={"data": data})
     if colors is None:
@@ -1107,10 +1129,10 @@ class ChartPie(Chart):
 
     Attributes:
     ----------
-    :param data:
-    :param label:
-    :param colors:
-    :param opacity:
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
     """
     data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity)
     self._datasets.append(data)
@@ -1138,7 +1160,7 @@ class ChartPie(Chart):
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series){
           dataSet = {label: series, data: [], backgroundColor: options.background_colors, type: options.type,
-                     borderColor: options.colors};
+                     borderColor: options.colors, hoverBackgroundColor: options.colors};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){
@@ -1151,7 +1173,7 @@ class ChartPie(Chart):
 class ChartRadar(Chart):
   _chart__type = 'radar'
 
-  def new_dataset(self, id, data, label, colors=None, opacity=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
     """
     Description:
     -----------
@@ -1161,18 +1183,18 @@ class ChartRadar(Chart):
 
     Attributes:
     ----------
-    :param id:
-    :param data:
-    :param label:
-    :param colors:
-    :param opacity:
-    :param type:
+    :param index: Integer.
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = JsChartJs.DataSetRadar(self._report, attrs={"data": data})
     data.label = label
     if colors is None:
-      data.backgroundColor = self.options.colors[id]
-      data.borderColor = self.options.colors[id]
+      data.backgroundColor = self.options.colors[index]
+      data.borderColor = self.options.colors[index]
       data.borderWidth = 0.2
       data.fillOpacity = opacity or self.options.props.get("opacity", 0)
     return data
@@ -1187,10 +1209,10 @@ class ChartRadar(Chart):
 
     Attributes:
     ----------
-    :param data:
-    :param label:
-    :param colors:
-    :param opacity:
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
     """
     dataset = self.new_dataset(len(self._datasets), data, label, colors, opacity)
     self._datasets.append(dataset)
@@ -1216,13 +1238,13 @@ class ChartRadar(Chart):
               temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
-          dataSet = {label: series, data: [], backgroundColor: options.colors, type: options.type,
+          dataSet = {label: series, data: [], backgroundColor: options.background_colors[i], fill: true, type: options.type,
                      borderColor: options.colors[i]};
           for(var attr in options.props){dataSet[attr] = options.props[attr]};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
-            if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+            if (temp[series][x] == undefined) {dataSet.data.push(null)} else {dataSet.data.push(temp[series][x])}
           }); result.datasets.push(dataSet)})}
       return result'''
 
@@ -1230,7 +1252,7 @@ class ChartRadar(Chart):
 class ChartScatter(Chart):
   _chart__type = 'scatter'
 
-  def new_dataset(self, id, data, label, colors=None, type=None):
+  def new_dataset(self, index, data, label, colors=None, kind=None):
     """
     Description:
     -----------
@@ -1240,18 +1262,18 @@ class ChartScatter(Chart):
 
     Attributes:
     ----------
-    :param id:
-    :param data:
-    :param label:
-    :param colors:
-    :param type:
+    :param index: Integer.
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
     data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
     data.fill = False
     data.label = label
     if colors is None:
-      data.backgroundColor = self.options.colors[id]
-      data.borderColor = self.options.colors[id]
+      data.backgroundColor = self.options.colors[index]
+      data.borderColor = self.options.colors[index]
     return data
 
   def add_dataset(self, data, label, colors=None):
@@ -1264,9 +1286,9 @@ class ChartScatter(Chart):
 
     Attributes:
     ----------
-    :param data:
-    :param label:
-    :param colors:
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
     """
     data = self.new_dataset(len(self._datasets), data, label, colors)
     self._datasets.append(data)

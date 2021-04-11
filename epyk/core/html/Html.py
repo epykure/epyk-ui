@@ -1406,6 +1406,19 @@ class Html:
       self._report.body.onReady([self.dom.events.trigger(event)])
     return self
 
+  def event_fnc(self, event):
+    """
+    Description:
+    ------------
+    Function to get the generated JavaScript method in order to then reuse it in other components.
+    This will return the event function in a string already transpiled.
+
+    Attributes:
+    ----------
+    :param event: String. The event function.
+    """
+    return list(self._browser_data['mouse'][event][self.dom.varId]["content"])
+
   def drop(self, js_funcs, prevent_default=True, profile=None):
     """
     Description:

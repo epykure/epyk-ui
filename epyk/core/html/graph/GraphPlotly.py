@@ -24,9 +24,25 @@ class Chart(Html.Html):
     super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
-    self.layout.autosize = True
+    self.layout.autosize, self._labels = True, None
     if not height[0] is None:
       self.layout.height = height[0]
+
+  @property
+  def shared(self):
+    """
+    Description:
+    -----------
+    All the common properties shared between all the charts.
+    This will ensure a compatibility with the plot method.
+
+    Usage:
+    -----
+
+      line = page.ui.charts.bb.bar()
+      line.shared.x_label("x axis")
+    """
+    return OptPlotly.OptionsChartSharedPlotly(self)
 
   @property
   def chartId(self):
@@ -174,6 +190,19 @@ class Chart(Html.Html):
       return self._traces[-1]
 
     return self._traces[i]
+
+  def labels(self, values):
+    self._labels = values
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    series = {"x": [], "y": []}
+    for i, x in enumerate(self._labels):
+      series["x"].append(x)
+      series["y"].append(data[i])
+    trace = self.add_trace(series, type=kind)
+    current_trace = trace.traces()
+    current_trace.name = label
+    return current_trace
 
   _js__builder__ = '''
       if(data.python){
@@ -392,6 +421,9 @@ class Bar(Chart):
     self.data.line.color = self.options.colors[len(self._traces)-1]
     self.data.marker.color = self.options.colors[len(self._traces)-1]
     return self
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind='bar'):
+    return super().add_dataset(data, label, colors, opacity, kind)
 
 
 class DataFill(DataClass):
@@ -2312,6 +2344,16 @@ class Pie(Chart):
     self._traces.append(DataPie(self._report, attrs=c_data))
     return self
 
+  def add_dataset(self, data, label, colors=None, opacity=None, kind="pie"):
+    series = {"label": [], "values": []}
+    for i, x in enumerate(self._labels):
+      series["label"].append(x)
+      series["values"].append(data[i])
+    trace = self.add_trace(series, type=kind)
+    current_trace = trace.traces()
+    current_trace.name = label
+    return current_trace
+
   _js__builder__ = '''
       if(data.python){
         result = []; 
@@ -2559,6 +2601,9 @@ class Box(Chart):
       c_data['mode'] = mode
     self._traces.append(DataBox(self._report, attrs=c_data))
     return self
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind="pie"):
+    self.add_trace({"x": data})
 
 
 class CandleStick(Chart):

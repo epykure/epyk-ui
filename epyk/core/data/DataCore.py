@@ -9,7 +9,7 @@ from epyk.core.py import OrderedSet
 from epyk.core.js.primitives import JsObjects
 
 
-class DataAggregators(object):
+class DataAggregators:
 
   def __init__(self,  varName, report=None):
     self.varName = varName
@@ -119,6 +119,26 @@ class DataAggregators(object):
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
         ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
 
+  def countBy(self, column):
+    """
+    Description:
+    -----------
+    Reduce the record set by counting all the columns.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param column: String. The columns in the recordset to be counted.
+    """
+    return JsObjects.JsArray.JsArray('''
+       (function(r, c){var tempDict = {};
+        r.forEach(function(v){if(typeof v[c] !== 'undefined'){
+          if(typeof tempDict[v[c]] === 'undefined'){tempDict[v[c]] = 0}; tempDict[v[c]] += 1} }); 
+        result = []; for(var key in tempDict){result.push({[c]: key, count: tempDict[key]})}; return result})(%s, %s)
+        ''' % (self.varName, json.dumps(column)), isPyData=False, report=self._report)
+
   def sumBy(self, columns, keys, dstKey=None, cast_vals=False):
     """
     Description:
@@ -172,7 +192,7 @@ class DataAggregators(object):
     return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), report=self._report)
 
 
-class DataFilters(object):
+class DataFilters:
 
   def __init__(self,  varName, filter_map, report=None):
     self.varName, self.__filters = varName, OrderedSet()
@@ -422,7 +442,7 @@ class DataFilters(object):
     return result % self.varName
 
 
-class DataGlobal(object):
+class DataGlobal:
 
   def __init__(self, varName, data, report=None):
     if data is not None:
@@ -487,6 +507,8 @@ class DataGlobal(object):
 
     Usage:
     -----
+
+    :rtype: DataFilters
 
     Attributes:
     ----------

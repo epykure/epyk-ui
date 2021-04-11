@@ -360,6 +360,9 @@ class Panels:
     Usage:
     -----
 
+      text = page.ui.text("Test")
+      page.ui.panels.sliding([text], title="Panel title")
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
@@ -519,6 +522,68 @@ class Panels:
       dflt_options.update(options)
     h_drawer = html.HtmlMenu.PanelsBar(self.page, width, height, dflt_options, helper, profile)
     return h_drawer
+
+  @html.Html.css_skin()
+  def hamburger(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"),
+                html_code=None, helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.PanelSlide`
+
+    Attributes:
+    ----------
+    :param components: List. Optional. The different HTML objects to be added to the component.
+    :param title: String. Optional. A panel title. This will be attached to the title property.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param align: String. Optional. The text-align property within this component (Default center).
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. A tooltip helper.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if components is not None and not isinstance(components, list):
+      _components = [components]
+    else:
+      _components = components
+    components = []
+    for component in _components:
+      if not hasattr(component, 'options'):
+        components.append(self.page.ui.texts.paragraph(component, options={"markdown": True}))
+      else:
+        components.append(component)
+    dfl_options = {"icon_expanded": "", "expanded": False, "icon_closed": "", "click_type": 'icon'}
+    if options is not None:
+      dfl_options.update(options)
+    html_slide = html.HtmlContainer.PanelSlide(
+      self.page, components, title, color, width, height, html_code, helper, dfl_options, profile)
+    html_slide.icon = self.page.ui.icons.hamburger()
+    html_slide.icon.options.managed = False
+    html_slide.icon.style.css.float = "right"
+    html_slide.icon.style.css.margin_top = 4
+    html_slide.icon.style.css.margin_right = 4
+    html_slide.style.css.border = "1px solid %s" % self.page.theme.greys[2]
+    html_slide._vals[1].style.css.padding = 5
+    html_slide.title.add(html_slide.icon)
+    html_slide.style.css.margin_top = 5
+    html_slide.style.css.margin_bottom = 5
+    if align == "center":
+      html_slide.style.css.margin = "5px auto"
+      html_slide.style.css.display = "block"
+    return html_slide
 
   @property
   def slidings(self):

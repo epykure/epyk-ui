@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# TODO PanelSliding: find a way to introduce CSS transform for the panel display
+
 import logging
 
 from epyk.interfaces import Arguments
@@ -247,12 +249,12 @@ class PanelSlide(Panel):
   _option_cls = OptPanel.OptionPanelSliding
 
   def __init__(self, report, components, title, color, width, height, html_code, helper, options, profile):
-    super(PanelSlide, self).__init__(report, components, None, color, width, height, html_code, helper, options,
-                                     profile)
+    super(PanelSlide, self).__init__(
+      report, components, None, color, width, height, html_code, helper, options, profile)
     self.add_helper(helper)
-    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px 5px 0',
-                                              'line-height': "%spx" % Defaults.LINE_HEIGHT,
-                                              'font-size': "%spx" % Defaults.BIG_ICONS})
+    self.icon = self.page.ui.icon("").css(
+      {"display": 'inline-block', 'margin': '0 5px 5px 0', 'line-height': "%spx" % Defaults.LINE_HEIGHT,
+       'font-size': "%spx" % Defaults.BIG_ICONS})
     if hasattr(title, 'options'):
       self.text = title
       self.text.options.managed = False
@@ -264,10 +266,9 @@ class PanelSlide(Panel):
       self.text.style.css.font_factor(2)
     self.title = self._report.ui.div([self.icon, self.text])
     self.title.options.managed = False
-    self.title.style.css.cursor = "pointer"
     self.title.style.css.white_space = "nowrap"
     self.title.style.css.padding = "5px 5px 0 0"
-    self.panel = self._report.ui.div()
+    self.panel = self.page.ui.div()
     self.panel.options.managed = False
     self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
 
@@ -367,9 +368,15 @@ class PanelSlide(Panel):
       self.icon.set_icon(self.options.icon_closed)
     if self.options.icon_position == "right":
       self.icon.style.css.float = "right"
-    self.title.click(self.__clicks + [
-      self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
-      self.icon.dom.switchClass(icon_current, icon_change)] + self.__clicks_open)
+
+    click_frg = [self.page.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle()]
+    if icon_change and icon_current:
+      click_frg.append(self.icon.dom.switchClass(icon_current, icon_change))
+    if self.options.click_type == 'title':
+      self.title.style.css.cursor = "pointer"
+      self.title.click(self.__clicks + click_frg + self.__clicks_open)
+    elif self.options.click_type == 'icon':
+      self.icon.click(self.__clicks + click_frg + self.__clicks_open)
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 

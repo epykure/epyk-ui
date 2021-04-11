@@ -33,7 +33,7 @@ class ChartGoogle:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
@@ -142,7 +142,46 @@ class ChartGoogle:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
+    options = options or {'type': 'ComboChart'}
+    options.update(
+      {'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
+    data = self.page.data.google.y(record, y_columns, x_axis)
+    bar_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
+    bar_chart.options.seriesType = "bars"
+    return bar_chart
+
+  def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
+           html_code=None):
+    """
+    Description:
+    ------------
+    Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
+    Like all Google charts, bar charts display tooltips when the user hovers over the data. For a vertical version of
+    this chart, see the column chart.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developers.google.com/chart/interactive/docs/gallery/barchart
+
+    Attributes:
+    ----------
+    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
     options = options or {'type': 'BarChart'}
+
     options.update(
       {'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
     data = self.page.data.google.y(record, y_columns, x_axis)

@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# TODO: improve the color palette definition for charts
+
+from epyk.core.css.themes import palettes
+
 
 class Theme:
   dark = False
@@ -138,6 +142,29 @@ class Theme:
   @success.setter
   def success(self, colors):
     self.__colors["success"] = colors
+
+  def color_palette(self, palette=None, n_colors=None, desat=None):
+    """
+    Description:
+    ------------
+    Change the chart color codes using standard palettes used in JavaScript and Python libraries.
+
+    Related Pages:
+
+      https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
+
+    Attributes:
+    ----------
+    :param palette: String. Optional. Name of palette or None to set for charts colors.
+    :param n_colors: Integer. Optional. Number of colors in the palette.
+    :param desat: Float. Optional. Proportion to desaturate each color by.
+    """
+    if palette is not None and palette.startswith("brewer."):
+      self.__colors["charts"] = getattr(palettes.brewer, palette.split(".")[1])
+    elif palette is not None and palette.startswith("office."):
+      self.__colors["charts"] = getattr(palettes.office, palette.split(".")[1])
+    elif palette is not None and palette.startswith("tableau."):
+      self.__colors["charts"] = getattr(palettes.tableau, palette.split(".")[1])
 
 
 class ThemeCustom(Theme):

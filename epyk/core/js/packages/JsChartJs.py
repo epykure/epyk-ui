@@ -25,7 +25,7 @@ class Config(DataAttrs):
     """
     Description:
     ------------
-    Time for the animation of the redraw in milliseconds
+    Time for the animation of the redraw in milliseconds.
 
     Related Pages:
 
@@ -42,7 +42,7 @@ class Config(DataAttrs):
     """
     Description:
     ------------
-    If true, the animation can be interrupted by other animations
+    If true, the animation can be interrupted by other animations.
 
     Related Pages:
 
@@ -59,7 +59,7 @@ class Config(DataAttrs):
     """
     Description:
     ------------
-    Set the easing option
+    Set the easing option.
 
     Related Pages:
 
@@ -100,7 +100,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: A Javascript Python function.
+    :param jsFncs: String | List. The Javascript functions
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -122,13 +122,20 @@ class ChartJs(JsPackage):
     Attributes:
     ----------
     :param point: Object. The point to add on the x-axis.
-    :param values: dictionary. The value per series name.
+    :param values: Dictionary. The value per series name.
     """
     point = JsUtils.jsConvertData(point, None)
     values = JsUtils.jsConvertData(values, None)
-    return JsObjects.JsVoid('''%(varName)s.data.labels.push(%(point)s);
-      %(varName)s.data.datasets.forEach(function(dataset){
-        dataset.data.push(%(values)s[dataset.label])})''' % {'varName': self.varName, 'point': point, 'values': values})
+    return JsObjects.JsVoid('''
+      var index = %(varName)s.data.labels.indexOf(%(point)s);
+      if(index >= 0){
+        %(varName)s.data.datasets.forEach(function(dataset){
+          if(%(values)s[dataset.label] !== undefined){dataset.data[index] = %(values)s[dataset.label] }})
+      } else {
+        %(varName)s.data.labels.push(%(point)s);
+        %(varName)s.data.datasets.forEach(function(dataset){
+          dataset.data.push(%(values)s[dataset.label])})}''' % {
+      'varName': self.varName, 'point': point, 'values': values})
 
   def remove(self, point=None, seriesNames=None):
     """
@@ -167,7 +174,8 @@ class ChartJs(JsPackage):
         if(index >= 0){
           %(varName)s.data.datasets.forEach(function(dataset){
             if (%(seriesNames)s.includes(dataset.label)){
-              dataset.data[index] = null}})} ''' % {'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
+              dataset.data[index] = null}})} ''' % {
+      'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
 
   def empty(self):
     """
@@ -176,7 +184,8 @@ class ChartJs(JsPackage):
     Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
     This will also update the chart to trigger the animation.
     """
-    return JsObjects.JsVoid("%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
+    return JsObjects.JsVoid(
+      "%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
   def data(self, datasets, options=None, profile=None):
     """
@@ -190,14 +199,14 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param datasets: Dictionary of dictionary. Teh full datasets object expected by ChartJs.
+    :param datasets: Dictionary of dictionary. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.src.build(
       JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
-  def load(self, name, points, options=None):
+  def load(self, name, points, options=None, color=""):
     """
     Description:
     -----------
@@ -214,24 +223,36 @@ class ChartJs(JsPackage):
     ----------
     :param name: String. The series name.
     :param points: List of dictionaries. The list of points ({x: , y: }) to be added to the chart.
+    :param options: Dictionary. Optional. Specific Python options available for this series.
+    :param color: String. Optional. The color code for the chart.
     """
     name = JsUtils.jsConvertData(name, None)
     points = JsUtils.jsConvertData(points, None)
+    current_options = dict(self.src.options.commons)
+    current_options.update(options or {})
+    options = self.src.options.config_js({"commons": current_options})
     return JsObjects.JsVoid('''
-      var values = []; var index= -1;
-      %(varName)s.data.datasets.forEach(function(d, i){ if(d.label == %(name)s){ index = i}});
+      var values = []; var index= -1; var %(htmlCode)s_options = %(options)s;
+      %(varName)s.data.datasets.forEach(function(d, i){if(d.label == %(name)s){index = i}});
       if (index == -1){
         %(varName)s.data.labels.forEach(function(v){values.push(%(points)s)});
-        %(varName)s.data.datasets.push({label: %(name)s, data: %(points)s})
-      }''' % {'varName': self.varName, 'name': name, 'points': points})
+        if(!'%(color)s'){
+          var nextIndex = %(varName)s.data.datasets.length;
+          %(htmlCode)s_options.commons.backgroundColor = %(htmlCode)s_options.background_colors[nextIndex];
+          %(htmlCode)s_options.commons.borderColor = %(htmlCode)s_options.colors[nextIndex];
+          %(htmlCode)s_options.commons.hoverBackgroundColor = %(htmlCode)s_options.background_colors[nextIndex]};
+        if (%(htmlCode)s_options.commons.type == "line"){%(htmlCode)s_options.commons.fill = null};
+        %(varName)s.data.datasets.push(Object.assign({label: %(name)s, data: %(points)s}, %(htmlCode)s_options.commons))
+      }''' % {'varName': self.varName, 'name': name, 'points': points, "options": options.toStr(),
+              "htmlCode": self.src.htmlCode, "color": color})
 
   def unload(self, names=None):
     """
     Description:
     -----------
-    Remove series from the chart
+    Remove series from the chart.
 
-    Note: Do not forget to trigger an update on the chart once all your transformations are done
+    Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
     Related Pages:
 
@@ -242,7 +263,8 @@ class ChartJs(JsPackage):
     :param names: List. Optional. The series names to be removed from the chart. If none all series will be removed.
     """
     if names is None:
-      return JsObjects.JsVoid('%(varName)s.data.labels = []; %(varName)s.data.datasets = []' % {'varName': self.varName})
+      return JsObjects.JsVoid(
+        '%(varName)s.data.labels = []; %(varName)s.data.datasets = []' % {'varName': self.varName})
 
     names = JsUtils.jsConvertData(names, None)
     return JsObjects.JsVoid('''
@@ -267,7 +289,8 @@ class ChartJs(JsPackage):
     -----------
 
     """
-    return JsObjects.JsObject.JsObject("%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, isPyData=False)
+    return JsObjects.JsObject.JsObject(
+      "%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, isPyData=False)
 
   @property
   def value(self):
@@ -290,7 +313,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param config: A Python dictionary. A config object can be provided with additional configuration for the update proces
+    :param config: Dictionary. Optional. A config object can be provided with additional configuration for the process.
     """
     if config is None:
       return JsObjects.JsObject.JsObject("%s.update()" % self.toStr())
@@ -340,7 +363,8 @@ class ChartJs(JsPackage):
     ------------
     Use this to manually resize the canvas element.
 
-    This is run each time the canvas container is resized, but you can call this method manually if you change the size of the canvas nodes container element.
+    This is run each time the canvas container is resized, but you can call this method manually if you change the size
+    of the canvas nodes container element.
 
     Related Pages:
 
@@ -401,7 +425,8 @@ class ChartJs(JsPackage):
     """
     Description:
     ------------
-    Calling getElementAtEvent(event) on your Chart instance passing an argument of an event, or jQuery event, will return the single element at the event position
+    Calling getElementAtEvent(event) on your Chart instance passing an argument of an event, or jQuery event,
+    will return the single element at the event position
 
     Related Pages:
 
@@ -409,7 +434,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsEvent:
+    :param jsEvent: String. The javascript event.
 
     :return: the first element at the event point.
     """
@@ -428,7 +453,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsEvent:
+    :param jsEvent: String. The javascript event.
 
     :return: an array of elements
     """
@@ -451,7 +476,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param index:
+    :param index: Integer. The index value of the series.
     """
     return JsObjects.JsObject.JsObject("%s.getDatasetMeta(%s)" % (self.toStr(), index))
 
@@ -459,7 +484,8 @@ class ChartJs(JsPackage):
     """
     Description:
     ------------
-    Triggers a redraw of all chart elements. Note, this does not update elements for new data. Use .update() in that case.
+    Triggers a redraw of all chart elements. Note, this does not update elements for new data.
+    Use .update() in that case.
 
     Usage::
 
@@ -471,7 +497,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param config: A python dictionary as config object
+    :param config: Dictionary. Optional. A python dictionary as config object.
     """
     if config is None:
       return JsObjects.JsObject.JsObject("%s.render()" % self.toStr())
@@ -492,43 +518,77 @@ class ChartJs(JsPackage):
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())
 
   def download(self, format, filename, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param format: String. The file format.
+    :param filename: String. The file name.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
     return self.toBase64Image()
 
   def clearData(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.clear()
 
   def toStr(self):
     """
-    Javascript representation
+    Description:
+    ------------
+    Javascript representation.
 
-    :return: Return the Javascript String
+    :return: Return the Javascript String.
     """
     if self._selector is None:
       raise Exception("Selector not defined, use this() or new() first")
 
     if self.setVar:
       if len(self._js) > 0:
-        strData = ".".join(self._js)
-        strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+        str_data = ".".join(self._js)
+        str_data = "var %s = %s.%s" % (self.varName, self._selector, str_data)
       else:
-        strData = "var %s = %s" % (self.varName, self._selector)
+        str_data = "var %s = %s" % (self.varName, self._selector)
       self.setVar = False
     else:
       if len(self._js) > 0:
-        strData = ".".join(self._js)
-        strData = "%s.%s" % (self.varName, strData)
+        str_data = ".".join(self._js)
+        str_data = "%s.%s" % (self.varName, str_data)
       else:
-        strData = self.varName
-    self._js = [] # empty the stack
-    return strData
+        str_data = self.varName
+    self._js = []
+    return str_data
 
 
 class ChartJsOptTicks(DataAttrs):
+
   def beginAtZero(self, flag):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param flag: Boolean. A flag to activate the start to zero of the series.
+    """
     self._attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def display(self, flag):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param flag: Boolean. Show the series.
+    """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
@@ -537,154 +597,200 @@ class ChartJsOptGridLines(DataAttrs):
 
   def display(self, flag=False):
     """
+    Description:
+    ------------
     If false, do not display grid lines for this axis.
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def circular(self, flag=False):
     """
+    Description:
+    ------------
     If true, gridlines are circular (on radar chart only).
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["circular"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def color(self, colors=""):
     """
+    Description:
+    ------------
     The color of the grid lines.
-    If specified as an array, the first color applies to the first grid line, the second to the second grid line and so on.
+    If specified as an array, the first color applies to the first grid line,
+    the second to the second grid line and so on.
 
-    :param colors:
-    :return:
+    Attributes:
+    ----------
+    :param colors: String. Optional. The color code.
     """
     self._attrs["color"] = JsUtils.jsConvertData(colors, None)
     return self
 
   def borderDash(self, narray):
     """
+    Description:
+    ------------
 
-    :param narray:
-    :return:
+    Attributes:
+    ----------
+    :param narray: List.
     """
     self._attrs["borderDash"] = JsUtils.jsConvertData(narray, None)
     return self
 
   def borderDashOffset(self, n=0.0):
     """
-    Offset for line dashes
+    Description:
+    ------------
+    Offset for line dashes.
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Number. Optional. The dash offset number.
     """
     self._attrs["borderDashOffset"] = JsUtils.jsConvertData(n, None)
     return self
 
   def lineWidth(self, num):
     """
+    Description:
+    ------------
     Stroke width of grid lines.
 
-    :param num:
-    :return:
+    Attributes:
+    ----------
+    :param num: Number. The line width.
     """
     self._attrs["lineWidth"] = JsUtils.jsConvertData(num, None)
     return self
 
   def drawBorder(self, flag=True):
     """
+    Description:
+    ------------
     If true, draw border at the edge between the axis and the chart area.
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional. Flag to draw the border.
     """
     self._attrs["drawBorder"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def drawOnChartArea(self, flag=True):
     """
+    Description:
+    ------------
     If true, draw lines on the chart area inside the axis lines.
     This is useful when there are multiple axes and you need to control which grid lines are drawn.
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["drawOnChartArea"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def drawTicks(self, flag=True):
     """
+    Description:
+    ------------
     If true, draw lines beside the ticks in the axis area beside the chart.
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["drawTicks"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def tickMarkLength(self, n=10):
     """
+    Description:
+    ------------
     Length in pixels that the grid lines will draw into the axis area.
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Integer. Optional.
     """
     self._attrs["tickMarkLength"] = JsUtils.jsConvertData(n, None)
     return self
 
   def zeroLineWidth(self, n=1):
     """
+    Description:
+    ------------
     Stroke width of the grid line for the first index (index 0).
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Integer. Optional.
     """
     self._attrs["zeroLineWidth"] = JsUtils.jsConvertData(n, None)
     return self
 
   def zeroLineColor(self, color="rgba(0, 0, 0, 0.25)"):
     """
+    Description:
+    ------------
     Stroke color of the grid line for the first index (index 0).
 
-    :param color:
-    :return:
+    Attributes:
+    ----------
+    :param color: String. Optional. The RGBA color code.
     """
     self._attrs["zeroLineColor"] = JsUtils.jsConvertData(color, None)
     return self
 
   def zeroLineBorderDash(self, narray):
     """
-    Length and spacing of dashes of the grid line for the first index (index 0)
+    Description:
+    ------------
+    Length and spacing of dashes of the grid line for the first index (index 0).
 
-    :param narray:
-    :return:
+    Attributes:
+    ----------
+    :param narray: List.
     """
     self._attrs["zeroLineBorderDash"] = JsUtils.jsConvertData(narray, None)
     return self
 
   def zeroLineBorderDashOffset(self, n=0.0):
     """
+    Description:
+    ------------
     Offset for line dashes of the grid line for the first index (index 0).
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Number. Optional.
     """
     self._attrs["zeroLineBorderDashOffset"] = JsUtils.jsConvertData(n, None)
     return self
 
   def offsetGridLines(self, flag=True):
     """
+    Description:
+    ------------
     If true, the bars for a particular data point fall between the grid lines.
     The grid line will move to the left by one half of the tick interval, which is the space between the grid lines.
     If false, the grid line will go right down the middle of the bars.
     This is set to true for a category scale in a bar chart while false for other scales or chart types by default.
 
-    :param flag:
-    :return:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["offsetGridLines"] = JsUtils.jsConvertData(flag, None)
     return self
@@ -693,17 +799,19 @@ class ChartJsOptGridLines(DataAttrs):
 class ChartJsOptScale(DataAttrs):
 
   def ticks(self):
-    if not "ticks" in self._attrs:
+    if "ticks" not in self._attrs:
       self._attrs["ticks"] = ChartJsOptTicks(self._report)
     return self._attrs["ticks"]
 
   @property
   def gridLines(self):
     """
+    Description:
+    ------------
 
     :rtype: ChartJsOptGridLines
     """
-    if not "gridLines" in self._attrs:
+    if "gridLines" not in self._attrs:
       self._attrs["gridLines"] = ChartJsOptGridLines(self._report)
     return self._attrs["gridLines"]
 
@@ -712,14 +820,17 @@ class ChartJsOptScale(DataAttrs):
 
 
 class ChartJsOptScaleBar(ChartJsOptScale):
+
   def barPercentage(self, n=0.9):
     """
+    Description:
+    ------------
     Percent (0-1) of the available width each bar should be within the category width.
-    1.0 will take the whole category width and put the bars right next to each other
+    1.0 will take the whole category width and put the bars right next to each other.
 
-    :param n:
-
-    :return:
+    Attributes:
+    ----------
+    :param n: Number. Optional.
     """
     if n > 1:
       raise Exception("n cannot exceed 1")
@@ -729,41 +840,54 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def categoryPercentage(self, n=0.8):
     """
+    Description:
+    ------------
     Percent (0-1) of the available width each category should be within the sample width.
 
-    :param n:
-    :return:
+    Attributes:
+    ----------
+    :param n: Number. Optional.
     """
     self._attrs["categoryPercentage"] = JsUtils.jsConvertData(n, None)
     return self
 
   def barThickness(self, width="flex"):
     """
+    Description:
+    ------------
     Manually set width of each bar in pixels.
 
     If set to 'flex', it computes "optimal" sample widths that globally arrange bars side by side.
     If not set (default), bars are equally sized based on the smallest interval.
 
-    :return:
+    Attributes:
+    ----------
+    :param width: String. Optional.
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
     return self
 
   def maxBarThickness(self, width):
     """
+    Description:
+    ------------
     Set this to ensure that bars are not sized thicker than this.
 
+    Attributes:
+    ----------
     :param width: A float
-    :return:
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
     return self
 
   def minBarLength(self, width):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param width:
-    :return:
     """
     self._attrs["minBarLength"] = JsUtils.jsConvertData(width, None)
     return self
@@ -774,11 +898,16 @@ class ChartJsOptTooltip(DataAttrs):
 
 
 class ChartJsOptLabels(DataAttrs):
+
   @property
   def fontColor(self):
     """
-    https://www.chartjs.org/docs/latest/general/fonts.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/general/fonts.html
     """
     return self._attrs["fontColor"]
 
@@ -791,8 +920,12 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def left(self):
     """
-    https://www.chartjs.org/docs/latest/general/fonts.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/general/fonts.html
     """
     return self._attrs["left"]
 
@@ -803,8 +936,12 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def right(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/layout.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/layout.html
     """
     return self._attrs["right"]
 
@@ -815,8 +952,12 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def top(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/layout.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/layout.html
     """
     return self._attrs["top"]
 
@@ -827,8 +968,12 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def bottom(self):
     """
-    https://www.chartjs.org/docs/latest/configuration/layout.html
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/layout.html
     """
     return self._attrs["bottom"]
 
@@ -848,7 +993,9 @@ class OptionsLegend(DataAttrs):
 
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
-    :param flag:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
@@ -857,9 +1004,11 @@ class OptionsLegend(DataAttrs):
     """
     Description:
     ------------
-    Position of the legend
+    Position of the legend.
 
-    :param location:
+    Attributes:
+    ----------
+    :param location: String. Optional.
     """
     self._attrs["position"] = JsUtils.jsConvertData(location, None)
     return self
@@ -869,7 +1018,9 @@ class OptionsLegend(DataAttrs):
     Description:
     ------------
 
-    :param flag:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
 
   def onClick(self, callback, profile=False):
@@ -878,7 +1029,10 @@ class OptionsLegend(DataAttrs):
     ------------
     A callback that is called when a click event is registered on a label item.
 
-    :param callback:
+    Attributes:
+    ----------
+    :param callback: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._attrs["onClick"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
@@ -889,7 +1043,10 @@ class OptionsLegend(DataAttrs):
     ------------
     A callback that is called when a 'mousemove' event is registered on top of a label item.
 
-    :param callback:
+    Attributes:
+    ----------
+    :param callback: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._attrs["onHover"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
@@ -899,7 +1056,10 @@ class OptionsLegend(DataAttrs):
     Description:
     ------------
 
-    :param callback:
+    Attributes:
+    ----------
+    :param callback: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
@@ -910,7 +1070,9 @@ class OptionsLegend(DataAttrs):
     ------------
     Legend will show datasets in reverse order.
 
-    :param flag:
+    Attributes:
+    ----------
+    :param flag: Boolean. Optional.
     """
     self._attrs["reverse"] = JsUtils.jsConvertFncs(flag)
     return self
@@ -923,7 +1085,7 @@ class OptionsLegend(DataAttrs):
 
     :rtype: ChartJsOptLabels
     """
-    if not 'labels' in self._attrs:
+    if 'labels' not in self._attrs:
       self._attrs["labels"] = ChartJsOptLabels(self._report)
     return self._attrs["labels"]
 
@@ -1044,8 +1206,8 @@ class OptionsTitle(DataAttrs):
 
 class Options(DataAttrs):
 
-  def __init__(self, report, attrs=None, oprions=None):
-    super(Options, self).__init__(report, attrs, oprions)
+  def __init__(self, report, attrs=None, options=None):
+    super(Options, self).__init__(report, attrs, options)
 
   def title(self):
     """
@@ -1117,7 +1279,7 @@ class DataSet(DataAttrs):
     """
     Description:
     ------------
-    Convert the hexadecimal color to the corresponding RGB one with the opacity
+    Convert the hexadecimal color to the corresponding RGB one with the opacity.
 
     Related Pages:
 
@@ -1127,16 +1289,16 @@ class DataSet(DataAttrs):
 
   @fillOpacity.setter
   def fillOpacity(self, val):
-    bgColors = self._attrs["backgroundColor"]
-    if isinstance(bgColors, list):
-      opColors = []
-      for c in bgColors:
+    bg_colors = self._attrs["backgroundColor"]
+    if isinstance(bg_colors, list):
+      op_colors = []
+      for c in bg_colors:
         color = Colors.getHexToRgb(c)
-        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
-      self._attrs["backgroundColor"] = opColors
+        op_colors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = op_colors
     else:
-      if bgColors.startswith("rgba"):
-        split_colors = bgColors.split(",")
+      if bg_colors.startswith("rgba"):
+        split_colors = bg_colors.split(",")
         split_colors[3] = " %s)" % val
         self._attrs["backgroundColor"] = ",".join(split_colors)
       else:
@@ -1150,10 +1312,10 @@ class DataSet(DataAttrs):
 
     Attributes:
     ----------
-    :param backgroundColor:
-    :param fillOpacity:
-    :param borderWidth:
-    :param borderColor:
+    :param backgroundColor: String. Optional. The background color code.
+    :param fillOpacity: Number. Optional. The opacity factor.
+    :param borderWidth: Number. Optional. The border width.
+    :param borderColor: String. Optional. The border color code.
     """
     if backgroundColor is not None:
       self.backgroundColor = backgroundColor
@@ -1256,7 +1418,9 @@ class DataSetPie(DataSet):
     """
     Description:
     ------------
-    The relative thickness of the dataset. Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the sum of all the dataset weight values.
+    The relative thickness of the dataset.
+    Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the
+    sum of all the dataset weight values.
 
     Related Pages:
 
@@ -1275,8 +1439,8 @@ class DataSetPie(DataSet):
 
     Attributes:
     ----------
-    :param backgroundColors:
-    :param fillOpacity:
+    :param backgroundColors: List. Optional.
+    :param fillOpacity: Number. Optional. The opacity factor.
     :param borderWidth:
     :param borderColors:
     """

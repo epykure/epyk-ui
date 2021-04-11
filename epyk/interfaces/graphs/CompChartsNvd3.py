@@ -38,7 +38,7 @@ class Nvd3:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
@@ -235,7 +235,7 @@ class Nvd3:
       bar_chart.dom._selector = "nv.models.multiBarChart()"
     bar_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
-      bar_chart.add_trace(d, data['labels'][i])
+      bar_chart.add_trace(d, data['series'][i])
     return bar_chart
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
@@ -307,7 +307,7 @@ class Nvd3:
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
-    bar_chart = graph.GraphNVD3.ChartBar(self.page, width, height, options, html_code, profile)
+    bar_chart = graph.GraphNVD3.ChartMultiBar(self.page, width, height, options, html_code, profile)
     bar_chart.colors(self.page.theme.charts)
     if y_columns is not None and len(y_columns) > 1:
       bar_chart.dom._selector = "nv.models.multiBarChart()"

@@ -46,7 +46,7 @@ class Graphs:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     chart_pkg = getattr(self, pkg)
     return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
@@ -352,7 +352,7 @@ class Graphs:
       https://developers.google.com/chart
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example page.imports().google_products(['charts'])")
+      raise Exception("Google produce must be added using for example page.imports.google_products(['charts'])")
 
     return CompChartsGoogle.ChartGoogle(self)
 

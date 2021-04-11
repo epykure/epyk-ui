@@ -200,8 +200,8 @@ class Options(DataClass):
     return self.get(True)
 
   @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+  def managed(self, flag):
+    self.set(flag)
 
   @property
   def verbose(self):
@@ -316,14 +316,16 @@ class Options(DataClass):
     prop_details = {}
     for prop_name in self.component_properties:
       prop = getattr(self, prop_name)
-      prop_details[prop_name] = {"type": 'mandatory', "name": prop_name, 'value': prop, 'doc':  getattr(self.__class__, prop_name).__doc__}
+      prop_details[prop_name] = {
+        "type": 'mandatory', "name": prop_name, 'value': prop, 'doc':  getattr(self.__class__, prop_name).__doc__}
 
     # Add the value of the system attributes
     prop_details["verbose"] = {"name": "verbose", "value": self.verbose, "type": "system"}
     prop_details["managed"] = {"name": "managed", "value": self.managed, "type": "system"}
     for k, v in vars(self.__class__).items():
       if k not in prop_details and isinstance(v, property):
-        prop_details[k] = {"type": 'optional', "name": k, 'value': getattr(self, k), 'doc': getattr(self.__class__, k).__doc__}
+        prop_details[k] = {
+          "type": 'optional', "name": k, 'value': getattr(self, k), 'doc': getattr(self.__class__, k).__doc__}
     return prop_details
 
   def required(self):
@@ -331,7 +333,7 @@ class Options(DataClass):
     Description:
     ------------
     Return all the mandatory / required options with the default values.
-    Those options are added by the framework in order to provide a default for the HTML components but they can be changed.
+    Those options are added by the framework to provide a default for the HTML components but they can be changed.
 
     System options are also added to this category as they are always available in any HTML components.
 
@@ -378,6 +380,10 @@ class Options(DataClass):
 
     Usage:
     -----
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. Optional. The extra or overridden options.
     """
     js_attrs, attrs = [], attrs or {}
     if self.__config_sub_levels:

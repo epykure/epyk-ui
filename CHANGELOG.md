@@ -1,16 +1,37 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.11] - 2021-04-11
+
+### Added
 - Add plot shortcut with kind to align with matplotlib.
 - Add plot function to the base property charts to switch chart families.
+- Add slider javascript functions.
+- Add hamburger Icon.
+- Add hamburger Panel.
+- New slider max and min component for range.
+- Introduce Charts google options module.
+- Create a palette internal module to manage color changes for charts.
 
 ### Changed
 - Change records name to record in all charts.
+- Change slider style.
+- Remove label from core switch component. 
+- Set code from texts as readonly.
+- Full revamping of C3 and Billboard options management.
 
 ### Fixed
 - Fix data transformation for scatter charts (with distinct agg)
 - Fix color definition for charts. Always rely on theme.charts list.
 - FIx bug when using page.imports.google_products(['charts']) without google packages.
+- Fix the way slider ranges are handled.
+- Improve way columns and data are defaulted for charts interfaces.
 
 
 ## [1.5.10] - 2021-04-07

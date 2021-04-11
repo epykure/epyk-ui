@@ -13,7 +13,7 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
 
 
-class C3Legend(object):
+class C3Legend:
 
   def __init__(self, varName):
     self.varName = varName
@@ -55,7 +55,7 @@ class C3Legend(object):
     return "%s.hide(%s)" % (self.varName, targetIds)
 
 
-class C3Data(object):
+class C3Data:
   def __init__(self, varName):
     self.varName = varName
 
@@ -193,7 +193,8 @@ class C3(JsPackage):
 
   @property
   def value(self):
-    return JsObjects.JsObjects.get("{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlCode)
+    return JsObjects.JsObjects.get(
+      "{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlCode)
 
   @property
   def content(self):
@@ -215,7 +216,8 @@ class C3(JsPackage):
     -----------
     This API shows specified targets.
 
-    You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be shown.
+    You can specify multiple targets by giving an array that includes id as String.
+    If no argument is given, all of targets will be shown.
 
     Related Pages:
 
@@ -227,7 +229,7 @@ class C3(JsPackage):
     :param options:
     """
     if targetIds is None and options is None:
-      return JsObjects.JsVoid("%s.show()" % (self._selector))
+      return JsObjects.JsVoid("%s.show()" % self._selector)
 
     targetIds = JsUtils.jsConvertData(targetIds, None)
     options = JsUtils.jsConvertData(options, None)
@@ -239,7 +241,8 @@ class C3(JsPackage):
     -----------
     This API shows specified targets.
 
-    You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be shown.
+    You can specify multiple targets by giving an array that includes id as String.
+    If no argument is given, all of targets will be shown.
 
     Related Pages:
 
@@ -251,7 +254,7 @@ class C3(JsPackage):
     :param options:
     """
     if targetIds is None and options is None:
-      return JsObjects.JsVoid("%s.toggle()" % (self._selector))
+      return JsObjects.JsVoid("%s.toggle()" % self._selector)
 
     targetIds = JsUtils.jsConvertData(targetIds, None)
     options = JsUtils.jsConvertData(options, None)
@@ -276,7 +279,8 @@ class C3(JsPackage):
     -----------
     This API hides specified targets.
 
-    You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be hidden.
+    You can specify multiple targets by giving an array that includes id as String.
+    If no argument is given, all of targets will be hidden.
 
     Related Pages:
 
@@ -288,7 +292,7 @@ class C3(JsPackage):
     :param options:
     """
     if targetIds is None and options is None:
-      return JsObjects.JsVoid("%s.show()" % (self._selector))
+      return JsObjects.JsVoid("%s.show()" % self._selector)
 
     targetIds = JsUtils.jsConvertData(targetIds, None)
     options = JsUtils.jsConvertData(options, None)
@@ -338,7 +342,8 @@ class C3(JsPackage):
     -----------
     Load data to the chart.
 
-    You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be toggles.
+    You can specify multiple targets by giving an array that includes id as String.
+    If no argument is given, all of targets will be toggles.
 
     Related Pages:
 
@@ -362,7 +367,8 @@ class C3(JsPackage):
     -----------
     Unload data to the chart.
 
-    You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be toggles.
+    You can specify multiple targets by giving an array that includes id as String.
+    If no argument is given, all of targets will be toggles.
 
     Related Pages:
 
@@ -462,7 +468,8 @@ class C3(JsPackage):
     -----------
     Get selected data points.
 
-    By this API, you can get selected data points information. To use this API, data.selection.enabled needs to be set true.
+    By this API, you can get selected data points information.
+    To use this API, data.selection.enabled needs to be set true.
 
     Related Pages:
 

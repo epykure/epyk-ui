@@ -65,7 +65,7 @@ class Sliders:
     return html_slider
 
   @html.Html.css_skin()
-  def date(self, value=None, min_val=None, max_val=None, width=(100, '%'), height=(20, 'px'), html_code=None,
+  def date(self, value=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'), html_code=None,
            helper=None, options=None, profile=None):
     """
     Description:
@@ -94,13 +94,13 @@ class Sliders:
     height = Arguments.size(height, unit="px")
     options = options or {}
     if value is None:
-      value = min
+      value = minimum
     html_slider = html.HtmlEvent.SliderDate(
-      self.page, value, min_val, max_val, width, height, helper, options or {}, html_code, profile)
+      self.page, value, minimum, maximum, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
   @html.Html.css_skin()
-  def date_range(self, value1=None, value2=None, min=None, max=None, width=(100, '%'), height=(20, 'px'),
+  def date_range(self, value1=None, value2=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'),
                  html_code=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -129,15 +129,15 @@ class Sliders:
     options = options or {}
     options['range'] = True
     if value1 is None:
-      value1 = min
+      value1 = minimum
     if value2 is None:
-      value2 = max
+      value2 = maximum
     html_slider = html.HtmlEvent.SliderDates(
-      self.page, [value1, value2], min, max, width, height, helper, options or {}, html_code, profile)
+      self.page, [value1, value2], minimum, maximum, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
   @html.Html.css_skin()
-  def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+  def range(self, values=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
             options=None, profile=None):
     """
     Description:
@@ -151,8 +151,8 @@ class Sliders:
       - :class:`epyk.core.html.HtmlEvent.Range`
 
     :param values:
-    :param min:
-    :param max:
+    :param minimum:
+    :param maximum:
     :param width:
     :param height:
     :param html_code:
@@ -163,9 +163,74 @@ class Sliders:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
+    values = values or [minimum, maximum]
     options['range'] = True
     html_slider = html.HtmlEvent.Range(
-      self.page, values, min, max, width, height, helper, options or {}, html_code, profile)
+      self.page, values, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    return html_slider
+
+  @html.Html.css_skin()
+  def upper(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+            options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Range`
+
+    :param value:
+    :param minimum:
+    :param maximum:
+    :param width:
+    :param height:
+    :param html_code:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    options['range'] = 'max'
+    html_slider = html.HtmlEvent.Slider(
+      self.page, value or 0, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    return html_slider
+
+  @html.Html.css_skin()
+  def lower(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
+            options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Range`
+
+    :param value:
+    :param minimum:
+    :param maximum:
+    :param width:
+    :param height:
+    :param html_code:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    options['range'] = 'min'
+    html_slider = html.HtmlEvent.Slider(
+      self.page, value or 0, minimum, maximum, width, height, helper, options or {}, html_code, profile)
     return html_slider
 
   @html.Html.css_skin()

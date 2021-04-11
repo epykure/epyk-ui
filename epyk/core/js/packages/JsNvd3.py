@@ -91,7 +91,7 @@ class JsNvd3Axis:
     return strData
 
 
-class JsNvd3Utils(object):
+class JsNvd3Utils:
   """
 
   """
@@ -229,7 +229,7 @@ class JsNvd3(JsPackage):
   def xAxis(self):
     """
 
-    :return:
+    :rtype: JsNvd3Axis
     """
     if self._xaxis is None:
       self._xaxis = JsNvd3Axis("%s.xAxis" % self.varName)
@@ -239,7 +239,7 @@ class JsNvd3(JsPackage):
   def yAxis(self):
     """
 
-    :return:
+    :rtype: JsNvd3Axis
     """
     if self._yaxis is None:
       self._yaxis = JsNvd3Axis("%s.yAxis" % self.varName)
@@ -649,6 +649,36 @@ class JsNvd3Bar(JsNvd3):
 
 class JsNvd3MultiBar(JsNvd3):
   chartFnc = "multiBarChart"
+
+  def x(self, column=None, jsFnc=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param column:
+    :param jsFnc:
+    :param profile:
+    """
+    if column is not None:
+      self.fnc("x(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    return self
+
+  def y(self, column=None, jsFnc=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param column:
+    :param jsFnc:
+    :param profile:
+    """
+    if column is not None:
+      self.fnc("y(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    return self
 
   def barColor(self, colors):
     """

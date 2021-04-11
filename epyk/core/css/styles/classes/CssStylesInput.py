@@ -145,20 +145,27 @@ class CssUIActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.page.theme.success[1],
-              'background-color': self.page.theme.success[1]}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.page.theme.success[1],
-                    'background-color': self.page.theme.success[1]})
+    self.css({"border": "1px solid %s" % self.page.theme.notch(),
+              'background-color': self.page.theme.notch()}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.page.theme.notch(),
+                    'background-color': self.page.theme.notch()})
+
+
+class CssUIWidgetHeader(CssStyle.Style):
+  classname = "ui-widget-header"
+
+  def customize(self):
+    self.css({'background': self.page.theme.notch()}, important=True)
 
 
 class CssUIMenuActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.page.theme.success[1],
-              'background-color': self.page.theme.success[1]}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.page.theme.success[1],
-                    'background-color': self.page.theme.success[1]})
+    self.css({"border": "1px solid %s" % self.page.theme.notch(),
+              'background-color': self.page.theme.notch()}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.page.theme.notch(),
+                    'background-color': self.page.theme.notch()})
 
 
 class CssAutocomplete(CssStyle.Style):

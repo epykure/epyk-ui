@@ -36,7 +36,7 @@ class C3:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    if not isinstance(y, list):
+    if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
@@ -75,8 +75,11 @@ class C3:
     line_chart = graph.GraphC3.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
+    line_chart.options.axis.x.tick.count = 5
+    line_chart.options.axis.x.tick.rotate = 0
+    line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -108,13 +111,13 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -146,14 +149,14 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart._type = 'step'
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -185,13 +188,13 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -223,14 +226,14 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart._type = "area-step"
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
@@ -262,8 +265,8 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     line = self.line(record, y_columns, x_axis, profile, width, height, options, html_code)
-    line.axis.x.type = "timeseries"
-    line.axis.x.tick.format = "%Y-%m-%d"
+    line.options.axis.x.type = "timeseries"
+    line.options.axis.x.tick.format = "%Y-%m-%d"
     return line
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -295,13 +298,16 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
+    line_chart.options.axis.x.tick.count = 5
+    line_chart.options.axis.x.tick.rotate = 0
+    line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -333,7 +339,7 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     h_bar = self.bar(record, y_columns, x_axis, profile, width, height, options, html_code)
-    h_bar.axis.rotated = True
+    h_bar.options.axis.rotated = True
     return h_bar
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -365,13 +371,13 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis, options={"agg": options.get('agg', 'distinct')})
     line_chart = graph.GraphC3.ChartScatter(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      line_chart.add_dataset(data['series'][i], d)
+      line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -404,13 +410,13 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartPie(self.page, width, height, html_code, options, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(data['series'][i], d)
+      pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -442,13 +448,13 @@ class C3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartDonut(self.page, width, height, html_code, options, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(data['series'][i], d)
+      pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
   def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
@@ -479,7 +485,7 @@ class C3:
     """
     g_chart = graph.GraphC3.ChartGauge(self.page, width, height, html_code, options or {}, profile)
     g_chart.colors(self.page.theme.charts)
-    g_chart.add_dataset(text, value)
+    g_chart.add_dataset(value, text)
     return g_chart
 
   def stanford(self, record=None, y_columns=None, x_axis=None, epoch_col=None, profile=None, width=(100, "%"),
@@ -516,5 +522,5 @@ class C3:
     line_chart.colors(self.page.theme.charts)
     line_chart.epoch(epoch, epoch_col)
     for i, y in enumerate(y_columns):
-      line_chart.add_dataset(y, series[i])
+      line_chart.add_dataset(series[i], y)
     return line_chart

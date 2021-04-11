@@ -184,7 +184,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self._src.dom.jquery.varId))
+        self.htmlCode, self.component.dom.jquery.varId))
 
   @property
   def content(self):
@@ -195,7 +195,74 @@ class JsHtmlSlider(JsHtml.JsHtml):
     Usage:
     -----
     """
-    return JsHtml.ContentFormatters(self._report, '%s.slider("value")' % self._src.dom.jquery.varId)
+    if self.component.options.range:
+      return JsHtml.ContentFormatters(self.page, '%s.slider("values")' % self.component.dom.jquery.varId)
+
+    return JsHtml.ContentFormatters(self.page, '%s.slider("value")' % self.component.dom.jquery.varId)
+
+  @property
+  def max_select(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    if self.component.options.range:
+      if self.component.options.range == "max":
+        return JsHtml.ContentFormatters(self.page, '%s.slider("option", "max")' % self.component.dom.jquery.varId)
+
+      if self.component.options.range == "min":
+        return JsHtml.ContentFormatters(self.page, '%s.slider("value")' % self.component.dom.jquery.varId)
+
+      return JsHtml.ContentFormatters(self.page, '%s.slider("values")[1]' % self.component.dom.jquery.varId)
+
+    return self.content
+
+  @property
+  def min_select(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    if self.component.options.range:
+      if self.component.options.range == "min":
+        return JsHtml.ContentFormatters(self.page, '%s.slider("option", "min")' % self.component.dom.jquery.varId)
+
+      if self.component.options.range == "max":
+        return JsHtml.ContentFormatters(self.page, '%s.slider("value")' % self.component.dom.jquery.varId)
+
+      return JsHtml.ContentFormatters(self.page, '%s.slider("values")[0]' % self.component.dom.jquery.varId)
+
+    return self.content
+
+  @property
+  def upper_bound(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    if self.component.options.range:
+      return JsHtml.ContentFormatters(self.page, '%s.slider("option", "max")' % self.component.dom.jquery.varId)
+
+    return self.content
+
+  @property
+  def lower_bound(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    if self.component.options.range:
+      return JsHtml.ContentFormatters(self.page, '%s.slider("option", "min")' % self.component.dom.jquery.varId)
+
+    return self.content
 
 
 class JsHtmlSliderRange(JsHtml.JsHtml):

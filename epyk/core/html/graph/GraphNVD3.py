@@ -18,7 +18,23 @@ class Chart(Html.Html):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
-    self._d3, self.html_items, self._datasets = None, [], []
+    self._d3, self.html_items, self._datasets, self._labels = None, [], [], None
+
+  @property
+  def shared(self):
+    """
+    Description:
+    -----------
+    All the common properties shared between all the charts.
+    This will ensure a compatibility with the plot method.
+
+    Usage:
+    -----
+
+      line = page.ui.charts.bb.bar()
+      line.shared.x_label("x axis")
+    """
+    return OptChart.OptionsChartSharedNVD3(self)
 
   @property
   def options(self):
@@ -115,11 +131,38 @@ class Chart(Html.Html):
     self._datasets.append(dataset)
     return self
 
+  def labels(self, values):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param values: List. The different values for the x axis.
+    """
+    self._labels = values
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    """
+    return self.add_trace([{"x": l, "y": data[i]} for i, l in enumerate(self._labels)], name=label)
+
   @property
   def d3(self):
     """
     Description:
     ------------
+    Property to the underlying D3 module.
 
     Usage:
     -----
@@ -194,7 +237,7 @@ class Chart(Html.Html):
         'htmlCode': self.htmlCode, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
         "options":  self.options.config_js(options), 'chart': self.dom.var}
 
-    return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis,
+    return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis,  self.dom.yAxis,
                                   self.d3.datum(self._datasets).call(self.dom.var),
                                   "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
@@ -336,7 +379,7 @@ class ChartBar(Chart):
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
 
-  def colors(self, hex_values, multi=False):
+  def colors(self, hex_values):
     """
     Description:
     -----------
@@ -351,7 +394,6 @@ class ChartBar(Chart):
     Attributes:
     ----------
     :param hex_values: List. An array of hexadecimal color codes.
-    :param multi: Boolean. Optional. Specify if the chart should be using the same color for a series.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -367,10 +409,7 @@ class ChartBar(Chart):
         bg_colors.append(h[0])
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
-    if multi:
-      self.dom.color(line_colors)
-    else:
-      self.dom.color([line_colors[0]])
+    self.dom.color([line_colors[0]])
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
 
@@ -392,6 +431,9 @@ class ChartBar(Chart):
     self.onReady("%s.selectAll('.nv-bar').on('click', function(event){%s})" % (
       self.d3.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    return self.add_trace([{"label": l, "y": data[i], "x": l} for i, l in enumerate(self._labels)], name=label)
 
   _js__builder__ = '''
       if(data.python){
@@ -435,8 +477,11 @@ class ChartHorizontalBar(ChartBar):
       self._dom = JsNvd3.JsNvd3MultiBarHorizontal(self._report, varName=self.chartId)
     return self._dom
 
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    return self.add_trace([{"label": l, "y": data[i]} for i, l in enumerate(self._labels)], name=label)
 
-class ChartMultiBar(Chart):
+
+class ChartMultiBar(ChartBar):
 
   @property
   def dom(self):
@@ -452,6 +497,43 @@ class ChartMultiBar(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3MultiBar(self._report, varName=self.chartId)
     return self._dom
+
+  def colors(self, hex_values):
+    """
+    Description:
+    -----------
+    Set the colors of the chart.
+
+    hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
+    If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param hex_values: List. An array of hexadecimal color codes.
+    """
+    line_colors, bg_colors = [], []
+    for h in hex_values:
+      if h.upper() in Colors.defined:
+        h = Colors.defined[h.upper()]['hex']
+      if not isinstance(h, tuple):
+        line_colors.append(h)
+        bg_colors.append("rgba(%s, %s, %s, %s" % (
+          Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+          Colors.getHexToRgb(h)[2], self.options.opacity))
+      else:
+        line_colors.append(h[0])
+        bg_colors.append(h[0])
+    self.options.colors = line_colors
+    self.options.background_colors = bg_colors
+    self.dom.barColor(line_colors)
+    for i, rec in enumerate(self._datasets):
+      rec['color'] = self.options.colors[i]
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    return self.add_trace([{"label": l, "y": data[i]} for i, l in enumerate(self._labels)], name=label)
 
 
 class ChartPie(Chart):
@@ -503,10 +585,10 @@ class ChartPie(Chart):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
-    :param source_event:
-    :param on_ready:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True)))

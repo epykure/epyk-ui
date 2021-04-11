@@ -44,8 +44,8 @@ class OptionPanelSliding(Options):
     return self.get(True)
 
   @expanded.setter
-  def expanded(self, boool):
-    self.set(boool)
+  def expanded(self, flag):
+    self.set(flag)
 
   @property
   def icon_expanded(self):
@@ -86,6 +86,14 @@ class OptionPanelSliding(Options):
 
   @icon_position.setter
   def icon_position(self, value):
+    self.set(value)
+
+  @property
+  def click_type(self):
+    return self.get("title")
+
+  @click_type.setter
+  def click_type(self, value):
     self.set(value)
 
 
