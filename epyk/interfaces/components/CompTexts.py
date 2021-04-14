@@ -936,7 +936,7 @@ class Texts:
     """
     c = self.page.ui.text(
       text, tooltip=tooltip, width=width, html_code=html_code, height=height, profile=profile, options=options)
-    c.add_icon(icon, html_code=c.html_code)
+    c.add_icon(icon, html_code=html_code)
     c.style.add_classes.div.background_hover()
     c.style.css.border_radius = 5
     c.style.css.font_size = self.page.body.style.globals.font.normal(-2)

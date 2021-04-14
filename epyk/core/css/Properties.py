@@ -45,6 +45,7 @@ def autoPrefixer(prop):
     'text-emphasis-position': ['-webkit-'],
     'text-emphasis-style': ['-webkit-'],
     'text-orientation': ['-webkit-'],
+    'transform': ['-webkit-', '-moz-', '-o-'],
     'transition': ['-webkit-', '-moz-', '-o-'],
     'transition-property': ['-webkit-', '-moz-', '-o-'],
     'transition-duration': ['-webkit-', '-moz-', '-o-'],
@@ -2331,6 +2332,25 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"transform": val})
 
+  def rotate(self, val):
+    """
+    Description:
+    ------------
+    Defines a 2D rotation, the angle is specified in the parameter
+
+    Related Pages:
+
+      https://css-tricks.com/snippets/css/text-rotation/
+      https://www.w3schools.com/cssref/css3_pr_transform.asp
+
+    Attributes:
+    ----------
+    :param val: Integer | String. The rotation angle.
+    """
+    if isinstance(val, int):
+      val = "%sdeg" % val
+    self.transform = "rotate(%s)" % val
+
   @property
   def transform_origin(self): return self.css("transform-origin")
 
@@ -2459,6 +2479,12 @@ class CssMixin:
   def white_space(self, val):
     val = val if val is not None else 'None'
     self.css({"white-space": val})
+
+  def nowrap(self):
+    """
+
+    """
+    self.css({"white-space": "nowrap"})
 
   @property
   def width(self):
@@ -2858,7 +2884,7 @@ class CssMixin:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
 
-  def inline_block(self):
+  def inline_block(self, width=None):
     """
     Description:
     -----------
@@ -2874,9 +2900,16 @@ class CssMixin:
       mode_switch = page.ui.fields.toggle({"off": 'No', "on": "Yes"}, is_on=True, label="Switch", htmlCode="switch")
       mode_switch.style.css.inline_block()
 
+    Attributes:
+    ----------
+    :param width: Integer | Tuple. Optional.
     """
     if self.width is not None and self.width.endswith("%"):
       self.width = None
+    if width is not None:
+      if isinstance(width, tuple) and width[0] is not None:
+        width = "%s%s" % (width[0], width[1])
+      self.width = width
     self.display = "inline-block"
     return self
 
@@ -2910,3 +2943,24 @@ class CssMixin:
       https://www.w3schools.com/cssref/pr_class_visibility.asp
     """
     self.visibility = "hidden"
+
+  def gradient_text(self, from_color, to_color, direction="bottom"):
+    """
+    Description:
+    -----------
+    you'll need two colors for the gradient to transition between.
+
+    Related Pages:
+
+      https://cssgradient.io/blog/css-gradient-text/
+
+    Attributes:
+    ----------
+    :param from_color: String.
+    :param to_color: String.
+    :param direction: String. Optional.
+    """
+    self.css({"background": "-webkit-linear-gradient(%s, %s, %s)" % (direction, from_color, to_color),
+              "-webkit-text-fill-color": "transparent", "-webkit-background-clip": "text"})
+
+

@@ -393,8 +393,12 @@ class Div(Html.Html):
       components = [components]
     for obj in components:
       if isinstance(obj, list) and obj:
-        component = report.ui.div(obj, label, color, width, icon, height, editable, align, padding, html_code, tag,
-                                  helper, profile)
+        component = report.ui.div(
+          obj, label, color, width, icon, height, editable, align, padding, html_code, tag, helper, profile,
+          position=self.options.get("position"))
+        if self.options.get("position", None) is not None:
+          print(self.options.get("position"))
+          component.style.css.vertical_align = self.options["position"]
       else:
         component = obj
 
@@ -468,7 +472,7 @@ class Div(Html.Html):
   def __add__(self, component):
     """ Add items to a container """
     if isinstance(component, list):
-      component = self._report.ui.row(component)
+      component = self._report.ui.row(component, position=self.options.get("position"))
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
     if self.options.inline:

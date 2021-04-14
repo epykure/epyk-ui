@@ -1,10 +1,21 @@
 ## [Unreleased]
 
 ### Added
+- Add gradient_text function to CSS properties.
+- Add rotate function to CSS properties.
+- Add margins shortcut for template configs.
+- Add width parameter for the powered by component.
 
 ### Changed
+- Add the template attribute for the body component to the __init__.
+- Change the parameters for div and introduce the position to align with row.
+- Change some icons component styles.
 
 ### Fixed
+- Change color for hover on button icons.
+- Add the start event for the countdown component.
+- Consider the template of the body for navigation components (side panels)
+- Bug fix for the texts.button component.
 
 
 ## [1.5.11] - 2021-04-11

@@ -5,6 +5,7 @@ import datetime
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.core.html import Defaults_html
 from epyk.interfaces import Arguments
 
 
@@ -584,8 +585,10 @@ class Navigation:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    print(self.page.body.template)
+    position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
-    d.css({"background": self.page.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
+    d.css({"background": self.page.theme.colors[2], "position": position_type, 'top': 0, 'height': '100%',
            'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 20})
     if position == 'left':
       d.css({
@@ -608,8 +611,16 @@ class Navigation:
       if position == 'left':
         i = self.page.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
         i.style.css.float = 'right'
+        if position_type == "fixed":
+          i.style.css.position = "fixed"
+          i.style.css.right = 10
+          i.style.css.top = 5
       else:
         i = self.page.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+        if position_type == "fixed":
+          i.style.css.position = "fixed"
+          i.style.css.left = 10
+          i.style.css.top = 10
       i.css({"padding": '5px'})
     else:
       if position == 'left':
@@ -718,7 +729,7 @@ class Banners:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def top(self, data, background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def top(self, data="", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -747,6 +758,8 @@ class Banners:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     div = self.page.ui.div(data, width=width, height=height, options=options, profile=profile)
+    if div.style.css.height is None:
+      div.style.css.min_height = Defaults_html.LINE_HEIGHT
     div.style.css.background_color = background or self.page.theme.colors[3]
     div.style.css.color = "white"
     div.style.css.position = "fixed"
@@ -755,7 +768,7 @@ class Banners:
     return div
 
   @html.Html.css_skin()
-  def bottom(self, data, background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
+  def bottom(self, data="", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
              profile=False):
     """
     Description:
@@ -786,6 +799,8 @@ class Banners:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     div = self.page.ui.div(data, width=width, height=height, options=options, profile=profile)
+    if div.style.css.height is None:
+      div.style.css.min_height = Defaults_html.LINE_HEIGHT
     div.style.css.background_color = background or self.page.theme.greys[1]
     div.style.css.z_index = 110
     div.style.css.text_align = align
@@ -834,7 +849,7 @@ class Banners:
     return container
 
   @html.Html.css_skin()
-  def corner(self, data, background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
+  def corner(self, data="", background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
              profile=False):
     """
     Description:
@@ -866,6 +881,8 @@ class Banners:
     """
     options = options or {}
     div = self.page.ui.div(data, width=width, height=height, options=options, profile=profile)
+    if div.style.css.height is None:
+      div.style.css.min_height = Defaults_html.LINE_HEIGHT
     div.style.css.background_color = background or self.page.theme.colors[3]
     div.style.css.color = "white"
     div.style.css.z_index = options.get("z_index", 860)

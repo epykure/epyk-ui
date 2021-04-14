@@ -422,9 +422,9 @@ class Layouts:
     return html_panel
 
   @html.Html.css_skin()
-  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"),
-          editable=False, align='left', padding=None, html_code=None, tag='div', helper=None, options=None,
-          profile=None):
+  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
+          height=(None, "px"), editable=False, align='left', padding=None, html_code=None, tag='div', helper=None,
+          options=None, profile=None, position=None):
     """
     Description:
     ------------
@@ -458,6 +458,7 @@ class Layouts:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param icon:
+    :param position: String. Optional.
     :param editable:
     :param align: String. Optional. A string with the horizontal position of the component
     :param padding:
@@ -472,8 +473,11 @@ class Layouts:
     if components is not None and not isinstance(components, list):
       components = [components]
 
+    dfl_options = {"position": position}
+    if options is not None:
+      dfl_options.update(options)
     html_div = html.HtmlContainer.Div(self.page, components or [], label, color, width, icon, height,
-                                      editable, align, padding, html_code, tag, helper, options or {}, profile)
+                                      editable, align, padding, html_code, tag, helper, dfl_options, profile)
     if width[0] == 'auto' or width[1] == 'px':
       html_div.style.css.display = "inline-block"
     return html_div

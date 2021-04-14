@@ -635,7 +635,7 @@ class Rich:
     return md
 
   @html.Html.css_skin()
-  def powered(self, by=None, height=(None, "px"), options=None, profile=None):
+  def powered(self, by=None, width=(100, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -652,11 +652,12 @@ class Rich:
     Attributes:
     ----------
     :param by: List. Optional. Name of JavaScript library aliases.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    container = self.page.ui.div(options=options, profile=profile)
+    container = self.page.ui.div(width=width, options=options, profile=profile)
     container.style.css.font_factor(-4)
     if by is None:
       by = sorted(list(self.page.jsImports))

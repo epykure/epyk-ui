@@ -7,6 +7,19 @@ class ClsConfigs:
   def __init__(self, component):
     self.component = component
 
+  def margins(self, h=(10, '%'), v=(0, 'px')):
+    """
+    Description:
+    ------------
+    Add a vertical and horizontal margin to the underlying template added to the body component.
+
+    Attributes:
+    ----------
+    :param h: Tuple. optional. The horizontal (left and right) margin.
+    :param v: Tuple. optional. The vertical (top, bottom) margin.
+    """
+    self.component.style.css.margin = "%s%s %s%s" % (v[0], v[1], h[0], h[1])
+
   def box(self, hexa_color=None, opacity=0.6, size=5, margin=5):
     """
     Description:

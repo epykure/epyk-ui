@@ -1854,6 +1854,7 @@ class Body(Html):
       for attrs in Defaults_css.BODY_STYLE.split(";"):
         k, v = attrs.split(":")
         self.css(key=k, value=v)
+    self.template = None
 
   @property
   def style(self):
@@ -2110,7 +2111,7 @@ class Body(Html):
     return self.template
 
   def __str__(self):
-    if hasattr(self, 'template'):
+    if getattr(self, 'template', None) is not None:
       self.template._vals = str(self._html_content)
       return '<body %s>%s%s%s</body>' % (
         self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(),

@@ -845,10 +845,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    options = options or {"target": "_blank", "font-factor": self.page.body.style.globals.font.size - 6}
+    if width[0] is None:
+      width = (self.page.body.style.globals.icon.big, 'px')
+    options = options or {"target": "_blank", "font-factor": 8}
     icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding': '3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding-bottom': '3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
@@ -996,11 +998,11 @@ class Icons:
     """
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
-    options = options or {"target": "_blank", "font-factor": 6}
+    options = options or {"target": "_blank", "font-factor": 8}
     icon = self.awesome(
       'fab fa-instagram-square', text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '3px'})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '0px 3px 5px 3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.page.js.navigateTo(url, options=options)])
     return icon
