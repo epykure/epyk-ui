@@ -396,14 +396,13 @@ class Div(Html.Html):
         component = report.ui.div(
           obj, label, color, width, icon, height, editable, align, padding, html_code, tag, helper, profile,
           position=self.options.get("position"))
-        if self.options.get("position", None) is not None:
-          print(self.options.get("position"))
-          component.style.css.vertical_align = self.options["position"]
       else:
         component = obj
 
       if hasattr(component, 'options'):
         self.__add__(component)
+        if self.options.get("position", None) is not None:
+          component.style.css.vertical_align = self.options["position"]
       else:
         self.val.append(obj)
     self.tag = tag

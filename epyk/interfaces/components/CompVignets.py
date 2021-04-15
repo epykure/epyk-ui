@@ -257,6 +257,7 @@ class Vignets:
       if title is not None and not hasattr(title, 'options'):
         title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
+      container.title = title
       if not hasattr(content, 'options'):
         content = self.page.ui.text(content)
         content.style.css.display = "block"
@@ -277,6 +278,7 @@ class Vignets:
       else:
         if title is not None:
           container.add(self.page.ui.col([title, content]))
+          container.title = title
         else:
           container.add(content)
         if image is not None:
@@ -290,6 +292,7 @@ class Vignets:
       if title is not None and not hasattr(title, 'options'):
         title = self.page.ui.titles.title(title)
         title.style.css.display = "block"
+      container.title = title
       if not hasattr(content, 'options'):
         content = self.page.ui.text(content)
         content.style.css.display = "block"

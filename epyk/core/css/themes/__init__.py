@@ -27,7 +27,7 @@ class RegisteredThemes:
   def __init__(self, page):
     self.page = page
 
-  def default(self, index=5, step=1, ovr_attrs=None):
+  def default(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -38,10 +38,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = Theme.ThemeDefault(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def blue(self, index=5, step=1, ovr_attrs=None):
+  def blue(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -52,10 +54,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = blues.Blue(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def blue_grey(self, index=5, step=1, ovr_attrs=None):
+  def blue_grey(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -66,10 +70,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = blues.BlueGrey(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def blue_light(self, index=5, step=1, ovr_attrs=None):
+  def blue_light(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -80,10 +86,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = blues.LightBlue(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def green(self, index=5, step=1, ovr_attrs=None):
+  def green(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -94,10 +102,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = greens.Green(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def green_light(self, index=5, step=1, ovr_attrs=None):
+  def green_light(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -108,10 +118,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = greens.LightGreen(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def teal(self, index=5, step=1, ovr_attrs=None):
+  def teal(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -122,10 +134,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = greens.Teal(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def grey(self, index=5, step=1, ovr_attrs=None):
+  def grey(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -136,10 +150,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = darks.Grey(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def dark(self, index=5, step=1, ovr_attrs=None):
+  def dark(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -150,10 +166,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = darks.Dark(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def pink(self, index=5, step=1, ovr_attrs=None):
+  def pink(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -164,10 +182,12 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = reds.Pink(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark
 
-  def red(self, index=5, step=1, ovr_attrs=None):
+  def red(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
     Description:
     ------------
@@ -178,5 +198,7 @@ class RegisteredThemes:
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
+    :param dark: Boolean. Optional. Set the dark mode.
     """
     self.page.theme = reds.Red(ovr_attrs=ovr_attrs, index=index, step=step)
+    self.page.theme.dark = dark

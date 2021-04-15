@@ -5,6 +5,7 @@
 - Add rotate function to CSS properties.
 - Add margins shortcut for template configs.
 - Add width parameter for the powered by component.
+- Add dark mode to color themes.
 
 ### Changed
 - Add the template attribute for the body component to the __init__.
