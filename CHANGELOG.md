@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.12] - 2021-04-16
+
+### Added
 - Add gradient_text function to CSS properties.
 - Add rotate function to CSS properties.
 - Add margins shortcut for template configs.
