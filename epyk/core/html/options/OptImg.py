@@ -5,6 +5,34 @@
 from epyk.core.html.options import Options
 
 
+class OptionsImage(Options):
+  component_properties = ('color', )
+
+  @property
+  def background(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(None)
+
+  @background.setter
+  def background(self, color):
+    self._config(color)
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(self.component.page.theme.colors[-1])
+
+  @color.setter
+  def color(self, color):
+    self._config(color)
+
+
 class OptionsTinySlider(Options):
   component_properties = ('container', 'items')
 
@@ -74,8 +102,8 @@ class OptionsTinySlider(Options):
     return self._config_get("top")
 
   @controlsPosition.setter
-  def controlsPosition(self, bool):
-    self._config(bool)
+  def controlsPosition(self, flag):
+    self._config(flag)
 
   @property
   def controlsText(self):
@@ -91,8 +119,8 @@ class OptionsTinySlider(Options):
     return self._config_get(["prev", "next"])
 
   @controlsText.setter
-  def controlsText(self, bool):
-    self._config(bool)
+  def controlsText(self, flag):
+    self._config(flag)
 
   @property
   def controlsContainer(self):
@@ -109,8 +137,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @controlsContainer.setter
-  def controlsContainer(self, bool):
-    self._config(bool)
+  def controlsContainer(self, flag):
+    self._config(flag)
 
   @property
   def mode(self):

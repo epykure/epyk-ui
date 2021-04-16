@@ -11,11 +11,13 @@ from epyk.core.html.entities import EntHtml5_D
 from epyk.core.html import Defaults
 
 
-class Entities(object):
+class Entities:
   """
 
   """
 
+  word_break = '<wbr>'
+  word_break_hyphen = '&shy;'
   non_breaking_space = '&#160;'
   less_than = '&#60;'
   greater_than = '&#62;'

@@ -393,9 +393,12 @@ class Rich:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     records = records or []
+    dfl_options = {"pageNumber": results_per_page}
+    if options is not None:
+      dfl_options.update(options)
     html_help = html.HtmlTextComp.SearchResult(
-      self.page, records, pageNumber=results_per_page, width=width, height=height, profile=profile,
-      options=options or {})
+      self.page, records, width=width, height=height, profile=profile,
+      options=dfl_options)
     return html_help
 
   @html.Html.css_skin()

@@ -6,6 +6,8 @@
 - Add margins shortcut for template configs.
 - Add width parameter for the powered by component.
 - Add dark mode to color themes.
+- Introduce position to div
+- Add options for navigation points.
 
 ### Changed
 - Add the template attribute for the body component to the __init__.
@@ -17,6 +19,8 @@
 - Add the start event for the countdown component.
 - Consider the template of the body for navigation components (side panels)
 - Bug fix for the texts.button component.
+- Fix options for Images and Carousels.
+- Fix html_code issue for content tables in text components.
 
 
 ## [1.5.11] - 2021-04-11

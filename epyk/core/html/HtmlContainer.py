@@ -395,7 +395,7 @@ class Div(Html.Html):
       if isinstance(obj, list) and obj:
         component = report.ui.div(
           obj, label, color, width, icon, height, editable, align, padding, html_code, tag, helper, profile,
-          position=self.options.get("position"))
+          position=options.get("position", None))
       else:
         component = obj
 
@@ -1979,16 +1979,16 @@ class Points(Html.Html):
     self.items = []
     self.css({"text-align": "center"})
     for i in range(count):
-      div = self._report.ui.div(self._report.entities.non_breaking_space)
+      div = self.page.ui.div(self.page.entities.non_breaking_space)
       div.attr["name"] = html_code
       div.attr["data-position"] = i
-      div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px",
+      div.css({"border": "1px solid %s" % self.page.theme.greys[5], "border-radius": "10px", "width": "15px",
                "height": "15px"})
       div.css(self.options.div_css)
       div.style.add_classes.div.background_hover()
       div.options.managed = False
       self.items.append(div)
-    self[self.options.selected].css({"background-color": self.options.background_color})
+    self.items[self.options.selected].css({"background-color": self.options.background_color})
 
   @property
   def options(self):
@@ -2081,10 +2081,10 @@ class Points(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    return self[i].on("click", [
+    return self.items[i].click([
       'var data = {position: this.getAttribute("data-position")}',
-      self[i].dom.by_name.css({"background-color": ""}).r,
-      self[i].dom.css({"background-color": self.options.background_color})] + js_funcs, profile, on_ready=on_ready)
+      self.items[i].dom.by_name.css({"background-color": ""}).r,
+      self.items[i].dom.css({"background-color": self.options.background_color})] + js_funcs, profile, on_ready=on_ready)
 
   def __getitem__(self, i):
     return self.items[i]

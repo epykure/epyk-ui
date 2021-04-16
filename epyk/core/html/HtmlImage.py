@@ -132,6 +132,7 @@ class AnimatedImage(Html.Html):
 
 class ImgCarousel(Html.Html):
   name = 'Carousel'
+  _option_cls = OptImg.OptionsImage
 
   def __init__(self, report, images, path, selected, width, height, options, profile):
     self.items, self.__click_items = [], []
@@ -178,8 +179,9 @@ class ImgCarousel(Html.Html):
       self.next.style.css.display = "none"
       self.previous.style.css.display = "none"
     self.items[selected].css({"display": 'block'})
-    self._jsStyles["color"] = self._report.theme.colors[-1]
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
+    self.points = self.page.ui.navigation.points(
+        len(self.items), html_code="%s_points" % self.htmlCode, options={"managed": False})
 
   def __getitem__(self, i):
     return self.items[i]
@@ -220,25 +222,20 @@ class ImgCarousel(Html.Html):
   def __str__(self):
     self.container._vals = self.items
     self.attr['data-last_picture'] = len(self.items)-1
-    if not "%s_points" % self.htmlCode in self._report.components:
-      points = self._report.ui.navigation.points(len(self.items), html_code="%s_points" % self.htmlCode,
-                                                 options={"managed": False})
-      points.style.css.cursor = "pointer"
-      if not self.__point_display:
-        points.style.css.display = 'none'
-      points.click([
-        self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
-        self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
-      ] + self.__click_items)
-    else:
-      points = self._report.components["%s_points" % self.htmlCode]
+    self.points.style.css.cursor = "pointer"
+    if not self.__point_display:
+      self.points.style.css.display = 'none'
+    self.points.click([
+      self.page.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
+      self.page.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
+    ] + self.__click_items)
     if hasattr(self.next, 'html'):
       self.next.click([
         data.primitives.float(self.dom.attr("data-current_picture").toString().parseFloat().add(1), 'picture_index'),
-        self.js.if_(self._report.js.object('picture_index') <= self.dom.attr('data-last_picture'), [
-          self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
+        self.js.if_(self.page.js.object('picture_index') <= self.dom.attr('data-last_picture'), [
+          self.dom.attr("data-current_picture", self.page.js.object('picture_index')),
           "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent)})()" %
-          self._report.js.getElementsByName("%s_points" % self.htmlCode)[
+          self.page.js.getElementsByName("%s_points" % self.htmlCode)[
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", -1),
               self.next.dom.events.trigger("click")
@@ -247,10 +244,10 @@ class ImgCarousel(Html.Html):
     if hasattr(self.previous, 'html'):
       self.previous.click([
         data.primitives.float(self.dom.attr("data-current_picture").toString().parseFloat().add(-1), 'picture_index'),
-        self.js.if_(self._report.js.object('picture_index') >= 0, [
-          self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
+        self.js.if_(self.page.js.object('picture_index') >= 0, [
+          self.dom.attr("data-current_picture", self.page.js.object('picture_index')),
           "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent) })()" %
-          self._report.js.getElementsByName("%s_points" % self.htmlCode)[
+          self.page.js.getElementsByName("%s_points" % self.htmlCode)[
             self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
               self.dom.attr("data-current_picture", len(self.items)),
               self.previous.dom.events.trigger("click")
@@ -258,7 +255,7 @@ class ImgCarousel(Html.Html):
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
       ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),
-             "points": points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '',
+             "points": self.points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '',
              'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
 
 

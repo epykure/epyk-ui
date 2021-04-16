@@ -8,7 +8,7 @@ class OptionsPanelPoints(Options):
 
   @property
   def background_color(self):
-    return self.get(self._report._report.theme.success[1])
+    return self.get(self.component.page.theme.success[1])
 
   @background_color.setter
   def background_color(self, val):
@@ -111,7 +111,7 @@ class OptionPanelTabs(Options):
 
   @width.setter
   def width(self, value):
-    return self.set(value)
+    self.set(value)
 
   @property
   def css_tab(self):
@@ -122,7 +122,7 @@ class OptionPanelTabs(Options):
     This must be changed before adding components
     """
     dflt = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-            "border-bottom": "2px solid %s" % self._report._report.theme.greys[0]}
+            "border-bottom": "2px solid %s" % self.component.page.theme.greys[0]}
     return self.get(dflt)
 
   @css_tab.setter
@@ -137,7 +137,7 @@ class OptionPanelTabs(Options):
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
-    return self.get({"border-bottom": "2px solid %s" % self._report._report.theme.colors[-1]})
+    return self.get({"border-bottom": "2px solid %s" % self.component.page.theme.colors[-1]})
 
   @css_tab_clicked.setter
   def css_tab_clicked(self, attrs):
@@ -153,7 +153,7 @@ class OptionPanelTabs(Options):
     :param name:
     :param css_style:
     """
-    if not 'tab_style' in self._attrs:
+    if 'tab_style' not in self._attrs:
       self._attrs['tab_style'] = {}
     css = dict(self.css_tab)
     if css_style is not None:
@@ -171,7 +171,7 @@ class OptionPanelTabs(Options):
     :param name:
     :param css_style:
     """
-    if not 'tab_style_clicked' in self._attrs:
+    if 'tab_style_clicked' not in self._attrs:
       self._attrs['tab_style_clicked'] = {}
     css = dict(self.css_tab_clicked)
     if css_style is not None:
@@ -208,8 +208,8 @@ class OptionPanelTable(Options):
     return self.get(True)
 
   @header.setter
-  def header(self, bool):
-    self.set(bool)
+  def header(self, flag):
+    self.set(flag)
 
   @property
   def cell_align(self):
@@ -235,8 +235,8 @@ class OptionsDiv(Options):
     return self.get(False)
 
   @inline.setter
-  def inline(self, bool):
-    self.set(bool)
+  def inline(self, flag):
+    self.set(flag)
 
 
 class OptionDrawer(Options):
@@ -499,8 +499,8 @@ class OptionGrid(Options):
     return self.get(True)
 
   @autoSize.setter
-  def autoSize(self, bool):
-    self.set(bool)
+  def autoSize(self, flag):
+    self.set(flag)
 
   @property
   def responsive(self):
@@ -511,8 +511,8 @@ class OptionGrid(Options):
     return self.get(True)
 
   @responsive.setter
-  def responsive(self, bool):
-    self.set(bool)
+  def responsive(self, flag):
+    self.set(flag)
 
   @property
   def classe(self):
@@ -537,8 +537,8 @@ class OptionGrid(Options):
     return self.get(False)
 
   @noGutters.setter
-  def noGutters(self, bool):
-    self.set(bool)
+  def noGutters(self, flag):
+    self.set(flag)
 
 
 class OptionPopup(Options):
@@ -555,8 +555,8 @@ class OptionPopup(Options):
     return self.get(True)
 
   @background.setter
-  def background(self, bool):
-    self.set(bool)
+  def background(self, flag):
+    self.set(flag)
 
   @property
   def draggable(self):
@@ -569,10 +569,10 @@ class OptionPopup(Options):
     return self.get(False)
 
   @draggable.setter
-  def draggable(self, bool):
-    if bool:
+  def draggable(self, flag):
+    if flag:
       self.background = False
-    self.set(bool)
+    self.set(flag)
 
   @property
   def closure(self):
@@ -585,7 +585,7 @@ class OptionPopup(Options):
   @closure.setter
   def closure(self, icon):
     if icon:
-      self._report.close = self._report._report.ui.icon(icon)
+      self._report.close = self.component.page.ui.icon(icon)
     self.set(icon)
 
   @property

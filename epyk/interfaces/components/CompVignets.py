@@ -267,6 +267,9 @@ class Vignets:
             split_url = os.path.split(image)
             container.image = self.page.ui.img(split_url[1], path=split_url[0], profile=profile)
             container.add(container.image)
+            if height[0] is not None and height[1] == "px":
+              container.image.style.css.width = "auto"
+              container.image.style.css.height = "%s%s" % (height[0], height[1])
           else:
             container.image = image
         if title is not None:
@@ -286,6 +289,10 @@ class Vignets:
             split_url = os.path.split(image)
             container.image = self.page.ui.img(split_url[1], path=split_url[0], profile=profile)
             container.add(container.image)
+            if height[0] is not None and height[1] == "px":
+              container.image.style.css.width = "auto"
+              container.image.style.css.height = "%s%s" % (height[0], height[1])
+
     else:
       container = self.page.ui.col(align=align, width=width, height=height, position="top", profile=profile)
       container.style.css.margin = "20px auto"

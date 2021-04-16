@@ -700,7 +700,7 @@ class ContentsTable(Html.Html):
     self.style.css.position = None
     self.style.css.margin = 5
 
-  def add_category(self, text, level=None, options=None):
+  def add_category(self, text, level=None, options=None, html_code_content="content"):
     """
     Description:
     ------------
@@ -711,10 +711,11 @@ class ContentsTable(Html.Html):
     :param text: String. The text visible on the page.
     :param level: Integer. Optional. The depth for the title in the document.
     :param options: Dictionary. Optional. The options for the title component.
+    :param html_code_content: String. Optional. The Html code of the component Content table.
     """
-    return self._report._content_table.anchor(text, level or 4, None, options=options)
+    return self.page.components[html_code_content].anchor(text, level or 4, None, options=options)
 
-  def add_title(self, component, level=None, css=None, position="before", options=None):
+  def add_title(self, component, level=None, css=None, position="before", options=None, html_code_content="content"):
     """
     Description:
     ------------
@@ -727,6 +728,7 @@ class ContentsTable(Html.Html):
     :param css: Dictionary. Optional. The CSS style for the link.
     :param position: String. Optional. The position in the content table (append or prepend).
     :param options: Dictionary. Optional. The options for the title component.
+    :param html_code_content: String. Optional. The Html code of the component Content table.
     """
     # Special attribute set in the base component interface
     div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -736,13 +738,13 @@ class ContentsTable(Html.Html):
       div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
     div.style.css.position = "absolute"
     div.style.css.z_index = -1
-    link = self._report._content_table.anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
-    self._report._content_table[-1].click([
+    link = self.page.components[html_code_content].anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
+    self.page.components[html_code_content][-1].click([
       component.dom.transition(
         ["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
     return link
 
-  def add_url(self, component, url, level=None, options=None):
+  def add_url(self, component, url, level=None, options=None, html_code_content="content"):
     """
     Description:
     ------------
@@ -755,6 +757,7 @@ class ContentsTable(Html.Html):
     :param url: String. The url link with component clicked.
     :param level: Integer. Optional. The depth for the title in the document.
     :param options: Dictionary. Optional. The options for the title component.
+    :param html_code_content: String. Optional. The Html code of the component Content table.
     """
     component.options.managed = False
     div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -767,8 +770,8 @@ class ContentsTable(Html.Html):
     dflt_options = {"target": '_blank'}
     if options is not None:
       dflt_options.update(options)
-    link = self._report._content_table.anchor(component.val, level or 4, url, options=dflt_options)
-    self._report._content_table[-1].click([
+    link = self.page.components[html_code_content].anchor(component.val, level or 4, url, options=dflt_options)
+    self.page.components[html_code_content][-1].click([
       component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5],
                                reverse=True)])
     return link
@@ -786,18 +789,11 @@ class ContentsTable(Html.Html):
 class SearchResult(Html.Html):
   name = 'Search Result'
   requirements = ('jquery', )
+  _option_cls = OptText.OptSearchResult
 
-  def __init__(self, report, records, pageNumber, width, height, options, profile):
+  def __init__(self, report, records, width, height, options, profile):
     super(SearchResult, self).__init__(report, records, options=options, profile=profile,
                                        css_attrs={"width": width, "height": height})
-    self._jsStyles = {
-      'title': {'color': self._report.theme.colors[7], 'font-size': '18px'},
-      'dsc': {'color': self._report.theme.greys[6]},
-      'url': {'color': self._report.theme.success[1], 'font-size': '14px'},
-      'visited': {'color': self._report.theme.greys[5]},
-      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'},
-      'pageNumber': pageNumber,
-      'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
 
   _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
@@ -832,7 +828,7 @@ class SearchResult(Html.Html):
         for (var i = 0; i < reste; i++){
           var indexPage = i + 1;
           if (options.currPage == i) { 
-            var href = $('<a href="#" style="background-color:'+ options.greyColor +';padding:5px;color:'+ options.whiteColor +'">'+ indexPage +'</a>');
+            var href = $('<a href="#" style="background-color:'+ options.grey +';padding:5px;color:'+ options.white +'">'+ indexPage +'</a>');
             href.click({page: i, rec: data}, function(e) {options.builder(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}
           else{

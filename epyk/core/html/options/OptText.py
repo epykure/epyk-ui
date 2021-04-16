@@ -767,3 +767,137 @@ class OptionsHighlights(Options):
   def showdown(self, values):
     self._config(True, 'markdown')
     self._config(values)
+
+
+class OptSearchResult(Options):
+  component_properties = ("title", "dsc", "url", "visited", "link")
+
+  @property
+  def title(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get({
+      'color': self.component.page.theme.colors[-1], "font-weight": 900,
+      'font-size': '18px'})
+
+  @title.setter
+  def title(self, attrs):
+    self._config(attrs)
+
+  @property
+  def dsc(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(
+      {'color': self.component.page.theme.greys[6], "padding-bottom": "10px"})
+
+  @dsc.setter
+  def dsc(self, attrs):
+    self._config(attrs)
+
+  @property
+  def url(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(
+      {"font-style": 'italic', 'color': self.component.page.theme.notch(), 'font-size': '14px'})
+
+  @url.setter
+  def url(self, attrs):
+    self._config(attrs)
+
+  @property
+  def visited(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get({'color': self.component.page.theme.greys[5]})
+
+  @visited.setter
+  def visited(self, attrs):
+    self._config(attrs)
+
+  @property
+  def link(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get({'color': self.component.page.theme.colors[7], 'cursor': 'pointer'})
+
+  @link.setter
+  def link(self, attrs):
+    self._config(attrs)
+
+  @property
+  def pageNumber(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(0)
+
+  @pageNumber.setter
+  def pageNumber(self, num):
+    self._config(num)
+
+  @property
+  def currPage(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(0)
+
+  @currPage.setter
+  def currPage(self, num):
+    self._config(num)
+
+  @property
+  def grey(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(self.component.page.theme.colors[9])
+
+  @grey.setter
+  def grey(self, color):
+    self._config(color)
+
+  @property
+  def white(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(self.component.page.theme.colors[0])
+
+  @white.setter
+  def white(self, color):
+    self._config(color)

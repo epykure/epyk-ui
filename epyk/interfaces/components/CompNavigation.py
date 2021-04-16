@@ -474,7 +474,7 @@ class Navigation:
     html_nav.style.css.line_height = height[0]
     Defaults_css.BODY_CONTAINER = {"padding-top": height[0] + scroll_height}
     self.page.body.style.custom_class({
-      "padding-top": '%spx' % (height[0] + 10 + scroll_height)}, "body", is_class=False)
+      "padding-top": '%spx' % (height[0] + 5 + scroll_height)}, "body", is_class=False)
     return html_nav
 
   @html.Html.css_skin()
@@ -585,7 +585,6 @@ class Navigation:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    print(self.page.body.template)
     position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
     d.css({"background": self.page.theme.colors[2], "position": position_type, 'top': 0, 'height': '100%',
