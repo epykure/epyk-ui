@@ -7,7 +7,7 @@
 ### Fixed
 
 
-## [1.5.13] - 2021-04-19
+## [1.5.13] - 2021-04-18
 
 ### Added
 - DatePicker component option.
