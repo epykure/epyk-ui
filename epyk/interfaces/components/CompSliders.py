@@ -183,6 +183,8 @@ class Sliders:
 
       - :class:`epyk.core.html.HtmlEvent.Range`
 
+    Attributes:
+    ----------
     :param value:
     :param minimum:
     :param maximum:

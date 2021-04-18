@@ -667,7 +667,7 @@ class Images:
     height = Arguments.size(height, "px")
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
-    html_icon = html.HtmlImage.Icon(self.page, icon, width=width, height=height, color=color, tooltip=tooltip,
+    html_icon = html.HtmlImage.Icon(self.page, icon, width=width, height=height, color=color or 'inherit', tooltip=tooltip,
                                     options=options, html_code=html_code, profile=profile)
     if align == "center":
       html_icon.style.css.margin = "auto"

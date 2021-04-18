@@ -851,10 +851,6 @@ class OptionsDatePicker(OptionsInput):
 
   @beforeShow.setter
   def beforeShow(self, value):
-    self._config(value)
-
-  @property
-  def beforeShowDay(self):
     """
     Description:
     ------------
@@ -864,11 +860,10 @@ class OptionsDatePicker(OptionsInput):
 
       https://api.jqueryui.com/datepicker/#option-beforeShowDay
     """
-    return self._config_get(None)
-
-  @beforeShowDay.setter
-  def beforeShowDay(self, value):
     self._config(value)
+
+  def beforeShowDay(self, jsFncs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def buttonImage(self):
@@ -1057,6 +1052,16 @@ class OptionsDatePicker(OptionsInput):
       https://api.jqueryui.com/datepicker/#option-dayNames
     """
     return self._config_get([])
+
+  def dateJsOvr(self, jsFncs=None, profile=None):
+    if jsFncs is None:
+      self._config("new Date()", js_type=True)
+    elif jsFncs == 'COB':
+      self._config(''' (function(){var cob = new Date(); var days = cob.getDay(); 
+          if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()''', js_type=True)
+    else:
+      self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+
 
   @dayNames.setter
   def dayNames(self, value):

@@ -488,11 +488,8 @@ class InputDate(Input):
 
   def __init__(self, report, records, placeholder, width, height, html_code, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, html_code, options, attrs, profile)
-    if options.get("date_if_null", None) is None:
-      self._jsStyles["date_if_null"] = "new Date()"
-    elif options["date_if_null"] == "COB":
-      self._jsStyles["date_if_null"] = ''' (function(){var cob = new Date(); var days = cob.getDay(); 
-          if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()'''
+    if options.get("date_from_js", None) is not None:
+      self.options.dateJsOvr(options["date_from_js"])
 
   @property
   def options(self):
@@ -576,13 +573,14 @@ class InputDate(Input):
     :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    self._jsStyles['beforeShowDay'] = '''function (date) {
-            var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-            %(jsFnc)s; if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
-            else {return [true, '', '']}
-          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}
+    self.options.beforeShowDay([''' var utc = value.getTime() - value.getTimezoneOffset()*60000; 
+      var newDate = new Date(utc); const dts = %(dts)s; %(jsFnc)s; 
+      if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
+      else {return [true, '', '']}''' % {
+        "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
+                               profile=profile)
 
-  def included_dates(self, dts=None, js_funcs=None, profile=None):
+  def included_dates(self, dts=None, selected=None, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -594,16 +592,19 @@ class InputDate(Input):
     Attributes:
     ----------
     :param dts: List. Optional. Dates included format YYYY-MM-DD.
+    :param selected: String. Optional. The selected date from the range. Default max.
     :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    self._jsStyles['beforeShowDay'] = '''function (date) {
-        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-        %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
-        else {return [true, '', '']}
-      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}
+    self._vals = selected or sorted(dts)[-1]
+    self.options.beforeShowDay(['''
+      var utc = value.getTime() - value.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+      %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
+      else {return [true, '', '']}''' % {
+        "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
+                               profile=profile)
 
-  def format_dates(self, class_name, dts=None, css=None, tooltip=""):
+  def format_dates(self, class_name, dts=None, css=None, tooltip="", profile=None):
     """
     Description:
     ------------
@@ -619,18 +620,19 @@ class InputDate(Input):
     :param dts: List. Optional. A list of dates format YYYY-MM-DD.
     :param css: Dictionary. Optional. The CSS Attributes for the CSS class.
     :param tooltip: String. Optional. The tooltip when the mouse is hover.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     dts = dts or []
     if css is not None:
       self._report.body.style.custom_class(css, classname="%s a" % class_name)
-    self._jsStyles['beforeShowDay'] = '''function (date) {
-        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+    self.options.beforeShowDay(['''
+        var utc = value.getTime() - value.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
         if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} 
-        else {return [true, '', '']}
-      }''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name}
+        else {return [true, '', '']}''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip,
+                                           "class_name": class_name}], profile=profile)
 
   _js__builder__ = '''
-      if(data == null){data = eval(options.date_if_null)}
+      if(data == null || options.dateJsOvr){data = options.dateJsOvr}
       %(jqId)s.datepicker(options).datepicker('setDate', data)''' % {
     "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 

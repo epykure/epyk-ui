@@ -100,8 +100,8 @@ class Tabulators:
     if 'json' in table_options_dflts:
       json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
       del table_options_dflts["json"]
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.TableTree(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
     table.config.layout.fitColumns()
     for c in cols + rows:

@@ -196,6 +196,16 @@ class JsHtmlSlider(JsHtml.JsHtml):
     -----
     """
     if self.component.options.range:
+      if self.component.options.range == "min":
+        return JsHtml.ContentFormatters(
+          self.page, '[%(varId)s.slider("value"), %(varId)s.slider("option", "max")]' % {
+            "varId": self.component.dom.jquery.varId})
+
+      if self.component.options.range == "max":
+        return JsHtml.ContentFormatters(
+          self.page, '[%(varId)s.slider("option", "min"), %(varId)s.slider("value")]' % {
+            "varId": self.component.dom.jquery.varId})
+
       return JsHtml.ContentFormatters(self.page, '%s.slider("values")' % self.component.dom.jquery.varId)
 
     return JsHtml.ContentFormatters(self.page, '%s.slider("value")' % self.component.dom.jquery.varId)
@@ -205,8 +215,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     """
     Description:
     ------------
-
-    :return:
+    Get the maximum value selected for range slider, returns the value otherwise.
     """
     if self.component.options.range:
       if self.component.options.range == "max":
@@ -224,8 +233,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     """
     Description:
     ------------
-
-    :return:
+    Get the minimum value selected for range slider, returns the value otherwise.
     """
     if self.component.options.range:
       if self.component.options.range == "min":

@@ -16,6 +16,7 @@ from epyk.core.css import Defaults
 class DatePicker(Html.Html):
   requirements = ('jqueryui', )
   name = 'Date Picker'
+  _option_cls = OptCalendars.OptionDatePicker
 
   def __init__(self, report, value, label, icon, width, height, color, html_code, profile, options, helper):
     super(DatePicker, self).__init__(report, value, html_code=html_code, profile=profile)
@@ -25,9 +26,9 @@ class DatePicker(Html.Html):
     self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css(
       {"padding": 0})
     self.prepend_child(self.input)
-    if not self.input.options.inline:
-      self.add_icon(icon, html_code=self.htmlCode, css={"margin-top": '-4px', "margin-left": '5px',
-                                                        'color': self._report.theme.colors[-1]},
+    if not self.input.options.inline and icon:
+      self.add_icon(icon, html_code=self.htmlCode,
+                    css={"margin-top": '-4px', "margin-left": '5px', 'color': color or "inherit"},
                     position="after", family=options.get("icon_family"))
     else:
       self.icon = None
@@ -107,7 +108,7 @@ class DatePicker(Html.Html):
     """
     return self.input.excluded_dates(dts, js_funcs, profile)
 
-  def included_dates(self, dts=None, js_funcs=None, profile=False):
+  def included_dates(self, dts=None, selected=None, js_funcs=None, profile=False):
     """
     Description:
     -----------
@@ -123,10 +124,11 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param dts: List. Optional. A list of dates format YYYY-MM-DD.
+    :param selected: String. Optional. The selected date from the range. Default max.
     :param js_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    return self.input.included_dates(dts, js_funcs, profile)
+    return self.input.included_dates(dts, selected, js_funcs, profile)
 
   def add_options(self, options=None, name=None, value=None):
     """

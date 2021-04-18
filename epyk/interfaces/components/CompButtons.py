@@ -79,7 +79,7 @@ class Buttons:
     html_button = html.HtmlButton.Button(
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     html_button.style.css.margin = "0"
-    html_button.style.css.padding = "0 20px"
+    html_button.style.css.padding = 0
     html_button.style.css.line_height = Defaults_html.LINE_HEIGHT
     self.__align(html_button, align)
     return html_button
@@ -135,6 +135,8 @@ class Buttons:
     component.style.css.color = self.page.theme.colors[0]
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
+    component.style.css.padding_left = 10
+    component.style.css.padding_right = 10
     return component
 
   @html.Html.css_skin()

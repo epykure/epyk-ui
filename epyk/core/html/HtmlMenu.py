@@ -516,8 +516,7 @@ class Shortcut(Html.Html):
     component.options.managed = False
 
     if self.__options['position'] in ['left', 'right']:
-      component.style.css.width = self.css("width")
-      component.style.css.text_align = 'center'
+      component.style.css.text_align = component.style.css.text_align or 'center'
       component.style.css.display = 'block'
       component.style.css.margin_bottom = 5
 
@@ -560,14 +559,14 @@ class Shortcut(Html.Html):
     else:
       self.logo.style.css.margin_top = 5
       self.logo.style.css.display = 'block'
-      self.logo.style.css.width = self.css("width")
-      self.logo.style.css.height = self.css("width")
+      self.logo.style.css.margin = 'auto'
       if self.__options['position'] in ['left', 'right']:
         self.logo.style.css.margin_bottom = 15
         self.logo.style.css.margin_right = 0
       else:
         self.logo.style.css.margin_right = 10
+    self.logo.options.managed = False
     self.logo.style.css.margin_bottom = 40
-    self._report.body.style.css.padding_left = "%spx" % (int(self.css("width")[:-2]) + 5)
+    self.page.body.style.css.padding_left = "%spx" % (int(self.css("width")[:-2]) + 5)
     str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

@@ -7,6 +7,29 @@
 ### Fixed
 
 
+## [1.5.13] - 2021-04-19
+
+### Added
+- DatePicker component option.
+- String primitive functions padStart, padEnd...
+- Component texts.date
+- interface cob entry point.
+- New components class in the base HTML class.
+
+### Changed
+- Button colored padding.
+- SelectPicker dom content value.
+- Tabulator wrapper Documentation.
+- Some improvements in the documentation formatting.
+- Align interface builder attributes.
+
+### Fixed
+- Bug fix datePicker JavaScript Options.
+- Tabulator tree management.
+- Fix shortcut bar components management
+- Fix icon CSS color management.
+
+
 ## [1.5.12] - 2021-04-16
 
 ### Added

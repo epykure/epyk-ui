@@ -291,6 +291,23 @@ class EventTouch:
     return self
 
 
+class Components(collections.OrderedDict):
+
+  def css(self, attrs):
+    """
+    Description:
+    -----------
+    Set the CSS style for all the inner components.
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. The CSS attributes.
+    """
+    for component in self.values():
+      if hasattr(component, "css"):
+        component.css(attrs)
+
+
 class Html:
   """
   Description:
@@ -306,7 +323,7 @@ class Html:
   def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     # Child component for this component
-    self.components = collections.OrderedDict()
+    self.components = Components()
     self.require = Required(report)
     for package in self.requirements or []:
       if isinstance(package, tuple):

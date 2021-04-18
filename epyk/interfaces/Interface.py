@@ -75,7 +75,8 @@ class Components:
     self.slider = self.sliders.slider
     self.select = self.lists.select
     self.lookup = self.lists.lookup
-    self.date = self.fields.cob
+    self.date = self.fields.date
+    self.cob = self.fields.cob
     self.tree = self.lists.tree
     self.info = self.rich.info
     self.radio = self.buttons.radio

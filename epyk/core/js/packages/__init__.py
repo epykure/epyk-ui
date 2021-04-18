@@ -44,6 +44,7 @@ class JsPackage:
 
   def __init__(self, src=None, varName=None, selector=None, data=None, setVar=None, parent=None):
     self.src = src if src is not None else self.__internal()
+    self.component = parent
     self._selector = selector if selector is not None else self.lib_selector
     self.varName, self.setVar, self._parent = varName, self.lib_set_var if setVar is None else setVar, parent
     self._data = data

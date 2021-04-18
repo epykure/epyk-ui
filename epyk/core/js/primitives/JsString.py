@@ -110,6 +110,45 @@ class JsString(JsObject.JsObject):
     self.varData = "%s + %s" % (JsUtils.jsConvertData(data, None), self.varData)
     return self
 
+  def padStart(self, num, text):
+    """
+    Description:
+    ------------
+    The padStart() method pads the current string with another string (multiple times,
+    if needed) until the resulting string reaches the given length.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
+
+    Attributes:
+    ----------
+    :param num: Integer. Integer. The length of the resulting string once the current str has been padded.
+    :param num: text. String. The string to pad the current str with
+    """
+    return JsString("%s.padStart(%s, %s)" % (
+      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), isPyData=False)
+
+  def padEnd(self, num, text):
+    """
+    Description:
+    ------------
+    The padEnd() method pads the current string with a given string (repeated,
+    if needed) so that the resulting string reaches a given length.
+    The padding is applied from the end of the current string.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd
+
+    Attributes:
+    ----------
+    :param num: Integer. Integer. The length of the resulting string once the current str has been padded.
+    :param num: text. String. The string to pad the current str with
+    """
+    return JsString("%s.padEnd(%s, %s)" % (
+      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), isPyData=False)
+
   def add(self, strVal):
     """
     Description:
@@ -379,6 +418,40 @@ class JsString(JsObject.JsObject):
     """
     return JsString("%s.trim()" % self.varId, isPyData=False)
 
+  def trimStart(self):
+    """
+    Description:
+    ------------
+    The trimStart() method removes whitespace from the beginning of a string. trimLeft() is an alias of this method.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart
+
+    :return: A String, representing the string with removed from the beginning
+    """
+    return JsString("%s.trimStart()" % self.varId, isPyData=False)
+
+  def trimEnd(self):
+    """
+    Description:
+    ------------
+    The trimEnd() method removes whitespace from the end of a string. trimRight() is an alias of this method.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd
+
+    :return: A String, representing the string with removed whitespace at the end
+    """
+    return JsString("%s.trimEnd()" % self.varId, isPyData=False)
+
   def charAt(self, i):
     """
     Description:
@@ -457,6 +530,28 @@ class JsString(JsObject.JsObject):
     :return: A String, representing the value of a string converted to uppercase
     """
     return JsString("%s.toUpperCase()" % self.varId, isPyData=False)
+
+  def toLocaleUpperCase(self, locale):
+    """
+    Description:
+    ------------
+    The toLocaleUpperCase() method returns the calling string value converted to upper case,
+    according to any locale-specific case mappings.
+
+    Usage:
+    -----
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase
+
+    Attributes:
+    ----------
+    :param locale: String. The locale parameter indicates the locale to be used to convert to upper case according to any locale-specific case mappings
+
+    :return: A String, representing the value of a string converted to uppercase
+    """
+    return JsString("%s.toLocaleUpperCase(%s)" % (self.varId, JsUtils.jsConvertData(locale, None)), isPyData=False)
 
   def includes(self, searchvalue, start=0, jsFnc=None, jsObj=None):
     """

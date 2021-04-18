@@ -262,6 +262,28 @@ class Table(Html.Html):
     return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
+class TableTree(Table):
+  def __init__(self, report, records, width, height, html_code, options, profile):
+    data, columns, self.__config, self._json_config = [], [], None, {}
+    super(TableTree, self).__init__(report, records, width, height, html_code, options, profile)
+    self.__config = TableTreeConfig(self, options)
+    if records is not None:
+      self.config.data = records
+    self.style.css.background = None
+
+  @property
+  def config(self):
+    """
+    Description:
+    ------------
+
+    :rtype: TableTreeConfig
+    """
+    if self.__config is None:
+      self.__config = TableTreeConfig(self._report)
+    return self.__config
+
+
 class EnumLayout(DataEnum):
   js_conversion = True
 
@@ -861,7 +883,7 @@ class Editor(DataGroup):
     self._attrs["editor"] = 'autocomplete'
     return EditorAutocomplete(self._report, self._attrs)
 
-  def autocomplete(self, values, showListOnEmpty=False, freetext=False, allowEmpty=False, searchFunc=None,
+  def autocomplete(self, values=None, showListOnEmpty=False, freetext=False, allowEmpty=False, searchFunc=None,
                    listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
                    verticalNavigation=None, **kwargs):
     """
@@ -1723,8 +1745,20 @@ class Column(DataClass):
     return self._attrs["headerFilter"]
 
   @headerFilter.setter
-  def headerFilter(self, bool):
-    self._attrs["headerFilter"] = bool
+  def headerFilter(self, value):
+    self._attrs["headerFilter"] = value
+
+  @property
+  def headerFilterFunc(self):
+    """
+    Description:
+    -----------
+    """
+    return self._attrs["headerFilterFunc"]
+
+  @headerFilterFunc.setter
+  def headerFilterFunc(self, value):
+    self._attrs["headerFilterFunc"] = value
 
   @property
   def headerVertical(self):
@@ -3240,9 +3274,42 @@ class TableTreeConfig(TableConfig):
     self._attrs["dataTree"] = val
 
   @property
+  def dataTreeSort(self):
+    return self._attrs["dataTreeSort"]
+
+  @dataTreeSort.setter
+  def dataTreeSort(self, val):
+    self._attrs["dataTreeSort"] = val
+
+  @property
+  def dataTreeFilter(self):
+    return self._attrs["dataTreeFilter"]
+
+  @dataTreeFilter.setter
+  def dataTreeFilter(self, val):
+    print("RRRRRRRR")
+    self._attrs["dataTreeFilter"] = val
+
+  @property
   def dataTreeStartExpanded(self):
     return self._attrs["dataTreeStartExpanded"]
 
   @dataTreeStartExpanded.setter
   def dataTreeStartExpanded(self, val):
     self._attrs["dataTreeStartExpanded"] = val
+
+  @property
+  def dataTreeSelectPropagate(self):
+    return self._attrs["dataTreeSelectPropagate"]
+
+  @dataTreeSelectPropagate.setter
+  def dataTreeSelectPropagate(self, val):
+    self._attrs["dataTreeSelectPropagate"] = val
+
+  @property
+  def dataTreeChildField(self):
+    return self._attrs["dataTreeChildField"]
+
+  @dataTreeSelectPropagate.setter
+  def dataTreeChildField(self, val):
+    self._attrs["dataTreeChildField"] = val

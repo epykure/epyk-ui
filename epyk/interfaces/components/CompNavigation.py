@@ -719,6 +719,7 @@ class Navigation:
       height = (100, '%')
     h_drawer = html.HtmlMenu.Shortcut(
       self.page, components or [], logo, width, height, html_code, dflt_options, profile)
+    h_drawer.style.css.padding = "5px 10px"
     return h_drawer
 
 

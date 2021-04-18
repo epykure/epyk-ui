@@ -943,6 +943,55 @@ class Texts:
     c.style.css.padding = '1px 2px'
     return c
 
+  @html.Html.css_skin()
+  def date(self, value=None, label=None, icon=False, color=None, width=(None, "px"),
+           height=(None, "px"), html_code=None, profile=None, options=None, helper=None):
+    """
+    Description:
+    ------------
+    This component is based on the Jquery Date Picker object.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+      page.ui.texts.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
+
+    Related Pages:
+
+      https://jqueryui.com/datepicker/
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+
+    Attributes:
+    ----------
+    :param value: Optional. The value to be displayed to the time component. Default now.
+    :param label: Optional. The text of label to be added to the component.
+    :param icon: Optional. The component icon content from font-awesome references.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: Optional. A tooltip helper.
+    """
+    html_dt = self.page.ui.date(
+        value, label=label, icon=icon, color=color, width=width, height=height, html_code=html_code,
+        profile=profile, options=options, helper=helper)
+    html_dt.input.style.css.background = "inherit"
+    html_dt.input.style.css.border = None
+    return html_dt
+
 
 class TextReferences:
 

@@ -125,3 +125,7 @@ class OptionDays(Options):
   @header.setter
   def header(self, css):
     self.set(css)
+
+
+class OptionDatePicker(Options):
+  pass
