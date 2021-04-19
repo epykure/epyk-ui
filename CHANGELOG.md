@@ -3,12 +3,14 @@
 ### Added
 - Add CSS Inline shortcut.
 - Add body.template property to easy the configuration.
+- Add pulse icon dom event.
+- Add new button refresh.
 
 ### Changed
 
 ### Fixed
-- Components documentation
-
+- Components documentation.
+- Fix icon.date and remove the input text.
 
 ## [1.5.13] - 2021-04-18
 

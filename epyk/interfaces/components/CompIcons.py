@@ -1446,7 +1446,7 @@ class Icons:
     return html_badge
 
   @html.Html.css_skin()
-  def date(self, value, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
+  def date(self, value=None, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
            html_code=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -1468,25 +1468,28 @@ class Icons:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to the time component. Default now
-    :param label: Optional. The text of label to be added to the component
-    :param icon: Optional. The component icon content from font-awesome references
-    :param color: Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Optional. A flag to set the component performance storage
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param helper: Optional. A tooltip helper
+    :param value: String. Optional. The value to be displayed to the time component. Default now.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param icon: String. Optional. The component icon content from font-awesome references.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param helper: String. Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
       dftl_options.update(options)
-    html_dt = html.HtmlDates.DatePicker(self.page, value, label, icon, width, height, color, html_code,
-                                        profile, dftl_options, helper)
+    html_dt = html.HtmlDates.DatePicker(
+      self.page, value, label, icon, width, height, color, html_code, profile, dftl_options, helper)
     html_dt.input.style.css.width = 0
+    html_dt.input.style.css.min_width = 0
+    html_dt.input.style.css.border = 0
+    html_dt.input.style.css.background = "inherit"
     return html_dt
 
   @html.Html.css_skin()

@@ -1426,6 +1426,21 @@ class JsHtmlIcon(JsHtml):
 
     return self._src.dom.classList.remove("fa-spin")
 
+  def pulse(self, status=True):
+    """
+    Description:
+    -----------
+    Add pulse class to the font awesome.
+
+    Attributes:
+    ----------
+    :param status: Boolean. Optional. The spin status.
+    """
+    if status:
+      return self._src.dom.classList.add("fa-pulse")
+
+    return self._src.dom.classList.remove("fa-pulse")
+
 
 class JsHtmlList(JsHtml):
 

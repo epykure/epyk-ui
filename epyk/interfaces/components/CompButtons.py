@@ -1358,3 +1358,60 @@ class Buttons:
     html_button = html.HtmlButton.ButtonFilter(
       self.page, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=dfl_options)
     return html_button
+
+  @html.Html.css_skin()
+  def refresh(self, text="Refresh", icon="fas fa-sync-alt", width=(None, "%"), height=(None, "px"), align="left",
+              html_code=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Standard refresh button with a font-awesome icon.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+      page.ui.buttons.refresh("Refresh")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the button.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    html_but = html.HtmlButton.Button(
+      self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    self.__align(html_but, align)
+    html_but.style.css.padding = "5px 10px"
+    html_but.style.css.margin_top = "5px !IMPORTANT"
+    html_but.style.css.color = self.page.theme.greys[0]
+    html_but.style.css.line_height = 0
+    html_but.style.css.background = self.page.theme.colors[-1]
+    html_but.style.css.border_color = self.page.theme.colors[-1]
+    return html_but
