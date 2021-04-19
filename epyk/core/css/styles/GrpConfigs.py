@@ -1,5 +1,6 @@
 
 from epyk.core.css import Colors
+from epyk.interfaces import Arguments
 
 
 class ClsConfigs:
@@ -13,11 +14,20 @@ class ClsConfigs:
     ------------
     Add a vertical and horizontal margin to the underlying template added to the body component.
 
+    Usage:
+    -----
+
+      page = pk.Page()
+      page.body.template.style.configs.margins(h=5)
+      page.body.template.style.css.background = "white"
+
     Attributes:
     ----------
     :param h: Tuple. optional. The horizontal (left and right) margin.
     :param v: Tuple. optional. The vertical (top, bottom) margin.
     """
+    h = Arguments.size(h, unit="%")
+    v = Arguments.size(v, unit="px")
     self.component.style.css.margin = "%s%s %s%s" % (v[0], v[1], h[0], h[1])
 
   def box(self, hexa_color=None, opacity=0.6, size=5, margin=5):
@@ -27,6 +37,7 @@ class ClsConfigs:
     Add a box shadow layout to the component.
 
     Usage:
+    -----
 
 
     Attributes:
@@ -53,6 +64,7 @@ class ClsConfigs:
     speed than the foreground content while scrolling.
 
     Usage:
+    -----
 
       div = page.ui.div()
       div.style.css.parallax("https://www.w3schools.com/howto/img_parallax.jpg")
@@ -79,6 +91,7 @@ class ClsConfigs:
     Set the box shadow color.
 
     Usage:
+    -----
 
 
 
@@ -117,6 +130,7 @@ class ClsConfigs:
     Add rounded border to the component.
 
     Usage:
+    -----
 
 
     Attributes:
@@ -133,6 +147,9 @@ class ClsConfigs:
     ------------
 
     TODO: Find way to set the container to the middle of the page.
+
+    Usage:
+    -----
 
     Attributes:
     ----------

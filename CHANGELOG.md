@@ -1,10 +1,13 @@
 ## [Unreleased]
 
 ### Added
+- Add CSS Inline shortcut.
+- Add body.template property to easy the configuration.
 
 ### Changed
 
 ### Fixed
+- Components documentation
 
 
 ## [1.5.13] - 2021-04-18

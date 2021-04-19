@@ -2,7 +2,6 @@
 import sys
 
 from epyk.core.css import Properties
-from epyk.core.css import Defaults_css
 
 
 class Attrs(Properties.CssMixin):
@@ -93,3 +92,29 @@ class Body(Attrs):
     self.font_size = component.style.globals.font.normal()
     self.font_family = component.style.globals.font.family
     self.margin = 0
+
+
+class CssInline(Attrs):
+
+  def __init__(self, component=None):
+    self.attrs = {}
+    self.component = component
+    if component is not None:
+      self._report = component.page
+      self.page = component.page
+
+  def to_dict(self, copy=False):
+    """
+    Description:
+    ------------
+    Returns the underlying CSS attributes.
+    This is the internal object and not a copy by default.
+
+    Attributes:
+    ----------
+    :param copy: Boolean. Optional. Specify if a copy must be returned.
+    """
+    if copy:
+      return dict(self.attrs)
+
+    return self.attrs

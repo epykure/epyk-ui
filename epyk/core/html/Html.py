@@ -1871,7 +1871,7 @@ class Body(Html):
       for attrs in Defaults_css.BODY_STYLE.split(";"):
         k, v = attrs.split(":")
         self.css(key=k, value=v)
-    self.template = None
+    self._template = None
 
   @property
   def style(self):
@@ -2107,29 +2107,51 @@ class Body(Html):
     Usage:
     -----
 
+      page = pk.Page()
+      template = page.body.add_template(defined_style="margins")
+      template.style.css.background = "white"
+
     Attributes:
     ----------
     :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component.
     :param defined_style: String. Optional. A predefined style attached to the style property.
     """
-    self.header = self.page.ui.div()
-    self.header.options.managed = False
-    self.header.style.clear_all()
-    self.footer = self.page.ui.div()
-    self.footer.options.managed = False
-    self.footer.style.clear_all()
-    self.template = self.page.ui.div()
-    self.template.options.managed = False
-    self.template.style.clear_all()
     if css is not None:
       self.template.css(css)
     if defined_style is not None:
       getattr(self.template.style.configs, defined_style)()
-    return self.template
+    return self._template
+
+  @property
+  def template(self):
+    """
+    Description:
+    ------------
+    Shortcut to the body template component.
+    This will just be an intermediate div tag on which all the component will be attached.
+
+    Usage:
+    -----
+
+      page = pk.Page()
+      page.body.template.margins(5)
+      page.body.template.style.css.background = "white"
+    """
+    if self._template is None:
+      self.header = self.page.ui.div()
+      self.header.options.managed = False
+      self.header.style.clear_all()
+      self.footer = self.page.ui.div()
+      self.footer.options.managed = False
+      self.footer.style.clear_all()
+      self._template = self.page.ui.div()
+      self._template.options.managed = False
+      self._template.style.clear_all()
+    return self._template
 
   def __str__(self):
-    if getattr(self, 'template', None) is not None:
-      self.template._vals = str(self._html_content)
+    if getattr(self, '_template', None) is not None:
+      self._template._vals = str(self._html_content)
       return '<body %s>%s%s%s</body>' % (
         self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(),
         self.footer.html())
