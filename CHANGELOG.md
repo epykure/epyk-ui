@@ -1,16 +1,31 @@
 ## [Unreleased]
 
 ### Added
-- Add CSS Inline shortcut.
-- Add body.template property to easy the configuration.
-- Add pulse icon dom event.
-- Add new button refresh.
 
 ### Changed
 
 ### Fixed
+
+
+## [1.5.14] - 2021-04-21
+
+### Added
+- Add CSS Inline shortcut.
+- Add body.template property to easy the configuration.
+- Add pulse icon dom event.
+- Add new button refresh.
+- Add borders option for Input components.
+- Add style.shadows various flavours.
+- Add profile to post request (first version).
+
+### Changed
+- Components minor still improvements.
+
+### Fixed
 - Components documentation.
 - Fix icon.date and remove the input text.
+- Fix Markdown display  in Console component.
+
 
 ## [1.5.13] - 2021-04-18
 
