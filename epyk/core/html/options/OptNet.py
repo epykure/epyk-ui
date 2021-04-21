@@ -16,10 +16,10 @@ class OptionsNews(Options):
     return self._config_get(True)
 
   @dated.setter
-  def dated(self, bool):
-    if bool:
+  def dated(self, flag):
+    if flag:
       self._report.jsImports.add('moment')
-    self._config(bool)
+    self._config(flag)
 
   @property
   def classes(self):

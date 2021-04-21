@@ -12,7 +12,7 @@ class CssSelectStyle(CssStyle.Style):
 
   def customize(self):
     self.css({
-      "background": 'inherit', "color": self.page.theme.greys[-1],
+      "background": 'inherit',
       'font-family': self.page.body.style.globals.font.family,
       'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
       'font-size': self.page.body.style.globals.font.normal(), #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
@@ -27,7 +27,7 @@ class CssSelectButton(CssStyle.Style):
   _selectors = {"child": '.btn'}
 
   def customize(self):
-    self.css({"background-color": 'inherit', "border": 'none', 'color': self.page.theme.colors[-1]})
+    self.css({"background-color": 'inherit', "border": 'none'})
 
 
 class CssSelectSearchBoxInput(CssStyle.Style):
@@ -74,7 +74,7 @@ class CssSelectOptionItems(CssStyle.Style):
     self.css({
       "z-index": 210,
       'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-      'color': self.page.theme.greys[-1]}, important=True)
+      'color': "inherit"}, important=True)
     self.hover.css({
       'color': self.page.theme.colors[0],
       "background-color": self.page.theme.notch(2)}, important=True)

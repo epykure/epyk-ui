@@ -436,6 +436,7 @@ class XMLHttpRequestErrors:
     self.__onerrors = onerrors
     self._src = report
     self._http = http_request
+    self.profile = None
 
   def e404(self, jsFncs=None, default=True, profile=None):
     """
@@ -712,6 +713,9 @@ class XMLHttpRequest:
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__req_success = jsFncs
+    if self.profile is not None and self.profile:
+      self.__req_success.insert(0, "console.log('Start[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
+      self.__req_success.append("console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
     return self
 
   def onerror(self, jsFncs):
@@ -893,6 +897,8 @@ class XMLHttpRequest:
     request = [
       "var %s = new XMLHttpRequest()" % self.varId,
       "%s.responseType = '%s'" % (self.varId, self.__responseType)]
+    if self.profile is not None and self.profile:
+      request.insert(0, "var t_post%s = performance.now()" % JsUtils.PROFILE_COUNT)
     if self.timeout is not None:
       request.append("%s.timeout = %s" % (self.varId, self.timeout))
     if self.__url_prefix:
@@ -916,4 +922,6 @@ class XMLHttpRequest:
     if self.__req_send is None:
       raise Exception("The send method must be called")
     request.append(self.__req_send)
+    if self.profile is not None and self.profile:
+      JsUtils.PROFILE_COUNT += 1
     return ";".join(request)

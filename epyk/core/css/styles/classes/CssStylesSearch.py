@@ -5,17 +5,14 @@ from epyk.core.css.styles.classes import CssStyle
 
 
 class CssSearchExt(CssStyle.Style):
-  _attrs = {'box-sizing': 'border-box', 'border-radius': '4px', 'width': '80px', 'background-repeat': 'no-repeat',
-            'padding': '5px 0px', '-webkit-transition': 'width 0.4s ease-in-out',
+  _attrs = {'box-sizing': 'border-box', 'border-radius': '4px', 'width': '40px', 'background-repeat': 'no-repeat',
+            'padding': '5px 0px', '-webkit-transition': 'width 0.4s ease-in-out', 'color': 'inherit',
             'transition': 'width 0.4s ease-in-out'}
   _focus = {'width': '350px', 'outline': 0}
 
   def customize(self):
-    self.css({
-      "border-bottom": '1px solid %s' % self.page.theme.greys[3]})
     self.hover.css({
       'color': self.page.theme.greys[-1],
-      'width': '100%',
       'border-bottom-color': self.page.theme.notch(1)})
 
 

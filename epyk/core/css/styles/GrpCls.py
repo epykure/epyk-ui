@@ -151,6 +151,22 @@ class ClassPage:
       self.classList['other'].add(self.__contenteditable)
     return self.__contenteditable
 
+  def fit_screen_height(self, margin_size=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param margin_size: Integer. Optional.
+    """
+    if margin_size is not None:
+      self.component.page.properties.css.add_text(
+        "body {height: calc(100%% - %spx)}" % margin_size)
+    else:
+      self.component.page.properties.css.add_text("body {height: 100%}")
+    return self
+
   @property
   def defaults(self):
     """
@@ -303,6 +319,46 @@ class ClassHtml:
       self._css_class = Classes.CatalogDiv.CatalogDiv(
         self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
+
+  def shadows(self, num):
+    """
+    Description:
+    ------------
+    Shortcut to various shadow styles.
+
+    Related Pages:
+
+      https://getcssscan.com/css-box-shadow-examples
+
+    Attributes:
+    ----------
+    :param num: Integer. The template number.
+    """
+    shadow_styles = {
+      0: {"box-shadow": "rgba(149, 157, 165, 0.2) 0px 8px 24px"},
+      1: {"box-shadow": "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"},
+      2: {"box-shadow": "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"},
+      3: {"box-shadow": "rgba(0, 0, 0, 0.35) 0px 5px 15px"},
+      4: {"box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px"},
+      5: {"box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px"},
+      6: {"box-shadow": "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"},
+      7: {"box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px"},
+      8: {"box-shadow": "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"},
+      9: {"box-shadow": "rgba(0, 0, 0, 0.1) 0px 4px 12px"},
+      10: {"box-shadow": "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"},
+      11: {"box-shadow": "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px"},
+      12: {"box-shadow": "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px"},
+      13: {"box-shadow": "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px"},
+      14: {"box-shadow": "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset"},
+      20: {"box-shadow": "rgb(38, 57, 77) 0px 20px 30px -10px"},
+      30: {"box-shadow": "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"},
+      43: {"box-shadow": "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px"},
+      55: {"box-shadow": "rgba(3, 102, 214, 0.3) 0px 0px 0px 3px"},
+      57: {"box-shadow": "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset"},
+      60: {"box-shadow": "blue 0px 0px 0px 2px inset, rgb(255, 255, 255) 10px -10px 0px -3px, rgb(31, 193, 27) 10px -10px, rgb(255, 255, 255) 20px -20px 0px -3px, rgb(255, 217, 19) 20px -20px, rgb(255, 255, 255) 30px -30px 0px -3px, rgb(255, 156, 85) 30px -30px, rgb(255, 255, 255) 40px -40px 0px -3px, rgb(255, 85, 85) 40px -40px"},
+      83: {"box-shadow": "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px"},
+    }
+    self.component.css(shadow_styles[num])
 
   @property
   def configs(self):
@@ -491,6 +547,7 @@ class ClassHtml:
     :return: self to allow the chaining.
     """
     self.classList['main'] = OrderedSet()
+    self.component.attr['class'] = self.classList['main']
     self._css_class = None
     return self
 

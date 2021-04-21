@@ -1075,7 +1075,7 @@ class JsBase:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request
 
-  def post(self, url, jsData=None, varName="response", is_json=True, components=None):
+  def post(self, url, jsData=None, varName="response", is_json=True, components=None, profile=None):
     """
     Description:
     ------------
@@ -1088,12 +1088,14 @@ class JsBase:
     :param varName: String. Optional. The variable name created in the Javascript (default response).
     :param is_json: Boolean. Optional. Specify the type of object passed.
     :param components: HTML component. Optional. This will add the component value to the request object.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData('POST', None)
     url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    request.profile = profile
     if components is not None:
       if jsData is None:
         jsData = components

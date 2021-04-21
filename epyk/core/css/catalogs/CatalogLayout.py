@@ -68,9 +68,18 @@ class CatalogLayout(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesSearch.CssSearch)
 
-  def search_extension(self):
-    """  """
-    return self._set_class(CssStylesSearch.CssSearchExt)
+  def search_extension(self, max_width=(100, '%')):
+    """
+    Description:
+    -----------
+    Attached the div extension class to the component.
+
+    :param max_width: Tuple. Optional. The maximum with for the component. Default 100%.
+    """
+    cssObj = CssStylesSearch.CssSearchExt(self.page, html_id=self._html_id)
+    cssObj.classname = "%s_%s%s" % (cssObj.classname, max_width[0], max_width[1])
+    cssObj.hover.css({"width": "%s%s" % (max_width[0], max_width[1])})
+    return self._add_class(cssObj)
 
   def search_button(self):
     """  """

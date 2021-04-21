@@ -20,6 +20,19 @@ class OptionsInput(Options):
     return self
 
   @property
+  def borders(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get("all")
+
+  @borders.setter
+  def borders(self, value):
+    self._config(value)
+
+  @property
   def disabled(self):
     """
     Description:

@@ -24,6 +24,22 @@ class CatalogInput(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesInput.CssInput)
 
+  def basic_border_bottom(self):
+    """
+    Description:
+    -----------
+    Basic style for an input component
+    """
+    return self._set_class(CssStylesInput.CssInputBottom)
+
+  def basic_noborder(self):
+    """
+    Description:
+    -----------
+    Basic style for an input component
+    """
+    return self._set_class(CssStylesInput.CssInputNoBorder)
+
   def range(self):
     """
     Description:

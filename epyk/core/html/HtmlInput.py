@@ -243,6 +243,15 @@ class Input(Html.Html):
       self.focus()
     if self.options.css:
       self.css(self.options.css)
+    if self.options.borders == "bottom":
+      self.style.no_class()
+      self.style.add_classes.input.basic_border_bottom()
+      self.options.borders = None
+    elif not self.options.borders and self.options.borders is not None:
+      self.style.no_class()
+      self.style.add_classes.input.basic_noborder()
+      self.options.borders = None
+
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -1209,6 +1218,8 @@ class TextArea(Html.Html):
     Usage:
     -----
 
+    Related Pages:
+
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
 
     Attributes:
@@ -1234,34 +1245,40 @@ class Search(Html.Html):
 
   def __init__(self, report, text, placeholder, color, width, height, html_code, tooltip, extensible, options, profile):
     super(Search, self).__init__(report, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
-    self.color = self._report.theme.colors[-1] if color is None else color
+    self.color = 'inherit' if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
-    #
     if not extensible:
       self.style.add_classes.layout.search()
       self.style.css.width = "%s%s" % (width[0], width[1])
     else:
-      self.style.add_classes.layout.search_extension()
+      self.style.add_classes.layout.search_extension(max_width=width)
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
-    self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, html_code=self.htmlCode,
-                  family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
-    self.icon.style.css.z_index = 10
+    if options["icon"]:
+      self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, html_code=self.htmlCode,
+                    family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+      self.icon.style.css.z_index = 10
+      self.dom.trigger = self.icon.dom.trigger
+    else:
+      self.icon = False
     self.style.css.position = "relative"
-    self.style.css.border_bottom_width = options["border"]
-    self.style.css.border_bottom_style = "solid"
+    #self.style.css.border_bottom_width = options["border"]
+    #self.style.css.border_bottom_style = "solid"
 
     if options.get("position", 'left') == 'left':
-      self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '5px 5px 5px 0px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
-                     'vertical-align': 'top'})
+      self.input.css({"text-align": 'left', 'padding-left': '2px', 'padding-right': '2px'})
+      if self.icon:
+        self.input.css({'padding-left': '%spx' % Defaults.LINE_HEIGHT})
+        self.icon.css({"margin": '5px 5px 5px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
+                       'vertical-align': 'top'})
     else:
-      self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '%spx' % Defaults.LINE_HEIGHT})
-      self.icon.css({"margin": '5px 5px 5px 0px', 'cursor': 'pointer', "right": 0,
-                     'position': 'absolute', 'vertical-align': 'top'})
+      self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '2px'})
+      if self.icon:
+        self.input.css({'padding-right': '%spx' % Defaults.LINE_HEIGHT})
+        self.icon.css({"margin": '5px 5px 5px 0px', 'cursor': 'pointer', "right": 0,
+                       'position': 'absolute', 'vertical-align': 'top'})
     self.tooltip(tooltip)
     self.input.style.css.background = "inherit"
     self.input.attr["type"] = "search"
-    self.dom.trigger = self.icon.dom.trigger
 
   @property
   def dom(self):
@@ -1292,10 +1309,10 @@ class Search(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     return self.icon.click(js_funcs, profile, source_event, on_ready=on_ready)
 
@@ -1319,9 +1336,14 @@ class Search(Html.Html):
 
     :return: The python object itself
     """
-    self.click(js_funcs)
+    if self.icon:
+      self.click(js_funcs)
+      return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
+        "jsFnc": self.icon.dom.events.trigger("click")}], profile=profile, source_event=source_event, on_ready=on_ready)
+
     return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
-      "jsFnc": self.icon.dom.events.trigger("click")}], profile=profile, source_event=source_event, on_ready=on_ready)
+        "jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
+
 
   def __str__(self):
     return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}

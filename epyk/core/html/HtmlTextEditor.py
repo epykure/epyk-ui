@@ -64,9 +64,8 @@ class Console(Html.Html):
 
   _js__builder__ = ''' 
       if(options.showdown){var converter = new showdown.Converter(options.showdown);
-        let frag = document.createRange().createContextualFragment(converter.makeHtml(data)); 
-        frag.firstChild.style.display = 'inline-block'; frag.firstChild.style.margin = 0;  
-        data = frag.firstChild.outerHTML} 
+        converter.setOption("display", "inline-block");
+        data = converter.makeHtml(data).replace("<p>", "<p style='display:inline-block;margin:0'>")}
       htmlObj.innerHTML = data +'<br/>' '''
 
   def __str__(self):

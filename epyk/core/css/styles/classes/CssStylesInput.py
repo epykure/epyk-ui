@@ -15,12 +15,55 @@ class CssInput(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.attrs.css({"color": self.page.theme.greys[-1],
+    self.attrs.css({'color': 'inherit',
                     'font-family': self.page.body.style.globals.font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
                     'border': '1px solid %s' % self.page.theme.colors[0],
                     'font-size': self.page.body.style.globals.font.normal()})
-    self.hover.css({'color': self.page.theme.notch(1)})
+    self.hover.css({
+      'color': self.page.theme.notch(1),
+      'border': '1px solid %s' % self.page.theme.notch(1),
+    })
+
+
+class CssInputBottom(CssStyle.Style):
+  """
+  Description:
+  ------------
+  CSS Base style for the input components.
+  """
+  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
+  _focus = {'outline': 0}
+
+  def customize(self):
+    self.attrs.css({'color': 'inherit',
+                    'font-family': self.page.body.style.globals.font.family,
+                    'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                    'border-bottom': '1px solid %s' % self.page.theme.colors[0],
+                    'font-size': self.page.body.style.globals.font.normal()})
+    self.hover.css({
+      'color': self.page.theme.notch(1),
+      'border-bottom': '1px solid %s' % self.page.theme.notch(1),
+    })
+
+
+class CssInputNoBorder(CssStyle.Style):
+  """
+  Description:
+  ------------
+  CSS Base style for the input components.
+  """
+  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
+  _focus = {'outline': 0}
+
+  def customize(self):
+    self.attrs.css({'color': 'inherit',
+                    'font-family': self.page.body.style.globals.font.family,
+                    'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                    'font-size': self.page.body.style.globals.font.normal()})
+    self.hover.css({
+      'color': self.page.theme.notch(1),
+    })
 
 
 class CssInputRange(CssStyle.Style):
