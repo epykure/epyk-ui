@@ -2,7 +2,15 @@
 
 ### Added
 
+- Add the shortcut properties margin_h, margin_v, padding_h, padding_h
+- Add the CssLine to CssClass conversion.
+- Add the style.clear_class() method.
+- Add the important method to CSSInline object.
+
 ### Changed
+
+- Change the nav interface argument with components.
+- Change the Autocomplete style and add the borders property.
 
 ### Fixed
 

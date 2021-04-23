@@ -277,6 +277,14 @@ class AutoComplete(Input):
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
     super(AutoComplete, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
     self.__focus = False
+    if self.options.borders == "bottom":
+      self.style.clear_class("CssInput")
+      self.style.add_classes.input.basic_border_bottom()
+      self.options.borders = None
+    elif not self.options.borders and self.options.borders is not None:
+      self.style.clear_class("CssInput")
+      self.style.add_classes.input.basic_noborder()
+      self.options.borders = None
 
   _js__builder__ = '''
     if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))}

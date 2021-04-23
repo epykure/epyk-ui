@@ -374,7 +374,7 @@ class Navigation:
     return div
 
   @html.Html.css_skin()
-  def nav(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -390,6 +390,7 @@ class Navigation:
     ----------
     :param logo: String. Optional.
     :param title: String. Optional. A panel title. This will be attached to the title property.
+    :param components: List. Optional. The Components to be added to the navbar.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options:  Dictionary. Optional. Specific Python options available for this component.
@@ -400,6 +401,9 @@ class Navigation:
       nav_bar = self.bar(logo, title, width, height, options, html_code=comp_id, profile=profile)
     else:
       nav_bar = self.page.components[comp_id]
+    if components is not None:
+      for component in components:
+        nav_bar.add(component)
     return nav_bar
 
   @html.Html.css_skin()

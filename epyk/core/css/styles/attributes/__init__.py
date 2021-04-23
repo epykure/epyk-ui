@@ -2,6 +2,7 @@
 import sys
 
 from epyk.core.css import Properties
+from epyk.core.css.styles.classes.CssStyle import Style
 
 
 class Attrs(Properties.CssMixin):
@@ -118,3 +119,32 @@ class CssInline(Attrs):
       return dict(self.attrs)
 
     return self.attrs
+
+  def important(self, attrs=None):
+    """
+    Description:
+    ------------
+
+    If attrs is not defined all the attributes will be important.
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. The Css Python property to be changed.
+    """
+    if attrs is None:
+      for k in self.attrs.items():
+        self.attrs[k] = "%s !IMPORTANT" % self.attrs[k]
+    else:
+      for k in attrs:
+        setattr(self, k, "%s !IMPORTANT" % getattr(self, k))
+
+  def to_class(self, classname):
+    """
+    Description:
+    ------------
+    The CSS class object.
+
+    :param classname: String. The class name.
+    """
+    v_cls = type(classname, (Style, ), {"_attrs": self.attrs})
+    return v_cls(None)

@@ -551,6 +551,26 @@ class ClassHtml:
     self._css_class = None
     return self
 
+  def clear_class(self, classname):
+    """
+    Description:
+    ------------
+    Remove a class from the main class object attribute.
+
+    Attributes:
+    ----------
+    :param classname: String. The CSS class name to be removed for the component.
+
+    :return: The style property for chaining.
+    """
+    classes = OrderedSet()
+    for cls in self.classList['main']:
+      if classname.lower() != cls.classname:
+        classes.add(cls)
+    self.classList['main'] = classes
+    self.component.attr['class'] = self.classList['main']
+    return self
+
   def clear_style(self):
     """
     Description:

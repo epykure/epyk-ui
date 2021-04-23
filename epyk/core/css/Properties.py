@@ -1608,6 +1608,44 @@ class CssMixin:
     self.css({"margin-bottom": val})
 
   @property
+  def margin_h(self):
+    """
+    Description:
+    ------------
+    Set the margin left and right with the same value.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_margin-left.asp
+      https://www.w3schools.com/cssref/pr_margin-right.asp
+    """
+    return self.margin_left, self.margin_right
+
+  @margin_h.setter
+  def margin_h(self, val):
+    self.margin_left = val
+    self.margin_right = val
+
+  @property
+  def margin_v(self):
+    """
+    Description:
+    ------------
+    Set the margin top and bottom with the same value.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_margin-top.asp
+      https://www.w3schools.com/cssref/pr_margin-bottom.asp
+    """
+    return self.margin_top, self.margin_bottom
+
+  @margin_v.setter
+  def margin_v(self, val):
+    self.margin_top = val
+    self.margin_bottom = val
+
+  @property
   def margin_left(self):
     """
     Description:
@@ -1917,6 +1955,44 @@ class CssMixin:
     if isinstance(val, int):
       val = "%spx" % val
     self.css({"padding-bottom": val})
+
+  @property
+  def padding_h(self):
+    """
+    Description:
+    ------------
+    Set the padding left and right with the same value.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_padding-left.asp
+      https://www.w3schools.com/cssref/pr_padding-right.asp
+    """
+    return self.padding_left, self.padding_right
+
+  @padding_h.setter
+  def padding_h(self, val):
+    self.padding_left = val
+    self.padding_right = val
+
+  @property
+  def padding_v(self):
+    """
+    Description:
+    ------------
+    Set the padding top and bottom with the same value.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_padding-left.asp
+      https://www.w3schools.com/cssref/pr_padding-right.asp
+    """
+    return self.padding_top, self.padding_bottom
+
+  @padding_v.setter
+  def padding_v(self, val):
+    self.padding_top = val
+    self.padding_bottom = val
 
   @property
   def padding_left(self):
