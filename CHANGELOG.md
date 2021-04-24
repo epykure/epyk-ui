@@ -2,6 +2,15 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+
+## [1.5.15] - 2021-04-24
+
+### Added
+
 - Add the shortcut properties margin_h, margin_v, padding_h, padding_h
 - Add the CssLine to CssClass conversion.
 - Add the style.clear_class() method.
