@@ -905,7 +905,14 @@ class JsHtmlRich(JsHtml):
     -----
 
     """
-    return ContentFormatters(self._report, "(function(domObl){if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} else {return domObl.innerHTML}})(%(varName)s)" % {"varName": self.varName})
+    if hasattr(self.component.options, "markdown"):
+      return ContentFormatters(self._report, '''(function(domObl){const converter = new showdown.Converter();
+        if(domObl.hasAttribute('data-value')){return converter.makeMarkdown(domObl.getAttribute('data-value'))} 
+        else {return converter.makeMarkdown(domObl.innerHTML)}})(%(varName)s)''' % {"varName": self.varName})
+    else:
+      return ContentFormatters(self._report, '''(function(domObl){
+        if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} 
+        else {return domObl.innerHTML}})(%(varName)s)''' % {"varName": self.varName})
 
   @property
   def format(self):

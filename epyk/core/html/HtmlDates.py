@@ -8,7 +8,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
 
 from epyk.core.js import JsUtils
-from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.js.html import JsHtmlJqueryUI, JsHtml
 
 from epyk.core.css import Defaults
 
@@ -302,6 +302,33 @@ class LastUpdated(Html.Html):
     super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
                                       html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, "color": color})
+
+  _js__builder__ = ''' 
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+      if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
+      else{htmlObj.innerHTML = data}'''
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   def refresh(self):
     """

@@ -70,7 +70,7 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param jsData: String | Js Object. The value of the item to be removed from the list.
     """
     if jsData is None:
       return JsObjects.JsObjects.get("%s.val()" % self._src.dom.jquery.varId)
@@ -87,7 +87,7 @@ class JSelect(JsPackage):
     Attributes:
     ----------
     :param name: String. optional. The option name of the new DOM component. Default the value.
-    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param jsData: String | Js Object. The value of the item to be removed from the list.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._src.dom.jquery.varId, name, jsData))
@@ -125,7 +125,8 @@ class JSelect(JsPackage):
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     if refresh:
-      return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove(); %s' % (self._src.dom.jquery.varId, jsData, self.refresh()))
+      return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove(); %s' % (
+        self._src.dom.jquery.varId, jsData, self.refresh()))
 
     return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove()' % (self._src.dom.jquery.varId, jsData))
 
@@ -140,7 +141,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('mobile')" % (self._src.dom.jquery.varId))
+    return JsObjects.JsObjects.get("%s.selectpicker('mobile')" % self._src.dom.jquery.varId)
 
   def add(self, value, name=None, refresh=True, selected=False):
     """
@@ -166,9 +167,11 @@ class JSelect(JsPackage):
     value = JsUtils.jsConvertData(value, None)
     selection = self.val(value) if selected else ""
     if refresh:
-      return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s; %s" % (self._src.dom.jquery.varId, value, name, self.refresh(), selection))
+      return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s; %s" % (
+        self._src.dom.jquery.varId, value, name, self.refresh(), selection))
 
-    return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s" % (self._src.dom.jquery.varId, value, name, selection))
+    return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s" % (
+      self._src.dom.jquery.varId, value, name, selection))
 
   def item(self, value):
     """
@@ -248,7 +251,8 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
-    To programmatically hide the bootstrap-select use the hide method (this only affects the visibility of the bootstrap-select itself).
+    To programmatically hide the bootstrap-select use the hide method (this only affects the visibility of
+    the bootstrap-select itself).
 
     Related Pages:
 
@@ -260,7 +264,8 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
-    To programmatically show the bootstrap-select use the show method (this only affects the visibility of the bootstrap-select itself).
+    To programmatically show the bootstrap-select use the show method (this only affects the visibility of
+    the bootstrap-select itself).
 
     Related Pages:
 
@@ -272,7 +277,8 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
-    To programmatically show the bootstrap-select use the show method (this only affects the visibility of the bootstrap-select itself).
+    To programmatically show the bootstrap-select use the show method (this only affects the visibility
+    of the bootstrap-select itself).
 
     Related Pages:
 
@@ -284,9 +290,11 @@ class JSelect(JsPackage):
     :param event: List. Set of Javascript function to trigger on this event
     """
     if event is None:
-      return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s')" % (self._src.dom.jquery.varId, class_name))
+      return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s')" % (
+        self._src.dom.jquery.varId, class_name))
 
-    return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s', '%s')" % (self._src.dom.jquery.varId, class_name, event))
+    return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s', '%s')" % (
+      self._src.dom.jquery.varId, class_name, event))
 
   def disable(self, flag):
     """
@@ -300,7 +308,7 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param flag: Boolean. A flag to specify the statuc of the component.
+    :param flag: Boolean. A flag to specify the status of the component.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsObjects.get("%s.prop('disabled', %s)" % (self._src.dom.jquery.varId, flag))
@@ -332,8 +340,10 @@ class JSelect(JsPackage):
     """
     Description:
     ------------
-    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.
-    Whether you're building highly interactive web applications or you just need to add a date picker to a form control, jQuery UI is the perfect choice.
+    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes
+    built on top of the jQuery JavaScript Library.
+    Whether you're building highly interactive web applications or you just need to add a date picker to a form control,
+    jQuery UI is the perfect choice.
 
     Related Pages:
 
@@ -406,7 +416,7 @@ class JSelect(JsPackage):
     ------------
     The str() method return the variable Javascript reference of the variable.
 
-    According to the variable definition it can be either its name or its value
+    According to the variable definition it can be either its name or its value.
 
     :return: A Javascript reference
     """

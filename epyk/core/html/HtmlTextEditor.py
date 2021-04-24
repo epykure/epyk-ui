@@ -4,7 +4,7 @@
 import datetime
 
 from epyk.core.js import JsUtils
-from epyk.core.js.html import JsHtmlEditor
+from epyk.core.js.html import JsHtmlEditor, JsHtml
 from epyk.core.js.packages import JsCodeMirror
 from epyk.core.html import Html
 
@@ -554,6 +554,28 @@ class MarkdownReader(Html.Html):
     super(MarkdownReader, self).__init__(report, vals, html_code=html_code, profile=profile, options=options,
                                          css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.actions = []
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage:
+    -----
+
+      div = page.ui.div(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   @property
   def options(self):

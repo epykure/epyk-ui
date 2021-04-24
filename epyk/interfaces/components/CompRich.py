@@ -236,7 +236,7 @@ class Rich:
     return html_cd
 
   @html.Html.css_skin()
-  def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None, options=None,
+  def update(self, label=None, color=None, align="left", width=(100, "%"), height=(None, "px"), html_code=None, options=None,
              profile=None):
     """
     Description:
@@ -266,6 +266,7 @@ class Rich:
     ----------
     :param label: String. Optional. The label to be displayed close to the date. Default Last Update.
     :param color: String. Optional. The color code for the font.
+    :param align: String. Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
@@ -274,8 +275,12 @@ class Rich:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_dt = html.HtmlDates.LastUpdated(self.page, label, color, width, height, html_code, options, profile)
-    return html_dt
+    component = html.HtmlDates.LastUpdated(self.page, label, color, width, height, html_code, options, profile)
+    if align in ("center", "right"):
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
+      component.style.css.text_align = align
+    return component
 
   @html.Html.css_skin()
   def console(self, content="", width=(100, "%"), height=(200, "px"), html_code=None, options=None, profile=None):

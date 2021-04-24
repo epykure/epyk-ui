@@ -190,6 +190,32 @@ class Input(Html.Html):
     self.keydown.enter(js_funcs, profile, source_event=source_event)
     return self
 
+  def leave(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    """
+    Description:
+    ------------
+    Add an javascript action when the key enter is pressed on the keyboard.
+
+    Usage:
+    -----
+
+      htmlObj.input(placeholder="Put your tag").enter("alert()")
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+
+    :return: The python object itself.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.append(self.dom.select())
+    self.on("blur", js_funcs, profile, source_event=source_event)
+    return self
+
   def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:

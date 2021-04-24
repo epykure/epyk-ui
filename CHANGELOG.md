@@ -6,13 +6,19 @@
 - Add the CssLine to CssClass conversion.
 - Add the style.clear_class() method.
 - Add the important method to CSSInline object.
+- Add leave function to the input component to map the onBlur event.
 
 ### Changed
 
 - Change the nav interface argument with components.
 - Change the Autocomplete style and add the borders property.
+- Change JsHtml content function to return string from Markdown.
 
 ### Fixed
+- Fix update component.
+- Link Update component to the JsHtmlRich dom definition.
+- Link Markdown component to the JsHtmlRich dom definition.
+- Minor fix on some JsSelect features.
 
 
 ## [1.5.14] - 2021-04-21
