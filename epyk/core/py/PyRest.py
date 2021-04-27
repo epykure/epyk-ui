@@ -40,8 +40,7 @@ class PyRest:
     ------------
     Set the proxy connexions for the Python requests.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -65,8 +64,9 @@ class PyRest:
     Start a local server for all the services.
     This should be at the end of the script in order to allow the services debug
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Attributes:
     ----------
@@ -108,8 +108,7 @@ class PyRest:
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    -----
+    Usage::
 
       page.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
 
@@ -144,8 +143,7 @@ class PyRest:
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    -----
+    Usage::
 
       page.py.requests.get("https://api.cdnjs.com/libraries")
       pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
@@ -184,8 +182,7 @@ class PyRest:
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    -----
+    Usage::
 
       json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
 
@@ -217,8 +214,7 @@ class PyRest:
     ------------
     Create a REST request with the appropriate header to mimic a browser GET request
 
-    Usage:
-    -----
+    Usage::
 
       PyRest().webscrapping(r"https://doc.scrapy.org/en/latest/topics/request-response.html")
 
@@ -254,8 +250,7 @@ class PyRest:
     ------------
     Retrieve tabular data from an external REST service.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -300,8 +295,7 @@ class PyRest:
     ------------
     Retrieve Json data from an external REST service
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -330,8 +324,7 @@ class PyRest:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.py.requests.query("SrcTest", "textbubble")
 
@@ -345,7 +338,7 @@ class PyRest:
     """
     if data is None:
       data = {}
-    if not "data" in data:
+    if "data" not in data:
       data = {"data": data}
     data["_function"] = function_name
     if report_name is None:

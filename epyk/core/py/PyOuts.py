@@ -10,7 +10,7 @@ from epyk.core.js import JsLinter
 from epyk.core.html.templates import HtmlTmplBase
 
 
-class OutBrowsers(object):
+class OutBrowsers:
   def __init__(self, context):
     self._context = context
 
@@ -18,11 +18,14 @@ class OutBrowsers(object):
     """
     Description:
     ------------
-    Update the Html launcher and send the data to codepen
+    Update the Html launcher and send the data to Codepen.
     URL used: https://codepen.io/pen/define/
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.browser.codepen()
 
     Related Pages:
 
@@ -30,11 +33,11 @@ class OutBrowsers(object):
 
     Attributes:
     ----------
-    :param path: String. Optional. Output path in which the static files will be generated
-    :param target: String. Optional. Load the data in a new tab in the browser
-    :param open_browser: Boolean. Optional. Flag to open the browser automatically
+    :param path: String. Optional. Output path in which the static files will be generated.
+    :param target: String. Optional. Load the data in a new tab in the browser.
+    :param open_browser: Boolean. Optional. Flag to open the browser automatically.
 
-    :return: The output launcher full file name
+    :return: The output launcher full file name.
     """
     import re
     import webbrowser
@@ -62,9 +65,13 @@ class OutBrowsers(object):
     """
     Description:
     ------------
+    Create an output to be compatible with stackblitz.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.codepen()
 
     Related Pages:
 
@@ -72,9 +79,9 @@ class OutBrowsers(object):
 
     Attributes:
     ----------
-    :param path: String. Optional. Output path in which the static files will be generated
-    :param target: String. Optional. Load the data in a new tab in the browser
-    :param open_browser: Boolean. Optional. Flag to open the browser automatically
+    :param path: String. Optional. Output path in which the static files will be generated.
+    :param target: String. Optional. Load the data in a new tab in the browser.
+    :param open_browser: Boolean. Optional. Flag to open the browser automatically.
     """
     import webbrowser
 
@@ -113,7 +120,7 @@ class OutBrowsers(object):
     return launcher_file
 
 
-class PyOuts(object):
+class PyOuts:
   def __init__(self, report=None, options=None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
@@ -122,16 +129,15 @@ class PyOuts(object):
     """
     Description:
     ------------
-    Create the HTML result object from the report definition
+    Create the HTML result object from the report definition.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
     ----------
-    :param htmlParts: List. Optional. HTML Content of the page
-    :param cssParts: List. Optional. CSS classes content of the page
+    :param htmlParts: List. Optional. HTML Content of the page.
+    :param cssParts: List. Optional. CSS classes content of the page.
     :param split_js: Boolean. Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
 
     :return: A python dictionary with the HTML results
@@ -235,8 +241,7 @@ class PyOuts(object):
 
     This is what will use IPython in order to display the results in cells.
 
-    Usage:
-    -----
+    Usage::
 
 
     """
@@ -255,11 +260,13 @@ class PyOuts(object):
     Description:
     ------------
     For a display of the report in JupyterLab.
-    Thanks to this function some packages will not be imported to not conflict with the existing ones
+    Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
-    Usage:
-    -----
+    Usage::
 
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.jupyterlab()
 
     Related Pages:
 
@@ -274,11 +281,13 @@ class PyOuts(object):
     Description:
     ------------
     For a display of the report in Jupyter.
-    Thanks to this function some packages will not be imported to not conflict with the existing ones
+    Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
-    Usage:
-    -----
+    Usage::
 
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.jupyter()
 
     Related Pages:
 
@@ -304,8 +313,11 @@ class PyOuts(object):
     ------------
     This will produce everything in a single page which can be directly copied to the try editor in w3C website
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.w3cTryIt()
 
     Related Pages:
 
@@ -333,9 +345,13 @@ class PyOuts(object):
     """
     Description:
     ------------
+    Produce files which will be compatible with codepen.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.codepen()
 
     Related Pages:
 
@@ -343,8 +359,8 @@ class PyOuts(object):
 
     Attributes:
     ----------
-    :param path: String. Optional. The path in which the output files will be created
-    :param name: String. Optional. The filename without the extension
+    :param path: String. Optional. The path in which the output files will be created.
+    :param name: String. Optional. The filename without the extension.
 
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
@@ -359,10 +375,13 @@ class PyOuts(object):
     ------------
     Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
 
-    The output is always in a sub directory jsfiddle
+    The output is always in a sub directory jsfiddle.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.codepen()
 
     Related Pages:
 
@@ -407,8 +426,11 @@ class PyOuts(object):
     ------------
     Function used to generate a static HTML page for the report.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.html_file()
 
     Attributes:
     ----------
@@ -504,6 +526,8 @@ class PyOuts(object):
     Usage:
     -----
 
+      page = Report()
+      page.ui.text("This is a text")
 
     Attributes:
     ----------
@@ -589,6 +613,9 @@ class PyOuts(object):
     Usage:
     -----
 
+      page = Report()
+      page.ui.text("This is a text")
+      page.outs.html()
     """
     self.html_tmpl = HtmlTmplBase.STATIC_PAGE
     results = self._to_html_obj()
@@ -624,6 +651,6 @@ class PyOuts(object):
     Description:
     ------------
     This module will require the package web browser.
-    It will allow outputs to be created directly in the web pages (without using intermediary text files
+    It will allow outputs to be created directly in the web pages (without using intermediary text files.
     """
     return OutBrowsers(self)

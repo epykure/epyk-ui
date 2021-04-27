@@ -31,7 +31,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 
-class DataJs(object):
+class DataJs:
   def __init__(self, report):
     self._report = report
 
@@ -42,8 +42,7 @@ class DataJs(object):
     Interface to transform Python records to Javascript objects.
     This will allow interactivity of the various HTML components.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -59,8 +58,7 @@ class DataJs(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -75,8 +73,7 @@ class DataJs(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -91,8 +88,7 @@ class DataJs(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -109,8 +105,7 @@ class DataJs(object):
     Configuration data for server interaction.
     This will only help on centralising the configuration in the final page.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -122,8 +117,8 @@ class DataJs(object):
     return DataCore.ServerConfig(hostname, port, self._report)
 
 
-class DataSrc(object):
-  class __internal(object):
+class DataSrc:
+  class __internal:
     _props = {}
 
   def __init__(self, report=None):
@@ -135,8 +130,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.Vis()
 
@@ -146,8 +140,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.ChartJs()
 
@@ -157,8 +150,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.Plotly()
 
@@ -172,8 +164,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.C3()
 
@@ -183,8 +174,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.NVD3()
 
@@ -194,8 +184,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return DataPy.Google()
 
@@ -206,8 +195,7 @@ class DataSrc(object):
     ------------
     Interface to the Javascript world.
 
-    Usage:
-    -----
+    Usage::
     """
     return DataJs(self._report)
 
@@ -217,8 +205,7 @@ class DataSrc(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     from epyk.core.data import DataDb
 
@@ -230,8 +217,7 @@ class DataSrc(object):
     -----------
     Loads data from a cached files.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -262,8 +248,7 @@ class DataSrc(object):
     -----------
     Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -286,8 +271,7 @@ class DataSrc(object):
     -----------
     Return the file.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -314,8 +298,7 @@ class DataSrc(object):
     ------------
     Returns data from a internal data service defined in the sources folder.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -345,8 +328,7 @@ class DataSrc(object):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -365,8 +347,7 @@ class DataSrc(object):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsQuery.JQuery(self._report).get(url, data)
@@ -377,10 +358,12 @@ class DataSrc(object):
     -----------
     Read a pdf file
 
-    This will require an external module PyPDF2
-    Example
-    data = rptObj.data.pdf("document.pdf", r"")
-    data.getPage(0)
+    This will require an external module PyPDF2.
+
+    Usage::
+
+      data = page.data.pdf("document.pdf", r"")
+      data.getPage(0)
 
     Related Pages:
 
@@ -408,14 +391,15 @@ class DataSrc(object):
 
     This function will require an external python package zeep to use SOAP
 
-    Example
-    soap = rptObj.data.soap("http://www.soapclient.com/xml/soapresponder.wsdl")
-    soap.Method1('Zeep', 'is cool')
+    Usage::
+
+      soap = page.data.soap("http://www.soapclient.com/xml/soapresponder.wsdl")
+      soap.Method1('Zeep', 'is cool')
 
     Related Pages:
 
       https://en.wikipedia.org/wiki/SOAP
-    https://python-zeep.readthedocs.io/en/master/
+      https://python-zeep.readthedocs.io/en/master/
 
     Attributes:
     ----------
@@ -435,8 +419,9 @@ class DataSrc(object):
 
     Test with a online server can be done here https://jsonplaceholder.typicode.com/
 
-    Example
-    rptObj.data.rest("https://jsonplaceholder.typicode.com/posts/1", method="PUT")
+    Usage::
+
+      page.data.rest("https://jsonplaceholder.typicode.com/posts/1", method="PUT")
 
     Related Pages:
 
@@ -481,10 +466,11 @@ class DataSrc(object):
 
     This module will require beautifulsoup4 as external package
 
-    Example
-    xml_soup = rptObj.data.rss("http://feeds.reuters.com/reuters/businessNews")
-    for title in xml_soup.findAll('title'):
-      print(title)
+    Usage::
+
+      xml_soup = rptObj.data.rss("http://feeds.reuters.com/reuters/businessNews")
+      for title in xml_soup.findAll('title'):
+        print(title)
 
     Related Pages:
 
@@ -511,9 +497,10 @@ class DataSrc(object):
 
     This module will require beautifulsoup4 as external package
 
-    Example
-    rptObj.data.webscrapping("https://www.w3schools.com/colors/default.asp")
-    xml_soup.findAll('title')
+    Usage::
+
+      page.data.webscrapping("https://www.w3schools.com/colors/default.asp")
+      xml_soup.findAll('title')
 
     Related Pages:
 
@@ -548,13 +535,13 @@ class DataSrc(object):
 
     This is using the external python package jsonrpcclient (https://jsonrpcclient.readthedocs.io/en/latest/)
 
-    Example
+    Usage::
 
     Related Pages:
 
       https://en.wikipedia.org/wiki/Rapid_control_prototyping
-    https://gurujsonrpc.appspot.com/
-    https://jsonrpcclient.readthedocs.io/en/latest/
+      https://gurujsonrpc.appspot.com/
+      https://jsonrpcclient.readthedocs.io/en/latest/
 
     Attributes:
     ----------
@@ -578,15 +565,16 @@ class DataSrc(object):
     -----------
     Interface to a GRPC server.
 
-    Example
-    grpc = rptObj.data.grpc(serviceName="GreeterStub", module="helloworld_pb2_grpc", path="")
-    data = grpc.imp("helloworld_pb2").HelloRequest(name="Test")
-    print(grpc.request("SayHello", data))
+    Usage::
+
+      grpc = rptObj.data.grpc(serviceName="GreeterStub", module="helloworld_pb2_grpc", path="")
+      data = grpc.imp("helloworld_pb2").HelloRequest(name="Test")
+      print(grpc.request("SayHello", data))
 
     Related Pages:
 
       https://grpc.io/docs/tutorials/basic/python/
-    https://grpc.io/docs/quickstart/python.html
+      https://grpc.io/docs/quickstart/python.html
 
     Attributes:
     ----------

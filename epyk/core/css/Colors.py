@@ -208,8 +208,7 @@ def rgba(red, green, blue, alpha):
   rgba(red, green, blue, alpha)
   The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
 
-  Usage:
-  -----
+  Usage::
 
   Related Pages:
 
@@ -231,8 +230,7 @@ def getRgbToHex(rgbColor):
   ------------
   Convert a RGB color to a hexadecimal code.
 
-  Usage:
-  -----
+  Usage::
 
       >>> ColorMaker().getRgbToHex([255, 0, 0])
   '#ff0000'
@@ -259,8 +257,7 @@ def randColor(seedNo=None):
   ------------
   Generate a random hexadecimal color code.
 
-  Usage:
-  -----
+  Usage::
 
       >>> ColorMaker.randColor(10)
   '#9693DD'
@@ -289,8 +286,7 @@ def gradient(start, end, factor):
   ------------
   Deduce the color from a factor in a range of colors.
 
-  Usage:
-  -----
+  Usage::
 
       >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
   '#ffcccc'
@@ -317,8 +313,7 @@ def colors(start, end, steps):
   ------------
   Generate a list of colors between two color codes.
 
-  Usage:
-  -----
+  Usage::
 
       >>> colors("#ffffff", "#FF0000", 10)
   ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
@@ -622,8 +617,7 @@ class DefinedColors:
     ------------
     Returns the Hexadecimal predefined color codes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -638,8 +632,7 @@ class DefinedColors:
     ------------
     Returns the RGB predefined color codes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

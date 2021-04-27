@@ -16,8 +16,8 @@ def requires(pyk_file, autoinstall=None, autoreload=False):
       The pyk file can be located on your file system, or it can be on pypi or even github
       if it's the latter options (pypi or github) you will need to use autoinstall=True
 
-  Usage:
-  -----------
+  Usage::
+
     requires(pyk_name, autoinstall=True)
 
     requires('/usr/local/my_pyk_file.py')
@@ -34,6 +34,7 @@ def requires(pyk_file, autoinstall=None, autoreload=False):
   pyk_obj = _Pyk.instance()
   return pyk_obj._requires(pyk_file, autoinstall, autoreload)
 
+
 def exports(obj_dict):
   """
   Description:
@@ -44,8 +45,7 @@ def exports(obj_dict):
     This will then be used by users who need to require your particular pyk file
     You can pass epyk object in that dictionary as well as function if you need to
 
-  Usage:
-  ------
+  Usage::
 
     exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
 
@@ -97,8 +97,8 @@ class _Pyk(object):
       The pyk file can be located on your file system, or it can be on pypi or even github
       if it's the latter options (pypi or github) you will need to use autoinstall=True
 
-    Usage:
-    -----------
+    Usage::
+
       requires(pyk_name, autoinstall=True)
 
     :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
@@ -140,8 +140,7 @@ class _Pyk(object):
       This will then be used by users who need to require your particular pyk file
       You can pass epyk object in that dictionary as well as function if you need to
 
-    Usage:
-    ------
+    Usage::
 
       exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
 

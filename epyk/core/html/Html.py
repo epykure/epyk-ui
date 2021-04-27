@@ -136,8 +136,7 @@ class Required:
 
     TODO: Use the version number
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -174,8 +173,7 @@ class EventTouch:
 
     Tip: Other events related to the touchstart event are:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -199,8 +197,7 @@ class EventTouch:
     The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger
     is released.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -224,8 +221,7 @@ class EventTouch:
     Different devices will interrupt a touch event at different actions, and it is considered good practice to include
     this event to clean up code if this "error" should occur.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -250,8 +246,7 @@ class EventTouch:
 
     Tip: Other events related to the touchend event are:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -272,8 +267,7 @@ class EventTouch:
     ------------
     Add swap event functions.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -298,6 +292,8 @@ class Components(collections.OrderedDict):
     Description:
     -----------
     Set the CSS style for all the inner components.
+
+    Usage::
 
     Attributes:
     ----------
@@ -410,8 +406,7 @@ class Html:
 
     For example containers are designed to handle sub components.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.add(page.ui.button("Run"))
@@ -443,8 +438,7 @@ class Html:
     The CSS style (class and attributes) of the HTML component.
     This property will allow to custom any component in the page.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.style.css.background = 'black'
@@ -468,8 +462,7 @@ class Html:
 
     There is not setter for this property in order to ensure a consistency in Python and JavaScript.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       print(div.htmlCode)
@@ -500,8 +493,7 @@ class Html:
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       div.click([
@@ -524,8 +516,7 @@ class Html:
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       print(div.dom.content)
@@ -545,8 +536,7 @@ class Html:
     -----------
     Property to set all the possible object for a button.
     
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       div.options.inline = True
@@ -561,8 +551,7 @@ class Html:
     -----------
     Wrapper to the Javascript method insertChild to add an HTML component.
 
-    Usage:
-    -----
+    Usage::
 
       for i in range(10):
         comp = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
@@ -594,8 +583,7 @@ class Html:
     -----------
     Wrapper to the Javascript method appendChild to append an HTML component.
 
-    Usage:
-    -----
+    Usage::
 
       for i in range(10):
         component = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
@@ -627,8 +615,7 @@ class Html:
     Add set of event / actions which will be triggered after the build of the object.
     Usually this can be used to add js functions on a chart or a table.
 
-    Usage:
-    -----
+    Usage::
 
       network = page.ui.charts.vis.network()
       network.onReady([
@@ -653,8 +640,7 @@ class Html:
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
     the report will not be triggered.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -670,8 +656,7 @@ class Html:
     ------------
     Add an icon to the HTML object.
 
-    Usage:
-    -----
+    Usage::
 
       checks.title.add_icon("fas fa-align-center")
 
@@ -711,8 +696,7 @@ class Html:
     -----------
     Add an elementary label component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -750,8 +734,7 @@ class Html:
     -----------
     Add an elementary span component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -788,8 +771,7 @@ class Html:
     -----------
     Add an elementary label component.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.add_link("test.py", name="Click to go to the test report")
@@ -829,8 +811,7 @@ class Html:
     -----------
     Add an elementary title component.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -863,8 +844,7 @@ class Html:
     -----------
     Add an elementary input component.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -904,8 +884,9 @@ class Html:
     -----------
     Add an elementary checkbox component.
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Attributes:
     ----------
@@ -935,8 +916,9 @@ class Html:
 
     The helper is not managed by the main page and should be written in the component.
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Attributes:
     ----------
@@ -959,8 +941,9 @@ class Html:
     -----------
     The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Related Pages:
 
@@ -979,8 +962,9 @@ class Html:
     -----------
     The onkeypress event occurs when the user presses a key (on the keyboard).
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Related Pages:
 
@@ -999,8 +983,7 @@ class Html:
     -----------
     The onkeypress event occurs when the user presses a key (on the keyboard).
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:
@@ -1021,8 +1004,7 @@ class Html:
     Accessible Rich Internet Applications is a [HTML] specification module.
     Web developers MAY use the ARIA role and aria-* attributes on HTML elements.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1039,8 +1021,7 @@ class Html:
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python.
 
-    Usage:
-    -----
+    Usage::
 
     :returns: Javascript string with the function to get the current value of the component
     """
@@ -1052,8 +1033,7 @@ class Html:
     Description:
     -----------
 
-    Usage:
-    -----
+    UUsage::
 
     """
     if self.innerPyHTML is not None:
@@ -1070,8 +1050,7 @@ class Html:
     -----------
     Move the component to this position in the page.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self._report.components.move_to_end(self.htmlCode)
@@ -1082,8 +1061,7 @@ class Html:
     -----------
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1135,8 +1113,7 @@ class Html:
     Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap.
 
-    Usage:
-    -----
+    Usage::
 
       htmlObj.tooltip("My tooltip", location="bottom")
 
@@ -1173,8 +1150,7 @@ class Html:
     -----------
     Add a tooltip using Bootstrap Popover feature.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1203,8 +1179,7 @@ class Html:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1224,6 +1199,8 @@ class Html:
     """
     Description:
     -----------
+
+    Usage::
 
     Attributes:
     ----------
@@ -1253,8 +1230,7 @@ class Html:
     Change the Javascript options of the component.
     This will change the options sent to the Javascript.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1291,8 +1267,7 @@ class Html:
 
       https://www.w3schools.com/html/html_attributes.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1340,8 +1315,7 @@ class Html:
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
     and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1391,8 +1365,7 @@ class Html:
       span.on("mouseover", span.dom.css("color", "red").r)
       span.on("mouseleave", span.dom.css("color", "blue"))
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1429,6 +1402,9 @@ class Html:
     ------------
     Function to get the generated JavaScript method in order to then reuse it in other components.
     This will return the event function in a string already transpiled.
+
+    Usage::
+
 
     Attributes:
     ----------
@@ -1480,8 +1456,7 @@ class Html:
     -----------
     Add an mouse hover event on the component.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.hover([
@@ -1502,8 +1477,7 @@ class Html:
     -----------
     The onclick event occurs when the user clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.click([
@@ -1531,8 +1505,7 @@ class Html:
     -----------
     The onfocusout event occurs when the user select an element.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.focusout([
@@ -1560,8 +1533,7 @@ class Html:
     -----------
     The ondblclick event occurs when the user double-clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1584,8 +1556,7 @@ class Html:
     -----------
     The onscroll event occurs when an element's scrollbar is being scrolled.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1611,8 +1582,7 @@ class Html:
     Tip: As function are defined to be chaining in most of the components use .r to get the string representation and
     clean the cache.
 
-    Usage:
-    -----
+    Usage::
 
       span.mouse([
           span.dom.css("color", "red"),
@@ -1641,8 +1611,7 @@ class Html:
     -----------
     Add a paste event to the component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1662,8 +1631,7 @@ class Html:
     -----------
     Attach a context menu to a component and set a function to called before the display.
 
-    Usage:
-    -----
+    Usage::
 
     TODO Test context menu
 
@@ -1698,8 +1666,7 @@ class Html:
 
       https://www.w3schools.com/jsref/obj_touchevent.asp
 
-    Usage:
-    -----
+    Usage::
 
     """
     return EventTouch(self)
@@ -1735,8 +1702,7 @@ class Html:
 
     Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.build(self.val, None)
@@ -1750,8 +1716,7 @@ class Html:
 
     The content of data will be used by this component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1779,8 +1744,7 @@ class Html:
     ------------
     Sortable is a JavaScript library for reorderable drag-and-drop lists.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1826,8 +1790,7 @@ class Html:
     This will be then used by the different framework to define the elementary bricks on which the complex component
     will be based on.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return Component.Component(self)
@@ -1837,8 +1800,7 @@ class Html:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     str_result = []
@@ -1881,8 +1843,7 @@ class Body(Html):
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpCls.ClassPage
     """
@@ -1898,8 +1859,7 @@ class Body(Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -1916,8 +1876,7 @@ class Body(Html):
     -----------
     The onscroll event occurs when an element's scrollbar is being scrolled.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1937,8 +1896,7 @@ class Body(Html):
     Add set of event / actions which will be triggered after the build of the object.
     usually this can be used to add js functions on a chart or a table.
 
-    Usage:
-    -----
+    Usage::
 
       network = page.ui.charts.vis.network()
       network.onReady([
@@ -1960,8 +1918,7 @@ class Body(Html):
     -----------
     Add a JavaScript function in the builder section which correspond to the JavaScript onload.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1981,8 +1938,7 @@ class Body(Html):
 
     Do not forget to use CTRL+F5 in order to refresh the browser cache to get the updates.
 
-    Usage:
-    -----
+    Usage::
 
       title = page.ui.title(html_code="title")
       page.body.onReady([
@@ -2027,8 +1983,7 @@ class Body(Html):
     Function to allow the templating of the report.
     This can be overridden by a generic class which can be shared within a set of report
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -2046,8 +2001,7 @@ class Body(Html):
     ------------
     Change the body background color.
 
-    Usage:
-    -----
+    Usage::
 
       page.body.set_background("#101626", "#374F67")
 
@@ -2073,8 +2027,7 @@ class Body(Html):
     -----------
     Display a loading page.
 
-    Usage:
-    -----
+    Usage::
 
       page.body.loading(),
       ...
@@ -2104,8 +2057,7 @@ class Body(Html):
     ------------
     Add an extra layer.
 
-    Usage:
-    -----
+    Usage::
 
       page = pk.Page()
       template = page.body.add_template(defined_style="margins")
@@ -2130,8 +2082,7 @@ class Body(Html):
     Shortcut to the body template component.
     This will just be an intermediate div tag on which all the component will be attached.
 
-    Usage:
-    -----
+    Usage::
 
       page = pk.Page()
       page.body.template.margins(5)

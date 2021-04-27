@@ -26,8 +26,7 @@ def parse_statements(line, level, delimiter=";", spaces=None):
   ------------
   Parse and format a JavaScript line.
 
-  Usage:
-  -----
+  Usage::
 
 
   Attributes:
@@ -56,8 +55,7 @@ def parse(data, minify=None, toStr=True, spaces=None):
   ------------
   Parse and format a JavaScript string full statement.
 
-  Usage:
-  -----
+  Usage::
 
 
   Attributes:
@@ -103,8 +101,7 @@ def builder(cls, minify=None, toStr=True, spaces=None):
   ------------
   Extract the builder function from the HTML component.
 
-  Usage:
-  -----
+  Usage::
 
 
   Attributes:
@@ -125,8 +122,7 @@ def events(component, minify=None, toStr=True, spaces=None):
   ------------
   Extract the JavaSscript events from an HTML component.
 
-  Usage:
-  -----
+  Usage::
 
     but = page.ui.button()
     but.click([page.js.alert("test1"), page.js.alert("test2")])

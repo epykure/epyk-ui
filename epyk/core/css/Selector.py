@@ -13,8 +13,7 @@ class Selector:
     -----------
     Specify HTML attributes to select.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -46,8 +45,7 @@ class Selector:
     -----------
     The element>element selector is used to select elements with a specific parent.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -66,8 +64,7 @@ class Selector:
     -----------
     The element>element selector is used to select elements with a specific parent.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -85,8 +82,7 @@ class Selector:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -101,8 +97,7 @@ class Selector:
     -----------
     Selects a specific status for the item.
 
-    Usage:
-    -----
+    Usage::
 
         self.state("disabled")
 
@@ -123,8 +118,7 @@ class Selector:
     -----------
     Selects the input element which has focus.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -139,8 +133,7 @@ class Selector:
     -----------
     Selects links on mouse over.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -154,8 +147,7 @@ class Selector:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -170,8 +162,7 @@ class Selector:
     -----------
     Add the component HTML reference to the CSS Class definition.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -186,8 +177,7 @@ class Selector:
     -----------
     Specify the class to use as a filter.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -206,8 +196,7 @@ class Selector:
     -----------
     Specify the element to exclude from the selection.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -228,8 +217,7 @@ class Selector:
     -----------
     Selects every <> element that is the first child of its parent.
 
-    Usage:
-    -----
+    Usage::
     """
     self._js.append(":first-child")
     return self
@@ -240,8 +228,7 @@ class Selector:
     -----------
     Selects every <> element that is the last child of its parent.
 
-    Usage:
-    -----
+    Usage::
     """
     self._js.append(":last-child")
     return self
@@ -252,8 +239,7 @@ class Selector:
     -----------
     Selects the first letter of every <> element.
 
-    Usage:
-    -----
+    Usage::
     """
     self._js.append("::first-letter")
     return self
@@ -264,8 +250,7 @@ class Selector:
     -----------
     Selects every <> element that is the first <> element of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -280,8 +265,7 @@ class Selector:
     -----------
     Selects every <> element that is the last <> element of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -296,8 +280,7 @@ class Selector:
     -----------
     Selects every <> element that is the second child of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -312,8 +295,7 @@ class Selector:
     -----------
     Selects every <> element that is the second child of its parent, counting from the last child.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -328,8 +310,7 @@ class Selector:
     -----------
     Selects every <p> element that is the second <> element of its parent, counting from the last child.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -345,8 +326,7 @@ class Selector:
     -----------
     Selects every <p> element that is the only <> element of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -362,8 +342,7 @@ class Selector:
     -----------
     The :only-of-type selector matches every element that is the only child of its type, of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -378,8 +357,7 @@ class Selector:
     -----------
     The :only-child selector matches every element that is the only child of its parent.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self._js.append(":only-child")

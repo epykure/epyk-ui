@@ -20,8 +20,7 @@ class JsMaths:
     ------------
     The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.E
 
@@ -40,8 +39,7 @@ class JsMaths:
     ------------
     The LN2 property returns the natural logarithm of 2, approximately 0.693.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.LN2
 
@@ -60,8 +58,7 @@ class JsMaths:
     ------------
     The LN10 property returns the natural logarithm of 10, approximately 2.302.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.LN10
 
@@ -80,8 +77,7 @@ class JsMaths:
     ------------
     The LOG2E property returns the base-2 logarithm of E, approximately 1.442
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.LOG2E
 
@@ -100,8 +96,7 @@ class JsMaths:
     ------------
     The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.SQRT1_2
 
@@ -120,8 +115,7 @@ class JsMaths:
     ------------
     The SQRT2 property returns the square root of 2, approximately 1.414.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.SQRT2
 
@@ -155,8 +149,7 @@ class JsMaths:
     ------------
     Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
 
-    Usage:
-    -----
+    Usage::
 
       page.js.math.random()
       jsObj.math.random(10, 100)
@@ -185,8 +178,7 @@ class JsMaths:
     ------------
     The min() method returns the number with the lowest value.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.min(10, 45, 100, -3, 56)
 
@@ -210,8 +202,7 @@ class JsMaths:
     ------------
     The max() method returns the number with the highest value.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.max(10, 45, 100, -3, 56)
 
@@ -239,8 +230,7 @@ class JsMaths:
     ------------
     The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.floor(13.566)
 
@@ -263,8 +253,7 @@ class JsMaths:
     ------------
     The trunc() method returns the integer part of a number.
 
-    Usage:
-    -----
+    Usage::
 
       page.js.math.trunc(rptObj.js.math.SQRT2)
 
@@ -385,8 +374,7 @@ class JsMaths:
 
     Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.new(23.6, varName="MyNumber")
       jsObj.math.round(jsObj.objects.number.get("MyNumber"))
@@ -410,8 +398,7 @@ class JsMaths:
     ------------
     The sqrt() method returns the square root of a number.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.new(23.6, varName="MyNumber")
       jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
@@ -435,8 +422,7 @@ class JsMaths:
     ------------
     The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
 
@@ -460,8 +446,7 @@ class JsMaths:
     ------------
     The pow() method returns the value of x to the power of y (xy).
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.new(23.6, varName="MyNumber")
       jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)

@@ -94,8 +94,7 @@ def header(step=0):
   Description:
   ------------
 
-  Usage:
-  -----
+  Usage::
 
   Attributes:
   ----------
@@ -110,8 +109,7 @@ def inline(css_attrs):
   ------------
   Convert a CSS attributes dictionary to a online CSS Style to be added to the dom object.
 
-  Usage:
-  -----
+  Usage::
 
     inline({"color": "red"})
 

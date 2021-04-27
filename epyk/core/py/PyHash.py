@@ -6,7 +6,7 @@ Related Pages:
 """
 
 
-class SipHash(object):
+class SipHash:
     """
     Generate a unique hash ID from the given string.
     This is supposed to be unique with a minimum expectation of collisions.
@@ -91,8 +91,7 @@ class SipHash(object):
       ------------
       Produce a unique ID for a given string. This can be used to replace the internal numbers.
 
-      Usage:
-      -----
+      Usage::
 
         >>> SipHash().hashId("Test")
         3169529217224722230

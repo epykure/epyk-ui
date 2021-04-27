@@ -32,8 +32,7 @@ class NpmRegisteryScore:
     Description:
     -----------
     
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
     """
@@ -44,9 +43,9 @@ class NpmRegisteryScore:
     """
     Description:
     -----------
+    Get the package popularity.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.__score['detail']['popularity']
@@ -57,8 +56,7 @@ class NpmRegisteryScore:
     Description:
     -----------
     
-    Usage:
-    -----
+    Usage::
 
     """
     return self.__score['detail']['maintenance']
@@ -75,8 +73,7 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.__controls["integrity"]
@@ -87,8 +84,7 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return self.__controls["shasum"]
 
@@ -98,8 +94,7 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.__controls["fileCount"]
@@ -110,8 +105,7 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.__controls["unpackedSize"]
@@ -135,8 +129,7 @@ class NpmRegistery:
     -----------
     Get the final score for the package on the NPM registry website.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.score)
@@ -149,8 +142,7 @@ class NpmRegistery:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return NpmRegisteryScore(self._meta["score"])
@@ -161,8 +153,7 @@ class NpmRegistery:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return NpmDistIntegrity(self.info()['dist'])
@@ -174,8 +165,7 @@ class NpmRegistery:
     -----------
     Get the score search figure on the NPM registry website.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.searchScore)
@@ -189,8 +179,7 @@ class NpmRegistery:
     -----------
     Get the last update date of the package in NPM.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.date)
@@ -204,8 +193,7 @@ class NpmRegistery:
     -----------
     Get the list of keywords of the package in NPM.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.keywords)
@@ -219,8 +207,7 @@ class NpmRegistery:
     -----------
     Get the package license in NPM.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('chart.js')
       print(pkg.license)
@@ -237,8 +224,7 @@ class NpmRegistery:
     -----------
     Get the package description in NPM.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._meta["package"]["description"]
@@ -250,8 +236,7 @@ class NpmRegistery:
     -----------
     Get the package scope in NPM.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._meta["package"]["scope"]
@@ -263,8 +248,7 @@ class NpmRegistery:
     -----------
     Get the underlying package links.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._meta["package"]["links"]
@@ -276,8 +260,7 @@ class NpmRegistery:
     -----------
     Get the full package details from the NPM website.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._meta
@@ -289,8 +272,7 @@ class NpmRegistery:
     -----------
     Get the current package version date from the NPM website.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._meta['package']['version']
@@ -302,8 +284,7 @@ class NpmRegistery:
     -----------
     Get the package name.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.name)
@@ -317,8 +298,7 @@ class NpmRegistery:
     -----------
     Check if the package version is the last one.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.is_latest())
@@ -343,8 +323,7 @@ class NpmRegistery:
     -----------
     Check if the CDNJS is available.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.has_cdnjs())
@@ -382,7 +361,7 @@ class NpmRegistery:
     Get the package code repository path (usual Github path if available).
     If not available this will take the repository defined internally in the framework.
 
-    Usage:
+    Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.repository)
@@ -399,8 +378,7 @@ class NpmRegistery:
     -----------
     Get the package homepage from the NPM definition.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('bootstrap')
       print(pkg.homepage)
@@ -413,8 +391,7 @@ class NpmRegistery:
     -----------
     Get the NPM package details.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('bootstrap')
       print(pkg.info())
@@ -437,8 +414,7 @@ class NpmRegistery:
     -----------
     Get the package dependency packages.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('bootstrap')
       print(pkg.dependencies)
@@ -456,8 +432,7 @@ class NpmRegistery:
     -----------
     Get the package version number.
 
-    Usage:
-    -----
+    Usage::
 
     """
     v = Imports.JS_IMPORTS[self._alias]['modules'][0].get("version", Imports.JS_IMPORTS[self._alias].get('version', self.release))
@@ -470,8 +445,7 @@ class NpmRegistery:
     -----------
     Get the package version tag (it is either the version number of the version number prefixed with v).
 
-    Usage:
-    -----
+    Usage::
 
     """
     prefix = Imports.JS_IMPORTS[self._alias].get("v_prefix")
@@ -487,8 +461,7 @@ class NpmRegistery:
     -----------
     Get the package author name defined in NPM.
 
-    Usage:
-    -----
+    Usage::
 
         pkg = PyNpm.Npm().package('bootstrap')
         print(pkg.author_name)
@@ -503,8 +476,7 @@ class NpmRegistery:
     -----------
     Get the email address of the package author from NPM info.
 
-    Usage:
-    -----
+    Usage::
 
         pkg = PyNpm.Npm().package('bootstrap')
         print(pkg.author_mail)
@@ -522,8 +494,7 @@ class NpmRegistery:
     This framework will only import directly from a pure vanilla JavaScript implementation the various modules mandatory
     to benefit from those external packages.
 
-    Usage:
-    -----
+    Usage::
 
       pkg = PyNpm.Npm().package('bootstrap')
       print(pkg.scripts())
@@ -543,8 +514,7 @@ class NpmRegistery:
 
     The framework will use this setup in order to ease the transition and compatibility with existing popular framework.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -606,8 +576,7 @@ class NpmRegistery:
     -----------
     Get the Github code structure. Get all the files and folder structure from the repository.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -639,8 +608,7 @@ class Npm:
 
     This shortcut will use the underlying is_latest package function.
 
-    Usage:
-    -----
+    Usage::
 
       result = PyNpm.Npm().check('pivottable')
 
@@ -663,8 +631,7 @@ class Npm:
     Get all the meta information related to the package.
     This will use json.dumps to display the output Json with all the details.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -682,8 +649,7 @@ class Npm:
     -----------
     Get the latest version name from the npm registry.
 
-    Usage:
-    -----
+    Usage::
 
       print(PyNpm.Npm().version('chart.js'))
 
@@ -701,8 +667,7 @@ class Npm:
     -----------
     Check the version of all the packages currently defined in the framework.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -716,8 +681,7 @@ class Npm:
     -----------
     Return the search url for the package.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -732,8 +696,7 @@ class Npm:
     Get the package information from the NPM registry.
     This will return only the exact match in the repository.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -752,8 +715,7 @@ class Npm:
     -----------
     Get the list of packages from the NPM registry matching the name.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -776,8 +738,7 @@ class Packages:
     -----------
     Get all the packages and the short description from NPM.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -803,8 +764,7 @@ class Packages:
 
     It is important to align with the new version in order to benefit from the community hard work !
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -832,8 +792,7 @@ class Packages:
     or even things to fix. It is important to encourage this open source community and to be part of modules
     improvements.
 
-    Usage:
-    -----
+    Usage::
 
       repos = PyNpm.Packages.repositories()
 
@@ -860,8 +819,7 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   Description:
   -----------
 
-  Usage:
-  -----
+  Usage::
 
   Attributes:
   ----------
@@ -893,8 +851,7 @@ def install(path, packages=None, node_server=False, update=False, verbose=True, 
   Install files using the npm structure is compatible.
   This will allow to run the script totally locally (without dependency on internet).
 
-  Usage:
-  -----
+  Usage::
 
     PyNpm.install(r"C:\tmps\packages", ['bootstrap'], update=True)
 

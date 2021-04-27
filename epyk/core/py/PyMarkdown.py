@@ -52,6 +52,9 @@ def doc_string_attrs(func):
   ------------
   Write the attribute section in the framework documentation.
 
+  Usage::
+
+
   Attributes:
   ----------
   :param func: Function. A python function.
@@ -90,6 +93,8 @@ class MarkDown:
     Description:
     -----------
 
+    Usage::
+
     Attributes:
     ----------
     :param data:
@@ -118,6 +123,8 @@ class MarkDown:
     Description:
     -----------
     Convert a string to a markdown file.
+
+    Usage::
 
     Attributes:
     ----------
@@ -172,6 +179,8 @@ class MarkDown:
     -----------
 
     TODO: Improve this function.
+
+    Usage::
 
     Attributes:
     ----------

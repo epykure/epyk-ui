@@ -40,8 +40,7 @@ class JsGeolocation:
     ------------
     Returns the current position of the user and continues to return updated position as the user moves.
 
-    Usage:
-    -----
+    Usage::
 
       options = {"enableHighAccuracy": False, "timeout": 5000, "maximumAge": 0}
 

@@ -7,8 +7,8 @@ from epyk.core.js.primitives import JsObjects
 
 class JsSwitch:
   """
-    Description:
-    ------------
+  Description:
+  ------------
 
   Documentation:
     - https://www.w3schools.com/js/js_switch.asp

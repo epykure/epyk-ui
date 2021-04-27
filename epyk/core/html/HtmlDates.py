@@ -46,8 +46,7 @@ class DatePicker(Html.Html):
     ------------
     The Javascript Dom proxy to the input object.
 
-    Usage:
-    -----
+    Usage::
 
       today = page.ui.fields.today()
       today.select([
@@ -66,8 +65,7 @@ class DatePicker(Html.Html):
     -----------
     Event trigger when the DatePicker component changes.
 
-    Usage:
-    -----
+    Usage::
 
       today = page.ui.fields.today()
       today.select([
@@ -94,8 +92,7 @@ class DatePicker(Html.Html):
     Exclude some dates from the date picker selection.
     Those dates will be visible but no available for selection.
 
-    Usage:
-    -----
+    Usage::
 
       today = page.ui.fields.today()
       today.excluded_dates(["2021-01-01"])
@@ -115,8 +112,7 @@ class DatePicker(Html.Html):
     Include some date to be available for selection.
     All the other dates will be visible but not valid ones.
 
-    Usage:
-    -----
+    Usage::
 
       today = page.ui.fields.today()
       today.included_dates(["2021-01-01"])
@@ -136,8 +132,7 @@ class DatePicker(Html.Html):
     -----------
     Add DatePicker options.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -187,8 +182,7 @@ class TimePicker(Html.Html):
     ------------
     The Javascript Dom proxy to the input object.
 
-    Usage:
-    -----
+    Usage::
 
       time_picker = page.ui.fields.time()
       time_picker.change([
@@ -209,8 +203,7 @@ class TimePicker(Html.Html):
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
 
-    Usage:
-    -----
+    Usage::
 
       morning = page.ui.fields.time("8:13:00", label="Time field")
       morning.change([
@@ -273,8 +266,7 @@ class CountDownDate(Html.Html):
     -----------
     Events triggered at the end of the timer.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -316,8 +308,7 @@ class LastUpdated(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       print(div.dom.content)
@@ -336,8 +327,7 @@ class LastUpdated(Html.Html):
     ------------
     Javascript shortcut to change the timestamp to this component.
 
-    Usage:
-    -----
+    Usage::
 
       update = page.ui.rich.update()
       update.click([
@@ -375,8 +365,7 @@ class Calendar(Html.Html):
     -----------
     Property to set all the Calendar properties.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptCalendars.OptionDays
     """
@@ -388,8 +377,7 @@ class Calendar(Html.Html):
     -----------
     Add a click event to the Calendar component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -408,8 +396,7 @@ class Calendar(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -483,8 +470,7 @@ class Calendar(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -572,8 +558,7 @@ class Timer(Html.Html):
     -----------
     Events triggered at the end of the timer.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

@@ -52,8 +52,7 @@ class JsConsole:
     Trigger a Javascript debugger from this point.
     The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12.
 
-    Usage:
-    -----
+    Usage::
 
       page.js.console.debugger
 
@@ -72,8 +71,7 @@ class JsConsole:
     ------------
     The console.clear() method clears the console.
 
-    Usage:
-    -----
+    Usage::
 
       page.js.console.clear
 
@@ -91,8 +89,7 @@ class JsConsole:
     ------------
     The console.log() method writes a message to the console.
 
-    Usage:
-    -----
+    Usage::
 
       page.js.console.log("Test")
 
@@ -757,8 +754,7 @@ class JsBase:
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to any JsBoolean objects.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
@@ -1023,8 +1019,7 @@ class JsBase:
 
       https://www.w3schools.com/xml/xml_http.asp
 
-    Usage:
-    -----
+    Usage::
 
       page.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
       page.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
@@ -1048,8 +1043,7 @@ class JsBase:
     ------------
     Create a GET HTTP request.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1179,8 +1173,7 @@ class JsBase:
     ------------
     Navigator to another URL like NodeJs.
 
-    Usage:
-    -----
+    Usage::
 
       icon.click([self.context.page.js.navigateTo(url)])
 

@@ -80,8 +80,7 @@ class Catalog:
 
       https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -100,8 +99,7 @@ class Catalog:
     ------------
     Change the current class type to the one defined and return the internal class object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -117,8 +115,7 @@ class Catalog:
     ------------
     Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
 
-    Usage:
-    -----
+    Usage::
     """
     self.__class_list_type = self.__class_list['other']
     return self.__class_list_type
@@ -130,8 +127,7 @@ class Catalog:
     ------------
     Get the list of CSS Classes added to the component and to the class tag of the component.
 
-    Usage:
-    -----
+    Usage::
     """
     self.__class_list_type = self.__class_list['main']
     return self.__class_list_type
@@ -143,8 +139,7 @@ class Catalog:
     ------------
     Shortcut to standard CSS classes (for layout purposes like margin, padding...).
 
-    Usage:
-    -----
+    Usage::
 
       t1 = page.ui.title("Templates structure")
       t1.style.add_classes.std.margin(7)
@@ -166,8 +161,7 @@ class Catalog:
     ------------
     CSS Classes specific to the buttons components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogButton.CatalogButton
     """
@@ -182,8 +176,7 @@ class Catalog:
     ------------
     CSS Classes specific to the select compatibility components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogMedia.CatalogSelect
     """
@@ -198,8 +191,7 @@ class Catalog:
     ------------
     CSS Classes specific to the screen compatibility components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogMedia.CatalogMedia
     """
@@ -214,8 +206,7 @@ class Catalog:
     ------------
     CSS Classes specific to the Icon components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogIcons.CatalogIcon
     """
@@ -230,8 +221,7 @@ class Catalog:
     ------------
     CSS Classes specific to Layout / Container components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogLayout.CatalogLayout
     """
@@ -246,8 +236,7 @@ class Catalog:
     ------------
     CSS Classes specific to the DropDown components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogTree.CssStyleDropdown
     """
@@ -262,8 +251,7 @@ class Catalog:
     ------------
     CSS Classes specific to the Table components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogTable.CatalogTable
     """
@@ -278,8 +266,7 @@ class Catalog:
     ------------
     CSS Classes specific to Chart components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogButton.CatalogButton
     """
@@ -294,8 +281,7 @@ class Catalog:
     ------------
     CSS Classes specific to Link components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogLink.CatalogLink
     """
@@ -310,8 +296,7 @@ class Catalog:
     ------------
     CSS Classes specific to Date components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogInput.CatalogDate
     """
@@ -326,8 +311,7 @@ class Catalog:
     ------------
     CSS Classes specific to Text components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogText.CatalogText
     """
@@ -342,8 +326,7 @@ class Catalog:
     ------------
     CSS Classes specific to Input components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogInput.CatalogInput
     """
@@ -358,8 +341,7 @@ class Catalog:
     ------------
     CSS Classes specific to Image components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogImg.CatalogImg
     """
@@ -374,8 +356,7 @@ class Catalog:
     ------------
     CSS Classes specific to Div / Container components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogDiv.CatalogDiv
     """
@@ -390,8 +371,7 @@ class Catalog:
     ------------
     CSS Classes specific to Div / Container components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogDiv.CatalogShapes
     """
@@ -406,8 +386,7 @@ class Catalog:
     ------------
     CSS Classes specific to Radio button components.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: CatalogRadio.CatalogRadio
     """
@@ -421,8 +400,7 @@ class Catalog:
     ------------
     Register a bespoke external class to the report object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -439,8 +417,7 @@ class Catalog:
     ------------
     Add an external CSS file to the final HTML report.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -460,8 +437,7 @@ class Catalog:
     ------------
     Add a bespoke CSS fragment.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -477,8 +453,7 @@ class Catalog:
     Create a bespoke class based on the various attributes.
     This will internal build the class and return it.
 
-    Usage:
-    -----
+    Usage::
 
       v_cls = page.css.anonymous_cls({
       '_attrs': {'color': 'green', 'cursor': 'pointer'},
@@ -505,8 +480,7 @@ class Catalog:
     ------------
     Add external CSS classes to a component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

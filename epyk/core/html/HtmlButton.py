@@ -44,8 +44,7 @@ class Button(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.options.multiple = False
@@ -62,8 +61,7 @@ class Button(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       page.js.console.log(but.dom.content)
@@ -82,8 +80,7 @@ class Button(Html.Html):
     -----------
     Show / Hide the loading event predefined for this component.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Loading")
       page.body.onReady([but.loading()])
@@ -108,8 +105,7 @@ class Button(Html.Html):
     -----------
     Remove the default button background and remove the padding.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.no_background()
@@ -124,8 +120,7 @@ class Button(Html.Html):
     -----------
     Click event which redirect to another page.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.goto("http://www.epyk-studio.com")
@@ -151,8 +146,7 @@ class Button(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.style.css.margin = "5px"
@@ -169,8 +163,7 @@ class Button(Html.Html):
     -----------
     Add the HTML tag to disable the button.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.disable()
@@ -197,8 +190,7 @@ class Button(Html.Html):
     -----------
     Special click event to keep in memory the state of the component.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
 
@@ -233,8 +225,7 @@ class Button(Html.Html):
     -----------
     Change the color of the button background when the mouse is hover.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.remove("remove").color("blue")
 
@@ -254,8 +245,7 @@ class Button(Html.Html):
     Return the full properties of the HTML component.
     This property should allow another JavaScript framework to build the component.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.properties
@@ -292,8 +282,7 @@ class Checkbox(Html.Html):
     -----------
     Property to set all the possible object for check boxes.
 
-    Usage:
-    -----
+    Usage::
 
 
     :rtype: OptButton.OptCheckboxes
@@ -308,8 +297,7 @@ class Checkbox(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtml.JsHtmlButtonChecks
     """
@@ -326,8 +314,7 @@ class Checkbox(Html.Html):
 
     TODO: Use the options parameter.
 
-    Usage:
-    -----
+    Usage::
 
       check = page.ui.buttons.check()
       check.tooltip("Tooltip")
@@ -365,8 +352,7 @@ class Checkbox(Html.Html):
 
     TODO: Find way to remove jquery
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -424,8 +410,7 @@ class CheckButton(Html.Html):
     -----------
     Property to set all the possible object for check button.
 
-    Usage:
-    -----
+    Usage::
 
 
     :rtype: OptButton.OptCheck
@@ -439,8 +424,7 @@ class CheckButton(Html.Html):
     ------------
     The Javascript Dom object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtml.JsHtmlButtonMenu
     """
@@ -456,8 +440,7 @@ class CheckButton(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -487,8 +470,7 @@ class CheckButton(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsButton.ClassButtonCheckBox
     """
@@ -502,8 +484,7 @@ class CheckButton(Html.Html):
     ------------
     Click even on the checkbox item.
 
-    Usage:
-    -----
+    Usage::
 
       ch = page.ui.buttons.check(label="Label")
       ch.click(page.js.alert("true"), page.js.alert("false"))
@@ -566,8 +547,7 @@ class IconEdit(Html.Html):
     ------------
     Add a spin effect to the icon.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.ui.icons.awesome("")
       icon.spin()
@@ -585,8 +565,7 @@ class IconEdit(Html.Html):
     ------------
     Add a pulse effect to the icon.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.ui.icons.awesome("")
       icon.pulse()
@@ -604,8 +583,7 @@ class IconEdit(Html.Html):
     ------------
     Add a border to the icon.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.ui.icons.awesome("")
       icon.border()
@@ -623,8 +601,7 @@ class IconEdit(Html.Html):
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.ui.icons.awesome("")
       icon.rotate(90)
@@ -646,8 +623,7 @@ class IconEdit(Html.Html):
     ------------
     Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.ui.icons.awesome("")
       icon.pull()
@@ -669,8 +645,7 @@ class IconEdit(Html.Html):
     -----------
     Add a JavaScript click event on this component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -696,8 +671,7 @@ class IconEdit(Html.Html):
 
       https://www.w3schools.com/tags/att_a_target.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -748,8 +722,7 @@ class ButtonMenuItem:
     -----------
     Javascript module of the items in the menu.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -765,8 +738,7 @@ class ButtonMenuItem:
     -----------
     Javascript generic events of the items in the menu.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -790,8 +762,7 @@ class ButtonMenuItem:
     -----------
     Javascript click events of the items in the menu.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -838,8 +809,7 @@ class ButtonMenu(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
       self.style.css.margin = "5px"
 
@@ -998,7 +968,6 @@ class ButtonFilter(Html.Html):
       self.page.js.objects.event.preventDefault(),
       self.menu.dom.invisible()])
 
-
   @property
   def options(self):
     """
@@ -1006,8 +975,7 @@ class ButtonFilter(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.options.multiple = False
@@ -1024,8 +992,7 @@ class ButtonFilter(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       page.js.console.log(but.dom.content)

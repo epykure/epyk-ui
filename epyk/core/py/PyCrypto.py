@@ -12,8 +12,8 @@ import uuid
 KEY = 'bAvGUC_7oazo4cIeNBt8t23bPe3Hvq8livGqQxSV-z0='
 
 
-class PyCrypto(object):
-  class __internal(object):
+class PyCrypto:
+  class __internal:
     _props, _context = {}, {}
 
   def __init__(self, src=None):
@@ -28,16 +28,15 @@ class PyCrypto(object):
     This can be also used to protect data from the report.
     In order to ensure the right privacy please do not store the token and the salt in the framework.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param data: The data to be encrypted
-    :param token: String. Optional. The token used to encrypt the data
-    :param salt: String. Optional. The salt id
+    :param data: The data to be encrypted.
+    :param token: String. Optional. The token used to encrypt the data.
+    :param salt: String. Optional. The salt id.
 
-    :return: The encrypted data with the salt used
+    :return: The encrypted data with the salt used.
     """
     from cryptography.fernet import Fernet
     from cryptography.hazmat.backends import default_backend
@@ -63,8 +62,7 @@ class PyCrypto(object):
     This function will use the two keys in order to decrypt the data.
     In case of failure this function will raise an exception.
 
-    Usage:
-    -----
+    Usage::
 
       PyCrypto().decrypt(encrypted)
 
@@ -72,12 +70,12 @@ class PyCrypto(object):
 
     Attributes:
     ----------
-    :param encrypted: The encrypted data
-    :param token: String. Optional. The token used to encrypt the data
-    :param salt: String. Optional. The salt id
-    :param label: String. Optional. A label used to store the reference in the log file
+    :param encrypted: The encrypted data.
+    :param token: String. Optional. The token used to encrypt the data.
+    :param salt: String. Optional. The salt id.
+    :param label: String. Optional. A label used to store the reference in the log file.
 
-    :return: A string with the decrypted data
+    :return: A string with the decrypted data.
     """
     from cryptography.fernet import Fernet
     from cryptography.hazmat.backends import default_backend
@@ -103,10 +101,9 @@ class PyCrypto(object):
     """
     Description:
     ------------
-    Return a unique token
+    Return a unique token.
 
-    Usage:
-    -----
+    Usage::
 
       PyCrypto.getId
 
@@ -125,8 +122,7 @@ class PyCrypto(object):
     ------------
     Return a Fernet key.
 
-    Usage:
-    -----
+    Usage::
 
       PyCrypto().key
 
@@ -143,8 +139,7 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       PyCrypto.b64encode("Test")
 
@@ -171,8 +166,7 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -190,8 +184,7 @@ class PyCrypto(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

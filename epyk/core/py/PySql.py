@@ -34,7 +34,7 @@ sqlalchemy = requires("sqlalchemy", reason='Missing Package', install='sqlalchem
 DATABASE_AUTOSYNC = False
 
 
-class SqlConn(object):
+class SqlConn:
   def __init__(self, family, database=None, filename=None, model_path=None, reset=False, migrate=True, tables_scope=None, **kwargs):
     """
     Here we try to setup as generic as we can all the variable environment variables for the DB.
@@ -77,8 +77,14 @@ class SqlConn(object):
 
   def _load_sql_file(self, filename, reset):
     """
+    Description:
+    ------------
     Load a database schema from a python file.
-    This will use the dialect available from SQLAlchemy
+    This will use the dialect available from SQLAlchemy.
+
+    Usage::
+
+
 
     Related Pages:
 
@@ -124,10 +130,13 @@ class SqlConn(object):
 
   def table(self, table_name):
     """
+    Description:
+    ------------
     Return a sqlAlchemy table object. This can be useful in the where clauses
 
-    Example
-    db.table('table1')
+    Usage::
+
+      db.table('table1')
 
     :param table_name:
     :return: Python table object
@@ -139,6 +148,8 @@ class SqlConn(object):
 
   def load_schema(self, filename=None, model_path=None, reset=False):
     """
+    Description:
+    ------------
     Function that takes care of initialising the DB
     Please note that some column names are prohibited such as lst_mod_dt
 
@@ -167,6 +178,8 @@ class SqlConn(object):
 
   def table_clone(self, old_table, new_table, mapping=None):
     """
+    Description:
+    ------------
     Helps to migrate between two tables.
     The mapping argument is used in case the column names differ between the two tables
 
@@ -188,6 +201,8 @@ class SqlConn(object):
 
   def table_migrate(self, from_table, to_table):
     """
+    Description:
+    ------------
     Copy data from one table to another
 
     :param from_table:
@@ -201,6 +216,8 @@ class SqlConn(object):
 
   def table_create(self, table_name, table_def, reset=False):
     """
+    Description:
+    ------------
 
     Example
       db = rptObj.db(database=r"newTest.db")
@@ -225,7 +242,9 @@ class SqlConn(object):
 
   def table_empty(self, table_name):
     """
-    This function will empty an existing table
+    Description:
+    ------------
+    This function will empty an existing table.
 
     Example
     db.emptyTable('test')
@@ -241,6 +260,8 @@ class SqlConn(object):
 
   def table_create_from_file(self, filename, table_name, records=None, path=None, reset=False, commit=True):
     """
+    Description:
+    ------------
 
     Example
     df = rptObj.file(htmlCode=r"IBRD_Balance_Sheet__FY2010.csv").read()
@@ -263,7 +284,9 @@ class SqlConn(object):
 
   def force_create(self):
     """
-    Force the creation of the database in the given project
+    Description:
+    ------------
+    Force the creation of the database in the given project.
 
     :return: The python Sql object
     """
@@ -274,6 +297,8 @@ class SqlConn(object):
 
   def load_data_file(self, filename, path, reset=False, new_tables=None):
     """
+    Description:
+    ------------
     Load a python sql file to the local database.
     This will only add records and then commit the changes.
 
@@ -305,6 +330,8 @@ class SqlConn(object):
 
   def where(self, stmts):
     """
+    Description:
+    ------------
     Add a where clause to the SqlAlchemy query.
 
     Examples
@@ -321,7 +348,9 @@ class SqlConn(object):
 
   def select(self, table_name=None, columns=None):
     """
-    Create a SQL statement
+    Description:
+    ------------
+    Create a SQL statement.
 
     Example
     rptObj.db().select(["worldcup_teams"])
@@ -346,7 +375,9 @@ class SqlConn(object):
 
   def delete(self, table_name):
     """
-    Create a SQL delete SQL statement
+    Description:
+    ------------
+    Create a SQL delete SQL statement.
 
     Example
     rptObj.db().delete('table1')
@@ -379,7 +410,9 @@ class SqlConn(object):
 
   def update(self, table_name, values):
     """
-    Create a delete SQL statment
+    Description:
+    ------------
+    Create a delete SQL statment.
 
     Example
     rptObj.db().update('table1', {db.column('test', 'name'): 'user'})
@@ -398,6 +431,8 @@ class SqlConn(object):
 
   def distinct(self, columns=None):
     """
+    Description:
+    ------------
 
     :param columns:
     :return:
@@ -410,6 +445,8 @@ class SqlConn(object):
 
   def get_last_id(self, table_name):
     """
+    Description:
+    ------------
     Return the table last primary key ID.
     This will return an error if the table does not have a primary key defined in its schema
 
@@ -433,6 +470,8 @@ class SqlConn(object):
 
   def insert(self, table_name, records, commit=False, col_user_name=None, clean_rec=False, getIdCol=False):
     """
+    Description:
+    ------------
     insert a list of records to a table
 
     Example
@@ -442,7 +481,7 @@ class SqlConn(object):
     Related Pages:
 
       https://docs.sqlalchemy.org/en/13/core/dml.html
-    https://docs.sqlalchemy.org/en/13/core/dml.html
+      https://docs.sqlalchemy.org/en/13/core/dml.html
 
     :param table_name: The database table name
     :param records: The list of dictionaries with the data to inserts
@@ -501,6 +540,8 @@ class SqlConn(object):
 
   def data(self, limit=None):
     """
+    Description:
+    ------------
     Returns the results of the select statement previously instantiated in a pandas dataframe
 
     Example
@@ -527,6 +568,8 @@ class SqlConn(object):
   @property
   def records(self):
     """
+    Description:
+    ------------
     Return the records
 
     Example
@@ -546,7 +589,9 @@ class SqlConn(object):
   @property
   def count(self):
     """
-    Return the number of records
+    Description:
+    ------------
+    Return the number of records.
 
     Example
     print(db.select("table").count)
@@ -574,6 +619,8 @@ class SqlConn(object):
 
   def first(self, items=False):
     """
+    Description:
+    ------------
     Return only the first items from the SQL query
 
     Example
@@ -597,6 +644,8 @@ class SqlConn(object):
   @property
   def tables(self):
     """
+    Description:
+    ------------
     Return the list of tables defined in the selected database
 
     Example
@@ -608,7 +657,9 @@ class SqlConn(object):
 
   def columns(self, table_name):
     """
-    Return the list of columns defined in the selected database
+    Description:
+    ------------
+    Return the list of columns defined in the selected database.
 
     Example
     rptObj.db().columns("table_name")
@@ -624,6 +675,8 @@ class SqlConn(object):
 
   def column(self, table_name, column_name):
     """
+    Description:
+    ------------
     Return a sqlAlchemy column object. This can be useful in the where clauses
 
     Example
@@ -639,6 +692,8 @@ class SqlConn(object):
 
   def drop(self, table_name, validate=True):
     """
+    Description:
+    ------------
     Delete the table from the database.
     The pre check can be disabled and the table will be automatically created again when the report will be triggered again.
     No extra function to create a table in the framework this is done by the SQL framework itself
@@ -653,6 +708,7 @@ class SqlConn(object):
 
     :param table_name: The database table name
     :param validate: Boolean, Validation check before dropping the table
+
     :return: Python column object
     """
     if validate:
@@ -669,7 +725,9 @@ class SqlConn(object):
 
   def execute(self):
     """
-    Execute the current SQL query
+    Description:
+    ------------
+    Execute the current SQL query.
 
     Related Pages:
 
@@ -691,8 +749,10 @@ class SqlConn(object):
     return self
 
 
-class SqlConnOdbc(object):
+class SqlConnOdbc:
   """
+  Description:
+  ------------
   Connector to Access databases. This connector will allow you to create, store and retrieve data from any MS Access Database.
   This will return the SQL database object. It will be possible to reuse the same syntax to then interact with it.
 

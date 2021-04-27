@@ -23,11 +23,10 @@ class Encoder(json.JSONEncoder):
   In most of the function the simple json module is used but this module is there to encode more complex object
   frequently coming from Pandas.
 
-  Usage:
-  -----
+  Usage::
 
-  >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
-  '{"test": ""}'
+    >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
+    '{"test": ""}'
 
   :return: A serializable item
   """

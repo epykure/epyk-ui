@@ -201,6 +201,19 @@ class Properties:
 
 
 class Report:
+  """
+  Main entry point for any web UI.
+
+  This class will store all the HTML components, JavaScript fragments and CSS definition in order to then render
+  a rich web page.
+
+  This will allow Python to access the components before the JavaScript on the fly computation to change then
+  according to the input data.
+
+  This class will also interface with plain Vanilla JavaScript feature to allow the design and definition of events
+  and / or interactions. Most of the Web documentation in this framework is either coming from w3School or from the
+  various external packages.
+  """
   showNavMenu, withContainer = False, False
   ext_packages = None    # For extension modules
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
@@ -271,8 +284,7 @@ class Report:
     ------------
     Property that returns the Body element of the HTML page.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.body.onReady([
@@ -298,8 +310,7 @@ class Report:
     ------------
     Return the currently used :doc:`report/theme` for the report.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.theme = themes.ThemeBlue.Blue
@@ -330,8 +341,8 @@ class Report:
     Add a special skin to the page.
     This could be used for special event or season during the year (Christmas for example).
 
-    Usage:
-    -----
+    Usage::
+
 
     """
     return skins.Skins(self)
@@ -341,8 +352,7 @@ class Report:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -365,8 +375,7 @@ class Report:
 
     This can be changed by loading the packages locally and switching off the online mode.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.imports
@@ -386,8 +395,7 @@ class Report:
 
     Those can be added in string in order to improve the render of a text.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.text(page.symbols.shapes.BLACK_SQUARE)
@@ -408,8 +416,7 @@ class Report:
 
     Those can be added in string in order to improve the render of a text.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.text(page.entities.non_breaking_space)
@@ -430,8 +437,7 @@ class Report:
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...).
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.text("This is a text")
@@ -456,11 +462,10 @@ class Report:
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...).
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
-      page.ui.text("This is a text")
+      page.web
 
     Related Pages:
 
@@ -479,8 +484,10 @@ class Report:
     ------------
     Returns the set of :doc:`CSS Classes <css>` for the HTML report.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.css.
 
     """
     cls_obj = Classes.Catalog(self, {'other': set()})
@@ -495,8 +502,7 @@ class Report:
     Go to the Javascript section. Property to get all the JavaScript features.
     Most of the standard modules will be available in order to add event and interaction to the Js transpiled.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.js.console.log("test")
@@ -521,8 +527,7 @@ class Report:
     Python external module section.
     Those are pre defined Python function to simplify the use of the various components.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.py.dates.today()
@@ -546,8 +551,10 @@ class Report:
     ------------
     Auth interface to allow easy sign-in pages.
 
-    Usage:
-    -----
+    Usage::
+
+      page = Report()
+      page.auth.
 
     Related Pages:
 
@@ -570,8 +577,7 @@ class Report:
 
     This can be extended by inheriting from this epyk.core.data.DataSrc.DataSrc and adding extra entry points.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
 
@@ -589,8 +595,7 @@ class Report:
     The example below will add obj1 and obj2 from an external pyk report previously required,
     then create a div and then add obj3 from an external file.
 
-    Usage:
-    ------
+    Usage::
 
       page = Report()
       page.register([obj1, obj2])
@@ -618,12 +623,10 @@ class Report:
     retrieve the components based on their ID.
     This should be used when the htmlCode is defined for a component.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.button(htmlCode="Button")
-
       but = page.get_components(["Button"])
 
     Attributes:
@@ -649,10 +652,11 @@ class Report:
 
     This work is still in progress.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
+      page.ui.text("This is an example")
+      page.framework("Vue")
 
     Attributes:
     ----------
@@ -666,12 +670,15 @@ class Report:
     Description:
     ------------
     Link to the possible output formats for a page.
+    This will transpile the Python code to web artifacts. Those outputs are standard outputs files in web development.
 
-    Usage:
-    -----
+    The property framework should be used to link to other web framework.
+
+    Usage::
 
       page = Report()
-
+      page.ui.text("This is an example")
+      page.outs.html()
     """
     return PyOuts.PyOuts(self)
 
@@ -682,8 +689,7 @@ class Report:
     ------------
     Property to the HTML page header.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.headers.meta.viewport({"width": "device-width"})
@@ -706,8 +712,7 @@ class Report:
     As NaN is not valid on the Json side those object are not allowed during the dump.
     It is advised to use fillna() in your script before returning the data to the framework to avoid this issue.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.dumps(result)
@@ -734,8 +739,7 @@ class Report:
     This will add extra features available on the target framework.
     For example this HTML page can be transformed to an Angular app, a React App or a Vue one.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
 

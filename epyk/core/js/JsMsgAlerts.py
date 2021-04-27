@@ -6,7 +6,7 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObject
 
 
-class Msg(object):
+class Msg:
 
   def __init__(self, page=None):
     self._src = page

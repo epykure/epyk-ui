@@ -31,10 +31,9 @@ class JsPerformance:
     ------------
     Wrap the Javascript functions with function to asset on the execution time.
 
-    Usage:
-    -----
+    Usage::
 
-      self._report.js.performance.add_profiling(fncs['content'])
+      page.js.performance.add_profiling(fncs['content'])
 
     Related Pages:
 
@@ -62,8 +61,7 @@ class JsPerformance:
     If the method is called with no arguments, all performance entries with an entry type of "mark" will be removed
     from the performance entry buffer.
 
-    Usage:
-    -----
+    Usage::
 
       performance.clearMarks("a")
 
@@ -78,7 +76,7 @@ class JsPerformance:
     :return: Void, the String for the Javascript side
     """
     if name is not None:
-      if not name in self.__marks:
+      if name not in self.__marks:
         raise Exception("Mark %s not defined in the performances" % name)
 
       return JsFncs.JsFunction("performance.clearMarks(%s)" % name)
@@ -93,8 +91,7 @@ class JsPerformance:
     If the method is called with no arguments, all performance entries with an entry type of "measure" will be removed
     from the performance entry buffer.
 
-    Usage:
-    -----
+    Usage::
 
       performance.clearMeasures("a");
 
@@ -122,8 +119,7 @@ class JsPerformance:
     the browser's performance data buffer and sets the size of the performance data buffer to zero.
     To set the size of the browser's performance data buffer, use the Performance.setResourceTimingBufferSize() method.
 
-    Usage:
-    -----
+    Usage::
 
       performance.clearResourceTimings()
 
@@ -161,8 +157,7 @@ class JsPerformance:
     The list's members (entries) can be created by making performance marks or
     measures (for example by calling the mark() method) at explicit points in time.
 
-    Usage:
-    -----
+    Usage::
 
       performance.getEntriesByName("Begin", "mark")
 
@@ -194,8 +189,7 @@ class JsPerformance:
     The list's members (entries) can be created by making performance marks or
     measures (for example by calling the mark() method) at explicit points in time.
 
-    Usage:
-    -----
+    Usage::
 
       performance.getEntriesByType("mark")
 
@@ -219,8 +213,7 @@ class JsPerformance:
     The application defined timestamp can be retrieved by one of the Performance interface's getEntries*() methods
     (getEntries(), getEntriesByName() or getEntriesByType()).
 
-    Usage:
-    -----
+    Usage::
 
       performance.mark("a")
 
@@ -282,8 +275,7 @@ class JsPerformance:
     ------------
     The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
 
-    Usage:
-    -----
+    Usage::
 
       var t0 = performance.now();
 
@@ -301,8 +293,9 @@ class JsPerformance:
     ------------
     The setResourceTimingBufferSize() method sets the browser's resource timing buffer size to the specified number of "resource" performance entry type objects.
 
-    Example
-    performance.setResourceTimingBufferSize(maxSize)
+    Usage::
+
+      performance.setResourceTimingBufferSize(maxSize)
 
     Related Pages:
 
@@ -323,8 +316,7 @@ class JsPerformance:
     The toJSON() method of the Performance interface is a standard serializer: it returns a JSON representation of
     the performance object's properties.
 
-    Usage:
-    -----
+    Usage::
 
       performance.toJSON()
 

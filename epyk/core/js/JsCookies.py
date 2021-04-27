@@ -7,7 +7,7 @@ from epyk.core.js import JsUtils
 
 
 class JsCookies:
-  class __internal(object):
+  class __internal:
     _context = {}
 
   def __init__(self, src=None):

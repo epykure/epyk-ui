@@ -466,7 +466,7 @@ WINDOWS_1252_TO_UTF8 = {
 
 
 class PyExt:
-  class __internal(object):
+  class __internal:
     _props = {}
 
   def __init__(self, report=None):
@@ -488,8 +488,7 @@ class PyExt:
 
     No external package is required to use this interface.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A PyDate object
     """
@@ -504,8 +503,7 @@ class PyExt:
 
     No external package is required to use this interface.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A PyRest object
     """
@@ -521,8 +519,7 @@ class PyExt:
     This will rely on the package cryptography. This should be added to the python environment before using it.
     This package can be installed using the usual pip install function.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -536,10 +533,9 @@ class PyExt:
     """
     Description:
     ------------
-    Property to some predefined Geolocation functions
+    Property to some predefined Geolocation functions.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return PyGeo.PyGeo(self._report)
@@ -549,10 +545,9 @@ class PyExt:
     """
     Description:
     ------------
-    Property to the Markdown String conversion
+    Property to the Markdown String conversion.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return PyMarkdown.MarkDown(self._report)
@@ -563,8 +558,7 @@ class PyExt:
     ------------
     Import dynamically a python module.
 
-    Usage:
-    -----------
+    Usage::
 
       page.py.import_lib("test.py", folder="tables", path=r"filePath")
 
@@ -596,8 +590,7 @@ class PyExt:
     Install the external Python package.
     This can automatically installed it from the Python Index online repository is missing
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyExt().import_package("sqlalchemy").__name__
       'sqlalchemy'
@@ -620,8 +613,7 @@ class PyExt:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -647,8 +639,7 @@ class PyExt:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -680,8 +671,7 @@ class PyExt:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

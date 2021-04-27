@@ -49,8 +49,7 @@ class Image(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -66,8 +65,7 @@ class Image(Html.Html):
     -----------
     Click event which redirect to another page.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -190,10 +188,9 @@ class ImgCarousel(Html.Html):
     """
     Description:
     ------------
-    Add click event on this component
+    Add click event on this component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -292,8 +289,7 @@ class Icon(Html.Html):
     -----------
     Click event which redirect to another page.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -317,8 +313,7 @@ class Icon(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -349,8 +344,7 @@ class Icon(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -365,8 +359,7 @@ class Icon(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -381,8 +374,7 @@ class Icon(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -399,8 +391,7 @@ class Icon(Html.Html):
     Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
     With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -422,8 +413,7 @@ class Icon(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -439,8 +429,7 @@ class Icon(Html.Html):
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -461,8 +450,7 @@ class Icon(Html.Html):
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
     This will use the font-awesome flip classes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -487,8 +475,7 @@ class Icon(Html.Html):
     ------------
     Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -508,8 +495,7 @@ class Icon(Html.Html):
     ------------
     Add the icon class reference to the CSS class attribute of the component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -524,8 +510,7 @@ class Icon(Html.Html):
     ------------
     Change the color of the button background when the mouse is hover.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.capture().icon.hover_colors("red", "yellow")
 
@@ -548,8 +533,7 @@ class Icon(Html.Html):
     ------------
     The onclick event occurs when the user clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -577,8 +561,7 @@ class IconToggle(Icon):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -593,8 +576,7 @@ class IconToggle(Icon):
     ------------
     The onclick event occurs when the user clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -642,8 +624,7 @@ class Emoji(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -698,8 +679,7 @@ class Badge(Html.Html):
     ------------
     Property to the options specific to the HTML component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptButton.OptionsBadge
     """
@@ -711,8 +691,7 @@ class Badge(Html.Html):
     -----------
     The onclick event occurs when the user clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -763,8 +742,7 @@ class SlideShow(Html.Html):
     ------------
     Return the Javascript variable of the json object.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%s_obj" % self.htmlCode
@@ -778,8 +756,7 @@ class SlideShow(Html.Html):
 
     Return the Javascript internal object.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -797,8 +774,7 @@ class SlideShow(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -813,8 +789,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -837,8 +812,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -853,8 +827,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -869,8 +842,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -885,8 +857,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -901,8 +872,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -917,8 +887,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -933,8 +902,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -949,8 +917,7 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -965,8 +932,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -981,8 +947,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -997,8 +962,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1013,8 +977,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1029,8 +992,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1045,8 +1007,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1061,8 +1022,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1077,8 +1037,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1093,8 +1052,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1109,8 +1067,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1125,8 +1082,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1141,8 +1097,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1157,8 +1112,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1173,8 +1127,7 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1190,8 +1143,7 @@ class SlideShow(Html.Html):
     -----------
     Component refresh function. Javascript function which can be called in any Javascript event.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.build([], self._jsStyles)
@@ -1203,8 +1155,7 @@ class SlideShow(Html.Html):
     ------------
     The tiny slider options.
 
-    Usage:
-    -----
+    Usage::
 
     https://github.com/ganlanyuan/tiny-slider
 
@@ -1219,8 +1170,7 @@ class SlideShow(Html.Html):
     Empty all the values already defined on the Python side.
     This will be called before the JavaScript Transpilation.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self._vals = []
@@ -1233,8 +1183,7 @@ class SlideShow(Html.Html):
     ------------
     Add a component to the slider container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1267,8 +1216,7 @@ class Background(HtmlContainer.Div):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

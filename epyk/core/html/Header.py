@@ -21,8 +21,7 @@ class Meta:
     ------------
     Setting the viewport to make your website look good on all devices.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.viewport({"width": "device-width"})
 
@@ -45,10 +44,9 @@ class Meta:
     """
     Description:
     ------------
-    Define the character set used
+    Define the character set used.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.charset("test")
 
@@ -74,8 +72,7 @@ class Meta:
     ------------
     Refresh document every X seconds.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.refresh(10)
 
@@ -98,8 +95,7 @@ class Meta:
     ------------
     Define the author of the page.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.author('epykure')
 
@@ -122,8 +118,7 @@ class Meta:
     ------------
     Define a description of your web page.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.description('This is a description')
 
@@ -146,8 +141,7 @@ class Meta:
     ------------
     Define keywords for search engine.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.keywords(['python', 'javascript'])
 
@@ -172,8 +166,7 @@ class Meta:
     ------------
     Bespoke function to add other meta tags.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta.custom('language', 'python')
 
@@ -197,8 +190,7 @@ class Meta:
     ------------
     Bespoke function to add other http-equiv tags to the meta section.
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.headers.meta.http_equiv('language', 'python')
 
@@ -240,8 +232,7 @@ class Links:
     If several icons are equally appropriate, the last one is used.
     If the most appropriate icon is later found to be inappropriate, for example because it uses an unsupported format, the browser proceeds to the next-most appropriate, and so on.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -261,8 +252,7 @@ class Links:
     Pingbacks (also known as trackbacks) are a form of automated comment for a page or post,
     created when another WordPress blog links to that page or post.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -282,8 +272,7 @@ class Links:
     ------------
     Some websites create short links to make sharing links via instant messaging easier.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -303,8 +292,7 @@ class Links:
     the target resource for the current navigation, and therefore the browser must preemptively fetch and cache
     the resource.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -328,8 +316,7 @@ class Links:
     need the target resource for future navigations, and therefore the browser can likely improve the user experience
     by preemptively fetching and caching the resource.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -353,8 +340,7 @@ class Links:
     to need resources from the target resource's origin, and therefore the browser can likely improve the user
     experience by preemptively performing DNS resolution for that origin.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -378,8 +364,7 @@ class Links:
     by preemptively fetching and processing the resource — for example, by fetching its subresources or performing
     some rendering in the background offscreen.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -402,8 +387,7 @@ class Links:
     This includes DNS lookups, TLS negotiations, TCP handshakes.
     This in turn eliminates roundtrip latency and saves time for users.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -424,12 +408,11 @@ class Links:
     ------------
     HTML Imports is intended to be the packaging mechanism for web components, but you can also use HTML Imports by itself.
 
-    Usage:
-    -----
-
-      https://developer.mozilla.org/en-US/docs/Web/Web_Components/HTML_Imports
+    Usage::
 
     Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/Web_Components/HTML_Imports
 
     Attributes:
     ----------
@@ -447,6 +430,9 @@ class Links:
     The manifest keyword for the rel attribute of the <link> element indicates that the target resource is a Web app manifest.
 
     Web app manifests are deployed in your HTML pages using a <link> element in the <head> of a document:
+
+    Usage::
+
 
     Related Pages:
 
@@ -470,8 +456,7 @@ class Links:
     ------------
     Link the page to a style sheet.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -501,8 +486,7 @@ class Links:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -531,8 +515,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -552,8 +535,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -572,8 +554,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -592,8 +573,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -612,8 +592,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -658,8 +637,7 @@ class Header:
     ------------
     Change the tab icon to highlight this page is still in dev mode.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.headers.dev()
@@ -682,8 +660,7 @@ class Header:
     The <meta> tag provides metadata about the HTML document.
     Metadata will not be displayed on the page, but will be machine parsable.
 
-    Usage:
-    -----
+    Usage::
 
       page.headers.meta
 
@@ -705,8 +682,7 @@ class Header:
 
     The script will be added in a script tag.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -727,9 +703,9 @@ class Header:
 
     You can NOT have more than one <title> element in an HTML document.
 
-    Usage:-----
+    Usage::
 
-      rptObj.headers.title("title")
+      page.headers.title("title")
 
     Related Pages:
 
@@ -750,8 +726,7 @@ class Header:
 
     Basically the images will use this path as base if present in the page.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -772,8 +747,7 @@ class Header:
 
     The <link> tag is used to link to external style sheets.
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.headers.favicon('https://github.com/favicon.ico')
 
@@ -811,8 +785,7 @@ class Header:
     ------------
     The various HTML page header links.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -829,8 +802,7 @@ class Header:
     Property to defined / add more icons to the page header.
     Some browsers (like Safari or Opera) could require specify tags in the page.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return Icons(self)

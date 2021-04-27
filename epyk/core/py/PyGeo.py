@@ -2,7 +2,7 @@
 from math import cos, asin, sqrt, pi
 
 
-class PyGeo(object):
+class PyGeo:
 
   def __init__(self, page=None):
     self._report = page
@@ -15,8 +15,7 @@ class PyGeo(object):
     Calculate the great circle distance between two points on the earth (specified in decimal degrees)
     3956
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

@@ -41,8 +41,9 @@ def fromVersion(data):
   This system decorate will decorate a component function to specify during the Python execution
   if a method is not yet available in the current state of the Javascript modules.
 
-  Example
-  .fromVersion({'jqueryui': '1.12.0'})
+  Usage::
+
+    .fromVersion({'jqueryui': '1.12.0'})
 
   Attributes:
   ----------
@@ -199,17 +200,18 @@ def getJsValid(value, fail=True):
   Return an error if the variable name is not valid following the Javascript naming conventions.
   Even if the function will fail it will propose a valid name to replace the one passed in input
 
-  Example
-  >>> getJsValid("test-js", False)
-  'testjs'
+  Usage::
 
-  >>> getJsValid("234@test-js", False)
-  'js234testjs'
+    >>> getJsValid("test-js", False)
+    'testjs'
 
-  >>> getJsValid("234@test-js", True)
-  Traceback (most recent call last):
-      ...
-  Exception: Javascript Variable name 234@test-js, for example you could use js234testjs instead
+    >>> getJsValid("234@test-js", False)
+    'js234testjs'
+
+    >>> getJsValid("234@test-js", True)
+    Traceback (most recent call last):
+        ...
+    Exception: Javascript Variable name 234@test-js, for example you could use js234testjs instead
 
   Related Pages:
 
@@ -312,8 +314,9 @@ def isNotDefined(varName):
   ------------
   Check if a variable is defined.
 
-  Example
-  JsUtils.isNotDefined(varId)
+  Usage::
+
+    JsUtils.isNotDefined(varId)
 
   Attributes:
   ----------
@@ -337,13 +340,14 @@ class JsFile:
     """
     Description:
     ------------
-    Write the Javascript piece of code to the file
+    Write the Javascript piece of code to the file.
 
-    Example
-    dt = JsDate.new("2019-05-03")
-    f.writeJs([dt,
-      Js.JsConsole().log(dt.getDay()),
-      Js.JsConsole().log(dt.getFullYear())])
+    Usage::
+
+      dt = JsDate.new("2019-05-03")
+      f.writeJs([dt,
+        Js.JsConsole().log(dt.getDay()),
+        Js.JsConsole().log(dt.getFullYear())])
 
     Attributes:
     ----------
@@ -360,6 +364,9 @@ class JsFile:
     ------------
     Write the Javascript content of a report to a structure .js file.
     This could help on the investigation and can be directly used in Codepen for testing
+
+    Usage::
+
 
     Attributes:
     ----------
@@ -393,7 +400,10 @@ class JsFile:
     """
     Description:
     ------------
-    Send the piece of Javascript to Codepen for testing
+    Send the piece of Javascript to Codepen for testing.
+
+    Usage::
+
 
     Related Pages:
 
@@ -428,7 +438,10 @@ class JsFile:
     """
     Description:
     ------------
-    Write the file and close the buffer
+    Write the file and close the buffer.
+
+    Usage::
+
 
     Attributes:
     ----------

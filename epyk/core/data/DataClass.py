@@ -21,8 +21,7 @@ class DataClass:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -35,8 +34,7 @@ class DataClass:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._attrs.items()
@@ -50,8 +48,7 @@ class DataClass:
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -69,8 +66,7 @@ class DataClass:
     ------------
     Add an attribute to the Javascript underlying dictionary.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -89,8 +85,7 @@ class DataClass:
     Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -104,8 +99,7 @@ class DataClass:
     ------------
     Get tje attribute to the underlying attributes dictionary.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -120,8 +114,7 @@ class DataClass:
     ------------
     Add an attribute to the Javascript underlying dictionary.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -141,8 +134,7 @@ class DataClass:
 
     Should use has_attribute is the name can be deduced from the parent function.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -162,8 +154,7 @@ class DataClass:
     ------------
     Add the key and value to the final result object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -179,8 +170,7 @@ class DataClass:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -216,8 +206,7 @@ class DataEnum:
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -235,8 +224,7 @@ class DataEnum:
     ------------
     Set a custom value.This will not use any specific conversion.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -272,8 +260,7 @@ class DataEnumMulti:
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -289,8 +276,7 @@ class DataEnumMulti:
     ------------
     Set a custom value.This will not use any specific conversion.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

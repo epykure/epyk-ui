@@ -18,9 +18,9 @@ import time
 import datetime
 
 
-class PyDates(object):
+class PyDates:
 
-  class __internal(object):
+  class __internal:
     _props, _context = {}, {}
 
   def __init__(self, src=None):
@@ -37,8 +37,7 @@ class PyDates(object):
     always return a string date in a specific format to guarantee and simplify the compatibility between languages
     within the components.
 
-    Usage:
-    -----
+    Usage::
 
       PyDates().today
 
@@ -55,10 +54,9 @@ class PyDates(object):
     """
     Description:
     ------------
-    Return the current timestamp in a format YYYY-MM-DD HH:mm:dd
+    Return the current timestamp in a format YYYY-MM-DD HH:mm:dd.
 
-    Usage:
-    -----
+    Usage::
 
       PyDates().now
 
@@ -77,8 +75,7 @@ class PyDates(object):
     Return a predefined format for date in a file path.
     Using this method will ensure a consistency in the naming convention of the various files in the project.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -98,10 +95,9 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Usage:
-    -----
+    Usage::
 
-      rptObj.py.dates.cob
+      page.py.dates.cob
 
     :return: A string date
     """
@@ -116,8 +112,7 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Usage:
-    -----
+    UUsage::
 
       page.py.dates.month_end
 
@@ -134,8 +129,7 @@ class PyDates(object):
 
     In this property the parameter weekdays is forced to True.
 
-    Usage:
-    -----
+    Usage::
 
       page.py.dates.months
 
@@ -149,12 +143,11 @@ class PyDates(object):
     """
     Description:
     ------------
-    Return the list of quarter dates since the beginning of the year
+    Return the list of quarter dates since the beginning of the year.
 
     In this property the parameter weekdays is forced to True.
 
-    Usage:
-    -----
+    Usage::
 
       page.py.dates.quarters
 
@@ -172,8 +165,7 @@ class PyDates(object):
     ------------
     Return the date corresponding to an alias code like T, T-N, M...
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyDates().date_from_alias("T", "2019-08-08")
       '2019-08-07'
@@ -183,7 +175,7 @@ class PyDates(object):
     :param alias: String. The alias of the operation (T-3, M-2....)
     :param from_date: String. Optional. The start date from which the time operation is applied. Today by default
 
-    :return: The converted date or a list of dates
+    :return: The converted date or a list of dates.
     """
     if from_date is None:
       cob_date = datetime.datetime.today()
@@ -244,8 +236,7 @@ class PyDates(object):
     ------------
     Convert a Excel date to a AReS standard date format YYYY-MM-DD.
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyDates().date_from_excel(39448)
       '2008-01-01'
@@ -267,10 +258,9 @@ class PyDates(object):
     """
     Description:
     ------------
-    Return the list of end of month dates between two dates
+    Return the list of end of month dates between two dates.
 
-    Usage:
-    -----
+    UUsage::
 
       >>> PyDates().month_ends("2019-01-01", "2019-06-05", False)
       ['2019-01-31', '2019-02-28', '2019-03-31', '2019-04-30', '2019-05-31']
@@ -309,16 +299,15 @@ class PyDates(object):
     The date should be two string dates in the format YYYY-MM-DD.
     The resulting range of date will always be increasing
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyDates().range_dates("2019-01-01", "2019-01-11")
       ['2019-01-11', '2019-01-10', '2019-01-09', '2019-01-08', '2019-01-07', '2019-01-04', '2019-01-03', '2019-01-02', '2019-01-01']
 
     Attributes:
     ----------
-    :param from_dt: String. The start date in format YYYY-MM-DD
-    :param to_dt: String. The end date in format YYYY-MM-DD
+    :param from_dt: String. The start date in format YYYY-MM-DD.
+    :param to_dt: String. Optional. The end date in format YYYY-MM-DD.
     :param weekdays: Boolean. Optional. Remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
@@ -345,8 +334,7 @@ class PyDates(object):
     ------------
     The default value will be given considering the GMT time
 
-    Usage:
-    -----
+    Usage::
 
       timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
 
@@ -355,6 +343,7 @@ class PyDates(object):
     :param timestamp: Integer. The timestamp in milliseconds
     :param offset: Integer. Optional. The time zone
     :param reference: Integer. Optional. The reference shift in minutes
+    :param factor:
 
     :return: The server timestamp string
     """
@@ -369,8 +358,7 @@ class PyDates(object):
     Return the converted timestamp to be stored in the database.
     This conversion will be based on the offset coming from the UI to convert to common time
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyDates().to_server_time("2019-08-20 20:04:10", 2)
       '2019-08-20 21:06:10'
@@ -394,16 +382,15 @@ class PyDates(object):
     Return the converted timestamp to be returned to the user.
     This is converting a stored timestamp to a user one.
 
-    Usage:
-    -----
+    Usage::
 
       >>> PyDates().to_user_time('2019-08-20 21:06:10', 2)
       '2019-08-20 20:04:10'
 
     Attributes:
     ----------
-    :param timestamp: String. The server timestamp
-    :param offset: Integer. Optional. The client offset time to be applied before storage
+    :param timestamp: String. The server timestamp.
+    :param offset: Integer. The client offset time to be applied before storage
     :param reference: Integer. Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
@@ -420,8 +407,9 @@ class PyDates(object):
     Get the time between two dates.
     This function will only format the result of a delta time object.
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Attributes:
     ----------

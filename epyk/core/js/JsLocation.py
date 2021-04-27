@@ -29,8 +29,7 @@ class URLSearchParams:
     ------------
     Get the value of a request parameter in the url.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -53,8 +52,7 @@ class URLSearchParams:
     ------------
     Get all the values of a request parameter in the url.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -73,8 +71,7 @@ class URLSearchParams:
     ------------
     Check if a given parameter is in the url.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -93,8 +90,7 @@ class URLSearchParams:
     ------------
     Append a key, value to the url parameter object.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -120,8 +116,7 @@ class JsLocation:
     ------------
     The hostname property sets or returns the hostname of a URL.
 
-    Usage:
-    -----
+    Usage::
 
       page.location.hostname
 
@@ -140,8 +135,7 @@ class JsLocation:
     ------------
     The hostname property sets or returns the hostname of a URL.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.location.pathname
 
@@ -160,8 +154,7 @@ class JsLocation:
     ------------
     The host property sets or returns the hostname and port of a URL.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.location.host
 
@@ -180,8 +173,7 @@ class JsLocation:
     ------------
     The hash property sets or returns the anchor part of a URL, including the hash sign (#).
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.location.hash
 
@@ -200,8 +192,7 @@ class JsLocation:
     ------------
     The search property sets or returns the querystring part of a URL, including the question mark (?).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -218,6 +209,9 @@ class JsLocation:
     ------------
     The URLSearchParams() constructor creates and returns a new URLSearchParams object.
 
+    Usage::
+
+
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
@@ -230,6 +224,9 @@ class JsLocation:
     Description:
     ------------
     The port property sets or returns the port number the server uses for a URL.
+
+    Usage::
+
 
     Related Pages:
 
@@ -246,8 +243,7 @@ class JsLocation:
     ------------
     The origin property returns the protocol, hostname and port number of a URL.
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.js.location.origin + rptObj.js.location.pathname
 
@@ -266,10 +262,9 @@ class JsLocation:
     ------------
     The href property sets or returns the entire URL of the current component.
 
-    Usage:
-    -----
+    Usage::
 
-      rptObj.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
+      page.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
 
     Related Pages:
 
@@ -295,10 +290,9 @@ class JsLocation:
     ------------
     Opens a new browser window in a new tab (duplicated but part of the Window module).
 
-    Usage:
-    -----
+    Usage::
 
-      rptObj.js.location.open_new_tab("www.google.fr")
+      page.js.location.open_new_tab("www.google.fr")
 
     Related Pages:
 
@@ -330,8 +324,7 @@ class JsLocation:
     ------------
     Download data from the url.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -351,10 +344,9 @@ class JsLocation:
     The mailto link when clicked opens users default email program or software.
     A new email page is created with "To" field containing the address of the name specified on the link by default.
 
-    Usage:
-    -----
+    Usage::
 
-      rptObj.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
+      page.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
 
     Related Pages:
 

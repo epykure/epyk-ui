@@ -47,8 +47,7 @@ class Drawer(Html.Html):
     ------------
     Property to get the common dom features.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlStepper.Drawer
     """
@@ -63,8 +62,7 @@ class Drawer(Html.Html):
     ------------
     Property to set all the possible object for a drawer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionDrawer
     """
@@ -76,8 +74,7 @@ class Drawer(Html.Html):
     ------------
     Add panel to the drawer object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -103,8 +100,7 @@ class Drawer(Html.Html):
     ------------
     Get the CSS Style of the object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsContainer.ClassDrawer
     """
@@ -118,8 +114,7 @@ class Drawer(Html.Html):
     ------------
     Set the handle used to trigger the open / close events.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -192,8 +187,7 @@ class DrawerMulti(Html.Html):
     ------------
     Property to get the common dom features.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlStepper.Drawer
     """
@@ -208,8 +202,7 @@ class DrawerMulti(Html.Html):
     ------------
     Property to set all the possible object for a drawer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionDrawer
     """
@@ -221,8 +214,7 @@ class DrawerMulti(Html.Html):
     ------------
     Add panel to the drawer object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -269,8 +261,7 @@ class DrawerMulti(Html.Html):
     ------------
     Get the CSS Style of the object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsContainer.ClassDrawer
     """

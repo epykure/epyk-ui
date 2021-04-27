@@ -12,8 +12,7 @@ class JsIf:
     ------------
     Create a JavaScript If statement
 
-    Usage:
-    -----
+    Usage::
 
       JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
 
@@ -35,8 +34,7 @@ class JsIf:
     ------------
     Add a Javascript elif statement to the loop.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
