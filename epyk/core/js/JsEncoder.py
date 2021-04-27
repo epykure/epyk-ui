@@ -28,7 +28,7 @@ class Encoder(json.JSONEncoder):
     >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
     '{"test": ""}'
 
-  :return: A serializable item
+  :return: A serializable item.
   """
   def default(self, obj):
     try:

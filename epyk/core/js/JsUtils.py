@@ -11,6 +11,7 @@ from epyk.core.js.primitives import JsObject
 
 PROFILE_COUNT = 0
 
+
 # --------------------------------------------------------------------------------------------------------------
 #                                                       DECORATORS
 #
@@ -18,6 +19,10 @@ def incompatibleBrowser(browsers):
   """
   Description:
   ------------
+  Decorator to send a warning for functions or packages which are restricted to some browsers.
+
+  Usage::
+
 
   Attributes:
   ----------
@@ -116,6 +121,9 @@ def jsConvertData(jsData, jsFnc, depth=False):
   Any pure Python object will be converted using the json function to be then written as a string
   to the resulting page.
 
+  Usage::
+
+
   Attributes:
   ----------
   :param jsData: The Python Javascript data.
@@ -152,6 +160,9 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   Description:
   ------------
 
+  Usage::
+
+
   Attributes:
   ----------
   :param jsData:
@@ -186,6 +197,9 @@ def jsWrap(data):
   Shortcut to wrap a python object to a generic JavaScript object.
   This will avoid the automatic conversion to string if it is a variable.
 
+  Usage::
+
+
   Attributes:
   ----------
   :param data: Object. A python object.
@@ -219,10 +233,10 @@ def getJsValid(value, fail=True):
 
   Attributes:
   ----------
-  :param value: The Javascript variable name
-  :param fail: Boolean to raise an exception if the name is not valid on the Javascript side
+  :param value: String. The Javascript variable name.
+  :param fail: Boolean. Optional. . Flat to raise an exception if the name is not valid on the Javascript side.
 
-  :return: The input variable name or a suggested one
+  :return: The input variable name or a suggested one.
   """
   regex = re.compile('[^a-zA-Z0-9_]')
   cleanName = regex.sub('', value.strip())
@@ -240,6 +254,10 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False, profile=Fa
   Description:
   ------------
   Generic conversion function for all the PyJs functions.
+
+  Usage::
+
+
 
   Attributes:
   ----------
@@ -299,11 +317,14 @@ def cleanFncs(fnc):
 
   Thus pre stored function code can be written to be easier to read.
 
+  Usage::
+
+
   Attributes:
   ----------
-  :param fnc: The Javascript String
+  :param fnc: The Javascript String.
 
-  :return: Return a cleaned an minify Javascript String
+  :return: Return a cleaned an minify Javascript String.
   """
   return "".join([r.strip() for r in fnc.strip().split('\n')])
 
@@ -320,7 +341,7 @@ def isNotDefined(varName):
 
   Attributes:
   ----------
-  :param varName: String. The varName
+  :param varName: String. The varName.
 
   :return: A string in Python and a Boolean in Javascript.
   """

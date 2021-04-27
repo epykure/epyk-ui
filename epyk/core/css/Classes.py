@@ -116,6 +116,9 @@ class Catalog:
     Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.other)
     """
     self.__class_list_type = self.__class_list['other']
     return self.__class_list_type
@@ -128,6 +131,9 @@ class Catalog:
     Get the list of CSS Classes added to the component and to the class tag of the component.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.main)
     """
     self.__class_list_type = self.__class_list['main']
     return self.__class_list_type
@@ -163,6 +169,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.button)
+
     :rtype: CatalogButton.CatalogButton
     """
     if "button" not in self.__ctx:
@@ -177,6 +186,9 @@ class Catalog:
     CSS Classes specific to the select compatibility components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.select)
 
     :rtype: CatalogMedia.CatalogSelect
     """
@@ -193,6 +205,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.screens)
+
     :rtype: CatalogMedia.CatalogMedia
     """
     if "screens" not in self.__ctx:
@@ -207,6 +222,9 @@ class Catalog:
     CSS Classes specific to the Icon components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.icon)
 
     :rtype: CatalogIcons.CatalogIcon
     """
@@ -223,6 +241,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.layout)
+
     :rtype: CatalogLayout.CatalogLayout
     """
     if "layout" not in self.__ctx:
@@ -237,6 +258,9 @@ class Catalog:
     CSS Classes specific to the DropDown components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.dropdown)
 
     :rtype: CatalogTree.CssStyleDropdown
     """
@@ -253,6 +277,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.table)
+
     :rtype: CatalogTable.CatalogTable
     """
     if "table" not in self.__ctx:
@@ -267,6 +294,9 @@ class Catalog:
     CSS Classes specific to Chart components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.chart)
 
     :rtype: CatalogButton.CatalogButton
     """
@@ -283,6 +313,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.link)
+
     :rtype: CatalogLink.CatalogLink
     """
     if "link" not in self.__ctx:
@@ -297,6 +330,9 @@ class Catalog:
     CSS Classes specific to Date components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.date)
 
     :rtype: CatalogInput.CatalogDate
     """
@@ -313,6 +349,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.text)
+
     :rtype: CatalogText.CatalogText
     """
     if "text" not in self.__ctx:
@@ -327,6 +366,9 @@ class Catalog:
     CSS Classes specific to Input components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.input)
 
     :rtype: CatalogInput.CatalogInput
     """
@@ -343,6 +385,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.image)
+
     :rtype: CatalogImg.CatalogImg
     """
     if "image" not in self.__ctx:
@@ -357,6 +402,9 @@ class Catalog:
     CSS Classes specific to Div / Container components.
 
     Usage::
+
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.div)
 
     :rtype: CatalogDiv.CatalogDiv
     """
@@ -373,6 +421,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.shapes)
+
     :rtype: CatalogDiv.CatalogShapes
     """
     if "shapes" not in self.__ctx:
@@ -388,6 +439,9 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      print(t1.style.add_classes.radio)
+
     :rtype: CatalogRadio.CatalogRadio
     """
     if "radio" not in self.__ctx:
@@ -402,9 +456,12 @@ class Catalog:
 
     Usage::
 
+
     Attributes:
     ----------
     :param css_cls: Class. The python class to be used as a CSS Class in the framework.
+
+    :return: self for the chaining.
     """
     css_cls_obj = css_cls(self.page)
     css_cls_obj.customize()
@@ -424,6 +481,8 @@ class Catalog:
     :param filename: String. The file name.
     :param path: String. Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
                  will be used.
+
+    :return: self for the chaining.
     """
     if path is None:
       self.page.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
@@ -442,6 +501,8 @@ class Catalog:
     Attributes:
     ----------
     :param text: String. The CSS fragment to be added to the HTML report. This can be a class or a group of class.
+
+    :return: self for the chaining.
     """
     self.page.properties.css.add_text(text)
     return self
@@ -455,9 +516,10 @@ class Catalog:
 
     Usage::
 
-      v_cls = page.css.anonymous_cls({
-      '_attrs': {'color': 'green', 'cursor': 'pointer'},
-      '_hover': {'color': 'red'}})
+      t1 = page.ui.title("Templates structure")
+      v_cls = t1.style.add_classes.anonymous_cls({
+        '_attrs': {'color': 'green', 'cursor': 'pointer'},
+        '_hover': {'color': 'red'}})
 
     Attributes:
     ----------
@@ -482,10 +544,16 @@ class Catalog:
 
     Usage::
 
+      t1 = page.ui.title("Templates structure")
+      t1.style.add_classes.external("cssClassReference")
+
     Attributes:
     ----------
-    :param classname: String | array.
+    :param classname: String | array. The external class name to be added.
+
+    :return: self for the chaining.
     """
     if isinstance(classname, list):
       classname = " ".join(classname)
     self.__class_list_type.add(classname)
+    return self

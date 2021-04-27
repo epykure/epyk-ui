@@ -13,19 +13,19 @@ class DataAggregators:
 
   def __init__(self,  varName, report=None):
     self.varName = varName
-    self._report = report
+    self.page = report
 
   def max(self, column):
     """
     Description:
     -----------
     Returns the maximum value in list.
-    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is
+    ranked.
     -Infinity is returned if list is empty, so an isEmpty guard may be required.
     Non-numerical values in list will be ignored.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -35,20 +35,21 @@ class DataAggregators:
     ----------
     :param column: String. The column name. The key in the list of dictionary.
     """
-    self._report.jsImports.add('underscore')
-    return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){return rec['%s']; })]" % (self.varName, column), report=self._report)
+    self.page.jsImports.add('underscore')
+    return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){return rec['%s']; })]" % (
+      self.varName, column), report=self.page)
 
   def min(self, column):
     """
     Description:
     -----------
     Returns the minimum value in list.
-    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    If an iterator function is provided, it will be used on each value to generate the criterion by which the value is
+    ranked.
     Infinity is returned if list is empty, so an isEmpty guard may be required.
     Non-numerical values in list will be ignored.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -58,26 +59,27 @@ class DataAggregators:
     ----------
     :param column: String. The column name. The key in the list of dictionary.
     """
-    self._report.jsImports.add('underscore')
-    return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (self.varName, column), report=self._report)
+    self.page.jsImports.add('underscore')
+    return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (
+      self.varName, column), report=self.page)
 
   def sortBy(self, column):
     """
     Description:
     ------------
-    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iterator.
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through
+    iterator.
     iterator may also be the string name of the property to sort by (eg. length).
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
     :param column: String. The column name. The key in the list of dictionary.
     """
-    self._report.jsImports.add('underscore')
+    self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
-    return JsObjects.JsArray.JsArray("_.sortBy(%s, %s)" % (self.varName, column), report=self._report)
+    return JsObjects.JsArray.JsArray("_.sortBy(%s, %s)" % (self.varName, column), report=self.page)
 
   def sum(self, columns, attrs=None):
     """
@@ -85,19 +87,18 @@ class DataAggregators:
     -----------
     Reduce the record set by adding all the columns.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param columns: List. The columns in the recordset to be counted.
-    :param attrs: Dictionary. Optional. The static values to be added to the final recordset.
+    :param columns: List. The columns in the records to be counted.
+    :param attrs: Dictionary. Optional. The static values to be added to the final records.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += v[c]}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self.page)
 
   def count(self, columns, attrs=None):
     """
@@ -105,19 +106,18 @@ class DataAggregators:
     -----------
     Reduce the record set by counting all the columns.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param columns: List. The columns in the recordset to be counted.
-    :param attrs: Dictionary. Optional. The static values to be added to the final recordset.
+    :param columns: List. The columns in the records to be counted.
+    :param attrs: Dictionary. Optional. The static values to be added to the final records.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += 1}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self.page)
 
   def countBy(self, column):
     """
@@ -125,36 +125,34 @@ class DataAggregators:
     -----------
     Reduce the record set by counting all the columns.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param column: String. The columns in the recordset to be counted.
+    :param column: String. The columns in the records to be counted.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, c){var tempDict = {};
         r.forEach(function(v){if(typeof v[c] !== 'undefined'){
           if(typeof tempDict[v[c]] === 'undefined'){tempDict[v[c]] = 0}; tempDict[v[c]] += 1} }); 
         result = []; for(var key in tempDict){result.push({[c]: key, count: tempDict[key]})}; return result})(%s, %s)
-        ''' % (self.varName, json.dumps(column)), isPyData=False, report=self._report)
+        ''' % (self.varName, json.dumps(column)), isPyData=False, report=self.page)
 
   def sumBy(self, columns, keys, dstKey=None, cast_vals=False):
     """
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param columns: List.
-    :param keys: List.
+    :param columns: List. The list of columns / attributes in the JavaScript object.
+    :param keys: List. The list of keys.
     :param dstKey: Dictionary. Optional.
     :param cast_vals: Boolean. Optional.
     """
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     keys = JsUtils.jsConvertData(keys, None)
     dstKey = JsUtils.jsConvertData(dstKey, None)
     columns = JsUtils.jsConvertData(columns, None)
@@ -167,8 +165,10 @@ class DataAggregators:
           if (!(skKey in tmpResults)){tmpResults[skKey] = {}; sks.forEach(function(s){tmpResults[skKey][s] = r[s]})
              cs.forEach(function(c){tmpResults[skKey][c] = 0})}
           cs.forEach(function(c){tmpResults[skKey][c] += %s})
-        }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (name, "parseFloat(r[c])" if cast_vals else 'r[c]')
-    return JsObjects.JsArray.JsRecordSet('%s(%s, %s, %s, %s)' % (name, self.varName, columns, keys, dstKey), report=self._report)
+        }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (
+      name, "parseFloat(r[c])" if cast_vals else 'r[c]')
+    return JsObjects.JsArray.JsRecordSet('%s(%s, %s, %s, %s)' % (
+      name, self.varName, columns, keys, dstKey), report=self.page)
 
   def pluck(self, column):
     """
@@ -176,8 +176,7 @@ class DataAggregators:
     -----------
     A convenient version of what is perhaps the most common use-case for map: extracting a list of property values.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -185,26 +184,25 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column:
+    :param column: String. The column / attribute in the JavaScript object.
     """
-    self._report.jsImports.add('underscore')
+    self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
-    return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), report=self._report)
+    return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), report=self.page)
 
 
 class DataFilters:
 
   def __init__(self,  varName, filter_map, report=None):
     self.varName, self.__filters = varName, OrderedSet()
-    self._report, self.filter_map = report, filter_map
+    self.page, self.filter_map = report, filter_map
 
   def setFilter(self, name):
     """
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -219,15 +217,14 @@ class DataFilters:
     -----------
     Filtering rule based on a Dictionary of lists.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
     :param data: Dictionary. The keys, values to be filtered.
     :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     """
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     data = JsUtils.jsConvertData(data, None)
     name = "filterMatch"
     constructors[name] = '''
@@ -245,15 +242,14 @@ class DataFilters:
 
     TODO: improve the performances by filtering on a list of keys if passed
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param value:
-    :param keys:
+    :param value: Object. The value to keep.
+    :param keys: List. Optional. The list of keys to check.
     """
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     value = JsUtils.jsConvertData(value, None)
     keys = JsUtils.jsConvertData(keys, None)
     name = "AnyMatch"
@@ -269,16 +265,15 @@ class DataFilters:
     -----------
     Filtering rule based on a key, value.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param key: String, The key in the various records.
+    :param key: String. The key in the various records.
     :param value: Object. The value to keep.
     :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     """
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
     if not case_sensitive:
@@ -296,8 +291,7 @@ class DataFilters:
     -----------
     Filtering rule based on a key, list of values.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -306,14 +300,15 @@ class DataFilters:
     :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     :param empty_all: Boolean. Optional. To specify how to consider the empty case.
     """
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(values, None)
     if not case_sensitive:
       name = "filterContainUpper"
       constructors[name] = '''function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; 
           var vUp = []; v.forEach(function(t){vUp.push(t.toUpperCase())}); 
-          var n=[];r.forEach(function(e){if(vUp.includes(e[k].toUpperCase())){n.push(e)}});return n}''' % (name, json.dumps(empty_all))
+          var n=[];r.forEach(function(e){if(vUp.includes(e[k].toUpperCase())){n.push(e)}});return n}''' % (
+        name, json.dumps(empty_all))
     else:
       name = "filterContain"
       constructors[name] = "function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % (name, json.dumps(empty_all))
@@ -326,8 +321,7 @@ class DataFilters:
     -----------
     Filtering rule based on a key, and a value starting with a specific format.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -337,7 +331,7 @@ class DataFilters:
     name = "filterStartsWith"
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k].startsWith(v)){n.push(e)}});return n}" % name
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
@@ -348,8 +342,7 @@ class DataFilters:
     -----------
     Filter values below a certain value.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -359,7 +352,7 @@ class DataFilters:
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if strict:
       name = "filterSup"
       constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] > v){n.push(e)}});return n}" % name
@@ -375,8 +368,7 @@ class DataFilters:
     -----------
     Filter values above a certain value.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -386,7 +378,7 @@ class DataFilters:
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if strict:
       name = "filterInf"
       constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] < v){n.push(e)}});return n}" % name
@@ -400,22 +392,22 @@ class DataFilters:
     """
     Description:
     -----------
+    Group a group for the data transformation.
+    This will be defined in the Python but processed on the JavaScript side.
 
-    Usage:
-    -----
+    Usage::
 
     """
-    return DataAggregators(self.toStr(), self._report)
+    return DataAggregators(self.toStr(), self.page)
 
   def sortBy(self, column):
     """
     Description:
     -----------
-    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iterator.
-    iterator may also be the string name of the property to sort by (eg. length).
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value
+    through iterator. iterator may also be the string name of the property to sort by (eg. length).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -425,7 +417,7 @@ class DataFilters:
     ----------
     :param column: String. The key in the record to be used as key for sorting.
     """
-    self._report.jsImports.add('underscore')
+    self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
     self.__filters.add("_.sortBy(%%s, %s)" % column)
     return self
@@ -447,7 +439,7 @@ class DataGlobal:
   def __init__(self, varName, data, report=None):
     if data is not None:
       report._props["js"]["datasets"][varName] = "var %s = %s" % (varName, json.dumps(data))
-    self._data, self.__filters_groups, self._report, self.varName = data, {}, report, varName
+    self._data, self.__filters_groups, self.page, self.varName = data, {}, report, varName
     self.__filter_saved = {}
 
   def getFilter(self, name, groupName=None):
@@ -455,13 +447,12 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param name:
-    :param groupName: Optional.
+    :param name: String. The filter alias name.
+    :param groupName: String. Optional. The filter group name.
     """
     if groupName is None:
       saved_filter = None
@@ -475,20 +466,19 @@ class DataGlobal:
         raise Exception("")
 
       saved_filter = self.__filter_saved[groupName]
-    return DataFilters(name, saved_filter, self._report)
+    return DataFilters(name, saved_filter, self.page)
 
   def clearFilter(self, name, groupName=None):
     """
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param name:
-    :param groupName:
+    :param name: String.
+    :param groupName: String. Optional.
     """
     if groupName is None:
       for k, v in self.__filter_saved.items():
@@ -505,8 +495,7 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: DataFilters
 
@@ -514,9 +503,9 @@ class DataGlobal:
     ----------
     :param groupName: String. The filter name.
     """
-    if not groupName in self.__filters_groups:
+    if groupName not in self.__filters_groups:
       self.__filter_saved[groupName] = {}
-      self.__filters_groups[groupName] = DataFilters(self.varName, self.__filter_saved[groupName], self._report)
+      self.__filters_groups[groupName] = DataFilters(self.varName, self.__filter_saved[groupName], self.page)
     return self.__filters_groups[groupName]
 
   def cleafFilterGroup(self, groupName):
@@ -524,14 +513,13 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
     :param groupName: String. The filter name.
     """
-    if not groupName in self.__filters_groups:
+    if groupName not in self.__filters_groups:
       del self.__filters_groups[groupName]
 
     return self
@@ -542,15 +530,14 @@ class DataGlobal:
     -----------
     Remove all the filters.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self.__filters_groups = {}
     return self
 
 
-class ServerNameSpaceConfig(object):
+class ServerNameSpaceConfig:
   def __init__(self, config, name, alias, endPoints):
     self.__config, self.end_points, self.name, self.alias = config, {}, name, alias
     if endPoints is not None:
@@ -562,8 +549,7 @@ class ServerNameSpaceConfig(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     """
@@ -574,8 +560,7 @@ class ServerNameSpaceConfig(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -589,8 +574,7 @@ class ServerNameSpaceConfig(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -601,7 +585,7 @@ class ServerNameSpaceConfig(object):
     return self
 
 
-class ServerConfig(object):
+class ServerConfig:
 
   def __init__(self, hostname, port, report=None):
     self.varId = "server_config_%s" % id(self)
@@ -612,13 +596,13 @@ class ServerConfig(object):
     """
     Description:
     ------------
+    Get the name space from its alias.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param alias:
+    :param alias: String. The name space alias.
     """
     return self.__namespaces[alias]
 
@@ -626,15 +610,16 @@ class ServerConfig(object):
     """
     Description:
     ------------
+    Add a JavaScript name space and its full end points and assigned it to a dedicated alias on the Python side.
+    This will allow the Python to get the name space from its alias.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param name:
-    :param alias: String. Optional.
-    :param endPoints: List. Optional.
+    :param name: String. The url name space.
+    :param alias: String. Optional. The alias for the entry point.
+    :param endPoints: List. Optional. The endpoint routes.
     """
     if alias is None:
       alias = name
@@ -645,9 +630,9 @@ class ServerConfig(object):
     """
     Description:
     ------------
+    Set the end point.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -660,9 +645,9 @@ class ServerConfig(object):
     """
     Description:
     ------------
+    Set multiple end points.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -676,13 +661,13 @@ class ServerConfig(object):
     """
     Description:
     ------------
+    Get the end point from its name.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param name: String.
+    :param name: String. The end point name.
     """
     if name not in self.__end_points:
       raise Exception("Missing end point in the server configuration - %s" % name)
@@ -694,12 +679,12 @@ class ServerConfig(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     for np, np_val in self.__namespaces.items():
-      self.__end_points[np] = {'e': np_val.end_points, 'n': np_val.name, 'u': "http://%s:%s/%s" % (self.host, self.port, np_val.name)}
+      self.__end_points[np] = {'e': np_val.end_points, 'n': np_val.name, 'u': "http://%s:%s/%s" % (
+        self.host, self.port, np_val.name)}
     return "var %s = %s" % (self.varId, JsUtils.jsConvertData(self.__end_points, None))
 
   def __str__(self):

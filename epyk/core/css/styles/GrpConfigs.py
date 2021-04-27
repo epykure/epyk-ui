@@ -14,8 +14,7 @@ class ClsConfigs:
     ------------
     Add a vertical and horizontal margin to the underlying template added to the body component.
 
-    Usage:
-    -----
+    Usage::
 
       page = pk.Page()
       page.body.template.style.configs.margins(h=5)
@@ -29,6 +28,7 @@ class ClsConfigs:
     h = Arguments.size(h, unit="%")
     v = Arguments.size(v, unit="px")
     self.component.style.css.margin = "%s%s %s%s" % (v[0], v[1], h[0], h[1])
+    return self
 
   def box(self, hexa_color=None, opacity=0.6, size=5, margin=5):
     """
@@ -36,8 +36,7 @@ class ClsConfigs:
     ------------
     Add a box shadow layout to the component.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -55,6 +54,7 @@ class ClsConfigs:
     rgb = Colors.getHexToRgb(self.component.page.theme.greys[5] if hexa_color is None else hexa_color)
     self.component.style.css.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
       "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+    return self
 
   def parallax(self, url):
     """
@@ -63,8 +63,7 @@ class ClsConfigs:
     Parallax scrolling is a web site trend where the background content (i.e. an image) is moved at a different
     speed than the foreground content while scrolling.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       div.style.css.parallax("https://www.w3schools.com/howto/img_parallax.jpg")
@@ -90,8 +89,7 @@ class ClsConfigs:
     ------------
     Set the box shadow color.
 
-    Usage:
-    -----
+    Usage::
 
 
 
@@ -129,8 +127,7 @@ class ClsConfigs:
     ------------
     Add rounded border to the component.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -140,6 +137,7 @@ class ClsConfigs:
     self.component.style.add_classes.div.border_hover()
     self.component.style.css.border_radius = self.component.page.body.style.globals.font.size
     self.component.style.css.padding = padding
+    return self
 
   def doc(self, percent=5, max_width=650, padding=True, background=None):
     """
@@ -148,8 +146,7 @@ class ClsConfigs:
 
     TODO: Find way to set the container to the middle of the page.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -170,3 +167,4 @@ class ClsConfigs:
     self.component.page.body.style.css.padding_left = "%s%%" % percent
     self.component.page.body.style.css.padding_right = "%s%%" % percent
     self.component.page.body.style.css.background = self.component.page.theme.greys[2]
+    return self

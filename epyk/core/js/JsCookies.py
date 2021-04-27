@@ -44,7 +44,7 @@ class JsCookies:
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param jsData: String. Optional. A String corresponding to a JavaScript object.
     :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
     :param jsResultFnc: Optional. A function used to transform the result.
     """

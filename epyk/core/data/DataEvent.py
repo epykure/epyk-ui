@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class DataConfig(object):
+class DataConfig:
 
   def __getitem__(self, key):
     from epyk.core.js.primitives import JsObjects
@@ -25,8 +25,8 @@ class DataConfig(object):
 
     Attributes:
     ----------
-    :param k: String. THe alias of the cache, variable.
-    :param default: Object. Optional. The default value of the cache.
+    :param k: String. The alias of the cache, variable.
+    :param default: String. Object. Optional. The default value of the cache.
     :param page: Report. Optional. The page object.
     :param end_point: String. Optional. THe static end point for the configurations.
     """
@@ -54,7 +54,7 @@ class DataConfig(object):
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
 
-class TabulatorEvents(object):
+class TabulatorEvents:
 
   @property
   def row(self):
@@ -102,7 +102,7 @@ class TabulatorEvents(object):
     return JsTabulator.ColumnComponent(setVar=False, varName=None)
 
 
-class DataEvents(object):
+class DataEvents:
 
   @property
   def tabulator(self):
@@ -236,7 +236,7 @@ class DataEvents(object):
     return JsEvents.KeyboardEvent()
 
 
-class DataFile(object):
+class DataFile:
 
   def __init__(self, varName="value"):
     self.varName = varName
@@ -246,6 +246,10 @@ class DataFile(object):
     """
     Description:
     ------------
+    Get the filename.
+
+    Usage::
+
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -256,6 +260,10 @@ class DataFile(object):
     """
     Description:
     ------------
+    Get the file size.
+
+    Usage::
+
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -266,6 +274,10 @@ class DataFile(object):
     """
     Description:
     ------------
+    Get the last modified date for the file.
+
+    Usage::
+
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -276,6 +288,10 @@ class DataFile(object):
     """
     Description:
     ------------
+    Get the last modified date for the file.
+
+    Usage::
+
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -296,13 +312,18 @@ class DataFile(object):
     """
     Description:
     ------------
+    Get file description (name, size and date).
+
+    Usage::
+
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {'varName': self.varName, 'dt': self.toISOString})
+    return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {
+      'varName': self.varName, 'dt': self.toISOString})
 
 
-class DataLoops(object):
+class DataLoops:
 
   @property
   def value(self):
@@ -312,6 +333,10 @@ class DataLoops(object):
     The value returned by forEach statement.
 
     Note. For nested loop make sure you store the important information in new variable names.
+
+    Usage::
+
+
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObject.JsObject.get("value")
@@ -321,6 +346,10 @@ class DataLoops(object):
     """
     Description:
     -----------
+
+    Usage::
+
+
     """
     from epyk.core.js.objects import JsNodeDom
     return JsNodeDom.JsDoms.new(varName="value", setVar=False)
@@ -330,6 +359,10 @@ class DataLoops(object):
     """
     Description:
     -----------
+
+    Usage::
+
+
     """
     from epyk.core.js.objects import JsNodeDom
     return JsNodeDom.JsDoms.new(varName="elt", setVar=False)
@@ -339,7 +372,11 @@ class DataLoops(object):
     """
     Description:
     ------------
-    The index value return in loop statement
+    The index value return in loop statement.
+
+    Usage::
+
+
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsNumber.JsNumber.get("index")
@@ -349,23 +386,25 @@ class DataLoops(object):
     return DataFile()
 
 
-class DataPrimitives(object):
+class DataPrimitives:
 
   def list(self, data=None, name=None):
     """
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param data: List. The Python object used to feed the list
-    :param name: String. The variable name used on the JavaScript
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsArray.JsArray(data, varName=name, setVar=setVar)
+      return JsObjects.JsArray.JsArray(data, varName=name, setVar=True if name is not None else False)
 
     return JsObjects.JsArray.JsArray.get(name)
 
@@ -374,16 +413,17 @@ class DataPrimitives(object):
     Description:
     -----------
 
+    Usage::
+
     Attributes:
     ----------
-    :param data:
-    :param name: String. The variable name used on the JavaScript
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsObject.JsObject(data, varName=name, setVar=setVar)
+      return JsObjects.JsObject.JsObject(data, varName=name, setVar=True if name is not None else False)
 
     return JsObjects.JsObject.JsObject.get(name)
 
@@ -392,16 +432,18 @@ class DataPrimitives(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param data:
-    :param name: String. The variable name used on the JavaScript
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsString.JsString(data, varName=name, setVar=setVar)
+      return JsObjects.JsString.JsString(data, varName=name, setVar=True if name is not None else False)
 
     return JsObjects.JsString.JsString.get(name)
 
@@ -410,16 +452,18 @@ class DataPrimitives(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param data:
-    :param name: String. The variable name used on the JavaScript
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=setVar)
+      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=True if name is not None else False)
 
     return JsObjects.JsNumber.JsNumber.get(name)
 
@@ -428,16 +472,18 @@ class DataPrimitives(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param data:
-    :param name: String. The variable name used on the JavaScript
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=setVar)
+      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=True if name is not None else False)
 
     return JsObjects.JsNumber.JsNumber.get(name)
 
@@ -446,16 +492,18 @@ class DataPrimitives(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param data:
-    :param name:
+    :param data: List. Optional. The Python object used to feed the list.
+    :param name: String. Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      setVar = True if name is not None else False
-      return JsObjects.JsDate.JsDate(data, varName=name, setVar=setVar)
+      return JsObjects.JsDate.JsDate(data, varName=name, setVar=True if name is not None else False)
 
     if data is None and name is None:
       return JsObjects.JsDate.JsDate(data, varName=name, setVar=False)

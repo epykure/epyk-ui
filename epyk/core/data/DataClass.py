@@ -280,7 +280,7 @@ class DataEnumMulti:
 
     Attributes:
     ----------
-    :param value: String. The value to be set
+    :param value: String. The value to be set.
     """
     self.__value.add(value)
 

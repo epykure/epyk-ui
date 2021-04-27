@@ -21,6 +21,19 @@ class NavBar(Attrs):
 
 
 class Footer(Attrs):
+  """
+  CSS pre defined properties for the Footer.
+
+  CSS Properties:
+
+    display: block
+    margin: 0
+    vertical-align: bottom
+    left: 0
+    padding: 0 2px 0 2px
+    bottom: 0
+    z-index: 10
+  """
 
   def __init__(self, component):
     super(Footer, self).__init__(component)

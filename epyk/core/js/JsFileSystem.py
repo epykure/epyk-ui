@@ -8,8 +8,8 @@ Documentation:
 from epyk.core.js import JsUtils
 
 
-class JsFileSystem(object):
-  class __internal(object):
+class JsFileSystem:
+  class __internal:
     _context = {}
 
   def __init__(self, src=None):

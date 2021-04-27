@@ -16,6 +16,9 @@ class ClassVisTimeline(GrpCls.ClassHtml):
     """
     Description:
     -----------
+    Link to all the CSS classes for Charts and add the vis_items CSS class.
+
+    :rtype: Classes.CatalogChart.CatalogChart
     """
     if self._css_vis_items is None:
       self._css_vis_items = Classes.CatalogChart.CatalogChart(
@@ -27,6 +30,9 @@ class ClassVisTimeline(GrpCls.ClassHtml):
     """
     Description:
     -----------
+    Link to all the CSS classes for Charts and add the vis_items overflow CSS class.
+
+    :rtype: Classes.CatalogChart.CatalogChart
     """
     if self._css_vis_items_overflow is None:
       self._css_vis_items_overflow = Classes.CatalogChart.CatalogChart(

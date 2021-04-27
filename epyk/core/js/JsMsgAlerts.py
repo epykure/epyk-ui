@@ -15,7 +15,12 @@ class Msg:
     """
     Description:
     ------------
-    This function will display a popup message using the key status from the service return
+    This function will display a popup message using the key status from the service return.
+
+    Usage::
+
+      page.js.msg.status()
+      page.js.msg.status(200, {"color": "red"})
 
     Attributes:
     ----------
@@ -51,6 +56,10 @@ class Msg:
     ------------
     Display a popup message close to the mouse.
 
+    Usage::
+
+      page.js.msg.mouse("This is a message")
+
     Attributes:
     ----------
     :param content: String. The content of the popup.
@@ -78,6 +87,10 @@ class Msg:
     Description:
     ------------
     Display a text message from a Javascript event for a specific period of time.
+
+    Usage::
+
+      page.js.msg.text("This is a message")
 
     Attributes:
     ----------
@@ -115,12 +128,14 @@ class Msg:
     Description:
     ------------
 
+    Usage::
+
 
     Attributes:
     ----------
-    :param value: Integer
-    :param content: String. Optional. The content of the popup
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param value: Integer.
+    :param content: String. Optional. The content of the popup.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                   "bottom": "40px", 'right': "10px"}
@@ -156,9 +171,7 @@ class Msg:
         }
       %s
       if(currentVal == 0){
-        document.body.removeChild(window['globalPoopup']);
-        window['globalPoopup'] = undefined;
-      }
+        document.body.removeChild(window['globalPoopup']); window['globalPoopup'] = undefined}
       })(event, %s, %s)''' % (
       JsNodeDom.JsDoms.get("window['globalPoopup']").css(dflt_attrs).r, value, JsUtils.jsConvertData(content, None))
 
@@ -167,12 +180,13 @@ class Msg:
     Description:
     ------------
 
+    Usage::
 
     Attributes:
     ----------
     :param content: String. The content of the popup.
     :param fixed: Boolean. Optional.
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px",
                   'border-radius': "5px", "bottom": "10px", 'right': "10px"}
@@ -203,12 +217,14 @@ class Msg:
     Description:
     ------------
 
+    Usage::
+
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param timer: Number. Optional. The time the popup will be displayed
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param content: String. The content of the popup.
+    :param timer: Number. Optional. The time the popup will be displayed.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
                   "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
@@ -243,12 +259,14 @@ class Msg:
     Description:
     ------------
 
+    Usage::
+
 
     Attributes:
     ----------
-    :param content: String. The content of the popup
-    :param timer: Number. Optional. The time the popup will be displayed
-    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup
+    :param content: String. The content of the popup.
+    :param timer: Number. Optional. The time the popup will be displayed.
+    :param cssAttrs: Dictionary. Optional. The CSS attributes for the popup.
     """
     dflt_attrs = {"position": "absolute", "padding": "10px", "bottom": "0", "width": '100%', 'background': 'pink'}
     if cssAttrs is not None:
@@ -270,7 +288,6 @@ class Msg:
         popupContent.innerHTML = content;
         popup.appendChild(popupContent); document.body.appendChild(popup);
         if(%(timer)s != null){
-          setTimeout(function(){ document.body.removeChild(popup); }, %(timer)s);
-        }
+          setTimeout(function(){ document.body.removeChild(popup); }, %(timer)s)}
       })(event, %(content)s)''' % {'dom': JsNodeDom.JsDoms.get("popup").css(dflt_attrs).r, 'timer': timer,
                                    'content': JsUtils.jsConvertData(content, None)}

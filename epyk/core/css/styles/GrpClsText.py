@@ -14,6 +14,10 @@ class ContentTable(GrpCls.ClassHtml):
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.color = "red"
+
     :rtype: Commons
     """
     if self._css_struct is None:
@@ -28,7 +32,7 @@ class ContentTable(GrpCls.ClassHtml):
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
-    :rtype: Classes.CatalogInput.CatalogInput
+    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_class is None:
       self._css_class = Classes.CatalogTable.CatalogTable(

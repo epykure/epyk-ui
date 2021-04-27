@@ -18,7 +18,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_bubble is None:
       self._css_bubble = Classes.CatalogDiv.CatalogDiv(self.component.page, self.classList['other']).bubble_container()
@@ -30,7 +30,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_bubble_content is None:
       self._css_bubble_content = Classes.CatalogDiv.CatalogDiv(
@@ -43,7 +43,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_bubble_arrow is None:
       self._css_bubble_arrow = Classes.CatalogDiv.CatalogDiv(

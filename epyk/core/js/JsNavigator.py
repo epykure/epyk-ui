@@ -24,7 +24,7 @@ class JsGeolocation:
       https://www.w3schools.com/html/html5_geolocation.asp
       https://developer.kaiostech.com/api/geolocation/getposition
 
-    :param callbackFnc: A callback function that takes a Position object as its sole input parameter.
+    :param callbackFnc: String. A callback function that takes a Position object as its sole input parameter.
     :param errorFnc: String. Optional. An callback func that takes a PositionError object as its sole input parameter.
     :param options: Dictionary. Optional. An optional PositionOptions object.
     """
@@ -48,7 +48,7 @@ class JsGeolocation:
 
       https://www.w3schools.com/html/html5_geolocation.asp
 
-    :param callbackFnc: A callback function that takes a Position object as an input parameter.
+    :param callbackFnc: String. A callback function that takes a Position object as an input parameter.
     :param watchId: The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.
     :param errorFnc: Optional An optional callback function that takes a PositionError object as an input parameter.
     :param options: Optional An optional PositionOptions object that provides configuration options for the location watch.

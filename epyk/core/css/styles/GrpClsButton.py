@@ -14,6 +14,10 @@ class ClassButton(GrpCls.ClassHtml):
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid red"
+
     :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
@@ -27,6 +31,10 @@ class ClassButton(GrpCls.ClassHtml):
     -----------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
+
+    Usage::
+
+      self.css_class.important()
 
     :rtype: Classes.CatalogButton.CatalogButton
     """
@@ -49,6 +57,10 @@ class ClassBadge(GrpCls.ClassHtml):
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.background = "white"
+
     :rtype: AttrClsButtons.AttrBadge
     """
     if self._css_struct is None:
@@ -64,6 +76,10 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
     Description:
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
+
+    Usage::
+
+      self.css.color = "red"
 
     :rtype: AttrClsButtons.AttrButton
     """

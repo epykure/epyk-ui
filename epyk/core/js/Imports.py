@@ -36,8 +36,6 @@ def requires(name, reason='Missing Package', install=None, package=None, raise_e
   """
   Description:
   ------------
-  System module
-
   Import the necessary external packages and provide explicit message to find a way to solve this error message.
   This method should also explain why this module is required to make sure this is really expected to get an error.
 
@@ -105,10 +103,11 @@ def load_package(package_name, pip_attrs=None, action='install'):
   Description:
   ------------
   Force the package to be installed manually to the currently python distribution.
-  This will run a pip command to the running python set up
+  This will run a pip command to the running python set up.
 
-  Example
-  load_package("pandas")
+  Usage::
+
+    load_package("pandas")
 
   Related Pages:
 
@@ -116,9 +115,9 @@ def load_package(package_name, pip_attrs=None, action='install'):
 
   Attributes:
   ----------
-  :param package_name: The external package reference (e.g. pandas)
-  :param pip_attrs: Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/
-  :param action: Optional. The pip command (default install)
+  :param package_name: String. The external package reference (e.g. pandas).
+  :param pip_attrs: List. Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/.
+  :param action: String. Optional. The pip command (default install).
   """
   import subprocess
 
@@ -134,13 +133,14 @@ def installed_packages():
   """
   Description:
   ------------
-  Returns the list of packages installed on the running Python distribution
+  Returns the list of packages installed on the running Python distribution.
 
   This will require an internet connection as it will run the pip command behind the scene.
   It will return in the console a table with the status of the obsolescence of all the python packages.
 
-  Example
-  installed_packages()
+  Usage::
+
+    installed_packages()
   """
   import subprocess
   subprocess.call(["pip", 'list', '-o'])
@@ -1852,9 +1852,6 @@ def script_version(alias, script_details, with_prefix=False):
   Return the script version number with or without prefix.
   This will ensure a standard way to get the version number for a given CSS or JavaScript script in the framework.
 
-  Usage:
-  -----
-
   Attributes:
   ----------
   :param alias: String. The package reference alias in the framework and in NPM.
@@ -1887,8 +1884,9 @@ def script_cdnjs_path(alias, script_details, with_prefix=False):
 
   Having script copied locally will speed up the loading of the page and also will ensure a run offline.
 
-  Usage:
-  -----
+  Usage::
+
+
 
   Attributes:
   ----------
@@ -1906,6 +1904,9 @@ def script_npm_path(alias, script_details, static_path, with_prefix=False):
   """
   Description:
   -----------
+
+  Usage::
+
 
   Attributes:
   ----------
@@ -1930,8 +1931,14 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
   ------------
   Function to extend the internal CSS and JS registered modules.
 
+  Usage::
+
+
   Related Pages:
   --------------
+
+  Attributes:
+  ----------
   :param reference: String. The internal reference in the framework.
   :param module_path: List of tuple. The different modules and location.
   :param version: String. The version number. Can be an internal module reference to point to follow its version number.
@@ -1957,8 +1964,12 @@ def extend_imports(extension):
   ------------
   Hook to extend the imports in the centralised Import module.
   The packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
-  simplicity
+  simplicity.
 
+  Usage::
+
+  Attributes:
+  ----------
   :param extension: Dictionary. The list of packages to be added grouped by alias
   """
   global CSS_IMPORTS, JS_IMPORTS
@@ -2059,8 +2070,7 @@ class ImportModule:
     -----------
     Get the list of external files used for this package.
 
-    Usage:
-    -----
+    Usage::
 
       pkgs = page.imports().pkgs
       pkgs.tabulator.version = "4.8.7"
@@ -2072,11 +2082,10 @@ class ImportModule:
     """
     Description:
     -----------
-    Just change the overriden flag of this package to ensure it will not be changed by the set_local method.
+    Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
     Indeed this method will not impact any modules with this flag set to True.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self.overriden = True
@@ -2088,8 +2097,7 @@ class ImportModule:
     Route the package to the local path.
     Check first of the modules exist and raise an error otherwise.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -2130,8 +2138,7 @@ class ImportPackages:
     Generic way to retrieve packages from the framework.
     This is a shortcut to change any properties for the package (version, path...).
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -2149,6 +2156,9 @@ class ImportPackages:
 
     TODO: Add the split of packages
 
+    Usage::
+
+
     Related Pages:
 
       http://visjs.org
@@ -2164,6 +2174,9 @@ class ImportPackages:
 
     TODO: Add the split of packages
 
+    Usage::
+
+
     Related Pages:
 
       https://d3js.org/
@@ -2177,6 +2190,8 @@ class ImportPackages:
     ------------
     dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
     large multi-dimensional datasets.
+
+    Usage::
 
     Related Pages:
 
@@ -2192,6 +2207,9 @@ class ImportPackages:
     This project is an attempt to build re-usable charts and chart components for d3.js without taking away
     the power that d3.js gives you.
 
+    Usage::
+
+
     Related Pages:
 
       http://nvd3.org/
@@ -2204,6 +2222,9 @@ class ImportPackages:
     Description:
     ------------
     C3.js D3-based reusable chart library.
+
+    Usage::
+
 
     Related Pages:
 
@@ -2218,6 +2239,9 @@ class ImportPackages:
     ------------
     Re-usable, easy interface JavaScript chart library, based on D3 v4+.
 
+    Usage::
+
+
     Related Pages:
 
       https://naver.github.io/billboard.js/
@@ -2230,6 +2254,9 @@ class ImportPackages:
     Description:
     ------------
     Simple yet flexible JavaScript charting for designers & developers.
+
+    Usage::
+
 
     Related Pages:
 
@@ -2244,6 +2271,9 @@ class ImportPackages:
     ------------
     Fast Multidimensional Filtering for Coordinated Views.
 
+    Usage::
+
+
     Related Pages:
 
       http://square.github.io/crossfilter
@@ -2256,6 +2286,9 @@ class ImportPackages:
     Description:
     ------------
     Modern & Interactive Open-source Charts.
+
+    Usage::
+
 
     Related Pages:
 
@@ -2270,6 +2303,9 @@ class ImportPackages:
     ------------
     Plotly JavaScript Open Source Graphing Library.
 
+    Usage::
+
+
     Related Pages:
 
       https://plot.ly/javascript/
@@ -2282,6 +2318,9 @@ class ImportPackages:
     Description:
     ------------
     The Best JavaScript Grid in the World.
+
+    Usage::
+
 
     Related Pages:
 
@@ -2296,6 +2335,9 @@ class ImportPackages:
     ------------
     The most popular front-end framework for developing responsive, mobile first projects on the web.
 
+    Usage::
+
+
     Related Pages:
 
       https://getbootstrap.com/
@@ -2308,6 +2350,10 @@ class ImportPackages:
     Description:
     ------------
     JavaScript library for DOM operations.
+
+    Usage::
+
+
 
     Related Pages:
 
@@ -2322,6 +2368,10 @@ class ImportPackages:
     ------------
     jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery
     JavaScript Library.
+
+    Usage::
+
+
 
     Related Pages:
 
@@ -2725,7 +2775,7 @@ class ImportManager:
     ------------
     Add package to the page external required modules.
 
-    Usage:
+    Usage::
 
     Attributes:
     ----------
@@ -2743,7 +2793,7 @@ class ImportManager:
     ------------
     Retrieve all the mandatory requirements required to display the final HTML page.
 
-    Usage:
+    Usage::
 
       print(page.imports().requirements)
     """
@@ -2759,8 +2809,7 @@ class ImportManager:
     Return the list of modules for a given entry.
     This will be used recursively to resolve all the dependencies.
 
-    Usage:
-    -----
+    Usage::
 
       modules = collections.OrderedDict()
       ImportManager().getModules(modules, 'c3')
@@ -2798,8 +2847,7 @@ class ImportManager:
     ------------
     Set the list pf required modules for a given alias to the modules list.
 
-    Usage:
-    -----
+    Usage::
 
       deps = []
       page.imports.getReq("c3", deps)
@@ -2846,8 +2894,7 @@ class ImportManager:
     ------------
     Remove the underlying imports to avoid duplicated entries.
 
-    Usage:
-    -----
+    Usage::
 
       >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
     ['jquery', 'd3', 'c3']
@@ -2880,8 +2927,7 @@ class ImportManager:
     ------------
     Return the list of CSS modules to add to the header.
 
-    Usage:
-    -----
+    Usage::
 
       >>> ImportManager().cssResolve(['c3'])
     '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
@@ -2932,16 +2978,15 @@ class ImportManager:
     """
     Description:
     ------------
-    Retrieve the list of CSS dependencies URL from a header
+    Retrieve the list of CSS dependencies URL from a header.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
-    :param css_str: String. The CSS String in the page
+    :param css_str: String. The CSS String in the page.
 
-    :return: A Python list with all the CSS external URL to be imported
+    :return: A Python list with all the CSS external URL to be imported.
     """
     return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
@@ -2951,8 +2996,7 @@ class ImportManager:
     ------------
     Return the list of Javascript modules to add to the header.
 
-    Usage:
-    -----
+    Usage::
 
       >>> ImportManager().jsResolve(['c3'])
     '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
@@ -3000,16 +3044,15 @@ class ImportManager:
     """
     Description:
     ------------
-    Retrieve the list of Javascript dependencies URL from a header
+    Retrieve the list of Javascript dependencies URL from a header.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
     :param js_str: String. The Javascript String in the page.
 
-    :return: A Python list with all the Javascript external URL to be imported
+    :return: A Python list with all the Javascript external URL to be imported.
     """
     return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', js_str)
 
@@ -3017,20 +3060,19 @@ class ImportManager:
     """
     Description:
     ------------
-    retrieve the package definition from the list of module aliases
+    retrieve the package definition from the list of module aliases.
 
-    Usage:
-    -----
+    Usage::
 
       >>> ImportManager().getFiles(['c3'], ['c3'])
     f['css'][0]['file']['script']
 
     Attributes:
     ----------
-    :param cssAlias: List. An array with the list of aliases for the CSS external packages
-    :param jsAlias: List. An array with the list of aliases for the Js external packages
+    :param cssAlias: List. An array with the list of aliases for the CSS external packages.
+    :param jsAlias: List. An array with the list of aliases for the Js external packages.
 
-    :return: A dictionary with the CSS and JS files definition
+    :return: A dictionary with the CSS and JS files definition.
     """
     files = {'css': [], 'js': []}
     mod_css, mod_js = {}, {}
@@ -3063,8 +3105,7 @@ class ImportManager:
 
     If split is True the generated css file will be not included.
 
-    Usage:
-    -----
+    Usage::
 
       print(page.imports.cssGetAll())
     """
@@ -3081,8 +3122,7 @@ class ImportManager:
 
     If split is True the generated JS file will be not included.
 
-    Usage:
-    -----
+    Usage::
 
       print(page.imports.jsGetAll())
     """
@@ -3170,8 +3210,7 @@ class ImportManager:
     ------------
     Download a full package (CSS and JS) locally for a server or full offline mode.
 
-    Usage:
-    -----
+    Usage::
 
       Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
@@ -3271,8 +3310,7 @@ class ImportManager:
 
     This will change the Import important to the Python env.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -3292,8 +3330,7 @@ class ImportManager:
     Add a new package or update an existing one with new parameters.
     Only few parameters are available here in order to limit the changes.
 
-    Usage:
-    -----
+    Usage::
 
       i.addPackage('test',
       {
@@ -3378,8 +3415,7 @@ class ImportManager:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -3446,8 +3482,7 @@ class ImportManager:
     ------------
     Show all the underlying packages used in a report or available in the framework.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -3483,8 +3518,7 @@ class ImportManager:
 
     TODO: Add the use of the API Key.
 
-    Usage:
-    -----
+    Usage::
 
       page.imports.google_products(['charts'])
       page.imports.google_products(['maps'])
@@ -3516,8 +3550,7 @@ class ImportManager:
     Short circuit the import mechanism and retrieve the selected ones from a local static path.
     This could help on the debugging and the improvement of the packages before submitting them for review.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

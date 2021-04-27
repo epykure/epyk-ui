@@ -12,6 +12,10 @@ class ClassIcon(GrpCls.ClassHtml):
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrClsImage.AttrIcon
     """
     if self._css_struct is None:

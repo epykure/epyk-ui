@@ -29,11 +29,17 @@ class Theme:
     """
     Description:
     ------------
+    Get the base color from the theme.
+    The base color can change and it is defined by the variable self.index.
+
+    Usage::
+
+      base_color = page.theme.notch()
 
     Attributes:
     ----------
     :param value: Integer. Optional. The number of notch from the centered index.
-    :param step: Integer. Optional The value of a move (default 1)
+    :param step: Integer. Optional The value of a move (default 1).
     """
     step = step or self.step
     if value is not None:
@@ -46,7 +52,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the white color from the theme.
 
+    Usage::
+
+      color = page.theme.white
     """
     return self.__colors["greys"][0]
 
@@ -55,7 +65,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the black color from the theme.
 
+    Usage::
+
+      color = page.theme.black
     """
     return self.__colors["greys"][-1]
 
@@ -64,7 +78,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the chart colors from the theme.
 
+    Usage::
+
+      colors = page.theme.charts
     """
     return self.__colors["charts"]
 
@@ -77,7 +95,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the theme colors scale.
 
+    Usage::
+
+      colors = page.theme.colors
     """
     if self.dark:
       return self.__colors["colors"][::-1]
@@ -93,7 +115,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the theme grey colors scale.
 
+    Usage::
+
+      colors = page.theme.greys
     """
     if self.dark:
       return self.__colors["greys"][::-1]
@@ -109,7 +135,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the warning colors. It is a tuple (light, dark).
 
+    Usage::
+
+      light, dark = page.theme.warning
     """
     return self.__colors["warning"]
 
@@ -122,7 +152,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the danger colors. It is a tuple (light, dark).
 
+    Usage::
+
+      light, dark = page.theme.danger
     """
     return self.__colors["danger"]
 
@@ -135,7 +169,11 @@ class Theme:
     """
     Description:
     ------------
+    Get the success colors. It is a tuple (light, dark).
 
+    Usage::
+
+      light, dark = page.theme.success
     """
     return self.__colors["success"]
 

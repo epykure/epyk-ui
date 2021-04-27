@@ -76,8 +76,8 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param key:
-    :param data:
+    :param key: String. The key attribute.
+    :param data: Object. The value to store.
     """
     self.setItem(key, data)
 
@@ -93,7 +93,7 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param item: String. The item name
+    :param item: String. The item name.
     """
     return self.getItem(item)
 
@@ -146,7 +146,7 @@ class JsLocalStorage:
     ----------
     :param key: String. Required. A String specifying the name of the key you want to get the value of.
 
-    :return: A String, representing the value of the specified key
+    :return: A String, representing the value of the specified key.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("localStorage.getItem(%s)" % key)
@@ -237,8 +237,8 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param key:
-    :param data:
+    :param key: String. The key attribute.
+    :param data: Object. The value to store.
     """
     self.setItem(key, data)
 
@@ -488,7 +488,7 @@ class JsHistory:
 
     Usage::
 
-      htmlObj.js.js.window.history.updateState(self.htmlCode, self.val)
+      component.js.window.history.updateState(self.htmlCode, self.val)
 
     Related Pages:
 
@@ -568,8 +568,7 @@ class JsWindowEvent:
     Usage::
 
       page.js.addOnLoad(
-      page.js.window.events.addContentLoaded(rptObj.js.alert("DOM fully loaded and parsed"))
-      )
+      page.js.window.events.addContentLoaded(rptObj.js.alert("DOM fully loaded and parsed")))
 
     Related Pages:
 
@@ -591,6 +590,7 @@ class JsWindowEvent:
     ----------
     :param jsFncs:
     :param windowId:
+    :param subEvents:
     """
     return self.addEventListener("click", jsFncs, windowId, subEvents)
 
@@ -608,6 +608,7 @@ class JsWindow:
   --------------
   https://www.w3schools.com/Jsref/obj_window.asp
   """
+
   @property
   def scrollY(self, windowId="window"):
     """
@@ -803,7 +804,6 @@ class JsWindow:
     ----------
     :param jsData:
     """
-
     if not isinstance(jsData, list):
       jsData = [jsData]
 

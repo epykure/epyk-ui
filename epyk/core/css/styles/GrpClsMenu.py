@@ -12,6 +12,10 @@ class ClassNav(GrpCls.ClassHtml):
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrClsMenu.NavBar
     """
     if self._css_struct is None:
@@ -28,6 +32,10 @@ class ClassFooter(GrpCls.ClassHtml):
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrClsMenu.Footer
     """
     if self._css_struct is None:
@@ -43,6 +51,10 @@ class ClassShortcut(GrpCls.ClassHtml):
     Description:
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
+
+    Usage::
+
+      self.css.border = "1px solid black"
 
     :rtype: AttrClsMenu.Footer
     """

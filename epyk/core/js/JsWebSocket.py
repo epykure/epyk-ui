@@ -84,13 +84,15 @@ class WebSocket:
     ------------
 
     """
-    return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {"varName": self._selector, "connect": self.__connect})
+    return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {
+      "varName": self._selector, "connect": self.__connect})
 
   def connect(self, url=None, port=None, protocol=None, from_config=None):
     """
     Description:
     ------------
-    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically attempt to open the connection to the server.
+    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically
+    attempt to open the connection to the server.
 
     Related Pages:
 
@@ -441,7 +443,8 @@ class ServerSentEvent:
     """
     Description:
     ------------
-    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically attempt to open the connection to the server.
+    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will
+    automatically attempt to open the connection to the server.
 
     Related Pages:
 

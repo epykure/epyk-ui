@@ -115,7 +115,8 @@ def inline(css_attrs):
 
   Related Pages:
   --------------
-  https://www.w3schools.com/css/css_howto.asp
+
+    https://www.w3schools.com/css/css_howto.asp
 
   Attributes:
   ----------

@@ -13,6 +13,10 @@ class ClassInput(GrpCls.ClassHtml):
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrInput.AttrInput
     """
     if self._css_struct is None:
@@ -48,6 +52,8 @@ class ClassInputDate(ClassInput):
     """
     Description:
     ------------
+    Add the datepicker class.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -60,6 +66,8 @@ class ClassInputDate(ClassInput):
     """
     Description:
     ------------
+    Add the predefined datepicker UI class.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -73,6 +81,8 @@ class ClassInputDate(ClassInput):
     """
     Description:
     ------------
+    Add the override on the date picker header class.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -95,6 +105,8 @@ class ClassInputTime(ClassInput):
     """
     Description:
     ------------
+    Add the predefined timepicker CSS class.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -107,6 +119,8 @@ class ClassInputTime(ClassInput):
     """
     Description:
     ------------
+    Add the predefined timepicker items CSS class.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -129,6 +143,7 @@ class ClassInputRange(GrpCls.ClassHtml):
     """
     Description:
     ------------
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
     """
@@ -142,6 +157,8 @@ class ClassInputRange(GrpCls.ClassHtml):
     """
     Description:
     ------------
+    Add the predefined timepicker CSS class for the slider thumb.
+    Class override on the existing one in the package.
 
     :rtype:Classes.CatalogInput.CatalogInput
     """
@@ -166,6 +183,8 @@ class ClassInputAutocomplete(ClassInput):
     """
     Description:
     ------------
+    Add the predefined autocomplete CSS style.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -179,6 +198,8 @@ class ClassInputAutocomplete(ClassInput):
     """
     Description:
     ------------
+    Change the CSS predefined style for the active item.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """
@@ -192,6 +213,7 @@ class ClassInputAutocomplete(ClassInput):
     """
     Description:
     ------------
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate
     """

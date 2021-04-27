@@ -38,6 +38,11 @@ class AttrSelect(Attrs):
 
   @property
   def background(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.component.attr.get("data-background")
 
   @background.setter
@@ -47,6 +52,11 @@ class AttrSelect(Attrs):
 
   @property
   def color(self):
+    """
+    Description:
+    ------------
+
+    """
     return self.component.attr.get("data-color")
 
   @color.setter
@@ -85,6 +95,10 @@ class ClassSelect(GrpCls.ClassHtml):
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrSelect
     """
     if self._css_struct is None:
@@ -97,7 +111,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogTree.CatalogDropDown
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_item_selected is None:
       self._css_item_selected = Classes.CatalogSelect.CatalogSelect(
@@ -110,7 +124,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_select is None:
       self._css_select = Classes.CatalogSelect.CatalogSelect(
@@ -123,7 +137,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_class_dt is None:
       self._css_class_dt = Classes.CatalogSelect.CatalogSelect(self.component.page, self.classList['main']).button()
@@ -135,7 +149,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_class_dt_ui is None:
       self._css_class_dt_ui = Classes.CatalogSelect.CatalogSelect(
@@ -148,7 +162,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogTree.CatalogDropDown
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_item_options is None:
       self._css_item_options = Classes.CatalogSelect.CatalogSelect(
@@ -161,7 +175,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogTree.CatalogDropDown
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_item_option is None:
       self._css_item_option = Classes.CatalogSelect.CatalogSelect(
@@ -174,7 +188,7 @@ class ClassSelect(GrpCls.ClassHtml):
     Description:
     ------------
 
-    :rtype: Classes.CatalogTree.CatalogDropDown
+    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_select_input is None:
       self._css_select_input = Classes.CatalogSelect.CatalogSelect(
@@ -321,13 +335,17 @@ class ClassItems(GrpCls.ClassHtml):
     Description:
     ------------
 
+    :return: self to allow the chaining.
     """
     self.classList['main'].add(CssStylesList.CssListItemsBorder(self.component.page))
+    return self
 
   def hover_background(self):
     """
     Description:
     ------------
 
+    :return: self to allow the chaining.
     """
     self.classList['main'].add(CssStylesList.CssListItemsBackground(self.component.page))
+    return self

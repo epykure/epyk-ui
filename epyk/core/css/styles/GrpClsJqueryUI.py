@@ -19,6 +19,10 @@ class ClassSlider(GrpCls.ClassHtml):
     -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
+    Usage::
+
+      self.css.border = "1px solid black"
+
     :rtype: AttrInput.AttrInput
     """
     if self._css_struct is None:
@@ -44,6 +48,8 @@ class ClassSlider(GrpCls.ClassHtml):
     """
     Description:
     -----------
+    Add the predefined CSS class style for the active slider.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
     """
@@ -56,6 +62,8 @@ class ClassSlider(GrpCls.ClassHtml):
     """
     Description:
     -----------
+    Add the predefined CSS class for the UI slider header.
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
     """
@@ -76,6 +84,7 @@ class ClassMenu(GrpCls.ClassHtml):
     """
     Description:
     -----------
+    Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
     """
