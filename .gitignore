@@ -41,7 +41,6 @@ Thumbs.db
 
 # Ignore test outs results
 doc/_build/*
-doc/report/*
 */tests/outs/*
 /tests/*
 
