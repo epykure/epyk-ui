@@ -348,6 +348,7 @@ class Menus:
 
     Usage::
 
+      page.ui.lists.
 
     Attributes:
     ----------
@@ -459,6 +460,8 @@ class Menus:
     ------------
 
     Usage::
+
+      page.ui.lists.
 
     Attributes:
     ----------
@@ -752,6 +755,7 @@ class Menus:
 
     Usage::
 
+      page.ui.lists.
 
     Attributes:
     ----------

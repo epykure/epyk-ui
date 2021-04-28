@@ -71,6 +71,8 @@ class Links:
 
     Usage::
 
+      page.ui.links.button()
+
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
@@ -187,6 +189,8 @@ class Links:
 
     Usage::
 
+        page.ui.links
+
     Attributes:
     ----------
     :param text: String. Optional. The string value to be displayed in the component
@@ -227,6 +231,8 @@ class Links:
     HTML component to upload files.
 
     Usage::
+
+      page.ui.links
 
     Attributes:
     ----------
@@ -272,6 +278,8 @@ class Links:
     HTML component to upload files.
 
     Usage::
+
+      page.ui.links
 
     Attributes:
     ----------

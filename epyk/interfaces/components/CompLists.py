@@ -191,6 +191,8 @@ class Lists:
 
     Usage::
 
+      page.ui.lists
+
     Attributes:
     ----------
     :param data:
@@ -216,6 +218,8 @@ class Lists:
     ------------
 
     Usage::
+
+      page.ui.lists
 
     Templates:
 
@@ -262,6 +266,8 @@ class Lists:
 
     Usage::
 
+      page.ui.lists
+
     Attributes:
     ----------
     :param records:
@@ -286,6 +292,8 @@ class Lists:
     Special list configuration for a list of box with a title with a text and a list of icons
 
     Usage::
+
+      page.ui.lists
 
     Templates:
 
@@ -345,6 +353,8 @@ class Lists:
 
     Usage::
 
+      page.ui.lists
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlList.List`
@@ -378,6 +388,8 @@ class Lists:
 
     Usage::
 
+      page.ui.lists
+
     Attributes:
     ----------
     :param data:
@@ -402,6 +414,8 @@ class Lists:
     ------------
 
     Usage::
+
+      page.ui.lists
 
     Underlying HTML Objects:
 
@@ -439,6 +453,8 @@ class Lists:
     ------------
 
     Usage::
+
+      page.ui.lists
 
     Underlying HTML Objects:
 
@@ -746,6 +762,8 @@ class Lists:
 
     Usage::
 
+      page.ui.lists
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
@@ -778,6 +796,8 @@ class Lists:
     ------------
 
     Usage::
+
+      page.ui.lists
 
     Attributes:
     ----------
