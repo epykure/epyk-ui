@@ -4,7 +4,7 @@
 from epyk.core.html import Defaults
 
 
-class Component(object):
+class Component:
 
   def __init__(self, html):
     self._html = html
@@ -16,8 +16,6 @@ class Component(object):
     Description:
     -----------
     Change the name of the file in the destination framework.
-
-    Usage::
 
     Attributes:
     ----------
@@ -33,9 +31,6 @@ class Component(object):
     Description:
     -----------
     Create a tag for the HTML component. This will be used by some JavaScript framework like Angular.
-
-    Usage::
-
     """
     return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
@@ -45,8 +40,6 @@ class Component(object):
     -----------
     Component export for an Angular app.
     This will allow to build apps directly from reports using each underlying components available in the framework.
-
-    Usage::
 
     Attributes:
     ----------

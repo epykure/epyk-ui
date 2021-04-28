@@ -33,8 +33,6 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-
-    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.checkbox.dom.varName)
 
@@ -86,7 +84,6 @@ class Tick(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, label: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -98,11 +95,10 @@ class Tick(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component.
-
-    Usage::
     """
     # the option variable is coming from the Tick class to get the icon details
-    return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
+    return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (
+      self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
 
 
 class SelectOption(JsHtml.JsHtmlRich):
@@ -170,8 +166,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the select Picker selected values.
-
-    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, text: %s, options_text: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -183,8 +177,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component.
-
-    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.val()" % self.jquery.varId)
 
@@ -194,8 +186,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component.
-
-    Usage::
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').text()" % self.jquery.varId)
 
@@ -205,8 +195,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component.
-
-    Usage::
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').index()" % self.jquery.varId)
 
@@ -216,8 +204,6 @@ class DomSelect(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get all the items in the selection box (selected or not).
-
-    Usage::
     """
     return JsObjects.JsObjects.get("(function(){var result = []; %s.find('option').each(function(i, dom){result.push(dom.innerText)}); return result})()" % self.jquery.varId)
 
@@ -279,8 +265,6 @@ class Radio(JsHtml.JsHtmlRich):
     Description:
     ------------
     Get the selected content from the Select component.
-
-    Usage::
     """
     # the option variable is coming from the Tick class to get the icon details
     return JsHtml.ContentFormatters(self._report, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self._src.dom.varName)
@@ -291,10 +275,9 @@ class Radio(JsHtml.JsHtmlRich):
     Description:
     ------------
     returns the checked DOM object.
-
-    Usage::
     """
-    return JsNodeDom.JsDoms.get("%s.querySelector('input:checked').parentNode" % self._src.dom.varName, report=self._report)
+    return JsNodeDom.JsDoms.get(
+      "%s.querySelector('input:checked').parentNode" % self._src.dom.varName, report=self._report)
 
   def select(self, value):
     """

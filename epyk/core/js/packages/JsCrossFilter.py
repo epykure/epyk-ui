@@ -62,7 +62,8 @@ class CrossFilter(JsPackage):
     :param column: String. The column name in the underlying data
     :param value: Object. The value
     """
-    return self.fnc_closure("remove(function (d,i) { return d[%s] === %s;})" % (JsUtils.jsConvertData(column, None), JsUtils.jsConvertData(value, None)))
+    return self.fnc_closure("remove(function (d,i) { return d[%s] === %s;})" % (
+      JsUtils.jsConvertData(column, None), JsUtils.jsConvertData(value, None)))
 
   def size(self):
     """
@@ -129,7 +130,8 @@ class CrossFilter(JsPackage):
         else:
           js_frg.append("+d[%s]" % JsUtils.jsConvertData(col_def[0], None))
       js_columns = "[%s]" % ", ".join(js_frg)
-    dim = Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (self.varId, js_columns), setVar=True)
+    dim = Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (
+      self.varId, js_columns), setVar=True)
     dim.cols = ools
     return dim
 
@@ -153,7 +155,8 @@ class Bissect(JsPackage):
     """
     Description:
     -----------
-    Similar to bisect.left, but returns an insertion point which comes after (to the right of) any existing entries of value in array.
+    Similar to bisect.left, but returns an insertion point which comes after (to the right of) any existing entries of
+    value in array.
 
     """
     raise Exception("Not implemented yet !")
@@ -175,7 +178,7 @@ class Heap(JsPackage):
 
     Attributes:
     ----------
-    :param value:
+    :param name:
     """
     return self.fnc("function(d) { return d['%s']; }" % name)
 
@@ -186,7 +189,8 @@ class Heapselect(JsPackage):
     """
     Description:
     -----------
-    Constructs a new heapselect function using the specified value accessor function, which must return a naturally-ordered value.
+    Constructs a new heapselect function using the specified value accessor function, which must return a
+    naturally-ordered value.
     For example, to create a heapselect function for objects based on their property
 
     Attributes:
@@ -202,7 +206,8 @@ class Insertionsort(JsPackage):
     """
     Description:
     -----------
-    Constructs a new insertionsort function using the specified value accessor function, which must return a naturally-ordered value.
+    Constructs a new insertionsort function using the specified value accessor function,
+    which must return a naturally-ordered value.
     For example, to create a insertionsort function for objects based on their property
 
     Attributes:
@@ -218,7 +223,8 @@ class Quicksort(JsPackage):
     """
     Description:
     -----------
-    Constructs a new quicksort function using the specified value accessor function, which must return a naturally-ordered value.
+    Constructs a new quicksort function using the specified value accessor function, which must return a
+    naturally-ordered value.
     For example, to create a quicksort function for objects based on their property
 
     Related Pages:
@@ -243,11 +249,15 @@ class Dimension(JsPackage):
     Related Pages:
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
+
+    Attributes:
+    ----------
+    :param jsData:
     """
     self._js.append("filter(%s)" % JsUtils.jsConvertData(jsData, None))
     return self
 
-  def filterExact(value):
+  def filterExact(self, value):
     """
     Description:
     -----------
@@ -266,7 +276,8 @@ class Dimension(JsPackage):
     """
     Description:
     -----------
-    Filters records such that this dimension's value is greater than or equal to range[0], and less than range[1], returning this dimension.
+    Filters records such that this dimension's value is greater than or equal to range[0], and less than range[1], r
+    eturning this dimension.
 
     Related Pages:
 
@@ -285,19 +296,24 @@ class Dimension(JsPackage):
     Description:
     -----------
 
-    :param column_index:
+    Attributes:
+    ----------
     :param value:
+    :param column:
     """
     if column is None:
-      return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d === %(value)s} )" % {'id': self.varId, 'value': JsUtils.jsConvertData(value, None)})
+      return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d === %(value)s} )" % {
+        'id': self.varId, 'value': JsUtils.jsConvertData(value, None)})
 
-    return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d[%(column)s] === %(value)s} )" % {'id': self.varId, 'column': self.cols[column], 'value': JsUtils.jsConvertData(value, None)})
+    return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d[%(column)s] === %(value)s} )" % {
+      'id': self.varId, 'column': self.cols[column], 'value': JsUtils.jsConvertData(value, None)})
 
   def filterFunction(function):
     """
     Description:
     -----------
-    ilters records such that the specified function returns truthy when called with this dimension's value, and returns this dimension.
+    ilters records such that the specified function returns truthy when called with this dimension's value,
+    and returns this dimension.
 
     Related Pages:
 
@@ -389,7 +405,8 @@ class Dimension(JsPackage):
     """
     Description:
     -----------
-    Constructs a new grouping for the given dimension, according to the specified groupValue function, which takes a dimension value as input and returns the corresponding rounded value.
+    Constructs a new grouping for the given dimension, according to the specified groupValue function,
+    which takes a dimension value as input and returns the corresponding rounded value.
 
     Related Pages:
 
@@ -402,7 +419,8 @@ class Dimension(JsPackage):
     """
     Description:
     -----------
-    Constructs a new grouping for the given dimension, according to the specified groupValue function, which takes a dimension value as input and returns the corresponding rounded value.
+    Constructs a new grouping for the given dimension, according to the specified groupValue function,
+    which takes a dimension value as input and returns the corresponding rounded value.
 
     Related Pages:
 
@@ -435,7 +453,8 @@ class Dimension(JsPackage):
     """
     Description:
     -----------
-    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index, and the upper bound hi is an exclusive index.
+    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index,
+    and the upper bound hi is an exclusive index.
     To sort the entire array, specify a lo of 0 and a hi of array.length.
 
     Related Pages:
@@ -452,7 +471,8 @@ class Dimension(JsPackage):
     """
     Description:
     -----------
-    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index, and the upper bound hi is an exclusive index.
+    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index,
+    and the upper bound hi is an exclusive index.
     To sort the entire array, specify a lo of 0 and a hi of array.length.
 
     Related Pages:
@@ -576,6 +596,8 @@ class Group(JsPackage):
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
+    Attributes:
+    ----------
     :param orderValue:
     """
     raise Exception("Not implemented yet !")
@@ -601,6 +623,8 @@ class Group(JsPackage):
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
+    Attributes:
+    ----------
     :param k:
     """
     if k is None:
@@ -612,7 +636,8 @@ class Group(JsPackage):
     """
     Description:
     -----------
-    Returns the array of all groups, in ascending natural order by key. Like top, the returned objects contain key and value attributes.
+    Returns the array of all groups, in ascending natural order by key. Like top, the returned objects contain key
+    and value attributes.
 
     Related Pages:
 
@@ -625,7 +650,8 @@ class Group(JsPackage):
     Description:
     -----------
     Removes this group from its dimension.
-    This group will no longer update when new filters are applied to the crossfilter, and it may be garbage collected if there are no other references to it remaining.
+    This group will no longer update when new filters are applied to the crossfilter,
+    and it may be garbage collected if there are no other references to it remaining.
 
     Related Pages:
 

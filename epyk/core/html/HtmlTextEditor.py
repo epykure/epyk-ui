@@ -34,8 +34,6 @@ class Console(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtmlEditor.Console
@@ -53,8 +51,6 @@ class Console(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    Usage::
 
     :rtype: OptText.OptionsConsole
     """
@@ -91,8 +87,6 @@ class Editor(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtmlEditor.Editor
@@ -106,8 +100,6 @@ class Editor(Html.Html):
     Description:
     ------------
     Add a bespoke action to the action panel.
-
-    Usage::
 
     Attributes:
     ----------
@@ -125,8 +117,6 @@ class Editor(Html.Html):
     Description:
     ------------
     Add an event action to the console object.
-
-    Usage::
 
     Attributes:
     ----------
@@ -148,8 +138,6 @@ class Editor(Html.Html):
     ------------
     Copy the content of the editor component to the clipboard.
 
-    Usage::
-
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
@@ -167,8 +155,6 @@ class Editor(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
-    Usage::
-
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
@@ -184,8 +170,6 @@ class Editor(Html.Html):
     Emtpy save button.
     This function will just add the icon on the actions panel.
 
-    Usage::
-
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
@@ -199,8 +183,6 @@ class Editor(Html.Html):
     Description:
     ------------
     Add an event action to the console object.
-
-    Usage::
 
     Attributes:
     ----------
@@ -243,8 +225,6 @@ class Cell(Html.Html):
     ------------
     Add a bespoke action to the action panel.
 
-    Usage::
-
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
@@ -262,8 +242,6 @@ class Cell(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
-    Usage::
-
     Attributes:
     ----------
     :param icon: String. The font awesome icon.
@@ -279,8 +257,6 @@ class Cell(Html.Html):
     ------------
     Emtpy save button.
     This function will just add the icon on the actions panel.
-
-    Usage::
 
     Attributes:
     ----------
@@ -320,8 +296,6 @@ class Code(Html.Html):
     ------------
     Property to the Style property of the component.
 
-    Usage::
-
     :rtype: GrpClsCodeMirror.Code
     """
     if self._styleObj is None:
@@ -335,8 +309,6 @@ class Code(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage::
-
     :rtype: OptCodeMirror.OptionsCode
     """
     return super().options
@@ -348,8 +320,6 @@ class Code(Html.Html):
     -----------
     A lot of CodeMirror features are only available through its API.
     Thus, you need to write code (or use add-ons) if you want to expose them to your users.
-
-    Usage::
 
     Related Pages:
 
@@ -368,8 +338,6 @@ class Code(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -459,9 +427,6 @@ class Code(Html.Html):
     Description:
     ------------
     Return the Javascript variable of the bespoke.
-
-    Usage::
-
     """
     return "editor_%s" % self.htmlCode
 
@@ -489,8 +454,6 @@ class Tags(Html.Html):
     Description:
     ------------
 
-    Usage::
-
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {
       "htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
@@ -499,8 +462,6 @@ class Tags(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {
@@ -564,8 +525,6 @@ class MarkdownReader(Html.Html):
     ------------
     Property to set all the input TimePicker component properties.
 
-    Usage::
-
     Related Pages:
 
       https://timepicker.co/options/
@@ -579,8 +538,6 @@ class MarkdownReader(Html.Html):
     Description:
     ------------
     Add automatically tooltips to the words.
-
-    Usage::
 
     Attributes:
     ----------

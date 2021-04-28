@@ -108,7 +108,9 @@ class CM(JsPackage):
     """
     Description:
     -----------
-    If your code does something to change the size of the editor element (window resizes are already listened for), or unhides it, you should probably follow up by calling this method to ensure CodeMirror is still looking as intended. See also the autorefresh addon.
+    If your code does something to change the size of the editor element (window resizes are already listened for),
+    or unhides it, you should probably follow up by calling this method to ensure CodeMirror is still looking as
+    intended. See also the autorefresh addon.
 
     Related Pages:
 
@@ -152,7 +154,6 @@ class CM(JsPackage):
     Description:
     -----------
 
-    :return:
     """
     return self.fnc_closure("undo()")
 
@@ -161,6 +162,5 @@ class CM(JsPackage):
     Description:
     -----------
 
-    :return:
     """
     return self.fnc_closure("redo()")

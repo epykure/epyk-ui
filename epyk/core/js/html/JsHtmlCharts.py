@@ -34,7 +34,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Return a Javascript val object
+    Return a Javascript val object.
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -59,7 +59,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Check if the component is in the visible part of the page (the viewpport)
+    Check if the component is in the visible part of the page (the viewpport).
 
     :rtype: JsObject.JsObject
 
@@ -75,7 +75,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Trigger some code when the component is visible on the visible part of the page (the viewpport)
+    Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
     Attributes:
     ----------
@@ -100,7 +100,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Link to the events attached to a Javascript DOM object
+    Link to the events attached to a Javascript DOM object.
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -111,7 +111,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Link to the JQuery functions
+    Link to the JQuery functions.
 
     :rtype: JsQuery.JQuery
     """
@@ -125,7 +125,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Wrapper to the D3 library
+    Wrapper to the D3 library.
 
     :rtype: JsD3.D3Select
     """
@@ -138,7 +138,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Interface to the main Javascript Classes and Primitives
+    Interface to the main Javascript Classes and Primitives.
     """
     return JsObjects.JsObjects(self)
 
@@ -147,7 +147,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     ------------
-    Specific formatters for the HTML components
+    Specific formatters for the HTML components.
     """
     return JsHtml.Formatters(self._report, self.content.toStr())
 
@@ -160,7 +160,7 @@ class ChartJs(JsCanvas.Canvas):
     Usage::
 
       button.js.style({"backgroundColor": 'red'})
-    button.js.style({"backgroundColor": None})
+      button.js.style({"backgroundColor": None})
 
     Related Pages:
 
@@ -184,12 +184,10 @@ class ChartJs(JsCanvas.Canvas):
     -----------
     Javascript Framework extension
 
-    Register a predefined Javascript function
-    This is only dedicated to specific Javascript transformation functions
+    Register a predefined Javascript function.
+    This is only dedicated to specific Javascript transformation functions.
 
-    Usage::
-
-      Attributes:
+    Attributes:
     ----------
     :param fncName: String. The function name
     :param jsFncs: String or List. The Javascript function definition
@@ -206,7 +204,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Hide the component
+    Hide the component.
 
     Usage::
 
@@ -222,7 +220,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Display the component
+    Display the component.
 
     Usage::
 
@@ -263,7 +261,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-    Select the content of the HTMl component
+    Select the content of the HTMl component.
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
@@ -276,7 +274,7 @@ class ChartJs(JsCanvas.Canvas):
     Usage::
 
       input.js.toggle()
-    input.js.toggle("background", "red", "blue")
+      input.js.toggle("background", "red", "blue")
 
     Related Pages:
 
@@ -302,7 +300,7 @@ class ChartJs(JsCanvas.Canvas):
     Usage::
 
       s.dom.highlight()
-    s.dom.highlight(css_attrs={"background": "red"}),
+      s.dom.highlight(css_attrs={"background": "red"}),
 
     Attributes:
     ----------
@@ -339,21 +337,21 @@ class ChartJs(JsCanvas.Canvas):
     Load during a Javascript event a component within the one using this method.
     This cannot be tested during the Python execution and should be tested in the browser.
 
-    Tip: It is possible to add a break point to debug in the browser by adding
+    Tip: It is possible to add a break point to debug in the browser by adding.
 
     Usage::
 
       d = page.ui.div().css({"border": "1px solid black"})
-    b = page.ui.button("test")
-    b.click([
-      page.js.console.debugger,
-      d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
-    ])
+      b = page.ui.button("test")
+      b.click([
+        page.js.console.debugger,
+        d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
+      ])
 
     Attributes:
     ----------
-    :param htmlObjs: List. The different HTML objects to be added to the component
-    :param append: Boolean. Mention if the component should replace or append the data
+    :param htmlObjs: List. The different HTML objects to be added to the component.
+    :param append: Boolean. Mention if the component should replace or append the data.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: The Javascript string to be added to the page

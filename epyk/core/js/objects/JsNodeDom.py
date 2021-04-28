@@ -88,7 +88,8 @@ class JsDomEvents:
     """
     Description:
     ------------
-    The event occurs when the content of a form element, the selection, or the checked state have changed (for <input>, <select>, and <textarea>)
+    The event occurs when the content of a form element, the selection, or the checked state have changed (for <input>,
+    <select>, and <textarea>)
 
     Usage::
 
@@ -469,20 +470,20 @@ class JsDomsTransforms:
     :param translateX: Number.
     :param translateY: Number.
     """
-    return "%s.style.transform = 'matrix(%s, %s, %s, %s, %s, %s)'" % (self.selector, scaleX, skewY, skewX, scaleY, translateX, translateY)
+    return "%s.style.transform = 'matrix(%s, %s, %s, %s, %s, %s)'" % (
+      self.selector, scaleX, skewY, skewX, scaleY, translateX, translateY)
 
   def translateX(self, x, unit='px'):
     """
     Description:
     ------------
-    The translateX() CSS function repositions an element horizontally on the 2D plane. Its result is a <transform-function> data type.
+    The translateX() CSS function repositions an element horizontally on the 2D plane. Its result is a
+    <transform-function> data type.
 
-    Usage::
-
-      Related Pages:
+    Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
-    https://www.w3schools.com/jsref/prop_style_transform.asp
+      https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
     ----------
@@ -495,7 +496,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The translateY() CSS function repositions an element vertically on the 2D plane. Its result is a <transform-function> data type.
+    The translateY() CSS function repositions an element vertically on the 2D plane. Its result is a
+    <transform-function> data type.
 
     Related Pages:
 
@@ -512,7 +514,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The translate() CSS function repositions an element in the horizontal and/or vertical directions. Its result is a <transform-function> data type.
+    The translate() CSS function repositions an element in the horizontal and/or vertical directions.
+    Its result is a <transform-function> data type.
 
     Related Pages:
 
@@ -568,7 +571,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The scaleX() CSS function defines a transformation that resizes an element along the x-axis (horizontally). Its result is a <transform-function> data type.
+    The scaleX() CSS function defines a transformation that resizes an element along the x-axis (horizontally).
+    Its result is a <transform-function> data type.
 
     Related Pages:
 
@@ -584,7 +588,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The scaleY() CSS function defines a transformation that resizes an element along the y-axis (vertically). Its result is a <transform-function> data type.
+    The scaleY() CSS function defines a transformation that resizes an element along the y-axis (vertically).
+    Its result is a <transform-function> data type.
 
     Related Pages:
 
@@ -600,7 +605,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The skew() CSS function defines a transformation that skews an element on the 2D plane. Its result is a <transform-function> data type.
+    The skew() CSS function defines a transformation that skews an element on the 2D plane.
+    Its result is a <transform-function> data type.
 
     Related Pages:
 
@@ -624,7 +630,7 @@ class JsDomsTransforms:
 
     Usage::
 
-      i.label.dom.transform.skewX(20),
+      i.label.dom.transform.skewX(20)
 
     Related Pages:
 
@@ -659,7 +665,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The rotate() CSS function defines a transformation that rotates an element around a fixed point on the 2D plane, without deforming it.
+    The rotate() CSS function defines a transformation that rotates an element around a fixed point on the 2D plane,
+    without deforming it.
     Its result is a <transform-function> data type.
 
     Usage::
@@ -681,7 +688,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The rotate3d() CSS function defines a transformation that rotates an element around a fixed axis in 3D space, without deforming it.
+    The rotate3d() CSS function defines a transformation that rotates an element around a fixed axis in 3D space,
+    without deforming it.
     Its result is a <transform-function> data type.
 
     Related Pages:
@@ -702,7 +710,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The rotateX() CSS function defines a transformation that rotates an element around the abscissa (horizontal axis) without deforming it.
+    The rotateX() CSS function defines a transformation that rotates an element around the abscissa (horizontal axis)
+    without deforming it.
     Its result is a <transform-function> data type.
 
     Related Pages:
@@ -720,7 +729,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The rotateY() CSS function defines a transformation that rotates an element around the ordinate (vertical axis) without deforming it.
+    The rotateY() CSS function defines a transformation that rotates an element around the ordinate (vertical axis)
+    without deforming it.
     Its result is a <transform-function> data type.
 
     Related Pages:
@@ -738,7 +748,8 @@ class JsDomsTransforms:
     """
     Description:
     ------------
-    The rotateZ() CSS function defines a transformation that rotates an element around the z-axis without deforming it. Its result is a <transform-function> data type.
+    The rotateZ() CSS function defines a transformation that rotates an element around the z-axis without deforming it.
+    Its result is a <transform-function> data type.
 
     Related Pages:
 
@@ -909,7 +920,8 @@ class JsClassList:
     The first parameter removes the specified class from an element, and returns false.
     If the class does not exist, it is added to the element, and the return value is true.
 
-    The optional second parameter is a Boolean value that forces the class to be added or removed, regardless of whether or not it already existed. For example:
+    The optional second parameter is a Boolean value that forces the class to be added or removed,
+    regardless of whether or not it already existed. For example:
 
     Remove a class: element.classList.toggle("classToRemove", false);
     Add a class: element.classList.toggle("classToAdd", true);
@@ -973,7 +985,8 @@ class JsDoms(JsObject.JsObject):
 
     :return: The Python Javascript Date primitive
     """
-    return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
+    return cls(
+      data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
 
   @property
   def parentNode(self):
@@ -982,7 +995,8 @@ class JsDoms(JsObject.JsObject):
     ------------
     The parentNode property returns the parent node of the specified node, as a Node object.
 
-    Note: In HTML, the document itself is the parent node of the HTML element, HEAD and BODY are child nodes of the HTML element.
+    Note: In HTML, the document itself is the parent node of the HTML element, HEAD and BODY are child nodes of
+    the HTML element.
 
     Related Pages:
 
@@ -1005,7 +1019,8 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+    as a static NodeList object.
 
     Related Pages:
 
@@ -1021,7 +1036,8 @@ class JsDoms(JsObject.JsObject):
     if varName is None:
       return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), isPyData=False)
 
-    return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
+    return JsArray.JsArray(
+      "%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
 
   def empty(self):
     """
@@ -1037,7 +1053,7 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Add CSS pre defined events from a dom object
+    Add CSS pre defined events from a dom object.
     """
     return JsDomEffects(self._report, self._src)
 
@@ -1052,7 +1068,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_style_transform.asp
-    https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
     """
     return JsDomsTransforms(self._report, self.varId)
 
@@ -1096,8 +1112,10 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Dispatches an Event at the specified EventTarget, (synchronously) invoking the affected EventListeners in the appropriate order.
-    The normal event processing rules (including the capturing and optional bubbling phase) also apply to events dispatched manually with dispatchEvent().
+    Dispatches an Event at the specified EventTarget, (synchronously) invoking the affected EventListeners in
+    the appropriate order.
+    The normal event processing rules (including the capturing and optional bubbling phase) also apply to events
+    dispatched manually with dispatchEvent().
 
     Attributes:
     ----------
@@ -1121,7 +1139,8 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param jsFncs: String or List. The Javascript functions
     """
-    self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
+    self._report._props.setdefault('js', {}).setdefault(
+      'onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
 
   def innerText(self, jsString=None, append=False, valType=None):
     """
@@ -1150,9 +1169,11 @@ class JsDoms(JsObject.JsObject):
 
     if append:
       if valType == int:
-        self._js.append("%s.innerText = parseInt(%s.innerText) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+        self._js.append("%s.innerText = parseInt(%s.innerText) + %s" % (
+          self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
       elif valType == float:
-        self._js.append("%s.innerText = parseFloat(%s.innerText) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+        self._js.append("%s.innerText = parseFloat(%s.innerText) + %s" % (
+          self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
       else:
         self._js.append("%s.innerText += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     else:
@@ -1224,9 +1245,11 @@ class JsDoms(JsObject.JsObject):
 
     if append:
       if valType == int:
-        self._js.append("%s.innerHTML = parseInt(%s.innerHTML) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+        self._js.append("%s.innerHTML = parseInt(%s.innerHTML) + %s" % (
+          self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
       elif valType == int:
-        self._js.append("%s.innerHTML = parseFloat(%s.innerHTML) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+        self._js.append("%s.innerHTML = parseFloat(%s.innerHTML) + %s" % (
+          self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
       else:
         self._js.append("%s.innerHTML += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     else:
@@ -1243,7 +1266,7 @@ class JsDoms(JsObject.JsObject):
     Usage::
 
       select.label.dom.attr("title", "Tooltip")
-    select.label.dom.attr({"title": "Tooltip"})
+      select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:
 
@@ -1290,7 +1313,8 @@ class JsDoms(JsObject.JsObject):
     :param attributename: Required. The name of the attribute you want to add
     :param attributevalue: Required. The value of the attribute you want to add
     """
-    self._js.append("%s.setAttribute('%s', %s)" % (self.varId, attributename, JsUtils.jsConvertData(attributevalue, None)))
+    self._js.append("%s.setAttribute('%s', %s)" % (
+      self.varId, attributename, JsUtils.jsConvertData(attributevalue, None)))
     return self
 
   def addClass(self, clsName, attrs=None, eventAttrs=None, extend=True):
@@ -1299,7 +1323,7 @@ class JsDoms(JsObject.JsObject):
     -----------
     Adds the specified class(es) to each element in the set of matched elements.
 
-    This function can either use an existing class or create one if the attrs or eventAttrs are defined
+    This function can either use an existing class or create one if the attrs or eventAttrs are defined.
 
     Usage::
 
@@ -1359,7 +1383,7 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     -----------
-    Replicate in plain Js the Jquery CSS function
+    Replicate in plain Js the Jquery CSS function.
 
     Usage::
 
@@ -1405,7 +1429,7 @@ class JsDoms(JsObject.JsObject):
 
     Usage::
 
-      rptObj.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
+      page.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
         'color': 'red', 'display': 'block'}).position()
 
     Attributes:
@@ -1428,7 +1452,7 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Toggle a transition
+    Toggle a transition.
 
     Related Pages:
 
@@ -1473,7 +1497,7 @@ class JsDoms(JsObject.JsObject):
     Usage::
 
       i.label.dom.transition('margin-left', '100px', 2, reverse=True),
-    i.label.dom.transition('color', 'red', 5, reverse=True),
+      i.label.dom.transition('color', 'red', 5, reverse=True),
 
     Related Pages:
 
@@ -1629,7 +1653,8 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels.
+    The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise,
+    it's the inner height of an element in pixels.
     It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
 
     Usage::
@@ -1690,7 +1715,7 @@ class JsDoms(JsObject.JsObject):
     Usage::
 
       select.dom.firstChild
-    select.dom.firstChild.css({"color": "yellow"})
+      select.dom.firstChild.css({"color": "yellow"})
 
     Related Pages:
 
@@ -1763,7 +1788,8 @@ class JsDoms(JsObject.JsObject):
 
     :return: A String, representing the specified attribute's value.
     """
-    return JsObject.JsObject("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
+    return JsObject.JsObject(
+      "%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
 
   def getAttributeNode(self, attributename):
     """
@@ -1809,7 +1835,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
-    https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
     """
     return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
 
@@ -1867,7 +1893,8 @@ class JsDoms(JsObject.JsObject):
     ------------
     The childNodes property returns a collection of a node's child nodes, as a NodeList object.
 
-    The nodes in the collection are sorted as they appear in the source code and can be accessed by index numbers. The index starts at 0.
+    The nodes in the collection are sorted as they appear in the source code and can be accessed by index numbers.
+    The index starts at 0.
 
     Related Pages:
 
@@ -1902,7 +1929,8 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
+    The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of
+    the offsetParent node.
 
     Related Pages:
 
@@ -1952,7 +1980,8 @@ class JsDoms(JsObject.JsObject):
       return JsString.JsString("%s.className" % self.varId, isPyData=False)
 
     # TODO fix this properly
-    return JsString.JsString("%s; %s.className = %s" % (self.toStr(), self.varId, JsUtils.jsConvertData(className, None)), isPyData=False)
+    return JsString.JsString("%s; %s.className = %s" % (
+      self.toStr(), self.varId, JsUtils.jsConvertData(className, None)), isPyData=False)
 
   def cloneNode(self, deep=True):
     """
@@ -1998,7 +2027,7 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Removes a child node from an element
+    Removes a child node from an element.
 
     Related Pages:
 
@@ -2119,7 +2148,8 @@ class JsDoms(JsObject.JsObject):
     ------------
     Function dedicated to DOM Canvas types.
 
-    The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
+    The HTMLCanvasElement.getContext() method returns a drawing context on the canvas,
+    or null if the context identifier is not supported.
 
     Related Pages:
 
@@ -2225,7 +2255,7 @@ class JsDomsList(JsArray.JsArray):
     Usage::
 
       select.label.dom.attr("title", "Tooltip")
-    select.label.dom.attr({"title": "Tooltip"})
+      select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:
 
@@ -2242,21 +2272,23 @@ class JsDomsList(JsArray.JsArray):
       for k, v in type.items():
         if k == "id":
           self._id = v
-        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (
+          self.varId, k, JsUtils.jsConvertData(v, None)))
     else:
       if type == "id":
         self._id = jsObject
-      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (
+        self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
   def __getitem__(self, index):
     """
     Description:
     ------------
-    Get the nth item corresponding to the name in the HTML page
+    Get the nth item corresponding to the name in the HTML page.
 
     Attributes:
     ----------
-    :param index: Integer. The index number of the item
+    :param index: Integer. The index number of the item.
     """
     return JsDoms.get("%s[%s]" % (self.toStr(), index))

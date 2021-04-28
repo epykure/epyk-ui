@@ -31,8 +31,6 @@ class FmtNumber:
     -----------
     The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_tofixed.asp
@@ -52,8 +50,6 @@ class FmtNumber:
     -----------
     The toPrecision() method formats a number to a specified length.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_toprecision.asp
@@ -72,8 +68,6 @@ class FmtNumber:
     Description:
     -----------
     The toExponential() method converts a number into an exponential notation.
-
-    Usage::
 
     Related Pages:
 
@@ -95,8 +89,6 @@ class Formatters:
     -----------
     Standard conversion to number.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_number.asp
@@ -110,8 +102,6 @@ class Formatters:
     -----------
     Convert to number using the accounting Javascript module.
 
-    Usage::
-
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
@@ -122,7 +112,8 @@ class Formatters:
     :param thousand_sep: String. Optional. The thousand symbol separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (self.selector, self.selector, digit, thousand_sep))
+    return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (
+      self.selector, self.selector, digit, thousand_sep))
 
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -130,8 +121,6 @@ class Formatters:
     Description:
     -----------
     Convert to number with a symbol using the accounting Javascript module.
-
-    Usage::
 
     Related Pages:
 
@@ -147,7 +136,8 @@ class Formatters:
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s, %s, %s, %s, %s)" % (self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
+    return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s, %s, %s, %s, %s)" % (
+      self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
 
 
 class ContentFormatters:
@@ -208,8 +198,6 @@ class ContentFormatters:
     -----------
     Convert to number using the accounting Javascript module.
 
-    Usage::
-
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
@@ -229,8 +217,6 @@ class ContentFormatters:
     ------------
     Convert to number with a symbol using the accounting Javascript module.
 
-    Usage::
-
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
@@ -245,7 +231,8 @@ class ContentFormatters:
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    return JsObjects.JsObjects.get("accounting.formatMoney(%s,%s, %s, %s, %s)" % (self.selector, symbol, digit, thousand_sep, decimal_sep))
+    return JsObjects.JsObjects.get("accounting.formatMoney(%s,%s, %s, %s, %s)" % (
+      self.selector, symbol, digit, thousand_sep, decimal_sep))
 
   @packageImport("accounting")
   def unformat(self):
@@ -253,8 +240,6 @@ class ContentFormatters:
     Description:
     ------------
     parse a value from any formatted number/currency string.
-
-    Usage::
 
     Related Pages:
 
@@ -268,8 +253,6 @@ class ContentFormatters:
     Description:
     ------------
     Standard conversion to number.
-
-    Usage::
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
@@ -279,8 +262,6 @@ class ContentFormatters:
     Description:
     ------------
     Standard conversion to string.
-
-    Usage::
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector, isPyData=False)
 
@@ -290,8 +271,6 @@ class ContentFormatters:
     Description:
     ------------
     Standard conversion to Date object.
-
-    Usage::
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
@@ -325,9 +304,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Return a Javascript val object.
-
-    Usage::
-
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -338,8 +314,6 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
-
-    Usage::
 
     :rtype: JsNodeDom.JsDomsList
     """
@@ -355,8 +329,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Check if the component is in the visible part of the page (the viewpport).
-
-    Usage::
 
     :rtype: JsObject.JsObject
 
@@ -374,8 +346,6 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The Javascript events.
@@ -387,8 +357,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Copy the component content to the clipboard.
-
-    Usage::
 
     Attributes:
     ----------
@@ -405,7 +373,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage::
     """
     return ContentFormatters(self._report, "%s.value" % self.varName)
 
@@ -414,7 +381,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage::
     """
     return '%s.value = ""' % self.varName
 
@@ -424,8 +390,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Link to the events attached to a Javascript DOM object.
-
-    Usage::
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -437,8 +401,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Link to the JQuery functions.
-
-    Usage::
 
     :rtype: JsQuery.JQuery
     """
@@ -454,8 +416,6 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Wrapper to the D3 library.
 
-    Usage::
-
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
@@ -468,8 +428,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Wrapper to the JqueryUI component.
-
-    Usage::
 
     :rtype: JsQueryUi.JQueryUI
     """
@@ -484,9 +442,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Interface to the main Javascript Classes and Primitives.
-
-    Usage::
-
     """
     return JsObjects.JsObjects(self)
 
@@ -496,8 +451,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Interface to CrossFilter package.
-
-    Usage::
 
     Related Pages:
 
@@ -511,8 +464,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
     Specific formatters for the HTML components.
-
-    Usage::
     """
     return Formatters(self._report, self.content.toStr())
 
@@ -551,8 +502,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
-
-    Usage::
 
     Attributes:
     ----------
@@ -622,8 +571,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3schools.com/cssref/pr_class_display.asp
 
-    Usage::
-
     Attributes:
     ----------
     :param data: Boolean. A flag to specify the display type show or None.
@@ -684,7 +631,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
       icon = page.web.bs.icons.danger()
       icon.style.css.invisble()
-
     """
     return self.css("visibility", "hidden").r
 
@@ -693,9 +639,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Select the content of the HTMl component.
-
-    Usage::
-
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
@@ -809,8 +752,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
     This will not change the original option object used during the first object creation.
 
-    Usage::
-
     Attributes:
     ----------
     :param options: Dictionary. Optional. The value to be changed.
@@ -833,8 +774,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Attributes:
     ----------
     :param event: String. The event to be triggered for the component.
-
-    :return:
     """
     return self.events.trigger(event)
 
@@ -847,9 +786,6 @@ class JsHtmlRich(JsHtml):
     Description:
     -----------
     Return the val object.
-
-    Usage::
-
     """
     values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
     return JsObjects.JsObjects.get(
@@ -860,8 +796,6 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     if hasattr(self.component.options, "markdown"):
@@ -879,8 +813,6 @@ class JsHtmlRich(JsHtml):
     Description:
     ------------
     Specific formatters for the HTML components.
-
-    Usage::
     """
     return Formatters(self._report, "%s.innerHTML" % self.varName)
 
@@ -889,8 +821,6 @@ class JsHtmlRich(JsHtml):
     Description:
     -----------
     Toggle (change) the content of the HTML component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -915,9 +845,6 @@ class JsHtmlRich(JsHtml):
     Description:
     -----------
     Select the content of the HTMl component.
-
-    Usage::
-
     """
     return JsObjects.JsObjects.get('''
      (function(node){
@@ -932,8 +859,6 @@ class JsHtmlRich(JsHtml):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -959,8 +884,6 @@ class JsHtmlRich(JsHtml):
     Description:
     ------------
     Empty the content of the HTML component using the innerHTML JavaScript property.
-
-    Usage::
     """
     return '%s.innerHTML = ""' % self.varName
 
@@ -973,8 +896,6 @@ class JsHtmlImg(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     """
     return ContentFormatters(self._report, "%s.src" % self.varName)
 
@@ -982,8 +903,6 @@ class JsHtmlImg(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1001,8 +920,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
       offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
@@ -1013,8 +930,6 @@ class JsHtmlButton(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
@@ -1027,7 +942,7 @@ class JsHtmlButton(JsHtml):
 
     Usage::
 
-      b = rptObj.ui.button("test")
+      b = component.ui.button("test")
       b.click([
         b.dom.loading(True),
         rptObj.js.window.setTimeout([
@@ -1053,8 +968,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param time:
@@ -1067,8 +980,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param flag: Boolean. Optional.
@@ -1080,8 +991,6 @@ class JsHtmlButton(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1104,8 +1013,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param not_allowed: Boolean. Optional.
@@ -1125,8 +1032,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     """
     return '%s.innerHTML = ""' % self.varName
 
@@ -1142,9 +1047,6 @@ class JsHtmlButtonChecks(JsHtml):
 
     This will return the current list status. Selected items but also the full content.
     It will return also the common parameters.
-
-    Usage::
-
     """
     return ""
 
@@ -1156,9 +1058,6 @@ class JsHtmlButtonChecks(JsHtml):
     Get the content of the list.
 
     This will return all the selected items in a list.
-
-    Usage::
-
     """
     return ""
 
@@ -1166,8 +1065,6 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return JsObjects.JsObjects.get('''
@@ -1181,8 +1078,6 @@ class JsHtmlButtonChecks(JsHtml):
 
     THis will add the item at the end of the list by default.
     By default the list will not add duplicated entries.
-
-    Usage::
 
     Attributes:
     ----------
@@ -1215,8 +1110,6 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
     Empty the list content.
-
-    Usage::
     """
     return '%s.empty()' % self.jquery.varId
 
@@ -1224,8 +1117,6 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1243,8 +1134,6 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1267,9 +1156,6 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
     Return the current value in the list.
-
-    Usage::
-
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
 
@@ -1277,8 +1163,6 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1303,8 +1187,6 @@ class JsHtmlButtonMenu(JsHtmlButton):
     Description:
     -----------
 
-    Usage::
-
     """
     return JsObjects.JsObjects.get('''
         {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
@@ -1315,8 +1197,6 @@ class JsHtmlButtonMenu(JsHtmlButton):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     check = self._src.options.icon_check.split(" ")[-1]
@@ -1331,8 +1211,6 @@ class JsHtmlIcon(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -1343,8 +1221,6 @@ class JsHtmlIcon(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return self._src.dom.getAttribute("class")
@@ -1388,9 +1264,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the standard value object with the fields (value, timestamp, offset).
-
-    Usage::
-
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
@@ -1401,9 +1274,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the values of the items in the list.
-
-    Usage::
-
     """
     return JsObjects.JsArray.JsArray.get('''
       (function(){
@@ -1417,9 +1287,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Return the class name of the list item.
-
-    Usage::
-
     """
     return self._src.dom.getAttribute("class")
 
@@ -1428,9 +1295,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Add a new item to the list.
-
-    Usage::
-
 
     Attributes:
     ----------
@@ -1476,9 +1340,6 @@ class JsHtmlList(JsHtml):
     Description:
     ------------
     Clear all the items in the list.
-
-    Usage::
-
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
 
@@ -1501,9 +1362,6 @@ class JsHtmlBackground(JsHtml):
     Description:
     -----------
 
-    Usage::
-
-
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
       self.htmlCode, self.content.toStr()))
@@ -1513,8 +1371,6 @@ class JsHtmlBackground(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return ContentFormatters(self._report, self._src.dom.querySelector("div").css("backgroundColor").toStr())
@@ -1526,8 +1382,6 @@ class JsHtmlNumeric(JsHtmlRich):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1554,8 +1408,6 @@ class JsHtmlNumeric(JsHtmlRich):
     ------------
     Add a value to the component value.
 
-    Usage::
-
     Attributes:
     ----------
     :param item: Float. The value to be added.
@@ -1573,8 +1425,6 @@ class JsHtmlLink(JsHtml):
     Description:
     -----------
 
-    Usage::
-
     """
     return ContentFormatters(self._report, "%s.innerText" % self.varName)
 
@@ -1583,8 +1433,6 @@ class JsHtmlLink(JsHtml):
     Description:
     -----------
     The href attribute specifies the URL of the page the link goes to.
-
-    Usage::
 
     Related Pages:
     --------------
@@ -1604,8 +1452,6 @@ class JsHtmlLink(JsHtml):
     -----------
     The href attribute specifies the URL of the page the link goes to.
 
-    Usage::
-
     Related Pages:
     --------------
 
@@ -1623,8 +1469,6 @@ class JsHtmlLink(JsHtml):
     Description:
     -----------
     The target attribute specifies where to open the linked document.
-
-    Usage::
 
     Related Pages:
     --------------
@@ -1649,8 +1493,6 @@ class JsMedia(JsHtml):
     -----------
     Start the cmera.
     This can only work with https and localhost urls.
-
-    Usage::
 
     Related Pages:
     --------------
@@ -1682,7 +1524,6 @@ class JsMedia(JsHtml):
     Description:
     -----------
 
-    Usage::
 
     Related Pages:
     --------------
@@ -1704,7 +1545,6 @@ class JsMedia(JsHtml):
     Description:
     -----------
 
-    Usage::
 
     Related Pages:
     --------------
@@ -1723,8 +1563,6 @@ class JsMedia(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     Related Pages:
     --------------
@@ -1770,8 +1608,6 @@ class JsHtmlButtonFilter(JsHtml):
     """
     Description:
     -----------
-
-    Usage::
 
     """
     if self.component.options.is_number:

@@ -10,7 +10,7 @@ from epyk.core.js.packages import JsQueryUi
 from epyk.core.js import JsUtils
 
 
-class MesuredText(object):
+class MesuredText:
   def __init__(self, varId):
     self.varId = varId
 
@@ -20,13 +20,11 @@ class MesuredText(object):
     Description:
     ------------
 
-    Usage::
-
     """
     return JsNumber.JsNumber("%s.width" % self.varId, isPyData=False)
 
 
-class RadialGradient(object):
+class RadialGradient:
   def __init__(self, varData, varId):
     self.varId, self.varData, self.__set = varId, varData, True
     self._js = []
@@ -38,8 +36,6 @@ class RadialGradient(object):
     The addColorStop() method specifies the colors and position in a gradient object.
 
     The addColorStop() method is used together with createLinearGradient() or createRadialGradient().
-
-    Usage::
 
     Related Pages:
 
@@ -62,7 +58,7 @@ class RadialGradient(object):
     return str_fnc
 
 
-class Context2D(object):
+class Context2D:
   def __init__(self, src):
     self.varId = '%s.getContext("2d")' % src.dom.varId
 
@@ -71,8 +67,6 @@ class Context2D(object):
     Description:
     ------------
     The arc() method creates an arc/curve (used to create circles, or parts of circles).
-
-    Usage::
 
     Related Pages:
 
@@ -95,8 +89,6 @@ class Context2D(object):
     ------------
     The beginPath() method begins a path, or resets the current path.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_beginpath.asp
@@ -107,9 +99,8 @@ class Context2D(object):
     """
     Description:
     ------------
-    The bezierCurveTo() method adds a point to the current path by using the specified control points that represent a cubic Bézier curve.
-
-    Usage::
+    The bezierCurveTo() method adds a point to the current path by using the specified control points that represent a
+    cubic Bézier curve.
 
     Related Pages:
 
@@ -132,8 +123,6 @@ class Context2D(object):
     ------------
     The clearRect() method clears the specified pixels within a given rectangle.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_clearrect.asp
@@ -153,8 +142,6 @@ class Context2D(object):
     ------------
     The clip() method clips a region of any shape and size from the original canvas.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_clip.asp
@@ -166,8 +153,6 @@ class Context2D(object):
     Description:
     ------------
     The closePath() method creates a path from the current point back to the starting point.
-
-    Usage::
 
     Related Pages:
 
@@ -182,8 +167,6 @@ class Context2D(object):
     The createPattern() method repeats the specified element in the specified direction.
 
     The element can be an image, video, or another <canvas> element.
-
-    Usage::
 
     Related Pages:
 
@@ -202,9 +185,8 @@ class Context2D(object):
     """
     Description:
     ------------
-    The createRadialGradient() method is specified by six parameters, three defining the gradient's start circle, and three defining the end circle.
-
-    Usage::
+    The createRadialGradient() method is specified by six parameters, three defining the gradient's start circle,
+    and three defining the end circle.
 
     Related Pages:
 
@@ -259,8 +241,6 @@ class Context2D(object):
     ------------
     The fill() method fills the current drawing (path). The default color is black.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_fill.asp
@@ -280,8 +260,6 @@ class Context2D(object):
     ------------
     The fillStyle property sets or returns the color, gradient, or pattern used to fill the drawing.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_fillstyle.asp
@@ -298,8 +276,6 @@ class Context2D(object):
     Description:
     ------------
     The fillText() method draws filled text on the canvas. The default color of the text is black.
-
-    Usage::
 
     Related Pages:
 
@@ -330,8 +306,6 @@ class Context2D(object):
     ------------
     The lineCap property sets or returns the style of the end caps for a line.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_linecap.asp
@@ -348,8 +322,6 @@ class Context2D(object):
     Description:
     ------------
     The lineJoin property sets or returns the type of corner created, when two lines meet.
-
-    Usage::
 
     Related Pages:
 
@@ -368,8 +340,6 @@ class Context2D(object):
     ------------
     Adds a new point and creates a line to that point from the last specified point in the canvas.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_lineto.asp
@@ -387,8 +357,6 @@ class Context2D(object):
     ------------
     The lineWidth property sets or returns the current line width, in pixels.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_linewidth.asp
@@ -404,8 +372,6 @@ class Context2D(object):
     Description:
     ------------
     Moves the path to the specified point in the canvas, without creating a line.
-
-    Usage::
 
     Related Pages:
 
@@ -423,8 +389,6 @@ class Context2D(object):
     Description:
     ------------
     The rect() method creates a rectangle.
-
-    Usage::
 
     Related Pages:
 
@@ -445,8 +409,6 @@ class Context2D(object):
     ------------
     The rect() method creates a rectangle.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_rect.asp
@@ -465,8 +427,6 @@ class Context2D(object):
     Description:
     ------------
     The font property sets or returns the current font properties for text content on the canvas.
-
-    Usage::
 
     Related Pages:
 
@@ -487,8 +447,6 @@ class Context2D(object):
 
     The globalAlpha property value must be a number between 0.0 (fully transparent) and 1.0 (no transparancy).
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_globalalpha.asp
@@ -504,8 +462,6 @@ class Context2D(object):
     Description:
     ------------
     The isPointInPath() method returns true if the specified point is in the current path, otherwise false.
-
-    Usage::
 
     Related Pages:
 
@@ -523,8 +479,6 @@ class Context2D(object):
     Description:
     ------------
     The measureText() method returns an object that contains the width of the specified text, in pixels.
-
-    Usage::
 
     Related Pages:
 
@@ -546,8 +500,6 @@ class Context2D(object):
     ------------
     The rotate() method rotates the current drawing.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_rotate.asp
@@ -563,8 +515,6 @@ class Context2D(object):
     Description:
     ------------
     The scale() method scales the current drawing, bigger or smaller.
-
-    Usage::
 
     Related Pages:
 
@@ -583,8 +533,6 @@ class Context2D(object):
     ------------
     The shadowBlur property sets or returns the blur level for shadows.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_shadowblur.asp
@@ -600,8 +548,6 @@ class Context2D(object):
     Description:
     ------------
     The shadowColor property sets or returns the color to use for shadows.
-
-    Usage::
 
     Related Pages:
 
@@ -620,8 +566,6 @@ class Context2D(object):
     ------------
     The shadowOffsetX property sets or returns the horizontal distance of the shadow from the shape.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_shadowoffsetx.asp
@@ -637,8 +581,6 @@ class Context2D(object):
     Description:
     ------------
     The shadowOffsetY property sets or returns the vertical distance of the shadow from the shape.
-
-    Usage::
 
     Related Pages:
 
@@ -656,8 +598,6 @@ class Context2D(object):
     ------------
     The stroke() method actually draws the path you have defined with all those moveTo() and lineTo() methods.
     The default color is black.
-
-    Usage::
     """
     return "%s.stroke()" % self.varId
 
@@ -665,8 +605,6 @@ class Context2D(object):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -679,8 +617,6 @@ class Context2D(object):
     Description:
     ------------
     The strokeStyle property sets or returns the color, gradient, or pattern used for strokes.
-
-    Usage::
 
     Related Pages:
 
@@ -698,8 +634,6 @@ class Context2D(object):
     ------------
     The strokeRect() method draws a rectangle (no fill). The default color of the stroke is black.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_strokestyle.asp
@@ -710,8 +644,6 @@ class Context2D(object):
     Description:
     ------------
     The strokeText() method draws text (with no fill) on the canvas. The default color of the text is black.
-
-    Usage::
 
     Related Pages:
 
@@ -736,8 +668,6 @@ class Context2D(object):
     ------------
     The textAlign property sets or returns the current alignment for text content, according to the anchor point.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_textalign.asp
@@ -753,8 +683,6 @@ class Context2D(object):
     Description:
     ------------
     The translate() method remaps the (0,0) position on the canvas.
-
-    Usage::
 
     Related Pages:
 
@@ -773,8 +701,6 @@ class Context2D(object):
     ------------
     The textBaseline property sets or returns the current text baseline used when drawing text.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/canvas_textbaseline.asp
@@ -790,8 +716,6 @@ class Context2D(object):
     Description:
     ------------
     The drawImage() method draws an image, canvas, or video onto the canvas.
-
-    Usage::
 
     Related Pages:
 
@@ -811,9 +735,8 @@ class Context2D(object):
     """
     Description:
     ------------
-    The getImageData() method returns an ImageData object that copies the pixel data for the specified rectangle on a canvas..
-
-    Usage::
+    The getImageData() method returns an ImageData object that copies the pixel data for the specified rectangle
+    on a canvas..
 
     Related Pages:
 
@@ -844,8 +767,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage::
-
     """
     return JsNumber.JsNumber("%s.width" % self.varId)
 
@@ -854,7 +775,8 @@ class Canvas(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-    The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
+    The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context
+    identifier is not supported.
 
     Related Pages:
 
@@ -872,20 +794,16 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlCode, self.varName))
+        self.htmlCode, self.varName))
 
   @property
   def events(self):
     """
     Description:
     ------------
-
-    Usage::
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -896,8 +814,6 @@ class Canvas(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-
-    Usage::
 
     :rtype: JsQuery.JQuery
     """
@@ -911,8 +827,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
@@ -924,8 +838,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/ref_canvas.asp
@@ -934,16 +846,13 @@ class Canvas(JsNodeDom.JsDoms):
     ----------
     :param format:
     """
-    format = JsUtils.jsConvertData(format, None)
-    return JsObjects.JsObjects.get("%s.toDataURL(%s)" % (self.varName, format))
+    return JsObjects.JsObjects.get("%s.toDataURL(%s)" % (self.varName, JsUtils.jsConvertData(format, None)))
 
   def save(self):
     """
     Description:
     ------------
     Saves the state of the current context.
-
-    Usage::
 
     Related Pages:
 
@@ -956,8 +865,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
     Returns previously saved path state and attributes.
-
-    Usage::
 
     Related Pages:
 

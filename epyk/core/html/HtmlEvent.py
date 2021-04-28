@@ -39,8 +39,6 @@ class ProgressBar(Html.Html):
     The progress bar is designed to display the current percent complete for a process.
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/progressbar
@@ -54,8 +52,6 @@ class ProgressBar(Html.Html):
     Description:
     ------------
     Move the progress bar to a defined level in a specific amount of time in millisecond.
-
-    Usage::
 
     Attributes:
     ----------
@@ -89,8 +85,6 @@ class ProgressBar(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/progressbar
@@ -110,8 +104,6 @@ class ProgressBar(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -145,8 +137,6 @@ class Menu(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage::
-
     :rtype: rpClsJqueryUI.ClassMenu
     """
     if self._styleObj is None:
@@ -162,8 +152,6 @@ class Menu(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    Usage::
 
     Related Pages:
 
@@ -195,8 +183,6 @@ class Menu(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/menu
@@ -216,8 +202,6 @@ class Menu(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -257,8 +241,6 @@ class Dialog(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     Related Pages:
 
       https://jqueryui.com/dialog/
@@ -278,8 +260,6 @@ class Dialog(Html.Html):
     Description:
     -----------
     Open content in an interactive overlay.
-
-    Usage::
 
     Related Pages:
 
@@ -301,8 +281,6 @@ class Dialog(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlProgressBar
@@ -322,7 +300,8 @@ class Dialog(Html.Html):
       logging.warning(
         "More details https://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x")
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(static_content), self.helper)
+    return '<div %s>%s%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(static_content), self.helper)
 
 
 class Slider(Html.Html):
@@ -348,8 +327,6 @@ class Slider(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: OptSliders.OptionsSlider
     """
     return super().options
@@ -360,8 +337,6 @@ class Slider(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsJqueryUI.ClassSlider
     """
@@ -376,8 +351,6 @@ class Slider(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     Related Pages:
 
@@ -397,8 +370,6 @@ class Slider(Html.Html):
     -----------
     Triggered after the user slides a handle, if the value has changed;
     or if the value is changed programmatically via the value method.
-
-    Usage::
 
     Related Pages:
 
@@ -421,8 +392,6 @@ class Slider(Html.Html):
     -----------
     Triggered when the user starts sliding.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-start
@@ -442,8 +411,6 @@ class Slider(Html.Html):
     Description:
     -----------
     Triggered when the user starts sliding.
-
-    Usage::
 
     Related Pages:
 
@@ -465,8 +432,6 @@ class Slider(Html.Html):
     -----------
     Triggered after the user slides a handle.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-stop
@@ -487,8 +452,6 @@ class Slider(Html.Html):
     Description:
     -----------
     The Javascript Dom object.
-
-    Usage::
 
     :rtype: JsHtmlJqueryUI.JsHtmlSlider
     """
@@ -542,8 +505,6 @@ class SliderDate(Slider):
     -----------
     The Javascript Dom object.
 
-    Usage::
-
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
     if self._dom is None:
@@ -567,8 +528,6 @@ class SliderDates(SliderDate):
     Description:
     -----------
     The Javascript Dom object.
-
-    Usage::
 
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
@@ -616,8 +575,6 @@ class SkillBar(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    Usage::
 
     :rtype: OptSliders.OptionsSlider
     """
@@ -704,8 +661,6 @@ class OptionsBar(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: OptSliders.OptionBar
     """
     return super().options
@@ -784,8 +739,6 @@ class Filters(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: OptList.OptionsTagItems
     """
     return super().options
@@ -809,8 +762,6 @@ class Filters(Html.Html):
     -----------
     Javascript event triggered by the enter key.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript events.
@@ -828,7 +779,6 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -845,7 +795,6 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -866,7 +815,6 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -887,7 +835,6 @@ class Filters(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -910,8 +857,6 @@ class Filters(Html.Html):
     Description:
     -----------
     The Javascript Dom object.
-
-    Usage::
 
     :rtype: JsHtmlList.Tags
     """

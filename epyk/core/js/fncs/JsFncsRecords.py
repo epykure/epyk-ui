@@ -257,10 +257,9 @@ class JsOperations(JsRecFunc):
   This function will aggregate the different values for each series according to a shcema defined in a Python
   dictionary in the last position of the tuple.
 
-  Example
-  aggFnc=('aggregation', ['direction'], values, {'dn': 'sum', 'Date': 'count'}),
+  Usage::
 
-  :return:
+    aggFnc=('aggregation', ['direction'], values, {'dn': 'sum', 'Date': 'count'}),
   """
 
   @staticmethod
@@ -268,8 +267,10 @@ class JsOperations(JsRecFunc):
     """
     Description:
     ------------
-    This function will update the function argument according to the mode defined by the user. Indeed some properties can be received to validate the accuracy of the data.
-    Those data should be added to the different transformation functions and the columns should be passed to the final object.
+    This function will update the function argument according to the mode defined by the user. Indeed some properties
+    can be received to validate the accuracy of the data.
+    Those data should be added to the different transformation functions and the columns should be passed to the final
+    object.
     This function will ensure that by activating the mode the columns will be automatically added to the aggregated data.
 
     :return: The update set of columns to be considered in the Javascript function
@@ -353,7 +354,7 @@ class JsCountSum(JsRecFunc):
       result.push(rec)})'''
 
 
-class JsTop(object):
+class JsTop:
 
   @staticmethod
   def extendColumns(jsSchema, params): pass
@@ -374,7 +375,7 @@ class JsTop(object):
     '''
 
 
-class JsCountDistinct(object):
+class JsCountDistinct:
   """
   Return the distinct counts of element in a list of columns. This function will return a list of dictionaries
   with the following structure {'column': '', 'count_distinct': 0}
@@ -390,7 +391,7 @@ class JsCountDistinct(object):
       result.push({'column': col, 'count': dCount, 'distinct': true, 'values': Object.keys(temp[col])})}'''
 
 
-class JsCountAll(object):
+class JsCountAll:
   """
   Function to produce KPI on an original recordSet. This function will create a new recordSet based on the selected
   columns of the original data source.
@@ -408,7 +409,7 @@ class JsCountAll(object):
       result.push(rec)})'''
 
 
-class JsRename(object):
+class JsRename:
   """
   Function to remap some columns in the recordSet. The renaming is done based on the input parameter.
   The parameter passed in this function is a dictionary with as keys the existing column names and value the new column.
@@ -422,7 +423,7 @@ class JsRename(object):
       for(var col in colsWithName){rec[colsWithName[col]] = rec[col]; delete rec[col]; result.push(rec)}})'''
 
 
-class JsExtend(object):
+class JsExtend:
   """
   Function to add some predefined entries to each records in the RecordSet
   The parameter passed in the function call should be a dictionary with as keys the columns to be added to the original record
@@ -456,7 +457,7 @@ class JsExtend(object):
   '''
 
 
-class JsExtendDataSet(object):
+class JsExtendDataSet:
   """
   :return: A new Js recordSet with the extra columns in the datasets section
   """
@@ -473,7 +474,7 @@ class JsExtendDataSet(object):
       recResults.push(newRec)})'''
 
 
-class JsFilter(object):
+class JsFilter:
   """
   Filter the different records in a recordSet from the definition given as a parameter.
   The filters definition is based on a dictionary as keys the column names. Each records should have the given columns.
@@ -503,7 +504,7 @@ class JsFilter(object):
     }; if (isValid) {result.push(rec)}})'''
 
 
-class JsIntensity(object):
+class JsIntensity:
   """
 
   """
@@ -532,7 +533,7 @@ class JsIntensity(object):
     """
 
 
-class JsToUrl(object):
+class JsToUrl:
   alias = "dictToUrl"
   value = '''
     var tmpResults = [];

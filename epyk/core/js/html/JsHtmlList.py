@@ -28,7 +28,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -113,11 +113,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add icon items to the list
+    Add icon items to the list.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     report.jsImports.add('font-awesome')
     report.cssImport.add('font-awesome')
@@ -137,11 +137,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add check components to the list
+    Add check components to the list.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -175,11 +175,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add radio components to the list
+    Add radio components to the list.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -206,11 +206,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add text object with badges to the list
+    Add text object with badges to the list.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -228,11 +228,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add links items to the list
+    Add links items to the list.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("div"); var link = document.createElement("a"); item.style.whiteSpace = "nowrap";
@@ -255,13 +255,13 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add button items to the list
+    Add button items to the list.
     Data structure expected:
       {'text': f, 'button': 'get',  'event': {'url': '/test', 'data': {'Ok': 45}}
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV"); var text = document.createElement("div");
@@ -288,11 +288,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    This will represent a title with a text and a list of icons
+    This will represent a title with a text and a list of icons.
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param report: Page object. The internal page object.
     """
     report.jsImports.add('font-awesome')
     report.cssImport.add('font-awesome')
@@ -358,7 +358,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Return a list with all the selected values
+    Return a list with all the selected values.
     """
     return self.content
 
@@ -367,7 +367,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Return a list with all the unselected values
+    Return a list with all the unselected values.
     """
     return JsHtml.ContentFormatters(self._report, '''
         (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){   
@@ -383,7 +383,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the first value in the list
+    Get the first value in the list.
     """
     return JsObjects.JsVoid("%s.firstChild.querySelector('[name=value]').innerHTML" % self.varName)
 
@@ -392,7 +392,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the last value in the list
+    Get the last value in the list.
     """
     return JsObjects.JsVoid("%s.lastChild.querySelector('[name=value]').innerHTML" % self.varName)
 
@@ -401,7 +401,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get the current value from a LI item event
+    Get the current value from a LI item event.
     """
     return JsObjects.JsVoid('''(function(){
       var source = this; if (typeof this.querySelector === 'undefined'){source = event.target || event.srcElement}
@@ -415,7 +415,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get all the values in the list
+    Get all the values in the list.
     """
     return JsObjects.JsArray.JsArray.get("")
 
@@ -423,11 +423,11 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Get an item from the list based on its value
+    Get an item from the list based on its value.
 
     Attributes:
     ----------
-    :param value: String. The value to find in the list
+    :param value: String. The value to find in the list.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsNodeDom.JsDoms.get('''
@@ -440,11 +440,11 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Select all the items in the list
+    Select all the items in the list.
 
     Attributes:
     ----------
-    :param with_input_box: Boolean. If the items have a dedicated input box for the check
+    :param with_input_box: Boolean. If the items have a dedicated input box for the check.
     """
     if self._src.options.items_type == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
@@ -468,11 +468,11 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    UnSelect all the items in the list
+    UnSelect all the items in the list.
 
     Attributes:
     ----------
-    :param with_input_box: Boolean. If the items have a dedicated input box for the check
+    :param with_input_box: Boolean. If the items have a dedicated input box for the check.
     """
     if self._src.options.items_type == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
@@ -496,13 +496,13 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Add items to the list
+    Add items to the list.
 
     Attributes:
     ----------
     :param value: String | Dictionary.
-    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component
-    :param css_cls: String. The CSS class to be added to the LI component
+    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component.
+    :param css_cls: String. The CSS class to be added to the LI component.
     """
     if isinstance(value, dict):
       js_values = []
@@ -542,13 +542,13 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Add tags to an item in the list
+    Add tags to an item in the list.
 
     Attributes:
     ----------
-    :param values: List. The tags to be added to the current item
-    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component
-    :param css_cls: String. The CSS class to be added to the LI component
+    :param values: List. The tags to be added to the current item.
+    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component.
+    :param css_cls: String. The CSS class to be added to the LI component.
     """
     return JsObjects.JsVoid('''
       var enumTags = %(values)s;
@@ -579,8 +579,8 @@ class JsItem(JsHtml.JsHtmlRich):
     Attributes:
     ----------
     :param menu:
-    :param jsFncs: List. The Javascript functions
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param jsFncs: List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
       menu = self._src._report.ui.menus.contextual(menu)
@@ -643,7 +643,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     -----------
-    Returns the list of data available on the filters panel
+    Returns the list of data available on the filters panel.
     """
     return JsHtml.ContentFormatters(self._report, '''
       (function(dom){var content = {}; 
@@ -659,12 +659,12 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Check the duplicates in the filter panel for a given category
+    Check the duplicates in the filter panel for a given category.
 
     Attributes:
     ----------
-    :param text: String. The item text
-    :param category: String. The item category
+    :param text: String. The item text.
+    :param category: String. The item category.
     """
     return JsObjects.JsObjects.get(''' 
       (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
@@ -689,7 +689,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Hide the filters panel
+    Hide the filters panel.
     """
     return self.querySelector("div[name=panel]").show()
 
@@ -697,7 +697,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Show the filters panel
+    Show the filters panel.
     """
     return self.querySelector("div[name=panel]").show()
 
@@ -705,7 +705,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Toggle the display of the filters panel
+    Toggle the display of the filters panel.
     """
     return self.querySelector("div[name=panel]").toggle()
 
@@ -713,12 +713,12 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Add item on the filters panel
+    Add item on the filters panel.
     When no_duplicate is set to False it is possible to pass a list.
 
     Attributes:
     ----------
-    :param text: String. The value to be added on the filter panel
+    :param text: String. The value to be added on the filter panel.
     :param category:
     :param name:
     :param fixed:
@@ -762,7 +762,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Clear the content of the fitlers panel
+    Clear the content of the fitlers panel.
     """
     return JsObjects.JsObjects.get("%s.value" % self.querySelector("input"))
 
@@ -770,7 +770,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Clear the content of the fitlers panel
+    Clear the content of the fitlers panel.
     """
     return self.querySelector("div[name=panel]").empty()
 
@@ -778,12 +778,12 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Remove an item from the filters panel
+    Remove an item from the filters panel.
 
     Attributes:
     ----------
-    :param text: String. The test of the items to be removed
-    :param category: String. The test of the items to be removed
+    :param text: String. The test of the items to be removed.
+    :param category: String. The test of the items to be removed.
     """
     if category is None:
       category = self._src._jsStyles['category']
@@ -804,7 +804,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Return a count of categories currently used to filter the data
+    Return a count of categories currently used to filter the data.
     """
     return self.content.dict.keys()
 

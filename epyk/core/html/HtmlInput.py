@@ -53,8 +53,6 @@ class Input(Html.Html):
     -----------
     Property to set all the input component properties.
 
-    Usage::
-
     :rtype: OptInputs.OptionsInput
     """
     return super().options
@@ -65,8 +63,6 @@ class Input(Html.Html):
     Description:
     -----------
     Specific Javascript function for the input object.
-
-    Usage::
 
     :rtype: JsHtmlField.InputText
     """
@@ -80,8 +76,6 @@ class Input(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsInput.ClassInput
     """
@@ -109,8 +103,6 @@ class Input(Html.Html):
     Description:
     -----------
     Action on focus.
-
-    Usage::
 
     Attributes:
     ----------
@@ -167,7 +159,7 @@ class Input(Html.Html):
 
     Usage::
 
-      htmlObj.input(placeholder="Put your tag").enter("alert()")
+      component.input(placeholder="Put your tag").enter("alert()")
 
     Attributes:
     ----------
@@ -192,7 +184,7 @@ class Input(Html.Html):
 
     Usage::
 
-      htmlObj.input(placeholder="Put your tag").enter("alert()")
+      component.input(placeholder="Put your tag").enter("alert()")
 
     Attributes:
     ----------
@@ -215,8 +207,6 @@ class Input(Html.Html):
     ------------
     The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
 
-    Usage::
-
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
@@ -236,8 +226,7 @@ class Input(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Set the input component to be readonly.
 
     Related Pages:
 
@@ -314,8 +303,6 @@ class AutoComplete(Input):
     ------------
     Property to set all the input TimePicker component properties.
 
-    Usage::
-
     Related Pages:
 
       https://timepicker.co/options/
@@ -329,8 +316,6 @@ class AutoComplete(Input):
     Description:
     -----------
     Action on focus.
-
-    Usage::
 
     Attributes:
     ----------
@@ -363,8 +348,6 @@ class AutoComplete(Input):
     ------------
     Property to the CSS Style of the component.
 
-    Usage::
-
     :rtype: GrpClsInput.ClassInputAutocomplete
     """
     if self._styleObj is None:
@@ -378,8 +361,6 @@ class AutoComplete(Input):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    Usage::
 
     :rtype: JsQueryUi.Autocomplete
     """
@@ -414,8 +395,6 @@ class InputTime(Input):
     ------------
     Property to set all the input TimePicker component properties.
 
-    Usage::
-
     Related Pages:
 
       https://timepicker.co/options/
@@ -431,8 +410,6 @@ class InputTime(Input):
     ------------
     Property to the CSS Style of the component.
 
-    Usage::
-
     :rtype: GrpClsInput.ClassInputTime
     """
     if self._styleObj is None:
@@ -445,8 +422,6 @@ class InputTime(Input):
     Description:
     ------------
     The Javascript Dom object.
-
-    Usage::
 
     :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
     """
@@ -461,8 +436,6 @@ class InputTime(Input):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    Usage::
 
     :rtype: JsTimepicker.Timepicker
     """
@@ -482,8 +455,6 @@ class InputTime(Input):
 
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
-
-    Usage::
 
     Related Pages:
 
@@ -523,8 +494,6 @@ class InputDate(Input):
     ------------
     Property to set all the input DatePicker component properties.
 
-    Usage::
-
     Related Pages:
 
       https://timepicker.co/options/
@@ -541,8 +510,6 @@ class InputDate(Input):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage::
-
     :rtype: JsQueryUi.Datepicker
     """
     if self._js is None:
@@ -555,8 +522,6 @@ class InputDate(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsInput.ClassInputDate
     """
@@ -571,8 +536,6 @@ class InputDate(Input):
     ------------
     The Javascript Dom object.
 
-    Usage::
-
     :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
     """
     if self._dom is None:
@@ -584,8 +547,6 @@ class InputDate(Input):
     Description:
     ------------
     List of dates to be excluded from the available dates in the DatePicker component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -605,8 +566,6 @@ class InputDate(Input):
     Description:
     ------------
     Define some specific date to be the only ones available from the DatePicker component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -629,8 +588,6 @@ class InputDate(Input):
     ------------
     Change the CSS style for some selected dates in the DateIicker.
     This function can be also used on the Javascript side from the js property.
-
-    Usage::
 
     Attributes:
     ----------
@@ -676,8 +633,6 @@ class InputInteger(Input):
     -----------
     Property to set all the input component properties.
 
-    Usage::
-
     :rtype: OptInputs.OptionsInputInteger
     """
     return super().options
@@ -686,9 +641,8 @@ class InputInteger(Input):
     """
     Description:
     -----------
-
-    Usage::
-
+    Add quantity shortcuts to the component.
+    This will then check the input and remap if they are K, M and B to the corresponding value.
     """
     factors, units_lookup = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
     for f, val in factors.items():
@@ -722,8 +676,6 @@ class InputRange(Input):
     ------------
     Property to set input range properties.
 
-    Usage::
-
     :rtype: OptSelect.OptionsInputRange
     """
     return super().options
@@ -734,8 +686,6 @@ class InputRange(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsInput.ClassInputRange
     """
@@ -773,8 +723,6 @@ class Field(Html.Html):
     Description:
     -----------
     The HTML Dom object linked to this component.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -817,8 +765,6 @@ class FieldAutocomplete(Field):
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-change
@@ -839,8 +785,6 @@ class FieldAutocomplete(Field):
     -----------
     Triggered before a search is performed, after minLength and delay are met.
     If canceled, then no request will be started and no items suggested.
-
-    Usage::
 
     Related Pages:
 
@@ -865,8 +809,6 @@ class FieldAutocomplete(Field):
     if the event was triggered by a keyboard interaction.
     Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-focus
@@ -886,8 +828,6 @@ class FieldAutocomplete(Field):
     Description:
     -----------
     Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
-
-    Usage::
 
     Related Pages:
 
@@ -910,8 +850,6 @@ class FieldAutocomplete(Field):
     Triggered when an item is selected from the menu.
     The default action is to replace the text field's value with the value of the selected item.
     Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
-
-    Usage::
 
     Related Pages:
 
@@ -937,8 +875,6 @@ class FieldAutocomplete(Field):
     This event is always triggered when a search completes, even if the menu will not be shown because there are no
     results or the Autocomplete is disabled.
 
-    Usage::
-
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-response
@@ -960,8 +896,9 @@ class FieldRange(Field):
 
   def __init__(self, report, value, min_val, max_val, step, label, placeholder, icon, width, height, html_code, helper,
                options, profile):
-    html_input = report.ui.inputs.d_range(report.inputs.get(html_code, value), min_val=min_val, max_val=max_val, step=step,
-                                     width=(None, "%"), placeholder=placeholder, options=options)
+    html_input = report.ui.inputs.d_range(report.inputs.get(html_code, value),
+                                          min_val=min_val, max_val=max_val, step=step,
+                                          width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldRange, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
                                      options, profile)
 
@@ -1054,8 +991,6 @@ class Checkbox(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtmlField.Check
     """
     if self._dom is None:
@@ -1104,8 +1039,6 @@ class Radio(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtmlField.Radio
     """
     if self._dom is None:
@@ -1119,8 +1052,6 @@ class Radio(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    Usage::
 
     :rtype: JsComponents.Radio
     """
@@ -1156,8 +1087,6 @@ class TextArea(Html.Html):
     -----------
     Property to set all the input component properties.
 
-    Usage::
-
     :rtype: OptInputs.OptionsTextarea
     """
     return self.__options
@@ -1167,7 +1096,6 @@ class TextArea(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1189,8 +1117,6 @@ class TextArea(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom.asp
@@ -1206,8 +1132,6 @@ class TextArea(Html.Html):
     Description:
     ------------
     The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
-
-    Usage::
 
     Related Pages:
 
@@ -1279,8 +1203,6 @@ class Search(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
@@ -1293,8 +1215,6 @@ class Search(Html.Html):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1330,8 +1250,8 @@ class Search(Html.Html):
         "jsFnc": self.icon.dom.events.trigger("click")}], profile=profile, source_event=source_event, on_ready=on_ready)
 
     return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
-        "jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
-
+        "jsFnc": JsUtils.jsConvertFncs(
+          js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
 
   def __str__(self):
     return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}

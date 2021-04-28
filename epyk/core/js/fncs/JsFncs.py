@@ -15,8 +15,6 @@ class FncToObject:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param data:
@@ -30,8 +28,6 @@ class FncToObject:
     Description:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
-
-    Usage::
 
     Attributes:
     ----------
@@ -50,8 +46,6 @@ class FncToObject:
     Description:
     ------------
     Data transformation to the D3 package.
-
-    Usage::
     """
     return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
 
@@ -61,8 +55,6 @@ class FncToObject:
     Description:
     ------------
     Data transformation to the DC package.
-
-    Usage::
     """
     from epyk.core.js.objects import JsChartDC
 
@@ -79,8 +71,6 @@ class FncRoAggRec:
     Description:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
-
-    Usage::
 
     Attributes:
     ----------
@@ -106,8 +96,6 @@ class FncOnRecords:
     ------------
     Property to the data final object.
     Those items help to the link to external packages.
-
-    Usage::
     """
     return FncToObject(self._js_src, self._data_schema)
 
@@ -116,8 +104,6 @@ class FncOnRecords:
     Description:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
-
-    Usage::
 
     Attributes:
     ----------
@@ -137,8 +123,6 @@ class FncOnRecords:
     ------------
     The function content should use data and produce an object record.
 
-    Usage::
-
     Attributes:
     ----------
     :param fnc_name: A string for the Javascript function name.
@@ -156,7 +140,6 @@ class FncOnRecords:
     Description:
     ------------
 
-    Usage::
     """
     fnc_name = JsFncsRecords.JsToUrl.__name__
     fnc_pmts = ["data"]
@@ -176,8 +159,6 @@ class FncOnRecords:
     If values is defined, the Javascript will aggregate the data based on the composite key and the values will be
     available in the record. Also the count will be displayed.
     The values will be one in the record and not the sum.
-
-    Usage::
 
     Attributes:
     ----------
@@ -207,8 +188,6 @@ class FncOnRecords:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param keys: List | String. The column names.
@@ -225,8 +204,6 @@ class FncOnRecords:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -248,8 +225,6 @@ class FncOnRecords:
     Description:
     ------------
     The Javascript function are using the main data as a first parameter.
-
-    Usage::
 
     Attributes:
     ----------
@@ -284,8 +259,6 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param column:
@@ -303,15 +276,12 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage::
     """
 
   def not_range_(self, column, val, compare_type="in", all_if_empty=True):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -326,8 +296,6 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param column:
@@ -339,8 +307,6 @@ class FncFiltere:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -368,8 +334,6 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param column:
@@ -382,8 +346,6 @@ class FncFiltere:
     Description:
     ------------
     Filter only the data above the value for the given key in the record.
-
-    Usage::
 
     Attributes:
     ----------
@@ -401,8 +363,6 @@ class FncFiltere:
     Description:
     ------------
     Filter only the data below the value for the given key in the record.
-
-    Usage::
 
     Attributes:
     ----------
@@ -432,8 +392,6 @@ class JsRegisteredFunctions:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param params:
@@ -450,8 +408,6 @@ class JsRegisteredFunctions:
     Create and store a function to do simple services calls and return a temporary message.
 
     TODO: To be improved and extended.
-    Usage::
-
     """
     self._js_src.setdefault('functions', {})["serviceCall"] = {
       'content': self.src.js.post(JsUtils.jsWrap("url"), {"data": JsUtils.jsWrap("data")}).onSuccess([
@@ -471,8 +427,6 @@ class JsRegisteredFunctions:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Usage::
-
     Attributes:
     ----------
     :param jsFnc: List | String. Javascript functions.
@@ -488,8 +442,6 @@ class JsRegisteredFunctions:
     Description:
     ------------
     Call a bespoke functions on the Javascript side.
-
-    Usage::
 
     Attributes:
     ----------
@@ -511,8 +463,6 @@ class JsRegisteredFunctions:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Usage::
-
     Attributes:
     ----------
     :param fnc_name: String. The function name.
@@ -532,13 +482,11 @@ class JsRegisteredFunctions:
     ------------
     Javascript pre defined function dedicated to transform a records.
     Namely a list of dictionaries.
-
-    Usage::
     """
     return FncOnRecords(self._js_src)
 
 
-class JsFunction(object):
+class JsFunction:
   fncName = "lambda"
 
   def __init__(self, strFnc):
@@ -563,8 +511,6 @@ class JsFunctions(list):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param strFnc:
@@ -575,8 +521,6 @@ class JsFunctions(list):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -623,8 +567,6 @@ class JsAnonymous:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param value:
@@ -637,8 +579,6 @@ class JsAnonymous:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param pmts: Dictionary. The function parameters.
@@ -650,8 +590,6 @@ class JsAnonymous:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------

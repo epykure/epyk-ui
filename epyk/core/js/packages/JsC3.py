@@ -46,6 +46,8 @@ class C3Legend:
 
       https://c3js.org/reference.html#api-legend-show
 
+    Attributes:
+    ----------
     :param targetIds:
     """
     if targetIds is None:
@@ -327,7 +329,10 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-transform
 
-    :param args:
+    Attributes:
+    ----------
+    :param type:
+    :param targetIds:
     """
     if targetIds is None:
       type = JsUtils.jsConvertData(type, None)
@@ -392,6 +397,10 @@ class C3(JsPackage):
     Related Pages:
 
       https://c3js.org/reference.html#api-resize
+
+    Attributes:
+    ----------
+    :param size:
     """
     size = JsUtils.jsConvertData(size, None)
     return JsObjects.JsVoid("%s.resise(%s)" % (self._selector, size))
@@ -425,6 +434,10 @@ class C3(JsPackage):
     Description:
     -----------
     Update x grid lines.
+
+    Attributes:
+    ----------
+    :param grids:
     """
     grids = JsUtils.jsConvertData(grids, None)
     return JsObjects.JsVoid("%s.xgrids(%s)" % (self._selector, grids))
@@ -440,6 +453,12 @@ class C3(JsPackage):
     Related Pages:
 
       https://c3js.org/reference.html#api-select
+
+    Attributes:
+    ----------
+    :param ids:
+    :param indices:
+    :param resetOthers:
     """
     ids = JsUtils.jsConvertData(ids, None)
     indices = JsUtils.jsConvertData(indices, None)
@@ -457,6 +476,11 @@ class C3(JsPackage):
     Related Pages:
 
       https://c3js.org/reference.html#api-select
+
+    Attributes:
+    ----------
+    :param ids:
+    :param indices:
     """
     ids = JsUtils.jsConvertData(ids, None)
     indices = JsUtils.jsConvertData(indices, None)
@@ -474,6 +498,10 @@ class C3(JsPackage):
     Related Pages:
 
       https://c3js.org/reference.html#api-selected
+
+    Attributes:
+    ----------
+    :param ids:
     """
     ids = JsUtils.jsConvertData(ids, None)
     return JsObjects.JsVoid("%s.selected(%s)" % (self._selector, ids))
@@ -487,6 +515,10 @@ class C3(JsPackage):
     Related Pages:
 
       https://c3js.org/reference.html#api-zoom
+
+    Attributes:
+    ----------
+    :param domain:
     """
     domain = JsUtils.jsConvertData(domain, None)
     return JsObjects.JsVoid("%s.zoom(%s)" % (self._selector, domain))

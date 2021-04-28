@@ -71,7 +71,7 @@ class Menu(JsPackage):
     """
     Description:
     -----------
-    Return the content of the component
+    Return the content of the component.
     """
     return JsHtml.ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
@@ -79,11 +79,11 @@ class Menu(JsPackage):
     """
     Description:
     -----------
-    Set the text of the component
+    Set the text of the component.
 
     Attributes:
     ----------
-    :param value: String. The text to be set
+    :param value: String. The text to be set.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.innerHTML = %s" % (self.varName, value))
@@ -92,7 +92,7 @@ class Menu(JsPackage):
     """
     Description:
     -----------
-    Set the URL information of the item component
+    Set the URL information of the item component.
 
     Usage::
 
@@ -109,7 +109,8 @@ class Menu(JsPackage):
     """
     value = JsUtils.jsConvertData(value, None)
     target = JsUtils.jsConvertData(target, None)
-    return JsObjects.JsObjects.get("%s.href = %s; %s.setAttribute('target', %s)" % (self.varName, value, self.varName, target))
+    return JsObjects.JsObjects.get("%s.href = %s; %s.setAttribute('target', %s)" % (
+      self.varName, value, self.varName, target))
 
 
 class Switch(JsPackage):
@@ -134,12 +135,15 @@ class Switch(JsPackage):
     -----------
     Set the value for the switch.
 
+    Attributes:
+    ----------
     :param jsData: Boolean. Flag to specify the state for the switch.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
         if(%(flag)s) {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.on}
-        else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {"varName": self.varName, "flag": jsData, "htmlCode": self.htmlCode})
+        else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {
+      "varName": self.varName, "flag": jsData, "htmlCode": self.htmlCode})
 
   def false(self):
     """
@@ -147,7 +151,9 @@ class Switch(JsPackage):
     -----------
     Set the switch component to False.
     """
-    return JsObjects.JsObjects.get("%s.querySelector('input').checked = false; %s.querySelector('p').innerHTML = %s_data.off" % (self.varName, self.varName, self.htmlCode))
+    return JsObjects.JsObjects.get(
+      "%s.querySelector('input').checked = false; %s.querySelector('p').innerHTML = %s_data.off" % (
+        self.varName, self.varName, self.htmlCode))
 
   def true(self):
     """
@@ -155,7 +161,9 @@ class Switch(JsPackage):
     -----------
     Set the switch component to True.
     """
-    return JsObjects.JsObjects.get("%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (self.varName, self.varName, self.htmlCode))
+    return JsObjects.JsObjects.get(
+      "%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (
+        self.varName, self.varName, self.htmlCode))
 
 
 class Alerts(JsPackage):

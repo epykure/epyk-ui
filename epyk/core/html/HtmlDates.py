@@ -132,8 +132,6 @@ class DatePicker(Html.Html):
     -----------
     Add DatePicker options.
 
-    Usage::
-
     Related Pages:
 
       https://timepicker.co/options/
@@ -266,8 +264,6 @@ class CountDownDate(Html.Html):
     -----------
     Events triggered at the end of the timer.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
@@ -365,8 +361,6 @@ class Calendar(Html.Html):
     -----------
     Property to set all the Calendar properties.
 
-    Usage::
-
     :rtype: OptCalendars.OptionDays
     """
     return super().options
@@ -376,8 +370,6 @@ class Calendar(Html.Html):
     Description:
     -----------
     Add a click event to the Calendar component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -396,7 +388,6 @@ class Calendar(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -470,7 +461,6 @@ class Calendar(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -557,8 +547,6 @@ class Timer(Html.Html):
     Description:
     -----------
     Events triggered at the end of the timer.
-
-    Usage::
 
     Attributes:
     ----------

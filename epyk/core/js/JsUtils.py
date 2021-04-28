@@ -21,9 +21,6 @@ def incompatibleBrowser(browsers):
   ------------
   Decorator to send a warning for functions or packages which are restricted to some browsers.
 
-  Usage::
-
-
   Attributes:
   ----------
   :param browsers: List. Incompatible browsers
@@ -121,9 +118,6 @@ def jsConvertData(jsData, jsFnc, depth=False):
   Any pure Python object will be converted using the json function to be then written as a string
   to the resulting page.
 
-  Usage::
-
-
   Attributes:
   ----------
   :param jsData: The Python Javascript data.
@@ -160,8 +154,6 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   Description:
   ------------
 
-  Usage::
-
 
   Attributes:
   ----------
@@ -196,9 +188,6 @@ def jsWrap(data):
   ------------
   Shortcut to wrap a python object to a generic JavaScript object.
   This will avoid the automatic conversion to string if it is a variable.
-
-  Usage::
-
 
   Attributes:
   ----------
@@ -254,10 +243,6 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False, profile=Fa
   Description:
   ------------
   Generic conversion function for all the PyJs functions.
-
-  Usage::
-
-
 
   Attributes:
   ----------
@@ -316,9 +301,6 @@ def cleanFncs(fnc):
   Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
   Thus pre stored function code can be written to be easier to read.
-
-  Usage::
-
 
   Attributes:
   ----------
@@ -386,9 +368,6 @@ class JsFile:
     Write the Javascript content of a report to a structure .js file.
     This could help on the investigation and can be directly used in Codepen for testing
 
-    Usage::
-
-
     Attributes:
     ----------
     :param rptObj: The report object
@@ -422,9 +401,6 @@ class JsFile:
     Description:
     ------------
     Send the piece of Javascript to Codepen for testing.
-
-    Usage::
-
 
     Related Pages:
 
@@ -460,9 +436,6 @@ class JsFile:
     Description:
     ------------
     Write the file and close the buffer.
-
-    Usage::
-
 
     Attributes:
     ----------

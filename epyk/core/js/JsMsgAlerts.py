@@ -128,9 +128,6 @@ class Msg:
     Description:
     ------------
 
-    Usage::
-
-
     Attributes:
     ----------
     :param value: Integer.
@@ -180,8 +177,6 @@ class Msg:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param content: String. The content of the popup.
@@ -216,9 +211,6 @@ class Msg:
     """
     Description:
     ------------
-
-    Usage::
-
 
     Attributes:
     ----------
@@ -258,9 +250,6 @@ class Msg:
     """
     Description:
     ------------
-
-    Usage::
-
 
     Attributes:
     ----------

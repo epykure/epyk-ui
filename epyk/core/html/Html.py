@@ -175,6 +175,8 @@ class EventTouch:
 
     Usage::
 
+      start([page.js.alert("Test")])
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchstart.asp
@@ -199,6 +201,8 @@ class EventTouch:
 
     Usage::
 
+        move([page.js.alert("Test")])
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchmove.asp
@@ -222,6 +226,8 @@ class EventTouch:
     this event to clean up code if this "error" should occur.
 
     Usage::
+
+        cancel([page.js.alert("Test")])
 
     Related Pages:
 
@@ -248,6 +254,8 @@ class EventTouch:
 
     Usage::
 
+        end([page.js.alert("Test")])
+
     Related Pages:
 
       https://www.w3schools.com/jsref/event_touchend.asp
@@ -266,8 +274,6 @@ class EventTouch:
     Description:
     ------------
     Add swap event functions.
-
-    Usage::
 
     Attributes:
     ----------
@@ -292,8 +298,6 @@ class Components(collections.OrderedDict):
     Description:
     -----------
     Set the CSS style for all the inner components.
-
-    Usage::
 
     Attributes:
     ----------
@@ -377,9 +381,9 @@ class Html:
 
     Attributes:
     ----------
-    :param profile:
-    :param event:
-    :param element_id:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param event: String. Optional. The event name.
+    :param element_id: String. Optional. A DOM component reference in the page.
     """
     if profile is None and self.profile:
       if event is None:
@@ -640,8 +644,6 @@ class Html:
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
     the report will not be triggered.
 
-    Usage::
-
     Attributes:
     ----------
     :param context_menu: ContextMenu. A Python context menu object.
@@ -659,9 +661,6 @@ class Html:
     Usage::
 
       checks.title.add_icon("fas fa-align-center")
-
-    Related Pages:
-
 
     Attributes:
     ----------
@@ -695,8 +694,6 @@ class Html:
     Description:
     -----------
     Add an elementary label component.
-
-    Usage::
 
     Related Pages:
 
@@ -733,8 +730,6 @@ class Html:
     Description:
     -----------
     Add an elementary span component.
-
-    Usage::
 
     Related Pages:
 
@@ -811,9 +806,6 @@ class Html:
     -----------
     Add an elementary title component.
 
-    Usage::
-
-
     Attributes:
     ----------
     :param text: String. The title content.
@@ -843,9 +835,6 @@ class Html:
     Description:
     -----------
     Add an elementary input component.
-
-    Usage::
-
 
     Attributes:
     ----------
@@ -884,10 +873,6 @@ class Html:
     -----------
     Add an elementary checkbox component.
 
-    Usage::
-
-
-
     Attributes:
     ----------
     :param flag: Boolean. The state of the checkbox component.
@@ -916,10 +901,6 @@ class Html:
 
     The helper is not managed by the main page and should be written in the component.
 
-    Usage::
-
-
-
     Attributes:
     ----------
     :param text: String. The helper content.
@@ -941,10 +922,6 @@ class Html:
     -----------
     The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
-    Usage::
-
-
-
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeydown.asp
@@ -962,10 +939,6 @@ class Html:
     -----------
     The onkeypress event occurs when the user presses a key (on the keyboard).
 
-    Usage::
-
-
-
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
@@ -982,9 +955,6 @@ class Html:
     Description:
     -----------
     The onkeypress event occurs when the user presses a key (on the keyboard).
-
-    Usage::
-
 
     Related Pages:
 
@@ -1004,8 +974,6 @@ class Html:
     Accessible Rich Internet Applications is a [HTML] specification module.
     Web developers MAY use the ARIA role and aria-* attributes on HTML elements.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties
@@ -1021,8 +989,6 @@ class Html:
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python.
 
-    Usage::
-
     :returns: Javascript string with the function to get the current value of the component
     """
     return self._vals
@@ -1032,9 +998,7 @@ class Html:
     """
     Description:
     -----------
-
-    UUsage::
-
+    Get the HTML content of the component as a string.
     """
     if self.innerPyHTML is not None:
       if isinstance(self.innerPyHTML, list):
@@ -1049,9 +1013,6 @@ class Html:
     Description:
     -----------
     Move the component to this position in the page.
-
-    Usage::
-
     """
     self._report.components.move_to_end(self.htmlCode)
 
@@ -1060,8 +1021,6 @@ class Html:
     Description:
     -----------
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function.
-
-    Usage::
 
     Related Pages:
 
@@ -1150,8 +1109,6 @@ class Html:
     -----------
     Add a tooltip using Bootstrap Popover feature.
 
-    Usage::
-
     Related Pages:
 
       https://getbootstrap.com/docs/4.4/components/popovers/
@@ -1178,8 +1135,7 @@ class Html:
     """
     Description:
     ------------
-
-    Usage::
+    Set the component as a draggable item.
 
     Attributes:
     ----------
@@ -1199,13 +1155,15 @@ class Html:
     """
     Description:
     -----------
+    Change the CSS style of the component to be sticky on the page.
 
-    Usage::
+    This will add a class to the component. It is possible to set some attributes in order to
+    change its style.
 
     Attributes:
     ----------
-    :param anchor:
-    :param css_attrs:
+    :param anchor: Component. the component which will be used to check the position.
+    :param css_attrs: Dictionary. Optional. The CSS attributes of the component once sticky.
     """
     if anchor.htmlCode == self.htmlCode:
       raise Exception("Anchor cannot be the moving component")
@@ -1229,8 +1187,6 @@ class Html:
     -----------
     Change the Javascript options of the component.
     This will change the options sent to the Javascript.
-
-    Usage::
 
     Attributes:
     ----------
@@ -1266,8 +1222,6 @@ class Html:
     Related Pages:
 
       https://www.w3schools.com/html/html_attributes.asp
-
-    Usage::
 
     Attributes:
     ----------
@@ -1314,8 +1268,6 @@ class Html:
 
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
     and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
-
-    Usage::
 
     Attributes:
     ----------
@@ -1365,8 +1317,6 @@ class Html:
       span.on("mouseover", span.dom.css("color", "red").r)
       span.on("mouseleave", span.dom.css("color", "blue"))
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jquery/event_on.asp
@@ -1402,9 +1352,6 @@ class Html:
     ------------
     Function to get the generated JavaScript method in order to then reuse it in other components.
     This will return the event function in a string already transpiled.
-
-    Usage::
-
 
     Attributes:
     ----------
@@ -1532,8 +1479,6 @@ class Html:
     -----------
     The ondblclick event occurs when the user double-clicks on an element.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/event_ondblclick.asp
@@ -1554,8 +1499,6 @@ class Html:
     Description:
     -----------
     The onscroll event occurs when an element's scrollbar is being scrolled.
-
-    Usage::
 
     Related Pages:
 
@@ -1610,8 +1553,6 @@ class Html:
     -----------
     Add a paste event to the component.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
@@ -1629,8 +1570,6 @@ class Html:
     Description:
     -----------
     Attach a context menu to a component and set a function to called before the display.
-
-    Usage::
 
     TODO Test context menu
 
@@ -1667,6 +1606,7 @@ class Html:
 
     Usage::
 
+      component.touch.
     """
     return EventTouch(self)
 
@@ -1701,8 +1641,6 @@ class Html:
 
     Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
 
-    Usage::
-
     """
     return self.build(self.val, None)
 
@@ -1714,8 +1652,6 @@ class Html:
     Data received from the socket are defined as a dictionary with a field data.
 
     The content of data will be used by this component.
-
-    Usage::
 
     Related Pages:
 
@@ -1742,8 +1678,6 @@ class Html:
     Description:
     ------------
     Sortable is a JavaScript library for reorderable drag-and-drop lists.
-
-    Usage::
 
     Related Pages:
 
@@ -1788,9 +1722,6 @@ class Html:
 
     This will be then used by the different framework to define the elementary bricks on which the complex component
     will be based on.
-
-    Usage::
-
     """
     return Component.Component(self)
 
@@ -1798,8 +1729,8 @@ class Html:
     """
     Description:
     -----------
-
-    Usage::
+    Rendrer the HTML component to the JavaScript.
+    This will be the main function called by the page to render all the component.s
 
     """
     str_result = []
@@ -1842,8 +1773,6 @@ class Body(Html):
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
 
-    Usage::
-
     :rtype: GrpCls.ClassPage
     """
     if self._styleObj is None:
@@ -1857,8 +1786,6 @@ class Body(Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -1874,8 +1801,6 @@ class Body(Html):
     Description:
     -----------
     The onscroll event occurs when an element's scrollbar is being scrolled.
-
-    Usage::
 
     Attributes:
     ----------
@@ -1916,8 +1841,6 @@ class Body(Html):
     Description:
     -----------
     Add a JavaScript function in the builder section which correspond to the JavaScript onload.
-
-    Usage::
 
     Attributes:
     ----------
@@ -1981,8 +1904,6 @@ class Body(Html):
     ------------
     Function to allow the templating of the report.
     This can be overridden by a generic class which can be shared within a set of report
-
-    Usage::
 
     Attributes:
     ----------

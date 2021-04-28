@@ -45,9 +45,6 @@ class Li(Html.Html):
     Description:
     ------------
     Remove the list default style.
-
-    Usage::
-
     """
     self.css({"text-decoration": "none", "list-style-type": 'none'})
     return self
@@ -57,8 +54,6 @@ class Li(Html.Html):
     Description:
     ------------
     Add an elementary label component.
-
-    Usage::
 
     Related Pages:
 
@@ -96,8 +91,6 @@ class Li(Html.Html):
     ------------
     Set the cell content to be an HTML object.
 
-    Usage::
-
     Attributes:
     ----------
     :param component: HTML. Python HTML object.
@@ -117,8 +110,7 @@ class Li(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a click event to the component.
 
     Attributes:
     ----------
@@ -162,8 +154,6 @@ class List(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: OptList.OptionsLi
     """
     return super().options
@@ -176,8 +166,6 @@ class List(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtml.JsHtmlList
     """
     if self._dom is None:
@@ -189,8 +177,6 @@ class List(Html.Html):
     Description:
     ------------
     Function to load a predefined style for the items of the components.
-
-    Usage::
 
     Attributes:
     ----------
@@ -210,8 +196,7 @@ class List(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a drop feature to the component.
 
     Attributes:
     ----------
@@ -247,8 +232,6 @@ class List(Html.Html):
     ------------
     Python function to get the elements of the lists which will be passed to the JavaScript.
 
-    Usage::
-
     Attributes:
     ----------
     :param i: Integer. Get an element from the Python list.
@@ -262,8 +245,6 @@ class List(Html.Html):
     Description:
     ------------
     Add an element to the list before passing the list to the Javascript.
-
-    Usage::
 
     Attributes:
     ----------
@@ -282,9 +263,6 @@ class List(Html.Html):
     Description:
     ------------
     Reset all the items in the list by applying the default styles,
-
-    Usage::
-
     """
     self.items = self.items or []
     for d in self.val:
@@ -302,8 +280,6 @@ class List(Html.Html):
     ------------
     Add event to the list items.
 
-    Usage::
-
     Attributes:
     ----------
     :param event: String. The event type.
@@ -319,8 +295,6 @@ class List(Html.Html):
     Description:
     ------------
     Add click events on the list items.
-
-    Usage::
 
     Attributes:
     ----------
@@ -362,8 +336,6 @@ class Groups(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -411,8 +383,6 @@ class Items(Html.Html):
     Description:
     -----------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsList.ClassItems
     """
@@ -485,8 +455,6 @@ class Items(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: OptList.OptionsItems
     """
     return super().options
@@ -499,8 +467,6 @@ class Items(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtmlList.JsItem
     """
     if self._dom is None:
@@ -512,8 +478,6 @@ class Items(Html.Html):
     Description:
     ------------
     The onclick event occurs when the user clicks on an element of the list.
-
-    Usage::
 
     Attributes:
     ----------
@@ -532,7 +496,6 @@ class Items(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -556,8 +519,6 @@ class Items(Html.Html):
     Add a bespoke item type with it is specific style and components.
 
     TODO: Create a tutorial to explain how to extend list types.
-
-    Usage::
 
     Attributes:
     ----------
@@ -587,8 +548,6 @@ class Items(Html.Html):
     It is possible to use predefined style or to pass bespoke ones.
 
     Style will be set at list type level so all the list in the page will be using it.
-
-    Usage::
 
     Attributes:
     ----------

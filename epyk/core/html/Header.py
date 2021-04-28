@@ -37,7 +37,8 @@ class Meta:
     dflt_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
     if attrs is not None:
       dflt_attrs.update(attrs)
-    self._metas["viewport"] = '<meta name="viewport" content="%s">' % ", ".join(["%s=%s" % (k, v) for k, v in dflt_attrs.items()])
+    self._metas["viewport"] = '<meta name="viewport" content="%s">' % ", ".join(
+      ["%s=%s" % (k, v) for k, v in dflt_attrs.items()])
     return self
 
   def charset(self, value="utf-8"):
@@ -228,11 +229,11 @@ class Links:
     Defines a resource for representing the page in the user interface, usually an icon (auditory or visual).
     In the browser, it is usually referred to as the favicon.
 
-    If there are multiple <link rel="icon">s, the browser uses their media, type, and sizes attributes to select the most appropriate icon.
+    If there are multiple <link rel="icon">s, the browser uses their media, type, and sizes attributes to select
+    the most appropriate icon.
     If several icons are equally appropriate, the last one is used.
-    If the most appropriate icon is later found to be inappropriate, for example because it uses an unsupported format, the browser proceeds to the next-most appropriate, and so on.
-
-    Usage::
+    If the most appropriate icon is later found to be inappropriate, for example because it uses an unsupported format,
+    the browser proceeds to the next-most appropriate, and so on.
 
     Related Pages:
 
@@ -252,8 +253,6 @@ class Links:
     Pingbacks (also known as trackbacks) are a form of automated comment for a page or post,
     created when another WordPress blog links to that page or post.
 
-    Usage::
-
     Related Pages:
 
       https://www.keycdn.com/blog/resource-hints
@@ -272,8 +271,6 @@ class Links:
     ------------
     Some websites create short links to make sharing links via instant messaging easier.
 
-    Usage::
-
     Related Pages:
 
       https://www.keycdn.com/blog/resource-hints
@@ -291,8 +288,6 @@ class Links:
     The preload keyword for the rel attribute of the <link> element indicates the user is highly likely to require
     the target resource for the current navigation, and therefore the browser must preemptively fetch and cache
     the resource.
-
-    Usage::
 
     Related Pages:
 
@@ -316,8 +311,6 @@ class Links:
     need the target resource for future navigations, and therefore the browser can likely improve the user experience
     by preemptively fetching and caching the resource.
 
-    Usage::
-
     Related Pages:
 
       https://www.keycdn.com/blog/resource-hints
@@ -339,8 +332,6 @@ class Links:
     The dns-prefetch keyword for the rel attribute of the <link> element is a hint to browsers that the user is likely
     to need resources from the target resource's origin, and therefore the browser can likely improve the user
     experience by preemptively performing DNS resolution for that origin.
-
-    Usage::
 
     Related Pages:
 
@@ -364,8 +355,6 @@ class Links:
     by preemptively fetching and processing the resource — for example, by fetching its subresources or performing
     some rendering in the background offscreen.
 
-    Usage::
-
     Related Pages:
 
       https://www.keycdn.com/blog/resource-hints
@@ -383,11 +372,10 @@ class Links:
     """
     Description:
     ------------
-    The preconnect directive allows the browser to setup early connections before an HTTP request is actually sent to the server.
+    The preconnect directive allows the browser to setup early connections before an HTTP request is actually sent
+    to the server.
     This includes DNS lookups, TLS negotiations, TCP handshakes.
     This in turn eliminates roundtrip latency and saves time for users.
-
-    Usage::
 
     Related Pages:
 
@@ -406,9 +394,8 @@ class Links:
     """
     Description:
     ------------
-    HTML Imports is intended to be the packaging mechanism for web components, but you can also use HTML Imports by itself.
-
-    Usage::
+    HTML Imports is intended to be the packaging mechanism for web components, but you can also use HTML Imports by
+    itself.
 
     Related Pages:
 
@@ -427,12 +414,10 @@ class Links:
     """
     Description:
     ------------
-    The manifest keyword for the rel attribute of the <link> element indicates that the target resource is a Web app manifest.
+    The manifest keyword for the rel attribute of the <link> element indicates that the target resource is a Web app
+    manifest.
 
     Web app manifests are deployed in your HTML pages using a <link> element in the <head> of a document:
-
-    Usage::
-
 
     Related Pages:
 
@@ -455,8 +440,6 @@ class Links:
     Description:
     ------------
     Link the page to a style sheet.
-
-    Usage::
 
     Related Pages:
 
@@ -485,8 +468,8 @@ class Links:
     """
     Description:
     ------------
-
-    Usage::
+    Specifying alternative style sheets in a web page provides a way for users to see multiple versions of a page,
+    based on their needs or preferences.
 
     Related Pages:
 
@@ -514,8 +497,7 @@ class Icons:
     """
     Description:
     ------------
-
-    Usage::
+    Set the icon for the page.
 
     Related Pages:
 
@@ -523,9 +505,9 @@ class Icons:
 
     Attributes:
     ----------
-    :param url: String.
-    :param sizes: String. Optional.
-    :param img_type: String. Optional.
+    :param url: String. The url of the icon on the server.
+    :param sizes: String. Optional. The size of the icon.
+    :param img_type: String. Optional. The type of picture.
     """
     self.__header.favicon(url, rel="icon", sizes=sizes, img_type=img_type)
     return self.__header
@@ -535,7 +517,6 @@ class Icons:
     Description:
     ------------
 
-    Usage::
 
     Related Pages:
 
@@ -554,8 +535,6 @@ class Icons:
     Description:
     ------------
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/tags/att_link_sizes.asp
@@ -573,7 +552,6 @@ class Icons:
     Description:
     ------------
 
-    Usage::
 
     Related Pages:
 
@@ -592,7 +570,6 @@ class Icons:
     Description:
     ------------
 
-    Usage::
 
     Related Pages:
 
@@ -682,8 +659,6 @@ class Header:
 
     The script will be added in a script tag.
 
-    Usage::
-
     Attributes:
     ----------
     :param src: String. The script path added to the page.
@@ -725,8 +700,6 @@ class Header:
     Specify a dedicated path for the relative paths in the page.
 
     Basically the images will use this path as base if present in the page.
-
-    Usage::
 
     Related Pages:
 
@@ -785,8 +758,6 @@ class Header:
     ------------
     The various HTML page header links.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/dom_obj_link.asp
@@ -801,9 +772,6 @@ class Header:
     ------------
     Property to defined / add more icons to the page header.
     Some browsers (like Safari or Opera) could require specify tags in the page.
-
-    Usage::
-
     """
     return Icons(self)
 

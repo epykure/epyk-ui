@@ -14,43 +14,49 @@ class JsHtmlTabulatorCell(JsHtml.JsHtml):
 
   def getElement(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsNodeDom.JsDoms.get("cell.getElement()")
 
   def getColumnField(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("cell.getColumn().getField()")
 
   def getColumnTitle(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("cell.getColumn().getDefinition().title")
 
   def getValue(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("cell.getValue()")
 
   def getRow(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("cell.getRow()")
 
   def getData(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("cell.getRow().getData()")
 
@@ -66,7 +72,7 @@ class JsHtmlTabulator(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlCode, self.content.toStr()))
+        self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
@@ -82,7 +88,6 @@ class JsHtmlTabulator(JsHtml.JsHtml):
     """
     Description:
     -----------
-
 
     """
     return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self._src.tableId)

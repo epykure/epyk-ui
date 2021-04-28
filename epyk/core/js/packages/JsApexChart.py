@@ -11,6 +11,8 @@ class _Export:
   @property
   def options(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsObject.JsObject.get("options")
@@ -18,6 +20,8 @@ class _Export:
   @property
   def event(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsObject.JsObject.get("event")
@@ -25,6 +29,8 @@ class _Export:
   @property
   def config(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsObject.JsObject.get("config")
@@ -32,6 +38,8 @@ class _Export:
   @property
   def chartContext(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsObject.JsObject.get("chartContext")
@@ -39,6 +47,8 @@ class _Export:
   @property
   def seriesIndex(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsNumber.JsNumber.get("seriesIndex")
@@ -46,6 +56,8 @@ class _Export:
   @property
   def x(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsObject.JsObject.get("config.globals.labels[config.dataPointIndex]")
@@ -53,6 +65,8 @@ class _Export:
   @property
   def y(self):
     """
+    Description:
+    -----------
 
     """
     return JsObjects.JsNumber.JsNumber.get("config.globals.series[config.seriesIndex][config.dataPointIndex]")

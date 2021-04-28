@@ -87,7 +87,8 @@ class JsAttributes(JsObject.JsObject):
     """
     The setNamedItem() method adds the specified node to the NamedNodeMap.
 
-    If the node already exists, it will be replaced, and the replaced node will be the return value, otherwise the return value will be null.
+    If the node already exists, it will be replaced, and the replaced node will be the return value, otherwise
+    the return value will be null.
 
     Related Pages:
 

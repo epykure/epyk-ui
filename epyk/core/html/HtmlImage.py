@@ -49,8 +49,6 @@ class Image(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlImg
@@ -64,8 +62,6 @@ class Image(Html.Html):
     Description:
     -----------
     Click event which redirect to another page.
-
-    Usage::
 
     Attributes:
     ----------
@@ -190,8 +186,6 @@ class ImgCarousel(Html.Html):
     ------------
     Add click event on this component.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: String | List. The Javascript functions.
@@ -289,8 +283,6 @@ class Icon(Html.Html):
     -----------
     Click event which redirect to another page.
 
-    Usage::
-
     Attributes:
     ----------
     :param url: String. The url text.
@@ -313,8 +305,6 @@ class Icon(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlIcon
@@ -330,8 +320,6 @@ class Icon(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage::
-
     :rtype: GrpClsImage.ClassIcon
     """
     if self._styleObj is None:
@@ -342,8 +330,7 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add the spin class to the font awesome icon.
 
     Related Pages:
 
@@ -357,8 +344,7 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add the pulse class to the font awesome icon.
 
     Related Pages:
 
@@ -372,8 +358,7 @@ class Icon(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a border to the icon.
 
     Related Pages:
 
@@ -389,8 +374,6 @@ class Icon(Html.Html):
     ------------
     Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
     With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
-
-    Usage::
 
     Related Pages:
 
@@ -412,7 +395,6 @@ class Icon(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Related Pages:
 
@@ -427,8 +409,6 @@ class Icon(Html.Html):
     Description:
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
-
-    Usage::
 
     Related Pages:
 
@@ -448,8 +428,6 @@ class Icon(Html.Html):
     ------------
     To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
     This will use the font-awesome flip classes.
-
-    Usage::
 
     Related Pages:
 
@@ -474,8 +452,6 @@ class Icon(Html.Html):
     ------------
     Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
-    Usage::
-
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
@@ -493,8 +469,6 @@ class Icon(Html.Html):
     Description:
     ------------
     Add the icon class reference to the CSS class attribute of the component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -532,8 +506,6 @@ class Icon(Html.Html):
     ------------
     The onclick event occurs when the user clicks on an element.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: String | List. The Javascript functions.
@@ -560,7 +532,6 @@ class IconToggle(Icon):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -574,8 +545,6 @@ class IconToggle(Icon):
     Description:
     ------------
     The onclick event occurs when the user clicks on an element.
-
-    Usage::
 
     Attributes:
     ----------
@@ -622,8 +591,6 @@ class Emoji(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -678,8 +645,6 @@ class Badge(Html.Html):
     ------------
     Property to the options specific to the HTML component.
 
-    Usage::
-
     :rtype: OptButton.OptionsBadge
     """
     return super().options
@@ -689,8 +654,6 @@ class Badge(Html.Html):
     Description:
     -----------
     The onclick event occurs when the user clicks on an element.
-
-    Usage::
 
     Attributes:
     ----------
@@ -740,9 +703,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
     Return the Javascript variable of the json object.
-
-    Usage::
-
     """
     return "%s_obj" % self.htmlCode
 
@@ -754,8 +714,6 @@ class SlideShow(Html.Html):
     The tiny slider javascript events.
 
     Return the Javascript internal object.
-
-    Usage::
 
     :return: A Javascript object
 
@@ -773,8 +731,6 @@ class SlideShow(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object.
 
     :rtype: JsHtmlTinySlider.JsHtmlTinySlider
@@ -787,8 +743,6 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -811,7 +765,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -826,7 +779,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -841,8 +793,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript fragments.
@@ -856,7 +806,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -871,7 +820,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -886,8 +834,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript fragments.
@@ -900,8 +846,6 @@ class SlideShow(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -916,7 +860,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -931,7 +874,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -946,8 +888,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript fragments.
@@ -960,8 +900,6 @@ class SlideShow(Html.Html):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -976,8 +914,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript fragments.
@@ -990,8 +926,6 @@ class SlideShow(Html.Html):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1006,8 +940,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. The JavaScript fragments.
@@ -1020,8 +952,6 @@ class SlideShow(Html.Html):
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1036,7 +966,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1051,7 +980,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1066,7 +994,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1081,7 +1008,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1096,7 +1022,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1111,7 +1036,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1126,7 +1050,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
 
-    Usage::
 
     Attributes:
     ----------
@@ -1141,9 +1064,6 @@ class SlideShow(Html.Html):
     Description:
     -----------
     Component refresh function. Javascript function which can be called in any Javascript event.
-
-    Usage::
-
     """
     return self.build([], self._jsStyles)
 
@@ -1154,9 +1074,9 @@ class SlideShow(Html.Html):
     ------------
     The tiny slider options.
 
-    Usage::
+    Related Pages:
 
-    https://github.com/ganlanyuan/tiny-slider
+      https://github.com/ganlanyuan/tiny-slider
 
     :rtype: OptImg.OptionsTinySlider
     """
@@ -1168,9 +1088,6 @@ class SlideShow(Html.Html):
     ------------
     Empty all the values already defined on the Python side.
     This will be called before the JavaScript Transpilation.
-
-    Usage::
-
     """
     self._vals = []
     self.components = {}
@@ -1181,8 +1098,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
     Add a component to the slider container.
-
-    Usage::
 
     Attributes:
     ----------
@@ -1215,13 +1130,12 @@ class Background(HtmlContainer.Div):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param value: String.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Optional. A DOM component reference in the page.
     """
     if isinstance(value, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in value.items()])

@@ -45,8 +45,6 @@ class Popup(Html.Html):
     Add a component to the popup.
     If this is a list then they will be added in a row.
 
-    Usage::
-
     Attributes:
     ----------
     :param component: HTML Component | List. The component to be added to the underlying list.
@@ -59,8 +57,6 @@ class Popup(Html.Html):
     ------------
     Append list of component to the popup.
 
-    Usage::
-
     Attributes:
     ----------
     :param components: HTML Component | List. The component to be added to the underlying list.
@@ -72,8 +68,6 @@ class Popup(Html.Html):
     Description:
     ------------
     Insert a component to the popup at a specific place.
-
-    Usage::
 
     Attributes:
     ----------
@@ -89,8 +83,6 @@ class Popup(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage::
-
     :rtype: OptPanel.OptionPopup
     """
     return self.__options
@@ -100,8 +92,6 @@ class Popup(Html.Html):
     Description:
     ------------
     Add a title to the popup.
-
-    Usage::
 
     Attributes:
     ----------

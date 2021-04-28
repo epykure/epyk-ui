@@ -19,8 +19,6 @@ class JsShapes:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param shape_def:
@@ -78,7 +76,6 @@ class JsShapes:
     Description:
     ------------
 
-    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
@@ -92,7 +89,6 @@ class JsShapes:
     Description:
     ------------
 
-    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'rect');
@@ -108,7 +104,6 @@ class JsShapes:
     Description:
     ------------
 
-    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'circle');
@@ -125,7 +120,6 @@ class JsShapes:
     Description:
     ------------
 
-    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
@@ -138,8 +132,6 @@ class JsShapes:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -158,8 +150,6 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -199,8 +189,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     """
     return self.colors(self._src.options.success, status='success')
 
@@ -208,8 +196,6 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     return self.colors(self._src.options.error, status='error')
@@ -219,8 +205,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     """
     return self.colors(self._src.options.pending, status='pending')
 
@@ -228,8 +212,6 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     return self.colors(self._src.options.waiting, status='waiting')
@@ -239,8 +221,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     """
 
   @property
@@ -248,8 +228,6 @@ class Step(JsNodeDom.JsDoms):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
@@ -259,7 +237,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -271,15 +248,14 @@ class Step(JsNodeDom.JsDoms):
     return JsObjects.JsObjects.get('''
       var svgns = '%(svgns)s';
       %(comp)s.querySelector('svg').remove(); %(shape)s(%(comp)s, %(options)s, %(step)s)
-      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step, 'shape': shape})
+      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': json.dumps(self._src._jsStyles),
+             'step': step, 'shape': shape})
 
   def triangle(self, status='error', step=None):
     """
     Description:
     ------------
     Hide all the panels in the drawer component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -299,7 +275,7 @@ class Step(JsNodeDom.JsDoms):
 
     Usage::
 
-      htmlObj.querySelector('svg').remove()
+      component.querySelector('svg').remove()
 
     Attributes:
     ----------
@@ -317,8 +293,6 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage::
-
     Attributes:
     ----------
     :param status: String. Optional.
@@ -334,8 +308,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
     Hide all the panels in the drawer component.
-
-    Usage::
 
     Attributes:
     ----------
@@ -353,8 +325,6 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Add a text label below the shape.
 
-    Usage::
-
     Attributes:
     ----------
     :param value: String. The text to be added.
@@ -366,8 +336,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
     Add a text on the shape.
-
-    Usage::
 
     Attributes:
     ----------
@@ -398,8 +366,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param color: String. Optional. The hexadecimal color code.
@@ -426,8 +392,6 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
@@ -450,7 +414,6 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage::
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
       self.htmlCode, self.content.toStr()))
@@ -461,7 +424,6 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
@@ -473,22 +435,19 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param label: String. The label value.
     """
     label = JsUtils.jsConvertData(label, None)
     return Step(self, src=self._src, varName='''
-      %(holder)s.querySelectorAll('div[name=svg_holder]')[%(StepByName)s(%(holder)s, %(label)s)]''' % {'StepByName': self._get_index(), "holder": self.varName, 'label': label}, report=self._report)
+      %(holder)s.querySelectorAll('div[name=svg_holder]')[%(StepByName)s(%(holder)s, %(label)s)]''' % {
+      'StepByName': self._get_index(), "holder": self.varName, 'label': label}, report=self._report)
 
   def addItem(self, label, tooltip="", shape='circle',  status="waiting"):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -515,14 +474,14 @@ class Stepper(JsHtml.JsHtmlRich):
         div.id = "svg_" + %(holder)s.childElementCount;
         window[%(shape)s](div, options, %(status)s); 
         %(holder)s.appendChild(li)}
-      ''' % {'StepByName': self._get_index(), "holder": self.varName, 'status': status, 'shape': shape, "tooltip": tooltip, 'label': label, 'options': json.dumps(self._src._jsStyles)}
+      ''' % {'StepByName': self._get_index(), "holder": self.varName, 'status': status, 'shape': shape,
+             "tooltip": tooltip, 'label': label, 'options': json.dumps(self._src._jsStyles)}
 
   def delete(self, i):
     """
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -539,8 +498,6 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
     Hide all the panels in the drawer component.
-
-    Usage::
     """
     return JsHtml.ContentFormatters(self._report, ''' 
       (function(doms, contents){var index =-1; doms.childNodes.forEach(function(dom, k){if(dom.style.display !== 'none'){index = k}}); 
@@ -552,8 +509,6 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
     Hide all the panels in the drawer component.
-
-    Usage::
     """
     return JsObjects.JsObjects.get(''' 
       (function(doms){doms.childNodes.forEach(function(dom){dom.style.display = 'none'; })})(%s)
@@ -563,8 +518,6 @@ class Drawer(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -578,8 +531,6 @@ class Drawer(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------

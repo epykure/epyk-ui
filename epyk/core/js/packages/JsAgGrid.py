@@ -26,10 +26,9 @@ class ColumnApi:
 
     Attributes:
     ----------
-    :param columns:
+    :param width:
     """
-    width = JsUtils.jsConvertData(width, None)
-    return JsObjects.JsVoid("%s.sizeColumnsToFit(%s)" % (self.varId, width))
+    return JsObjects.JsVoid("%s.sizeColumnsToFit(%s)" % (self.varId, JsUtils.jsConvertData(width, None)))
 
   def getColumnGroup(self, name):
     """
@@ -45,8 +44,7 @@ class ColumnApi:
     ----------
     :param name:
     """
-    name = JsUtils.jsConvertData(name, None)
-    return JsObjects.JsVoid("%s.getColumnGroup(%s)" % (self.varId, name))
+    return JsObjects.JsVoid("%s.getColumnGroup(%s)" % (self.varId, JsUtils.jsConvertData(name, None)))
 
   def getColumn(self, name):
     """
@@ -62,8 +60,7 @@ class ColumnApi:
     ----------
     :param name:
     """
-    name = JsUtils.jsConvertData(name, None)
-    return JsObjects.JsVoid("%s.getColumn(%s)" % (self.varId, name))
+    return JsObjects.JsVoid("%s.getColumn(%s)" % (self.varId, JsUtils.jsConvertData(name, None)))
 
   def getColumnState(self):
     """
@@ -89,8 +86,7 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    columnState = JsUtils.jsConvertData(columnState, None)
-    return JsObjects.JsVoid("%s.setColumnState(%s)" % (self.varId, columnState))
+    return JsObjects.JsVoid("%s.setColumnState(%s)" % (self.varId, JsUtils.jsConvertData(columnState, None)))
 
   def resetColumnState(self):
     """
@@ -228,8 +224,7 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKey = JsUtils.jsConvertData(colKey, None)
-    return JsObjects.JsVoid("%s.autoSizeColumn(%s)" % (self.varId, colKey))
+    return JsObjects.JsVoid("%s.autoSizeColumn(%s)" % (self.varId, JsUtils.jsConvertData(colKey, None)))
 
   def autoSizeColumns(self, colKeys):
     """
@@ -242,8 +237,7 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKeys = JsUtils.jsConvertData(colKeys, None)
-    return JsObjects.JsVoid("%s.autoSizeColumns(%s)" % (self.varId, colKeys))
+    return JsObjects.JsVoid("%s.autoSizeColumns(%s)" % (self.varId, JsUtils.jsConvertData(colKeys, None)))
 
   def getDisplayNameForColumn(self, name):
     """
@@ -261,8 +255,7 @@ class ColumnApi:
     ----------
     :param name:
     """
-    name = JsUtils.jsConvertData(name, None)
-    return JsObjects.JsVoid("%s.getDisplayNameForColumn(%s)" % (self.varId, name))
+    return JsObjects.JsVoid("%s.getDisplayNameForColumn(%s)" % (self.varId, JsUtils.jsConvertData(name, None)))
 
   def getAllColumns(self):
     """
@@ -416,7 +409,8 @@ class ColumnApi:
     """
     Description:
     -----------
-    Sets the column width on a single column. The finished flag gets included in the resulting event and not used internally by the grid.
+    Sets the column width on a single column. The finished flag gets included in the resulting event and not used
+    internally by the grid.
 
     Related Pages:
 
@@ -467,6 +461,8 @@ class AgGrid(JsPackage):
   @property
   def columnApi(self):
     """
+    Description:
+    -----------
 
     Related Pages:
 

@@ -1884,10 +1884,6 @@ def script_cdnjs_path(alias, script_details, with_prefix=False):
 
   Having script copied locally will speed up the loading of the page and also will ensure a run offline.
 
-  Usage::
-
-
-
   Attributes:
   ----------
   :param alias: String. The package reference alias in the framework and in NPM.
@@ -1904,9 +1900,6 @@ def script_npm_path(alias, script_details, static_path, with_prefix=False):
   """
   Description:
   -----------
-
-  Usage::
-
 
   Attributes:
   ----------
@@ -1930,8 +1923,6 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
   Description:
   ------------
   Function to extend the internal CSS and JS registered modules.
-
-  Usage::
 
 
   Related Pages:
@@ -1965,8 +1956,6 @@ def extend_imports(extension):
   Hook to extend the imports in the centralised Import module.
   The packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
   simplicity.
-
-  Usage::
 
   Attributes:
   ----------
@@ -2084,9 +2073,6 @@ class ImportModule:
     -----------
     Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
     Indeed this method will not impact any modules with this flag set to True.
-
-    Usage::
-
     """
     self.overriden = True
 
@@ -2096,8 +2082,6 @@ class ImportModule:
     -----------
     Route the package to the local path.
     Check first of the modules exist and raise an error otherwise.
-
-    Usage::
 
     Attributes:
     ----------
@@ -2138,9 +2122,6 @@ class ImportPackages:
     Generic way to retrieve packages from the framework.
     This is a shortcut to change any properties for the package (version, path...).
 
-    Usage::
-
-
     Attributes:
     ----------
     :param name: String. The package alias to be loaded.
@@ -2155,9 +2136,6 @@ class ImportPackages:
     A dynamic, browser based visualization library..
 
     TODO: Add the split of packages
-
-    Usage::
-
 
     Related Pages:
 
@@ -2174,9 +2152,6 @@ class ImportPackages:
 
     TODO: Add the split of packages
 
-    Usage::
-
-
     Related Pages:
 
       https://d3js.org/
@@ -2190,8 +2165,6 @@ class ImportPackages:
     ------------
     dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
     large multi-dimensional datasets.
-
-    Usage::
 
     Related Pages:
 
@@ -2207,9 +2180,6 @@ class ImportPackages:
     This project is an attempt to build re-usable charts and chart components for d3.js without taking away
     the power that d3.js gives you.
 
-    Usage::
-
-
     Related Pages:
 
       http://nvd3.org/
@@ -2222,9 +2192,6 @@ class ImportPackages:
     Description:
     ------------
     C3.js D3-based reusable chart library.
-
-    Usage::
-
 
     Related Pages:
 
@@ -2239,9 +2206,6 @@ class ImportPackages:
     ------------
     Re-usable, easy interface JavaScript chart library, based on D3 v4+.
 
-    Usage::
-
-
     Related Pages:
 
       https://naver.github.io/billboard.js/
@@ -2254,9 +2218,6 @@ class ImportPackages:
     Description:
     ------------
     Simple yet flexible JavaScript charting for designers & developers.
-
-    Usage::
-
 
     Related Pages:
 
@@ -2271,9 +2232,6 @@ class ImportPackages:
     ------------
     Fast Multidimensional Filtering for Coordinated Views.
 
-    Usage::
-
-
     Related Pages:
 
       http://square.github.io/crossfilter
@@ -2286,9 +2244,6 @@ class ImportPackages:
     Description:
     ------------
     Modern & Interactive Open-source Charts.
-
-    Usage::
-
 
     Related Pages:
 
@@ -2303,9 +2258,6 @@ class ImportPackages:
     ------------
     Plotly JavaScript Open Source Graphing Library.
 
-    Usage::
-
-
     Related Pages:
 
       https://plot.ly/javascript/
@@ -2318,9 +2270,6 @@ class ImportPackages:
     Description:
     ------------
     The Best JavaScript Grid in the World.
-
-    Usage::
-
 
     Related Pages:
 
@@ -2335,9 +2284,6 @@ class ImportPackages:
     ------------
     The most popular front-end framework for developing responsive, mobile first projects on the web.
 
-    Usage::
-
-
     Related Pages:
 
       https://getbootstrap.com/
@@ -2350,10 +2296,6 @@ class ImportPackages:
     Description:
     ------------
     JavaScript library for DOM operations.
-
-    Usage::
-
-
 
     Related Pages:
 
@@ -2368,10 +2310,6 @@ class ImportPackages:
     ------------
     jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery
     JavaScript Library.
-
-    Usage::
-
-
 
     Related Pages:
 
@@ -2775,8 +2713,6 @@ class ImportManager:
     ------------
     Add package to the page external required modules.
 
-    Usage::
-
     Attributes:
     ----------
     :param alias: String. The external module alias.
@@ -2980,8 +2916,6 @@ class ImportManager:
     ------------
     Retrieve the list of CSS dependencies URL from a header.
 
-    Usage::
-
     Attributes:
     ----------
     :param css_str: String. The CSS String in the page.
@@ -3045,8 +2979,6 @@ class ImportManager:
     Description:
     ------------
     Retrieve the list of Javascript dependencies URL from a header.
-
-    Usage::
 
     Attributes:
     ----------
@@ -3310,8 +3242,6 @@ class ImportManager:
 
     This will change the Import important to the Python env.
 
-    Usage::
-
     Attributes:
     ----------
     :param alias: String. The package reference in the above list.
@@ -3415,8 +3345,6 @@ class ImportManager:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param data: Dictionary. The Report modules to resolve.
@@ -3481,8 +3409,6 @@ class ImportManager:
     Description:
     ------------
     Show all the underlying packages used in a report or available in the framework.
-
-    Usage::
 
     Attributes:
     ----------

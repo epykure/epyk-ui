@@ -52,7 +52,6 @@ class JsHtmlGrid(JsHtml.JsHtml):
   def val(self):
     """
 
-    :return:
     """
     return self._src.input.dom.val
 
@@ -90,8 +89,6 @@ class JsHtmlGrid(JsHtml.JsHtml):
     Attributes:
     ----------
     :param i: Integer. The column number (start at 0)
-
-    :return:
     """
     return '''
       if(%(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display == 'none'){
@@ -122,12 +119,13 @@ class JsHtmlTabs(JsHtml.JsHtml):
     """
     Description:
     ------------
-    Return the Javascript tab object
+    Return the Javascript tab object.
 
-    Example
-    tab.dom.tab(3).firstChild.css({"color": 'red'})
+    Usage::
 
-    :param i: Integer. Starting from 0 as we keep the Python indexing as reference
+      tab.dom.tab(3).firstChild.css({"color": 'red'})
+
+    :param i: Integer. Starting from 0 as we keep the Python indexing as reference.
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.firstChild.querySelector('div:nth-child(%s)')" % (self.varId, i+1))
 
@@ -136,7 +134,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
     """
     Description:
     ------------
-    Return the index of the selected tab
+    Return the index of the selected tab.
 
     :return: The index or -1
     """
@@ -151,9 +149,9 @@ class JsHtmlTabs(JsHtml.JsHtml):
     """
     Description:
     ------------
-    Return the name of the selected tab
+    Return the name of the selected tab.
 
-    :return: The HTML content or an emtpy string
+    :return: The HTML content or an emtpy string.
     """
     return JsObjects.JsObjects.get('''
           (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
@@ -182,9 +180,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
     """
     Description:
     ------------
-    Deselect all the tabs in the component
-
-    :return:
+    Deselect all the tabs in the component.
     """
     return JsFncs.JsFunctions([
       self._report.js.getElementsByName(self._src.tabs_name).all([

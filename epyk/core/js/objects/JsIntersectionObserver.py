@@ -12,14 +12,15 @@ from epyk.core.js.fncs import JsFncs
 from epyk.core.js import JsUtils
 
 
-class IntersectionObserverEntry(object):
+class IntersectionObserverEntry:
 
   @property
   def boundingClientRect(self):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only boundingClientRect property returns a DOMRectReadOnly which in essence describes a rectangle describing the smallest rectangle that contains the entire target element.
+    The IntersectionObserverEntry interface's read-only boundingClientRect property returns a DOMRectReadOnly
+    which in essence describes a rectangle describing the smallest rectangle that contains the entire target element.
 
     Related Pages:
 
@@ -31,7 +32,8 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only intersectionRatio property tells you how much of the target element is currently visible within the root's intersection ratio, as a value between 0.0 and 1.0.
+    The IntersectionObserverEntry interface's read-only intersectionRatio property tells you how much of
+    the target element is currently visible within the root's intersection ratio, as a value between 0.0 and 1.0.
 
     Related Pages:
 
@@ -43,7 +45,9 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only intersectionRect property is a DOMRectReadOnly object which describes the smallest rectangle that contains the entire portion of the target element which is currently visible within the intersection root.
+    The IntersectionObserverEntry interface's read-only intersectionRect property is a DOMRectReadOnly object
+    which describes the smallest rectangle that contains the entire portion of the target element which is currently
+    visible within the intersection root.
 
     Related Pages:
 
@@ -55,7 +59,8 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only isIntersecting property is a Boolean value which is true if the target element intersects with the intersection observer's root.
+    The IntersectionObserverEntry interface's read-only isIntersecting property is a Boolean value which is true
+    if the target element intersects with the intersection observer's root.
 
     Related Pages:
 
@@ -67,7 +72,8 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only rootBounds property is a DOMRectReadOnly corresponding to the target's root intersection rectangle, offset by the IntersectionObserver.rootMargin if one is specified.
+    The IntersectionObserverEntry interface's read-only rootBounds property is a DOMRectReadOnly corresponding to the
+    target's root intersection rectangle, offset by the IntersectionObserver.rootMargin if one is specified.
 
     Related Pages:
 
@@ -79,7 +85,8 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only target property indicates which targeted Element has changed its amount of intersection with the intersection root.
+    The IntersectionObserverEntry interface's read-only target property indicates which targeted Element has changed
+    its amount of intersection with the intersection root.
 
     Related Pages:
 
@@ -91,7 +98,8 @@ class IntersectionObserverEntry(object):
     """
     Description:
     ------------
-    The IntersectionObserverEntry interface's read-only time property is a DOMHighResTimeStamp that indicates the time at which the intersection change occurred relative to the time at which the document was created.
+    The IntersectionObserverEntry interface's read-only time property is a DOMHighResTimeStamp that indicates the time
+    at which the intersection change occurred relative to the time at which the document was created.
 
     Related Pages:
 
@@ -100,7 +108,7 @@ class IntersectionObserverEntry(object):
     return JsNumber.JsNumber("%s.time")
 
 
-class IntersectionObserver(object):
+class IntersectionObserver:
 
   def __init__(self):
     pass
@@ -110,7 +118,8 @@ class IntersectionObserver(object):
     """
     Description:
     ------------
-    The IntersectionObserver interface's read-only root property identifies the Element whose bounds are treated as the bounding box of the viewport for the element which is the observer's target.
+    The IntersectionObserver interface's read-only root property identifies the Element whose bounds are treated as
+    the bounding box of the viewport for the element which is the observer's target.
     If the root is null, then the bounds of the actual document viewport are used.
 
     Related Pages:
@@ -124,7 +133,8 @@ class IntersectionObserver(object):
     """
     Description:
     ------------
-    The IntersectionObserver interface's read-only rootMargin property is a string with syntax similar to that of the CSS margin property.
+    The IntersectionObserver interface's read-only rootMargin property is a string with syntax similar to that of
+    the CSS margin property.
 
     Related Pages:
 
@@ -132,15 +142,15 @@ class IntersectionObserver(object):
     """
     return JsString.JsString("%s.rootMargin", isPyData=False)
 
-
-
   @property
   def thresholds(self):
     """
     Description:
     ------------
-    The IntersectionObserver interface's read-only thresholds property returns the list of intersection thresholds that was specified when the observer was instantiated with IntersectionObserver().
-    If only one threshold ratio was provided when instanitating the object, this will be an array containing that single value.
+    The IntersectionObserver interface's read-only thresholds property returns the list of intersection thresholds that
+    was specified when the observer was instantiated with IntersectionObserver().
+    If only one threshold ratio was provided when instanitating the object, this will be an array containing
+    that single value.
 
     Related Pages:
 
@@ -152,7 +162,8 @@ class IntersectionObserver(object):
     """
     Description:
     ------------
-    The IntersectionObserver method observe() adds an element to the set of target elements being watched by the IntersectionObserver.
+    The IntersectionObserver method observe() adds an element to the set of target elements being watched by the
+    IntersectionObserver.
 
     Related Pages:
 
@@ -180,13 +191,16 @@ class IntersectionObserver(object):
     """
     Description:
     ------------
-    The IntersectionObserver method takeRecords() returns an array of IntersectionObserverEntry objects, one for each targeted element which has experienced an intersection change since the last time the intersections were checked, either explicitly through a call to this method or implicitly by an automatic call to the observer's callback.
+    The IntersectionObserver method takeRecords() returns an array of IntersectionObserverEntry objects, one for each
+    targeted element which has experienced an intersection change since the last time the intersections were checked,
+    either explicitly through a call to this method or implicitly by an automatic call to the observer's callback.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/takeRecords
 
-    :return: An array of IntersectionObserverEntry objects, one for each target element whose intersection with the root has changed since the last time the intersections were checked.
+    :return: An array of IntersectionObserverEntry objects, one for each target element whose intersection with the
+    root has changed since the last time the intersections were checked.
     """
     return JsFncs.JsFunction("%s.takeRecords()")
 
@@ -194,7 +208,8 @@ class IntersectionObserver(object):
     """
     Description:
     ------------
-    The IntersectionObserver method unobserve() instructs the IntersectionObserver to stop observing the specified target element.
+    The IntersectionObserver method unobserve() instructs the IntersectionObserver to stop observing the specified
+    target element.
 
     Related Pages:
 

@@ -21,26 +21,29 @@ class SelectAPI(JsPackage):
 
   def blurable(self):
     """
-    Get the blurable state for the table
+    Description:
+    -----------
+    Get the blurable state for the table.
 
     Related Pages:
 
       https://datatables.net/reference/api/select.blurable()
-
-    :return:
     """
     return JsObjects.JsBoolean.JsBoolean("%s.blurable()" % self._selector)
 
   def info(self, jsFlag=None):
     """
+    Description:
+    -----------
     Get / set the information summary display state.
 
     Related Pages:
 
       https://datatables.net/reference/api/select.info()
 
+    Attributes:
+    ----------
     :param jsFlag: Value to set for the information summary display state - true to enable, false to disable.
-    :return:
     """
     if jsFlag is None:
       return JsObjects.JsBoolean.JsBoolean("%s.info()" % self._selector)
@@ -49,37 +52,37 @@ class SelectAPI(JsPackage):
 
   def items(self):
     """
+    Description:
+    -----------
     Get / set the items that Select will select based on user interaction (rows, columns or cells).
 
     Related Pages:
 
       https://datatables.net/reference/api/select.items()
-
-    :return:
     """
     return JsObjects.JsString.JsString("%s.items()" % self._selector)
 
   def selector(self):
     """
+    Description:
+    -----------
     Get the current item selector string applied to the table.
 
     Related Pages:
 
       https://datatables.net/reference/api/select.selector()
-
-    :return:
     """
     return JsObjects.JsString.JsString("%s.selector()" % self._selector)
 
   def style(self):
     """
+    Description:
+    -----------
     Get / set the style by which the end user can select items in the table.
 
     Related Pages:
 
       https://datatables.net/reference/api/select.style()
-
-    :return:
     """
     return JsObjects.JsString.JsString("%s.style()" % self._selector)
 
@@ -91,6 +94,8 @@ class CellAPI(JsPackage):
 
   def deselect(self):
     """
+    Description:
+    -----------
     Deselect a single cell
 
     Related Pages:
@@ -103,7 +108,9 @@ class CellAPI(JsPackage):
 
   def select(self):
     """
-    Select a single cell
+    Description:
+    -----------
+    Select a single cell.
 
     Related Pages:
 
@@ -115,7 +122,9 @@ class CellAPI(JsPackage):
 
   def render(self):
     """
-    Get rendered data for a cell
+    Description:
+    -----------
+    Get rendered data for a cell.
 
     Related Pages:
 
@@ -127,7 +136,9 @@ class CellAPI(JsPackage):
 
   def node(self):
     """
-    Get the DOM element for the selected cell
+    Description:
+    -----------
+    Get the DOM element for the selected cell.
 
     Related Pages:
 
@@ -139,6 +150,8 @@ class CellAPI(JsPackage):
 
   def jquery_nodes(self):
     """
+    Description:
+    -----------
     Get the cell nodes for the selected column.
 
     Related Pages:
@@ -153,72 +166,74 @@ class CellAPI(JsPackage):
 
   def invalidate(self):
     """
-    Invalidate the data held in DataTables for the selected cells
+    Description:
+    -----------
+    Invalidate the data held in DataTables for the selected cells.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell().invalidate()
 
-    :return: DataTables API instance for chaining
+    :return: DataTables API instance for chaining.
     """
     return self.fnc("invalidate()")
 
   def index(self):
     """
-    Get index information about the selected cell
+    Description:
+    -----------
+    Get index information about the selected cell.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell().index()
-
-    :return:
     """
     return JsObjects.JsNumber.JsNumber("%s.index()" % self.getStr())
 
   def cache(self):
     """
-    Get cached data of the cache type specified
+    Description:
+    -----------
+    Get cached data of the cache type specified.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell().cache()
-
-    :return:
     """
 
   def data(self):
     """
+    Description:
+    -----------
     Get / set data for the selected cell.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell().data()
-
-    :return:
     """
     return self.fnc("data()")
 
   def focus(self):
     """
+    Description:
+    -----------
     Focus on a cell.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell().focus()
-
-    :return:
     """
     return self.fnc("focus()")
 
   def blur(self):
     """
+    Description:
+    -----------
     Blur focus from the table.
 
     Related Pages:
 
       https://datatables.net/reference/api/cell.blur()
-
-    :return:
     """
     return self.fnc("blur()")
 
@@ -230,7 +245,9 @@ class ColumnAPI(JsPackage):
 
   def deselect(self):
     """
-    Deselect a single column
+    Description:
+    -----------
+    Deselect a single column.
 
     Related Pages:
 
@@ -242,7 +259,9 @@ class ColumnAPI(JsPackage):
 
   def select(self):
     """
-    Select a single column
+    Description:
+    -----------
+    Select a single column.
 
     Related Pages:
 
@@ -254,6 +273,8 @@ class ColumnAPI(JsPackage):
 
   def cache(self):
     """
+    Description:
+    -----------
     Get the DataTables cached data for the selected column.
 
     Related Pages:
@@ -265,6 +286,8 @@ class ColumnAPI(JsPackage):
 
   def data(self):
     """
+    Description:
+    -----------
     Get the data for the cells in the selected column.
 
     Related Pages:
@@ -277,28 +300,30 @@ class ColumnAPI(JsPackage):
 
   def dataSrc(self):
     """
+    Description:
+    -----------
     Get the data source property for the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().dataSrc()
-
-    :return:
     """
 
   def footer(self):
     """
+    Description:
+    -----------
     Get the footer node for the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().footer()
-
-    :return:
     """
 
   def header(self):
     """
+    Description:
+    -----------
     Get the header node for the selected column.
 
     Related Pages:
@@ -310,38 +335,38 @@ class ColumnAPI(JsPackage):
 
   def index(self):
     """
+    Description:
+    -----------
     Get the column index of the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().index()
-
-    :return:
     """
     return JsObjects.JsNumber.JsNumber("%s.index()" % self.getStr())
 
   def nodes(self):
     """
+    Description:
+    -----------
     Get the cell nodes for the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().nodes()
-
-    :return:
     """
     self._js.append("nodes()")
     return self
 
   def jquery_nodes(self):
     """
+    Description:
+    -----------
     Get the cell nodes for the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().nodes()
-
-    :return:
     """
     self.nodes()
     self._js.append("to$()")
@@ -349,29 +374,31 @@ class ColumnAPI(JsPackage):
 
   def order(self):
     """
+    Description:
+    -----------
     Order the table by the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().order()
-
-    :return:
     """
 
   def search(self, jsData):
     """
+    Description:
+    -----------
     Search for data in the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().search()
-
-    :return:
     """
     return self.fnc("search(%s)" % JsUtils.jsConvertData(jsData, None))
 
   def visible(self):
     """
+    Description:
+    -----------
     Get / set the visibility of a single selected column.
 
     Related Pages:
@@ -384,6 +411,8 @@ class ColumnAPI(JsPackage):
 
   def draw(self, target=None):
     """
+    Description:
+    -----------
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
     Related Pages:
@@ -410,13 +439,13 @@ class RowChildAPI(JsPackage):
 
   def hide(self):
     """
+    Description:
+    -----------
     Hide the child row(s) of a parent row.
 
     Related Pages:
 
       https://datatables.net/reference/api/row().child.hide()
-
-    :return:
     """
     return self.fnc("hide()")
 
@@ -431,10 +460,12 @@ class RowAPI(JsPackage):
 
   def _mapVarId(self, strFnc, varId):
     """
+    Description:
+    -----------
     Change the varIs for row.add.
     This is done at class level and not object level on the Javascript side
 
-    This mapping is done according to the Package API definition
+    This mapping is done according to the Package API definition.
 
     Related Pages:
 
@@ -452,6 +483,8 @@ class RowAPI(JsPackage):
 
   def deselect(self):
     """
+    Description:
+    -----------
     This method simply deselects a single row that has been found by the row() selector method.
 
     Related Pages:
@@ -464,6 +497,8 @@ class RowAPI(JsPackage):
 
   def select(self):
     """
+    Description:
+    -----------
     This method simply selects a single row that has been found by the row() selector method.
 
     Related Pages:
@@ -476,6 +511,8 @@ class RowAPI(JsPackage):
 
   def scrollTo(self, animate=True):
     """
+    Description:
+    -----------
     Redraw the table's scrolling display to show the row selected by the row() method.
 
     Related Pages:
@@ -490,6 +527,8 @@ class RowAPI(JsPackage):
 
   def cache(self, dtype):
     """
+    Description:
+    -----------
     Get the DataTables cached data for the selected row.
 
     Related Pages:
@@ -509,6 +548,8 @@ class RowAPI(JsPackage):
 
   def data(self):
     """
+    Description:
+    -----------
     Retrieve the data for the whole table, in row index order.
 
     Related Pages:
@@ -521,6 +562,8 @@ class RowAPI(JsPackage):
 
   def id(self, hash=True):
     """
+    Description:
+    -----------
     This method can be used to get a row's id, as specified by the row's data and the rowId option.
     Optionally it can also prepend a hash (#) to the row id allowing it to then easily be used as a selector.
 
@@ -529,14 +572,14 @@ class RowAPI(JsPackage):
       https://datatables.net/reference/api/row().id()
 
     :param hash: Append a hash (#) to the start of the row id. This can be useful for then using the id as a selector
-
-    :return:
     """
     hash = JsUtils.jsConvertData(hash, None)
     return self.fnc("id(%s)" % hash)
 
   def index(self):
     """
+    Description:
+    -----------
     Get the row index of the selected row.
 
     Related Pages:
@@ -549,6 +592,8 @@ class RowAPI(JsPackage):
 
   def invalidate(self, source=None):
     """
+    Description:
+    -----------
     Invalidate the data held in DataTables for the selected row.
 
     Related Pages:
@@ -556,32 +601,30 @@ class RowAPI(JsPackage):
       https://datatables.net/reference/api/row().invalidate()
 
     :param source:
-
-    :return:
     """
     return self.fnc("invalidate(%s)")
 
   def node(self):
     """
+    Description:
+    -----------
     Get the row TR node for the selected row.
 
     Related Pages:
 
       https://datatables.net/reference/api/row().node()
-
-    :return:
     """
     return self.fnc("node()")
 
   def jquery_node(self):
     """
+    Description:
+    -----------
     Get the cell nodes for the selected column.
 
     Related Pages:
 
       https://datatables.net/reference/api/column().nodes()
-
-    :return:
     """
     self.node()
     self._js.append("to$()")
@@ -589,6 +632,8 @@ class RowAPI(JsPackage):
 
   def remove(self, update=False):
     """
+    Description:
+    -----------
     Delete the selected row from the DataTable.
 
     Related Pages:
@@ -596,8 +641,6 @@ class RowAPI(JsPackage):
       https://datatables.net/reference/api/row().remove()
 
     :param update:
-
-    :return:
     """
     if update:
       self.fnc("remove()")
@@ -607,6 +650,8 @@ class RowAPI(JsPackage):
 
   def add(self, jsData, toArray=False, update=False):
     """
+    Description:
+    -----------
     Add a new row to the table.
 
     Related Pages:
@@ -616,8 +661,6 @@ class RowAPI(JsPackage):
     :param jsData: The input data
     :param toArray: Boolean. Convert a python dictionary to a list
     :param update:
-
-    :return:
     """
     if toArray:
       if isinstance(jsData, list):
@@ -639,13 +682,13 @@ class RowAPI(JsPackage):
 
   def draw(self, target=None):
     """
+    Description:
+    -----------
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
     Related Pages:
 
       https://datatables.net/reference/api/draw()
-
-    :return:
     """
     if target is not None:
       return self.fnc("draw(%s)" % JsUtils.jsConvertData(target, None))
@@ -654,8 +697,10 @@ class RowAPI(JsPackage):
 
   def child(self, namespace=True):
     """
-    Row child method
-    Get / set the child rows of the selected main table row
+    Description:
+    -----------
+    Row child method.
+    Get / set the child rows of the selected main table row.
 
     Related Pages:
 
@@ -675,6 +720,8 @@ class DatatableAPI(JsPackage):
 
   def body(self):
     """
+    Description:
+    -----------
     Get the tbody node for the table in the API's context.
 
     Related Pages:
@@ -688,7 +735,9 @@ class DatatableAPI(JsPackage):
   @property
   def row(self):
     """
-    Link to the single row API
+    Description:
+    -----------
+    Link to the single row API.
 
     Related Pages:
 
@@ -699,7 +748,9 @@ class DatatableAPI(JsPackage):
   @property
   def rows(self):
     """
-    Link to the rows API
+    Description:
+    -----------
+    Link to the rows API.
 
     Related Pages:
 
@@ -709,6 +760,8 @@ class DatatableAPI(JsPackage):
 
   def adjust(self):
     """
+    Description:
+    -----------
     Adjust the column sizes of a newly shown table:
 
     Related Pages:
@@ -719,16 +772,21 @@ class DatatableAPI(JsPackage):
 
   def container_jquery(self):
     """
+    Description:
+    -----------
     Get the div container node for the table in the API's context.
 
     Related Pages:
 
       https://datatables.net/reference/api/table().container()
     """
-    return JsQuery.JQuery(self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
+    return JsQuery.JQuery(
+      self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
 
   def container_dom(self):
     """
+    Description:
+    -----------
     Get the div container node for the table in the API's context.
 
     Related Pages:
@@ -739,7 +797,9 @@ class DatatableAPI(JsPackage):
 
   def footer(self):
     """
-    Get the tfoot node for the table in the API's context
+    Description:
+    -----------
+    Get the tfoot node for the table in the API's context.
 
     Related Pages:
 
@@ -748,17 +808,19 @@ class DatatableAPI(JsPackage):
 
   def header(self):
     """
-    Get the thead node for the table in the API's context
+    Description:
+    -----------
+    Get the thead node for the table in the API's context.
 
     Related Pages:
 
       https://datatables.net/reference/api/table().header()
-
-    :return:
     """
 
   def nodes(self):
     """
+    Description:
+    -----------
     Get the table node for the table in the API's context.
 
     Related Pages:
@@ -769,6 +831,8 @@ class DatatableAPI(JsPackage):
 
   def jquery_node(self):
     """
+    Description:
+    -----------
     Get the cell nodes for the selected column.
 
     Related Pages:
@@ -779,6 +843,8 @@ class DatatableAPI(JsPackage):
 
   def clear(self, update=False):
     """
+    Description:
+    -----------
     Clear the table of all data:
 
     Related Pages:
@@ -786,7 +852,6 @@ class DatatableAPI(JsPackage):
       https://datatables.net/reference/api/clear()
 
     :param update: Boolean
-    :return:
     """
     if update:
       self.fnc("clear()")
@@ -796,18 +861,20 @@ class DatatableAPI(JsPackage):
 
   def data(self):
     """
+    Description:
+    -----------
     Retrieve the data for the whole table, in row index order.
 
     Related Pages:
 
       https://datatables.net/reference/api/data()
-
-    :return:
     """
     return JsObjects.JsArray.JsArray.get("%s.data()" % self.varId)
 
   def destroy(self, remove=False, checkUndefined=False):
     """
+    Description:
+    -----------
     Restore the tables in the current context to its original state in the DOM by removing all of DataTables enhancements,
     alterations to the DOM structure of the table and event listeners.
 
@@ -817,20 +884,18 @@ class DatatableAPI(JsPackage):
 
     :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original plain un-enhanced HTML state (default, false).
     :param checkUndefined: Boolean
-
-    :return:
     """
     return self.fnc_closure("destroy(%s)" % JsUtils.jsConvertData(remove, None), checkUndefined=checkUndefined)
 
   def draw(self, target=None):
     """
+    Description:
+    -----------
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
     Related Pages:
 
       https://datatables.net/reference/api/draw()
-
-    :return:
     """
     if target is not None:
       return self.fnc_closure("draw(%s)" % JsUtils.jsConvertData(target, None))
@@ -839,15 +904,12 @@ class DatatableAPI(JsPackage):
 
   def order(self, data=None):
     """
-
-    Example
-
+    Description:
+    -----------
 
     Related Pages:
 
       https://datatables.net/reference/api/order()
-
-    :return:
     """
     if data is not None:
       data = JsUtils.jsConvertData(data, None)
@@ -857,6 +919,8 @@ class DatatableAPI(JsPackage):
 
   def page(self, action):
     """
+    Description:
+    -----------
 
     Related Pages:
 
@@ -864,57 +928,58 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    if not action in ("first", "next", "previous", "last"):
+    if action not in ("first", "next", "previous", "last"):
       raise Exception("Action not defined")
 
     return self
 
   def search(self, jsData):
     """
+    Description:
+    -----------
 
     Related Pages:
 
       https://datatables.net/reference/api/search()
 
     :param jsData:
-    :return:
     """
 
     return self
 
   def settings(self):
     """
+    Description:
+    -----------
 
     Related Pages:
 
       https://datatables.net/reference/api/settings()
-
-    :return:
     """
     return self.fnc("settings()")
 
   def state(self):
     """
+    Description:
+    -----------
     Get the last saved state of the table.
 
     Related Pages:
 
       https://datatables.net/reference/api/state()
-
-    :return:
     """
     return JsObjects.JsObject.JsObject.get("%s.state()" % self.varId)
 
   def cell(self, cellSelector=None, rowColSelector=None):
     """
+    Description:
+    -----------
     Select cells found by both row and column selectors
 
     Related Pages:
 
       https://datatables.net/reference/api/cells()
-    https://datatables.net/reference/api/cell()
-
-    :return:
+      https://datatables.net/reference/api/cell()
     """
     if cellSelector is not None:
       selector = "%s.cell(%s)" % self.toStr()
@@ -926,9 +991,10 @@ class DatatableAPI(JsPackage):
 
   def column(self, colSelector):
     """
+    Description:
+    -----------
 
     :param colSelector:
-    :return:
     """
     if colSelector is not None:
       selector = "%s.column(%s)" % (self.toStr(), JsUtils.jsConvertData(colSelector, None))
@@ -938,9 +1004,10 @@ class DatatableAPI(JsPackage):
 
   def columns(self, colSelector):
     """
+    Description:
+    -----------
 
     :param colSelector:
-    :return:
     """
     if colSelector is not None:
       selector = "%s.column(%s)" % (self.varId, JsUtils.jsConvertData(colSelector, None))
@@ -950,13 +1017,14 @@ class DatatableAPI(JsPackage):
 
   def select(self):
     """
-    Initialise Select from outside of the constructor
+    Description:
+    -----------
+    Initialise Select from outside of the constructor.
 
     Related Pages:
 
       https://datatables.net/reference/api/select()
 
     TODO add the select true
-    :return:
     """
     return SelectAPI(selector="%s.select()", setVar=False)

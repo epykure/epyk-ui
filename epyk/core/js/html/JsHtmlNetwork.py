@@ -111,8 +111,6 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param delimiter: String. Optional. The file delimiter.
@@ -141,8 +139,7 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
   @property
   def code(self):
     """
-    The default data reference
-    :return:
+    The default data reference.
     """
     return "%s_data" % self._src.htmlCode
 

@@ -110,8 +110,7 @@ class UpDown(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a click event to the HTML component.
 
     Attributes:
     ----------
@@ -152,8 +151,6 @@ class BlockText(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -207,8 +204,6 @@ class TextWithBorder(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -327,8 +322,6 @@ class Delta(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage::
-
     :rtype: OptText.OptionsNumberDelta
     """
     return super().options
@@ -391,9 +384,7 @@ class Formula(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage::
-
-    :rtype: GrpClsText.ContentTable
+    :rtype: GrpClsText.ClsFormula
     """
     if self._styleObj is None:
       self._styleObj = GrpClsText.ClsFormula(self)
@@ -406,8 +397,6 @@ class Formula(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    Usage::
 
     Related Pages:
 
@@ -457,8 +446,6 @@ class TrafficLight(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlBackground
@@ -472,8 +459,6 @@ class TrafficLight(Html.Html):
     Description:
     ------------
     Set the 3 colors of the traffic light.
-
-    Usage::
 
     Attributes:
     ----------
@@ -497,8 +482,6 @@ class TrafficLight(Html.Html):
     ------------
     Turn a error warning to a green one.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
@@ -518,8 +501,7 @@ class TrafficLight(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a click event to the HTML component.
 
     Attributes:
     ----------
@@ -578,8 +560,6 @@ class ContentsTable(Html.Html):
     Property to set all the possible object for the content menu on the page.
     This object can be defined only once on the page.
 
-    Usage::
-
     :rtype: OptText.OptContents
     """
     return super().options
@@ -617,8 +597,6 @@ class ContentsTable(Html.Html):
     Description:
     ------------
     Add link to the content table.
-
-    Usage::
 
     Related Pages:
 
@@ -677,8 +655,6 @@ class ContentsTable(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     super(ContentsTable, self).move()
@@ -857,8 +833,6 @@ class Composite(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage::
-
     :rtype: ptText.OptionsComposite
     """
     return super().options
@@ -872,8 +846,6 @@ class Composite(Html.Html):
     Those functions will use plain javascript by default.
 
     This is the only flexible component in which this DOM object can be changed.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -893,8 +865,6 @@ class Composite(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpCls.ClassHtmlEmpty
     """
@@ -919,8 +889,6 @@ class Composite(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     """
     comp_ui = self._report.ui
@@ -956,8 +924,6 @@ class Composite(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -1035,8 +1001,6 @@ class Status(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    Usage::
 
     :rtype: ptText.OptionsStatus
     """

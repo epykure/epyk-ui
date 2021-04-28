@@ -282,9 +282,6 @@ class Checkbox(Html.Html):
     -----------
     Property to set all the possible object for check boxes.
 
-    Usage::
-
-
     :rtype: OptButton.OptCheckboxes
     """
     return super().options
@@ -296,8 +293,6 @@ class Checkbox(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
-
-    Usage::
 
     :rtype: JsHtml.JsHtmlButtonChecks
     """
@@ -349,10 +344,9 @@ class Checkbox(Html.Html):
     """
     Description:
     -----------
+    Add a click event on the checkbox component.
 
     TODO: Find way to remove jquery
-
-    Usage::
 
     Attributes:
     ----------
@@ -410,9 +404,6 @@ class CheckButton(Html.Html):
     -----------
     Property to set all the possible object for check button.
 
-    Usage::
-
-
     :rtype: OptButton.OptCheck
     """
     return super().options
@@ -423,8 +414,6 @@ class CheckButton(Html.Html):
     Description:
     ------------
     The Javascript Dom object.
-
-    Usage::
 
     :rtype: JsHtml.JsHtmlButtonMenu
     """
@@ -439,8 +428,6 @@ class CheckButton(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    Usage::
 
     :return: A Javascript Dom object
 
@@ -469,8 +456,6 @@ class CheckButton(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    Usage::
 
     :rtype: GrpClsButton.ClassButtonCheckBox
     """
@@ -645,8 +630,6 @@ class IconEdit(Html.Html):
     -----------
     Add a JavaScript click event on this component.
 
-    Usage::
-
     Attributes:
     ----------
     :param js_funcs: String | List. The Javascript functions.
@@ -670,8 +653,6 @@ class IconEdit(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/tags/att_a_target.asp
-
-    Usage::
 
     Attributes:
     ----------
@@ -722,8 +703,6 @@ class ButtonMenuItem:
     -----------
     Javascript module of the items in the menu.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsComponents.Menu
@@ -737,8 +716,6 @@ class ButtonMenuItem:
     Description:
     -----------
     Javascript generic events of the items in the menu.
-
-    Usage::
 
     Attributes:
     ----------
@@ -761,8 +738,6 @@ class ButtonMenuItem:
     Description:
     -----------
     Javascript click events of the items in the menu.
-
-    Usage::
 
     Attributes:
     ----------

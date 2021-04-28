@@ -30,8 +30,6 @@ class ExternalLink(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtmlLink
@@ -46,8 +44,6 @@ class ExternalLink(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    Usage::
 
     :rtype: OptText.OptionsLink
     """
@@ -75,8 +71,6 @@ class ExternalLink(Html.Html):
     Create a link to an HTML component defined in the page.
     This will create a shortcut to directly scroll to this component.
 
-    Usage::
-
     Attributes:
     ----------
     :param component: HTML. A link to this HTML component.
@@ -90,8 +84,6 @@ class ExternalLink(Html.Html):
     Description:
     -----------
     Property to remove the list default style.
-
-    Usage::
 
     Attributes:
     ----------
@@ -109,8 +101,6 @@ class ExternalLink(Html.Html):
     Description:
     -----------
     Return the JavaScript fragment to refresh the component content.
-
-    Usage::
 
     Attributes:
     ----------
@@ -144,9 +134,6 @@ class DataLink(Html.Html):
     Description:
     -----------
     Property to remove the list default style.
-
-    Usage::
-
     """
     self.style.css.text_decoration = None
     self.style.css.list_style_type = None

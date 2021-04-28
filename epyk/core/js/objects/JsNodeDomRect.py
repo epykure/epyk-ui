@@ -3,7 +3,7 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 
 
-class JsDOMRect(object):
+class JsDOMRect:
 
   def __init__(self, varId):
     self.varId = varId

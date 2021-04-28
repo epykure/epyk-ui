@@ -22,13 +22,12 @@ class Radio(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a value to the radio component.
 
     Attributes:
     ----------
     :param val: HTML | String. The item to be added.
-    :param checked: Boolean. Optional.
+    :param checked: Boolean. Optional. Check the item.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
       val = self._report.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
@@ -41,8 +40,6 @@ class Radio(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -57,8 +54,6 @@ class Radio(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -76,9 +71,7 @@ class Radio(Html.Html):
     ------------
     HTML Dom object.
 
-    Usage::
-
-    :rtype: JsHtmlSelect.Tick
+    :rtype: JsHtmlSelect.Radio
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.Radio(self, report=self._report)
@@ -123,8 +116,6 @@ class Tick(Html.Html):
     Description:
     ------------
     HTML Dom object.
-
-    Usage::
 
     :rtype: JsHtmlSelect.Tick
     """
@@ -178,8 +169,6 @@ class Switch(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage::
-
     :rtype: JsHtmlSelect.JsHtmlSwitch
     """
     if self._dom is None:
@@ -199,8 +188,6 @@ class Switch(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    Usage::
 
     :return: A Javascript Dom object.
 

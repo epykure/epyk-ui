@@ -65,6 +65,8 @@ class ChartGeoGoogle(Html.Html):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param data:
     :param options:
     :param profile:

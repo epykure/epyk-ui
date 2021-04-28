@@ -20,8 +20,7 @@ class Step:
     """
     Description:
     ------------
-
-    Usage::
+    Add a click event to the component.
 
     Attributes:
     ----------
@@ -67,8 +66,6 @@ class Stepper(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :rtype: JsHtmlStepper.Stepper
     """
     if self._dom is None:
@@ -81,8 +78,6 @@ class Stepper(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    Usage::
 
     :rtype: OptPanel.OptionsStepper
     """
@@ -120,14 +115,13 @@ class Stepper(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
+    Add a bespoke shape for the stepper component.
 
     Attributes:
     ----------
-    :param shape: String.
-    :param shape_def: String.
-    :param dependencies: List. Optional. The external module dependencies
+    :param shape: String. The shape reference.
+    :param shape_def: String. The shape JavaScript definition.
+    :param dependencies: List. Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:

@@ -329,7 +329,8 @@ class KeyboardEvent(UIEvent):
     """
     Description:
     ------------
-    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a key event was triggered.
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a
+    key event was triggered.
 
     Related Pages:
 

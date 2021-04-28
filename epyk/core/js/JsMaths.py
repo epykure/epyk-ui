@@ -22,7 +22,7 @@ class JsMaths:
 
     Usage::
 
-      jsObj.math.E
+      page.js.math.E
 
     Related Pages:
 

@@ -10,7 +10,7 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.fncs import JsFncs
 
 
-class D3ScaleLinear(object):
+class D3ScaleLinear:
   """
 
   """
@@ -74,7 +74,8 @@ class D3Select(JsPackage):
     returning a new selection that represents the update selection: the elements successfully bound to data.
 
     The data is specified for each group in the selection.
-    If the selection has multiple groups (such as d3.selectAll followed by selection.selectAll), then data should typically be specified as a function.
+    If the selection has multiple groups (such as d3.selectAll followed by selection.selectAll),
+    then data should typically be specified as a function.
 
     Related Pages:
 
@@ -98,7 +99,8 @@ class D3Select(JsPackage):
     Convert a list of dictionaries to an iteractor which will return ordered arrays based on the columns definition
 
     Related Pages:
-http://bl.ocks.org/gka/17ee676dc59aa752b4e6
+
+      http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Attributes:
     ----------

@@ -8,9 +8,6 @@ def indent(level=0, spaces=None):
   ------------
   Add the number of spaces according to the indent level.
 
-  Usage:
-
-
   Attributes:
   ----------
   :param level: Integer. Optional. The level for the line indent.
@@ -25,9 +22,6 @@ def parse_statements(line, level, delimiter=";", spaces=None):
   Description:
   ------------
   Parse and format a JavaScript line.
-
-  Usage::
-
 
   Attributes:
   ----------
@@ -54,9 +48,6 @@ def parse(data, minify=None, toStr=True, spaces=None):
   Description:
   ------------
   Parse and format a JavaScript string full statement.
-
-  Usage::
-
 
   Attributes:
   ----------
@@ -100,9 +91,6 @@ def builder(cls, minify=None, toStr=True, spaces=None):
   Description:
   ------------
   Extract the builder function from the HTML component.
-
-  Usage::
-
 
   Attributes:
   ----------

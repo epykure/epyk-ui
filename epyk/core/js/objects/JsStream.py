@@ -5,7 +5,7 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 
 
-class TeedStreams(object):
+class TeedStreams:
 
   def __init__(self, varId):
     self.varId = varId
@@ -28,8 +28,6 @@ class TransformStream(JsPackage):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
-
-    :return:
     """
     return "%s.readable" % self.varId
 
@@ -80,7 +78,8 @@ class ReadableStream(JsPackage):
     """
     Description:
     ------------
-    The pipeThrough() method of the ReadableStream interface provides a chainable way of piping the current stream through a transform stream or any other writable/readable pair.
+    The pipeThrough() method of the ReadableStream interface provides a chainable way of piping the current stream
+    through a transform stream or any other writable/readable pair.
 
     Related Pages:
 
@@ -102,7 +101,8 @@ class ReadableStream(JsPackage):
     """
     Description:
     ------------
-    The pipeTo() method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream and returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
+    The pipeTo() method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream
+    and returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 
     Related Pages:
 
@@ -122,7 +122,8 @@ class ReadableStream(JsPackage):
     """
     Description:
     ------------
-    The tee() method of the ReadableStream interface tees the current readable stream, returning a two-element array containing the two resulting branches as new ReadableStream instances.
+    The tee() method of the ReadableStream interface tees the current readable stream, returning a two-element array
+    containing the two resulting branches as new ReadableStream instances.
 
     Related Pages:
 
@@ -138,7 +139,8 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The desiredSize read-only property of the WritableStreamDefaultWriter interface returns the desired size required to fill the stream's internal queue.
+    The desiredSize read-only property of the WritableStreamDefaultWriter interface returns the desired size required
+    to fill the stream's internal queue.
 
     Related Pages:
 
@@ -151,7 +153,8 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The closed read-only property of the WritableStreamDefaultWriter interface returns a promise that fulfills if the stream becomes closed or the writer's lock is released, or rejects if the stream errors.
+    The closed read-only property of the WritableStreamDefaultWriter interface returns a promise that fulfills
+    if the stream becomes closed or the writer's lock is released, or rejects if the stream errors.
 
     Related Pages:
 
@@ -164,7 +167,9 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The ready read-only property of the WritableStreamDefaultWriter interface returns a Promise that resolves when the desired size of the stream's internal queue transitions from non-positive to positive, signaling that it is no longer applying backpressure.
+    The ready read-only property of the WritableStreamDefaultWriter interface returns a Promise that resolves when
+    the desired size of the stream's internal queue transitions from non-positive to positive, signaling that it is
+    no longer applying backpressure.
 
     Related Pages:
 
@@ -176,7 +181,9 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The abort() method of the WritableStreamDefaultWriter interface aborts the stream, signaling that the producer can no longer successfully write to the stream and it is to be immediately moved to an error state, with any queued writes discarded.
+    The abort() method of the WritableStreamDefaultWriter interface aborts the stream, signaling that the producer
+    can no longer successfully write to the stream and it is to be immediately moved to an error state, with any
+    queued writes discarded.
 
     Related Pages:
 
@@ -204,7 +211,8 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The releaseLock() method of the WritableStreamDefaultWriter interface releases the writer's lock on the corresponding stream.
+    The releaseLock() method of the WritableStreamDefaultWriter interface releases the writer's lock on the
+    corresponding stream.
 
     Related Pages:
 
@@ -216,7 +224,9 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     Description:
     ------------
-    The write() property of the WritableStreamDefaultWriter interface writes a passed chunk of data to a WritableStream and its underlying sink, then returns a Promise that resolves to indicate the success or failure of the write operation.
+    The write() property of the WritableStreamDefaultWriter interface writes a passed chunk of data to a
+    WritableStream and its underlying sink, then returns a Promise that resolves to indicate the success or failure of
+    the write operation.
 
     Related Pages:
 
@@ -237,7 +247,10 @@ class WritableStream(JsPackage):
     """
     Description:
     ------------
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStream
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WritableStream
     """
     return "%s.locked" % self.varId
 
@@ -245,7 +258,9 @@ class WritableStream(JsPackage):
     """
     Description:
     ------------
-    The abort() method of the WritableStream interface aborts the stream, signaling that the producer can no longer successfully write to the stream and it is to be immediately moved to an error state, with any queued writes discarded.
+    The abort() method of the WritableStream interface aborts the stream, signaling that the producer can no longer
+    successfully write to the stream and it is to be immediately moved to an error state, with any queued writes
+    discarded.
 
     Related Pages:
 
@@ -264,7 +279,9 @@ class WritableStream(JsPackage):
     """
     Description:
     ------------
-    The getWriter() method of the WritableStream interface returns a new instance of WritableStreamDefaultWriter and locks the stream to that instance. While the stream is locked, no other writer can be acquired until this one is released.
+    The getWriter() method of the WritableStream interface returns a new instance of WritableStreamDefaultWriter
+    and locks the stream to that instance. While the stream is locked, no other writer can be acquired until this
+    one is released.
 
     Related Pages:
 
@@ -272,7 +289,3 @@ class WritableStream(JsPackage):
     """
     return WritableStreamDefaultWriter("%s.getWriter()" % self.varId)
 
-
-if __name__ == '__main__':
-  obj = ReadableStream().cancel()
-  print(obj.toStr())

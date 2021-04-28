@@ -15,7 +15,7 @@ from epyk.core.js.fncs import JsFncs
 from epyk.core.js import JsUtils
 
 
-class DataLoop(object):
+class DataLoop:
   """
   Description:
   -----------
@@ -29,7 +29,7 @@ class DataLoop(object):
   val, index, arr = JsObject.JsObject("value"), JsNumber.JsNumber("index", isPyData=False), JsArray.JsArray("arr")
 
 
-class DataReduce(object):
+class DataReduce:
   """
   Description:
   -----------
@@ -41,13 +41,13 @@ class DataReduce(object):
   rVal, val, index = JsObject.JsObject("r"), JsNumber.JsNumber("o", isPyData=False), JsNumber.JsNumber("i", isPyData=False)
 
 
-class DataSort(object):
+class DataSort:
   """
 
   """
 
 
-class DataEach(object):
+class DataEach:
   """
   Description:
   -----------
@@ -59,7 +59,7 @@ class DataEach(object):
   index, data = JsNumber.JsNumber("index", isPyData=False), JsObject.JsObject("data", isPyData=False)
 
 
-class DataAll(object):
+class DataAll:
   """
   Description:
   -----------
@@ -71,7 +71,7 @@ class DataAll(object):
   index, element = JsNumber.JsNumber("index", isPyData=False), JsNodeDom.JsDoms.get(varName="elt")
 
 
-class ContainerData(object):
+class ContainerData:
   def __init__(self, report, schema):
     self._report, self._schema = report, schema
 
@@ -103,7 +103,7 @@ class ContainerData(object):
     return JsFncs.FncFiltere(self, self._report._props, self._schema)
 
 
-class RawData(object):
+class RawData:
 
   def __init__(self, report, records=None, profile=False):
     self._report, self._data_id = report, id(records)
@@ -154,7 +154,8 @@ class RawData(object):
     :param html_obj:
     :param profile:
     """
-    self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {'fncs': [], 'outs': None, "profile": profile}
+    self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {
+      'fncs': [], 'outs': None, "profile": profile}
     return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
 
   def toTsv(self, colNames=None, profile=False):
@@ -215,7 +216,7 @@ class RawData(object):
     return data
 
 
-class Datamap(object):
+class Datamap:
 
   def __init__(self, components=None, attrs=None):
     self._data = []
@@ -272,7 +273,8 @@ class Datamap(object):
     return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self._data])
 
   def get(self, value, dflt=None):
-    return JsObject.JsObject.get("{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
+    return JsObject.JsObject.get(
+      "{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
 
   def update(self, attrs):
     self.attrs(attrs)
@@ -282,7 +284,7 @@ class Datamap(object):
     return self.toStr()
 
 
-class FormData(object):
+class FormData:
   alias = None
 
   def new(self, varName, varType="let"):
@@ -344,7 +346,7 @@ class FormData(object):
     return self.alias
 
 
-class JsData(object):
+class JsData:
 
   def __init__(self, src):
     self._src = src
@@ -412,7 +414,8 @@ class JsData(object):
     """
     Description:
     -----------
-    One of the starting points of the visualizations of vis.js is that they can deal with dynamic data, and allow manipulation of the data.
+    One of the starting points of the visualizations of vis.js is that they can deal with dynamic data,
+    and allow manipulation of the data.
     To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
 
     Related Pages:
@@ -435,7 +438,8 @@ class JsData(object):
     Description:
     -----------
     A DataView offers a filtered and/or formatted view on a DataSet.
-    One can subscribe to changes in a DataView, and easily get filtered or formatted data without having to specify filters and field types all the time.
+    One can subscribe to changes in a DataView, and easily get filtered or formatted data without having to specify
+    filters and field types all the time.
 
     Viz.Js module
 
@@ -475,7 +479,7 @@ class JsData(object):
     return JsObject.JsObject("null", isPyData=False)
 
 
-class JsDataTransfer(object):
+class JsDataTransfer:
 
   def __init__(self, varName):
     self.varId = varName
@@ -494,7 +498,8 @@ class JsDataTransfer(object):
     """
     Description:
     -----------
-    The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files, the list is empty.
+    The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files,
+    the list is empty.
 
     This feature can be used to drag files from a user's desktop to the browser.
 
@@ -548,7 +553,8 @@ class JsDataTransfer(object):
     -----------
     Remove the data associated with a given type. The type argument is optional.
     If the type is empty or not specified, the data associated with all types is removed.
-    If data for the specified type does not exist, or the data transfer contains no data, this method will have no effect.
+    If data for the specified type does not exist, or the data transfer contains no data, this method will have no
+    effect.
 
     Related Pages:
 
@@ -589,7 +595,7 @@ class JsDataTransfer(object):
     return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)
 
 
-class JsClipboardData(object):
+class JsClipboardData:
 
   def __init__(self, varName):
     self.varId = varName

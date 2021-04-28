@@ -29,8 +29,6 @@ class URLSearchParams:
     ------------
     Get the value of a request parameter in the url.
 
-    Usage::
-
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
@@ -52,8 +50,6 @@ class URLSearchParams:
     ------------
     Get all the values of a request parameter in the url.
 
-    Usage::
-
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
@@ -71,8 +67,6 @@ class URLSearchParams:
     ------------
     Check if a given parameter is in the url.
 
-    Usage::
-
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
@@ -89,8 +83,6 @@ class URLSearchParams:
     Description:
     ------------
     Append a key, value to the url parameter object.
-
-    Usage::
 
     Related Pages:
 
@@ -192,8 +184,6 @@ class JsLocation:
     ------------
     The search property sets or returns the querystring part of a URL, including the question mark (?).
 
-    Usage::
-
     Related Pages:
 
       https//www.w3schools.com/jsref/prop_loc_search.asp
@@ -209,9 +199,6 @@ class JsLocation:
     ------------
     The URLSearchParams() constructor creates and returns a new URLSearchParams object.
 
-    Usage::
-
-
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
@@ -224,9 +211,6 @@ class JsLocation:
     Description:
     ------------
     The port property sets or returns the port number the server uses for a URL.
-
-    Usage::
-
 
     Related Pages:
 
@@ -245,7 +229,7 @@ class JsLocation:
 
     Usage::
 
-      rptObj.js.location.origin + rptObj.js.location.pathname
+      page.js.location.origin + rptObj.js.location.pathname
 
     Related Pages:
 
@@ -323,8 +307,6 @@ class JsLocation:
     Description:
     ------------
     Download data from the url.
-
-    Usage::
 
     Attributes:
     ----------

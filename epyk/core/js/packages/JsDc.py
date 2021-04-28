@@ -30,7 +30,10 @@ class DC(JsPackage):
 
   def redrawGroup(self):
     """
-    Redraws all charts in the same group as this chart, typically in reaction to a filter change. If the chart has a commitHandler, it will be executed and waited for.
+    Description:
+    -----------
+    Redraws all charts in the same group as this chart, typically in reaction to a filter change. If the chart has
+    a commitHandler, it will be executed and waited for.
 
     http://dc-js.github.io/dc.js/docs/html/BaseMixin.html#redrawGroup__anchor
     """
