@@ -46,8 +46,7 @@ class Li(Html.Html):
     ------------
     Remove the list default style.
 
-    Usage:
-    -----
+    Usage::
 
     """
     self.css({"text-decoration": "none", "list-style-type": 'none'})
@@ -59,8 +58,7 @@ class Li(Html.Html):
     ------------
     Add an elementary label component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -98,8 +96,7 @@ class Li(Html.Html):
     ------------
     Set the cell content to be an HTML object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -121,8 +118,7 @@ class Li(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -166,8 +162,7 @@ class List(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptList.OptionsLi
     """
@@ -181,8 +176,7 @@ class List(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtml.JsHtmlList
     """
@@ -196,8 +190,7 @@ class List(Html.Html):
     ------------
     Function to load a predefined style for the items of the components.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -218,8 +211,7 @@ class List(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -255,8 +247,7 @@ class List(Html.Html):
     ------------
     Python function to get the elements of the lists which will be passed to the JavaScript.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -272,8 +263,7 @@ class List(Html.Html):
     ------------
     Add an element to the list before passing the list to the Javascript.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -293,8 +283,7 @@ class List(Html.Html):
     ------------
     Reset all the items in the list by applying the default styles,
 
-    Usage:
-    -----
+    Usage::
 
     """
     self.items = self.items or []
@@ -313,8 +302,7 @@ class List(Html.Html):
     ------------
     Add event to the list items.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -332,8 +320,7 @@ class List(Html.Html):
     ------------
     Add click events on the list items.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -376,8 +363,7 @@ class Groups(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -426,8 +412,7 @@ class Items(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsList.ClassItems
     """
@@ -500,8 +485,7 @@ class Items(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptList.OptionsItems
     """
@@ -515,8 +499,7 @@ class Items(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlList.JsItem
     """
@@ -530,8 +513,7 @@ class Items(Html.Html):
     ------------
     The onclick event occurs when the user clicks on an element of the list.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -550,8 +532,7 @@ class Items(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -576,8 +557,7 @@ class Items(Html.Html):
 
     TODO: Create a tutorial to explain how to extend list types.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -608,8 +588,7 @@ class Items(Html.Html):
 
     Style will be set at list type level so all the list in the page will be using it.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

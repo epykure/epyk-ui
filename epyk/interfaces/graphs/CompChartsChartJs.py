@@ -23,8 +23,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -55,8 +54,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -96,8 +94,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -129,8 +126,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -169,8 +165,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -211,8 +206,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -252,8 +246,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -293,8 +286,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -337,8 +329,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -418,8 +409,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -459,8 +449,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -502,8 +491,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -542,8 +530,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -584,8 +571,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -625,8 +611,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -664,8 +649,7 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

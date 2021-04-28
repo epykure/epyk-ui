@@ -46,8 +46,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -61,8 +60,7 @@ class JsString(JsObject.JsObject):
     ------------
     Proxy to the Python method startswith.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -79,8 +77,7 @@ class JsString(JsObject.JsObject):
     ------------
     The length property of an array returns the length of an array (the number of array elements).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -100,8 +97,7 @@ class JsString(JsObject.JsObject):
     ------------
     Prepend Object to the String Javascript Object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -155,8 +151,7 @@ class JsString(JsObject.JsObject):
     ------------
     Add object to the String Javascript object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -172,8 +167,7 @@ class JsString(JsObject.JsObject):
     ------------
     The indexOf() method returns the position of the first occurrence of a specified value in a string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -197,8 +191,7 @@ class JsString(JsObject.JsObject):
     ------------
     The lastIndexOf() method returns the position of the last occurrence of a specified value in a string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -222,8 +215,7 @@ class JsString(JsObject.JsObject):
     The substring() method extracts the characters from a string, between two specified indices, and returns the new
     sub string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -246,8 +238,7 @@ class JsString(JsObject.JsObject):
     The substr() method extracts parts of a string, beginning at the character at the specified position, and returns
     the specified number of characters.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -271,8 +262,7 @@ class JsString(JsObject.JsObject):
 
     The replace() method does not change the string it is called on. It returns a new string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -295,8 +285,7 @@ class JsString(JsObject.JsObject):
     ------------
     The slice() method extracts parts of a string and returns the extracted parts in a new string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -316,8 +305,7 @@ class JsString(JsObject.JsObject):
     ------------
     The search() method searches a string for a specified value, and returns the position of the match.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -341,8 +329,7 @@ class JsString(JsObject.JsObject):
     ------------
     The concat() method is used to join two or more strings.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -377,8 +364,7 @@ class JsString(JsObject.JsObject):
     Indeed some rules are defined for the variable names and the HTML codes values must follow those rules.
     Check are on the Python side with an exception raised but it can also be added on the Javascript side
 
-    Usage:
-    -----
+    Usage::
 
       page.js.string("iib$% rni233n", varName="MyTest").clean() => returns "iibrni233n"
 
@@ -395,8 +381,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsString("%s.leftTrim()" % self.varId, isPyData=False)
@@ -407,8 +392,7 @@ class JsString(JsObject.JsObject):
     ------------
     The trim() method removes whitespace from both sides of a string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -424,8 +408,7 @@ class JsString(JsObject.JsObject):
     ------------
     The trimStart() method removes whitespace from the beginning of a string. trimLeft() is an alias of this method.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -441,8 +424,7 @@ class JsString(JsObject.JsObject):
     ------------
     The trimEnd() method removes whitespace from the end of a string. trimRight() is an alias of this method.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -458,8 +440,7 @@ class JsString(JsObject.JsObject):
     ------------
     The charAt() method returns the character at the specified index in a string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -480,8 +461,7 @@ class JsString(JsObject.JsObject):
     ------------
     The charCodeAt() method returns the Unicode of the character at the specified index in a string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -503,8 +483,7 @@ class JsString(JsObject.JsObject):
     ------------
     The toLocaleLowerCase() method converts a string to lowercase letters, according to the host's current locale.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -520,8 +499,7 @@ class JsString(JsObject.JsObject):
     ------------
     The toUpperCase() method converts a string to uppercase letters.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -538,8 +516,7 @@ class JsString(JsObject.JsObject):
     The toLocaleUpperCase() method returns the calling string value converted to upper case,
     according to any locale-specific case mappings.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -560,8 +537,7 @@ class JsString(JsObject.JsObject):
     The includes() method determines whether a string contains the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -590,8 +566,7 @@ class JsString(JsObject.JsObject):
     The startsWith() method determines whether a string begins with the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -620,8 +595,7 @@ class JsString(JsObject.JsObject):
     ------------
     The endsWith() method determines whether a string ends with the characters of a specified string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -650,8 +624,7 @@ class JsString(JsObject.JsObject):
     ------------
     The repeat() method returns a new string with a specified number of copies of the string it was called on.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -672,8 +645,7 @@ class JsString(JsObject.JsObject):
     The split() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is a List with as a first value an emtpy String.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -702,8 +674,7 @@ class JsString(JsObject.JsObject):
     The splitEmptyArray() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is an emtpy list.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -731,8 +702,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -750,8 +720,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -766,8 +735,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -782,8 +750,7 @@ class JsString(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     from epyk.core.js.primitives import JsDate

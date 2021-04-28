@@ -17,8 +17,7 @@ class Steppers:
     ------------
     Entry point for the stepper object.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.stepper([
         {"value": 'test 1', "status": 'success', 'label': 'test'},
@@ -54,8 +53,7 @@ class Steppers:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -76,8 +74,7 @@ class Steppers:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -98,8 +95,7 @@ class Steppers:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -122,8 +118,7 @@ class Steppers:
     ------------
     Entry point for the stepper object
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.stepper([
         {"value": 'test 1', "status": 'success', 'label': 'test'},

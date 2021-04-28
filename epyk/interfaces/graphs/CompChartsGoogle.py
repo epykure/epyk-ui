@@ -18,8 +18,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -52,8 +51,7 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/linechart
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -90,8 +88,7 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/columnchart
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -124,8 +121,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -162,8 +158,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -201,8 +196,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -241,8 +235,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -276,8 +269,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -314,8 +306,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -346,8 +337,7 @@ class ChartGoogle:
     ------------
     A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -381,8 +371,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -415,8 +404,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -453,8 +441,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -489,8 +476,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -528,8 +514,7 @@ class ChartGoogle:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

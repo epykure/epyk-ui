@@ -21,8 +21,7 @@ class Step:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -68,8 +67,7 @@ class Stepper(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlStepper.Stepper
     """
@@ -84,8 +82,7 @@ class Stepper(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsStepper
     """
@@ -124,8 +121,7 @@ class Stepper(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

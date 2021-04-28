@@ -17,8 +17,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -45,8 +44,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -72,8 +70,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -95,8 +92,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -124,8 +120,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -148,8 +143,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -172,8 +166,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -192,8 +185,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -213,8 +205,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -236,8 +227,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -259,8 +249,7 @@ class Pictogram:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

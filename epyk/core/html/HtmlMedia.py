@@ -64,8 +64,7 @@ class Media(Html.Html):
     -----------
     Property to set all the possible object for a Media (video and audio).
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptButton.OptMedia
     """
@@ -141,8 +140,7 @@ class Youtube(Html.Html):
     -------------
     simple function to convert a youtube link to the embedded version.
 
-    Usage:
-    ------
+    Usage::-
 
       html.HtmlMedia.Youtube.get_embed_link('https://www.youtube.com/watch?v=iPGgnzc34tY')
 
@@ -170,8 +168,7 @@ class Camera(Html.Html):
     -----------
     Property to set all the possible object for a Media (video and audio).
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptButton.OptMedia
     """
@@ -184,8 +181,7 @@ class Camera(Html.Html):
     -----------
     The Javascript Dom object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtml.JsMedia
     """

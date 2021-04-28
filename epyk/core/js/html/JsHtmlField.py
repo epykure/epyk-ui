@@ -16,8 +16,7 @@ class Radio(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
@@ -29,8 +28,7 @@ class Radio(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.input.dom.varName)
@@ -41,8 +39,7 @@ class Radio(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsHtml.ContentFormatters(self._report, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self._src.input.dom.getAttribute('name'))
@@ -56,8 +53,7 @@ class Check(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s}}
@@ -69,8 +65,7 @@ class Check(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsHtml.ContentFormatters(self._report, "%s.checked" % self.varName)
@@ -135,8 +130,7 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._src.input.dom.val
@@ -147,8 +141,7 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._src.input.dom.content
@@ -158,8 +151,7 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('%s = ""' % self.content.toStr())
@@ -173,8 +165,7 @@ class Textarea(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsHtml.ContentFormatters(self._report, "%s.value" % self.varName)

@@ -45,8 +45,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -94,8 +93,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -143,8 +141,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -192,8 +189,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -240,8 +236,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -289,8 +284,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -338,8 +332,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -387,8 +380,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -436,8 +428,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -484,8 +475,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -530,8 +520,7 @@ class JqueryVertorMap:
 
       https://www.10bestdesign.com/jqvmap/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

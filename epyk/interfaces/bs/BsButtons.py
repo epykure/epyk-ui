@@ -85,8 +85,11 @@ class Buttons:
     ----------
     :param text:
     :param category:
+    :param width:
+    :param height:
     """
-    schema = {"type": 'div', 'args': {"width": width, "height": height}, 'class': 'btn-group-toggle', 'arias': {'pressed': False}, 'css': None, 'children': [
+    schema = {"type": 'div', 'args': {"width": width, "height": height}, 'class': 'btn-group-toggle',
+              'arias': {'pressed': False}, 'css': None, 'children': [
       {"type": 'label', 'css': None, 'class': 'btn btn-%s active' % category, 'children': [
         {'type': 'checkbox', 'css': None, 'args': {'flag': True, 'label': text}}
       ]}
@@ -99,7 +102,8 @@ class Buttons:
     """
     Description:
     ------------
-    Combine sets of button groups into button toolbars for more complex components. Use utility classes as needed to space out groups, buttons, and more.
+    Combine sets of button groups into button toolbars for more complex components. Use utility classes as needed
+    to space out groups, buttons, and more.
 
     Related Pages:
 
@@ -114,7 +118,8 @@ class Buttons:
     """
     Description:
     ------------
-    Wrap a series of buttons with .btn in .btn-group. Add on optional JavaScript radio and checkbox style behavior with our buttons plugin.
+    Wrap a series of buttons with .btn in .btn-group. Add on optional JavaScript radio and checkbox style behavior
+    with our buttons plugin.
 
     Related Pages:
 
@@ -143,12 +148,14 @@ class Buttons:
     :param category:
     """
     schema = {"type": 'div', 'class': 'btn-group', 'attrs': {'role': 'group'}, 'css': None, 'children': [
-      {'type': 'button', 'css': None, 'class': 'btn btn-%s dropdown-toggle' % category, 'attrs': {'data-toggle': 'dropdown'}, 'args': {'text': text}},
+      {'type': 'button', 'css': None, 'class': 'btn btn-%s dropdown-toggle' % category, 'attrs': {
+        'data-toggle': 'dropdown'}, 'args': {'text': text}},
       {"type": 'div', 'css': None, 'class': 'dropdown-menu', 'children': []}
     ]}
 
     for v in values:
-      schema['children'][1]['children'].append({'type': 'link', 'css': None, 'class': 'dropdown-item', 'args': {'text': v, 'url': '#'}})
+      schema['children'][1]['children'].append({'type': 'link', 'css': None, 'class': 'dropdown-item', 'args': {
+        'text': v, 'url': '#'}})
     button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['data-toggle'] = "button"
     return button
@@ -279,7 +286,8 @@ class Buttons:
     ----------
     :param dismiss:
     """
-    schema = {"type": 'button', 'class': 'close', 'attrs': {'data-dismiss': dismiss}, 'arias': {'label': 'Close'}, 'css': None, 'children': [
+    schema = {"type": 'button', 'class': 'close', 'attrs': {'data-dismiss': dismiss}, 'arias': {
+      'label': 'Close'}, 'css': None, 'children': [
       {"type": 'span', 'css': None, 'arias': {"hidden": True}, 'args': {"text": '&times;'}}]}
     button = self.page.web.bs.composite(schema, options={"reset_class": True})
     return button

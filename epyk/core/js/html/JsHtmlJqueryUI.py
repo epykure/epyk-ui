@@ -16,8 +16,7 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -29,8 +28,7 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
@@ -43,8 +41,7 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -56,8 +53,7 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.input.dom.jquery.varId)
 
@@ -70,8 +66,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.progressbar('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -83,8 +78,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, '%s.progressbar("value")' % self._src.dom.jquery.varId)
 
@@ -93,8 +87,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -119,8 +112,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -134,8 +126,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -152,8 +143,7 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -165,8 +155,7 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
@@ -179,8 +168,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -192,8 +180,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self.component.options.range:
       if self.component.options.range == "min":
@@ -281,8 +268,7 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('values'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -294,8 +280,7 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, '%s.slider("values")' % self._src.dom.jquery.varId)
 
@@ -308,8 +293,7 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -321,8 +305,7 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, 'new Date(%s.slider("value") * 1000).toISOString().split("T")[0]' % self._src.dom.jquery.varId)
 
@@ -335,8 +318,7 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -348,8 +330,7 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, 'function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (self._src.dom.jquery.varId, self._src.dom.jquery.varId))
 
@@ -362,8 +343,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.region))
@@ -374,8 +354,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
@@ -388,8 +367,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
@@ -402,8 +380,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()")
 
@@ -413,8 +390,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
@@ -427,8 +403,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].offset")
@@ -441,8 +416,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     if self._src._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].value")

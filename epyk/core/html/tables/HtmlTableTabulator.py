@@ -892,8 +892,7 @@ class Editor(DataGroup):
     The autocomplete editor allows users to search a list of predefined options passed into the values property of
     the editorParams option.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:

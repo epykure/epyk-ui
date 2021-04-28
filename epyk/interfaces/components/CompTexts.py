@@ -18,8 +18,7 @@ class Texts:
     ------------
     Add the HTML text component to the page.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.text("this is a test")
 
@@ -78,8 +77,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.text("this is a test")
 
@@ -127,8 +125,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -184,8 +181,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.label("Test")
       page.ui.texts.label("this is a test", color="red")
@@ -235,8 +231,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.span("Test")
 
@@ -277,8 +272,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
       page.ui.texts.highlights("Server configuration at: %s" % SERVER_PATH, icon="fas fa-exclamation-triangle")
@@ -325,8 +319,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
@@ -380,8 +373,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
@@ -426,8 +418,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.code("This is a code")
 
@@ -472,8 +463,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
 
@@ -531,8 +521,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.preformat("This is a pre formatted text")
 
@@ -578,8 +567,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.blockquote("This is a code")
 
@@ -622,8 +610,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
@@ -669,8 +656,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -719,8 +705,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.title("Test")
       page.ui.title("Test", level=2)
@@ -772,8 +757,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.fieldset("legend")
 
@@ -811,8 +795,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -854,8 +837,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
       page.ui.texts.highlights("Server configuration at: %s" % SERVER_PATH,  icon="fas fa-exclamation-triangle")
@@ -918,8 +900,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -954,8 +935,7 @@ class Texts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
@@ -1009,8 +989,7 @@ class TextReferences:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1043,8 +1022,7 @@ class TextReferences:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1084,8 +1062,7 @@ class TextReferences:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

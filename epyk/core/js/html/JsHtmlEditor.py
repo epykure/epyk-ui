@@ -16,8 +16,7 @@ class Console(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -50,8 +49,7 @@ class Console(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('%s.innerHTML = ""' % self.varName)
@@ -65,8 +63,7 @@ class Editor(JsHtml.JsHtmlRich):
     ------------
     Update the editor timestamp.
 
-    Usage:
-    -----
+    Usage::
     """
     return self.querySelector("span").innerHTML(JsObjects.JsDate.JsDate().getStrTimeStamp())
 
@@ -86,8 +83,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.getValue()" % self._src.editorId)
 
@@ -97,8 +93,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
     Select the whole content of the editor.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -112,8 +107,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
     When multiple selections are present, this deselects all but the primary selection.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -128,8 +122,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Emacs-style line killing. Deletes the part of the line after the cursor.
     If that consists only of whitespace, the newline at the end of the line is also deleted.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -143,8 +136,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
     Deletes the whole line under the cursor, including newline at the end.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -157,8 +149,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get("%s.execCommand('copy')" % self._src.editorId)
 
@@ -167,8 +158,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -182,8 +172,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -199,8 +188,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get("%s.refresh()" % self._src.editorId)
 
@@ -209,8 +197,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get('%s.setValue("")' % self._src.editorId)
 
@@ -219,8 +206,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get('%s.setValue("")' % self._src.editorId)
 
@@ -229,8 +215,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

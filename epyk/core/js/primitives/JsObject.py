@@ -62,8 +62,7 @@ class JsObject:
     ------------
     Create a Python Javascript Object.
 
-    Usage:
-    -----
+    Usage::
 
       JsDate.new("2019-05-03", varName="MyDate")
 
@@ -92,8 +91,7 @@ class JsObject:
     ------------
     Get the object this.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.object.this
 
@@ -116,8 +114,7 @@ class JsObject:
     ------------
     Get the Javascript Object by its reference.
 
-    Usage:
-    -----
+    Usage::
 
       JsDate.new("2019-05-03", varName="MyDate")
       JsDate.get("MyDate")
@@ -152,8 +149,7 @@ class JsObject:
     ------------
     The setVar() method will defined the variable name and use this reference in the future.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -335,8 +331,7 @@ class JsObject:
     ------------
     The Object.isFrozen() determines if an object is frozen.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject").isFrozen()
 
@@ -362,8 +357,7 @@ class JsObject:
     existing properties from being removed, prevents changing the enumerability, configurability,
     or writability of existing properties, and prevents the values of existing properties from being changed.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject").freeze()
 
@@ -388,8 +382,7 @@ class JsObject:
     existing properties as non-configurable.
     Values of present properties can still be changed as long as they are writable
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject").isSealed()
 
@@ -544,8 +537,7 @@ class JsObject:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject").setattr("tesr", jsObj.objects.number.get("MyNumber"))
 
@@ -595,8 +587,7 @@ class JsObject:
     ------------
     Return the value for a given key defined in the object
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject")["test"]
 
@@ -618,8 +609,7 @@ class JsObject:
     ------------
     Returns an array of enumerable properties.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.get("MyObject").keys()
 
@@ -640,8 +630,7 @@ class JsObject:
     ------------
     This might not be supported by all the browser.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

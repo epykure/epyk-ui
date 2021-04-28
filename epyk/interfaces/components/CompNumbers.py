@@ -28,8 +28,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.span("Test")
 
@@ -78,8 +77,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -121,8 +119,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.percent(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -160,8 +157,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.pound(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -199,8 +195,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.euro(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -238,8 +233,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.dollar(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -277,8 +271,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.texts.money(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
@@ -317,8 +310,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -347,8 +339,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Underlying HTML Objects:
@@ -378,8 +369,7 @@ class Numbers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.numbers.move(100, 60, helper="test")
 

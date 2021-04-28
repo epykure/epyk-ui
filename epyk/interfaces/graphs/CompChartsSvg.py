@@ -18,8 +18,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       svg = page.ui.charts.svg.new(width=200)
       svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
@@ -48,8 +47,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.line(10, 30, 40, 69)
 
@@ -86,8 +84,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.line(10, 30, 40, 69)
 
@@ -118,8 +115,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -150,8 +146,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.arrow_left()
 
@@ -184,8 +179,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.ellipse(100, 100, 40, 69)
 
@@ -216,8 +210,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.polyline([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
@@ -245,8 +238,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.charts.svg.polygone([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
@@ -275,8 +267,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.ui.charts.svg.triangle((50, 100))
 
@@ -311,8 +302,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       svg = page.ui.charts.svg.axes()
       m = svg.defs().marker("circle", "0 0 10 10", 5, 5)
@@ -349,8 +339,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -376,8 +365,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       c = page.ui.charts.svg.heart(w=50, h=100, fill="pink")
       c[0].transform("transform", "rotate", "0 100 100", "360 100 10")
@@ -405,8 +393,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -433,8 +420,7 @@ class SVG:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

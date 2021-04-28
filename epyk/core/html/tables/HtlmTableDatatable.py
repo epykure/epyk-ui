@@ -39,8 +39,7 @@ class Table(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsTable.Datatable
     """
@@ -55,8 +54,7 @@ class Table(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s_obj" % self.htmlCode
 
@@ -66,8 +64,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: TableConfig
     """
@@ -80,8 +77,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -98,8 +94,7 @@ class Table(Html.Html):
     -----------
     Return the Javascript internal object.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -114,8 +109,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -141,8 +135,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -167,8 +160,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -186,8 +178,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -205,8 +196,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -224,8 +214,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -243,8 +232,7 @@ class EnumStyleOptions(DataEnum):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -268,8 +256,7 @@ class ColumnDef(DataClass):
     The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a
     DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -288,8 +275,7 @@ class ColumnDef(DataClass):
     -----------
     Enable or disable the display of this column.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:

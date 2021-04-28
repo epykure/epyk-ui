@@ -51,8 +51,7 @@ class Panel(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsContainer.ClassDiv
     """
@@ -68,8 +67,7 @@ class Panel(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -85,8 +83,7 @@ class Panel(Html.Html):
     ------------
     Add multiple HTML components to the container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -102,8 +99,7 @@ class Panel(Html.Html):
     ------------
     Add specific and predefined options to the panels.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -193,8 +189,7 @@ class PanelSplit(Html.Html):
     ------------
     Add the left component to the panel.
 
-    Usage:
-    -----
+    Usage::
 
       split_panel = page.ui.panels.split()
       split_panel.left(page.ui.col([page.ui.text("Left")]))
@@ -213,8 +208,7 @@ class PanelSplit(Html.Html):
     ------------
     Add the right component to the panel.
 
-    Usage:
-    -----
+    Usage::
 
       split_panel = page.ui.panels.split()
       split_panel.right(page.ui.col([page.ui.text("Right")]))
@@ -282,8 +276,7 @@ class PanelSlide(Panel):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionPanelSliding
     """
@@ -297,8 +290,7 @@ class PanelSlide(Panel):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -315,8 +307,7 @@ class PanelSlide(Panel):
     Event added to the title bar.
     This will be triggered first.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -336,8 +327,7 @@ class PanelSlide(Panel):
     ------------
     Event triggered when the sliding panel is open.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -431,8 +421,7 @@ class Div(Html.Html):
 
       https://www.w3schools.com/tags/att_a_target.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -457,8 +446,7 @@ class Div(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -516,8 +504,7 @@ class Div(Html.Html):
     ------------
     Add multiple HTML components to the container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -534,8 +521,7 @@ class Div(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsDiv
     """
@@ -548,8 +534,7 @@ class Div(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsContainer.ClassDiv
     """
@@ -562,8 +547,7 @@ class Div(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -618,8 +602,7 @@ class Td(Html.Html):
     ------------
     The colspan attribute defines the number of columns a cell should span.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -638,8 +621,7 @@ class Td(Html.Html):
     ------------
     The rowspan attribute specifies the number of rows a cell should span.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -679,8 +661,7 @@ class Tr(Html.Html):
     -----------
     Add items to a container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -702,8 +683,7 @@ class Tr(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -735,8 +715,7 @@ class Caption(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -768,8 +747,7 @@ class TSection(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionPanelTable
     """
@@ -824,8 +802,7 @@ class Table(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionPanelTable
     """
@@ -852,8 +829,7 @@ class Table(Html.Html):
     ------------
     Load data from a 2D array.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -874,8 +850,7 @@ class Table(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -895,8 +870,7 @@ class Table(Html.Html):
     ------------
     The <caption> tag defines a table caption.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -922,8 +896,7 @@ class Table(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -937,8 +910,7 @@ class Table(Html.Html):
     ------------
     Get a specific items from the table footer.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -951,8 +923,7 @@ class Table(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -976,8 +947,7 @@ class Table(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1027,8 +997,7 @@ class Col(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionGrid
     """
@@ -1040,8 +1009,7 @@ class Col(Html.Html):
     ------------
     Add items to a container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1057,8 +1025,7 @@ class Col(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1074,8 +1041,7 @@ class Col(Html.Html):
     ------------
     Set the column size.
 
-    Usage:
-    -----
+    Usage::
 
       ps = page.ui.layouts.grid()
       ps += [page.ui.text("test %s" % i) for i in range(5)]
@@ -1132,8 +1098,7 @@ class Row(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionGrid
     """
@@ -1147,8 +1112,7 @@ class Row(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -1234,8 +1198,7 @@ class Grid(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionGrid
     """
@@ -1269,8 +1232,7 @@ class Grid(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -1289,8 +1251,7 @@ class Grid(Html.Html):
     This will rescale based on the number of items and the fact that the max per row is 12.
     It will update the colsDim list.
 
-    Usage:
-    -----
+    Usage::
 
     """
     max_size = int(12 / len(self.colsDim))
@@ -1329,8 +1290,7 @@ class Tabs(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionPanelTabs
     """
@@ -1344,8 +1304,7 @@ class Tabs(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -1364,8 +1323,7 @@ class Tabs(Html.Html):
     ------------
     Set a value to be selected when the component is created.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1380,8 +1338,7 @@ class Tabs(Html.Html):
     ------------
     Get the panel object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1397,8 +1354,7 @@ class Tabs(Html.Html):
     ------------
     Get the tab container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1414,8 +1370,7 @@ class Tabs(Html.Html):
     ------------
     Get the tab container.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1431,8 +1386,7 @@ class Tabs(Html.Html):
     ------------
     Get the tab container.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: Div
     """
@@ -1444,8 +1398,7 @@ class Tabs(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1558,8 +1511,7 @@ class IFrame(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -1574,8 +1526,7 @@ class IFrame(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       https://www.w3schools.com/tags/tag_iframe.ASP
 
@@ -1595,8 +1546,7 @@ class IFrame(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1614,8 +1564,7 @@ class IFrame(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1633,8 +1582,7 @@ class IFrame(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       https://www.w3schools.com/tags/att_iframe_referrerpolicy.asp
 
@@ -1672,8 +1620,7 @@ class IconsMenu(Html.Html):
     -----------
     Add an icon to the HTML object
 
-    Usage:
-    -----
+    Usage::
 
       checks.title.add_icon("fas fa-align-center")
 
@@ -1707,8 +1654,7 @@ class IconsMenu(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1748,8 +1694,7 @@ class Form(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1787,8 +1732,7 @@ class Modal(Html.Html):
     which is a row they all accept collections of html objects and are configurable just like the normal rows and
     column objects.
 
-    Usage:
-    -----
+    Usage::
 
     """
     super(Modal, self).__init__(report, [])
@@ -1837,8 +1781,7 @@ class Modal(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsButton.ClassButton
     """
@@ -1870,8 +1813,7 @@ class Modal(Html.Html):
     ------------
     Will allow an event to close the modal if a click event is detected anywhere outside the modal.
 
-    Usage:
-    -----
+    Usage::
 
     """
     modal = self._report.js.getElementById(self.htmlCode)
@@ -1933,8 +1875,7 @@ class Indices(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsPanelPoints
     """
@@ -1948,8 +1889,7 @@ class Indices(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -2000,8 +1940,7 @@ class Points(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsPanelPoints
     """
@@ -2013,8 +1952,7 @@ class Points(Html.Html):
     ------------
     Add Javascript events to all the items in the component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -2045,8 +1983,7 @@ class Points(Html.Html):
     ------------
     Add specific event on the container items.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -2069,8 +2006,7 @@ class Points(Html.Html):
     ------------
     Add a click event on a particular item of the component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -2113,8 +2049,7 @@ class Header(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsDiv
     """
@@ -2153,8 +2088,7 @@ class Section(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionsDiv
     """

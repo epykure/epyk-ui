@@ -14,7 +14,7 @@ def transpile_parser(subparser):
   """
   Description:
   ------------
-  Paser for the transpile CLI
+  Paser for the transpile CLI.
 
   Attributes:
   ----------

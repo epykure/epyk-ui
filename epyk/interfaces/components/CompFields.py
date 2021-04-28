@@ -25,8 +25,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.text("this is a test")
 
@@ -104,8 +103,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
@@ -164,8 +162,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
 
@@ -220,8 +217,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.cob(label="COB Date")
 
@@ -272,8 +268,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
       page.ui.fields.now(label="Time field")
@@ -317,8 +312,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
       page.ui.fields.time(label="Time field")
@@ -361,8 +355,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
@@ -404,8 +397,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
@@ -452,8 +444,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.autocomplete("", label="Range Example", icon="fas fa-unlock-alt")
 
@@ -494,8 +485,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.static(label="readonly field")
 
@@ -539,8 +529,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.hidden(label="readonly field")
 
@@ -583,8 +572,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.integer(label="test")
 
@@ -625,8 +613,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.integer(label="test")
 
@@ -667,8 +654,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.password(label="password")
 
@@ -709,8 +695,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.textarea(label="Date")
 
@@ -751,8 +736,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.checkbox(True, label="Check")
 
@@ -800,8 +784,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.radio(False, label="radio")
 
@@ -854,8 +837,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
 
@@ -903,8 +885,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.select(["a", "b"], label="Check")
 
@@ -956,8 +937,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.select(["a", "b"], label="Check")
 
@@ -1008,8 +988,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.select(["a", "b"], label="Check")
 
@@ -1114,8 +1093,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.select(["a", "b"], label="Check")
 
@@ -1166,8 +1144,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1207,8 +1184,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1252,8 +1228,7 @@ class Fields:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
@@ -1317,8 +1292,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1364,8 +1338,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1413,8 +1386,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1458,8 +1430,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1493,8 +1464,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1539,8 +1509,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1571,8 +1540,7 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:

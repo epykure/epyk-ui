@@ -35,8 +35,7 @@ class Sparklines(Html.Html):
     Property to the sparkline style properties.
     This will group all the default CSS classes which are defined by default to a sparkline component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsChart.ClassBSpartlines
     """
@@ -51,8 +50,7 @@ class Sparklines(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptSparkline.OptionsSparkLine
     """
@@ -66,8 +64,7 @@ class Sparklines(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -86,8 +83,7 @@ class Sparklines(Html.Html):
     the mouse at the time of the click.
     For non-composite sparklines, this array will have just one entry.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -111,8 +107,7 @@ class Sparklines(Html.Html):
     When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
     This can be useful to hook in an alternate tooltip library.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -137,8 +132,7 @@ class Sparklines(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

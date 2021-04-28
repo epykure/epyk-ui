@@ -30,8 +30,7 @@ class Chart(Html.Html):
     All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.bar()
       line.shared.x_label("x axis")
@@ -86,8 +85,7 @@ class Chart(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.apex.line(height=250)
       line.colors(["#FFA500", "#FF7F50"])
@@ -124,8 +122,7 @@ class Chart(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object functions.
 
@@ -155,8 +152,7 @@ class Chart(Html.Html):
     -----------
     Set the labels of the different series in the chart.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -226,8 +222,7 @@ class Chart(Html.Html):
     ------------
     Update the chart with context and / or data changes.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

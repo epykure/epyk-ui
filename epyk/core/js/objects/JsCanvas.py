@@ -20,8 +20,7 @@ class MesuredText(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsNumber.JsNumber("%s.width" % self.varId, isPyData=False)
@@ -40,8 +39,7 @@ class RadialGradient(object):
 
     The addColorStop() method is used together with createLinearGradient() or createRadialGradient().
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -74,8 +72,7 @@ class Context2D(object):
     ------------
     The arc() method creates an arc/curve (used to create circles, or parts of circles).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -98,8 +95,7 @@ class Context2D(object):
     ------------
     The beginPath() method begins a path, or resets the current path.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -113,8 +109,7 @@ class Context2D(object):
     ------------
     The bezierCurveTo() method adds a point to the current path by using the specified control points that represent a cubic Bézier curve.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -137,8 +132,7 @@ class Context2D(object):
     ------------
     The clearRect() method clears the specified pixels within a given rectangle.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -159,8 +153,7 @@ class Context2D(object):
     ------------
     The clip() method clips a region of any shape and size from the original canvas.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -174,8 +167,7 @@ class Context2D(object):
     ------------
     The closePath() method creates a path from the current point back to the starting point.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -191,8 +183,7 @@ class Context2D(object):
 
     The element can be an image, video, or another <canvas> element.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -213,8 +204,7 @@ class Context2D(object):
     ------------
     The createRadialGradient() method is specified by six parameters, three defining the gradient's start circle, and three defining the end circle.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -241,8 +231,7 @@ class Context2D(object):
 
     The gradient can be used to fill rectangles, circles, lines, text, etc.
 
-    Usage:
-    -----
+    Usage::
 
       canvas.ctx.createLinearGradient(0, 0, canvas.dom.width, 0, "test").
       addColorStop("0", "magenta").addColorStop("0.5", "blue").addColorStop("1.0", "red")
@@ -270,8 +259,7 @@ class Context2D(object):
     ------------
     The fill() method fills the current drawing (path). The default color is black.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -292,8 +280,7 @@ class Context2D(object):
     ------------
     The fillStyle property sets or returns the color, gradient, or pattern used to fill the drawing.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -312,8 +299,7 @@ class Context2D(object):
     ------------
     The fillText() method draws filled text on the canvas. The default color of the text is black.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -344,8 +330,7 @@ class Context2D(object):
     ------------
     The lineCap property sets or returns the style of the end caps for a line.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -364,8 +349,7 @@ class Context2D(object):
     ------------
     The lineJoin property sets or returns the type of corner created, when two lines meet.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -384,8 +368,7 @@ class Context2D(object):
     ------------
     Adds a new point and creates a line to that point from the last specified point in the canvas.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -404,8 +387,7 @@ class Context2D(object):
     ------------
     The lineWidth property sets or returns the current line width, in pixels.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -423,8 +405,7 @@ class Context2D(object):
     ------------
     Moves the path to the specified point in the canvas, without creating a line.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -443,8 +424,7 @@ class Context2D(object):
     ------------
     The rect() method creates a rectangle.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -465,8 +445,7 @@ class Context2D(object):
     ------------
     The rect() method creates a rectangle.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -487,8 +466,7 @@ class Context2D(object):
     ------------
     The font property sets or returns the current font properties for text content on the canvas.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -509,8 +487,7 @@ class Context2D(object):
 
     The globalAlpha property value must be a number between 0.0 (fully transparent) and 1.0 (no transparancy).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -528,8 +505,7 @@ class Context2D(object):
     ------------
     The isPointInPath() method returns true if the specified point is in the current path, otherwise false.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -548,8 +524,7 @@ class Context2D(object):
     ------------
     The measureText() method returns an object that contains the width of the specified text, in pixels.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -571,8 +546,7 @@ class Context2D(object):
     ------------
     The rotate() method rotates the current drawing.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -590,8 +564,7 @@ class Context2D(object):
     ------------
     The scale() method scales the current drawing, bigger or smaller.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -610,8 +583,7 @@ class Context2D(object):
     ------------
     The shadowBlur property sets or returns the blur level for shadows.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -629,8 +601,7 @@ class Context2D(object):
     ------------
     The shadowColor property sets or returns the color to use for shadows.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -649,8 +620,7 @@ class Context2D(object):
     ------------
     The shadowOffsetX property sets or returns the horizontal distance of the shadow from the shape.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -668,8 +638,7 @@ class Context2D(object):
     ------------
     The shadowOffsetY property sets or returns the vertical distance of the shadow from the shape.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -688,8 +657,7 @@ class Context2D(object):
     The stroke() method actually draws the path you have defined with all those moveTo() and lineTo() methods.
     The default color is black.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s.stroke()" % self.varId
 
@@ -698,8 +666,7 @@ class Context2D(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -713,8 +680,7 @@ class Context2D(object):
     ------------
     The strokeStyle property sets or returns the color, gradient, or pattern used for strokes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -732,8 +698,7 @@ class Context2D(object):
     ------------
     The strokeRect() method draws a rectangle (no fill). The default color of the stroke is black.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -746,8 +711,7 @@ class Context2D(object):
     ------------
     The strokeText() method draws text (with no fill) on the canvas. The default color of the text is black.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -772,8 +736,7 @@ class Context2D(object):
     ------------
     The textAlign property sets or returns the current alignment for text content, according to the anchor point.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -791,8 +754,7 @@ class Context2D(object):
     ------------
     The translate() method remaps the (0,0) position on the canvas.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -811,8 +773,7 @@ class Context2D(object):
     ------------
     The textBaseline property sets or returns the current text baseline used when drawing text.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -830,8 +791,7 @@ class Context2D(object):
     ------------
     The drawImage() method draws an image, canvas, or video onto the canvas.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -853,8 +813,7 @@ class Context2D(object):
     ------------
     The getImageData() method returns an ImageData object that copies the pixel data for the specified rectangle on a canvas..
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -885,8 +844,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsNumber.JsNumber("%s.width" % self.varId)
@@ -914,8 +872,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get(
@@ -928,8 +885,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -941,8 +897,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsQuery.JQuery
     """
@@ -956,8 +911,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsQueryUi.JQueryUI
     """
@@ -970,8 +924,7 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -990,8 +943,7 @@ class Canvas(JsNodeDom.JsDoms):
     ------------
     Saves the state of the current context.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1005,8 +957,7 @@ class Canvas(JsNodeDom.JsDoms):
     ------------
     Returns previously saved path state and attributes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

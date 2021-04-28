@@ -20,8 +20,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -57,8 +56,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -94,8 +92,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -132,8 +129,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -173,8 +169,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -211,8 +206,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -249,8 +243,7 @@ class Pivottable:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

@@ -23,8 +23,7 @@ class Radio(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -43,8 +42,7 @@ class Radio(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -60,8 +58,7 @@ class Radio(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -79,8 +76,7 @@ class Radio(Html.Html):
     ------------
     HTML Dom object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlSelect.Tick
     """
@@ -128,8 +124,7 @@ class Tick(Html.Html):
     ------------
     HTML Dom object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlSelect.Tick
     """
@@ -183,8 +178,7 @@ class Switch(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlSelect.JsHtmlSwitch
     """
@@ -206,8 +200,7 @@ class Switch(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -236,8 +229,7 @@ class Switch(Html.Html):
     ------------
     Add click event to the switch component.
 
-    Usage:
-    -----
+    Usage::
 
       mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
       mode_switch.input.click([
@@ -262,8 +254,7 @@ class Switch(Html.Html):
     Set the click property for the Switch.
     The toggle event allow to specify different Javascript functions for each states of the component.
 
-    Usage:
-    -----
+    Usage::
 
       sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
       sw.toggle([

@@ -18,8 +18,7 @@ class Trees:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       data = [{"value": 'test', 'items': [{"value": 'child 1', 'color': 'red'}]}]
       page.ui.lists.tree(data)
@@ -54,8 +53,7 @@ class Trees:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -84,8 +82,7 @@ class Trees:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -115,8 +112,7 @@ class Trees:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 

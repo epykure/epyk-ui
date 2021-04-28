@@ -20,8 +20,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(0.5)
@@ -36,8 +35,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -52,8 +50,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -68,8 +65,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -84,8 +80,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -100,8 +95,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -116,8 +110,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get({})
@@ -132,8 +125,7 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get({})

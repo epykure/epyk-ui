@@ -42,8 +42,7 @@ class Comments(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptNet.OptionsChat
     """
@@ -57,8 +56,7 @@ class Comments(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -94,8 +92,7 @@ class Comments(Html.Html):
     ------------
     Add a text message.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -111,8 +108,7 @@ class Comments(Html.Html):
     ------------
     Define the function when the user press enter.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -138,8 +134,7 @@ class Comments(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -169,8 +164,7 @@ class Comments(Html.Html):
 
     The content of data will be used by this component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -229,8 +223,7 @@ class Bot(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsNetwork.ClassNetworkBot
     """
@@ -310,8 +303,7 @@ class Chat(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptNet.OptionsChat
     """
@@ -325,8 +317,7 @@ class Chat(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsComponents.Chat
     """
@@ -354,8 +345,7 @@ class Chat(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -376,8 +366,7 @@ class Chat(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -402,8 +391,7 @@ class Chat(Html.Html):
 
     The content of data will be used by this component.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -456,8 +444,7 @@ class Alert(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
       danger = page.ui.network.warning()
       danger.options.time = None
@@ -522,8 +509,7 @@ class News(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsComponents.News
     """
@@ -541,8 +527,7 @@ class News(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptNet.OptionsNews
     """
@@ -591,8 +576,7 @@ class Room(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsComponents.Room
     """
@@ -666,8 +650,7 @@ class DropFile(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlNetwork.JsHtmlDropFiles
     """
@@ -685,8 +668,7 @@ class DropFile(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptNet.OptionFiles
     """
@@ -698,8 +680,7 @@ class DropFile(Html.Html):
     -----------
     Create a Ajax transfer to a distant server.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -715,8 +696,7 @@ class DropFile(Html.Html):
     -----------
     Add a drag and drop property to the element.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -749,8 +729,7 @@ class DropFile(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -766,8 +745,7 @@ class DropFile(Html.Html):
 
     This function will first use as underlying the drop method to get the file dropped.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -796,8 +774,7 @@ class DropFile(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

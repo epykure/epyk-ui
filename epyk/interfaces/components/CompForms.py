@@ -20,8 +20,7 @@ class Forms:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       f = page.ui.form()
 
@@ -43,8 +42,7 @@ class Forms:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.forms.date("http://127.0.0.1:5000", "POST")
 
@@ -81,8 +79,7 @@ class Forms:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.forms.dates("http://127.0.0.1:5000", "POST")
 
@@ -119,8 +116,7 @@ class Forms:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -154,8 +150,7 @@ class Forms:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.forms.inputs([
         {"label": "name", "htmlCode": "input"},
@@ -200,8 +195,7 @@ class Forms:
     :tags:
     :categories:
     
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

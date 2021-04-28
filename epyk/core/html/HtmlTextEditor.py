@@ -34,8 +34,7 @@ class Console(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -55,8 +54,7 @@ class Console(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsConsole
     """
@@ -93,8 +91,7 @@ class Editor(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -110,8 +107,7 @@ class Editor(Html.Html):
     ------------
     Add a bespoke action to the action panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -130,8 +126,7 @@ class Editor(Html.Html):
     ------------
     Add an event action to the console object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -153,8 +148,7 @@ class Editor(Html.Html):
     ------------
     Copy the content of the editor component to the clipboard.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -173,8 +167,7 @@ class Editor(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -191,8 +184,7 @@ class Editor(Html.Html):
     Emtpy save button.
     This function will just add the icon on the actions panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -208,8 +200,7 @@ class Editor(Html.Html):
     ------------
     Add an event action to the console object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -252,8 +243,7 @@ class Cell(Html.Html):
     ------------
     Add a bespoke action to the action panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -272,8 +262,7 @@ class Cell(Html.Html):
     Emtpy run button.
     This function will just add the icon on the actions panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -291,8 +280,7 @@ class Cell(Html.Html):
     Emtpy save button.
     This function will just add the icon on the actions panel.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -332,8 +320,7 @@ class Code(Html.Html):
     ------------
     Property to the Style property of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsCodeMirror.Code
     """
@@ -348,8 +335,7 @@ class Code(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptCodeMirror.OptionsCode
     """
@@ -363,8 +349,7 @@ class Code(Html.Html):
     A lot of CodeMirror features are only available through its API.
     Thus, you need to write code (or use add-ons) if you want to expose them to your users.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -384,8 +369,7 @@ class Code(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -476,8 +460,7 @@ class Code(Html.Html):
     ------------
     Return the Javascript variable of the bespoke.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "editor_%s" % self.htmlCode
@@ -506,8 +489,7 @@ class Tags(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {
@@ -518,8 +500,7 @@ class Tags(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {
@@ -563,8 +544,7 @@ class MarkdownReader(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div(htmlCode="testDiv")
       print(div.dom.content)
@@ -584,8 +564,7 @@ class MarkdownReader(Html.Html):
     ------------
     Property to set all the input TimePicker component properties.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -601,8 +580,7 @@ class MarkdownReader(Html.Html):
     ------------
     Add automatically tooltips to the words.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

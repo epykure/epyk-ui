@@ -22,8 +22,7 @@ class Chart(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "chart_%s" % self.htmlCode
 
@@ -32,8 +31,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -48,8 +46,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -76,8 +73,7 @@ class ChartLine(Chart):
     For example, the popularity of food items can be drawn as a line chart in such a way that the food item is
     represented along the x-axis and its popularity is represented along the y-axis.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:
@@ -103,8 +99,7 @@ class ChartBar(Chart):
     The graph is constructed such that the heights or lengths of the different bars are proportional to the size of
     the category they represent.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -125,8 +120,7 @@ class ChartRow(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsDc.Row
     """
@@ -146,8 +140,7 @@ class ChartScatter(Chart):
     It is represented using the Cartesian coordinates to display values for typically two variables for a set of data.
     The data is displayed as a collection of points and the points maybe colored.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:
@@ -173,8 +166,7 @@ class ChartBubble(Chart):
     represented with respect to the data dimension.
     It uses horizontal and vertical axes as value axes.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -196,8 +188,7 @@ class ChartPie(Chart):
     -----------
     A pie chart is a circular statistical graph. It is divided into slices to show a numerical proportion.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -218,8 +209,7 @@ class ChartSunburst(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsDc.Sunburst
     """
@@ -237,8 +227,7 @@ class ChartSeries(Chart):
     -----------
     A series is a set of data. You can plot a chart based on the data.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

@@ -6,7 +6,7 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 
 
-class JsInfo(object):
+class JsInfo:
 
   def __init__(self, component):
     self._src = component
@@ -19,8 +19,7 @@ class JsInfo(object):
     Set the slider info variable on the JavaScript side.
     This is not mandatory in a Slider event as it is already passed in the event function.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -36,8 +35,7 @@ class JsInfo(object):
     ------------
     Get the slider current index (starts from 1).
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.index" % self.varName)
 
@@ -48,8 +46,7 @@ class JsInfo(object):
     ------------
     Get the slider past index.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.indexCached" % self.varName)
 
@@ -60,8 +57,7 @@ class JsInfo(object):
     ------------
     display index starts from 1.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.displayIndex" % self.varName)
 
@@ -72,8 +68,7 @@ class JsInfo(object):
     ------------
     Get the container ID
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsString.JsString.get("%s.container.Id" % self.varName)
 
@@ -84,8 +79,7 @@ class JsInfo(object):
     ------------
     Get the slider views count.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.slideCount" % self.varName)
 
@@ -95,8 +89,7 @@ class JsInfo(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.slideCountNew" % self.varName)
 
@@ -118,8 +111,7 @@ class JsInfo(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.isOn" % self.varName)
 
@@ -129,8 +121,7 @@ class JsInfo(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasControls" % self.varName)
 
@@ -140,8 +131,7 @@ class JsInfo(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.navCurrentIndex" % self.varName)
 
@@ -151,8 +141,7 @@ class JsInfo(object):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber.get("%s.navCurrentIndexCached" % self.varName)
 
@@ -163,8 +152,7 @@ class JsInfo(object):
     ------------
     Get the slider next button DOM object.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.nextButton" % self.varName)
 
@@ -175,8 +163,7 @@ class JsInfo(object):
     ------------
     Return the slider previous button DOM object.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.prevButton" % self.varName)
 
@@ -193,8 +180,7 @@ class JsHtmlTinySlider(JsHtml.JsHtmlRich):
     ------------
     Get the current index in the tiny slider.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.getInfo().index" % self._src.jsonId)
 
@@ -204,7 +190,6 @@ class JsHtmlTinySlider(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsInfo(self._src)

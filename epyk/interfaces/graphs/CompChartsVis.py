@@ -17,8 +17,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -50,8 +49,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -84,8 +82,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -119,8 +116,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -154,8 +150,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -193,8 +188,7 @@ class Vis2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -224,8 +218,7 @@ class Vis3D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -254,8 +247,7 @@ class Vis3D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -284,8 +276,7 @@ class Vis3D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -314,8 +305,7 @@ class Vis3D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -351,8 +341,7 @@ class Vis(Vis2D):
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -377,8 +366,7 @@ class Vis(Vis2D):
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -403,8 +391,7 @@ class Vis(Vis2D):
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -429,8 +416,7 @@ class Vis(Vis2D):
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

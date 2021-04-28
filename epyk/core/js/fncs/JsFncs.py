@@ -15,8 +15,7 @@ class FncToObject:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -32,8 +31,7 @@ class FncToObject:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -53,8 +51,7 @@ class FncToObject:
     ------------
     Data transformation to the D3 package.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
 
@@ -65,8 +62,7 @@ class FncToObject:
     ------------
     Data transformation to the DC package.
 
-    Usage:
-    -----
+    Usage::
     """
     from epyk.core.js.objects import JsChartDC
 
@@ -84,8 +80,7 @@ class FncRoAggRec:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -112,8 +107,7 @@ class FncOnRecords:
     Property to the data final object.
     Those items help to the link to external packages.
 
-    Usage:
-    -----
+    Usage::
     """
     return FncToObject(self._js_src, self._data_schema)
 
@@ -123,8 +117,7 @@ class FncOnRecords:
     ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -144,8 +137,7 @@ class FncOnRecords:
     ------------
     The function content should use data and produce an object record.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -164,8 +156,7 @@ class FncOnRecords:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     fnc_name = JsFncsRecords.JsToUrl.__name__
     fnc_pmts = ["data"]
@@ -186,8 +177,7 @@ class FncOnRecords:
     available in the record. Also the count will be displayed.
     The values will be one in the record and not the sum.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -217,8 +207,7 @@ class FncOnRecords:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -237,8 +226,7 @@ class FncOnRecords:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -261,8 +249,7 @@ class FncOnRecords:
     ------------
     The Javascript function are using the main data as a first parameter.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -297,8 +284,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -317,8 +303,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
 
   def not_range_(self, column, val, compare_type="in", all_if_empty=True):
@@ -326,8 +311,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -342,8 +326,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -357,8 +340,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -386,8 +368,7 @@ class FncFiltere:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -402,8 +383,7 @@ class FncFiltere:
     ------------
     Filter only the data above the value for the given key in the record.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -422,8 +402,7 @@ class FncFiltere:
     ------------
     Filter only the data below the value for the given key in the record.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -453,8 +432,7 @@ class JsRegisteredFunctions:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -472,8 +450,7 @@ class JsRegisteredFunctions:
     Create and store a function to do simple services calls and return a temporary message.
 
     TODO: To be improved and extended.
-    Usage:
-    -----
+    Usage::
 
     """
     self._js_src.setdefault('functions', {})["serviceCall"] = {
@@ -494,8 +471,7 @@ class JsRegisteredFunctions:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -513,8 +489,7 @@ class JsRegisteredFunctions:
     ------------
     Call a bespoke functions on the Javascript side.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -536,8 +511,7 @@ class JsRegisteredFunctions:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -559,8 +533,7 @@ class JsRegisteredFunctions:
     Javascript pre defined function dedicated to transform a records.
     Namely a list of dictionaries.
 
-    Usage:
-    -----
+    Usage::
     """
     return FncOnRecords(self._js_src)
 
@@ -590,8 +563,7 @@ class JsFunctions(list):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -604,8 +576,7 @@ class JsFunctions(list):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -652,8 +623,7 @@ class JsAnonymous:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -667,8 +637,7 @@ class JsAnonymous:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -682,8 +651,7 @@ class JsAnonymous:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

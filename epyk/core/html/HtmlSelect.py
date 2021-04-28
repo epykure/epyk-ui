@@ -76,8 +76,7 @@ class Select(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptSelect.OptionsSelectJs
     """
@@ -91,8 +90,7 @@ class Select(Html.Html):
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsList.ClassSelect
     """
@@ -108,8 +106,7 @@ class Select(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -127,8 +124,7 @@ class Select(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -166,8 +162,7 @@ class Select(Html.Html):
     -----------
     Javascript event triggered when the value has changed.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -191,8 +186,7 @@ class Select(Html.Html):
     -----------
     Create a AJAX request.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

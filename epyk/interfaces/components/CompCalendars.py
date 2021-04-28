@@ -22,8 +22,7 @@ class Calendar:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       content = {
         "2020-07-02": {'task1': 50, 'task2': 50},
@@ -107,8 +106,7 @@ class Calendar:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -138,8 +136,7 @@ class Calendar:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
         records = {
           1: {"Project 1": 12, "Project 2": 30},
@@ -206,8 +203,7 @@ class Calendar:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
         monthly = page.ui.calendars.months(content=records, align="center")
         page.ui.calendars.legend(monthly.tasks)
@@ -256,8 +252,7 @@ class Calendar:
     ------------
     Display a forecast based on a dictionary containing the values for several months
 
-    Usage:
-    -----
+    Usage::
 
     :tags:
     :categories:
@@ -303,8 +298,7 @@ class Calendar:
     ------------
     Add link to the google calendar. Will add the event to the Calendar.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.calendars.google("hrehr", "Test", "20200801T153000Z", "20200802T163000Z")
 
@@ -355,8 +349,7 @@ class Calendar:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :tags:
     :categories:
@@ -410,8 +403,7 @@ class Calendar:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       pill = page.ui.calendars.pill("4D")
       page.ui.button("Click").click([page.js.alert(pill.dom.content)])

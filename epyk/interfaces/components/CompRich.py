@@ -19,8 +19,7 @@ class Rich:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
@@ -77,8 +76,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.rich.stars(3, label="test", helper="This is a helper")
       stars = page.ui.rich.stars(3, label="test", helper="This is a helper")
@@ -118,8 +116,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
       page.ui.rich.light(True)
@@ -160,8 +157,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.info("Test")
 
@@ -195,8 +191,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.rich.countdown(24, 9 2021)
 
@@ -246,8 +241,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.rich.update("Last update: ")
 
@@ -292,8 +286,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -333,8 +326,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.search()
 
@@ -379,8 +371,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -420,8 +411,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       schema = {'type': 'div', 'css': {}, 'class': , 'attrs': {} 'arias': {},  'children': [
           {'type': : {...}}
@@ -454,8 +444,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -485,8 +474,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.editor()
 
@@ -527,8 +515,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -582,8 +569,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -620,8 +606,7 @@ class Rich:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

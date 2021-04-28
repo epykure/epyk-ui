@@ -21,8 +21,7 @@ class Row(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -48,8 +47,7 @@ class Cell(Html.Html):
     ------------
     Set the cell content to be an HTML object.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -92,8 +90,7 @@ class Bespoke(Html.Html):
     -----------
     Return the Javascript variable of the bespoke.
 
-    Usage:
-    -----
+    Usage::
     """
     return self.dom.varId
 
@@ -104,8 +101,7 @@ class Bespoke(Html.Html):
     -----------
     Get the header row. Returns none if missing.
 
-    Usage:
-    -----
+    Usage::
     """
     return self._header
 
@@ -114,8 +110,7 @@ class Bespoke(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -133,8 +128,7 @@ class Bespoke(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     if self.items is None:
       self.items = []
@@ -156,8 +150,7 @@ class Bespoke(Html.Html):
     -----------
     Get the table rows.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -171,8 +164,7 @@ class Bespoke(Html.Html):
     -----------
     Get the table rows.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -190,8 +182,7 @@ class Bespoke(Html.Html):
     -----------
     Get the table column cells as a generator
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -212,8 +203,7 @@ class Bespoke(Html.Html):
     Add a row to the table.
 
 
-    Usage:
-    -----
+    Usage::
 
       simple_table.row_add({"column": "value"})
 

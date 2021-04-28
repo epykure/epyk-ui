@@ -25,8 +25,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
@@ -83,8 +82,7 @@ class Images:
 
       https://www.w3schools.com/tags/tag_figcaption.asp
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption",
         path=picture_path, width=(100, 'px'))
@@ -127,8 +125,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -158,8 +155,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -196,8 +192,7 @@ class Images:
     :tags: Background
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -240,8 +235,7 @@ class Images:
     :categories:
 
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -279,8 +273,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -310,8 +303,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
@@ -362,8 +354,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.avatar("Epyk", status='out')
       page.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
@@ -452,8 +443,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
 
@@ -509,8 +499,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       c = page.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#")
       c.style.css.borders()
@@ -552,8 +541,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       car = page.ui.images.carousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
                                  path=r"../../../static/images", height=(200, 'px'))
@@ -599,8 +587,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.emoji(page.symbols.smileys.DISAPPOINTED_FACE)
 
@@ -637,8 +624,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.icon("fab fa-angellist")
 
@@ -685,8 +671,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
       page.ui.images.badge("This is a badge", background_color="red", color="white")
@@ -745,8 +730,7 @@ class Images:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.color("FFFFFF")
 

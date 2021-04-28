@@ -17,8 +17,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -55,8 +54,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -92,8 +90,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -130,8 +127,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -174,8 +170,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -211,8 +206,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -247,8 +241,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -289,8 +282,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -328,8 +320,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -370,8 +361,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -410,8 +400,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -446,8 +435,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -477,8 +465,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -510,8 +497,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       gauge = page.ui.charts.plotly.gauge(2000)
       gauge.data.gauge.axis.range = [0, 5000]
@@ -544,8 +530,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -581,8 +566,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -614,8 +598,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -651,8 +634,7 @@ class Plotly2D:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       data = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
       sc = page.ui.charts.plotly.candlestick(

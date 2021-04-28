@@ -29,8 +29,7 @@ class Sliders:
     ------------
     Add a Jquery UI slider object to the page
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.slider(40)
       page.ui.slider([1, 2, 3, 4, 5, 6, 7])
@@ -71,8 +70,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -106,8 +104,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -143,8 +140,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -176,8 +172,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -210,8 +205,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -243,8 +237,7 @@ class Sliders:
     ------------
     Add a progress bar component to the page
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.sliders.progressbar(300)
 
@@ -280,8 +273,7 @@ class Sliders:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

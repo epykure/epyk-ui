@@ -17,8 +17,7 @@ class Lists:
     ------------
     HTML Select component.
 
-    Usage:
-    -----
+    Usage::
 
       record = [
         {"text": 'Text 1', "value": "text 1"},
@@ -80,8 +79,7 @@ class Lists:
     ------------
     HTML Select component.
 
-    Usage:
-    -----
+    Usage::
 
       select1 = page.ui.select([
         {"value": "value 1", "text": "value 1"},
@@ -128,8 +126,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
 
@@ -151,8 +148,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
 
@@ -193,8 +189,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -220,8 +215,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -266,8 +260,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -292,8 +285,7 @@ class Lists:
     ------------
     Special list configuration for a list of box with a title with a text and a list of icons
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -325,8 +317,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.lists.numbers(["A", "B"])
 
@@ -352,8 +343,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -386,8 +376,7 @@ class Lists:
 
       - :class:`epyk.core.html.HtmlList.List`
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -412,8 +401,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -450,8 +438,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -488,8 +475,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.lists.squares(["A", "B"])
 
@@ -524,8 +510,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.groups(["AWW", "B"])
       l.add_list(["D", "E"], category="Test")
@@ -571,8 +556,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
       page.ui.lists.tree(data)
@@ -642,8 +626,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
       checks = page.ui.lists.checklist(data)
@@ -681,8 +664,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
@@ -724,8 +706,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
@@ -763,8 +744,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -797,8 +777,7 @@ class Lists:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -822,8 +801,7 @@ class Lists:
     ------------
     Add a chip (filter) html component
 
-    Usage:
-    -----
+    Usage::
 
       chips = page.ui.chips([])
 

@@ -12,8 +12,7 @@ class OptionDays(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -33,8 +32,7 @@ class OptionDays(Options):
     Change the unit to the calendar.
     Default is in percentage.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -53,8 +51,7 @@ class OptionDays(Options):
     ------------
     Overload style of the day number when workload is above 100%.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -73,8 +70,7 @@ class OptionDays(Options):
     ------------
     CSS Style for the day number.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -93,8 +89,7 @@ class OptionDays(Options):
     ------------
     CSS Style for the today cell.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -113,8 +108,7 @@ class OptionDays(Options):
     ------------
     CSS Style for the table header.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

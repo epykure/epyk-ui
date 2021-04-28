@@ -43,8 +43,7 @@ class Chart(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -62,8 +61,7 @@ class Chart(Html.Html):
     All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.c3.bar()
       line.shared.x_label("x axis")
@@ -107,8 +105,7 @@ class Chart(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -204,8 +201,7 @@ class ChartLine(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -223,8 +219,7 @@ class ChartLine(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -345,8 +340,7 @@ class ChartPie(ChartLine):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -361,8 +355,7 @@ class ChartPie(ChartLine):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -390,8 +383,7 @@ class ChartGauge(ChartPie):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:

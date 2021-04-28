@@ -15,6 +15,7 @@ class Panels:
             helper=None, options=None, profile=False):
     """
     Description:
+    Description:
     ------------
 
     :tags:
@@ -24,8 +25,7 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -59,8 +59,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       tab = page.ui.panels.pills()
       for i in range(5):
@@ -112,8 +111,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       tab = page.ui.panels.boxes()
       for i in range(5):
@@ -166,8 +164,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       tab = page.ui.panels.tabs()
       for i in range(5):
@@ -221,8 +218,7 @@ class Panels:
 
       https://getbootstrap.com/docs/4.0/components/navs/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -270,8 +266,7 @@ class Panels:
 
       https://getbootstrap.com/docs/4.0/components/navs/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -319,8 +314,7 @@ class Panels:
 
       https://getbootstrap.com/docs/4.0/components/navs/
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -357,8 +351,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       text = page.ui.text("Test")
       page.ui.panels.sliding([text], title="Panel title")
@@ -409,8 +402,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       number = page.ui.rich.number(500, "Test", height=(150, 'px'))
       number_2 = page.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
@@ -453,8 +445,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       filters = page.ui.panels.filters()
 
@@ -500,8 +491,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -533,8 +523,7 @@ class Panels:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -611,8 +600,7 @@ class Slidings:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -646,8 +634,7 @@ class Slidings:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -680,8 +667,7 @@ class Slidings:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

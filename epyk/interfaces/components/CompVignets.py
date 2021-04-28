@@ -28,8 +28,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.vignets.bubble({"value": 23, "title": "Title"}, helper="This is a helper")
 
@@ -95,8 +94,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       number = page.ui.vignets.number(500, "Test")
       number_2 = page.ui.vignets.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
@@ -162,8 +160,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.vignets.block({"text": 'This is a brand new python framework', "title": 'New Python Web Framework',
                              "button": {"text": 'Get Started', 'url': "/getStarted"}, 'color': 'green'})
@@ -201,8 +198,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.vignets.text({"title": "New Python Framework", 'value': "A new Python Web Framework", 'color': 'green',
                             'icon': 'fab fa-python', 'colorTitle': 'darkgreen'})
@@ -234,8 +230,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -325,8 +320,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -405,8 +399,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -441,8 +434,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -509,8 +501,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.vignets.price(10, "This is the price", [])
 
@@ -570,8 +561,7 @@ class Vignets:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

@@ -21,8 +21,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.new_line(10)
 
@@ -53,8 +52,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.new_line(10)
 
@@ -91,8 +89,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.hr(10)
 
@@ -143,8 +140,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.underline()
 
@@ -176,8 +172,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.accentuate()
 
@@ -212,8 +207,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.col([
         page.ui.text("test C"),
@@ -263,8 +257,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       row = page.ui.layouts.row()
       row += page.ui.layouts.col([
@@ -313,8 +306,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       row = page.ui.layouts.table()
 
@@ -350,8 +342,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       gr = page.ui.layouts.grid()
       gr += [page.ui.text("test %s" % i) for i in range(5)]
@@ -395,8 +386,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -432,8 +422,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div([html])
       div += html_2
@@ -492,8 +481,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -523,8 +511,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -553,8 +540,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.ui.layouts.popup(page.ui.title('Test'), color="red")
       popup.add(page.ui.texts.paragraph('Test'))
@@ -594,8 +580,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.layouts.iframe("http://www.google.com")
 
@@ -637,8 +622,7 @@ class Layouts:
 
       https://jqueryui.com/dialog/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -665,8 +649,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       menu = page.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
       menu.icon.click([menu.icon.dom.css({"color": 'red'})])
@@ -707,8 +690,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -736,8 +718,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.header([html])
       div += html_2
@@ -782,8 +763,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.header([html])
       div += html_2
@@ -826,8 +806,7 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -872,8 +851,7 @@ class Delimiter:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -899,8 +877,7 @@ class Delimiter:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -927,8 +904,7 @@ class Delimiter:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -957,8 +933,7 @@ class Delimiter:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 

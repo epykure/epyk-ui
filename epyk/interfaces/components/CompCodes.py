@@ -29,8 +29,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.codes.css('''
       .cssdivnoborder {margin: 0 ;clear: both ;padding: 0 ;border: 0 ;}
@@ -79,8 +78,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -124,8 +122,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -169,8 +166,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -214,8 +210,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -258,8 +253,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -299,8 +293,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -340,8 +333,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -381,8 +373,7 @@ class Code:
 
       https://codemirror.net/index.html
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 

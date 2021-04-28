@@ -361,8 +361,7 @@ class Slider(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsJqueryUI.ClassSlider
     """
@@ -846,8 +845,7 @@ class Filters(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

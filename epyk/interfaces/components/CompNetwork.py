@@ -20,8 +20,7 @@ class Network:
     ------------
     Python wrapper to a div item composed to several sub html items to display message
 
-    Usage:
-    -----
+    Usage::
 
       db = page.db(database="test.db")
       page.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
@@ -57,8 +56,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -90,8 +88,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -129,8 +126,7 @@ class Network:
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
@@ -182,8 +178,7 @@ class Network:
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
@@ -215,8 +210,7 @@ class Network:
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
@@ -248,8 +242,7 @@ class Network:
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
@@ -281,8 +274,7 @@ class Network:
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
@@ -311,8 +303,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       b = page.ui.button("Display")
       n = page.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
@@ -348,8 +339,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -384,8 +374,7 @@ class Network:
 
       - :class:`epyk.core.html.HtmlFiles.DropFile`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.network.dropfile()
 
@@ -413,8 +402,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -438,8 +426,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -481,8 +468,7 @@ class Network:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

@@ -29,14 +29,6 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonImportant)
 
-  def border_rounded(self):
-    """
-    Description:
-    -----------
-
-    """
-    pass
-
   def reset(self):
     """
     Description:

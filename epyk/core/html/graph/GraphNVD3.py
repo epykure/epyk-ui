@@ -28,8 +28,7 @@ class Chart(Html.Html):
     All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.bb.bar()
       line.shared.x_label("x axis")
@@ -57,8 +56,7 @@ class Chart(Html.Html):
     ------------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s_obj" % self.htmlCode
 
@@ -70,8 +68,7 @@ class Chart(Html.Html):
     Property to the last dataset added to the NVD3 chart.
     Use the function traces to get a specific series from the chart object.
 
-    Usage:
-    -----
+    Usage::
     """
     return self._datasets[-1]
 
@@ -81,8 +78,7 @@ class Chart(Html.Html):
     ------------
     Get a specific series from the datasets attributes in the NVD3 chart.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -99,8 +95,7 @@ class Chart(Html.Html):
     ------------
     This function is not implemented.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -116,8 +111,7 @@ class Chart(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -164,8 +158,7 @@ class Chart(Html.Html):
     ------------
     Property to the underlying D3 module.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsD3.D3Select
     """
@@ -182,8 +175,7 @@ class Chart(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -212,8 +204,7 @@ class Chart(Html.Html):
     ------------
     Return the JavaScript fragment to refresh the component content.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -255,8 +246,7 @@ class ChartLine(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Line
     """
@@ -297,8 +287,7 @@ class ChartScatter(ChartLine):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Scatter
     """
@@ -311,8 +300,7 @@ class ChartScatter(ChartLine):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -334,8 +322,7 @@ class ChartCumulativeLine(ChartLine):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3CumulativeLine
     """
@@ -352,8 +339,7 @@ class ChartFocusLine(ChartLine):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3LineWithFocus
     """
@@ -370,8 +356,7 @@ class ChartBar(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Bar
     """
@@ -388,8 +373,7 @@ class ChartBar(Chart):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -418,8 +402,7 @@ class ChartBar(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -468,8 +451,7 @@ class ChartHorizontalBar(ChartBar):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3MultiBarHorizontal
     """
@@ -489,8 +471,7 @@ class ChartMultiBar(ChartBar):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3MultiBar
     """
@@ -507,8 +488,7 @@ class ChartMultiBar(ChartBar):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -544,8 +524,7 @@ class ChartPie(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Pie
     """
@@ -580,8 +559,7 @@ class ChartPie(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -599,8 +577,7 @@ class ChartPie(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -620,8 +597,7 @@ class ChartArea(ChartBar):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Area
     """
@@ -638,8 +614,7 @@ class ChartHistoBar(ChartBar):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3HistoricalBar
     """
@@ -656,8 +631,7 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3ParallelCoordinates
     """
@@ -670,8 +644,7 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -686,8 +659,7 @@ class ChartParallelCoord(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -706,8 +678,7 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3Sunburst
     """
@@ -720,8 +691,7 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -738,8 +708,7 @@ class ChartSunbrust(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -778,8 +747,7 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3BoxPlot
     """
@@ -793,8 +761,7 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
@@ -828,8 +795,7 @@ class ChartBoxPlot(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -848,8 +814,7 @@ class ChartCandlestick(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3CandlestickBar
     """
@@ -866,8 +831,7 @@ class ChartOhlcBar(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3OhlcBar
     """
@@ -884,8 +848,7 @@ class ChartForceDirected(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNvd3.JsNvd3ForceDirectedGraph
     """
@@ -898,8 +861,7 @@ class ChartForceDirected(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

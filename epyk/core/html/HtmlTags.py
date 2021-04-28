@@ -28,8 +28,7 @@ class HtmlGeneric(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -59,8 +58,7 @@ class HtmlGeneric(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -90,8 +88,7 @@ class HtmlGenericLInk(HtmlGeneric):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

@@ -239,8 +239,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     The CSS colour of the marker displayed for the minimum value. Set to false or an empty string to hide it.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -256,8 +255,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     The CSS colour of the marker displayed for the maximum value. Set to false or an empty string to hide it.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -273,8 +271,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specifies a colour for the spot that appears on a value when moused over. Set to null to disable.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -290,8 +287,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specifies a colour for the vertical line that appears through a value when moused over. Set to null to disable.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -307,8 +303,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     In pixels (default: 1) - Integer.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(1)
@@ -324,8 +319,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specify threshold values between which to draw a bar to denote the "normal" or expected range of values.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -341,8 +335,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specify threshold values between which to draw a bar to denote the "normal" or expected range of values.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -358,8 +351,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Radius of all spot markers, In pixels (default: 1.5) - Integer.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(1.5)
@@ -375,8 +367,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     The CSS colour of the final value marker. Set to false or an empty string to hide it.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get("")
@@ -392,8 +383,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specifies which points to draw spots on, and with which colour. Accepts a range.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get({})
@@ -409,8 +399,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     By default the normal range is drawn behind the fill area of the chart.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(False)
@@ -426,8 +415,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     By default the normal range is drawn behind the fill area of the chart.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -443,8 +431,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specifies the minimum value to use for the X value of the chart.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)
@@ -460,8 +447,7 @@ class OptionsSparkLine(OptionsSpark):
     ------------
     Specifies the maximum value to use for the X value of the chart.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)

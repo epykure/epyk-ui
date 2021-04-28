@@ -18,8 +18,7 @@ class Links:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
 
@@ -70,8 +69,7 @@ class Links:
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -107,8 +105,7 @@ class Links:
     ------------
     Python interface to the common Hyperlink.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.link({"text": "Profiling results", "url": '#'})
       l = page.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
@@ -152,8 +149,7 @@ class Links:
     ------------
     Python interface to the Hyperlink to retrieve data.
 
-    Usage:
-    -----
+    Usage::
 
       data_link = page.ui.links.data("link", "test#data")
       data_link.build({"text": 'new link Name', 'data': "new content"})
@@ -189,8 +185,7 @@ class Links:
     ------------
     Display a link with the same layout than a buttons.colored HTML component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -231,8 +226,7 @@ class Links:
     ------------
     HTML component to upload files.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -277,8 +271,7 @@ class Links:
     ------------
     HTML component to upload files.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

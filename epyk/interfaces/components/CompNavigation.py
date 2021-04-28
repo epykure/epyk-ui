@@ -25,8 +25,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.up()
 
@@ -74,8 +73,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.down()
 
@@ -123,8 +121,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.to(100, tooltip="test")
 
@@ -173,8 +170,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
@@ -220,8 +216,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.scroll()
 
@@ -249,8 +244,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.navigation.indices(10)
 
@@ -281,8 +275,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       p = page.ui.navigation.points(10)
       for i, _ in enumerate(p):
@@ -315,8 +308,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       d = page.ui.navigation.dots(10)
 
@@ -347,8 +339,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
       page.ui.navigation.path(record)
@@ -382,8 +373,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -416,8 +406,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       nav = page.ui.navigation.bar(title="test")
       nav.add_text("Test text")
@@ -490,8 +479,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -537,8 +525,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -572,8 +559,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -642,8 +628,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -667,8 +652,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -699,8 +683,7 @@ class Navigation:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -741,8 +724,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -781,8 +763,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -822,8 +803,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.banners.cookies("Test", "#")
 
@@ -862,8 +842,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -914,8 +893,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -954,8 +932,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -995,8 +972,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1043,8 +1019,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1090,8 +1065,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1135,8 +1109,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1206,8 +1179,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1250,8 +1222,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1299,8 +1270,7 @@ class Banners:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1364,8 +1334,7 @@ class NavBars:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1388,8 +1357,7 @@ class NavBars:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1413,8 +1381,7 @@ class NavBars:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1440,8 +1407,7 @@ class NavBars:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

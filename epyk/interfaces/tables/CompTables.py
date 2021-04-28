@@ -34,8 +34,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -53,8 +52,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -154,8 +152,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -173,8 +170,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       simple_table = page.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
       simple_table.add({"COL1": "Value"})
@@ -203,8 +199,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -248,8 +243,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       hierarchy = page.ui.tables.tabulators.hierarchy(html_code="hierarchy")
       menu = page.ui.tables.menu(hierarchy)

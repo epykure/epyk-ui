@@ -21,8 +21,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -53,8 +52,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -91,8 +89,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -130,8 +127,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -169,8 +165,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -208,8 +203,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -248,8 +242,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -286,8 +279,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -326,8 +318,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -364,8 +355,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -402,8 +392,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -440,8 +429,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -478,8 +466,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -515,8 +502,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -559,8 +545,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -588,8 +573,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -618,8 +602,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       data = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
       sc = page.ui.charts.nvd3.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"],
@@ -670,8 +653,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -715,8 +697,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -743,8 +724,7 @@ class Nvd3:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

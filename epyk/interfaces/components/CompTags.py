@@ -33,8 +33,7 @@ class Tags:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

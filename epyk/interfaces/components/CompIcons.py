@@ -22,8 +22,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.awesome(icon="fas fa-align-center")
 
@@ -64,8 +63,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.awesome(icon="fas fa-align-center")
 
@@ -113,8 +111,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.edit()
       page.ui.icons.edit().color("red")
@@ -147,8 +144,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.clock()
       page.ui.icons.clock().color("red")
@@ -181,8 +177,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -206,8 +201,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -231,8 +225,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -257,8 +250,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -283,8 +275,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -309,8 +300,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -334,8 +324,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -360,8 +349,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -385,8 +373,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -410,8 +397,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.refresh()
       page.ui.icons.refresh().color("red")
@@ -441,8 +427,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.pdf(tooltip="helper")
 
@@ -471,8 +456,7 @@ class Icons:
     ------------
 
 
-   Usage:
-    -----
+   Usage::
 
       page.ui.icons.plus()
 
@@ -501,8 +485,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.excel()
 
@@ -531,8 +514,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.download()
 
@@ -561,8 +543,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.delete()
 
@@ -596,8 +577,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.zoom()
 
@@ -626,8 +606,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.capture()
 
@@ -656,8 +635,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.remove()
 
@@ -690,8 +668,7 @@ class Icons:
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/fas fa-eraser>`_ icon
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.clear()
 
@@ -725,8 +702,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.table(tooltip="helper")
 
@@ -754,8 +730,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.wrench()
 
@@ -784,8 +759,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.rss()
 
@@ -825,8 +799,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.facebook()
 
@@ -863,8 +836,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.facebook()
 
@@ -899,8 +871,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.twitter()
 
@@ -937,8 +908,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.twitter()
 
@@ -976,8 +946,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.twitter()
 
@@ -1015,8 +984,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.linkedIn()
 
@@ -1054,8 +1022,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.youtube()
 
@@ -1092,8 +1059,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.github()
 
@@ -1130,8 +1096,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.python()
 
@@ -1165,8 +1130,7 @@ class Icons:
     ------------
 
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.stackoverflow()
 
@@ -1201,8 +1165,7 @@ class Icons:
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.mail()
 
@@ -1235,8 +1198,7 @@ class Icons:
     ------------
     Display a tick box component
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.tick()
 
@@ -1275,8 +1237,7 @@ class Icons:
     ------------
     Add the Epyk Icon.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.epyk()
 
@@ -1310,8 +1271,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.signin("test")
 
@@ -1340,8 +1300,7 @@ class Icons:
     ------------
     Add a bespoke options / actions bar with icons
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1372,8 +1331,7 @@ class Icons:
     ------------
     Display an avatar component.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1404,8 +1362,7 @@ class Icons:
     ------------
     Display a badge component using Bootstrap
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
       page.ui.images.badge("This is a badge", background_color="red", color="white")
@@ -1453,8 +1410,7 @@ class Icons:
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
@@ -1498,8 +1454,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1540,8 +1495,7 @@ class Icons:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1576,8 +1530,7 @@ class Icons:
     ------------
     Add a menu bar with multiple icons.
 
-    Usage:
-    -----
+    Usage::
 
       menu = page.ui.icons.menu([
         {"icon": "fab fa-github-square", "tooltip": "Github path", 'url': 'test'},
@@ -1676,8 +1629,7 @@ class Toggles:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.images.icon("fab fa-angellist")
 
@@ -1722,8 +1674,7 @@ class Toggles:
     ------------
     Add a lock toggle button.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.icons.toggles.lock()
 

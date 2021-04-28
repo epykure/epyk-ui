@@ -19,8 +19,7 @@ class AgGrid:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

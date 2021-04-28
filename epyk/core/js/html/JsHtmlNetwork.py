@@ -6,7 +6,7 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
-class JsFileData(object):
+class JsFileData:
 
   def __init__(self, varName):
     self.varName = varName
@@ -111,8 +111,7 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

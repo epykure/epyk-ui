@@ -23,8 +23,7 @@ class Table(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s_obj" % self.htmlCode
 

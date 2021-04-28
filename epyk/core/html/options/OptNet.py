@@ -65,8 +65,7 @@ class OptionsAlert(Options):
     Set the time in milliseconds before hidden the popup.
     If None the popup will not hide progressively.
 
-    Usage:
-    -----
+    Usage::
 
       danger = page.ui.network.warning()
       danger.options.time = None
@@ -89,8 +88,7 @@ class OptionsAlert(Options):
     The delay between the event and the display of the popup.
     THe time is in millisecond.
 
-    Usage:
-    -----
+    Usage::
 
       danger = page.ui.network.warning()
       danger.options.delay = 100

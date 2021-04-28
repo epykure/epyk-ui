@@ -16,8 +16,7 @@ class Plotly:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

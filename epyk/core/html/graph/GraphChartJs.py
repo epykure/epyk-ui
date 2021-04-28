@@ -28,8 +28,7 @@ class ChartJsActivePoints:
     -----------
     Get the index of the clicked series in teh datasets.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().index])
@@ -45,8 +44,7 @@ class ChartJsActivePoints:
     -----------
     Get the name of the selected series.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().x])
@@ -60,8 +58,7 @@ class ChartJsActivePoints:
     -----------
     Get the series label name.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().labels])
@@ -76,8 +73,7 @@ class ChartJsActivePoints:
     -----------
     Get the series value.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().model])
@@ -91,8 +87,7 @@ class ChartJsActivePoints:
     -----------
     Get the series name.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().datasetLabel])
@@ -106,8 +101,7 @@ class ChartJsActivePoints:
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().label])
@@ -122,8 +116,7 @@ class ChartJsActivePoints:
     -----------
     Get the series dataset.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObject.JsObject.get("activePoints[Math.min(%s, activePoints.length - 1)]['_model'].label" % self.num)
@@ -135,8 +128,7 @@ class ChartJsActivePoints:
     -----------
     Get the point value.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().value])
@@ -166,8 +158,7 @@ class Chart(Html.Html):
     -----------
     The current active points selected by an event on a chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -187,8 +178,7 @@ class Chart(Html.Html):
     All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.bar()
       line.shared.x_label("x axis")
@@ -202,8 +192,7 @@ class Chart(Html.Html):
     -----------
     Property to the D3 library.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsD3.D3Select
     """
@@ -219,8 +208,7 @@ class Chart(Html.Html):
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.chartJs.bar()
       page.ui.button("Load").click([line.js.add(6, {"test 2": 34})])
@@ -241,8 +229,7 @@ class Chart(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -259,8 +246,7 @@ class Chart(Html.Html):
     -----------
     Property to the series options.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptChartJs.ChartJsOptions
     """
@@ -273,8 +259,7 @@ class Chart(Html.Html):
     -----------
     Shortcut property to all the external plugins defined in the framework.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -291,8 +276,7 @@ class Chart(Html.Html):
 
     Makes data points draggable. Supports touch events.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -307,8 +291,7 @@ class Chart(Html.Html):
     -----------
     Set the labels of the different series in the chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -327,8 +310,7 @@ class Chart(Html.Html):
     -----------
     Change the series name.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -344,8 +326,7 @@ class Chart(Html.Html):
     -----------
     The data property of a ChartJs chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -371,8 +352,7 @@ class Chart(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -403,8 +383,7 @@ class Chart(Html.Html):
     -----------
     Add a click event on the chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -428,8 +407,7 @@ class Chart(Html.Html):
     -----------
     Add a double click event on the chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -452,8 +430,7 @@ class Chart(Html.Html):
     -----------
     Add an on mouse hover event on the chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -476,8 +453,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return self._datasets
 
@@ -488,8 +464,7 @@ class Chart(Html.Html):
     Get the ChartJs context. The internal configuration of the chart.
     The context is a dictionary object with javascript fragments.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -509,8 +484,7 @@ class Chart(Html.Html):
     ------------
     Update the chart with context and / or data changes.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -541,8 +515,7 @@ class Chart(Html.Html):
     ------------
     Loading component on a chart.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -591,8 +564,7 @@ class Fabric(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
@@ -607,8 +579,7 @@ class Fabric(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -627,8 +598,7 @@ class Fabric(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -663,8 +633,7 @@ class Datasets:
     ------------
     Add a series to an existing dataset.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -685,8 +654,7 @@ class ChartLine(Chart):
     ------------
     Property to the specific ChartJs Line chart.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -705,8 +673,7 @@ class ChartLine(Chart):
 
     For a chart line the default Opacity is None which will set the fill to attribute to False.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -738,8 +705,7 @@ class ChartLine(Chart):
     ------------
     Add a new Dataset to the chart list of Datasets.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -801,8 +767,7 @@ class ChartBubble(Chart):
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -831,8 +796,7 @@ class ChartBubble(Chart):
     ------------
     Add a new Dataset to the chart list of Datasets.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -887,8 +851,7 @@ class ChartBar(ChartLine):
     ------------
     Property to the bar chart options.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -905,8 +868,7 @@ class ChartBar(ChartLine):
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -937,8 +899,7 @@ class ChartBar(ChartLine):
     ------------
     Add a new Dataset to the chart list of Datasets.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -975,8 +936,7 @@ class ChartPolar(Chart):
     ------------
     Property to the Polar chart options.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -991,8 +951,7 @@ class ChartPolar(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1022,8 +981,7 @@ class ChartPolar(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1087,8 +1045,7 @@ class ChartPie(Chart):
     -----------
     Property to the Pie Chart options.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptChartJs.OptionsPie
     """
@@ -1099,8 +1056,7 @@ class ChartPie(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1124,8 +1080,7 @@ class ChartPie(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1178,8 +1133,7 @@ class ChartRadar(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1204,8 +1158,7 @@ class ChartRadar(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1257,8 +1210,7 @@ class ChartScatter(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1281,8 +1233,7 @@ class ChartScatter(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

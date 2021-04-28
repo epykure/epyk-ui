@@ -39,8 +39,7 @@ class Label(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -55,8 +54,7 @@ class Label(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -71,8 +69,7 @@ class Label(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build.
 
-    Usage:
-    -----
+    Usage::
 
       select.label.click(str(page.js.console.log("test")))
 
@@ -102,8 +99,7 @@ class Label(Html.Html):
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -156,8 +152,7 @@ class Span(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -177,8 +172,7 @@ class Span(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -195,8 +189,7 @@ class Span(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -215,8 +208,7 @@ class Span(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build.
 
-    Usage:
-    -----
+    Usage::
 
       select.label.click(str(page.js.console.log("test")))
 
@@ -256,8 +248,7 @@ class Position(Span):
     ------------
     Specify if the count should be done from the commas.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -272,8 +263,7 @@ class Position(Span):
     ------------
     Set the CSS format for a specific character at a given position.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -336,8 +326,7 @@ class Text(Html.Html):
     Add a click event on the text component.
     The style of the mouse on the component will be changed to make the event more visible.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -361,8 +350,7 @@ class Text(Html.Html):
     -----------
     Click event which redirect to another page.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -388,8 +376,7 @@ class Text(Html.Html):
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
 
-    Usage:
-    -----
+    Usage::
 
     :returns: Javascript string with the function to get the current value of the component
     """
@@ -407,8 +394,7 @@ class Text(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -425,8 +411,7 @@ class Text(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -438,8 +423,7 @@ class Text(Html.Html):
     ------------
     Change the component properties to be editable if double clicked.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.text("This is a text").editable()
 
@@ -456,8 +440,7 @@ class Text(Html.Html):
     ------------
     Add a typing effect on this text.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -531,8 +514,7 @@ class Pre(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -550,8 +532,7 @@ class Pre(Html.Html):
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -570,8 +551,7 @@ class Pre(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -629,8 +609,7 @@ class Paragraph(Html.Html):
     -----------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -657,8 +636,7 @@ class Paragraph(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object.
 
@@ -741,8 +719,7 @@ class Title(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpCls.ClassHtmlEmpty
     """
@@ -758,8 +735,7 @@ class Title(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -779,8 +755,7 @@ class Title(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsTitle
     """
@@ -801,8 +776,7 @@ class Title(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build.
 
-    Usage:
-    -----
+    Usage::
 
       select.label.click(str(page.js.console.log("test")))
 
@@ -860,8 +834,7 @@ class Numeric(Html.Html):
     -----------
     Format any number into currency.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -888,8 +861,7 @@ class Numeric(Html.Html):
     -----------
     Format a number with custom precision and localisation.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -915,8 +887,7 @@ class Numeric(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -931,8 +902,7 @@ class Numeric(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -958,8 +928,7 @@ class Numeric(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -982,8 +951,7 @@ class Numeric(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsNumber
     """
@@ -1036,8 +1004,7 @@ class Highlights(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsHighlights
     """
@@ -1080,8 +1047,7 @@ class Fieldset(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """

@@ -31,8 +31,7 @@ class FmtNumber:
     -----------
     The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -53,8 +52,7 @@ class FmtNumber:
     -----------
     The toPrecision() method formats a number to a specified length.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -75,8 +73,7 @@ class FmtNumber:
     -----------
     The toExponential() method converts a number into an exponential notation.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -98,8 +95,7 @@ class Formatters:
     -----------
     Standard conversion to number.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -114,8 +110,7 @@ class Formatters:
     -----------
     Convert to number using the accounting Javascript module.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -136,8 +131,7 @@ class Formatters:
     -----------
     Convert to number with a symbol using the accounting Javascript module.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -190,8 +184,7 @@ class ContentFormatters:
     ------------
     Convert markwdown to HTML string.
 
-    Usage:
-    -----
+    Usage::
 
       t.dom.content.fromMarkdown()
 
@@ -215,8 +208,7 @@ class ContentFormatters:
     -----------
     Convert to number using the accounting Javascript module.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -237,8 +229,7 @@ class ContentFormatters:
     ------------
     Convert to number with a symbol using the accounting Javascript module.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -263,8 +254,7 @@ class ContentFormatters:
     ------------
     parse a value from any formatted number/currency string.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -279,8 +269,7 @@ class ContentFormatters:
     ------------
     Standard conversion to number.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
@@ -291,8 +280,7 @@ class ContentFormatters:
     ------------
     Standard conversion to string.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector, isPyData=False)
 
@@ -303,8 +291,7 @@ class ContentFormatters:
     ------------
     Standard conversion to Date object.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
@@ -339,8 +326,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Return a Javascript val object.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get(
@@ -353,8 +339,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNodeDom.JsDomsList
     """
@@ -371,8 +356,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Check if the component is in the visible part of the page (the viewpport).
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsObject.JsObject
 
@@ -390,8 +374,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -405,8 +388,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Copy the component content to the clipboard.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -423,8 +405,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return ContentFormatters(self._report, "%s.value" % self.varName)
 
@@ -433,8 +414,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return '%s.value = ""' % self.varName
 
@@ -445,8 +425,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Link to the events attached to a Javascript DOM object.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsNodeDom.JsDomEvents
     """
@@ -459,8 +438,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Link to the JQuery functions.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsQuery.JQuery
     """
@@ -476,8 +454,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Wrapper to the D3 library.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsD3.D3Select
     """
@@ -492,8 +469,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Wrapper to the JqueryUI component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsQueryUi.JQueryUI
     """
@@ -509,8 +485,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Interface to the main Javascript Classes and Primitives.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects(self)
@@ -522,8 +497,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Interface to CrossFilter package.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -538,8 +512,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ------------
     Specific formatters for the HTML components.
 
-    Usage:
-    -----
+    Usage::
     """
     return Formatters(self._report, self.content.toStr())
 
@@ -549,8 +522,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Style property to change from the javascript the CSS attributes of an HTML object.
 
-    Usage:
-    -----
+    Usage::
 
       button.js.style({"backgroundColor": 'red'})
       button.js.style({"backgroundColor": None})
@@ -580,8 +552,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -603,8 +574,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Hide the component.
 
-    Usage:
-    -----
+    Usage::
 
       input.js.hide()
 
@@ -622,8 +592,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     This will use the display attribute of the component.
 
-    Usage:
-    -----
+    Usage::
 
       input.js.show()
 
@@ -653,8 +622,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3schools.com/cssref/pr_class_display.asp
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -679,8 +647,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3schools.com/cssref/pr_class_visibility.asp
 
-    Usage:
-    -----
+    Usage::
 
       mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
       mode_switch.input.click([
@@ -713,8 +680,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3schools.com/cssref/pr_class_visibility.asp
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.web.bs.icons.danger()
       icon.style.css.invisble()
@@ -728,8 +694,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Select the content of the HTMl component.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
@@ -740,8 +705,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ------------
     Toggle (hide / show) the display of the component.
 
-    Usage:
-    -----
+    Usage::
 
       input.js.toggle()
       input.js.toggle("background", "red", "blue")
@@ -767,8 +731,7 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       s.dom.highlight()
       s.dom.highlight(css_attrs={"background": "red"}),
@@ -810,8 +773,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Tip: It is possible to add a break point to debug in the browser by adding.
 
-    Usage:
-    -----
+    Usage::
 
       d = page.ui.div().css({"border": "1px solid black"})
       b = page.ui.button("test")
@@ -847,8 +809,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     This will not change the original option object used during the first object creation.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -887,8 +848,7 @@ class JsHtmlRich(JsHtml):
     -----------
     Return the val object.
 
-    Usage:
-    -----
+    Usage::
 
     """
     values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
@@ -901,8 +861,7 @@ class JsHtmlRich(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     if hasattr(self.component.options, "markdown"):
@@ -921,8 +880,7 @@ class JsHtmlRich(JsHtml):
     ------------
     Specific formatters for the HTML components.
 
-    Usage:
-    -----
+    Usage::
     """
     return Formatters(self._report, "%s.innerHTML" % self.varName)
 
@@ -932,8 +890,7 @@ class JsHtmlRich(JsHtml):
     -----------
     Toggle (change) the content of the HTML component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -959,8 +916,7 @@ class JsHtmlRich(JsHtml):
     -----------
     Select the content of the HTMl component.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''
@@ -977,8 +933,7 @@ class JsHtmlRich(JsHtml):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1005,8 +960,7 @@ class JsHtmlRich(JsHtml):
     ------------
     Empty the content of the HTML component using the innerHTML JavaScript property.
 
-    Usage:
-    -----
+    Usage::
     """
     return '%s.innerHTML = ""' % self.varName
 
@@ -1019,8 +973,7 @@ class JsHtmlImg(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ContentFormatters(self._report, "%s.src" % self.varName)
@@ -1030,8 +983,7 @@ class JsHtmlImg(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1049,8 +1001,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
@@ -1063,8 +1014,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
@@ -1075,8 +1025,7 @@ class JsHtmlButton(JsHtml):
     -----------
     Add a loading icon to the button.
 
-    Usage:
-    -----
+    Usage::
 
       b = rptObj.ui.button("test")
       b.click([
@@ -1104,8 +1053,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1119,8 +1067,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1134,8 +1081,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1158,8 +1104,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1180,8 +1125,7 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return '%s.innerHTML = ""' % self.varName
@@ -1199,8 +1143,7 @@ class JsHtmlButtonChecks(JsHtml):
     This will return the current list status. Selected items but also the full content.
     It will return also the common parameters.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ""
@@ -1214,8 +1157,7 @@ class JsHtmlButtonChecks(JsHtml):
 
     This will return all the selected items in a list.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ""
@@ -1225,8 +1167,7 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''
@@ -1241,8 +1182,7 @@ class JsHtmlButtonChecks(JsHtml):
     THis will add the item at the end of the list by default.
     By default the list will not add duplicated entries.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1276,8 +1216,7 @@ class JsHtmlButtonChecks(JsHtml):
     -----------
     Empty the list content.
 
-    Usage:
-    -----
+    Usage::
     """
     return '%s.empty()' % self.jquery.varId
 
@@ -1286,8 +1225,7 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1306,8 +1244,7 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1331,8 +1268,7 @@ class JsHtmlButtonChecks(JsHtml):
     -----------
     Return the current value in the list.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
@@ -1342,8 +1278,7 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1368,8 +1303,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('''
@@ -1382,8 +1316,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     check = self._src.options.icon_check.split(" ")[-1]
@@ -1398,8 +1331,7 @@ class JsHtmlIcon(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get(
@@ -1412,8 +1344,7 @@ class JsHtmlIcon(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._src.dom.getAttribute("class")
@@ -1458,8 +1389,7 @@ class JsHtmlList(JsHtml):
     ------------
     Return the standard value object with the fields (value, timestamp, offset).
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get(
@@ -1472,8 +1402,7 @@ class JsHtmlList(JsHtml):
     ------------
     Return the values of the items in the list.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsArray.JsArray.get('''
@@ -1489,8 +1418,7 @@ class JsHtmlList(JsHtml):
     ------------
     Return the class name of the list item.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._src.dom.getAttribute("class")
@@ -1501,8 +1429,7 @@ class JsHtmlList(JsHtml):
     ------------
     Add a new item to the list.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -1550,8 +1477,7 @@ class JsHtmlList(JsHtml):
     ------------
     Clear all the items in the list.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
@@ -1575,8 +1501,7 @@ class JsHtmlBackground(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     """
@@ -1589,8 +1514,7 @@ class JsHtmlBackground(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ContentFormatters(self._report, self._src.dom.querySelector("div").css("backgroundColor").toStr())
@@ -1603,8 +1527,7 @@ class JsHtmlNumeric(JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1631,8 +1554,7 @@ class JsHtmlNumeric(JsHtmlRich):
     ------------
     Add a value to the component value.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1651,8 +1573,7 @@ class JsHtmlLink(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return ContentFormatters(self._report, "%s.innerText" % self.varName)
@@ -1663,8 +1584,7 @@ class JsHtmlLink(JsHtml):
     -----------
     The href attribute specifies the URL of the page the link goes to.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1684,8 +1604,7 @@ class JsHtmlLink(JsHtml):
     -----------
     The href attribute specifies the URL of the page the link goes to.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1705,8 +1624,7 @@ class JsHtmlLink(JsHtml):
     -----------
     The target attribute specifies where to open the linked document.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1732,8 +1650,7 @@ class JsMedia(JsHtml):
     Start the cmera.
     This can only work with https and localhost urls.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1765,8 +1682,7 @@ class JsMedia(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1788,8 +1704,7 @@ class JsMedia(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1809,8 +1724,7 @@ class JsMedia(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -1857,8 +1771,7 @@ class JsHtmlButtonFilter(JsHtml):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     if self.component.options.is_number:

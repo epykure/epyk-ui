@@ -64,7 +64,7 @@ class Carousels:
       schema['children'][0]['children'][0]['class'] = 'carousel-item active'
     schema['children'].append({"type": 'link', 'class': 'carousel-control-prev',
                                'attrs': {"role": 'button', 'data-slide': 'prev'},
-       'args': {"text": '', 'url': '#%(carouselExampleIndicators)s'}, 'children': [
+                               'args': {"text": '', 'url': '#%(carouselExampleIndicators)s'}, 'children': [
         {"type": 'span', 'class': 'carousel-control-prev-icon', 'arias': {'hidden': True}},
         {"type": 'span', 'class': 'sr-only', 'args': {'text': 'Previous'}},
       ]})

@@ -45,8 +45,7 @@ class Popup(Html.Html):
     Add a component to the popup.
     If this is a list then they will be added in a row.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -60,8 +59,7 @@ class Popup(Html.Html):
     ------------
     Append list of component to the popup.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -75,8 +73,7 @@ class Popup(Html.Html):
     ------------
     Insert a component to the popup at a specific place.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -92,8 +89,7 @@ class Popup(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptPanel.OptionPopup
     """
@@ -105,8 +101,7 @@ class Popup(Html.Html):
     ------------
     Add a title to the popup.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

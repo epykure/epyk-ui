@@ -27,8 +27,7 @@ class Chart(Html.Html):
     All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
-    Usage:
-    -----
+    Usage::
 
       line = page.ui.charts.bb.bar()
       line.shared.x_label("x axis")
@@ -42,8 +41,7 @@ class Chart(Html.Html):
     -----------
     Property to the series options.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptChartGoogle.OptionGoogle
     """
@@ -56,8 +54,7 @@ class Chart(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s_obj" % self.htmlCode
 
@@ -66,8 +63,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

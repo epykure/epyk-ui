@@ -15,8 +15,7 @@ class OptionsButton(Options):
     ------------
     Button category to specify the style.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -36,8 +35,7 @@ class OptionsButton(Options):
     Property to define if multiple buttons can be selected at the same time.
     Default value is false.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.options.multiple = False
@@ -59,8 +57,7 @@ class OptionsButton(Options):
     ------------
     Property to set the group name of a button.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button("Click Me")
       but.options.group = "buttons"
@@ -84,8 +81,7 @@ class OptionsBadge(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -107,8 +103,7 @@ class OptionsBadge(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -134,8 +129,7 @@ class OptMedia(Options):
     ------------
     Specifies that video controls should be displayed (such as a play/pause button etc).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -159,8 +153,7 @@ class OptMedia(Options):
     ------------
     Specifies that the video will start over again, every time it is finished.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -184,8 +177,7 @@ class OptMedia(Options):
     ------------
     Specifies if and how the author thinks the video should be loaded when the page loads.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -216,8 +208,7 @@ class OptMedia(Options):
 
     When present, it specifies that the audio output should be muted.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -244,8 +235,7 @@ class OptMedia(Options):
     The poster attribute specifies an image to be shown while the video is downloading,
     or until the user hits the play button.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -271,8 +261,7 @@ class OptMedia(Options):
 
     Specifies that the video will start playing as soon as it is ready.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -294,8 +283,7 @@ class OptCheckboxes(Options):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

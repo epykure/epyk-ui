@@ -1418,8 +1418,7 @@ class Html:
     -----------
     Add a drag and drop property to the element.
 
-    Usage:
-    -----
+    Usage::
 
       d = page.ui.div()
       d.drop([page.js.objects.data.toRecord([1, 2, 3, 4], "result")])

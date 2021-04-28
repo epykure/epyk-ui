@@ -18,8 +18,7 @@ class Modals:
     ------------
     Simple interface to create an html form within a modal
 
-    Usage:
-    -----
+    Usage::
 
       d = page.ui.fields.today('test')
       i = page.ui.fields.input(placeholder='test2', label='test1')
@@ -61,8 +60,7 @@ class Modals:
     ------------
     Disclaimer that will appear as a modal.
 
-    Usage:
-    -----
+    Usage::
 
       privacy_title = page.ui.texts.title('A privacy reminder', 2)
       p1 = page.ui.texts.paragraph('''Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.''' % rptObj.ui.tags.strong('''I agree''', options={'managed': False}))
@@ -118,8 +116,7 @@ class Modals:
 
       https://jqueryui.com/dialog/
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -144,8 +141,7 @@ class Modals:
     ------------
     Display a generic popup with an icon.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -202,8 +198,7 @@ class Modals:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -254,8 +249,7 @@ class Modals:
     ------------
     Display a popup with a ok button to validate the message has been displayed.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -302,8 +296,7 @@ class Modals:
     ------------
     Display a generic popup.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.ui.modals.popup(page.ui.title('Test'), color="red")
       popup.add(page.ui.texts.paragraph('Test'))
@@ -342,8 +335,7 @@ class Modals:
     ------------
     Display an error popup.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -384,8 +376,7 @@ class Modals:
     ------------
     Display an info popup.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -421,8 +412,7 @@ class Modals:
     ------------
     Display a success popup.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')
@@ -459,8 +449,7 @@ class Modals:
     ------------
     Display a success popup.
 
-    Usage:
-    -----
+    Usage::
 
       popup = page.popup(page.ui.title('Test'), color="red")
       popup + page.paragraph('Test')

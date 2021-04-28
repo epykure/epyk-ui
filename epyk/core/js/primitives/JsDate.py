@@ -23,8 +23,7 @@ class JsDate(JsObject.JsObject):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -56,8 +55,7 @@ class JsDate(JsObject.JsObject):
     -----------
     Get the Javascript Object by its reference.
 
-    Usage:
-    -----
+    Usage::
 
       JsDate.new("2019-05-03", varName="MyDate")
       JsDate.get("MyDate")
@@ -85,8 +83,7 @@ class JsDate(JsObject.JsObject):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.get("dateTest").isWeedend
     """
@@ -101,8 +98,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The Date.now() method returns the number of milliseconds since January 1, 1970 00:00:00 UTC.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.now()
 
@@ -123,8 +119,7 @@ class JsDate(JsObject.JsObject):
     -----------
     Return the String date in the standard format YYYY-MM-DD
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.js.objects.date.today()
 
@@ -143,8 +138,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getDate() method returns the day of the month (from 1 to 31) for the specified date.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -158,8 +152,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getDay() method returns the day of the week (from 0 to 6) for the specified date.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getDay()
@@ -177,8 +170,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getFullYear() method returns the year (four digits for dates between year 1000 and 9999) of the specified date.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getFullYear()
@@ -199,8 +191,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getHours() method returns the hour (from 0 to 23) of the specified date and time.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getHours()
@@ -221,8 +212,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getMilliseconds() method returns the milliseconds (from 0 to 999) of the specified date and time.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getMilliseconds()
@@ -243,8 +233,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The getMonth() method returns the month (from 0 to 11) for the specified date, according to local time.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getMonth()
@@ -264,8 +253,7 @@ class JsDate(JsObject.JsObject):
     -----------
     Use getMonth() method returns the month the month name from the definition in the module.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").getMonthName()
@@ -285,8 +273,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The setDate() method sets the day of the month to the date object.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").setDate(5)
@@ -310,8 +297,7 @@ class JsDate(JsObject.JsObject):
     The setMonth() method sets the month of a date object.
     Return a new date object.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsObj.objects.date.get("dateTest").setMonth(5)
@@ -338,8 +324,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The toDateString() method converts the date (not the time) of a Date object into a readable string.
 
-    Usage:
-    -----
+    Usage::
 
       jsType.date.new(varName="Test")
       jsType.date.get("Test").toDateString()
@@ -360,8 +345,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The toISOString() method converts a Date object into a string, using the ISO standard.
 
-    Usage:
-    -----
+    Usage::
 
       jsType.date.new(varName="Test")
       jsType.date.get("Test").toISOString()
@@ -382,8 +366,7 @@ class JsDate(JsObject.JsObject):
     -----------
     Return the String date in the standard format YYYY-MM-DD
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsType.date.get("dateTest").getStrDate()
@@ -404,8 +387,7 @@ class JsDate(JsObject.JsObject):
     -----------
     The toISOString() method converts a Date object into a string, using the ISO standard.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.new("2019-01-01", varName="dateTest")
       jsType.date.get("dateTest").getStrTimeStamp()
@@ -428,8 +410,7 @@ class JsDate(JsObject.JsObject):
     As this returns the number of milliseconds then we must divide the number by 1000 and round it in order to get the
     timestamp in seconds.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -451,8 +432,7 @@ class JsDate(JsObject.JsObject):
 
     This function is used in the addDays method.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.this().getDate().add(1)
 
@@ -471,8 +451,7 @@ class JsDate(JsObject.JsObject):
     -----------
     Add some days to a Javascript date.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.date.get("MyDate").addDays(jsObj, 6).getStrDate()
 

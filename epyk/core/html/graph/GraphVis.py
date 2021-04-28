@@ -29,8 +29,7 @@ class Chart(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%s_obj" % self.htmlCode
@@ -41,8 +40,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptVis.Options2D
     """
@@ -56,8 +54,7 @@ class Chart(Html.Html):
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -72,8 +69,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -116,8 +112,7 @@ class ChartLine(Chart):
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -133,8 +128,7 @@ class ChartLine(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsVis.VisGroups
     """
@@ -147,8 +141,7 @@ class ChartLine(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -166,8 +159,7 @@ class ChartLine(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -182,8 +174,7 @@ class ChartLine(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "new vis.Graph2d(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
@@ -224,8 +215,7 @@ class Chart3D(Chart):
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsVis.VisGraph3D
     """
@@ -243,8 +233,7 @@ class Chart3D(Chart):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptVis.Options3D
     """
@@ -256,8 +245,7 @@ class Chart3D(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsVis.VisGroups
     """
@@ -270,8 +258,7 @@ class Chart3D(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -286,8 +273,7 @@ class Chart3D(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -305,8 +291,7 @@ class Chart3D(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -325,8 +310,7 @@ class Chart3D(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "new vis.Graph3d(%s, %s, %s)" % (self.dom.varId, self.items, self.options)
@@ -369,8 +353,7 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptVis.OptionsNetwork
     """
@@ -384,8 +367,7 @@ class ChartNetwork(Chart):
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object.
 
@@ -401,8 +383,7 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsVis.VisGroups
     """
@@ -415,8 +396,7 @@ class ChartNetwork(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -432,8 +412,7 @@ class ChartNetwork(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -450,8 +429,7 @@ class ChartNetwork(Chart):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return "new vis.Network(%s, %s, %s, %s)" % (
       self.dom.varId, {"nodes": self._nodes, 'edges': self._edges}, self.groups.varId, self.options)
@@ -470,8 +448,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -496,8 +473,7 @@ class ChartTimeline(Chart):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsCharts.ClassVisTimeline
     """
@@ -515,8 +491,7 @@ class ChartTimeline(Chart):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptVis.OptionsTimeline
     """
@@ -530,8 +505,7 @@ class ChartTimeline(Chart):
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -547,8 +521,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsVis.VisGroups
     """
@@ -562,8 +535,7 @@ class ChartTimeline(Chart):
     ------------
     Add group labels to the timeline.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -577,8 +549,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -592,8 +563,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     # Remove the managed parameter to avoid issue with the library
     if self.__cats is not None:

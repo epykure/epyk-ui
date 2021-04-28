@@ -13,8 +13,7 @@ class JsonFormatter(JsHtml.JsHtmlRich):
     ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "JSON.stringify(%s.json)" % self._src.jsonId)
 

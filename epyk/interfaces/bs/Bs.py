@@ -149,10 +149,16 @@ class Bootstrap:
 
   def badge(self, value, pill=False, category='primary'):
     """
+    Description:
+    ------------
     Documentation and examples for badges, our small count and labeling component.
 
-    https://getbootstrap.com/docs/4.4/components/badge/
+    Related Pages:
 
+      hhttps://getbootstrap.com/docs/4.4/components/badge/
+
+    Attributes:
+    ----------
     :param value:
     :param pill:
     :param category:
@@ -174,6 +180,8 @@ class Bootstrap:
 
       https://getbootstrap.com/docs/4.4/components/breadcrumb/
 
+    Attributes:
+    ----------
     :param values:
     :param selected:
     """
@@ -201,6 +209,8 @@ class Bootstrap:
 
       https://getbootstrap.com/docs/4.4/components/pagination/
 
+    Attributes:
+    ----------
     :param values:
     :param selected:
     :param sizing:
@@ -226,12 +236,16 @@ class Bootstrap:
 
   def jumbotron(self, components):
     """
+    Description:
+    ------------
     Lightweight, flexible component for showcasing hero unit style content.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.4/components/jumbotron/
 
+    Attributes:
+    ----------
     :param components:
     """
     container = self.page.web.std.div(components)
@@ -241,6 +255,8 @@ class Bootstrap:
 
   def progress(self, value, valuemin=0, valuemax=100, stripped=False, category='success'):
     """
+    Description:
+    ------------
     Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars,
     animated backgrounds, and text labels.
 
@@ -248,6 +264,8 @@ class Bootstrap:
 
       https://getbootstrap.com/docs/4.4/components/progress/
 
+    Attributes:
+    ----------
     :param value:
     :param valuemin:
     :param valuemax:
@@ -271,9 +289,21 @@ class Bootstrap:
 
   def card(self, component=None, title=None, width=(100, "%"), height=(None, "px"), options=None, profile=False):
     """
-    https://getbootstrap.com/docs/4.4/components/card/
+    Description:
+    ------------
 
-    :param data:
+    Related Pages:
+
+      https://getbootstrap.com/docs/4.4/components/card/
+
+    Attributes:
+    ----------
+    :param component:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
     """
     container = BsHtml.BsCards(self.page, component or [], title, width, height, options, profile)
     container.style.clear_all()
@@ -282,8 +312,17 @@ class Bootstrap:
 
   def toast(self, component=None, title=None, width=(100, "%"), height=(None, "px"), options=None, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param component:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
     """
     if component is not None and not isinstance(component, list):
       component = [component]
@@ -294,12 +333,17 @@ class Bootstrap:
     """
     Description:
     ------------
-    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert
+    messages.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.4/components/alerts/
 
+    Attributes:
+    ----------
+    :param test:
+    :param dismissing:
     :param category:
     """
     container = self.page.web.std.div(test)
@@ -353,12 +397,15 @@ class Bootstrap:
     """
     Description:
     ------------
-    Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS, and no JavaScript.
+    Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS,
+    and no JavaScript.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.4/components/spinners/
 
+    Attributes:
+    ----------
     :param category:
     :param grow:
     """

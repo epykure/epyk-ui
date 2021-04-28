@@ -37,8 +37,7 @@ class OptionConfig(OptChart.OptionsChart):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._config_get(None)

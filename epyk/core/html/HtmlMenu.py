@@ -35,8 +35,7 @@ class HtmlNavBar(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsMenu.ClassNav
     """
@@ -50,8 +49,7 @@ class HtmlNavBar(Html.Html):
     -----------
     Move the object to this position in the final page.
 
-    Usage:
-    -----
+    Usage::
 
     """
     super(HtmlNavBar, self).move()
@@ -85,8 +83,7 @@ class HtmlNavBar(Html.Html):
     -----------
     remove the default navigation bar background and remove the padding.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -114,8 +111,7 @@ class HtmlNavBar(Html.Html):
     -----------
     Add component to the right.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -148,8 +144,7 @@ class HtmlNavBar(Html.Html):
     -----------
     Add an item to the nav bar.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -197,8 +192,7 @@ class HtmlFooter(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     """
     if not self.__col_lst:
@@ -211,8 +205,7 @@ class HtmlFooter(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :param col_lst:
     """
@@ -225,8 +218,7 @@ class HtmlFooter(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsMenu.ClassFooter
     """
@@ -249,8 +241,7 @@ class HtmlFooter(Html.Html):
     -----------
     Return the internal column in the row for the given index.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -289,8 +280,7 @@ class ContextMenu(Html.Html):
     -----------
     Component options.
 
-    Usage:
-    -----
+    Usage::
 
 
     :rtype: OptList.OptionsLi
@@ -311,8 +301,7 @@ class ContextMenu(Html.Html):
     ------------
     Add Item to the context menu.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -328,8 +317,7 @@ class ContextMenu(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -344,8 +332,7 @@ class ContextMenu(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -426,8 +413,7 @@ class PanelsBar(Html.Html):
     ------------
     Add a panel to the panel bar.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -497,8 +483,7 @@ class Shortcut(Html.Html):
     -----------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsMenu.ClassShortcut
     """
@@ -538,8 +523,7 @@ class Shortcut(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

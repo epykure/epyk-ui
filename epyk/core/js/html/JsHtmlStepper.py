@@ -19,8 +19,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -79,8 +78,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
@@ -94,8 +92,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'rect');
@@ -111,8 +108,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'circle');
@@ -129,8 +125,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
@@ -144,8 +139,7 @@ class JsShapes:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -165,8 +159,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -206,8 +199,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.colors(self._src.options.success, status='success')
@@ -217,8 +209,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.colors(self._src.options.error, status='error')
@@ -228,8 +219,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.colors(self._src.options.pending, status='pending')
@@ -239,8 +229,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self.colors(self._src.options.waiting, status='waiting')
@@ -250,8 +239,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
 
@@ -261,8 +249,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
@@ -272,8 +259,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -293,8 +279,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -312,8 +297,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
 
       htmlObj.querySelector('svg').remove()
 
@@ -333,8 +317,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -352,8 +335,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -371,8 +353,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Add a text label below the shape.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -386,8 +367,7 @@ class Step(JsNodeDom.JsDoms):
     ------------
     Add a text on the shape.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -418,8 +398,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -447,8 +426,7 @@ class Step(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -472,8 +450,7 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
       self.htmlCode, self.content.toStr()))
@@ -484,8 +461,7 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
@@ -497,8 +473,7 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -513,8 +488,7 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -548,8 +522,7 @@ class Stepper(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -567,8 +540,7 @@ class Drawer(JsHtml.JsHtmlRich):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsHtml.ContentFormatters(self._report, ''' 
       (function(doms, contents){var index =-1; doms.childNodes.forEach(function(dom, k){if(dom.style.display !== 'none'){index = k}}); 
@@ -581,8 +553,7 @@ class Drawer(JsHtml.JsHtmlRich):
     ------------
     Hide all the panels in the drawer component.
 
-    Usage:
-    -----
+    Usage::
     """
     return JsObjects.JsObjects.get(''' 
       (function(doms){doms.childNodes.forEach(function(dom){dom.style.display = 'none'; })})(%s)
@@ -593,8 +564,7 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -609,8 +579,7 @@ class Drawer(JsHtml.JsHtmlRich):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

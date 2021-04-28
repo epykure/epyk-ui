@@ -108,8 +108,9 @@ class Components:
     ------------
     Change the CSS Style of the main container in the page.
 
-    Usage:
-    -----
+    Usage::
+
+
 
     Attributes:
     ----------
@@ -128,8 +129,7 @@ class Components:
     This function can be also used to display Python function. Inspect module will be used in this case to get the
     source code.
 
-    Usage:
-    -----
+    Usage::
 
       import pandas
       page.ui.print('pandas: {}'.format(pandas.__version__))
@@ -166,8 +166,7 @@ class Components:
 
     This will wrap the Javascript module codemirror.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:
@@ -181,7 +180,12 @@ class Components:
     """
     Description:
     ------------
+    Group all the UI with polling feature.
 
+    Usage::
+
+      page = pk.Page()
+      page.ui.pollers
     """
     return CompPollers.Poller(self)
 
@@ -195,9 +199,10 @@ class Components:
     This category will group (chat, RSS streams, forum, bot ...).
     Those components are interactive and they would require underlying services and databases in order to fully work.
 
-    Usage:
-    -----
+    Usage::
 
+        page = pk.Page()
+        page.ui.network
     """
     return CompNetwork.Network(self)
 
@@ -211,10 +216,10 @@ class Components:
     Those components are interactive and can be used to filter the data on other items in the dashboard.
     Those components are mainly relying on Jquery and JqueryUi.
 
-    Usage:
-    -----
+    Usage::
 
-
+        page = pk.Page()
+        page.ui.sliders
     """
     return CompSliders.Sliders(self)
 
@@ -225,8 +230,7 @@ class Components:
     ------------
     Group all the 3D charts.
 
-    Usage:
-    -----
+    Usage::
     """
     return CompCharts.Chart3d(self)
 
@@ -237,8 +241,7 @@ class Components:
     ------------
     Group all the 2D charts.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -252,9 +255,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce titles.
 
-    Usage:
-    -----
-
+    Usage::
 
     """
     return CompTitles.Titles(self)
@@ -266,8 +267,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce links to another page or website.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -281,8 +281,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce navigation components such as navigation bar, footer, banner...
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -296,8 +295,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce Navigation bar components such as navigation bar, footer, banner...
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -311,8 +309,7 @@ class Components:
     ------------
     Group all the available banners.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -347,6 +344,10 @@ class Components:
     Group all the UI components dedicated to produce rich HTML Components.
 
     This category will take into account very specific and bespoke components.
+
+    Usage::
+
+
     """
     return CompVignets.Vignets(self)
 
@@ -358,6 +359,10 @@ class Components:
     Group all the UI components dedicated to produce Numbers components.
 
     The items in this category will not be editable and they will only provide nice number renderings.
+
+    Usage::
+
+
     """
     return CompNumbers.Numbers(self)
 
@@ -370,6 +375,10 @@ class Components:
 
     The items in this category will not be editable and they will only provide nice text structure like paragraph,
     formatted text...
+
+    Usage::
+
+
     """
     return CompTexts.Texts(self)
 
@@ -379,6 +388,10 @@ class Components:
     Description:
     ------------
     Group all the UI components dedicated to produce image or collection of images.
+
+    Usage::
+
+
     """
     return CompImages.Images(self)
 
@@ -390,6 +403,10 @@ class Components:
     Group all the UI components dedicated to produce list or selection items.
 
     Simple list, trees or DropDown boxes will be part of this category of items.
+
+    Usage::
+
+
     """
     return CompLists.Lists(self)
 
@@ -400,8 +417,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce Trees or selection items.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -415,8 +431,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce Trees or selection items.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -430,8 +445,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce button or checkbox.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -448,8 +462,7 @@ class Components:
     Different kind of tables are available in the framework (Tabulator, DataTable, PivotTable or even a bespoke
     implementation).
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -463,8 +476,7 @@ class Components:
     ------------
     Group all the UI steps components.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -478,8 +490,7 @@ class Components:
     ------------
     Group all the UI drawers components.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -493,8 +504,7 @@ class Components:
     ------------
     Group all the UI steppers components.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -510,8 +520,7 @@ class Components:
 
     Plain Vanilla HTML5 components.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -528,8 +537,7 @@ class Components:
     Those components are editable items which need to be updated by the user of the dashboard.
     This category will take into account TextArea, input text...
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -546,8 +554,7 @@ class Components:
     Those components are editable items which need to be updated by the user of the dashboard.
     This category will take into account TextArea, input text...
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -560,8 +567,7 @@ class Components:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -577,8 +583,7 @@ class Components:
 
     This category of component will rely on the font-awesome library for the final display.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -590,9 +595,9 @@ class Components:
     """
     Description:
     ------------
+    Group all the UI menus.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -604,9 +609,9 @@ class Components:
     """
     Description:
     ------------
+    Group all the UI panels.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -624,8 +629,7 @@ class Components:
     are mainly holder of other components.
     This will mainly rely on bootstrap for the display of the different objects in the page.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -643,8 +647,7 @@ class Components:
 
       https://www.w3schools.com/html/html_forms.asp
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -658,8 +661,7 @@ class Components:
     ------------
     Group all the UI components dedicated to produce modal components.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -675,8 +677,7 @@ class Components:
 
     Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis or even D3).
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -692,8 +693,7 @@ class Components:
 
     Those tags can be considered as normal HTML component, which means Js and CSS features are also available.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -707,8 +707,7 @@ class Components:
     ------------
     Group all the component related to the time and calendar management.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -726,8 +725,7 @@ class Components:
 
       https://codepen.io/ibrahimjabbari/pen/ozinB
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -741,8 +739,7 @@ class Components:
     ------------
     Add a content table to the page.
 
-    Usage:
-    -----
+    Usage::
 
         contents = page.ui.contents()
 
@@ -796,8 +793,7 @@ class Components:
 
     Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -815,8 +811,7 @@ class Components:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -846,8 +841,7 @@ class Components:
       - label component for the text
       - icon component for the loading icon
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -871,8 +865,7 @@ class Components:
     ------------
     Add Breadcrumb information to the page.
 
-    Usage:
-    -----
+    Usage::
 
         page.ui.breadcrumb([
           {"text": 'part 1', 'url': 'part1'},
@@ -911,8 +904,7 @@ class Components:
     ------------
     Creates an new empty form.
 
-    Usage:
-    -----
+    Usage::
 
       f = page.ui.form()
 
@@ -932,8 +924,7 @@ class Components:
     ------------
     HTML component to display a Json.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -965,8 +956,7 @@ class Components:
     SlideShow component for pictures from the tiny-slider library.
     More details regarding this library here: https://github.com/ganlanyuan/tiny-slider.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -995,8 +985,7 @@ class Components:
     ------------
     HTML component to display a QR Code from a string.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1028,8 +1017,7 @@ class Components:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1052,8 +1040,7 @@ class Components:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1091,8 +1078,7 @@ class Components:
     ------------
     Add an extension base on it is name.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1113,8 +1099,7 @@ class Components:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1147,8 +1132,7 @@ class Components:
 
     TODO: Improve the editable feature for Markdown.
 
-    Usage:
-    -----
+    Usage::
 
         p2 = page.ui.paragraph("paragraph", options={"markdown": True})
         menu2 = page.ui.texts.menu(p2, save_funcs=[
@@ -1300,8 +1284,7 @@ class WebComponents:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1319,8 +1302,7 @@ class WebComponents:
     Add the entire Bootstrap framework as a dependency to the framework.
     This will enable more components to the framework.
 
-    Usage:
-    -----
+    Usage::
 
       icon = page.web.bs.icons.danger()
 
@@ -1346,8 +1328,7 @@ class WebComponents:
     Set the material components entry point.
     This will be available in the same way than ui is available for anything else in the core framework.
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 

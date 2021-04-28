@@ -18,8 +18,7 @@ class Geo:
     ------------
     Interface for the Plotly library.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -46,8 +45,7 @@ class Geo:
     ------------
     Property to the ChartJs Geo API.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -62,8 +60,7 @@ class Geo:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -79,8 +76,7 @@ class Geo:
     ------------
     Property to the google charts API.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------
@@ -99,8 +95,7 @@ class Geo:
     ------------
     Property to the Jquery vector Map API.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
     --------------

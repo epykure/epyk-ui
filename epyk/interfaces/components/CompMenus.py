@@ -19,8 +19,7 @@ class Menus:
     Add a menu item at the top of the page.
     The menu will be fixed on the page, always visible
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
       page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
@@ -109,8 +108,7 @@ class Menus:
     Add a menu item at the bottom of the page.
     The menu will be fixed on the page, always visible.
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
       page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
@@ -197,8 +195,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
 
@@ -273,8 +270,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       l = page.ui.lists.list(["A", "B"])
 
@@ -350,8 +346,7 @@ class Menus:
     ------------
     Add a menu bar with font awesome icons.
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:
@@ -379,8 +374,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       bs = page.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
       bs[2].click([
@@ -419,8 +413,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.menus.images(["https://jupyter.org/favicon.ico", "https://codepen.io//favicon.ico"])
 
@@ -465,8 +458,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -542,8 +534,7 @@ class Menus:
     Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
     The components will be based on Links.
 
-    Usage:
-    -----
+    Usage::
 
       record = []
       page.ui.menus.divisor(record)
@@ -584,8 +575,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       mb = page.ui.menus.button("Value", page.ui.button("sub button"))
       mb.items[0].click([page.js.alert(mb.items[0].dom.content)])
@@ -628,8 +618,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       tb = page.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
       tb[1].link.val = 4589
@@ -681,8 +670,7 @@ class Menus:
     ------------
     Menu using Jquery UI external module.
 
-    Usage:
-    -----
+    Usage::
 
         page.ui.menus.selections(["Item 1", "Item 2"])
 
@@ -732,8 +720,7 @@ class Menus:
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work.
 
-    Usage:
-    -----
+    Usage::
 
       menu = page.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
       page.ui.title("Test").attach_menu(menu)
@@ -763,8 +750,7 @@ class Menus:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
 
     Attributes:

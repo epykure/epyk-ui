@@ -44,8 +44,7 @@ class PivotTable(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsTable.Pivot
     """
@@ -60,8 +59,7 @@ class PivotTable(Html.Html):
     ------------
     Pivot Table options.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptTable.OptionsPivot
     """
@@ -95,8 +93,7 @@ class PivotTable(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
     """
     self._report.jsImports.add('subtotal')
     self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
@@ -126,8 +123,7 @@ class PivotUITable(PivotTable):
     ------------
     Pivot Table options.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptTable.OptionsPivotUI
     """
@@ -148,8 +144,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -164,8 +159,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     self.options.aggregator = '$.pivotUtilities.aggregators["Count"]()'
     self.options.aggregatorName = "count"
@@ -175,8 +169,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -190,8 +183,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -204,8 +196,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -219,8 +210,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -234,8 +224,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -260,8 +249,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -290,8 +278,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -307,8 +294,7 @@ class PivotAggregator:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
 
@@ -331,8 +317,7 @@ class PivotRendererC3:
     ------------
     Horizontal bar chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -349,8 +334,7 @@ class PivotRendererC3:
     ------------
     Scatter chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -366,8 +350,7 @@ class PivotRendererC3:
     ------------
     Area chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -383,8 +366,7 @@ class PivotRendererC3:
     ------------
     Line chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -400,8 +382,7 @@ class PivotRendererC3:
     ------------
     Stacked bar chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -417,8 +398,7 @@ class PivotRendererC3:
     ------------
     Stacked bar chart from C3.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -440,8 +420,7 @@ class PivotRendererPlotly:
     ------------
     Multiple Pies charts from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -457,8 +436,7 @@ class PivotRendererPlotly:
     ------------
     Area chart from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -474,8 +452,7 @@ class PivotRendererPlotly:
     ------------
     Scatter chart from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -491,8 +468,7 @@ class PivotRendererPlotly:
     ------------
     Line chart from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -508,8 +484,7 @@ class PivotRendererPlotly:
     ------------
     Bar chart from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -525,8 +500,7 @@ class PivotRendererPlotly:
     ------------
     Horizontal Bar chart from Plotly.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -557,8 +531,7 @@ class PivotRenderer:
     ------------
     Property to use the Plotly special renderers.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return PivotRendererPlotly(self._report, self.options)
@@ -570,8 +543,7 @@ class PivotRenderer:
     ------------
     Property to use the C3 special renderers.
 
-    Usage:
-    -----
+    Usage::
     """
     return PivotRendererC3(self._report, self.options)
 
@@ -580,8 +552,7 @@ class PivotRenderer:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     https://pivottable.js.org/examples/plotly.html
 
@@ -595,8 +566,7 @@ class PivotRenderer:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
     """
     self.options.renderer = '$.pivotUtilities.renderers["Heatmap"]'
 
@@ -605,8 +575,7 @@ class PivotRenderer:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     self.options.renderer = '$.pivotUtilities.renderers["Table Barchart"]'
@@ -616,8 +585,7 @@ class PivotRenderer:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     https://github.com/nicolaskruchten/pivottable/wiki/Renderers
 

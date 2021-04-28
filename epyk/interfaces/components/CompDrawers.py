@@ -19,8 +19,7 @@ class Drawers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       d1 = page.ui.drawer()
       d1.add_panel(page.ui.button("Test"), "ok")
@@ -53,8 +52,7 @@ class Drawers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -81,8 +79,7 @@ class Drawers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
         button = page.ui.button("Test")
 
@@ -114,8 +111,7 @@ class Drawers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -148,8 +144,7 @@ class Drawers:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.drawers.no_handle(page.ui.button("No Handle"))
 

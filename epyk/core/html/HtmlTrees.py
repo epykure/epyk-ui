@@ -35,8 +35,7 @@ class Tree(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -56,8 +55,7 @@ class Tree(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptTrees.OptionsTree
     """
@@ -123,8 +121,7 @@ class Tree(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -142,8 +139,7 @@ class Tree(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -169,8 +165,7 @@ class TreeInput(Tree):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -223,8 +218,7 @@ class DropDown(Html.Html):
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsList.ClassDropDown
     """
@@ -239,8 +233,7 @@ class DropDown(Html.Html):
     -----------
     Property to set all the possible object for a DropDown.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptTrees.OptDropDown
     """
@@ -252,8 +245,7 @@ class DropDown(Html.Html):
     -----------
     The onclick event occurs when the user clicks on an element.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

@@ -50,8 +50,7 @@ class UpDown(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
       move = page.ui.numbers.move(100, 60, height=120, helper="Show delta with yesterday")
       move.options.digits_percent = 4
@@ -112,8 +111,7 @@ class UpDown(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -155,8 +153,7 @@ class BlockText(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -211,8 +208,7 @@ class TextWithBorder(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -331,8 +327,7 @@ class Delta(Html.Html):
     ------------
     Property to set all the possible object for a button.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsNumberDelta
     """
@@ -396,8 +391,7 @@ class Formula(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsText.ContentTable
     """
@@ -413,8 +407,7 @@ class Formula(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -464,8 +457,7 @@ class TrafficLight(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -481,8 +473,7 @@ class TrafficLight(Html.Html):
     ------------
     Set the 3 colors of the traffic light.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -506,8 +497,7 @@ class TrafficLight(Html.Html):
     ------------
     Turn a error warning to a green one.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -529,8 +519,7 @@ class TrafficLight(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -589,8 +578,7 @@ class ContentsTable(Html.Html):
     Property to set all the possible object for the content menu on the page.
     This object can be defined only once on the page.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptContents
     """
@@ -603,8 +591,7 @@ class ContentsTable(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsText.ContentTable
     """
@@ -631,8 +618,7 @@ class ContentsTable(Html.Html):
     ------------
     Add link to the content table.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -692,8 +678,7 @@ class ContentsTable(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     super(ContentsTable, self).move()
@@ -872,8 +857,7 @@ class Composite(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: ptText.OptionsComposite
     """
@@ -889,8 +873,7 @@ class Composite(Html.Html):
 
     This is the only flexible component in which this DOM object can be changed.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 
@@ -911,8 +894,7 @@ class Composite(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpCls.ClassHtmlEmpty
     """
@@ -938,8 +920,7 @@ class Composite(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     """
     comp_ui = self._report.ui
@@ -976,8 +957,7 @@ class Composite(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1056,8 +1036,7 @@ class Status(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: ptText.OptionsStatus
     """

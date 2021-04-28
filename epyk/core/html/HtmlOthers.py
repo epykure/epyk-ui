@@ -37,8 +37,7 @@ class Hr(Html.Html):
     ------------
     Shortcut to set the margin let and right for this HTML component.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -60,8 +59,7 @@ class Hr(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :return: GrpClsLayout.ClassStandard
     """
@@ -112,8 +110,7 @@ class Stars(Html.Html):
     ------------
     The JavaScript dom object to be used in any events.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlStars.Stars
     """
@@ -128,8 +125,7 @@ class Stars(Html.Html):
     Add the event click and double click to the starts item.
     The Javascript function will be triggered after the change of content of the component.
 
-    Usage:
-    -----
+    Usage::
 
       stars = page.ui.rich.stars(3, label="test Again")
       stars.click(page.js.console.log("test").toStr())
@@ -183,8 +179,7 @@ class Help(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsLayout.ClassHelp
     """
@@ -225,8 +220,7 @@ class Loading(Html.Html):
     Set css attributes of the loading div to be fixed.
     This can be done directly in options in the component constructor options={"fixed": True}.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -266,8 +260,7 @@ class HtmlJson(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlJson.JsonFormatter
     """
@@ -282,8 +275,7 @@ class HtmlJson(Html.Html):
     ------------
     Return the Javascript variable of the json object.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%s_obj" % self.htmlCode
@@ -302,8 +294,7 @@ class HtmlJson(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptJsonFormatter.OptionsJsonFmt
     """
@@ -316,8 +307,7 @@ class HtmlJson(Html.Html):
     -----------
     Return the Javascript internal object.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -362,8 +352,7 @@ class Breadcrumb(Html.Html):
     ------------
     Property to set all the possible object for a breadcrumb definition.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptBreadCrumb
     """
@@ -427,8 +416,7 @@ class Legend(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptJsonFormatter.OptionsLegend
     """
@@ -531,8 +519,7 @@ class Slides(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptText.OptionsText
     """
@@ -546,8 +533,7 @@ class Slides(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsHtmlStars.Slides
     """
@@ -560,8 +546,7 @@ class Slides(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -591,8 +576,7 @@ class Slides(Html.Html):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -658,8 +642,7 @@ class HtmlQRCode(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: OptQrCode.OptionsQrCode
     """
@@ -672,8 +655,7 @@ class HtmlQRCode(Html.Html):
     ------------
     Return the Javascript variable of the json object.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return "%s_obj" % self.htmlCode
@@ -688,8 +670,7 @@ class HtmlQRCode(Html.Html):
     -----------
     Return the Javascript internal object.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 

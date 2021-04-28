@@ -30,8 +30,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -47,8 +46,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsTable.Aggrid
     """
@@ -62,8 +60,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: TableConfig
     """
@@ -78,8 +75,7 @@ class Table(Html.Html):
     -----------
     Return the Javascript internal object.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript object
 
@@ -94,8 +90,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -116,8 +111,7 @@ class Table(Html.Html):
     -----------
     Return the Javascript variable of the chart.
 
-    Usage:
-    -----
+    Usage::
     """
     return "%s_obj" % self.htmlCode
 
@@ -126,8 +120,7 @@ class Table(Html.Html):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

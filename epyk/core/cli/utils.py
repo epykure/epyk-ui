@@ -15,7 +15,8 @@ def get_report_path(project_path, raise_error=True):
 
   Attributes:
   ----------
-  :param project_path: String. The project path
+  :param project_path: String. The project path.
+  :param raise_error. Boolean. Flag to raise an error.
   """
   ui_path = os.path.join(project_path, 'ui')
   if not os.path.exists(ui_path):
@@ -48,7 +49,7 @@ def get_page(mod, template=False):
 
       page = Report()
       page.json_config_file = mod.__name__
-    except:
+    except Exception as err:
       page = Report()
       page.json_config_file = mod.__name__
     if template and hasattr(mod, 'INPUTS'):

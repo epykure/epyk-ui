@@ -19,8 +19,7 @@ class Datatables:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------

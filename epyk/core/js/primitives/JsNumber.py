@@ -37,8 +37,7 @@ class JsNumber(JsObject.JsObject):
     The NEGATIVE_INFINITY property represents negative infinity.
     Negative infinity can be explained as something that is lower than any other number.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").NEGATIVE_INFINITY
 
@@ -56,8 +55,7 @@ class JsNumber(JsObject.JsObject):
     The POSITIVE_INFINITY property represents positive infinity.
     Positive infinity can be explained as something that is higher than any other number.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").POSITIVE_INFINITY
 
@@ -76,8 +74,7 @@ class JsNumber(JsObject.JsObject):
 
     This static property has a value of 1.7976931348623157e+308.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").MAX_VALUE
 
@@ -96,8 +93,7 @@ class JsNumber(JsObject.JsObject):
 
     This static property has a value of 5e-324.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").MIN_VALUE
 
@@ -113,8 +109,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Check whether the value is NaN.
 
-    Usage:
-    -----
+    Usage::
 
       string.parseFloat().isNaN()
 
@@ -134,8 +129,7 @@ class JsNumber(JsObject.JsObject):
     Add a value to a Javascript Number.
     The value will be added and it will return a new number object on the Javascript side.
 
-    Usage:
-    -----
+    Usage::
 
       jsNumber.add(34.5)
 
@@ -153,8 +147,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Add a cap to the value using the min function.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -168,8 +161,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Add a floor to the value using the max function.
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -184,8 +176,7 @@ class JsNumber(JsObject.JsObject):
     Subtract a value to a Javascript Number.
     The value will be subtracted and it will return a new number object on the Javascript side.
 
-    Usage:
-    -----
+    Usage::
 
       jsNumber.sub(34.5)
 
@@ -203,8 +194,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Convert a number into an exponential notation.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").toExponential()
 
@@ -222,8 +212,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Convert a number into a string, keeping only two decimals.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").toFixed()
 
@@ -245,8 +234,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Check whether a value is a finite number.
 
-    Usage:
-    -----
+    Usage::
 
       jsObj.objects.number.get("MyNumber").isFinite()
 
@@ -266,8 +254,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Format a number into a specified length:
 
-    Usage:
-    -----
+    Usage::
 
       rptObj.js.number(varName="myNumber").toPrecision(10) for 5776 returns 5776.000000
 
@@ -317,8 +304,7 @@ class JsNumber(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -338,8 +324,7 @@ class JsNumber(JsObject.JsObject):
     ------------
     Wrapper function.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

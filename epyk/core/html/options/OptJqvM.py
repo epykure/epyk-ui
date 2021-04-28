@@ -14,8 +14,7 @@ class OptionsJqVM(Options):
     -----------
     The map alias.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -37,8 +36,7 @@ class OptionsJqVM(Options):
     Description:
     -----------
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -61,8 +59,7 @@ class OptionsJqVM(Options):
     -----------
     Border Color to use to outline map objects
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -85,8 +82,7 @@ class OptionsJqVM(Options):
     -----------
     Border Opacity to use to outline map objects ( use anything from 0-1, e.g. 0.5, defaults to 0.25 )
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -109,8 +105,7 @@ class OptionsJqVM(Options):
     -----------
     Border Width to use to outline map objects ( defaults to 1 ).
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -133,8 +128,7 @@ class OptionsJqVM(Options):
     -----------
     Background color of map container in any CSS compatible format.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -157,8 +151,7 @@ class OptionsJqVM(Options):
     -----------
     Color of map regions.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -182,8 +175,7 @@ class OptionsJqVM(Options):
     Colors of individual map regions. Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -206,8 +198,7 @@ class OptionsJqVM(Options):
     -----------
     Color of the region when mouse pointer is over it.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -231,8 +222,7 @@ class OptionsJqVM(Options):
     Colors of individual map regions when mouse pointer is over it. Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -255,8 +245,7 @@ class OptionsJqVM(Options):
     -----------
     Opacity of the region when mouse pointer is over it.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -313,8 +302,7 @@ class OptionsJqVM(Options):
     Array scaleColors can have more then two elements.
     Elements should be strings representing colors in RGB hex format.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 

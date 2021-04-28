@@ -21,8 +21,7 @@ class Canvas(Html.Html):
     Property to the DOM object.
     This will return the Canvas properties.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsCanvas.Canvas
     """
@@ -37,8 +36,7 @@ class Canvas(Html.Html):
     -----------
     Return the 2D context options of the Canvas DOM component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: JsCanvas.Canvas
     """

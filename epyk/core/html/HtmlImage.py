@@ -330,8 +330,7 @@ class Icon(Html.Html):
     ------------
     Property to the CSS Style of the component.
 
-    Usage:
-    -----
+    Usage::
 
     :rtype: GrpClsImage.ClassIcon
     """

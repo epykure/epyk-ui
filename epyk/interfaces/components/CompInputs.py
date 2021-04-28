@@ -17,8 +17,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.d_text()
 
@@ -52,8 +51,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.d_radio()
 
@@ -86,8 +84,7 @@ class Inputs:
     ------------
     One of the new types of inputs in HTML5 is search
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.d_search("")
 
@@ -125,8 +122,7 @@ class Inputs:
     ------------
     Input field that will hide characters typed in.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.password(placeholder="Password")
 
@@ -159,8 +155,7 @@ class Inputs:
     ------------
     Input field that will hide characters typed in
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.file()
 
@@ -190,8 +185,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       date = page.ui.inputs.d_time()
 
@@ -222,8 +216,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       date = page.ui.inputs.d_date()
 
@@ -252,8 +245,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       date = page.ui.inputs.d_int()
 
@@ -284,8 +276,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -313,8 +304,7 @@ class Inputs:
     ------------
     Create a HTML output object.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs._output("test output")
 
@@ -338,8 +328,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.textarea("Test")
 
@@ -377,8 +366,7 @@ class Inputs:
     Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching
     and filtering.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.autocomplete("Test")
 
@@ -422,8 +410,7 @@ class Inputs:
     ------------
     Add a standard input component.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.input("Test")
 
@@ -458,8 +445,7 @@ class Inputs:
     ------------
     Add a standard input component.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.input("Test")
 
@@ -530,8 +516,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.checkbox(False)
 
@@ -570,8 +555,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.radio(['Single', 'Multiple'], html_code="type", checked="Multiple")
 
@@ -611,8 +595,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.editor()
 
@@ -645,8 +628,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.cell()
 
@@ -680,8 +662,7 @@ class Inputs:
     ------------
     Add an input search component.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.search()
 
@@ -731,8 +712,7 @@ class Inputs:
     Description:
     ------------
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.inputs.label()
 

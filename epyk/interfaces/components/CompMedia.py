@@ -19,8 +19,7 @@ class Media:
     Add a video from the server to the page.
     The format for the video must be MP4.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.media.video("CWWB3673.MP4")
 
@@ -67,8 +66,7 @@ class Media:
     Add a audio track from the server to the page.
     The format for the video must be mpeg.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.media.video("CWWB3673.mpeg")
 
@@ -110,8 +108,7 @@ class Media:
     -----------
     This will add a youtube video using the shared line to embedded to a website.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
 
@@ -156,8 +153,7 @@ class Media:
     Add a video from the server to the page.
     The format for the video must be MP4.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.media.camera()
 

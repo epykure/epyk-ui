@@ -40,8 +40,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.button("Test")
 
@@ -95,8 +94,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.colored("Test")
 
@@ -150,8 +148,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.clear("Clear")
 
@@ -204,8 +201,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.large("Test")
 
@@ -261,8 +257,7 @@ class Buttons:
 
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.absolute("Test")
 
@@ -319,8 +314,7 @@ class Buttons:
 
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.small("Small button")
 
@@ -364,8 +358,7 @@ class Buttons:
 
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.normal("Standard button")
 
@@ -408,8 +401,7 @@ class Buttons:
 
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.important("Important")
 
@@ -457,8 +449,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.validate("Validate")
 
@@ -509,8 +500,7 @@ class Buttons:
 
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.run("Run")
 
@@ -570,8 +560,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.remove("Remove")
 
@@ -620,8 +609,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.cancel("Cancel")
 
@@ -670,8 +658,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.phone()
 
@@ -717,8 +704,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.mail()
 
@@ -767,8 +753,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
 
@@ -817,8 +802,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
@@ -879,8 +863,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.checkboxes(data)
 
@@ -925,8 +908,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.check(label="Label")
       page.ui.buttons.check(True, label="Label")
@@ -971,8 +953,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       tree5 = page.ui.buttons.menu(["A", "B", "C"], 'Menu')
 
@@ -1020,8 +1001,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Underlying HTML Objects:
 
@@ -1068,8 +1048,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1138,8 +1117,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1172,8 +1150,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1206,8 +1183,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1239,8 +1215,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Templates:
 
@@ -1283,8 +1258,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       b = page.ui.buttons.more([
         {"text": "Add", "target": "_blank", "icon": "fab fa-500px",
@@ -1327,8 +1301,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Attributes:
     ----------
@@ -1370,8 +1343,7 @@ class Buttons:
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.buttons.refresh("Refresh")
 
