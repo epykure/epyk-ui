@@ -71,9 +71,6 @@ class JsLocalStorage:
     Description:
     ------------
 
-    Usage::
-
-
     Attributes:
     ----------
     :param key: String. The key attribute.
@@ -219,8 +216,6 @@ class JsSessionStorage:
     ------------
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage::
-
     Attributes:
     ----------
     :param i: Integer. The key number.
@@ -232,8 +227,6 @@ class JsSessionStorage:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
