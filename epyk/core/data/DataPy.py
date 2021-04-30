@@ -18,10 +18,6 @@ class Plotly:
       -----------
       Transform a record to a valid data structure for Plotly surfaces.
 
-      Usage:
-      -----
-
-
       Attributes:
       ----------
       :param data: List of dictionaries. The data to be converted.
@@ -58,8 +54,6 @@ class Plotly:
     Description:
     -----------
 
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -72,9 +66,6 @@ class Plotly:
     """
     Description:
     -----------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -107,9 +98,6 @@ class Plotly:
     Description:
     -----------
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param data:
@@ -141,9 +129,6 @@ class Plotly:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -179,9 +164,6 @@ class Plotly:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -220,9 +202,6 @@ class Plotly:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -266,9 +245,6 @@ class Plotly:
     Description:
     ------------
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
@@ -306,9 +282,6 @@ class Plotly:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -352,9 +325,6 @@ class Plotly:
     Description:
     ------------
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param data: List of dict. The Python recordset
@@ -377,10 +347,6 @@ class Vis:
     """
     Description:
     ------------
-
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -408,9 +374,6 @@ class Vis:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     Attributes:
     ----------
@@ -487,7 +450,8 @@ class ChartJs:
     :param records: Dictionary. A ChartJs data structure object.
     :param empty: Boolean. Optional. Specify of the data need to be removed.
     """
-    result = {"labels": list(records["labels"]), 'datasets': [], 'series': list(records["series"]), 'python': records["python"]}
+    result = {"labels": list(records["labels"]), 'datasets': [],
+              'series': list(records["series"]), 'python': records["python"]}
     for d in records['datasets']:
       result['datasets'].append({"data": list(d["data"]), 'label': d["label"]})
     if empty:

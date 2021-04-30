@@ -57,8 +57,7 @@ class DataJs:
     """
     Description:
     ------------
-
-    Usage::
+    Transform a Python object to a JavaScript list.
 
     Attributes:
     ----------
@@ -72,8 +71,7 @@ class DataJs:
     """
     Description:
     ------------
-
-    Usage::
+    Transform a Python number to a JavaScript one.
 
     Attributes:
     ----------
@@ -87,8 +85,7 @@ class DataJs:
     """
     Description:
     ------------
-
-    Usage::
+    Transform a Python object to a JavaScript object.
 
     Attributes:
     ----------
@@ -104,8 +101,6 @@ class DataJs:
     ------------
     Configuration data for server interaction.
     This will only help on centralising the configuration in the final page.
-
-    Usage::
 
     Attributes:
     ----------
@@ -129,8 +124,11 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to Vis data transformation.
 
-    Usage::
+    This will convert Python object to input data for Vis charts.
+
+    :rtype: DataPy.Vis
     """
     return DataPy.Vis()
 
@@ -139,8 +137,11 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to chartJs data transformation.
 
-    Usage::
+    This will convert Python object to input data for chartJs charts.
+
+    :rtype: DataPy.ChartJs
     """
     return DataPy.ChartJs()
 
@@ -149,13 +150,25 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to Plotly data transformation.
 
-    Usage::
+    This will convert Python object to input data for Plotly charts.
+
+    :rtype: DataPy.Plotly
     """
     return DataPy.Plotly()
 
   @property
   def c3(self):
+    """
+    Description:
+    ------------
+    Interface to C3 data transformation.
+
+    This will convert Python object to input data for C3 charts.
+
+    :rtype: DataPy.C3
+    """
     return DataPy.C3()
 
   @property
@@ -163,8 +176,11 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to Billboard data transformation.
 
-    Usage::
+    This will convert Python object to input data for Billboard charts.
+
+    :rtype: DataPy.C3
     """
     return DataPy.C3()
 
@@ -173,8 +189,11 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to NVD3 data transformation.
 
-    Usage::
+    This will convert Python object to input data for NVD3 charts.
+
+    :rtype: DataPy.NVD3
     """
     return DataPy.NVD3()
 
@@ -183,8 +202,11 @@ class DataSrc:
     """
     Description:
     ------------
+    Interface to Google data transformation.
 
-    Usage::
+    This will convert Python object to input data for Google charts.
+
+    :rtype: DataPy.Google
     """
     return DataPy.Google()
 
@@ -193,9 +215,9 @@ class DataSrc:
     """
     Description:
     ------------
-    Interface to the Javascript world.
+    Interface to standard JavaScript transformation.
 
-    Usage::
+    :rtype: DataJs
     """
     return DataJs(self._report)
 
@@ -204,8 +226,7 @@ class DataSrc:
     """
     Description:
     ------------
-
-    Usage::
+    Interface to the internal database wrapper.
     """
     from epyk.core.data import DataDb
 
@@ -216,8 +237,6 @@ class DataSrc:
     Description:
     -----------
     Loads data from a cached files.
-
-    Usage::
 
     Attributes:
     ----------
@@ -248,8 +267,6 @@ class DataSrc:
     -----------
     Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
 
-    Usage::
-
     Attributes:
     ----------
     :param data: The data to be saved.
@@ -270,8 +287,6 @@ class DataSrc:
     Description:
     -----------
     Return the file.
-
-    Usage::
 
     Attributes:
     ----------
@@ -297,8 +312,6 @@ class DataSrc:
     Description:
     ------------
     Returns data from a internal data service defined in the sources folder.
-
-    Usage::
 
     Attributes:
     ----------
@@ -328,8 +341,6 @@ class DataSrc:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param script:
@@ -346,8 +357,6 @@ class DataSrc:
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return JsQuery.JQuery(self._report).get(url, data)
@@ -378,10 +387,6 @@ class DataSrc:
     pyPDF2 = requires("PyPDF2", reason='Missing Package', install='PyPDF2', sourceScript=__file__, raiseExcept=True)
     pdf_data = pyPDF2.PdfFileReader(os.path.join(path, filename))
     return pdf_data
-
-  # --------------------------------------------------------------------------------
-  # generic system entry point
-  #
 
   def soap(self, wsdl):
     """
@@ -510,6 +515,8 @@ class DataSrc:
     ----------
     :param url: The url of the html page
     :param parser: The output data parser
+    :param proxy:
+    :param method:
 
     :return: A xml object
     """
@@ -525,8 +532,6 @@ class DataSrc:
     xml_soup = bs4.BeautifulSoup(response, parser)
     return xml_soup
 
-
-
   def rpc(self, url, data=None, headers=None, is_secured=False):
     """
     Description:
@@ -534,8 +539,6 @@ class DataSrc:
     Interface to a RPC server.
 
     This is using the external python package jsonrpcclient (https://jsonrpcclient.readthedocs.io/en/latest/)
-
-    Usage::
 
     Related Pages:
 
@@ -567,7 +570,7 @@ class DataSrc:
 
     Usage::
 
-      grpc = rptObj.data.grpc(serviceName="GreeterStub", module="helloworld_pb2_grpc", path="")
+      grpc = page.data.grpc(serviceName="GreeterStub", module="helloworld_pb2_grpc", path="")
       data = grpc.imp("helloworld_pb2").HelloRequest(name="Test")
       print(grpc.request("SayHello", data))
 

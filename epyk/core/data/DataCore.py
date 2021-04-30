@@ -25,8 +25,6 @@ class DataAggregators:
     -Infinity is returned if list is empty, so an isEmpty guard may be required.
     Non-numerical values in list will be ignored.
 
-    Usage::
-
     Related Pages:
 
       https://underscorejs.org/#max
@@ -49,8 +47,6 @@ class DataAggregators:
     Infinity is returned if list is empty, so an isEmpty guard may be required.
     Non-numerical values in list will be ignored.
 
-    Usage::
-
     Related Pages:
 
       https://underscorejs.org/#min
@@ -71,8 +67,6 @@ class DataAggregators:
     iterator.
     iterator may also be the string name of the property to sort by (eg. length).
 
-    Usage::
-
     Attributes:
     ----------
     :param column: String. The column name. The key in the list of dictionary.
@@ -86,8 +80,6 @@ class DataAggregators:
     Description:
     -----------
     Reduce the record set by adding all the columns.
-
-    Usage::
 
     Attributes:
     ----------
@@ -106,8 +98,6 @@ class DataAggregators:
     -----------
     Reduce the record set by counting all the columns.
 
-    Usage::
-
     Attributes:
     ----------
     :param columns: List. The columns in the records to be counted.
@@ -125,8 +115,6 @@ class DataAggregators:
     -----------
     Reduce the record set by counting all the columns.
 
-    Usage::
-
     Attributes:
     ----------
     :param column: String. The columns in the records to be counted.
@@ -142,8 +130,6 @@ class DataAggregators:
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -176,8 +162,6 @@ class DataAggregators:
     -----------
     A convenient version of what is perhaps the most common use-case for map: extracting a list of property values.
 
-    Usage::
-
     Related Pages:
 
       https://underscorejs.org/#pluck
@@ -202,8 +186,6 @@ class DataFilters:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The filter reference on the JavaScript side.
@@ -216,8 +198,6 @@ class DataFilters:
     Description:
     -----------
     Filtering rule based on a Dictionary of lists.
-
-    Usage::
 
     Attributes:
     ----------
@@ -242,8 +222,6 @@ class DataFilters:
 
     TODO: improve the performances by filtering on a list of keys if passed
 
-    Usage::
-
     Attributes:
     ----------
     :param value: Object. The value to keep.
@@ -264,8 +242,6 @@ class DataFilters:
     Description:
     -----------
     Filtering rule based on a key, value.
-
-    Usage::
 
     Attributes:
     ----------
@@ -290,8 +266,6 @@ class DataFilters:
     Description:
     -----------
     Filtering rule based on a key, list of values.
-
-    Usage::
 
     Attributes:
     ----------
@@ -321,8 +295,6 @@ class DataFilters:
     -----------
     Filtering rule based on a key, and a value starting with a specific format.
 
-    Usage::
-
     Attributes:
     ----------
     :param key: String. The key in the various records.
@@ -341,8 +313,6 @@ class DataFilters:
     Description:
     -----------
     Filter values below a certain value.
-
-    Usage::
 
     Attributes:
     ----------
@@ -368,8 +338,6 @@ class DataFilters:
     -----------
     Filter values above a certain value.
 
-    Usage::
-
     Attributes:
     ----------
     :param key: String, The key in the various records.
@@ -394,9 +362,6 @@ class DataFilters:
     -----------
     Group a group for the data transformation.
     This will be defined in the Python but processed on the JavaScript side.
-
-    Usage::
-
     """
     return DataAggregators(self.toStr(), self.page)
 
@@ -406,8 +371,6 @@ class DataFilters:
     -----------
     Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value
     through iterator. iterator may also be the string name of the property to sort by (eg. length).
-
-    Usage::
 
     Related Pages:
 
@@ -423,11 +386,6 @@ class DataFilters:
     return self
 
   def toStr(self):
-    """
-    Description:
-    -----------
-
-    """
     result = "%s"
     for rec in self.__filters[::-1]:
       result %= rec
@@ -446,8 +404,6 @@ class DataGlobal:
     """
     Description:
     -----------
-
-    Usage::
 
     Attributes:
     ----------
@@ -473,8 +429,6 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String.
@@ -495,8 +449,6 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage::
-
     :rtype: DataFilters
 
     Attributes:
@@ -513,8 +465,6 @@ class DataGlobal:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param groupName: String. The filter name.
@@ -529,9 +479,6 @@ class DataGlobal:
     Description:
     -----------
     Remove all the filters.
-
-    Usage::
-
     """
     self.__filters_groups = {}
     return self
@@ -549,8 +496,6 @@ class ServerNameSpaceConfig:
     Description:
     ------------
 
-    Usage::
-
 
     """
     return JsObjects.JsObject.JsObject.get(self.__config.varId)[self.alias]['u']
@@ -560,7 +505,6 @@ class ServerNameSpaceConfig:
     Description:
     ------------
 
-    Usage::
 
     Attributes:
     ----------
@@ -573,8 +517,6 @@ class ServerNameSpaceConfig:
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -598,8 +540,6 @@ class ServerConfig:
     ------------
     Get the name space from its alias.
 
-    Usage::
-
     Attributes:
     ----------
     :param alias: String. The name space alias.
@@ -612,8 +552,6 @@ class ServerConfig:
     ------------
     Add a JavaScript name space and its full end points and assigned it to a dedicated alias on the Python side.
     This will allow the Python to get the name space from its alias.
-
-    Usage::
 
     Attributes:
     ----------
@@ -632,8 +570,6 @@ class ServerConfig:
     ------------
     Set the end point.
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The enpoint name.
@@ -646,8 +582,6 @@ class ServerConfig:
     Description:
     ------------
     Set multiple end points.
-
-    Usage::
 
     Attributes:
     ----------
@@ -663,8 +597,6 @@ class ServerConfig:
     ------------
     Get the end point from its name.
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The end point name.
@@ -678,8 +610,6 @@ class ServerConfig:
     """
     Description:
     ------------
-
-    Usage::
 
     """
     for np, np_val in self.__namespaces.items():

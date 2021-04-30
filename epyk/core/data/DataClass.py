@@ -21,8 +21,6 @@ class DataClass:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
     :param vals: Dictionary. All the attributes to be added to the component.
@@ -33,8 +31,6 @@ class DataClass:
     """
     Description:
     ------------
-
-    Usage::
 
     """
     return self._attrs.items()
@@ -47,8 +43,6 @@ class DataClass:
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
-
-    Usage::
 
     Attributes:
     ----------
@@ -65,8 +59,6 @@ class DataClass:
     Description:
     ------------
     Add an attribute to the Javascript underlying dictionary.
-
-    Usage::
 
     Attributes:
     ----------
@@ -85,8 +77,6 @@ class DataClass:
     Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
 
-    Usage::
-
     Attributes:
     ----------
     :param clsObj: Class. The sub data class used in the structure definition
@@ -98,8 +88,6 @@ class DataClass:
     Description:
     ------------
     Get tje attribute to the underlying attributes dictionary.
-
-    Usage::
 
     Attributes:
     ----------
@@ -113,8 +101,6 @@ class DataClass:
     Description:
     ------------
     Add an attribute to the Javascript underlying dictionary.
-
-    Usage::
 
     Attributes:
     ----------
@@ -134,8 +120,6 @@ class DataClass:
 
     Should use has_attribute is the name can be deduced from the parent function.
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The key to be added to the internal data dictionary.
@@ -154,8 +138,6 @@ class DataClass:
     ------------
     Add the key and value to the final result object.
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The key in the final data dictionary.
@@ -169,8 +151,8 @@ class DataClass:
     """
     Description:
     ------------
-
-    Usage::
+    Add key to a sub dictionary.
+    This will create an attribute object with a nested structure.
 
     Attributes:
     ----------
@@ -206,8 +188,6 @@ class DataEnum:
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Usage::
-
     Attributes:
     ----------
     :param value: String. Optional. The value to be set (default is the function name).
@@ -223,8 +203,6 @@ class DataEnum:
     Description:
     ------------
     Set a custom value.This will not use any specific conversion.
-
-    Usage::
 
     Attributes:
     ----------
@@ -260,8 +238,6 @@ class DataEnumMulti:
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Usage::
-
     Attributes:
     ----------
     :param value: String. Optional. The value to be set (default is the function name).
@@ -275,8 +251,6 @@ class DataEnumMulti:
     Description:
     ------------
     Set a custom value.This will not use any specific conversion.
-
-    Usage::
 
     Attributes:
     ----------

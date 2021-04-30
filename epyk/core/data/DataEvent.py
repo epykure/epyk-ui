@@ -19,10 +19,6 @@ class DataConfig:
     By using this way of working it is easier to split the page and the configuration and non developers can
     change the content or create new ones based on the templates.
 
-    Usage:
-    -----
-
-
     Attributes:
     ----------
     :param k: String. The alias of the cache, variable.
@@ -62,10 +58,6 @@ class TabulatorEvents:
     Description:
     ------------
     Get a Tabulator Row object.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -77,10 +69,6 @@ class TabulatorEvents:
     Description:
     ------------
     Get a Tabulator cell object.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -92,10 +80,6 @@ class TabulatorEvents:
     Description:
     ------------
     Get a Tabulator column object.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.packages import JsTabulator
 
@@ -109,10 +93,7 @@ class DataEvents:
     """
     Description:
     ------------
-
-    Usage:
-    -----
-
+    Interface to the Tabulator events.
     """
     return TabulatorEvents()
 
@@ -121,9 +102,6 @@ class DataEvents:
     """
     Description:
     ------------
-
-    Usage:
-    -----
 
     """
     from epyk.core.js.primitives import JsObjects
@@ -135,9 +113,6 @@ class DataEvents:
     Description:
     ------------
 
-    Usage:
-    -----
-
     """
     return DataFile("value")
 
@@ -148,9 +123,6 @@ class DataEvents:
     ------------
     Interface to a standard data object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
-
-    Usage:
-    -----
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObjects.get("data")
@@ -162,10 +134,6 @@ class DataEvents:
     ------------
     Interface to a standard value object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObjects.get("value")
@@ -176,10 +144,6 @@ class DataEvents:
     Description:
     ------------
     Interface to the standard event.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.objects import JsEvents
 
@@ -191,10 +155,6 @@ class DataEvents:
     Description:
     ------------
     Interface to the standard mouse event.
-
-    Usage:
-    -----
-
     """
     from epyk.core.js.objects import JsEvents
 
@@ -217,7 +177,7 @@ class DataEvents:
     Description:
     ------------
     Interface to a standard touch event.
-    This object is available in any event specific to touch screens
+    This object is available in any event specific to touch screens.
     """
     from epyk.core.js.objects import JsEvents
 
@@ -247,10 +207,6 @@ class DataFile:
     Description:
     ------------
     Get the filename.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%s.name" % self.varName)
@@ -261,10 +217,6 @@ class DataFile:
     Description:
     ------------
     Get the file size.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%s.size" % self.varName)
@@ -275,10 +227,6 @@ class DataFile:
     Description:
     ------------
     Get the last modified date for the file.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsDate.JsDate("%s.lastModifiedDate" % self.varName)
@@ -289,10 +237,6 @@ class DataFile:
     Description:
     ------------
     Get the last modified date for the file.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsDate.JsDate("%s.lastModified" % self.varName)
@@ -305,7 +249,8 @@ class DataFile:
 
     """
     from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("(function(){var dt = new Date(%s.lastModified); return dt.toISOString() }())" % self.varName)
+    return JsObjects.JsString.JsString.get(
+      "(function(){var dt = new Date(%s.lastModified); return dt.toISOString() }())" % self.varName)
 
   @property
   def description(self):
@@ -313,10 +258,6 @@ class DataFile:
     Description:
     ------------
     Get file description (name, size and date).
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {
@@ -333,10 +274,6 @@ class DataLoops:
     The value returned by forEach statement.
 
     Note. For nested loop make sure you store the important information in new variable names.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsObject.JsObject.get("value")
@@ -346,9 +283,6 @@ class DataLoops:
     """
     Description:
     -----------
-
-    Usage::
-
 
     """
     from epyk.core.js.objects import JsNodeDom
@@ -360,9 +294,6 @@ class DataLoops:
     Description:
     -----------
 
-    Usage::
-
-
     """
     from epyk.core.js.objects import JsNodeDom
     return JsNodeDom.JsDoms.new(varName="elt", setVar=False)
@@ -373,10 +304,6 @@ class DataLoops:
     Description:
     ------------
     The index value return in loop statement.
-
-    Usage::
-
-
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsNumber.JsNumber.get("index")
@@ -392,8 +319,6 @@ class DataPrimitives:
     """
     Description:
     -----------
-
-    Usage::
 
 
     Attributes:
@@ -413,8 +338,6 @@ class DataPrimitives:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param data: List. Optional. The Python object used to feed the list.
@@ -431,8 +354,6 @@ class DataPrimitives:
     """
     Description:
     -----------
-
-    Usage::
 
 
     Attributes:
@@ -452,9 +373,6 @@ class DataPrimitives:
     Description:
     -----------
 
-    Usage::
-
-
     Attributes:
     ----------
     :param data: List. Optional. The Python object used to feed the list.
@@ -472,9 +390,6 @@ class DataPrimitives:
     Description:
     -----------
 
-    Usage::
-
-
     Attributes:
     ----------
     :param data: List. Optional. The Python object used to feed the list.
@@ -491,9 +406,6 @@ class DataPrimitives:
     """
     Description:
     -----------
-
-    Usage::
-
 
     Attributes:
     ----------

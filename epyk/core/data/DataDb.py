@@ -10,8 +10,8 @@ from epyk.core.js.Imports import requires
 from epyk.core.py import PySql
 
 
-class NoSql(object):
-  class __internal(object):
+class NoSql:
+  class __internal:
     _props = {}
 
   def __init__(self, report=None):
@@ -21,9 +21,6 @@ class NoSql(object):
     """
     Description:
     -----------
-
-    Usage:
-    -----
 
     Related Pages:
 
@@ -36,16 +33,14 @@ class NoSql(object):
     :param port: Integer. Optional. Database port. Default 5000
     :param is_secured: Boolean. Optional.
     """
-    pyMongo = requires("pyMongo", reason='Missing Package', install="pyMongo", source_script=__file__, raise_sxcept=True)
+    pyMongo = requires(
+      "pyMongo", reason='Missing Package', install="pyMongo", source_script=__file__, raise_sxcept=True)
     return pyMongo.MongoClient("mongodb://%s:%s/" % (host, port))
 
   def neo4j(self, host="localhost", port=5000, is_secured=False):
     """
     Description:
     -----------
-
-    Usage:
-    -----
 
     Related Pages:
 
@@ -65,8 +60,8 @@ class NoSql(object):
     return PySql.SqlConnNeo4j(host, port)
 
 
-class DataDb(object):
-  class __internal(object):
+class DataDb:
+  class __internal:
     _props = {}
 
   def __init__(self, report=None):
@@ -77,6 +72,8 @@ class DataDb(object):
 
   def __settings(self):
     """
+    Description:
+    -----------
     Retrieve the database settings based on the environment configuration.
 
     Settings are used in the context of generic private and public databases.
@@ -92,7 +89,8 @@ class DataDb(object):
       if db_settings['names']['private'].get("fixed", False):
         db_settings['private'] = db_settings['names']['private']['name']
       else:
-        db_settings['private'] = "%s_%s" % (db_settings['names']['private']['name'], self._report.py.hash(self._report.run.current_user))
+        db_settings['private'] = "%s_%s" % (
+          db_settings['names']['private']['name'], self._report.py.hash(self._report.run.current_user))
     elif 'name' in db_settings:
       # In this context there is no unique database per user and all the users will use a different
       # DB when they are in a private mode
@@ -101,23 +99,24 @@ class DataDb(object):
       del db_settings['name']
 
     else:
-      if not 'path' in db_settings:
+      if 'path' not in db_settings:
         db_settings['path'] = self._report.run.local_path
-      db_settings['private'] = '%s_%s' % (self._report.run.report_name, self._report.py.hash(self._report.run.current_user))
+      db_settings['private'] = '%s_%s' % (
+        self._report.run.report_name, self._report.py.hash(self._report.run.current_user))
       db_settings['public'] = self._report.run.report_name
-    if not 'model_path' in db_settings:
+    if 'model_path' not in db_settings:
       db_settings['model_path'] = os.path.join(self._report.run.local_path, 'model', 'tables')
     return db_settings
 
   @property
   def names(self):
     """
+    Description:
+    -----------
     Returns the different database names to be used by the user in a public or private context.
 
     Generally the public database is shared by all the users whereas the private one is only dedicated to a user and
     data can be granted to some external users.
-
-    Example
 
     Related Pages:
 
@@ -131,6 +130,8 @@ class DataDb(object):
   @property
   def private(self):
     """
+    Description:
+    -----------
     Return the private database from the family defined in the environment.
 
     It is not possible to specify the type of DB for an environment at this level.
@@ -138,14 +139,11 @@ class DataDb(object):
 
     This module rely on SQLAlchemy for the query generation
 
-    Example
-
     Related Pages:
 
       https://www.sqlalchemy.org/
 
     :rtype: epyk.core.py.PySql.SqlConn
-    :return:
     """
     settings = self.__settings()
     database = "%(path)s/%(private)s" % settings if settings.get("path") is not None else settings['private']
@@ -154,15 +152,21 @@ class DataDb(object):
       if settings["family"] == "sqlite":
         db = self.sqlite(settings["private"], settings.get("path"), model_path, tables_scope=self.table_names)
       elif settings["family"] == "mssql":
-        db = self.mssql(settings["private"], settings["host"], driverName=settings["driverName"], model_path=model_path, tables_scope=self.table_names)
+        db = self.mssql(
+          settings["private"], settings["host"], driverName=settings["driverName"], model_path=model_path,
+          tables_scope=self.table_names)
       elif settings["family"] == "oracle":
-        db = self.oracle(settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
+        db = self.oracle(
+          settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
       elif settings["family"] == "postgres":
-        db = self.postgres(settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
+        db = self.postgres(
+          settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
       elif settings["family"] == "mysql":
-        db = self.mysql(settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
+        db = self.mysql(
+          settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
       elif settings["family"] == "mariadb":
-        db = self.mariadb(settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
+        db = self.mariadb(
+          settings["private"], settings["host"], settings["port"], model_path=model_path, tables_scope=self.table_names)
       elif settings["family"] == "mdb":
         db = self.mdb(settings["private"], settings.get("path"), model_path)
       elif settings["family"] == "accdb":
@@ -173,14 +177,14 @@ class DataDb(object):
   @property
   def public(self):
     """
+    Description:
+    -----------
     Return the public shared database from the family defined in the environment.
 
     It is not possible to specify the type of DB for an environment at this level.
     This should be done either in the server configuration or in the report configuration.
 
     This module rely on SQLAlchemy for the query generation
-
-    Example
 
     Related Pages:
 
@@ -215,15 +219,17 @@ class DataDb(object):
 
   def reflect(self, table_names):
     """
-    Reduce the scope of database tables to be loaded by SQLAchemy
+    Description:
+    -----------
+    Reduce the scope of database tables to be loaded by SQLAchemy.
 
     Related Pages:
 
       https://docs.sqlalchemy.org/en/13/core/metadata.html
 
+    Attributes:
+    ----------
     :param table_names:
-
-    :return:
     """
     if self.table_names is None:
       self.table_names = set(table_names)
@@ -231,23 +237,23 @@ class DataDb(object):
       self.table_names |= set(table_names)
     return self
 
-  # -------------------------------------------------
-  # Specific database entries
-  #
   def sqlite(self, name, db_path=None, model_path=None, db_settings=None, tables_scope=None):
     """
-    Create a bespoke SQLite database
+    Description:
+    -----------
+    Create a bespoke SQLite database.
 
     By default the database will be in the current folder.
-    The table definition will not be done automatically for this database and this should be created in a external manner
+    The table definition will not be done automatically for this database and this should be created in a
+    external manner
 
-    Example
-
-    Documentation
-
+    Attributes:
+    ----------
     :param name: The database name
     :param db_path: Optional, the database path
     :param model_path: Optional, the model with the tables definition. The filename must be unique in the project
+    :param db_settings:
+    :param tables_scope:
 
     :rtype: epyk.core.py.PySql.SqlConn
 
@@ -260,25 +266,25 @@ class DataDb(object):
     if db_settings is not None:
       dataSettings.update(db_settings)
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConn('sqlite', database=database, tables_scope=tables_scope, **dataSettings)
+      self._db_bindings[database] = PySql.SqlConn(
+        'sqlite', database=database, tables_scope=tables_scope, **dataSettings)
     return self._db_bindings[database]
 
   def oracle(self, name, host, port, model_path=None, is_secured=False, tables_scope=None):
     """
+    Description:
+    -----------
 
-    Example
-
-    Documentation
-
+    Attributes:
+    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 5432
     :param model_path: Optional, Database model path with the python scripts of the tables
     :param is_secured: If credentials required. Default False
+    :param tables_scope:
 
     :rtype: epyk.core.py.PySql.SqlConn
-
-    :return:
     """
     if 'oracle' not in self.pkgs:
       self.pkgs[name] = requires(name, reason='Missing Package', install="cx_Oracle", source_script=__file__)
@@ -292,46 +298,45 @@ class DataDb(object):
 
   def mssql(self, name, host="localhost", driverName="{ODBC Driver 17 for SQL Server}", model_path=None, tables_scope=None):
     """
+    Description:
+    -----------
 
-    Example
-
-    Documentation
-
+    Attributes:
+    ----------
     :param name: The database name
     :param host: The database host name
     :param driverName: Optional, The
     :param model_path: Optinal, The databse model path
 
     :rtype: epyk.core.py.PySql.SqlConn
-
-    :return:
     """
     if 'mssql' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="mssql", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="mssql", source_script=__file__, raise_except=True)
     if 'pyodbc' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="pyodbc", source_script=__file__, raise_except=True)
     database = name
     dataSettings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "driver": 'mssql+pyodbc', "driverName": driverName, 'host': host}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConn('mssql+pyodbc', database=database, tables_scope=tables_scope, **dataSettings)
+      self._db_bindings[database] = PySql.SqlConn(
+        'mssql+pyodbc', database=database, tables_scope=tables_scope, **dataSettings)
     return self._db_bindings[database]
 
   def mdb(self, name, db_path, model_path=None):
     """
-    Get a Access (.mdb) Database query object using ODBC driver
+    Description:
+    -----------
+    Get a Access (.mdb) Database query object using ODBC driver.
 
-    Example
-
-    Documentation
-
+    Attributes:
+    ----------
     :param name: The filename
     :param db_path: The database full path
-    :param model_path: Optional, Database model path with the python scripts of the tables
+    :param model_path: Optional, Database model path with the python scripts of the tables.
 
     :rtype: epyk.core.py.PySql.SqlConnOdbc
-
-    :return:
     """
     if 'pyodbc' not in self.pkgs:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
@@ -344,21 +349,21 @@ class DataDb(object):
 
   def accdb(self, name, db_path, model_path=None):
     """
-    Get a Access (.accdb) Database query object using ODBC driver
-
-    Example
+    Description:
+    -----------
+    Get a Access (.accdb) Database query object using ODBC driver.
 
     Related Pages:
 
       https://www.599cd.com/access/studentdatabases/
 
+    Attributes:
+    ----------
     :param name: The filename
     :param db_path: The database full path
     :param model_path: Optional, Database model path with the python scripts of the tables
 
     :rtype: epyk.core.py.PySql.SqlConnOdbc
-
-    :return:
     """
     if 'pyodbc' not in self.pkgs:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
@@ -371,45 +376,56 @@ class DataDb(object):
 
   def postgres(self, name, host="localhost", port=5432, model_path=None, is_secured=False, tables_scope=None):
     """
-    Get a PostgreSql Database query object using SQLAlchemy
+    Description:
+    -----------
+    Get a PostgreSql Database query object using SQLAlchemy.
 
     Related Pages:
 
       https://www.postgresql.org/
-    https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.dml.Insert.on_conflict_do_update.params.where
+      https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.dml.Insert.on_conflict_do_update.params.where
 
+    Attributes:
+    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 5432
     :param model_path: Optional, Database model path with the python scripts of the tables
     :param is_secured: If credentials required. Default False
+    :param tables_scope:
 
     :rtype: epyk.core.py.PySql.SqlConn
-
-    :return:
     """
     if 'postgresql' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="postgresql", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="postgresql", source_script=__file__, raise_except=True)
     if 'psycopg2' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="psycopg2", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="psycopg2", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "username": "postgres", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConn('postgresql+psycopg2', database=database, tables_scope=tables_scope, **db_settings)
+      self._db_bindings[database] = PySql.SqlConn(
+        'postgresql+psycopg2', database=database, tables_scope=tables_scope, **db_settings)
     return self._db_bindings[database]
 
   def mysql(self, name, host="localhost", port=3306, model_path=None, is_secured=False, tables_scope=None):
     """
-    Get a MySql Database query object using SQLAlchemy
+    Description:
+    -----------
+    Get a MySql Database query object using SQLAlchemy.
 
-    Example
-    rptObj.data.db.mysql("MySQL", port=3333)
+    Usage::
+
+      page.data.db.mysql("MySQL", port=3333)
 
     Related Pages:
 
       https://dev.mysql.com/
 
+    Attributes:
+    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 3306
@@ -417,29 +433,34 @@ class DataDb(object):
     :param is_secured: If credentials required. Default False
 
     :rtype: epyk.core.py.PySql.SqlConn
-
-    :return:
     """
     if 'pymysql' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "username": "root", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConn('mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)
+      self._db_bindings[database] = PySql.SqlConn(
+        'mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)
     return self._db_bindings[database]
 
   def mariadb(self, name, host="localhost", port=3306, model_path=None, is_secured=False, tables_scope=None):
     """
-    Get a MariaDB Database query object using SQLAlchemy
+    Description:
+    -----------
+    Get a MariaDB Database query object using SQLAlchemy.
 
-    Example
-    rptObj.data.db.mariadb("MySQL", port=3333)
+    Usage::
+
+      page.data.db.mariadb("MySQL", port=3333)
 
     Related Pages:
 
       https://mariadb.org/
 
+    Attributes:
+    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 3306
@@ -449,10 +470,12 @@ class DataDb(object):
     :rtype: epyk.core.py.PySql.SqlConn
     """
     if 'pymysql' not in self.pkgs:
-      self.pkgs[name] = requires(name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
+      self.pkgs[name] = requires(
+        name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "username": "root", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConn('mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)
+      self._db_bindings[database] = PySql.SqlConn(
+        'mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)
     return self._db_bindings[database]

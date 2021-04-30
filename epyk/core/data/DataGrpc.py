@@ -8,16 +8,13 @@ import sys
 import importlib
 
 
-class DataGrpc(object):
+class DataGrpc:
 
   def __init__(self, service_name, path, module, host, port):
     """
     Description:
     ------------
     The path will be added to the python path.
-
-    Usage:
-    -----
 
     Attributes:
     ----------
