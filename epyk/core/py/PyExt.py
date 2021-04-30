@@ -490,7 +490,11 @@ class PyExt:
 
     Usage::
 
+        page.py.dates.today()
+
     :return: A PyDate object
+
+    :rtype: PyDates.PyDates
     """
     return PyDates.PyDates(self._report)
 
@@ -503,9 +507,9 @@ class PyExt:
 
     No external package is required to use this interface.
 
-    Usage::
+    :return: A PyRest object.
 
-    :return: A PyRest object
+    :rtype: PyRest.PyRest
     """
     return PyRest.PyRest(self._report)
 
@@ -519,12 +523,12 @@ class PyExt:
     This will rely on the package cryptography. This should be added to the python environment before using it.
     This package can be installed using the usual pip install function.
 
-    Usage::
-
     Related Pages:
 
       https://pypi.org/project/cryptography/
       https://cryptography.io/en/latest/
+
+    :rtype: PyCrypto.PyCrypto
     """
     return PyCrypto.PyCrypto(self._report)
 
@@ -535,8 +539,7 @@ class PyExt:
     ------------
     Property to some predefined Geolocation functions.
 
-    Usage::
-
+    :rtype: PyGeo.PyGeo
     """
     return PyGeo.PyGeo(self._report)
 
@@ -547,8 +550,7 @@ class PyExt:
     ------------
     Property to the Markdown String conversion.
 
-    Usage::
-
+    :rtype: PyMarkdown.MarkDown
     """
     return PyMarkdown.MarkDown(self._report)
 
@@ -564,12 +566,12 @@ class PyExt:
 
     Attributes:
     ----------
-    :param lib_name: The python module name
-    :param folder: The internal folder with the libraries to be imported
-    :param report_name: Optional, the report name in which the library is defined. Default current folder
-    :param path: Optional, the path to be added to the classpath
+    :param lib_name: String. The python module name.
+    :param folder: String. Optional. The internal folder with the libraries to be imported.
+    :param report_name: String. Optional. the report name in which the library is defined. Default current folder.
+    :param path: String. Optional. the path to be added to the classpath.
 
-    :return: The imported Python module
+    :return: The imported Python module.
     """
     lib_name = lib_name.replace(".py", "")
     if path is not None:
@@ -588,7 +590,7 @@ class PyExt:
     Description:
     ------------
     Install the external Python package.
-    This can automatically installed it from the Python Index online repository is missing
+    This can automatically installed it from the Python Index online repository is missing.
 
     Usage::
 
@@ -597,14 +599,15 @@ class PyExt:
 
     Attributes:
     ----------
-    :param package: The Python Package Name
-    :param sub_module: The sub module or class within the package
+    :param package: String. The Python Package Name.
+    :param sub_module: String. Optional. The sub module or class within the package.
 
-    :return: The installed Python module
+    :return: The installed Python module.
     """
     package_alias = "%s_%s" % (package, sub_module) if sub_module is not None else package
-    if not package_alias in self._report._props:
-      self._report._props[package_alias] = requires(package, reason='Missing Package', package=sub_module, install=package)
+    if package_alias not in self._report._props:
+      self._report._props[package_alias] = requires(
+        package, reason='Missing Package', package=sub_module, install=package)
     return self._report._props[package_alias]
 
   @staticmethod
@@ -613,13 +616,10 @@ class PyExt:
     Description:
     ------------
 
-    Usage::
-
-
     Attributes:
     ----------
-    :param text: String. a test to encode with HTML special symbols
-    :param encoding: String. teh encoding type
+    :param text: String. a test to encode with HTML special symbols.
+    :param encoding: String. Optional. teh encoding type.
     """
     if not isinstance(text, str):
       return text
@@ -639,9 +639,6 @@ class PyExt:
     Description:
     ------------
 
-    Usage::
-
-
     Attributes:
     ----------
     :param value:
@@ -654,7 +651,6 @@ class PyExt:
       e, d = text.split(decimal_sep)
     else:
       e, d = text, ""
-
     r = []
     for i, c in enumerate(e[::-1]):
       if i > 0 and i % 3 == 0:
@@ -671,16 +667,14 @@ class PyExt:
     Description:
     ------------
 
-    Usage::
-
     Attributes:
     ----------
-    :param text:
-    :param digits:
-    :param thousand_sep:
-    :param decimal_sep:
-    :param symbol:
-    :param format:
+    :param text: String.
+    :param digits: Integer. Optional.
+    :param thousand_sep: String. Optional.
+    :param decimal_sep: String. Optional.
+    :param symbol: String. Optional.
+    :param format: String. Optional.
     """
     text = PyExt.format_number(text, digits, thousand_sep, decimal_sep)
     if symbol not in ["£"]:

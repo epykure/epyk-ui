@@ -1,24 +1,20 @@
-"""
-Description:
-------------
-Common module for managing dates.
-
-This module is a light wrapper on top of datetime in order to perform basic operations on dates.
-This will also standardise the date format to YYYY-MM-DD in the Python layer to simplify the
-conversion to the Javascript
-
-All the tests in this module are using doctest.
-
-Related Pages:
-
-		https://docs.python.org/2/library/doctest.html
-"""
 
 import time
 import datetime
 
 
 class PyDates:
+  """
+  Description:
+  ------------
+  Common module for managing dates.
+
+  This module is a light wrapper on top of datetime in order to perform basic operations on dates.
+  This will also standardise the date format to YYYY-MM-DD in the Python layer to simplify the
+  conversion to the Javascript
+
+  All the tests in this module are using doctest.
+  """
 
   class __internal:
     _props, _context = {}, {}
@@ -108,7 +104,7 @@ class PyDates:
     """
     Description:
     ------------
-    Returns the last month end date
+    Returns the last month end date.
 
     In this property the parameter weekdays is forced to True.
 
@@ -125,7 +121,7 @@ class PyDates:
     """
     Description:
     ------------
-    Returns the list of month end dates from the beginning of the year
+    Returns the list of month end dates from the beginning of the year.
 
     In this property the parameter weekdays is forced to True.
 
@@ -234,7 +230,7 @@ class PyDates:
     """
     Description:
     ------------
-    Convert a Excel date to a AReS standard date format YYYY-MM-DD.
+    Convert a Excel date to a standard date format YYYY-MM-DD.
 
     Usage::
 
@@ -249,7 +245,7 @@ class PyDates:
     ----------
     :param xlDate: Integer. An date in the excel format.
 
-    :return: The date as a String in the common format YYYY-MM-DD in AReS
+    :return: The date as a String in the common format YYYY-MM-DD
     """
     dt = datetime.datetime.fromordinal(datetime.datetime(1900, 1, 1).toordinal() + xlDate - 2)
     return dt.strftime('%Y-%m-%d')
@@ -332,7 +328,7 @@ class PyDates:
     """
     Description:
     ------------
-    The default value will be given considering the GMT time
+    The default value will be given considering the GMT time.
 
     Usage::
 
@@ -356,7 +352,7 @@ class PyDates:
     Description:
     ------------
     Return the converted timestamp to be stored in the database.
-    This conversion will be based on the offset coming from the UI to convert to common time
+    This conversion will be based on the offset coming from the UI to convert to common time.
 
     Usage::
 
@@ -366,8 +362,8 @@ class PyDates:
     Attributes:
     ----------
     :param timestamp: String. The client timestamp.
-    :param offset: Integer. optional. The client offset time to be applied before storage in hour
-    :param reference: Integer. optional. The reference time used on the server side
+    :param offset: Integer. optional. The client offset time to be applied before storage in hour.
+    :param reference: Integer. optional. The reference time used on the server side.
 
     :return: The server timestamp string
     """
@@ -390,7 +386,7 @@ class PyDates:
     Attributes:
     ----------
     :param timestamp: String. The server timestamp.
-    :param offset: Integer. The client offset time to be applied before storage
+    :param offset: Integer. The client offset time to be applied before storage.
     :param reference: Integer. Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
@@ -407,14 +403,10 @@ class PyDates:
     Get the time between two dates.
     This function will only format the result of a delta time object.
 
-    Usage::
-
-
-
     Attributes:
     ----------
-    :param delta_time: delta_time. The delta time between two python dates
-    :param with_time: Boolean. Optional. A flag to mention if the time should be computed
+    :param delta_time: delta_time. The delta time between two python dates.
+    :param with_time: Boolean. Optional. A flag to mention if the time should be computed.
     """
     year = delta_time.days // 365
     months = (delta_time.days - year * 365) // 12

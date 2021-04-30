@@ -28,11 +28,9 @@ class PyCrypto:
     This can be also used to protect data from the report.
     In order to ensure the right privacy please do not store the token and the salt in the framework.
 
-    Usage::
-
     Attributes:
     ----------
-    :param data: The data to be encrypted.
+    :param data: String. The data to be encrypted.
     :param token: String. Optional. The token used to encrypt the data.
     :param salt: String. Optional. The salt id.
 
@@ -66,8 +64,6 @@ class PyCrypto:
 
       PyCrypto().decrypt(encrypted)
 
-    Documentation
-
     Attributes:
     ----------
     :param encrypted: The encrypted data.
@@ -89,7 +85,8 @@ class PyCrypto:
     if hasattr(self.__src, 'log'):
       # In the admin section the report is not defined
       self.__src.log("SECURITY|%s|%s|password decoding" % (self.__src.run.current_user, label))
-    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=bytes(salt.encode('latin1')), iterations=100000, backend=default_backend())
+    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=bytes(salt.encode('latin1')), iterations=100000,
+                     backend=default_backend())
     if hasattr(token, 'encode'):
       encrypted_key = base64.urlsafe_b64encode(kdf.derive(bytes(token.encode('utf-8'))))
     else:
@@ -175,6 +172,7 @@ class PyCrypto:
     :param key2:
     """
     from cryptography.fernet import Fernet, MultiFernet
+
     f = MultiFernet([Fernet(key1), Fernet(key2)])
     return f.encrypt(bytes(msg.encode('latin1')))
 
@@ -193,6 +191,7 @@ class PyCrypto:
     :param key2:
     """
     from cryptography.fernet import Fernet, MultiFernet
+
     f = MultiFernet([Fernet(key1), Fernet(key2)])
     return f.decrypt(bytes(encrypted.encode('latin1')))
 
