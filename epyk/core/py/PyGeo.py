@@ -15,8 +15,6 @@ class PyGeo:
     Calculate the great circle distance between two points on the earth (specified in decimal degrees)
     3956
 
-    Usage::
-
     Related Pages:
 
       https://en.wikipedia.org/wiki/Haversine_formula

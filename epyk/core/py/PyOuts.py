@@ -43,10 +43,13 @@ class OutBrowsers:
     import webbrowser
 
     results = self._context._to_html_obj()
-    js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
-    css_external = re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
+    js_external = re.findall(
+      '<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
+    css_external = re.findall(
+      '<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
     jsObj = Js.JsBase()
-    result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external), "html": results['content'], "css": results["cssStyle"]}
+    result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external),
+              "html": results['content'], "css": results["cssStyle"]}
     data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
@@ -130,9 +133,6 @@ class PyOuts:
     Description:
     ------------
     Create the HTML result object from the report definition.
-
-    Usage::
-
 
     Attributes:
     ----------
@@ -240,10 +240,6 @@ class PyOuts:
     Standard output for Jupyter Notebooks.
 
     This is what will use IPython in order to display the results in cells.
-
-    Usage::
-
-
     """
     results = self._to_html_obj()
     if self._report is not None:
@@ -311,7 +307,7 @@ class PyOuts:
     """
     Description:
     ------------
-    This will produce everything in a single page which can be directly copied to the try editor in w3C website
+    This will produce everything in a single page which can be directly copied to the try editor in w3C website.
 
     Usage::
 
@@ -499,7 +495,7 @@ class PyOuts:
     Description:
     ------------
     Return the complete page structure to allow the various web framework to split the code accordingly.
-    Fragments will then be used by the various framework to create the corresponding pages
+    Fragments will then be used by the various framework to create the corresponding pages.
     """
     htmlParts = []
     cssParts = dict(self._report.body.style.get_classes_css())
@@ -560,10 +556,12 @@ class PyOuts:
         app.route().add(component, selector, target_folder)
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
-      app.page(report=self._report, selector=selector, name=component, auto_route=auto_route, target_folder=target_folder)
+      app.page(report=self._report, selector=selector, name=component, auto_route=auto_route,
+               target_folder=target_folder)
     elif server.upper() == 'REACT':
       app = react.React(app_path=app_path, name=name or 'react')
-      app.page(report=self._report, selector=selector or 'app-root', name=module, auto_route=auto_route, target_folder=target_folder)
+      app.page(report=self._report, selector=selector or 'app-root', name=module, auto_route=auto_route,
+               target_folder=target_folder)
     app.publish()
     return app
 
@@ -572,9 +570,6 @@ class PyOuts:
     Description:
     ------------
     Writes a Markdown file from the report object.
-
-    Usage:
-    -----
 
     Attributes:
     ----------

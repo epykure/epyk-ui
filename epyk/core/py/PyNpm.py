@@ -45,8 +45,6 @@ class NpmRegisteryScore:
     -----------
     Get the package popularity.
 
-    Usage::
-
     """
     return self.__score['detail']['popularity']
 
@@ -55,8 +53,6 @@ class NpmRegisteryScore:
     """
     Description:
     -----------
-    
-    Usage::
 
     """
     return self.__score['detail']['maintenance']
@@ -73,8 +69,6 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage::
-
     """
     return self.__controls["integrity"]
 
@@ -84,7 +78,6 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage::
     """
     return self.__controls["shasum"]
 
@@ -94,8 +87,6 @@ class NpmDistIntegrity:
     Description:
     -----------
 
-    Usage::
-
     """
     return self.__controls["fileCount"]
 
@@ -104,8 +95,6 @@ class NpmDistIntegrity:
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return self.__controls["unpackedSize"]
@@ -142,8 +131,6 @@ class NpmRegistery:
     Description:
     -----------
 
-    Usage::
-
     """
     return NpmRegisteryScore(self._meta["score"])
 
@@ -152,8 +139,6 @@ class NpmRegistery:
     """
     Description:
     -----------
-
-    Usage::
 
     """
     return NpmDistIntegrity(self.info()['dist'])
@@ -213,7 +198,9 @@ class NpmRegistery:
       print(pkg.license)
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
-    json_req = Request("%s/%s/%s/package.json" % (self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""), self.version), method="GET", headers=headers)
+    json_req = Request("%s/%s/%s/package.json" % (
+      self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""),
+      self.version), method="GET", headers=headers)
     response = json.loads(urlopen(json_req).read())
     return response["license"]
 
@@ -223,9 +210,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the package description in NPM.
-
-    Usage::
-
     """
     return self._meta["package"]["description"]
 
@@ -235,9 +219,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the package scope in NPM.
-
-    Usage::
-
     """
     return self._meta["package"]["scope"]
 
@@ -247,9 +228,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the underlying package links.
-
-    Usage::
-
     """
     return self._meta["package"]["links"]
 
@@ -259,9 +237,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the full package details from the NPM website.
-
-    Usage::
-
     """
     return self._meta
 
@@ -271,9 +246,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the current package version date from the NPM website.
-
-    Usage::
-
     """
     return self._meta['package']['version']
 
@@ -314,7 +286,8 @@ class NpmRegistery:
       for r in scripts:
         if r['code'] != 200:
           is_valid = False
-      logging.warning("{} - Current: {}, Framework: {}, CDNJS: {}".format(self._alias, self.release, self.version_no, is_valid))
+      logging.warning("{} - Current: {}, Framework: {}, CDNJS: {}".format(
+        self._alias, self.release, self.version_no, is_valid))
     return result
 
   def has_cdnjs(self, version=None):
@@ -431,11 +404,9 @@ class NpmRegistery:
     Description:
     -----------
     Get the package version number.
-
-    Usage::
-
     """
-    v = Imports.JS_IMPORTS[self._alias]['modules'][0].get("version", Imports.JS_IMPORTS[self._alias].get('version', self.release))
+    v = Imports.JS_IMPORTS[self._alias]['modules'][0].get(
+      "version", Imports.JS_IMPORTS[self._alias].get('version', self.release))
     return v
 
   @property
@@ -444,9 +415,6 @@ class NpmRegistery:
     Description:
     -----------
     Get the package version tag (it is either the version number of the version number prefixed with v).
-
-    Usage::
-
     """
     prefix = Imports.JS_IMPORTS[self._alias].get("v_prefix")
     if prefix is not None:
@@ -514,9 +482,6 @@ class NpmRegistery:
 
     The framework will use this setup in order to ease the transition and compatibility with existing popular framework.
 
-    Usage::
-
-
     Attributes:
     ----------
     :param version: String. Optional. The package version number (default the current release number from NPM).
@@ -525,11 +490,15 @@ class NpmRegistery:
     :param verbose: Boolean. Optional. Display warning message. Default True.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
-    json_req = Request("%s/%s/%s/package.json" % (self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""), version or self.version), method="GET", headers=headers)
+    json_req = Request("%s/%s/%s/package.json" % (
+      self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""),
+      version or self.version), method="GET", headers=headers)
     try:
       response = json.loads(urlopen(json_req).read())
     except Exception as err:
-      logging.warning("{} - Error getting files from {}/{}/{}/package.json".format(self._alias, self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""), version or self.version))
+      logging.warning("{} - Error getting files from {}/{}/{}/package.json".format(
+        self._alias, self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""),
+        version or self.version))
       return None
 
     if "files" in response:
@@ -547,7 +516,9 @@ class NpmRegistery:
         match_reg = reg_exp.match(t["path"])
         if match_reg is not None:
           if out_path is not None:
-            json_req = Request("%s/%s/%s/%s" % (self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""), version or self.version, t["path"]), method="GET", headers=headers)
+            json_req = Request("%s/%s/%s/%s" % (
+              self.__HTTP_GITHUB_USER, self.repository.replace("https://github.com/", ""),
+              version or self.version, t["path"]), method="GET", headers=headers)
             req = urlopen(json_req)
             if "/" in t['path']:
               folder_path = os.path.join(out_path, folder_map.get(self._alias, self._alias), *t['path'].split("/")[:-1])
@@ -576,8 +547,6 @@ class NpmRegistery:
     -----------
     Get the Github code structure. Get all the files and folder structure from the repository.
 
-    Usage::
-
     Attributes:
     ----------
     :param version: String. Optional. The package version number (default the current release number from NPM).
@@ -585,10 +554,12 @@ class NpmRegistery:
     if self._tree is None:
       version = version or self.version
       try:
-        with urlopen('%s/repos/%s/git/trees/%s?recursive=1' % (self.__HTTP_GITHUB, self.repository.replace("https://github.com/", ""), version)) as response:
+        with urlopen('%s/repos/%s/git/trees/%s?recursive=1' % (
+          self.__HTTP_GITHUB, self.repository.replace("https://github.com/", ""), version)) as response:
           self._tree = json.loads(response.read())
       except:
-        logging.warning('Error get repo: %s/repos/%s/git/trees/%s?recursive=1' % (self.__HTTP_GITHUB, self.repository.replace("https://github.com/", ""), version))
+        logging.warning('Error get repo: %s/repos/%s/git/trees/%s?recursive=1' % (
+          self.__HTTP_GITHUB, self.repository.replace("https://github.com/", ""), version))
         self._tree = {"tree": []}
     return self._tree
 
@@ -631,8 +602,6 @@ class Npm:
     Get all the meta information related to the package.
     This will use json.dumps to display the output Json with all the details.
 
-    Usage::
-
     Attributes:
     ----------
     :param name: String. The package alias name in NPM.
@@ -667,8 +636,6 @@ class Npm:
     -----------
     Check the version of all the packages currently defined in the framework.
 
-    Usage::
-
     Attributes:
     ----------
     :param verbose: Boolean. Optional. Display warning message. Default True.
@@ -680,8 +647,6 @@ class Npm:
     Description:
     -----------
     Return the search url for the package.
-
-    Usage::
 
     Attributes:
     ----------
@@ -695,8 +660,6 @@ class Npm:
     -----------
     Get the package information from the NPM registry.
     This will return only the exact match in the repository.
-
-    Usage::
 
     Attributes:
     ----------
@@ -714,8 +677,6 @@ class Npm:
     Description:
     -----------
     Get the list of packages from the NPM registry matching the name.
-
-    Usage::
 
     Attributes:
     ----------
@@ -737,8 +698,6 @@ class Packages:
     Description:
     -----------
     Get all the packages and the short description from NPM.
-
-    Usage::
 
     Attributes:
     ----------
@@ -763,8 +722,6 @@ class Packages:
     This could help on maintaining the internal framework up to date with the improvements.
 
     It is important to align with the new version in order to benefit from the community hard work !
-
-    Usage::
 
     Attributes:
     ----------
@@ -818,8 +775,6 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   """
   Description:
   -----------
-
-  Usage::
 
   Attributes:
   ----------

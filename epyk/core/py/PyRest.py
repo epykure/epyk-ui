@@ -40,15 +40,13 @@ class PyRest:
     ------------
     Set the proxy connexions for the Python requests.
 
-    Usage::
-
     Attributes:
     ----------
-    :param username: String. The username
-    :param password: String. The user password
-    :param proxy_host: String. The proxy server hostname
-    :param proxy_port: Integer. The proxy server port
-    :param protocols: List. Protocoles for the proxy. Default [('http', 'http://'), ('https', 'https://')]
+    :param username: String. The username.
+    :param password: String. The user password.
+    :param proxy_host: String. The proxy server hostname.
+    :param proxy_port: Integer. The proxy server port.
+    :param protocols: List. Protocols for the proxy. Default [('http', 'http://'), ('https', 'https://')]
     """
     if protocols is None:
       protocols = [('http', 'http://'), ('https', 'https://')]
@@ -62,16 +60,12 @@ class PyRest:
     Description:
     ------------
     Start a local server for all the services.
-    This should be at the end of the script in order to allow the services debug
-
-    Usage::
-
-
+    This should be at the end of the script in order to allow the services debug.
 
     Attributes:
     ----------
-    :param port:
-    :param service_name:
+    :param port: Integer.
+    :param service_name: String.
     """
     import http.server
     import socketserver
@@ -118,9 +112,9 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: The external URL to the REST service
+    :param url: String. The external URL to the REST service
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
-    :param encoding: Optional. The encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
+    :param encoding: String. Optional. The encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
     :param headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with each key and value as arguments
     :param proxy: Optional.
 
@@ -193,10 +187,10 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: Should be a string containing a valid URL
+    :param url: String. Should be a string containing a valid URL
     :param method: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
-    :param encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
+    :param encoding: String. Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
     :param headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with each key and value as arguments
     :param unverifiable: Optional. Should indicate whether the request is unverifiable, as defined by RFC 2965
     :param proxy: Optional.
@@ -212,7 +206,7 @@ class PyRest:
     """
     Description:
     ------------
-    Create a REST request with the appropriate header to mimic a browser GET request
+    Create a REST request with the appropriate header to mimic a browser GET request.
 
     Usage::
 
@@ -250,15 +244,13 @@ class PyRest:
     ------------
     Retrieve tabular data from an external REST service.
 
-    Usage::
-
     Attributes:
     ----------
-    :param url: String. The url with the data to request
-    :param delimiter: String. The line delimiter
-    :param encoding: String. The encoding format
-    :param with_header: Boolean. A flag to mention if the header is available. (it will be used for the keys)
-    :param store_location: Optional. String. The temp folder to cache the data locally. False will cancel the temps data retrievall
+    :param url: String. The url with the data to request.
+    :param delimiter: String. Optional. The line delimiter.
+    :param encoding: String. Optional. The encoding format.
+    :param with_header: Boolean. Optional. A flag to mention if the header is available. (it will be used for the keys)
+    :param store_location: String. Optional. String. The temp folder to cache the data locally. False will cancel the temps data retrievall
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
     if store_location is not False:
@@ -293,15 +285,13 @@ class PyRest:
     """
     Description:
     ------------
-    Retrieve Json data from an external REST service
-
-    Usage::
+    Retrieve Json data from an external REST service.
 
     Attributes:
     ----------
-    :param url: String. The url with the data to request
-    :param encoding: String. The encoding format
-    :param store_location: Optional. String. The temp folder to cache the data locally
+    :param url: String. The url with the data to request.
+    :param encoding: String. Optional. The encoding format.
+    :param store_location: String. Optional. String. The temp folder to cache the data locally.
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
     if store_location is not False:
@@ -330,11 +320,11 @@ class PyRest:
 
     Attributes:
     ----------
-    :param service_name: The service Name in the sources folder
-    :param function_name: Optional, Optional, the function name in the service. Default getData()
-    :param report_name: Optional, The folder name
-    :param data: Optional, The input data for the service
-    :param encoding: Optional, The encoding for the input data. Default utf-8
+    :param service_name: String. The service Name in the sources folder.
+    :param function_name: String. Optional. the function name in the service. Default getData().
+    :param report_name: String. Optional. The folder name.
+    :param data: Dictionary. Optional. The input data for the service.
+    :param encoding: String. Optional. The encoding for the input data. Default utf-8.
     """
     if data is None:
       data = {}

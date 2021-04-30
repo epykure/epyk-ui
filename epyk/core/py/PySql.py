@@ -35,8 +35,12 @@ DATABASE_AUTOSYNC = False
 
 
 class SqlConn:
-  def __init__(self, family, database=None, filename=None, model_path=None, reset=False, migrate=True, tables_scope=None, **kwargs):
+
+  def __init__(self, family, database=None, filename=None, model_path=None, reset=False, migrate=True,
+               tables_scope=None, **kwargs):
     """
+    Description:
+    ------------
     Here we try to setup as generic as we can all the variable environment variables for the DB.
     We try to not rely on the rptObj in order to be able to use this interface for various usage
     """
@@ -56,11 +60,15 @@ class SqlConn:
       # Special logic to create a connection to a MS SQl database
       # https://www.linkedin.com/pulse/connecting-sql-database-python-patrick-j-ryan
       try:
-        params = urllib.parse.quote_plus('DRIVER=' + kwargs.get('driverName', "{ODBC Driver 17 for SQL Server}") + ';SERVER=' + kwargs['host'] + ';DATABASE=' + database + ';Trusted_Connection=yes;')
+        params = urllib.parse.quote_plus('DRIVER=' + kwargs.get('driverName', "{ODBC Driver 17 for SQL Server}") +
+                                         ';SERVER=' + kwargs['host'] + ';DATABASE=' + database +
+                                         ';Trusted_Connection=yes;')
       except:
-        params = urllib.quote_plus('DRIVER=' + kwargs.get('driverName', "{ODBC Driver 17 for SQL Server}") + ';SERVER=' + kwargs['host'] + ';DATABASE=' + database + ';Trusted_Connection=yes;')
+        params = urllib.quote_plus('DRIVER=' + kwargs.get('driverName', "{ODBC Driver 17 for SQL Server}") + ';SERVER='
+                                   + kwargs['host'] + ';DATABASE=' + database + ';Trusted_Connection=yes;')
       # echo is dedicated to keep track of changes and store those to logs files
-      self.engine = sqlalchemy.create_engine('mssql+pyodbc:///?odbc_connect=%s' % params, echo=kwargs.get('echo', False))
+      self.engine = sqlalchemy.create_engine(
+        'mssql+pyodbc:///?odbc_connect=%s' % params, echo=kwargs.get('echo', False))
     else:
       self.engine = sqlalchemy.create_engine(sqlalchemy.engine.url.URL(**dbConfig), echo=kwargs.get('echo', False))
     self.metadata = sqlalchemy.MetaData(bind=self.engine)
@@ -82,18 +90,14 @@ class SqlConn:
     Load a database schema from a python file.
     This will use the dialect available from SQLAlchemy.
 
-    Usage::
-
-
-
     Related Pages:
 
       https://www.sqlalchemy.org/
 
-    :param filename: The database schema python file name
-    :param reset: Boolean, flag to specify is the schema needs to be fully reloaded
-
-    :return:
+    Attributes:
+    ----------
+    :param filename: String. The database schema python file name.
+    :param reset: Boolean. flag to specify is the schema needs to be fully reloaded.
     """
     on_init_fnc = None
     model_mod = importlib.import_module(filename.replace('.py', ''))
@@ -102,7 +106,8 @@ class SqlConn:
         on_init_fnc = table
       elif '__' not in table_name and inspect.isroutine(table) and table.__module__ in filename:
         table_def = getattr(model_mod, table_name)()
-        table_def.append(sqlalchemy.Column('lst_mod_dt', sqlalchemy.DateTime, default=datetime.datetime.utcnow, nullable=True))
+        table_def.append(sqlalchemy.Column(
+          'lst_mod_dt', sqlalchemy.DateTime, default=datetime.datetime.utcnow, nullable=True))
         if not self.engine.has_table(table_name):
           new_table = sqlalchemy.Table(table_name, self.metadata, *table_def)
           new_table.create(self.engine, checkfirst=True)
@@ -115,9 +120,12 @@ class SqlConn:
             for c in table_def:
               if c.key == cn:
                 if c.default is not None:
-                  self.engine.execute('ALTER TABLE %s ADD COLUMN %s %s DEFAULT %s' % (table_name, cn, c.type.compile(self.engine.dialect), json.dumps(c.default.arg)))
+                  self.engine.execute(
+                    'ALTER TABLE %s ADD COLUMN %s %s DEFAULT %s' % (
+                      table_name, cn, c.type.compile(self.engine.dialect), json.dumps(c.default.arg)))
                 else:
-                  self.engine.execute('ALTER TABLE %s ADD COLUMN %s %s' % (table_name, cn, c.type.compile(self.engine.dialect)))
+                  self.engine.execute(
+                    'ALTER TABLE %s ADD COLUMN %s %s' % (table_name, cn, c.type.compile(self.engine.dialect)))
           if reset or table_name in getattr(model_mod, 'RESET_TABLES', []):
             #self.metadata.tables[tableName].drop(self.engine, checkfirst=False)
             new_table = sqlalchemy.Table(table_name, self.metadata, *table_def, extend_existing=True)
@@ -132,13 +140,16 @@ class SqlConn:
     """
     Description:
     ------------
-    Return a sqlAlchemy table object. This can be useful in the where clauses
+    Return a sqlAlchemy table object. This can be useful in the where clauses.
 
     Usage::
 
       db.table('table1')
 
-    :param table_name:
+    Attributes:
+    ----------
+    :param table_name: String. The table name.
+
     :return: Python table object
     """
     if self.engine.has_table(table_name):
@@ -150,15 +161,14 @@ class SqlConn:
     """
     Description:
     ------------
-    Function that takes care of initialising the DB
-    Please note that some column names are prohibited such as lst_mod_dt
+    Function that takes care of initialising the DB.
+    Please note that some column names are prohibited such as lst_mod_dt.
 
-    Example
-
-    :param filename: The python module used to get the database schema
-    :param model_path: The python path with the model
-    :param reset: Boolean, Flag to reset the database. THis will emtpy the tables
-    :return:
+    Attributes:
+    ----------
+    :param filename: String. Optional. The python module used to get the database schema.
+    :param model_path: String. Optional. The python path with the model.
+    :param reset: Boolean. Optional. Flag to reset the database. THis will emtpy the tables.
     """
     if not filename and not model_path:
       raise Exception("You need to specify at least a file name or a model path")
@@ -181,13 +191,15 @@ class SqlConn:
     Description:
     ------------
     Helps to migrate between two tables.
-    The mapping argument is used in case the column names differ between the two tables
+    The mapping argument is used in case the column names differ between the two tables.
 
-    :param old_table: A SQLAlchemy table class in the current database model
-    :param new_table: A SQLAlchemy table class
-    :param mapping: Optional, A dictionary for the column names
+    Attributes:
+    ----------
+    :param old_table: String. A SQLAlchemy table class in the current database model
+    :param new_table: String. A SQLAlchemy table class
+    :param mapping: String. Optional. A dictionary for the column names.
 
-    :return:
+    :return: self for the chaining.
     """
     old_schema = sqlalchemy.Table(old_table, self.metadata)
     new_schema = sqlalchemy.Table(new_table, self.metadata)
@@ -203,10 +215,12 @@ class SqlConn:
     """
     Description:
     ------------
-    Copy data from one table to another
+    Copy data from one table to another.
 
-    :param from_table:
-    :param to_table:
+    Attributes:
+    ----------
+    :param from_table: String. The table name.
+    :param to_table: String. The destination table name.
 
     :return: The Python SQL object
     """
@@ -218,17 +232,20 @@ class SqlConn:
     """
     Description:
     ------------
+    Create a table in the database.
 
-    Example
+    Usage::
+
       db = rptObj.db(database=r"newTest.db")
       tableDef = [sqlalchemy.Column('environment', sqlalchemy.String, nullable=False),
                   sqlalchemy.Column('report', sqlalchemy.String, nullable=False),]
       db.createTable('newTable', tableDef)
 
-    :param table_name:
+    Attributes:
+    ----------
+    :param table_name: String. The table name.
     :param table_def:
     :param reset:
-
     """
     if not self.engine.has_table(table_name):
       new_table = sqlalchemy.Table(table_name, self.metadata, *table_def)
@@ -246,10 +263,13 @@ class SqlConn:
     ------------
     This function will empty an existing table.
 
-    Example
-    db.emptyTable('test')
+    Usage::
 
-    :param table_name: A string with the datable name
+      db.emptyTable('test')
+
+    Attributes:
+    ----------
+    :param table_name: A string with the datable name.
 
     :return: self
     """
@@ -263,11 +283,14 @@ class SqlConn:
     Description:
     ------------
 
-    Example
-    df = rptObj.file(htmlCode=r"IBRD_Balance_Sheet__FY2010.csv").read()
-    db = rptObj.db(database=r"newTest.db").forceCreate()
-    dbObj.createTable('myschema.py', 'mytable', records=df)
+    Usage::
 
+      df = page.py.file(htmlCode=r"IBRD_Balance_Sheet__FY2010.csv").read()
+      db = page.py.db(database=r"newTest.db").forceCreate()
+      dbObj.createTable('myschema.py', 'mytable', records=df)
+
+    Attributes:
+    ----------
     :param filename:
     :param table_name:
     :param records:
@@ -275,7 +298,7 @@ class SqlConn:
     :param reset:
     :param commit:
 
-    :return: The Python SQL object
+    :return: The Python SQL object.
     """
     self.load_schema(model_path=path, filename=filename, reset=reset)
     if records:
@@ -304,12 +327,14 @@ class SqlConn:
 
     Those data should not be sensitive ones if they are store and committed to the folder.
 
+    Attributes:
+    ----------
     :param filename:
     :param path:
     :param reset:
     :param new_tables:
 
-    :return: The Python SQL object
+    :return: The Python SQL object.
     """
     sys.path.append(path)
     py_mod = importlib.import_module(filename.replace(".py", ""))
@@ -334,11 +359,13 @@ class SqlConn:
     ------------
     Add a where clause to the SqlAlchemy query.
 
-    Examples
-    db.select().where([db.column("table", 'column') == 'X')
-    db.select( ['BNP'] ).where([ db.column('BNP', 'date') == '22/04/2013 00:00'] ).toDf()
+    Usage::
 
-    :param stmts: The SQL where statement
+      db.select().where([db.column("table", 'column') == 'X')
+
+    Attributes:
+    ----------
+    :param stmts: The SQL where statement.
 
     :return: The python object itself
     """
@@ -352,15 +379,19 @@ class SqlConn:
     ------------
     Create a SQL statement.
 
-    Example
-    rptObj.db().select(["worldcup_teams"])
+    Usage::
+
+      page.db().select(["worldcup_teams"])
 
     Documentation
-    http://docs.sqlalchemy.org/en/latest/core/selectable.html
-    http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
 
-    :param table_name: Optional, The database table name
-    :param columns: Optional, The list of columns
+      http://docs.sqlalchemy.org/en/latest/core/selectable.html
+      http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
+
+    Attributes:
+    ----------
+    :param table_name: String. Optional. The database table name.
+    :param columns: String. Optional. The list of columns.
 
     :return: self
     """
@@ -379,14 +410,18 @@ class SqlConn:
     ------------
     Create a SQL delete SQL statement.
 
-    Example
-    rptObj.db().delete('table1')
+    Usage::
+
+      page.db().delete('table1')
 
     Related Pages:
 
       https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    :param table_name: Optional, The database table name
+    Attributes:
+    ----------
+    :param table_name: String. Optional. The database table name.
+
     :return: self
     """
     self.query = sqlalchemy.Table(table_name, self.metadata, autoload=True).delete()
@@ -412,19 +447,24 @@ class SqlConn:
     """
     Description:
     ------------
-    Create a delete SQL statment.
+    Create a delete SQL statement.
 
-    Example
-    rptObj.db().update('table1', {db.column('test', 'name'): 'user'})
+    Usage::
+
+      page.db().update('table1', {db.column('test', 'name'): 'user'})
 
     Documentation
-    http://docs.sqlalchemy.org/en/latest/core/selectable.html
-    http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
-    https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    :param table_name:
+      http://docs.sqlalchemy.org/en/latest/core/selectable.html
+      http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
+      https://docs.sqlalchemy.org/en/13/core/dml.html
+
+    Attributes:
+    ----------
+    :param table_name: String. The table name.
     :param values:
-    :return: self
+
+    :return: self for the chaining.
     """
     self.query = sqlalchemy.Table(table_name, self.metadata, autoload=True).update(values=values)
     return self
@@ -434,8 +474,11 @@ class SqlConn:
     Description:
     ------------
 
-    :param columns:
-    :return:
+    Attributes:
+    ----------
+    :param columns: List. the list of columns.
+
+    :return: self for the chaining.
     """
     if columns is None:
       self.query = self.query.distinct()
@@ -448,13 +491,17 @@ class SqlConn:
     Description:
     ------------
     Return the table last primary key ID.
-    This will return an error if the table does not have a primary key defined in its schema
+    This will return an error if the table does not have a primary key defined in its schema.
 
-    Example
-    db.get_last_id("table")
+    Usage::
 
-    :param table_name: The table name
-    :return: Returh the last row ID or -1
+      db.get_last_id("table")
+
+    Attributes:
+    ----------
+    :param table_name: The table name.
+
+    :return: Return the last row ID or -1
     """
     table = sqlalchemy.Table(table_name, self.metadata)
     try:
@@ -472,22 +519,25 @@ class SqlConn:
     """
     Description:
     ------------
-    insert a list of records to a table
+    insert a list of records to a table.
 
-    Example
-    db.insert('table1',[{'name': 'test'}], commit=True)
-    db.insert("table", {"user_name": "Test", "data": "test"}, commit=True)
+    Usage::
+
+      db.insert('table1',[{'name': 'test'}], commit=True)
+      db.insert("table", {"user_name": "Test", "data": "test"}, commit=True)
 
     Related Pages:
 
       https://docs.sqlalchemy.org/en/13/core/dml.html
       https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    :param table_name: The database table name
-    :param records: The list of dictionaries with the data to inserts
-    :param commit: Optional, Boolean to commit the insert. Set to False by default
+    Attributes:
+    ----------
+    :param table_name: String. The database table name.
+    :param records: List. The list of dictionaries with the data to inserts.
+    :param commit: Boolean. Optional. Boolean to commit the insert. Set to False by default.
     :param col_user_name:
-    :param clean_rec: Optional, remove the key in the dictionaries which are not related to the table. Set to False
+    :param clean_rec: Boolean, Optional. Remove the key in the dictionaries which are not related to the table. Set to False.
     :param getIdCol:
 
     :return: The python object itself
@@ -534,20 +584,23 @@ class SqlConn:
     if commit:
       self.session.commit()
     if error_count:
-      return (False, error_count, error_log, last_id)
+      return False, error_count, error_log, last_id
 
-    return (True, 0, [], last_id)
+    return True, 0, [], last_id
 
   def data(self, limit=None):
     """
     Description:
     ------------
-    Returns the results of the select statement previously instantiated in a pandas dataframe
+    Returns the results of the select statement previously instantiated in a pandas dataframe.
 
-    Example
-    rptObj.db().getData()
+    Usage::
 
-    :param limit: Optional. The number of records to be returned
+      rptObj.db().getData()
+
+    Attributes:
+    ----------
+    :param limit: Optional. The number of records to be returned.
 
     :return: A pandas dataframe
     """
@@ -570,11 +623,12 @@ class SqlConn:
     """
     Description:
     ------------
-    Return the records
+    Return the records.
 
-    Example
-    for rec in db.select("table").records:
-      print(rec)
+    Usage::
+
+      for rec in db.select("table").records:
+        print(rec)
 
     :return: A iterator for the SQL result
     """
@@ -593,10 +647,11 @@ class SqlConn:
     ------------
     Return the number of records.
 
-    Example
-    print(db.select("table").count)
+    Usage::
 
-    :return: The number of records
+      print(db.select("table").count)
+
+    :return: The number of records.
     """
     results = self.data()
     if has_pandas:
@@ -606,10 +661,15 @@ class SqlConn:
 
   def limit(self, n):
     """
-    Limit the number of records returned
+    Description:
+    ------------
+    Limit the number of records returned.
 
-    :param n: Integer, the number of records
-    :return: The SQL Query object
+    Attributes:
+    ----------
+    :param n: Integer, the number of records.
+
+    :return: The SQL Query object.
     """
     if self.query is None:
       return None
@@ -621,14 +681,16 @@ class SqlConn:
     """
     Description:
     ------------
-    Return only the first items from the SQL query
+    Return only the first items from the SQL query.
 
-    Example
-    print(db.first())
-    print(db.first(items=True))
+    Usage::
 
-    :param items: Return a dictionary or a list of data
-    :return: None or the first record
+      print(db.first())
+      print(db.first(items=True))
+
+    :param items: Return a dictionary or a list of data.
+
+    :return: None or the first record.
     """
     self.limit(1)
     try:
@@ -824,7 +886,7 @@ class SqlConnOdbc:
     return [row.table_name for row in cursor.tables()]
 
 
-class SqlConnNeo4j(object):
+class SqlConnNeo4j:
   def __init__(self, host=None, port=None, usr=None, pwd=None):
     import neo4j
     self.driver = neo4j.GraphDatabase.driver('bolt://%s:%s' % (host, port), auth=(usr, pwd))

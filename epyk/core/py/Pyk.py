@@ -1,7 +1,9 @@
 import importlib, subprocess, sys, os, inspect
 
+
 class EpykMissingPykException(Exception):
   pass
+
 
 class EpykBoundRptObj(Exception):
   pass
@@ -10,11 +12,11 @@ class EpykBoundRptObj(Exception):
 def requires(pyk_file, autoinstall=None, autoreload=False):
   """
   Description:
-    ------------
+  ------------
 
-      This function will allow you to import components from another pyk file.
-      The pyk file can be located on your file system, or it can be on pypi or even github
-      if it's the latter options (pypi or github) you will need to use autoinstall=True
+    This function will allow you to import components from another pyk file.
+    The pyk file can be located on your file system, or it can be on pypi or even github
+    if it's the latter options (pypi or github) you will need to use autoinstall=True
 
   Usage::
 

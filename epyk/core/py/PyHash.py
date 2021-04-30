@@ -1,17 +1,16 @@
-"""
-Interface to the SipHash module available in the below packages
-Related Pages:
-
-      https://pypi.org/project/siphash/
-"""
-
 
 class SipHash:
     """
     Generate a unique hash ID from the given string.
     This is supposed to be unique with a minimum expectation of collisions.
-    This module is only in charge of producing the hash ID and the potential collisions should be monitored in the environment by the users
+    This module is only in charge of producing the hash ID and the potential collisions should be monitored in
+    the environment by the users.
+
+    Related Pages:
+
+      https://pypi.org/project/siphash/
     """
+
     def __init__(self, c=2, d=4):
       assert c >= 0
       assert d >= 0
@@ -102,7 +101,7 @@ class SipHash:
 
       Attributes:
       ----------
-      :param text: The String to be hashed
+      :param text: String. The String to be hashed.
       """
       return self.auth(0x0f0e0d0c0b0a09080706050403020100, text)
 

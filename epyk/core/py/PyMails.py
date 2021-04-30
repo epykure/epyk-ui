@@ -18,12 +18,8 @@ _STRING_TYPES = (str,) if _PY3 else (str, unicode)
 _str = str if _PY3 else unicode
 
 
-class Attachment(object):
+class Attachment:
   """Email attachment class.
-
-  This instantiates a proxy object that will only read
-  the data whenever the `data` property is read. This
-  class is not suitable for huge files.
 
   INSTANCE PROPERTIES
   -------------------
@@ -52,7 +48,7 @@ class Attachment(object):
     return self.__data
 
 
-class Address(object):
+class Address:
   """Represents an email address.
 
   This class can be used to add email addresses to emails with attached name
@@ -79,8 +75,9 @@ class Address(object):
       raise ValueError('Only string and Address objects can be compared with an Address object')
 
 
-class Email(object):
-  def __init__(self, sender, recipients, subject, content, attachments=None, headers=None, mimetype='text/plain', charset='utf8'):
+class Email:
+  def __init__(self, sender, recipients, subject, content, attachments=None, headers=None, mimetype='text/plain',
+               charset='utf8'):
     """
     ARGUMENTS
     ---------
@@ -129,7 +126,7 @@ class Email(object):
     return e
 
 
-class SMTPServer(object):
+class SMTPServer:
   """SMTP server class.
 
   This class is used to represent a SMTP server and a connection to it.

@@ -93,8 +93,6 @@ class MarkDown:
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
     :param data:
@@ -123,8 +121,6 @@ class MarkDown:
     Description:
     -----------
     Convert a string to a markdown file.
-
-    Usage::
 
     Attributes:
     ----------
@@ -179,8 +175,6 @@ class MarkDown:
     -----------
 
     TODO: Improve this function.
-
-    Usage::
 
     Attributes:
     ----------
