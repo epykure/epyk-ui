@@ -12,84 +12,74 @@ The target of Epyk is to ensure the implementation of a coherent system using a 
 With Epyk the user stays in the Python layer to drive and optimize the data transformation.
 This Framework also encourages the implementation of Micro services and cloud based architecture.
 
+This package will allow you to easily create rich and interactive web interfaces to your projects.
+
+**No JavaScript, CSS or HTML5 knowledge needed, the platform will provide you the best experience thanks to the community.**
+
+.. image:: _static/ui_1.PNG
+    :align: center
+
+
 Compatibility
 ================================
 
-Epik is compatible with the most common Web Python Frameworks (Flask and Django).
+Epyk is compatible with the most common Web Python Frameworks (Flask and Django).
 By default, the server package embeds a Flask app as it is easier to install and ready to use.
 
 The Framework can be included within a :doc:`jupyter/Jupyter` or :doc:`jupyter/JupyterLab` project. But this will lead to some limitations - for example Ajax and Socket will not be available.
 
-Install
-=================================
 
-Epyk is an open source package available on pypi::
+Community & Support
+===================
 
-    pip install epyk
+Epyk is an **OpenSource** module dedicated to provide functions and components to improve the productivity.
+Do not hesitate to participate in improving the library.
 
+Any help are welcome and this can be done by JavaScript developers interesting to learn Python or by Python developers.
 
-Get Started
-=================================
+Also please do not forget to star our project on `Github <https://github.com/epykure/epyk-ui>`_ or to
+follow us on `Twitter <https://twitter.com/Epykure1>`_ or on `LinkedIn <https://uk.linkedin.com/in/epykure-python-58278a1b8>`_ to get the latest news.
 
-Quick start
-***********
-
-The below will illustrate how to start with Epyk and build your first report.
-This will write the web artifacts locally::
-
-    import epyk as pk
-
-    page = pk.Page()
-    page.ui.text("This is a test")
-    page.outs.html()
-
-The best to get more familiar with Epyk is to use PyCharm and the code autocompletion or to start
-with examples on the template Github repository: https://github.com/epykure/epyk-templates
-
-CLI Features
-************
-
-Epyk comes also with a series of CLI tools to simplify the report create or definition of structures.
-
-.. toctree::
-    :maxdepth: 1
-
-    cli.rst
-
-
-Main categories
-***************
-
-In the following sections you will learn how to build complex HTML/JS reports using only python through the followings concepts:
-
-.. toctree::
-    :maxdepth: 5
-    
-    report
-    themes
-    html_builtins
-    css_builtins
-    js_builtins
-    
-
-Those are the basics of the Epyk framework, then you can move to using complex objects relying on Javascript Libraries such as:
-
-- `D3 <https://d3js.org/>`_
-- `ChartJs <https://d3js.org/>`_
-- `Tabulator <https://d3js.org/>`_
-- `DataTables <https://d3js.org/>`_
-- and more, for an exhaustive list of supported libraries and frameworks please see :doc:`supported_ext`
-
-
-Example
+Examples
 ================================
 
-You can find example of what Epyk can do right here:
+You can find examples of what Epyk can do right here:
+
+- `Components <https://github.com/epykure/epyk-templates/tree/master/locals>`_
+- `Dashboards <https://github.com/epykure/epyk-templates/tree/master/tutos>`_
+- `Websites <https://github.com/epykure/epyk-templates/tree/master/websites>`_
 - `Jupyter Playground <https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/tutorials/components/00_components.ipynb>`_
+
 
 Coming Soon
 ================================
 
-Please get in touch if there is any feature you feel Epyk-UI needs.
+Please see below the 2021 road map of notifications on Twitter:
 
+- W13:  Dashboards
+- W14:  Web sites, UX / UI Development
+- W15:  Epyk for Data Science
+- W16:  Epyk and Backend Servers (Fast API)
+- W17:  Epyk documentation
+- W18:  Epyk & Jupyter
+- W19:  Epyk Studio
+- W20:  Epyk with web framework (Vue, Angular or React)
+- W21:  Crypto Currency tracker with Epyk
+
+
+Do not hesitate to follow us on `Twitter <https://twitter.com/Epykure1>`_ or to help us improving our code by
+sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
+
+
+.. toctree::
+    :maxdepth: 5
+    :hidden:
+
+    intro/getting-started-with-epyk.rst
+    intro/first-pages.rst
+    intro/ready-to-use.rst
+    intro/getting-started-with-webdev.rst
+    intro/design-architecture-details.rst
+    intro/security-control.rst
+    intro/advanced-features.rst
 

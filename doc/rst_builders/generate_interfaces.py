@@ -52,6 +52,16 @@ UI Interface
 The UI interface allows you to access the different parts of the framework without having to know the underlying details how these components
 are built.
 
+External Interfaces:
+********************
+
+.. toctree::
+    :maxdepth: 1
+    
+    /report/rst_frgs/ui_bs
+    /report/rst_frgs/ui_mtd
+    
+    
 These interfaces are grouped per category as follows:
 
 Interfaces per Categories:

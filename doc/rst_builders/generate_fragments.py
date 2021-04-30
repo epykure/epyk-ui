@@ -12,7 +12,7 @@ for k, v in Imports.JS_IMPORTS.items():
   import_frgs.append("- %s, version %s, %s" % (k, v.get("version", ""), v.get("website", "")))
   count_libs += 1
 
-with open(os.path.join(os.path.dirname(__file__), "..", 'supported_ext.rst'), "w") as fp:
+with open(os.path.join(os.path.dirname(__file__), "..", 'report', 'supported_ext.rst'), "w") as fp:
   fp.write('''
 Supported Libraries and Frameworks
 ==================================
@@ -40,7 +40,7 @@ The import Manager is one of the entry point directly accessible from Epyk.
 ''' % (count_libs, "\n".join(import_frgs)))
 
 
-with open(os.path.join(os.path.dirname(__file__), "..", 'css_builtins.rst'), "w") as fp:
+with open(os.path.join(os.path.dirname(__file__), "..", 'report', 'css_builtins.rst'), "w") as fp:
   fp.write('''
 CSS Built-Ins
 =============

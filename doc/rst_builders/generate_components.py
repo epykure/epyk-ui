@@ -43,8 +43,12 @@ def parse_folder(path, outpath):
 
     if suffix.startswith("Html") and suffix != "Html":
       sub_components["html"].append("    /report/components/%s" % mod_file)
-    if suffix.startswith("tables"):
+    elif suffix.startswith("tables"):
       sub_components["table"].append("    /report/components/tables/%s" % mod_file)
+    elif mod_file.startswith("Geo"):
+      sub_components["geo"].append("    /report/components/geo/%s" % mod_file)
+    elif mod_file.startswith("Chart"):
+      sub_components["charts"].append("    /report/components/graph/%s" % mod_file)
     mod = importlib.import_module("epyk.core.html.%s" % suffix)
     with open(r'%s\%s.rst' % (outpath, mod_file), 'w') as doc_file:
       title_str = '%s Module' % mod_file
@@ -82,13 +86,23 @@ Table Components
       fp.write('''
 Graph Components
 ===============
-''')
+
+.. toctree::
+    :maxdepth: 1
+    
+%s
+''' % "\n".join(sub_components["charts"]))
 
   with open(os.path.join(os.path.dirname(__file__), "..", "report", "components", 'geos.rst'), "w") as fp:
     fp.write('''
 Geo Components
 ===============
-''')
+
+.. toctree::
+    :maxdepth: 1
+    
+%s
+''' % "\n".join(sub_components["geo"]))
 
   with open(os.path.join(os.path.dirname(__file__), "..", "report", 'components.rst'), "w") as fp:
     fp.write('''
@@ -123,4 +137,20 @@ Plus
     /report/components/symboles
 
 .. currentmodule:: epyk.core.html
+''')
+
+
+with open(os.path.join(os.path.dirname(__file__), "..", "report", 'html_builtins.rst'), "w") as fp:
+  fp.write('''
+HTML Built-Ins
+==============
+
+.. toctree::
+    :maxdepth: 1
+
+    /report/components/htmls
+    /report/components/tables
+    /report/components/graphs
+    /report/components/geos
+
 ''')
