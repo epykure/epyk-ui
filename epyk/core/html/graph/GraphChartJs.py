@@ -160,6 +160,8 @@ class Chart(Html.Html):
 
     Usage::
 
+        activePoints
+
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/api.html
@@ -191,8 +193,6 @@ class Chart(Html.Html):
     Description:
     -----------
     Property to the D3 library.
-
-    Usage::
 
     :rtype: JsD3.D3Select
     """
@@ -383,8 +383,6 @@ class Chart(Html.Html):
     -----------
     Add a click event on the chart.
 
-    Usage::
-
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
@@ -407,8 +405,6 @@ class Chart(Html.Html):
     -----------
     Add a double click event on the chart.
 
-    Usage::
-
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
@@ -429,8 +425,6 @@ class Chart(Html.Html):
     Description:
     -----------
     Add an on mouse hover event on the chart.
-
-    Usage::
 
     Related Pages:
 
@@ -453,28 +447,29 @@ class Chart(Html.Html):
     Description:
     -----------
 
-    Usage::
     """
     return self._datasets
 
-  def getCtx(self):
+  def getCtx(self, options=None):
     """
     Description:
     -----------
     Get the ChartJs context. The internal configuration of the chart.
     The context is a dictionary object with javascript fragments.
 
-    Usage::
-
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/
+
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The chart options.
     """
     obj_datasets = "[%s]" % ", ".join([d.toStr() for d in self._datasets])
     self._data_attrs['datasets'] = JsObject.JsObject.get(obj_datasets)
     obj_data = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._data_attrs.items()])
     self._attrs["data"] = JsObject.JsObject.get(obj_data)
-    self._attrs["options"] = JsObject.JsObject.get(str(self.options))
+    self._attrs["options"] = self.options.config_js(options)
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
 
@@ -488,7 +483,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param data: Dictionary of dictionary. The full datasets object expected by ChartJs.
+    :param data: List. Optional. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param component_id: String. Not used.
@@ -507,7 +502,8 @@ class Chart(Html.Html):
         'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
         "options":  self.options.config_js(options)}
 
-    return '%s = new Chart(%s.getContext("2d"), %s)' % (self.chartId, component_id or self.dom.varId, self.getCtx())
+    return '%s = new Chart(%s.getContext("2d"), %s)' % (
+      self.chartId, component_id or self.dom.varId, self.getCtx(options))
 
   def loading(self, status=True):
     """
@@ -516,6 +512,10 @@ class Chart(Html.Html):
     Loading component on a chart.
 
     Usage::
+
+        chart_obj.loading()
+        ....
+        chart_obj.loading(False)
 
     Attributes:
     ----------

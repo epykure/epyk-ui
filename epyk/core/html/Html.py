@@ -43,7 +43,7 @@ def cleanData(value):
 #                                          FRAMEWORK DECORATORS
 #
 # ---------------------------------------------------------------------------------------------------------
-def deprecated(func):
+def deprecated(comment):
   """
   Description:
   -----------
@@ -55,13 +55,17 @@ def deprecated(func):
   :param func: Function. A python function.
   """
 
-  @functools.wraps(func)
-  def new_func(*args, **kwargs):
-    logging.warn('#########################################')
-    logging.warn("Call to deprecated function {}.".format(func.__name__))
-    logging.warn('#########################################')
-    return func(*args, **kwargs)
-  return new_func
+  def decorator(func):
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+      logging.warn('#########################################')
+      logging.warn("Call to deprecated function {}.".format(func.__name__))
+      logging.warn("Action => {}.".format(comment))
+      logging.warn('#########################################')
+      return func(*args, **kwargs)
+
+    return new_func
+  return decorator
 
 
 def inprogress(func):

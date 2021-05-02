@@ -6,7 +6,13 @@ from epyk.core.js import JsUtils
 
 
 class JsHtmlPanel(JsHtml.JsHtml):
-  pass
+
+  def __init__(self, data, varName=None, setVar=False, isPyData=False, report=None, src=None):
+    super(JsHtmlPanel, self).__init__(data, varName, setVar, isPyData, report)
+    self.varName = varName
+
+  def select(self):
+    return self.firstChild.events.trigger("click")
 
 
 class JsHtmlSlidingPanel(JsHtml.JsHtml):
@@ -98,6 +104,11 @@ class JsHtmlGrid(JsHtml.JsHtml):
 
 
 class JsHtmlTabs(JsHtml.JsHtml):
+
+  def __getitem__(self, i):
+    return JsHtmlPanel(
+      self, src=self._src, varName="%s.firstChild.querySelector('div:nth-child('+ (parseInt(%s)+1) + ')')" % (
+        self.varId, i), report=self._report)
 
   def add_tab(self, name):
     return JsFncs.JsFunctions([

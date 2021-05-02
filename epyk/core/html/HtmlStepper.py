@@ -30,8 +30,8 @@ class Step:
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._src.page.properties.js.add_on_ready(
-      "%s.addEventListener('click', function(event){%s})" % (
-        self._selector.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      "%(src)s.style.cursor = 'pointer'; %(src)s.addEventListener('click', function(event){%(fncs)s})" % {
+        "src": self._selector.varName, "fncs": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
     return self
 
 
@@ -48,12 +48,12 @@ class Stepper(Html.Html):
                     'error': ["#F8CBAD", "#FF5757", "#FF0000"],
                     'pending': ["#FFDEB3", "#FFB047", "#FF9200"],
                     'waiting': ["#BEBEBE", "#B5B5B5", "#A0A0A0"],
-                    'shape': 'circle', 'text_colors': 'white'}
+                    'shape': 'circle', 'text_color': 'white'}
     dflt_options.update(options)
     super(Stepper, self).__init__(
       report, records, options=dflt_options, profile=profile, css_attrs={"list-style-type": 'none', "width": width})
     self.color = self._report.theme.greys[-1] if color is None else color
-    self.css({'color': self.color, "margin": 0, 'display': 'block', 'padding': 0})
+    self.css({'color': self.color, "margin": 0, 'display': 'inline-block', 'padding': 0})
 
   def __getitem__(self, i):
     return Step(self, selector=self.dom[i])
@@ -90,7 +90,8 @@ class Stepper(Html.Html):
       
       data.forEach(function(step, i){
         var li = document.createElement("LI");
-        li.style['margin-bottom'] = '10px';
+        li.style['margin-bottom'] = '5px';
+        li.style['margin-top'] = '5px';
         
         attrs.forEach(function(attr){if(typeof step[attr] === 'undefined'){step[attr] = ''}});
         props.forEach(function(prop){if(typeof step[prop] === 'undefined'){step[prop] = options[prop]}});

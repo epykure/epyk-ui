@@ -341,9 +341,7 @@ class Report:
     Add a special skin to the page.
     This could be used for special event or season during the year (Christmas for example).
 
-    Usage::
-
-
+    rtype: skins.Skins
     """
     return skins.Skins(self)
 
@@ -404,6 +402,8 @@ class Report:
 
       https://www.w3schools.com/html/html_symbols.asp
       https://www.w3schools.com/charsets/ref_utf_math.asp
+
+    :rtype: symboles.Symboles
     """
     return symboles.Symboles()
 
@@ -489,6 +489,7 @@ class Report:
       page = Report()
       page.css.
 
+    :rtyype: Classes.Catalog
     """
     cls_obj = Classes.Catalog(self, {'other': set()})
     cls_obj.other
@@ -582,6 +583,8 @@ class Report:
       page = Report()
 
     :return: The framework available data source
+
+    :rtype: data.Data.DataSrc
     """
     return data.Data.DataSrc(self)
 
@@ -743,6 +746,7 @@ class Report:
 
       page = Report()
 
+    :rtype: apps.AppRoute
     """
     self._props['web'] = {
       'modules': {}

@@ -8,6 +8,9 @@ COMP_PREFIX = 'epyk'
 
 SERVER_PATH = "/img"
 
+CHART_FAMILY = "chartJs"
+TABLE_FAMILY = "tabulator"
+
 #
 ENTITIES_ADD_ON = ""
 

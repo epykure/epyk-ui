@@ -62,7 +62,7 @@ class Components:
     self.grid = self.layouts.grid
     self.row = self.layouts.row
     self.col = self.layouts.col
-    self.table = self.tables.tabulator
+    self.table = getattr(self.tables, html.Defaults.TABLE_FAMILY)
     self.pivot = self.tables.pivot
     self.text = self.texts.text
     self.title = self.texts.title

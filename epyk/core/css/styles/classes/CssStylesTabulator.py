@@ -120,8 +120,7 @@ class CssTabulatorEvenRow(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'color': self.page.theme.greys[-1], #'border': "1px solid %s" % self.rptObj.theme.colors[1],
-      'background-color': self.page.theme.colors[1]}, important=True)
+      'background-color': self.page.theme.colors[0]}, important=True)
 
 
 class CssTabulatorEvenRowNoStrip(CssStyle.Style):
@@ -129,35 +128,31 @@ class CssTabulatorEvenRowNoStrip(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'color': self.page.theme.greys[-1],
-      'border': "1px solid %s" % self.page.theme.greys[0],
       'background-color': self.page.theme.greys[0]}, important=True)
-    self.hover.css({#'color': self.rptObj.theme.greys[-1],
-                    'border': "1px solid %s" % self.page.theme.success[1],
-                    #'background-color': self.rptObj.theme.colors[1]
-    })
 
 
 class CssTabulatorOddRow(CssStyle.Style):
   classname = 'tabulator-row-odd'
 
   def customize(self):
-    self.css({'color': self.page.theme.greys[-1],
-              'border': "1px solid %s" % self.page.theme.greys[0],
-              'background-color': self.page.theme.greys[0]
-              })
+    self.css({
+      'background-color': self.page.theme.greys[0]
+    })
 
 
 class CssTabulatorRow(CssStyle.Style):
   classname = 'tabulator-row'
 
   def customize(self):
-    self.hover.css({'color': self.page.theme.greys[-1],
-                    'border-bottom': "1px solid %s" % self.page.theme.colors[1],
-                    'border-top': "1px solid %s" % self.page.theme.colors[1],
-                    'background-color': self.page.theme.colors[1]
-                    },
-                   important=True)
+    self.css({
+      'color': self.page.theme.greys[-1],
+      'border': "1px solid %s" % self.page.theme.greys[0]
+    })
+    self.hover.css({
+      'border-bottom': "1px solid %s" % self.page.theme.success[1],
+      'border-top': "1px solid %s" % self.page.theme.success[1],
+      'background-color': self.page.theme.colors[1]
+    }, important=True)
 
 
 class CssTabulatorCell(CssStyle.Style):

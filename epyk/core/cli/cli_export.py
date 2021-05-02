@@ -6,6 +6,7 @@ epyk_export.exe
 import os
 import sys
 import argparse
+import time
 
 from epyk.core.cli import utils
 
@@ -21,8 +22,9 @@ def transpile_parser(subparser):
   :param subparser: subparser
   """
   subparser.set_defaults(func=transpile)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-n', '--name',  help='''The name of the page to be transpiled (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-s', '--split', help='''Y. N flag, Split the files to html, css and js''')
 
 
 def transpile(args):
@@ -34,7 +36,8 @@ def transpile(args):
   Attributes:
   ----------
   :param parser: -p, The path where the new environment will be created: -p /foo/bar
-  :param parser: -n, The name of the page to be transpiled: -n home
+  :param parser: -n, The name of the page to be transpiled: -n home.
+  :param parser: -s, Y / N Flag, to specify if the files should be split input 3 modules.
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
@@ -47,6 +50,8 @@ def transpile(args):
     install_modules = settings.INSTALL_MODULES
     split_files = settings.SPLIT_FILES
     view_folder = settings.VIEWS_FOLDER
+  if args.split is not None:
+    split_files = args.split == "Y"
   views = []
   if args.name is None:
     for v in os.listdir(report_path):
@@ -56,16 +61,16 @@ def transpile(args):
     views = [args.name]
   for v in views:
     try:
+      start = time.time()
       mod = __import__(v, fromlist=['object'])
       page = utils.get_page(mod)
       if settings is not None:
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
       output = page.outs.html_file(path=view_folder, name=v,
-                                   options={"split": split_files, "css_route": '/css', "js_route": '/js'})
-      print(output)
+                                   options={"split": split_files, "css_route": 'css', "js_route": 'js'})
+      print("File created in %sms, location: %s" % (round(time.time() - start, 4), output))
     except Exception as err:
-      print(err)
-      print("")
+      print("Error in file %s.py" % v, err)
 
 
 def angular_parser(subparser):
@@ -209,7 +214,7 @@ def html(args):
   """
   Description:
   ------------
-  Transpile a specific report
+  Transpile a specific report.
 
   Attributes:
   ----------
@@ -227,11 +232,130 @@ def html(args):
   print(output)
 
 
+def page_parser(subparser):
+  """
+  Description:
+  ------------
+  Paser for the page CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  subparser.set_defaults(func=page)
+  subparser.add_argument('-n', '--name', help='''The name of the page''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def page(args):
+  """
+  Description:
+  ------------
+  Create a new page.
+
+  Attributes:
+  ----------
+  :param args:
+  """
+  project_path = args.path or os.getcwd()
+  if args.name is None:
+    i = 0
+    dfl_name = "epyk_page_%s.py" % i
+    while os.path.exists(os.path.join(project_path, dfl_name)):
+      i += 1
+      dfl_name = "epyk_page_%s.py" % i
+    name = dfl_name
+  else:
+    name = args.name
+  if name.endswith(".py"):
+    name = name[:-3]
+  with open(os.path.join(project_path, "%s.py" % name), "w") as f:
+    f.write('''
+import epyk as pk
+
+# Create a basic report object
+page = pk.Page()
+
+# the method get_page(page) can be used is the page object is created outside of the script
+# This is quite useful with there is a backend to generate the response
+# It can allow to start creating the page on the server side and just having to enrich it on the UI
+''')
+  print("Epyk page created %s" % os.path.join(project_path, "%s.py" % name))
+
+
+def demo_parser(subparser):
+  """
+  Description:
+  ------------
+  Paser for the demo CLI.
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  subparser.set_defaults(func=page)
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def demo(args):
+  """
+  Description:
+  ------------
+  Create a page to demonstrate a example of report.
+
+  Attributes:
+  ----------
+  :param args:
+  """
+  project_path = args.path or os.getcwd()
+  with open(os.path.join(project_path, "epyk_demo.py"), "w") as f:
+    f.write('''
+import epyk as pk
+
+# Module with mock data
+from epyk.tests import mocks
+
+# Create a basic report object
+page = pk.Page()
+page.headers.dev()
+
+page.body.template.style.configs.doc()
+
+# Change the CSS style of the div template container
+page.body.template.style.css.background = "white"
+
+table = page.ui.table(mocks.popularity_2020)
+table.options.paginationSize = 10
+
+toggle = page.ui.toggle({"on": "Trend", "off": "Share"})
+bar = page.ui.charts.bar(mocks.popularity_2020, y_columns=["Share"], x_axis="Language")
+
+toggle.click([
+  # Store the variable to myData on the JavaScript side
+  pk.std.var("myData", sorted(mocks.popularity_2020, key=lambda k: k['Language'])),
+  # Use the standard build and dom.content to respectively update and get the component value
+  pk.expr.if_(toggle.input.dom.content.toStr(), [
+    # Use the variable to update the chart
+    bar.build(pk.std.var("myData"), options={"y_columns": ["Trend"]})
+  ]).else_([
+    bar.build(pk.std.var("myData"), options={"y_columns": ["Share"]})
+  ])
+])
+
+# the method get_page(page) can be used is the page object is created outside of the script
+# This is quite useful with there is a backend to generate the response
+# It can allow to start creating the page on the server side and just having to enrich it on the UI
+''')
+  print("Epyk page created %s" % os.path.join(project_path, "epyk_demo.py"))
+
+
 def main():
   """
 
   """
   parser_map = {
+    'demo': (page_parser, '''Create a demo page'''),
+    'new': (page_parser, '''Create a new page'''),
     'transpile': (transpile_parser, '''Transpile a script to web objects'''),
     'html': (html_parser, '''Fast HTML transpilation'''),
     'angular': (angular_parser, '''Transpile to an Angular format'''),
@@ -241,7 +365,7 @@ def main():
   subparser = arg_parser.add_subparsers(title='Commands', dest='command')
   subparser.required = True
   for func, parser_init in parser_map.items():
-    new_parser = subparser.add_parser(func, help=parser_init[1])
-    parser_init[0](new_parser)
+    parser_obj = subparser.add_parser(func, help=parser_init[1])
+    parser_init[0](parser_obj)
   args = arg_parser.parse_args(sys.argv[1:])
   return args.func(args)

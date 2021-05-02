@@ -14,25 +14,25 @@ The below 2 lines of codes will show how to create a page object::
 
 There are 6 main interfaces available through this object which will enable you to build a complete HTML page:
 
-- :doc:`report/ui`
-- :doc:`report/components`
-- :doc:`report/js`
-- :doc:`report/outs`
-- :doc:`report/py`
-- :doc:`report/data`
-- :doc:`report/web`
+- :doc:`ui`
+- :doc:`components`
+- :doc:`js`
+- :doc:`outs`
+- :doc:`py`
+- :doc:`data`
+- :doc:`web`
 
 .. toctree::
     :maxdepth: 5
     :hidden:
     
-    /report/ui
-    /report/html_components
-    /report/js
-    /report/outs
-    /report/py
-    /report/data
-    /report/web
+    ui
+    html_components
+    js
+    outs
+    py
+    data
+    web
 
 Example
 *******

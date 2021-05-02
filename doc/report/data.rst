@@ -13,5 +13,15 @@ Those functions can be used from the page object from **page.data** or directly 
 
 This module should be moved to a dedicated package in future releases to make the use on the backend side lighter.
 
-.. automodule:: epyk.core.data.DataPy
+
+Interface Documentation
+***********************
+
+.. autoclass:: epyk.core.data.Data.DataJs
   :members:
+
+.. autoclass:: epyk.core.data.Data.DataSrc
+  :members:
+
+.. automodule:: epyk.core.data.Data.DataPy
+

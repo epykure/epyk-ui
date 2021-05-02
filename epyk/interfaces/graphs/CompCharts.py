@@ -23,6 +23,11 @@ class Graphs:
 
   def __init__(self, ui):
     self.page = ui.page
+    # Add shortcut to the default charting library
+    dflt_chart_fam = getattr(self, html.Defaults.CHART_FAMILY)
+    self.pie = dflt_chart_fam.pie
+    self.bar = dflt_chart_fam.bar
+    self.line = dflt_chart_fam.line
 
   def plot(self, pkg="apex", record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"),
            height=(330, "px"), options=None, html_code=None):

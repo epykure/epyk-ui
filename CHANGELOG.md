@@ -7,6 +7,30 @@
 ### Fixed
 
 
+## [1.5.16] - 2021-05-02
+
+### Added
+- Add Read the docs documentation first version.
+- Add CLI commands for demo and new page.
+- Add Tabs getitems feature.
+- Common charts shortcuts.
+- Add Epyk settings shortcut for Chart and Table default families.
+
+
+### Changed
+- Review docstrings in the framework.
+- Move Tabulator configs to options to align with other components.
+- Stepper default width auto.
+- Add comment to the deprecated decorator.
+
+### Fixed
+- Fix steppers features.
+- Fix JsDom firstchild, parentNode reference.
+- Add JsDom events.
+- Fix button toggle underlying input access.
+- Review Tabulator CSS classes.
+
+
 ## [1.5.15] - 2021-04-24
 
 ### Added

@@ -2,8 +2,8 @@
 UI Interface
 ============
 
-The UI interface allows you to access the different parts of the framework without having to know the underlying details how these components
-are built.
+The UI interface allows you to access the different parts of the framework without having to know the underlying details
+how these components are built.
 
 External Interfaces:
 ********************

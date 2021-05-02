@@ -48,6 +48,8 @@ class DataJs:
     ----------
     :param varName: String. Optional. The Javascript variable name.
     :param data: Dictionary | lists. Object passed to the Javascript layer.
+
+    :rtype: DataCore.DataGlobal
     """
     from epyk.core.data import DataCore
 
@@ -63,6 +65,8 @@ class DataJs:
     ----------
     :param varName: String. The Javascript variable name.
     :param data: List. Object passed to the Javascript layer.
+
+    :rtype:
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().array(data, varName=varName, setVar=True, report=self._report)
@@ -106,6 +110,8 @@ class DataJs:
     ----------
     :param hostname: String. The server hostname.
     :param port: Integer. Optional. The server port.
+
+    :rtype: DataCore.ServerConfig
     """
     from epyk.core.data import DataCore
 
@@ -227,6 +233,8 @@ class DataSrc:
     Description:
     ------------
     Interface to the internal database wrapper.
+
+    :rtype: DataDb.DataDb
     """
     from epyk.core.data import DataDb
 
@@ -347,6 +355,8 @@ class DataSrc:
     :param data:
     :param successFncs:
     :param udpate_freq: Optional, Set the data update frequency in second
+
+    :rtype: JsQuery.JQuery
     """
     if udpate_freq is not None:
       return self._report.js.window.setInterval(JsQuery.JQuery(self._report).getPyScript(script, data, successFncs=successFncs), milliseconds=udpate_freq * 1000).setVar(interval_name)
@@ -588,6 +598,8 @@ class DataSrc:
     :param port: The service port
 
     :return: A GRPC wrapped object
+
+    :rtype: DataGrpc.DataGrpc
     """
     requires("grpc", reason='Missing Package', install='grpcio', sourceScript=__file__, raiseExcept=True)
     return DataGrpc.DataGrpc(serviceName, path, module, host, port)

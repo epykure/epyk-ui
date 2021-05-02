@@ -29,6 +29,7 @@ class JsShapes:
         var svg = document.createElementNS(svgns, 'svg');
         var defs = document.createElementNS(svgns, 'defs');
         var gradient = document.createElementNS(svgns, 'linearGradient');
+        if(typeof step.status === "undefined"){step.status= "waiting"};
         for (var i = 0, length = options.colors[step.status].length; i < length; i++) {
           var stop = document.createElementNS(svgns, 'stop');
           stop.setAttribute('offset', options.colors[step.status][i].offset);
@@ -216,13 +217,6 @@ class Step(JsNodeDom.JsDoms):
     """
     return self.colors(self._src.options.waiting, status='waiting')
 
-  def blink(self):
-    """
-    Description:
-    ------------
-
-    """
-
   @property
   def status(self):
     """
@@ -232,7 +226,7 @@ class Step(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
 
-  def shape(self, shape, status='success', step=None):
+  def shape(self, shape, status='success', step=None, options=None):
     """
     Description:
     ------------
@@ -240,18 +234,19 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param shape: String.
-    :param status: String. Optional.
+    :param shape: String. The shape alias of the step.
+    :param status: String. Optional. The status of the step.
     :param step: Dictionary. Optional.
+    :param options. Dictionary. The stepper options to be changed.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       var svgns = '%(svgns)s';
       %(comp)s.querySelector('svg').remove(); %(shape)s(%(comp)s, %(options)s, %(step)s)
-      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': json.dumps(self._src._jsStyles),
+      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': self._src.options.config_js(options),
              'step': step, 'shape': shape})
 
-  def triangle(self, status='error', step=None):
+  def triangle(self, status='error', step=None, options=None):
     """
     Description:
     ------------
@@ -259,15 +254,16 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param status: String. Optional.
+    :param status: String. Optional. The status of the step.
     :param step: Dictionary. Optional.
+    :param options. Dictionary. The stepper options to be changed.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       %(comp)s.querySelector('svg').remove(); triangle(%(comp)s, %(options)s, %(step)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
+      ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'step': step})
 
-  def rectangle(self, status='success', step=None):
+  def rectangle(self, status='success', step=None, options=None):
     """
     Description:
     ------------
@@ -279,15 +275,16 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param status: String. Optional.
+    :param status: String. Optional. The status of the step.
     :param step: Dictionary. Optional.
+    :param options. Dictionary. The stepper options to be changed.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       %(comp)s.querySelector('svg').remove(); rectangle(%(comp)s, %(options)s, %(step)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
+      ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'step': step})
 
-  def arrow(self, status='success', step=None):
+  def arrow(self, status='success', step=None, options=None):
     """
     Description:
     ------------
@@ -295,15 +292,16 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param status: String. Optional.
+    :param status: String. Optional. The status of the step.
     :param step: Dictionary. Optional.
+    :param options. Dictionary. The stepper options to be changed.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       %(comp)s.querySelector('svg').remove(); arrow(%(comp)s, %(options)s, %(step)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
+      ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'step': step})
 
-  def circle(self, status='waiting', step=None):
+  def circle(self, status='waiting', step=None, options=None):
     """
     Description:
     ------------
@@ -311,13 +309,14 @@ class Step(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param status: String. Optional.
+    :param status: String. Optional. The status of the step.
     :param step: Dictionary. Optional.
+    :param options. Dictionary. The stepper options to be changed.
     """
     step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       %(comp)s.querySelector('svg').remove(); circle(%(comp)s, %(options)s, %(step)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
+      ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'step': step})
 
   def label(self, value):
     """
@@ -331,7 +330,7 @@ class Step(JsNodeDom.JsDoms):
     """
     return self.querySelector('span[name=label]').innerHTML(value)
 
-  def text(self, text, x=None, y=None, css=None):
+  def text(self, text, x=None, y=None, css=None, color=None):
     """
     Description:
     ------------
@@ -343,23 +342,28 @@ class Step(JsNodeDom.JsDoms):
     :param x: Number. Optional. The x position.
     :param y: Number. Optional. The y position.
     :param css: Dictionary. Optional. The CSS attributes.
+    :param color: String. The text color.
     """
     text = JsUtils.jsConvertData(text, None)
     if y is None:
-      y = self._src._jsStyles['svg_style']['height'] / 2 + 3
+      y = self._src.options.svg_style['height'] / 2 + 3
     if x is None:
-      x = self._src._jsStyles['svg_style']['width'] / 2
-    dft_css = {"text-anchor": "middle", 'fill': 'white'}
+      x = self._src.options.svg_style['width'] / 2
+    dft_css = {"text-anchor": "middle", 'fill': color or self._src.options.text_color}
     if css is not None:
       dft_css.update(css)
     return JsObjects.JsObjects.get('''
-      var newText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      newText.setAttributeNS(null, 'x', %(x)s);
-      newText.setAttributeNS(null, 'y', %(y)s); var css = %(css)s;
-      for (var key in css){ newText.setAttributeNS(null, key, css[key]) }
-      var textNode = document.createTextNode(%(text)s);
-      newText.appendChild(textNode);
-      %(svg)s.appendChild(newText)''' % {'text': text, 'svg': self.querySelector('svg'), 'y': y, 'x': x, 'css': dft_css})
+      var textNodes = %(svg)s.querySelectorAll("text");
+      if (textNodes.length == 0){
+        var newText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        newText.setAttributeNS(null, 'x', %(x)s);
+        newText.setAttributeNS(null, 'y', %(y)s); var css = %(css)s;
+        for (var key in css){ newText.setAttributeNS(null, key, css[key]) }
+        var textNode = document.createTextNode(%(text)s); newText.appendChild(textNode);
+        %(svg)s.appendChild(newText)
+      } else {
+        textNodes[0].innerHTML = %(text)s;
+      }''' % {'text': text, 'svg': self.querySelector('svg'), 'y': y, 'x': x, 'css': dft_css})
 
   def blink(self, color="#FFDEB3", border="#FF9200"):
     """
@@ -387,18 +391,62 @@ class Step(JsNodeDom.JsDoms):
       }
       ''' % {"comp": self.varName, 'colors': self.colors([color, border], clear_gradient=False)})
 
-  def click(self, jsFncs, profile=None):
+  def click(self, jsFncs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     ------------
+    Add a click event on a specific step.
 
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param source_event: String. Optional. The source target for the event.
     """
-    return JsObjects.JsObjects.get('%s.addEventListener("click", function(){%s})' % (
-      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+    return JsObjects.JsObjects.get('%(src)s.style.cursor = "pointer"; %(src)s.addEventListener("click", function(){%(fncs)s})' % {
+      "src": source_event or self.varName, "fncs": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+
+  def css(self, type, jsObject=None, duration=None):
+    """
+    Description:
+    -----------
+    Replicate in plain Js the Jquery CSS function.
+
+    Usage::
+
+      select.label.dom.css({"color": "red"})
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    Attributes:
+    ----------
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+    :param duration: Integer
+
+    :return: A JsObj
+    """
+    js_styles = []
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if "-" in k:
+          split_css = k.split("-")
+          k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
+        js_styles.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
+      return JsObjects.JsObjects.get("%s.style.%s" % (self.varId, type))
+
+    else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
+      self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return JsObjects.JsObjects.get(";".join(js_styles))
 
 
 class Stepper(JsHtml.JsHtmlRich):

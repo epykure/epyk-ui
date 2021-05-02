@@ -10,6 +10,7 @@ from epyk.core.js.html import JsHtmlTabulator
 from epyk.core.js.packages import JsTabulator
 from epyk.core.js.primitives import JsObjects
 
+from epyk.core.html.options import Options
 from epyk.core.data.DataClass import DataClass
 from epyk.core.data.DataClass import DataEnum
 from epyk.core.data.DataClass import DataGroup
@@ -19,17 +20,1145 @@ from epyk.core.data.DataClass import DataEnumMulti
 from epyk.core.css.styles import GrpClsTable
 
 
+class TableConfig(Options):
+
+  @property
+  def ajaxURL(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/data
+    """
+    return self._attrs["ajaxURL"]
+
+  @ajaxURL.setter
+  def ajaxURL(self, val):
+    self._attrs["ajaxURL"] = val
+
+  @property
+  def ajaxProgressiveLoad(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/data
+    """
+    return self._attrs["ajaxProgressiveLoad"]
+
+  @ajaxProgressiveLoad.setter
+  def ajaxProgressiveLoad(self, val):
+    self._attrs["ajaxProgressiveLoad"] = val
+
+  @property
+  def autoColumns(self):
+    """
+    Description:
+    -----------
+    If you set the autoColumns option to true, every time data is loaded into the table through the data option or
+    through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/columns
+    """
+    return self._attrs["autoColumns"]
+
+  @autoColumns.setter
+  def autoColumns(self, val):
+    self._attrs["autoColumns"] = val
+
+  @property
+  def addRowPos(self):
+    """
+    Description:
+    -----------
+    The position in the table for new rows to be added, "bottom" or "top".
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["addRowPos"]
+
+  @addRowPos.setter
+  def addRowPos(self, val):
+    self._attrs["addRowPos"] = val
+
+  @property
+  def clipboard(self):
+    """
+    Description:
+    -----------
+    Enable clipboard module.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["clipboard"]
+
+  @clipboard.setter
+  def clipboard(self, val):
+    self._attrs["clipboard"] = val
+
+  def cellClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using
+    the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+
+    self.component.style.css.cursor = "pointer"
+    self._attrs["cellClick"] = JsObjects.JsVoid("function(event, cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile))
+
+  def clipboardPasted(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The clipboardPasted event is triggered whenever data is successfuly pasted into the table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks#cell
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["clipboardPasted"] = JsObjects.JsVoid(
+      "function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def cellDblClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis
+    using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.component.style.css.cursor = "pointer"
+    self._attrs["cellDblClick"] = JsObjects.JsVoid(
+      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def cellContext(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using
+    the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellContext"] = JsObjects.JsVoid(
+      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def cellEditCancelled(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellEdited callback is triggered when data in an editable cell is changed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellEditCancelled"] = JsObjects.JsVoid(
+      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def cellEdited(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The cellEdited callback is triggered when data in an editable cell is changed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["cellEdited"] = JsObjects.JsVoid(
+      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  @property
+  def clipboardPasteAction(self):
+    """
+    Description:
+    -----------
+    Clipboard paste action function.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["clipboardPasteAction"]
+
+  @clipboardPasteAction.setter
+  def clipboardPasteAction(self, val):
+    self._attrs["clipboardPasteAction"] = val
+
+  @property
+  def columns(self):
+    """
+    Description:
+    -----------
+    Holder for column definition array.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+
+    :rtype: Column
+    """
+    return self.sub_data_enum("columns", Column)
+
+  @property
+  def columns_group(self):
+    """
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+
+    :rtype: ColumnsGroup
+    """
+    return self.sub_data_enum("columns", ColumnsGroup)
+
+  @property
+  def columnVertAlign(self):
+    """
+    Description:
+    -----------
+    Vertical alignment for contents of column header (used in column grouping).
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["columnVertAlign"]
+
+  @columnVertAlign.setter
+  def columnVertAlign(self, val):
+    self._attrs["columnVertAlign"] = val
+
+  @property
+  def data(self):
+    """
+    Description:
+    -----------
+    Array to hold data that should be loaded on table creation.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["data"]
+
+  @data.setter
+  def data(self, val):
+    self._attrs["data"] = val
+
+  @property
+  def fitColumns(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/examples/3.2
+    """
+    return self._attrs["fitColumns"]
+
+  @fitColumns.setter
+  def fitColumns(self, val):
+    self._attrs["fitColumns"] = val
+
+  @property
+  def groupBy(self):
+    """
+    Description:
+    -----------
+    String/function to select field to group rows by.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["groupBy"]
+
+  @groupBy.setter
+  def groupBy(self, val):
+    self._attrs["groupBy"] = val
+
+  @property
+  def groupToggleElement(self):
+    """
+    Description:
+    -----------
+    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of
+    the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose
+    a different option:
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/group
+
+    :param val:
+    """
+    return self._attrs["groupToggleElement"]
+
+  @groupToggleElement.setter
+  def groupToggleElement(self, val):
+    self._attrs["groupToggleElement"] = val
+
+  @property
+  def groupStartOpen(self):
+    """
+    Description:
+    -----------
+    You can set the default open state of groups using the groupStartOpen property.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/group
+    """
+    return self._attrs["groupStartOpen"]
+
+  @groupStartOpen.setter
+  def groupStartOpen(self, val):
+    self._attrs["groupStartOpen"] = val
+
+  @property
+  def groupValues(self):
+    """
+    Description:
+    -----------
+    Array of values for groups.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["groupValues"]
+
+  @groupValues.setter
+  def groupValues(self, val):
+    self._attrs["groupValues"] = val
+
+  def headerClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per
+    column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerClick"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def headerDblClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a
+    per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerDblClick"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def headerContext(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The headerContext callback is triggered when a user right clicks on a column or group header,
+    it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerContext"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def headerTap(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a
+    per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerTap"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def headerDblTap(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under
+    300ms, it can be set on a per column basis using the option in the columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["headerDblTap"] = JsObjects.JsVoid(
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  @property
+  def height(self):
+    """
+    Description:
+    -----------
+    Sets the height of the containing element, can be set to any valid height css value.
+    If set to false (the default), the height of the table will resize to fit the table data.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["height"]
+
+  @height.setter
+  def height(self, val):
+    if isinstance(val, int):
+      val = "%spx" % val
+    self._attrs["height"] = val
+
+  @property
+  def history(self):
+    """
+    Description:
+    -----------
+    Enable user interaction history functionality.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["history"]
+
+  @history.setter
+  def history(self, val):
+    self._attrs["history"] = val
+
+  @property
+  def keybindings(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/modules#module-keybindings
+    """
+    return self.sub_data("keybindings", Keybindings)
+
+  @property
+  def lang(self):
+    """
+    Description:
+    -----------
+    hold localization templates.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["lang"]
+
+  @lang.setter
+  def lang(self, val):
+    self._attrs["lang"] = val
+
+  @property
+  def layout(self):
+    """
+    Description:
+    -----------
+    Layout mode for the table columns.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+
+    :rtype: EnumLayout
+    """
+    return self.sub_data("layout", EnumLayout)
+
+  @property
+  def movableColumns(self):
+    """
+    Description:
+    -----------
+    Allow users to move and reorder columns.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["movableColumns"]
+
+  @movableColumns.setter
+  def movableColumns(self, val):
+    self._attrs["movableColumns"] = val
+
+  @property
+  def movableRows(self):
+    """
+    Description:
+    -----------
+    Allow users to move and reorder rows.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["movableRows"]
+
+  @movableRows.setter
+  def movableRows(self, val):
+    self._attrs["movableRows"] = val
+
+  @property
+  def movableRowsConnectedTables(self):
+    """
+    Description:
+    -----------
+    Connection selector for receiving tables.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["movableRowsConnectedTables"]
+
+  @movableRowsConnectedTables.setter
+  def movableRowsConnectedTables(self, val):
+    if hasattr(val, 'htmlCode'):
+      self._attrs["movableRowsConnectedTables"] = "#%s" % val.htmlCode
+    else:
+      if isinstance(val, list):
+        vals = []
+        for v in val:
+          if hasattr(v, 'htmlCode'):
+            vals.append("#%s" % v.htmlCode)
+          else:
+            vals.append(v)
+        self._attrs["movableRowsConnectedTables"] = vals
+      else:
+        self._attrs["movableRowsConnectedTables"] = val
+
+  @property
+  def movableRowsReceiver(self):
+    """
+    Description:
+    -----------
+    Sender function to be executed when row has been received.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["movableRowsReceiver"]
+
+  @movableRowsReceiver.setter
+  def movableRowsReceiver(self, val):
+    self._attrs["movableRowsReceiver"] = val
+
+  @property
+  def movableRowsSender(self):
+    """
+    Description:
+    -----------
+    Sender function to be executed when row has been sent.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["movableRowsSender"]
+
+  @movableRowsSender.setter
+  def movableRowsSender(self, val):
+    self._attrs["movableRowsSender"] = val
+
+  @property
+  def pagination(self):
+    """
+    Description:
+    -----------
+    Choose pagination method, "local" or "remote".
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["pagination"]
+
+  @pagination.setter
+  def pagination(self, val):
+    self._attrs["pagination"] = val
+
+  @property
+  def paginationSize(self):
+    """
+    Description:
+    -----------
+    Set the number of rows in each page.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["paginationSize"]
+
+  @paginationSize.setter
+  def paginationSize(self, val):
+    if val is not None:
+      #
+      self._attrs["pagination"] = 'local'
+    self._attrs["paginationSize"] = val
+
+  @property
+  def paginationSizeSelector(self):
+    """
+    Description:
+    -----------
+    Add page size selection select element to the table footer.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["paginationSizeSelector"]
+
+  @paginationSizeSelector.setter
+  def paginationSizeSelector(self, val):
+    self._attrs["paginationSizeSelector"] = val
+
+  @property
+  def persistenceID(self):
+    """
+    Description:
+    -----------
+    ID tag used to identify persistent storage information.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["persistenceID"]
+
+  @persistenceID.setter
+  def persistenceID(self, val):
+    self._attrs["persistenceID"] = val
+
+  @property
+  def persistence(self):
+    """
+    Description:
+    -----------
+    The persistence system has received an overhaul in this release, providing a more consistent way to configure
+    table persistence and allow even more table options to be persisted between sessions.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/release#persistence
+
+    :rtype: Persistence
+    """
+    return self.sub_data("persistence", Persistence)
+
+  @property
+  def placeholder(self):
+    """
+    Description:
+    -----------
+    placeholder element to display on empty table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["placeholder"]
+
+  @placeholder.setter
+  def placeholder(self, val):
+    self._attrs["placeholder"] = val
+
+  @property
+  def printAsHtml(self):
+    return self._attrs["printAsHtml"]
+
+  @printAsHtml.setter
+  def printAsHtml(self, val):
+    self._attrs["printAsHtml"] = val
+
+  @property
+  def printHeader(self):
+    return self._attrs["printHeader"]
+
+  @printHeader.setter
+  def printHeader(self, val):
+    self._attrs["printHeader"] = val
+
+  @property
+  def printFooter(self):
+    return self._attrs["printFooter"]
+
+  @printFooter.setter
+  def printFooter(self, val):
+    self._attrs["printFooter"] = val
+
+  @property
+  def reactiveData(self):
+    """
+    Description:
+    -----------
+    enable data reactivity.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["reactiveData"]
+
+  @reactiveData.setter
+  def reactiveData(self, val):
+    self._attrs["reactiveData"] = val
+
+  @property
+  def responsiveLayout(self):
+    """
+    Description:
+    -----------
+    Automatically hide/show columns to fit the width of the Tabulator element.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["responsiveLayout"]
+
+  @responsiveLayout.setter
+  def responsiveLayout(self, val):
+    self._attrs["responsiveLayout"] = val
+
+  @property
+  def resizableColumns(self):
+    """
+    Description:
+    -----------
+    Allow user to resize columns (via handles on the left and right edges of the column header).
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["resizableColumns"]
+
+  @resizableColumns.setter
+  def resizableColumns(self, val):
+    self._attrs["resizableColumns"] = val
+
+  def rowAdded(self, jsFncs):
+    """
+    Description:
+    -----------
+    The rowAdded callback is triggered when a row is added to the table by the addRow and updateOrAddRow functions.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs:
+
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowAdded"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  @property
+  def rowContextMenu(self):
+    """
+    Description:
+    -----------
+    Shortcut property to the row context menu.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.6/menu#cell-context
+    """
+    return self.sub_data_enum("rowContextMenu", RowContextMenu)
+
+  def rowClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowClick callback is triggered when a user clicks on a row.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.component.style.css.cursor = "pointer"
+    self._attrs["rowClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(
+      jsFncs, toStr=True, profile=profile))
+
+  def rowDblClick(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowDblClick callback is triggered when a user double clicks on a row.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.component.style.css.cursor = "pointer"
+    self._attrs["rowDblClick"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowDelete(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowDeleted callback is triggered when a row is deleted from the table by the deleteRow function.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowDelete"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowContext(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowContext callback is triggered when a user right clicks on a row.
+
+    If you want to prevent the browsers context menu being triggered in this event you will need to include the
+    preventDefault() function in your callback.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowContext"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowFormatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Tabulator also allows you to define a row level formatter using the rowFormatter option.
+    this lets you alter each row of the table based on the data it contains.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/format
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowFormatter"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowMove(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowMoved callback will be triggered when a row has been successfuly moved.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowMove"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowTap(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowTap callback is triggered when a user taps on a row on a touch display.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowTap"] = JsObjects.JsVoid(
+      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  def rowUpdated(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or
+    updateOrAddData, functions.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._attrs["rowUpdated"] = JsObjects.JsVoid(
+      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+
+  @property
+  def selectable(self):
+    """
+    Description:
+    -----------
+    Enable/Disable row selection.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._attrs["selectable"]
+
+  @selectable.setter
+  def selectable(self, val):
+    self._attrs["selectable"] = val
+
+  @property
+  def tooltips(self):
+    """
+    Description:
+    -----------
+    You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/format#tooltips
+    """
+    return self._attrs["tooltips"]
+
+  @tooltips.setter
+  def tooltips(self, val):
+    self._attrs["tooltips"] = val
+
+
+class TableTreeConfig(TableConfig):
+
+  @property
+  def dataTree(self):
+    return self._attrs["dataTree"]
+
+  @dataTree.setter
+  def dataTree(self, val):
+    self._attrs["dataTree"] = val
+
+  @property
+  def dataTreeSort(self):
+    return self._attrs["dataTreeSort"]
+
+  @dataTreeSort.setter
+  def dataTreeSort(self, val):
+    self._attrs["dataTreeSort"] = val
+
+  @property
+  def dataTreeFilter(self):
+    return self._attrs["dataTreeFilter"]
+
+  @dataTreeFilter.setter
+  def dataTreeFilter(self, val):
+    print("RRRRRRRR")
+    self._attrs["dataTreeFilter"] = val
+
+  @property
+  def dataTreeStartExpanded(self):
+    return self._attrs["dataTreeStartExpanded"]
+
+  @dataTreeStartExpanded.setter
+  def dataTreeStartExpanded(self, val):
+    self._attrs["dataTreeStartExpanded"] = val
+
+  @property
+  def dataTreeSelectPropagate(self):
+    return self._attrs["dataTreeSelectPropagate"]
+
+  @dataTreeSelectPropagate.setter
+  def dataTreeSelectPropagate(self, val):
+    self._attrs["dataTreeSelectPropagate"] = val
+
+  @property
+  def dataTreeChildField(self):
+    return self._attrs["dataTreeChildField"]
+
+  @dataTreeSelectPropagate.setter
+  def dataTreeChildField(self, val):
+    self._attrs["dataTreeChildField"] = val
+
+
 class Table(Html.Html):
   requirements = ('tabulator-tables', )
   name = 'Tabulator Table'
+  _option_cls = TableConfig
 
   def __init__(self, report, records, width, height, html_code, options, profile):
-    data, columns, self.__config, self._json_config = [], [], None, {}
-    super(Table, self).__init__(report, [], html_code=html_code, profile=profile,
+    data, columns, self._json_config = [], [], {}
+    super(Table, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
-    self.__config = TableConfig(self, options)
     if records is not None:
-      self.config.data = records
+      self.options.data = records
     self.style.css.background = None
 
   @property
@@ -77,6 +1206,7 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlCode
 
   @property
+  @Html.deprecated("use self.options instead")
   def config(self):
     """
     Description:
@@ -84,9 +1214,7 @@ class Table(Html.Html):
 
     :rtype: TableConfig
     """
-    if self.__config is None:
-      self.__config = TableConfig(self._report)
-    return self.__config
+    return self.options
 
   @property
   def js(self):
@@ -110,7 +1238,7 @@ class Table(Html.Html):
 
     :param data:
     """
-    self.config.data = data
+    self.options.data = data
 
   def add_column(self, field, title=None):
     """
@@ -123,7 +1251,7 @@ class Table(Html.Html):
     :param field: String. Mandatory. The key in the row.
     :param title: String. Optional. The title for the column. Default to the field.
     """
-    col_def = self.config.columns
+    col_def = self.options.columns
     col_def.field = field
     col_def.title = field if title is None else title
     return col_def
@@ -142,7 +1270,7 @@ class Table(Html.Html):
 
     :rtype: Column
     """
-    for c in self.config._attrs.get('columns', []):
+    for c in self.options._attrs.get('columns', []):
       if by_field is not None and c.field == by_field:
         return c
 
@@ -152,7 +1280,7 @@ class Table(Html.Html):
     return None
 
   def get_columns(self):
-    for c in self.config._attrs.get('columns', []):
+    for c in self.options._attrs.get('columns', []):
       yield c
 
   def headers(self, colsDef):
@@ -164,7 +1292,7 @@ class Table(Html.Html):
     ----------
     :param colsDef:
     """
-    for c in self.config._attrs.get('columns', []):
+    for c in self.options._attrs.get('columns', []):
       if c._attrs['field'] in colsDef:
         c._attrs.update(colsDef[c._attrs['field']])
 
@@ -185,7 +1313,7 @@ class Table(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.config.rowClick(["var data = row.getData()"] + js_funcs)
+    self.options.rowClick(["var data = row.getData()"] + js_funcs)
     return self
 
   def build(self, data=None, options=None, profile=None, component_id=None):
@@ -204,7 +1332,7 @@ class Table(Html.Html):
       return self.js.setData(data)
 
     return 'var %s = new Tabulator("#%s", Object.assign(%s, %s))' % (
-      self.tableId, self.htmlCode, self._json_config, self.config)
+      self.tableId, self.htmlCode, self._json_config, self.options)
 
   def extendModule(self, category, type, func_name, func_def):
     """
@@ -263,12 +1391,13 @@ class Table(Html.Html):
 
 
 class TableTree(Table):
+  _option_cls = TableTreeConfig
+
   def __init__(self, report, records, width, height, html_code, options, profile):
-    data, columns, self.__config, self._json_config = [], [], None, {}
+    data, columns, self._json_config = [], [], {}
     super(TableTree, self).__init__(report, records, width, height, html_code, options, profile)
-    self.__config = TableTreeConfig(self, options)
     if records is not None:
-      self.config.data = records
+      self.options.data = records
     self.style.css.background = None
 
   @property
@@ -279,9 +1408,7 @@ class TableTree(Table):
 
     :rtype: TableTreeConfig
     """
-    if self.__config is None:
-      self.__config = TableTreeConfig(self._report)
-    return self.__config
+    return self.options
 
 
 class EnumLayout(DataEnum):
@@ -2187,1128 +3314,3 @@ class HeaderMenu(DataClass):
       else:
         result.append("{label: '%s', action: function(e, column){%s}}" % (k, v))
     return ", ".join(result)
-
-
-class TableConfig(DataClass):
-
-  @property
-  def ajaxURL(self):
-    """
-    Description:
-    -----------
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/data
-    """
-    return self._attrs["ajaxURL"]
-
-  @ajaxURL.setter
-  def ajaxURL(self, val):
-    self._attrs["ajaxURL"] = val
-
-  @property
-  def ajaxProgressiveLoad(self):
-    """
-    Description:
-    -----------
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/data
-    """
-    return self._attrs["ajaxProgressiveLoad"]
-
-  @ajaxProgressiveLoad.setter
-  def ajaxProgressiveLoad(self, val):
-    self._attrs["ajaxProgressiveLoad"] = val
-
-  @property
-  def autoColumns(self):
-    """
-    Description:
-    -----------
-    If you set the autoColumns option to true, every time data is loaded into the table through the data option or
-    through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/columns
-    """
-    return self._attrs["autoColumns"]
-
-  @autoColumns.setter
-  def autoColumns(self, val):
-    self._attrs["autoColumns"] = val
-
-  @property
-  def addRowPos(self):
-    """
-    Description:
-    -----------
-    The position in the table for new rows to be added, "bottom" or "top".
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["addRowPos"]
-
-  @addRowPos.setter
-  def addRowPos(self, val):
-    self._attrs["addRowPos"] = val
-
-  @property
-  def clipboard(self):
-    """
-    Description:
-    -----------
-    Enable clipboard module.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["clipboard"]
-
-  @clipboard.setter
-  def clipboard(self, val):
-    self._attrs["clipboard"] = val
-
-  def cellClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using
-    the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs:
-    :param profile:
-
-    :return:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellClick"] = JsObjects.JsVoid("function(event, cell){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile))
-
-  def clipboardPasted(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The clipboardPasted event is triggered whenever data is successfuly pasted into the table.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks#cell
-
-    Attributes:
-    ----------
-    :param jsFncs:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["clipboardPasted"] = JsObjects.JsVoid(
-      "function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def cellDblClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis
-    using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs:
-
-    :return:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellDblClick"] = JsObjects.JsVoid(
-      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def cellContext(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using
-    the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellContext"] = JsObjects.JsVoid(
-      "function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def cellEditCancelled(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The cellEdited callback is triggered when data in an editable cell is changed.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellEditCancelled"] = JsObjects.JsVoid(
-      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def cellEdited(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The cellEdited callback is triggered when data in an editable cell is changed.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["cellEdited"] = JsObjects.JsVoid(
-      "function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  @property
-  def clipboardPasteAction(self):
-    """
-    Description:
-    -----------
-    Clipboard paste action function.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["clipboardPasteAction"]
-
-  @clipboardPasteAction.setter
-  def clipboardPasteAction(self, val):
-    self._attrs["clipboardPasteAction"] = val
-
-  @property
-  def columns(self):
-    """
-    Description:
-    -----------
-    Holder for column definition array.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-
-    :rtype: Column
-    """
-    return self.sub_data_enum("columns", Column)
-
-  @property
-  def columns_group(self):
-    """
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-
-    :rtype: ColumnsGroup
-    """
-    return self.sub_data_enum("columns", ColumnsGroup)
-
-  @property
-  def columnVertAlign(self):
-    """
-    Description:
-    -----------
-    Vertical alignment for contents of column header (used in column grouping).
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["columnVertAlign"]
-
-  @columnVertAlign.setter
-  def columnVertAlign(self, val):
-    self._attrs["columnVertAlign"] = val
-
-  @property
-  def data(self):
-    """
-    Description:
-    -----------
-    Array to hold data that should be loaded on table creation.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["data"]
-
-  @data.setter
-  def data(self, val):
-    self._attrs["data"] = val
-
-  @property
-  def fitColumns(self):
-    """
-    Description:
-    -----------
-
-    Related Pages:
-
-      http://tabulator.info/examples/3.2
-    """
-    return self._attrs["fitColumns"]
-
-  @fitColumns.setter
-  def fitColumns(self, val):
-    self._attrs["fitColumns"] = val
-
-  @property
-  def groupBy(self):
-    """
-    Description:
-    -----------
-    String/function to select field to group rows by.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["groupBy"]
-
-  @groupBy.setter
-  def groupBy(self, val):
-    self._attrs["groupBy"] = val
-
-  @property
-  def groupToggleElement(self):
-    """
-    Description:
-    -----------
-    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of
-    the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose
-    a different option:
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/group
-
-    :param val:
-    """
-    return self._attrs["groupToggleElement"]
-
-  @groupToggleElement.setter
-  def groupToggleElement(self, val):
-    self._attrs["groupToggleElement"] = val
-
-  @property
-  def groupStartOpen(self):
-    """
-    Description:
-    -----------
-    You can set the default open state of groups using the groupStartOpen property.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/group
-    """
-    return self._attrs["groupStartOpen"]
-
-  @groupStartOpen.setter
-  def groupStartOpen(self, val):
-    self._attrs["groupStartOpen"] = val
-
-  @property
-  def groupValues(self):
-    """
-    Description:
-    -----------
-    Array of values for groups.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["groupValues"]
-
-  @groupValues.setter
-  def groupValues(self, val):
-    self._attrs["groupValues"] = val
-
-  def headerClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per
-    column basis using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["headerClick"] = JsObjects.JsVoid(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def headerDblClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a
-    per column basis using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["headerDblClick"] = JsObjects.JsVoid(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def headerContext(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The headerContext callback is triggered when a user right clicks on a column or group header,
-    it can be set on a per column basis using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["headerContext"] = JsObjects.JsVoid(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def headerTap(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a
-    per column basis using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["headerTap"] = JsObjects.JsVoid(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def headerDblTap(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under
-    300ms, it can be set on a per column basis using the option in the columns definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["headerDblTap"] = JsObjects.JsVoid(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  @property
-  def height(self):
-    """
-    Description:
-    -----------
-    Sets the height of the containing element, can be set to any valid height css value.
-    If set to false (the default), the height of the table will resize to fit the table data.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["height"]
-
-  @height.setter
-  def height(self, val):
-    if isinstance(val, int):
-      val = "%spx" % val
-    self._attrs["height"] = val
-
-  @property
-  def history(self):
-    """
-    Description:
-    -----------
-    Enable user interaction history functionality.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["history"]
-
-  @history.setter
-  def history(self, val):
-    self._attrs["history"] = val
-
-  @property
-  def keybindings(self):
-    """
-    Description:
-    -----------
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/modules#module-keybindings
-    """
-    return self.sub_data("keybindings", Keybindings)
-
-  @property
-  def lang(self):
-    """
-    Description:
-    -----------
-    hold localization templates.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["lang"]
-
-  @lang.setter
-  def lang(self, val):
-    self._attrs["lang"] = val
-
-  @property
-  def layout(self):
-    """
-    Description:
-    -----------
-    Layout mode for the table columns.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-
-    :rtype: EnumLayout
-    """
-    return self.sub_data("layout", EnumLayout)
-
-  @property
-  def movableColumns(self):
-    """
-    Description:
-    -----------
-    Allow users to move and reorder columns.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["movableColumns"]
-
-  @movableColumns.setter
-  def movableColumns(self, val):
-    self._attrs["movableColumns"] = val
-
-  @property
-  def movableRows(self):
-    """
-    Description:
-    -----------
-    Allow users to move and reorder rows.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["movableRows"]
-
-  @movableRows.setter
-  def movableRows(self, val):
-    self._attrs["movableRows"] = val
-
-  @property
-  def movableRowsConnectedTables(self):
-    """
-    Description:
-    -----------
-    Connection selector for receiving tables.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["movableRowsConnectedTables"]
-
-  @movableRowsConnectedTables.setter
-  def movableRowsConnectedTables(self, val):
-    if hasattr(val, 'htmlCode'):
-      self._attrs["movableRowsConnectedTables"] = "#%s" % val.htmlCode
-    else:
-      if isinstance(val, list):
-        vals = []
-        for v in val:
-          if hasattr(v, 'htmlCode'):
-            vals.append("#%s" % v.htmlCode)
-          else:
-            vals.append(v)
-        self._attrs["movableRowsConnectedTables"] = vals
-      else:
-        self._attrs["movableRowsConnectedTables"] = val
-
-  @property
-  def movableRowsReceiver(self):
-    """
-    Description:
-    -----------
-    Sender function to be executed when row has been received.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["movableRowsReceiver"]
-
-  @movableRowsReceiver.setter
-  def movableRowsReceiver(self, val):
-    self._attrs["movableRowsReceiver"] = val
-
-  @property
-  def movableRowsSender(self):
-    """
-    Description:
-    -----------
-    Sender function to be executed when row has been sent.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["movableRowsSender"]
-
-  @movableRowsSender.setter
-  def movableRowsSender(self, val):
-    self._attrs["movableRowsSender"] = val
-
-  @property
-  def pagination(self):
-    """
-    Description:
-    -----------
-    Choose pagination method, "local" or "remote".
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["pagination"]
-
-  @pagination.setter
-  def pagination(self, val):
-    self._attrs["pagination"] = val
-
-  @property
-  def paginationSize(self):
-    """
-    Description:
-    -----------
-    Set the number of rows in each page.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["paginationSize"]
-
-  @paginationSize.setter
-  def paginationSize(self, val):
-    if val is not None:
-      #
-      self._attrs["pagination"] = 'local'
-    self._attrs["paginationSize"] = val
-
-  @property
-  def paginationSizeSelector(self):
-    """
-    Description:
-    -----------
-    Add page size selection select element to the table footer.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["paginationSizeSelector"]
-
-  @paginationSizeSelector.setter
-  def paginationSizeSelector(self, val):
-    self._attrs["paginationSizeSelector"] = val
-
-  @property
-  def persistenceID(self):
-    """
-    Description:
-    -----------
-    ID tag used to identify persistent storage information.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["persistenceID"]
-
-  @persistenceID.setter
-  def persistenceID(self, val):
-    self._attrs["persistenceID"] = val
-
-  @property
-  def persistence(self):
-    """
-    Description:
-    -----------
-    The persistence system has received an overhaul in this release, providing a more consistent way to configure
-    table persistence and allow even more table options to be persisted between sessions.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/release#persistence
-
-    :rtype: Persistence
-    """
-    return self.sub_data("persistence", Persistence)
-
-  @property
-  def placeholder(self):
-    """
-    Description:
-    -----------
-    placeholder element to display on empty table.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["placeholder"]
-
-  @placeholder.setter
-  def placeholder(self, val):
-    self._attrs["placeholder"] = val
-
-  @property
-  def printAsHtml(self):
-    return self._attrs["printAsHtml"]
-
-  @printAsHtml.setter
-  def printAsHtml(self, val):
-    self._attrs["printAsHtml"] = val
-
-  @property
-  def printHeader(self):
-    return self._attrs["printHeader"]
-
-  @printHeader.setter
-  def printHeader(self, val):
-    self._attrs["printHeader"] = val
-
-  @property
-  def printFooter(self):
-    return self._attrs["printFooter"]
-
-  @printFooter.setter
-  def printFooter(self, val):
-    self._attrs["printFooter"] = val
-
-  @property
-  def reactiveData(self):
-    """
-    Description:
-    -----------
-    enable data reactivity.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["reactiveData"]
-
-  @reactiveData.setter
-  def reactiveData(self, val):
-    self._attrs["reactiveData"] = val
-
-  @property
-  def responsiveLayout(self):
-    """
-    Description:
-    -----------
-    Automatically hide/show columns to fit the width of the Tabulator element.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["responsiveLayout"]
-
-  @responsiveLayout.setter
-  def responsiveLayout(self, val):
-    self._attrs["responsiveLayout"] = val
-
-  @property
-  def resizableColumns(self):
-    """
-    Description:
-    -----------
-    Allow user to resize columns (via handles on the left and right edges of the column header).
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["resizableColumns"]
-
-  @resizableColumns.setter
-  def resizableColumns(self, val):
-    self._attrs["resizableColumns"] = val
-
-  def rowAdded(self, jsFncs):
-    """
-    Description:
-    -----------
-    The rowAdded callback is triggered when a row is added to the table by the addRow and updateOrAddRow functions.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs:
-
-    :return:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowAdded"] = JsObjects.JsVoid("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
-
-  @property
-  def rowContextMenu(self):
-    """
-    Description:
-    -----------
-    Shortcut property to the row context menu.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.6/menu#cell-context
-    """
-    return self.sub_data_enum("rowContextMenu", RowContextMenu)
-
-  def rowClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowClick callback is triggered when a user clicks on a row.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowClick"] = JsObjects.JsVoid("function(event, row){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile))
-
-  def rowDblClick(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowDblClick callback is triggered when a user double clicks on a row.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowDblClick"] = JsObjects.JsVoid(
-      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowDelete(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowDeleted callback is triggered when a row is deleted from the table by the deleteRow function.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowDelete"] = JsObjects.JsVoid(
-      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowContext(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowContext callback is triggered when a user right clicks on a row.
-
-    If you want to prevent the browsers context menu being triggered in this event you will need to include the
-    preventDefault() function in your callback.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowContext"] = JsObjects.JsVoid(
-      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowFormatter(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    Tabulator also allows you to define a row level formatter using the rowFormatter option.
-    this lets you alter each row of the table based on the data it contains.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/format
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowFormatter"] = JsObjects.JsVoid(
-      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowMove(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowMoved callback will be triggered when a row has been successfuly moved.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :return:
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowMove"] = JsObjects.JsVoid(
-      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowTap(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowTap callback is triggered when a user taps on a row on a touch display.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowTap"] = JsObjects.JsVoid(
-      "function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  def rowUpdated(self, jsFncs, profile=None):
-    """
-    Description:
-    -----------
-    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or
-    updateOrAddData, functions.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._attrs["rowUpdated"] = JsObjects.JsVoid(
-      "function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
-
-  @property
-  def selectable(self):
-    """
-    Description:
-    -----------
-    Enable/Disable row selection.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.2/options
-    """
-    return self._attrs["selectable"]
-
-  @selectable.setter
-  def selectable(self, val):
-    self._attrs["selectable"] = val
-
-  @property
-  def tooltips(self):
-    """
-    Description:
-    -----------
-    You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/format#tooltips
-    """
-    return self._attrs["tooltips"]
-
-  @tooltips.setter
-  def tooltips(self, val):
-    self._attrs["tooltips"] = val
-
-
-class TableTreeConfig(TableConfig):
-
-  @property
-  def dataTree(self):
-    return self._attrs["dataTree"]
-
-  @dataTree.setter
-  def dataTree(self, val):
-    self._attrs["dataTree"] = val
-
-  @property
-  def dataTreeSort(self):
-    return self._attrs["dataTreeSort"]
-
-  @dataTreeSort.setter
-  def dataTreeSort(self, val):
-    self._attrs["dataTreeSort"] = val
-
-  @property
-  def dataTreeFilter(self):
-    return self._attrs["dataTreeFilter"]
-
-  @dataTreeFilter.setter
-  def dataTreeFilter(self, val):
-    print("RRRRRRRR")
-    self._attrs["dataTreeFilter"] = val
-
-  @property
-  def dataTreeStartExpanded(self):
-    return self._attrs["dataTreeStartExpanded"]
-
-  @dataTreeStartExpanded.setter
-  def dataTreeStartExpanded(self, val):
-    self._attrs["dataTreeStartExpanded"] = val
-
-  @property
-  def dataTreeSelectPropagate(self):
-    return self._attrs["dataTreeSelectPropagate"]
-
-  @dataTreeSelectPropagate.setter
-  def dataTreeSelectPropagate(self, val):
-    self._attrs["dataTreeSelectPropagate"] = val
-
-  @property
-  def dataTreeChildField(self):
-    return self._attrs["dataTreeChildField"]
-
-  @dataTreeSelectPropagate.setter
-  def dataTreeChildField(self, val):
-    self._attrs["dataTreeChildField"] = val

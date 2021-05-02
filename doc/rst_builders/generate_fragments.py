@@ -9,7 +9,7 @@ from epyk.core.js import Imports
 
 import_frgs, count_libs = [], 1
 for k, v in Imports.JS_IMPORTS.items():
-  import_frgs.append("- %s, version %s, %s" % (k, v.get("version", ""), v.get("website", "")))
+  import_frgs.append("- `%s, version %s <%s>`_" % (k, v.get("version", ""), v.get("website", "")))
   count_libs += 1
 
 with open(os.path.join(os.path.dirname(__file__), "..", 'report', 'supported_ext.rst'), "w") as fp:
@@ -20,6 +20,7 @@ Supported Libraries and Frameworks
 A toolbox to multiple external libraries. Epyk will interface with the most popular JavaScript and Css libraries from 
 the vast number of components.
 
+This will be fully transparent :doc:`all_components` will include to the page their external resources.
 
 %s Libraries
 ============

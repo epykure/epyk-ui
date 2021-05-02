@@ -18,12 +18,16 @@ from epyk.core.js import JsUtils
 
 class JsDomEvents:
 
-  class __internal(object):
+  class __internal:
     htmlCode = None
 
-  def __init__(self, src=None):
+  def __init__(self, src=None, varName=None):
     self._src = src if src is not None else self.__internal()
     self._js = []
+    if varName is not None:
+      self.varName = varName
+    else:
+      self.varName = "document.getElementById('%s')" % self._src.htmlCode
 
   def stopPropagation(self):
     """
@@ -370,7 +374,7 @@ class JsDomEvents:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_html_focus.asp
-    https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+      https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
 
     Usage::
 
@@ -391,7 +395,6 @@ class JsDomEvents:
       event = "new Event('keypress'); %s.keyCode = 13" % event_name
     else:
       event = "new Event(%s)" % JsUtils.jsConvertData(event, None)
-    item = "document.getElementById('%(htmlCode)s')" % {'htmlCode': self._src.htmlCode}
     if with_focus:
       if options is not None and 'timer' in options:
         return JsFncs.JsFunction(
@@ -401,18 +404,19 @@ class JsDomEvents:
       else:
         return JsFncs.JsFunction(
           "(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)})()" % {
-            "event": event, "event_name": event_name, "elem": item})
+            "event": event, "event_name": event_name, "elem": self.varName})
 
     if options is not None and 'timer' in options:
       return JsFncs.JsFunction('''
         window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; 
           %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)''' % {
-        "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": item, 'timer': options['timer'] * 1000})
+        "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": self.varName,
+        'timer': options['timer'] * 1000})
 
     else:
       return JsFncs.JsFunction(
         "(function(){var %(event_name)s = %(event)s; %(elem)s.dispatchEvent(%(event_name)s)})()" % {
-          "event": event, "event_name": event_name, "elem": item})
+          "event": event, "event_name": event_name, "elem": self.varName})
 
   def toStr(self):
     if self._src.htmlCode is None:
@@ -421,7 +425,8 @@ class JsDomEvents:
     if len(self._js) == 0:
       return self._src.htmlCode
 
-    strData = "document.getElementById('%(htmlCode)s').%(items)s" % {'htmlCode': self._src.htmlCode, 'items': ".".join(self._js)}
+    strData = "%(varName)s.%(items)s" % {
+      'varName': self.varName, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
     return strData
 
@@ -1002,7 +1007,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_node_parentnode.asp
     """
-    return JsDoms("%s.parentNode" % self.toStr())
+    return JsDoms('', varName="%s.parentNode" % self.toStr())
 
   def querySelector(self, tag):
     """
@@ -1047,6 +1052,17 @@ class JsDoms(JsObject.JsObject):
     This will only reuse the innerHTML property
     """
     return JsObject.JsObject('%s.innerHTML = ""' % self.varId)
+
+  @property
+  def events(self):
+    """
+    Description:
+    -----------
+    Link to the events attached to a Javascript DOM object.
+
+    :rtype: JsDomEvents
+    """
+    return JsDomEvents(self.page, varName=self.varName)
 
   @property
   def effects(self):
@@ -1222,11 +1238,12 @@ class JsDoms(JsObject.JsObject):
     """
     Description:
     ------------
-    Sets or returns the content of an element
+    Sets or returns the content of an element.
 
     Usage::
 
       select.label.dom.innerHTML("<p style='color:red'>Changed !</p>")
+      page.js.console.log(tabs.dom[2].innerText())
 
     Related Pages:
 
@@ -1238,7 +1255,7 @@ class JsDoms(JsObject.JsObject):
     :param append: Boolean. Mention if the component should replace or append the data
     :param valType: Type: The type of data expected in the component
 
-    :return: The JsObj
+    :return: self to allow the chaining
     """
     if jsString is None:
       return JsString.JsString("%s.innerHTML" % self.varId, isPyData=False)
@@ -1723,7 +1740,7 @@ class JsDoms(JsObject.JsObject):
 
     :return: A new JsDom python object
     """
-    return JsDoms("%s.firstChild" % self.varId)
+    return JsDoms('', varName="%s.firstChild" % self.varId)
 
   def child(self, i):
     """
@@ -1748,7 +1765,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_node_nextsibling.asp
     """
-    return JsDoms("%s.nextSibling" % self.varId)
+    return JsDoms('', varName="%s.nextSibling" % self.varId)
 
   def contains(self, node):
     """

@@ -1,7 +1,7 @@
 Javascript Built-Ins
 ====================
 
-Most of the JavaScript features are wrapped in Epyk in order to be able to use the autocompletion to write JavaScript code.
+Most of the JavaScript features are wrapped in Epyk in order to be able to use the auto completion to write JavaScript code.
 By design this framework is not dedicated to write thousand of lines of JavaScript. It has been implemented in order to help
 link components and modules with the Python object.
 

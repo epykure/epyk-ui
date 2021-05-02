@@ -11,7 +11,7 @@ class Steppers:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def stepper(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None, profile=False):
+  def stepper(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -26,11 +26,11 @@ class Steppers:
 
     Attributes:
     ----------
-    :param records: A list with the different steps defined in the workflow
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: Optional.
-    :param options: Optional. Specific Python options available for this component.
+    :param records: List. A list with the different steps defined in the workflow.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The text color code.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
@@ -40,15 +40,16 @@ class Steppers:
       dft_options.update(options)
     st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile)
     st.style.add_classes.div.stepper()
-    st.style.css_class.media({
-      '.cssdivstepper li': {"float": None, 'width': '100%'},
-      '.cssdivstepper li line': {'stroke-width': 0},
-      '.cssdivstepper li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen',
-      {"and": [{'max-width': '600px'}]})
+    if dft_options.get("media", True):
+      st.style.css_class.media({
+        '.cssdivstepper li': {"float": None, 'width': '100%'},
+        '.cssdivstepper li line': {'stroke-width': 0},
+        '.cssdivstepper li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen',
+        {"and": [{'max-width': '600px'}]})
     return st
 
   @html.Html.css_skin()
-  def arrow(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def arrow(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -57,19 +58,20 @@ class Steppers:
 
     Attributes:
     ----------
-    :param records:
-    :param width:
-    :param height:
-    :param color:
-    :param options:
+    :param records: List. A list with the different steps defined in the workflow.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The text color code.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dft_options = {"shape": 'arrow'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options)
+    return self.stepper(records, width, height, color, dft_options, profile)
 
   @html.Html.css_skin()
-  def rectangle(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def rectangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -78,19 +80,20 @@ class Steppers:
 
     Attributes:
     ----------
-    :param records:
+    :param records: List. A list with the different steps defined in the workflow.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color:
+    :param color: String. Optional. The text color code.
     :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dft_options = {"shape": 'rectangle'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options)
+    return self.stepper(records, width, height, color, dft_options, profile)
 
   @html.Html.css_skin()
-  def triangle(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def triangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -99,24 +102,25 @@ class Steppers:
 
     Attributes:
     ----------
-    :param records:
-    :param width:
-    :param height:
-    :param color:
-    :param options:
+    :param records: List. A list with the different steps defined in the workflow.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The text color code.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     dft_options = {"shape": 'triangle'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options)
+    return self.stepper(records, width, height, color, dft_options, profile)
 
   @html.Html.css_skin()
-  def vertical(self, records, shape='circle', width=(100, '%'), height=(70, 'px'), color=None, options=None,
+  def vertical(self, records, shape='circle', width=("auto", ''), height=(70, 'px'), color=None, options=None,
                profile=None):
     """
     Description:
     ------------
-    Entry point for the stepper object
+    Entry point for the stepper object.
 
     Usage::
 
@@ -127,12 +131,12 @@ class Steppers:
 
     Attributes:
     ----------
-    :param records: A list with the different steps defined in the workflow
-    :param shape:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: Optional.
-    :param options: Optional. Specific Python options available for this component.
+    :param records: List. A list with the different steps defined in the workflow.
+    :param shape: String. Optional. The steppers shape.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The text color code.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")

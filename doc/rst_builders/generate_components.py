@@ -104,7 +104,7 @@ Geo Components
 %s
 ''' % "\n".join(sub_components["geo"]))
 
-  with open(os.path.join(os.path.dirname(__file__), "..", "report", 'components.rst'), "w") as fp:
+  with open(os.path.join(os.path.dirname(__file__), "..", "report", 'all_components.rst'), "w") as fp:
     fp.write('''
 Epyk Components
 ===============
@@ -113,18 +113,18 @@ The Core Html Components all inherit from :py:class:`epyk.core.html.Html`, they'
 
 The core Html Components are divided into 4 categories:
 
-- :doc:`report/components/htmls`
-- :doc:`report/components/tables`
-- :doc:`report/components/graphs`
-- :doc:`report/components/geos`
+- :doc:`components/htmls`
+- :doc:`components/tables`
+- :doc:`components/graphs`
+- :doc:`components/geos`
 
 .. toctree::
     :maxdepth: 1
 
-    /report/components/htmls
-    /report/components/tables
-    /report/components/graphs
-    /report/components/geos
+    /components/htmls
+    /components/tables
+    /components/graphs
+    /components/geos
 
 
 Plus
@@ -132,9 +132,9 @@ Plus
 .. toctree::
     :maxdepth: 1
 
-    /report/components/options
-    /report/components/entities
-    /report/components/symboles
+    /components/options
+    /components/entities
+    /components/symboles
 
 .. currentmodule:: epyk.core.html
 ''')
@@ -148,9 +148,9 @@ HTML Built-Ins
 .. toctree::
     :maxdepth: 1
 
-    /report/components/htmls
-    /report/components/tables
-    /report/components/graphs
-    /report/components/geos
+    /components/htmls
+    /components/tables
+    /components/graphs
+    /components/geos
 
 ''')

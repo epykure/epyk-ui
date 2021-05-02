@@ -844,9 +844,9 @@ class Buttons:
       html_toggle.style.css.padding_top = 2
       container = self.page.ui.div([label, html_toggle])
       container.label = label
-      container.input = html_toggle
     else:
       container = self.page.ui.div([html_toggle])
+    container.input = html_toggle
     return container
 
   @html.Html.css_skin()
