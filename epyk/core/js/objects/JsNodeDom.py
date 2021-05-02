@@ -1394,7 +1394,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_element_classlist.asp
     """
-    return JsClassList("%s.classList" % self.varId, self.page)
+    return JsClassList("%s.classList" % self.varId, self._src)
 
   def css(self, type, jsObject=None, duration=None):
     """

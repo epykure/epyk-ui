@@ -293,7 +293,7 @@ def demo_parser(subparser):
   ----------
   :param subparser: subparser
   """
-  subparser.set_defaults(func=page)
+  subparser.set_defaults(func=demo)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
 
 
@@ -354,7 +354,7 @@ def main():
 
   """
   parser_map = {
-    'demo': (page_parser, '''Create a demo page'''),
+    'demo': (demo_parser, '''Create a demo page'''),
     'new': (page_parser, '''Create a new page'''),
     'transpile': (transpile_parser, '''Transpile a script to web objects'''),
     'html': (html_parser, '''Fast HTML transpilation'''),
