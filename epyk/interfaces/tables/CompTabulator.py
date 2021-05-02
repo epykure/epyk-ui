@@ -46,7 +46,7 @@ class Tabulators:
 
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
                                                  table_options_dflts, profile)
-    table.config.layout.fitColumns()
+    table.options.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
     if rows:
@@ -101,7 +101,7 @@ class Tabulators:
     table = html_tables.HtmlTableTabulator.TableTree(
       self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
-    table.config.layout.fitColumns()
+    table.options.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)
     table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {

@@ -1206,6 +1206,17 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlCode
 
   @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Tabulator table options.
+
+    :rtype: TableConfig
+    """
+    return super().options
+
+  @property
   @Html.deprecated("use self.options instead")
   def config(self):
     """
@@ -1401,6 +1412,7 @@ class TableTree(Table):
     self.style.css.background = None
 
   @property
+  @Html.deprecated("use self.options instead")
   def config(self):
     """
     Description:
@@ -1409,6 +1421,17 @@ class TableTree(Table):
     :rtype: TableTreeConfig
     """
     return self.options
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Tabulator table options.
+
+    :rtype: TableTreeConfig
+    """
+    return super().options
 
 
 class EnumLayout(DataEnum):
