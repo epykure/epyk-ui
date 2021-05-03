@@ -34,14 +34,69 @@ Assuming you have Python already, install Epyk::
 
 Create a directory inside your project to hold your ui and run the epyk-new command:::
 
-    $ cd ui
+    epyk.exe new
 
 This command will create a first empty report in your folder.
 Then the below command will convert (transpile) it to a web page::
 
-    $ cd ui
+    epyk.exe transpile
 
 .. seealso:: More details on the :doc:`/report/cli`.
+
+For a quick examples it is possible to use the below CLI::
+
+    epyk.exe demo
+
+Ths will generate the below script epyk_demo.py in the current directly::
+
+    epyk.exe transpile -n=epyk_demo
+
+This script will demo some common features available in the library::
+
+    import epyk as pk
+
+    # Module with mock data
+    from epyk.tests import mocks
+
+    # Create a basic report object
+    page = pk.Page()
+    page.headers.dev()
+
+    page.body.template.style.configs.doc()
+
+    # Change the CSS style of the div template container
+    page.body.template.style.css.background = "white"
+
+    table = page.ui.table(mocks.popularity_2020)
+    table.options.paginationSize = 10
+
+    toggle = page.ui.toggle({"on": "Trend", "off": "Share"})
+    bar = page.ui.charts.bar(mocks.popularity_2020, y_columns=["Share"], x_axis="Language")
+
+    toggle.click([
+      # Store the variable to myData on the JavaScript side
+      pk.std.var("myData", sorted(mocks.popularity_2020, key=lambda k: k['Language'])),
+      # Use the standard build and dom.content to respectively update and get the component value
+      pk.expr.if_(toggle.input.dom.content.toStr(), [
+        # Use the variable to update the chart
+        bar.build(pk.std.var("myData"), options={"y_columns": ["Trend"]})
+      ]).else_([
+        bar.build(pk.std.var("myData"), options={"y_columns": ["Share"]})
+      ])
+    ])
+
+Another example is available in the `Github templates <https://github.com/epykure/epyk-templates/blob/master/tutos/onepy/flask_demo.py>`_ repo to illustrate how to adapt a script to backend services.
+Very few changes are required to add a backend post to an underlying service::
+
+  toggle.click([
+    page.js.post("/data", components=[toggle.input]).onSuccess([
+      bar.build(pk.events.data["chart_data"], options={"y_columns": pk.events.data["columns"]})
+    ])
+  ])
+
+
+.. image:: ../_static/anim_ui_2.gif
+    :align: center
 
 
 First Page
