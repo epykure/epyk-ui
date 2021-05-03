@@ -62,3 +62,10 @@ class CatalogImg(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesImg.CssCarrouselH2)
 
+  def tns_button(self):
+    """ """
+    return self._set_class(CssStylesImg.CssTinySliderButton)
+
+  def tns_button_active(self):
+    """ """
+    return self._set_class(CssStylesImg.CssTinySliderButtonActive)

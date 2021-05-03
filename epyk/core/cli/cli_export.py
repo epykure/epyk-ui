@@ -7,6 +7,7 @@ import os
 import sys
 import argparse
 import time
+import traceback
 
 from epyk.core.cli import utils
 
@@ -71,6 +72,7 @@ def transpile(args):
       print("File created in %sms, location: %s" % (round(time.time() - start, 4), output))
     except Exception as err:
       print("Error in file %s.py" % v, err)
+      print(traceback.format_exc())
 
 
 def angular_parser(subparser):

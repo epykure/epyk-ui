@@ -85,3 +85,21 @@ class CssCarrouselLabel(CssStyle.Style):
 class CssCarrouselH2(CssStyle.Style):
   _attrs = {'position': 'absolute', 'top': '10px', 'padding': '10px'}
   _selectors = {'child': 'h2'}
+
+
+class CssTinySliderButton(CssStyle.Style):
+  _attrs = {'border-radius': '50px', 'margin': '0 2px',
+            'height': '10px', "padding": 0, "width": "10px"}
+  classname = 'tns-nav button'
+
+  def customize(self):
+    self.css({"border": "1px solid %s" % self.page.theme.greys[4]})
+    self.hover.css({"border": "1px solid %s" % self.page.theme.greys[-1]})
+    self.active.css({"background": self.page.theme.notch(-2)})
+
+
+class CssTinySliderButtonActive(CssStyle.Style):
+  classname = "tns-nav-active"
+
+  def customize(self):
+    self.css({"background": self.page.theme.notch()})

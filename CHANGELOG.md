@@ -1,10 +1,16 @@
 ## [Unreleased]
 
 ### Added
+- from_plot() to the image and animated image components to load from a plot object.
+- from_base64() to load 
+- add from_plots to carousel, tiny slider
+- Add tiny slider pre defined styles.
 
 ### Changed
+- Add stacktrace in transpile error.
 
 ### Fixed
+- Fix style for tiny slider.
 
 
 ## [1.5.16] - 2021-05-02

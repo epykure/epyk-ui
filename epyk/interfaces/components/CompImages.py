@@ -488,7 +488,7 @@ class Images:
     return div
 
   @html.Html.css_skin()
-  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
+  def animated(self, image="", text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
                html_code=None, options=None, profile=None):
     """
     Description:
@@ -532,7 +532,7 @@ class Images:
     return html_id
 
   @html.Html.css_skin()
-  def carousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
+  def carousel(self, images=None, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -575,7 +575,7 @@ class Images:
       raise Exception("This height cannot be in percentage")
 
     html_i = html.HtmlImage.ImgCarousel(
-      self.page, images, path, selected, width, height, options or {}, profile)
+      self.page, images or [], path, selected, width, height, options or {}, profile)
     return html_i
 
   @html.Html.css_skin()

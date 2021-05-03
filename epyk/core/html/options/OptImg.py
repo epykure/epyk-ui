@@ -34,7 +34,7 @@ class OptionsImage(Options):
 
 
 class OptionsTinySlider(Options):
-  component_properties = ('container', 'items')
+  component_properties = ('container', 'items', 'loop', 'mouseDrag')
 
   @property
   def container(self):
@@ -68,8 +68,8 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @controls.setter
-  def controls(self, bool):
-    self._config(bool)
+  def controls(self, flag):
+    self._config(flag)
 
   @property
   def mouseDrag(self):
@@ -82,11 +82,13 @@ class OptionsTinySlider(Options):
 
       https://github.com/ganlanyuan/tiny-slider
     """
-    return self._config_get(False)
+    return self._config_get(True)
 
   @mouseDrag.setter
-  def mouseDrag(self, bool):
-    self._config(bool)
+  def mouseDrag(self, flag):
+    if flag:
+      self.component.style.css.cursor = "pointer"
+    self._config(flag)
 
   @property
   def controlsPosition(self):
@@ -194,7 +196,7 @@ class OptionsTinySlider(Options):
 
       https://github.com/ganlanyuan/tiny-slider
     """
-    return self._config_get(5)
+    return self._config_get(1)
 
   @items.setter
   def items(self, num):
@@ -692,7 +694,7 @@ class OptionsTinySlider(Options):
 
       https://github.com/ganlanyuan/tiny-slider
     """
-    return self._config_get(True)
+    return self._config_get(False)
 
   @loop.setter
   def loop(self, value):
