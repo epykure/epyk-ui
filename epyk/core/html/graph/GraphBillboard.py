@@ -337,17 +337,29 @@ class ChartPie(ChartLine):
     """
     Description:
     -----------
+    Add a dataset to a pie chart.
+    If multiple datasets are added the value will be summed up in the resulting pue chart.
 
     Attributes:
     ----------
-    :param values:
-    :param name:
-    :param kind:
+    :param values: List. The series of numbers to be added to the chart
+    :param name: String. The series name.
+    :param kind: String. Optional. The chart type.
     """
     for i, value in enumerate(values):
-      self.options.data.columns.append([self._labels[i], value])
-      self.options.data.colors[self._labels[i]] = self.options.colors[i]
-      self.options.data.types[self._labels[i]] = kind or self._type
+      series_index = None
+      for j, col in enumerate(self.options.data.columns):
+        if col[0] == self._labels[i]:
+          series_index = j
+          break
+
+      if series_index is None:
+        self.options.data.columns.append([self._labels[i], value])
+      else:
+        self.options.data.columns[series_index].append(value)
+      if series_index is None:
+        self.options.data.colors[self._labels[i]] = self.options.colors[len(self.options.data.columns)]
+        self.options.data.types[self._labels[i]] = kind or self._type
     return self.options.data
 
 

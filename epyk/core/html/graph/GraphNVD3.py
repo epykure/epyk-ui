@@ -393,7 +393,6 @@ class ChartBar(Chart):
         bg_colors.append(h[0])
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
-    self.dom.color([line_colors[0]])
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
 

@@ -7,6 +7,9 @@ from epyk.core import html
 from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
 from epyk.interfaces.graphs import CompChartsDc
+from epyk.interfaces.graphs import CompChartsRoughViz
+from epyk.interfaces.graphs import CompChartsFrappe
+from epyk.interfaces.graphs import CompChartsChartCss
 from epyk.interfaces.graphs import CompChartsC3
 from epyk.interfaces.graphs import CompChartsChartJs
 from epyk.interfaces.graphs import CompChartsPlotly
@@ -34,6 +37,8 @@ class Graphs:
     """
     Description:
     ------------
+    Generic shortcut to plot a chart in the framework.
+    Family and kind of chart are passed in parameter.
 
     Usage::
 
@@ -138,10 +143,12 @@ class Graphs:
     """
     Description:
     ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
-    plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
+    Display a sparkline component.
 
     Usage::
+
+      page.ui.charts.sparklinea.box([1, 2, 3, 4, 5, 4, 3, 2, 1])
+      page.ui.charts.sparklines.bar([1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Related Pages:
 
@@ -233,6 +240,13 @@ class Graphs:
     This project has been forked from C3.js.
 
     Usage::
+
+      languages = [
+        {"name": 'C', 'type': 'code', 'rating': 17.07, 'change': 12.82},
+        {"name": 'Java', 'type': 'code', 'rating': 16.28, 'change': 0.28},
+      ]
+
+      c = page.ui.charts.bb.line(languages, y_columns=["rating", 'change'], x_axis='name')
 
     Related Pages:
 
@@ -379,14 +393,52 @@ class Graphs:
     """
     return CompChartsCanvas.Canvas(self)
 
+  @property
+  def roughviz(self):
+    """
+    Description:
+    ------------
+    Reusable JavaScript library for creating sketchy/hand-drawn styled charts in the browser.
+
+    Related Pages:
+
+      https://github.com/jwilber/roughViz
+    """
+    return CompChartsRoughViz.CompRoughViz(self)
+
+  @property
+  def frappe(self):
+    """
+    Description:
+    ------------
+    GitHub-inspired simple and modern SVG charts for the web with zero dependencies.
+
+    Related Pages:
+
+      https://frappe.io/charts
+    """
+    return CompChartsFrappe.CompChartFrappe(self)
+
+  @property
+  def chartCss(self):
+    """
+    Description:
+    ------------
+    Charts.css is a modern CSS framework. It uses CSS utility classes to style HTML elements as charts.
+
+    Related Pages:
+
+      https://chartscss.org/
+    """
+    return CompChartsChartCss.CompChartCss(self)
+
+
   @html.Html.css_skin()
   def menu(self, chart, height=(18, 'px'), options=None, post=None, profile=None):
     """
     Description:
     -----------
     Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
-
-    Usage::
 
     Attributes:
     ----------

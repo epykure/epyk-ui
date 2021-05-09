@@ -661,6 +661,9 @@ class Rich:
           by.append(alias)
     for i, b in enumerate(by):
       if b in self.page.imports.jsImports:
+        if not self.page.imports.jsImports[b]["versions"]:
+          continue
+
         badge = self.page.ui.div([
           self.page.ui.text(b.capitalize(), height=height, profile=profile),
           self.page.ui.text("v%s" % self.page.imports.jsImports[b]["versions"][0], height=height, profile=profile)],

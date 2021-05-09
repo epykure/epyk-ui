@@ -5,12 +5,23 @@
 - from_base64() to load 
 - add from_plots to carousel, tiny slider
 - Add tiny slider pre defined styles.
+- Add output path option to the transpile CLI.
+- Add 3 new Charting libraries.
+- Add inline() css shortcut for display = inline-block
+- Add page.apps.jupyter to get information related to the Jupyter instance (new web/jupyter.py module).
 
 ### Changed
 - Add stacktrace in transpile error.
+- Change tranpile and add -o for destination folder.
+- Some improvements on a few CSS style.
 
 ### Fixed
 - Fix style for tiny slider.
+- Bug fixes for Billboard and C3.
+- Fix input range field style.
+- Fix height definition in the Code component.
+- Fix Imports module to work with Jupyter.
+- Bug fixes in the Jquery wrapper.
 
 
 ## [1.5.16] - 2021-05-02

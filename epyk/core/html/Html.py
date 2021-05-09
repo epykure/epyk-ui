@@ -513,7 +513,7 @@ class Html:
     :rtype: Js.JsBase
     """
     if self._js is None:
-      self._js = Js.JsBase(self._report)
+      self._js = Js.JsBase(self.page, component=self)
     return self._js
 
   @property
@@ -1095,15 +1095,16 @@ class Html:
     :return: The Python object self.
     """
     if value is not None:
-      self.attr.update({'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
+      self.attr.update({'data-html': 'true', 'data-placement': location})
+      # TODO Check with error with 'data-toggle': 'tooltip'
       if options is not None:
         self.attr.update(options)
       self.page.properties.js.add_on_ready(
         "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
       if hasattr(value, 'toStr'):
-        self.onReady(self.dom.setattr("title", value))
+        self.onReady([self.dom.setattr("title", value), self.dom.setattr("alt", value)])
       else:
-        self.attr.update({'title': value})
+        self.attr.update({'title': value, 'alt': value})
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')

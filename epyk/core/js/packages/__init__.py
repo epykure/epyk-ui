@@ -117,10 +117,10 @@ class JsPackage:
     :param data_class: Class. The Python Data class
     """
     index = len(self._js) - 1
-    if not index in self._js_enums:
+    if index not in self._js_enums:
       self._js_enums[index] = {name: []}
       self._js[-1].append(name)
-    elif not name in self._js_enums[index]:
+    elif name not in self._js_enums[index]:
       self._js_enums[index][name] = []
       self._js[-1].append(name)
     self._js_enums[index][name].append(data_class(self.src))

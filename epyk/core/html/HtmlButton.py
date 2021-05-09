@@ -986,3 +986,23 @@ class ButtonFilter(Html.Html):
     return '<div %s>%s%s%s%s</div>' % (
       self.get_attrs(pyClassNames=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
       self.menu.html())
+
+
+class ButtonData(Button):
+  name = 'button data'
+
+  def __init__(self, report, text=None, icon=None, width=None, height=None, html_code=None, tooltip=None, profile=None,
+               options=None):
+    super(ButtonData, self).__init__(report, text, icon, width, height, html_code, tooltip, profile, options)
+    self.set_attrs(name="data-content", value="")
+    self.filename = None
+
+  _js__builder__ = '''
+    htmlObj.setAttribute("data-content", JSON.stringify(data));
+    htmlObj.setAttribute("title", ""+ data.length + " row loaded: " + (new Date()).toISOString().slice(0, 19).replace("T", " "));
+    if(data.length > 0){htmlObj.style.visibility = "visible"}
+    '''
+
+  def download(self):
+    return self.click([self.page.js.location.download(self.page.js.location.getUrlFromArrays(
+      self.js.json.parse(self.dom.getAttribute("data-content"))), self.filename)])

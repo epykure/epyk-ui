@@ -461,3 +461,21 @@ class JsLocation:
       return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s], %s))" % (data, options))
 
     return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s]))" % data)
+
+  def getUrlFromArrays(self, data, options=None):
+    """
+    Description:
+    ------------
+    Convert data to a URL.
+
+    Attributes:
+    ----------
+    :param data: List | JsObject. A JavaScript array.
+    :param options: Dictionary | JsData. Optional. Blob definition properties.
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject.get(r'''
+      (function(data){let csvContent = "";
+        data.forEach(function(rowArray){let row = rowArray.join(","); csvContent += row + "\r\n"});
+        return 'data:text/csv;charset=utf-8,'+escape(csvContent)})(%s)''' % data)
+

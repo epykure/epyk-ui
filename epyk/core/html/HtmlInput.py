@@ -663,8 +663,9 @@ class InputRange(Input):
     self.append_child(self.input)
     self.input.set_attrs(attrs={"type": "range", "min": min_val, "max": max_val, "step": step})
     if self.options.output:
+      self.style.css.position = "relative"
       self.output = self._report.ui.inputs._output(text).css({
-        "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
+        "width": '15px', "text-align": 'center', "margin-left": '2px', "position": "absolute", 'color': self._report.theme.success[1]})
       self.append_child(self.output)
       self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlCode})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -901,6 +902,8 @@ class FieldRange(Field):
                                           width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldRange, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
                                      options, profile)
+    if html_input.options.output:
+      self.style.css.min_height = 45
 
 
 class FieldCheckBox(Field):

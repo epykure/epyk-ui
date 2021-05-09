@@ -11,7 +11,7 @@ class CssInput(CssStyle.Style):
   ------------
   CSS Base style for the input components.
   """
-  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0, 'border-radius': '5px'}
+  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
   _focus = {'outline': 0}
 
   def customize(self):
@@ -22,7 +22,7 @@ class CssInput(CssStyle.Style):
                     'font-size': self.page.body.style.globals.font.normal()})
     self.hover.css({
       'color': self.page.theme.notch(1),
-      'border': '1px solid %s' % self.page.theme.notch(1),
+      'border': '1px solid %s' % self.page.theme.notch(-1),
     })
 
 

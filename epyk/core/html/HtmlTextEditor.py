@@ -434,7 +434,7 @@ class Code(Html.Html):
     self.page.properties.js.add_builders(self.refresh())
     self.page.body.onReady(
       'window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()' % {
-        "editor": self.editorId, "width": self.css("width"), "height": self.css("width")})
+        "editor": self.editorId, "width": self.css("width"), "height": self.css("height")})
     return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 

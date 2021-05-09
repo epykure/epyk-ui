@@ -298,6 +298,9 @@ class PyOuts:
       self.excluded_packages = []
       nb_path = os.path.split(notebook.__file__)[0]
       for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
+        if f == "font-awesome":
+          continue
+
         self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
     except Exception as err:
       self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax']
@@ -460,8 +463,10 @@ class PyOuts:
     if options.get("split", False):
       css_filename = "%s.min" % name if options.get("minify", False) else name
       js_filename = "%s.min" % name if options.get("minify", False) else name
-      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), css_filename)
-      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), js_filename)
+      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
+        results['cssImports'], options.get("css_route", './css'), css_filename)
+      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
+        body, options.get("js_route", './js'), js_filename)
       static_path = path
       if options.get("static_path") is not None:
         static_path = os.path.join(path, options.get("static_path"))

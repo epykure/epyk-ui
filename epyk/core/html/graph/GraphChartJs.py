@@ -11,7 +11,6 @@ from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObject
 
 from epyk.core.js.packages import JsChartJs
-from epyk.core.js.packages import JsD3
 
 
 class ChartJsActivePoints:
@@ -146,7 +145,7 @@ class Chart(Html.Html):
     self.height = height[0]
     super(Chart, self).__init__(
       report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
-    self._d3, self._chart, self._datasets, self._data_attrs, self._attrs = None, None, [], {}, {}
+    self._chart, self._datasets, self._data_attrs, self._attrs = None, [], {}, {}
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
     self.options.type = self._chart__type
@@ -186,19 +185,6 @@ class Chart(Html.Html):
       line.shared.x_label("x axis")
     """
     return OptChartJs.OptionsChartSharedChartJs(self)
-
-  @property
-  def d3(self):
-    """
-    Description:
-    -----------
-    Property to the D3 library.
-
-    :rtype: JsD3.D3Select
-    """
-    if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
-    return self._d3
 
   @property
   def js(self):
@@ -478,8 +464,6 @@ class Chart(Html.Html):
     Description:
     ------------
     Update the chart with context and / or data changes.
-
-    Usage::
 
     Attributes:
     ----------

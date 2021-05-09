@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import io
+import base64
 
 from epyk.core.html import Html
 from epyk.core.html import HtmlContainer
@@ -78,6 +80,61 @@ class Image(Html.Html):
     js_funcs.append(self.js.location.open_new_tab(url, target))
     return self.click(js_funcs, profile, source_event)
 
+  def from_plot(self, plt):
+    """
+    Description:
+    -----------
+    Load a image from a plt object from matplotlib.
+
+    Usage::
+
+      x = np.arange(0, 15, 0.1)
+      y = np.sin(x)
+      plt.plot(x, y)
+
+      img2 = page.ui.img(width=(50, "%"))
+      img2.from_plot(plt)
+      img2.style.css.display = "inline-block"
+
+    Attributes:
+    ----------
+    :param plt: matplotlib.pyplot. The ploting features in matplotlib.
+
+    :return: self to allow the chaining
+    """
+    str_io = io.BytesIO()
+    plt.savefig(str_io, format='jpg')
+    str_io.seek(0)
+    return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
+
+  def from_base64(self, text):
+    """
+    Description:
+    -----------
+    Load a image from a base64 string.
+
+    Usage::
+
+      x = np.arange(0, 15, 0.1)
+      y = np.sin(x)
+      plt.plot(x, y)
+
+      str_io = io.BytesIO()
+      plt.savefig(str_io, format='jpg')
+      str_io.seek(0)
+
+      self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
+
+    Attributes:
+    ----------
+    :param text: String. The encoded picture.
+
+    :return: self to allow the chaining
+    """
+    self.val["path"] = "data:image"
+    self.val["image"] = "png;base64,%s" % text
+    return self
+
   _js__builder__ = '''
       if ((typeof data !== 'string') && (typeof data !== 'undefined')){
         if(typeof data.path === 'undefined'){data.path = '%s'}
@@ -108,15 +165,73 @@ class AnimatedImage(Html.Html):
                                                    'display': 'block'},
                                         options=options, profile=profile)
     self.img = report.ui.img(
-      image, path=path, width=(width[0]-5, width[1]), html_code=html_code, height=("auto", ''), options=options)
+      image, path=path, width="auto", html_code=html_code, height=(100, "%"), options=options)
     self.img.options.managed = False
     self.title = report.ui.tags.h2(title).css({"display": 'block'})
     self.text = report.ui.tags.p(text).css({"display": 'block'})
-    self.a = report.ui.tags.a("Enter", url).css({"width": "100px"})
+    self.a = report.ui.tags.a("Enter", url).css({"width": "100px", "background": "white"})
     self.a.style.add_classes.image.info_link()
-    self.div = report.ui.div([self.title, self.text, self.a], width=(width[0]-2, width[1])).css({"padding": "5px"})
+    self.div = report.ui.div([self.title, self.text, self.a], width=(100, "%"))
     self.div.style.add_classes.image.mask()
+    self.div.style.css.position = "absolute"
+    self.div.style.css.padding = 10
     self.div.options.managed = False
+    self.style.css.position = "relative"
+
+  def from_plot(self, plt):
+    """
+    Description:
+    -----------
+    Load a image from a plt object from matplotlib.
+
+    Usage::
+
+      x = np.arange(0, 15, 0.1)
+      y = np.sin(x)
+      plt.plot(x, y)
+
+      img2 = page.ui.img(width=(50, "%"))
+      img2.from_plot(plt)
+      img2.style.css.display = "inline-block"
+
+    Attributes:
+    ----------
+    :param plt: matplotlib.pyplot. The ploting features in matplotlib.
+
+    :return: self to allow the chaining.
+    """
+    str_io = io.BytesIO()
+    plt.savefig(str_io, format='jpg')
+    str_io.seek(0)
+    return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
+
+  def from_base64(self, text):
+    """
+    Description:
+    -----------
+    Load a image from a base64 string.
+
+    Usage::
+
+      x = np.arange(0, 15, 0.1)
+      y = np.sin(x)
+      plt.plot(x, y)
+
+      str_io = io.BytesIO()
+      plt.savefig(str_io, format='jpg')
+      str_io.seek(0)
+
+      self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
+
+    Attributes:
+    ----------
+    :param text: String. The encoded picture.
+
+    :return: self to allow the chaining
+    """
+    self.img.val["path"] = "data:image"
+    self.img.val["image"] = "png;base64,%s" % text
+    return self
 
   def __str__(self):
     return '''<div %(cssAttr)s>%(div)s%(img)s</div>
@@ -142,9 +257,11 @@ class ImgCarousel(Html.Html):
           selected = i
         img = report.ui.img(rec["image"], path=rec["path"], width=width,
                             height=(height[0] - 60 if height[0] is not None else None, height[1]))
-        div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img],
-                                    html_code="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none',
-                                                                                    "text-align": "center"})
+        img_title = report.ui.tags.h3(rec['title'])
+        div = report.ui.layouts.div([img_title, img], html_code="%s_img_%s" % (self.htmlCode, i)).css(
+          {"display": 'none', "text-align": "center"})
+        div.title = img_title
+        div.img = img
       else:
         div = report.ui.layouts.div(rec, html_code="%s_img_%s" % (self.htmlCode, i)).css(
           {"display": 'none', "text-align": "center"})
@@ -172,13 +289,76 @@ class ImgCarousel(Html.Html):
     if not options.get('arrows', True):
       self.next.style.css.display = "none"
       self.previous.style.css.display = "none"
-    self.items[selected].css({"display": 'block'})
+
+    if self.items:
+      self.items[selected].css({"display": 'block'})
+      self.set_nav_dots()
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
-    self.points = self.page.ui.navigation.points(
-        len(self.items), html_code="%s_points" % self.htmlCode, options={"managed": False})
 
   def __getitem__(self, i):
     return self.items[i]
+
+  def add_plot(self, plot, title="", width="auto"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param plot: matplotlib.pyplot. The ploting features in matplotlib.
+    :param title:
+    :param width: Tuple | Value. Optional.
+
+    :return: self to allow the chaining.
+    """
+    img = self.page.ui.img(width=width)
+    img.from_plot(plot)
+    title = self.page.ui.tags.h3(title)
+    div = self.page.ui.layouts.div([title, img], html_code="%s_img_%s" % (self.htmlCode, len(self.items))).css(
+      {"display": 'none', "text-align": "center"})
+    div.title = title
+    div.img = img
+    div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+    div.options.managed = False
+    self.items.append(div)
+    return self
+
+  def set_nav_dots(self, selected=0):
+    """
+    Description:
+    ------------
+
+    :param selected:
+
+    :return: self to allow the chaining.
+    """
+    self.items[selected].css({"display": 'block'})
+    self.points = self.page.ui.navigation.points(
+      len(self.items), html_code="%s_points" % self.htmlCode, options={"managed": False})
+    return self
+
+  def from_base64_list(self, values, width="auto"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param values:
+    :param width: Tuple | Value. Optional.
+
+    :return: self to allow the chaining.
+    """
+    for val in values:
+      img = self.page.ui.img(width=width)
+      img.from_base64(val)
+      div = self.page.ui.layouts.div([img], html_code="%s_img_%s" % (self.htmlCode, len(self.items))).css(
+        {"display": 'none', "text-align": "center"})
+      div.img = img
+      div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+      div.options.managed = False
+      self.items.append(div)
+    return self
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
@@ -696,6 +876,37 @@ class SlideShow(Html.Html):
                                     profile=profile, options=options)
     for i in images:
       self.add(i)
+
+  def add_plot(self, plot, width=(220, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param plot: matplotlib.pyplot. The ploting features in matplotlib.
+    :param width: Tuple | Value. Optional.
+
+    :return: self to allow the chaining.
+    """
+    img = self.page.ui.img(width=width)
+    img.style.css.display = "inline-block"
+    img.from_plot(plot)
+    self.add(img)
+    return self
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component.
+
+    :rtype: GrpClsImage.ClassTinySlider
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsImage.ClassTinySlider(self)
+    return self._styleObj
 
   @property
   def jsonId(self):

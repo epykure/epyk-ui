@@ -1120,7 +1120,6 @@ class TableTreeConfig(TableConfig):
 
   @dataTreeFilter.setter
   def dataTreeFilter(self, val):
-    print("RRRRRRRR")
     self._attrs["dataTreeFilter"] = val
 
   @property
@@ -2897,17 +2896,17 @@ class Column(DataClass):
   def headerFilter(self, value):
     self._attrs["headerFilter"] = value
 
-  @property
-  def headerFilterFunc(self):
+  def headerFilterFunc(self, jsFncs, profile=None):
     """
     Description:
     -----------
     """
-    return self._attrs["headerFilterFunc"]
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
 
-  @headerFilterFunc.setter
-  def headerFilterFunc(self, value):
-    self._attrs["headerFilterFunc"] = value
+    self._attrs["headerFilterFunc"] = JsObjects.JsVoid(
+      "function customHeaderFilter(headerValue, rowValue, rowData, filterParams){%s}" % JsUtils.jsConvertFncs(
+        jsFncs, toStr=True, profile=profile))
 
   @property
   def headerVertical(self):

@@ -26,6 +26,7 @@ def transpile_parser(subparser):
   subparser.add_argument('-n', '--name',  help='''The name of the page to be transpiled (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-s', '--split', help='''Y. N flag, Split the files to html, css and js''')
+  subparser.add_argument('-o', '--output', help='''The output path''')
 
 
 def transpile(args):
@@ -45,7 +46,7 @@ def transpile(args):
   report_path = utils.get_report_path(project_path, raise_error=False)
   sys.path.append(report_path)
   ui_setting_path = os.path.join(report_path, '..', 'ui_settings.py')
-  install_modules, split_files, view_folder, settings = False, False, 'views', None
+  install_modules, split_files, view_folder, settings = False, False, args.output or 'views', None
   if os.path.exists(ui_setting_path):
     settings = __import__('ui_settings')
     install_modules = settings.INSTALL_MODULES
@@ -59,16 +60,21 @@ def transpile(args):
       if v.endswith(".py"):
         views.append(v[:-3])
   else:
+    if args.name.endswith(".py"):
+      args.name = args.name[:-3]
     views = [args.name]
   for v in views:
+    if v == "__init__":
+      continue
+
     try:
       start = time.time()
       mod = __import__(v, fromlist=['object'])
       page = utils.get_page(mod)
       if settings is not None:
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
-      output = page.outs.html_file(path=view_folder, name=v,
-                                   options={"split": split_files, "css_route": 'css', "js_route": 'js'})
+      output = page.outs.html_file(
+        path=view_folder, name=v, options={"split": split_files, "css_route": 'css', "js_route": 'js'})
       print("File created in %sms, location: %s" % (round(time.time() - start, 4), output))
     except Exception as err:
       print("Error in file %s.py" % v, err)

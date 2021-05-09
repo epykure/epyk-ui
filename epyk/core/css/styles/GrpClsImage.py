@@ -1,10 +1,15 @@
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
+from epyk.core.py import OrderedSet
 from epyk.core.css.styles.attributes import AttrClsImage
 
 
 class ClassIcon(GrpCls.ClassHtml):
+
+  def __init__(self, component):
+    super(ClassIcon, self).__init__(component)
+    self.classList["main"] = OrderedSet()
 
   @property
   def css(self):

@@ -153,7 +153,6 @@ class Billboard:
     bubble_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       bubble_chart.add_dataset(d, data['series'][i])
-      bubble_chart.data.labels = True
     return bubble_chart
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -191,7 +190,6 @@ class Billboard:
     radar_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(d, data['series'][i])
-      radar_chart.data.labels = True
     return radar_chart
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),

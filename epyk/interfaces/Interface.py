@@ -308,11 +308,6 @@ class Components:
     Description:
     ------------
     Group all the available banners.
-
-    Usage::
-
-    Templates:
-
     """
     return CompNavigation.Banners(self)
 

@@ -53,7 +53,7 @@ class Lists:
     height = Arguments.size(height, unit="%")
     records = records or []
     if not isinstance(records, list):
-      records = [{'name': v, 'value': v, "selected": True} for v in records.split(",")]
+      records = [{'text': v, 'value': v, "selected": True} for v in records.split(",")]
     options = options or {}
     options['selected'] = selected
     if multiple:

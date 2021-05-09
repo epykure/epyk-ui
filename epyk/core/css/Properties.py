@@ -3039,4 +3039,15 @@ class CssMixin:
     self.css({"background": "-webkit-linear-gradient(%s, %s, %s)" % (direction, from_color, to_color),
               "-webkit-text-fill-color": "transparent", "-webkit-background-clip": "text"})
 
+  def inline(self):
+    """
+    Description:
+    -----------
+    Shortcut to the inline-block CSS style.
 
+    Usage::
+
+        editor.style.css.inline()
+    """
+    self.display = "inline-block"
+    return self

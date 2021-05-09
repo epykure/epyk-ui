@@ -750,6 +750,8 @@ class Banners:
     div.style.css.color = "white"
     div.style.css.position = "fixed"
     div.style.css.top = 0
+    div.style.css.left = 0
+    div.style.css.z_index = 500
     div.style.css.padding = "5px 15px"
     return div
 

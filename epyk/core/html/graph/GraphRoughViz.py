@@ -1,0 +1,122 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from epyk.core.html import Html
+from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsD3
+from epyk.core.html.options import OptChartRoughViz
+
+
+class RoughViz(Html.Html):
+  requirements = ('rough-viz', )
+  name = 'rough_viz'
+  _chart__type = 'Line'
+  _option_cls = OptChartRoughViz.RoughVizLine
+
+  def __init__(self,  report, width, height, html_code, options, profile):
+    super(RoughViz, self).__init__(
+      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+    self._d3, self._chart, self._datasets, self._data_attrs, self._attrs = None, None, [], {}, {}
+    self.chartId = "%s_obj" % self.htmlCode
+    self.options.element = "#%s" % self.htmlCode
+
+  @property
+  def datasets(self):
+    """
+    Description:
+    -----------
+
+    """
+    return self._datasets
+
+  @property
+  def d3(self):
+    """
+    Description:
+    -----------
+    Property to the D3 library.
+
+    :rtype: JsD3.D3Select
+    """
+    if self._d3 is None:
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
+    return self._d3
+
+  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
+    """
+    Description:
+    ------------
+    Add a new Dataset to the chart list of Datasets.
+
+    Usage::
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param data: List. The list of points (float).
+    :param label: List. Optional. The list of points (float).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Float. Optional. The opacity level for the content.
+    """
+    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None)
+    self._datasets.append(data)
+    return data
+
+  def build(self, data=None, options=None, profile=None, component_id=None):
+    """
+    Description:
+    ------------
+    Update the chart with context and / or data changes.
+
+    Attributes:
+    ----------
+    :param data: List. Optional. The full datasets object expected by ChartJs.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param component_id: String. Not used.
+    """
+    if data is not None:
+      options = options or {}
+      options["data"] = data
+      return '''
+        %(chartId)s.data = {"values": [80, 10], "labels": ["www", "test"]}
+        ''' % {"chartId": self.chartId}
+      #return '''
+      #      %(chartId)s = new roughViz.%(chartType)s(%(config)s);
+      #    ''' % {"chartId": self.chartId, "chartType": self._chart__type, "hmlCode": component_id or self.htmlCode,
+      #           'config': self.options.config_js(options)}
+
+    return '''%(chartId)s = new roughViz.%(chartType)s(%(config)s)''' % {"chartId": self.chartId, "chartType": self._chart__type, "hmlCode": component_id or self.htmlCode,
+           'config': self.options.config_js(options)}
+
+  def __str__(self):
+    self.page.properties.js.add_builders(self.build())
+    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class RoughVizBar(RoughViz):
+  _chart__type = 'Bar'
+  _option_cls = OptChartRoughViz.RoughVizBar
+
+
+class RoughVizPie(RoughViz):
+  _chart__type = 'Pie'
+  _option_cls = OptChartRoughViz.RoughVizPie
+
+
+class RoughVizDonut(RoughViz):
+  _chart__type = 'Donut'
+  _option_cls = OptChartRoughViz.RoughVizPie
+
+
+class RoughVizBarH(RoughViz):
+  _chart__type = 'BarH'
+  _option_cls = OptChartRoughViz.RoughVizBar
+
+
+class RoughVizScatter(RoughViz):
+  _chart__type = 'Scatter'
+  _option_cls = OptChartRoughViz.RoughVizScatter

@@ -30,9 +30,8 @@ class CssImgH2(CssStyle.Style):
 
 
 class CssImgMask(CssStyle.Style):
-  _attrs = {'opacity': 0, 'transition': 'all 0.4s ease-in-out', 'height': 'inherit', 'left': 1,
-            'position': 'absolute'}
-  _hover = {'opacity': 0.8}
+  _attrs = {'opacity': 0, 'transition': 'all 0.4s ease-in-out', 'height': 'inherit', 'left': 1}
+  _hover = {'opacity': 1}
 
   def customize(self):
     self.css({

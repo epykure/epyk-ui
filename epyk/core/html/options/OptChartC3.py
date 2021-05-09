@@ -37,6 +37,21 @@ class OptionsChartSharedC3(OptChart.OptionsChartShared):
     self.component.options.axis.y.label.text = value
 
 
+class OptionPadding(Options):
+
+  @property
+  def bottom(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(None)
+
+  @bottom.setter
+  def bottom(self, val):
+    self._config(val)
+
+
 class OptionsGridLine(Options):
   @property
   def value(self):
@@ -643,6 +658,19 @@ class OptionsAxis(Options):
     self._config(val)
 
   @property
+  def min(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(None)
+
+  @min.setter
+  def min(self, val):
+    self._config(val)
+
+  @property
   def tick(self):
     """
     Description:
@@ -651,6 +679,16 @@ class OptionsAxis(Options):
     :rtype: OptionTick
     """
     return self._config_sub_data("tick", OptionTick)
+
+  @property
+  def padding(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionTick
+    """
+    return self._config_sub_data("padding", OptionPadding)
 
 
 class OptionsSelection(Options):
@@ -728,7 +766,7 @@ class OptionsSelection(Options):
 
 
 class OptionsData(Options):
-  component_properties = ("columns", "types")
+  component_properties = ("columns", "types", 'colors')
 
   @property
   def x(self):

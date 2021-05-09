@@ -228,7 +228,7 @@ JS_IMPORTS = {
   'bootstrap': {
     'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
     'v_prefix': 'v',
-    'version': '4.5.3',
+    'version': '4.6.0',
     'repository': 'https://github.com/twbs/bootstrap',
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
@@ -266,6 +266,7 @@ JS_IMPORTS = {
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
     'version': '4.9.3',
+    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator-tables'},
     'modules': [
       # core only needed for Jupyter for some reasons
       {'script': 'tabulator.min.js', 'node_path': 'tabulator/dist/js', 'path': 'tabulator/%(version)s/js/',
@@ -520,6 +521,7 @@ JS_IMPORTS = {
     'website': 'https://azimi.me/json-formatter-js/',
     'version': '2.3.4',
     'repository': 'https://github.com/mohsen1/json-formatter-js',
+    'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min'},
     'modules': [
       {'script': 'json-formatter.umd.min.js', 'node_path': 'dist/', 'path': 'json-formatter-js@%(version)s/dist/',
        'cdnjs': "https://cdn.jsdelivr.net/npm"},
@@ -669,6 +671,7 @@ JS_IMPORTS = {
   'timepicker': {
     'website': 'https://timepicker.co/',
     'version': '1.13.16',
+    'register': {'alias': 'timepicker', 'module': 'jquery.timepicker.min'},
     'repository': 'https://github.com/jonthornton/jquery-timepicker',
     'req': [
       {'alias': 'jquery'},
@@ -760,6 +763,7 @@ JS_IMPORTS = {
   'd3': {
     'website': 'https://d3js.org/',
     'v_prefix': 'v',
+    'register': {'alias': 'd3', 'module': 'd3.min'},
     'version': '6.3.1',
     'modules': [
       {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -911,6 +915,7 @@ JS_IMPORTS = {
   'plotly.js': {
     'website': 'https://plot.ly/javascript/',
     'repository': 'https://github.com/plotly/plotly.js',
+    'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
     'version': '1.58.4',
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -941,6 +946,7 @@ JS_IMPORTS = {
     'website': 'https://c3js.org/',
     'repository': 'https://github.com/c3js/c3',
     'req': [{'alias': 'd3', 'version': '5.0.0'}],
+    'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
     'version': '0.7.20',
     'modules': [
       {'script': 'c3.min.js', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -983,14 +989,37 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'req': [{'alias': 'd3', 'version': '5.0.0'}],
-    'version': '2.1.4',
+    'req': [{'alias': 'd3'}],
+    'version': '3.0.3',
+    'register': {'alias': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
     'modules': [
       {'script': 'billboard.min.js', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
     'assets': [
       {'script': 'billboard.min.js.map', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
+  },
+
+  # Rough Viz charts
+  'rough-viz': {
+    'website': 'https://github.com/jwilber/roughViz',
+    'req': [{'alias': 'd3'}],
+    'version': '1.0.6',
+    'register': {'alias': 'roughViz', 'module': 'roughviz.min'},
+    'modules': [
+      {'script': 'roughviz.min.js', 'path': 'rough-viz@%(version)s/dist/', 'cdnjs': "https://unpkg.com"}
+    ],
+  },
+
+  # Frappe-Charts module
+  'frappe-charts': {
+    'website': 'https://frappe.io/charts/docs',
+    'version': '1.5.1',
+    'register': {'alias': 'Frappe', 'module': 'frappe-charts.min.iife'},
+    'modules': [
+      {'script': 'frappe-charts.min.iife.js', 'path': 'frappe-charts@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}
+    ],
+
   },
 
   # ChartJs modules width CDN links
@@ -1082,7 +1111,7 @@ JS_IMPORTS = {
   '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
     'v_prefix': 'v',
-    'version': '2.6.0',
+    'version': '2.9.2',
     'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
     'modules': [
@@ -1100,7 +1129,7 @@ JS_IMPORTS = {
     'website': 'http://silviomoreto.github.io/bootstrap-select/',
     'version': '1.13.18',
     'repository': 'https://github.com/snapappointments/bootstrap-select',
-    #'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
+    'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
       {'alias': '@popperjs/core', 'version': '1.14.6'}, # Cannot be upgraded bug with bootstrap select
       {'alias': 'jquery'},
@@ -1340,7 +1369,7 @@ JS_IMPORTS = {
     'version': '1.9.1',
     'website': 'https://github.com/showdownjs/showdown',
     'repository': 'https://github.com/showdownjs/showdown',
-    #'register': {'alias': 'showdown', 'npm': 'showdown', 'npm_path': 'dist'},
+    'register': {'alias': 'showdown', 'module': 'showdown.min', 'npm': 'showdown', 'npm_path': 'dist'},
     'modules': [
       {'script': 'showdown.min.js', 'node_path': 'dist/', 'path': 'showdown/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -1393,6 +1422,19 @@ CSS_IMPORTS = {
   'chart.js': {
     'modules': [
       {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  'frappe-charts': {
+    'modules': [
+      {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # Chart.css
+  'charts.css': {
+    'website': 'https://github.com/ChartsCSS/charts.css#readme',
+    'version': "1.0.0",
+    'modules': [
+      {'script': 'charts.min.css', 'path': 'charts.css/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm/"}
+    ],
+  },
 
   # The Apexcharts CDN links
   'apexcharts': {
@@ -1869,10 +1911,11 @@ def script_version(alias, script_details, with_prefix=False):
     if 'v_prefix' in JS_IMPORTS[alias]:
       return "%s%s" % (JS_IMPORTS[alias]['v_prefix'], JS_IMPORTS[alias]["version"])
 
-  if 'node_folder' in JS_IMPORTS[alias]:
-    # use the version of the node folder
-    JS_IMPORTS[alias]["version"] = JS_IMPORTS[JS_IMPORTS[alias]['node_folder']]['version']
-  return JS_IMPORTS[alias]["version"]
+  if alias in JS_IMPORTS:
+    if 'node_folder' in JS_IMPORTS[alias]:
+      # use the version of the node folder
+      JS_IMPORTS[alias]["version"] = JS_IMPORTS[JS_IMPORTS[alias]['node_folder']]['version']
+    return JS_IMPORTS[alias]["version"]
 
 
 def script_cdnjs_path(alias, script_details, with_prefix=False):
@@ -2514,7 +2557,7 @@ class ImportPackages:
 
       https://azimi.me/json-formatter-js/
     """
-    return ImportModule("json-formatter-j", self._js, self._css)
+    return ImportModule("json-formatter-js", self._js, self._css)
 
   @property
   def pivottable(self):
@@ -2721,6 +2764,19 @@ class ImportManager:
       self._report.jsImports.add(alias)
     if alias in CSS_IMPORTS:
       self._report.cssImport.add(alias)
+
+  def extend(self, aliases):
+    """
+    Description:
+    ------------
+    Add multiple aliases to the external requirements.
+
+    Attributes:
+    ----------
+    :param aliases: List. The list of package aliases to be added.
+    """
+    for alias in aliases:
+      self.add(alias)
 
   @property
   def requirements(self):

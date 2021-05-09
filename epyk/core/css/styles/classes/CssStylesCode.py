@@ -13,7 +13,7 @@ class CMEditorGutters(CssStyle.Style):
   classname = "CodeMirror-gutter"
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[1], 'color': self.page.theme.colors[-1]})
+    self.css({'background-color': self.page.theme.greys[1], 'color': self.page.theme.colors[-1]})
 
 
 class CMEditorActiveLine(CssStyle.Style):

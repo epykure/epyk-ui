@@ -28,6 +28,8 @@ class Buttons:
     if align == "center":
       component.style.css.margin = "auto"
       component.style.css.display = "block"
+    elif align == "right":
+      component.style.css.float = "right"
 
   @html.Html.css_skin()
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
@@ -79,6 +81,7 @@ class Buttons:
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     html_button.style.css.margin = "0"
     html_button.style.css.padding = 0
+    html_button.style.css.padding_h = 5
     html_button.style.css.line_height = Defaults_html.LINE_HEIGHT
     self.__align(html_button, align)
     return html_button
@@ -1386,4 +1389,68 @@ class Buttons:
     html_but.style.css.line_height = 0
     html_but.style.css.background = self.page.theme.colors[-1]
     html_but.style.css.border_color = self.page.theme.colors[-1]
+    return html_but
+
+  @html.Html.css_skin()
+  def data(self, filename, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left",
+           html_code=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Standard refresh button with a font-awesome icon.
+
+    :tags:
+    :categories:
+
+    Usage::
+
+      page.ui.buttons.refresh("Refresh")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
+
+    Attributes:
+    ----------
+    :param filename: String. Optional. The filename.
+    :param text: String. Optional. The value to be displayed to the button.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if icon is None:
+      mapped_file = {
+        "excel": 'far fa-file-excel', 'pdf': 'far fa-file-pdf', 'code': 'far fa-file-code', 'csv': 'fas fa-file-csv',
+        'word': 'fa-file-word'}
+      extension = filename.split(".")[-1]
+      if extension in mapped_file:
+        icon = mapped_file[extension]
+    html_but = html.HtmlButton.ButtonData(
+      self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    self.__align(html_but, align)
+    html_but.filename = filename
+    html_but.style.css.padding = 5
+    html_but.style.css.visibility = "hidden"
+    html_but.style.css.margin_top = "5px !IMPORTANT"
+    html_but.style.css.line_height = 0
+    html_but.style.css.color = self.page.theme.colors[-1]
     return html_but

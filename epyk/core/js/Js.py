@@ -514,9 +514,10 @@ class JsBase:
     _props, _context, http = {}, {}, []
     jsImports, cssImport = set([]), set([])
 
-  def __init__(self, src=None):
+  def __init__(self, src=None, component=None):
     # The underlying source object is not supposed to be touched in the underlying classes
     self._src = src if src else self.__internal()
+    self.component, self.page = component, src
     self.console = JsConsole()
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
@@ -627,6 +628,9 @@ class JsBase:
       https://jquery.com/
     """
     from epyk.core.js.packages import JsQuery
+
+    if self.component is not None:
+      return JsQuery.JQuery(self.component, varName=JsQuery.decorate_var(self.component.htmlCode), setVar=False)
 
     return JsQuery.JQuery(self._jquery_ref)
 
@@ -1045,6 +1049,11 @@ class JsBase:
 
     Usage::
 
+      inputs = page.ui.input("")
+      btn = page.ui.button("Click").click([
+        page.js.get("/test", {"fegeg": "efefe", "ok": inputs.dom.content}, components=[("input", inputs)])
+      ])
+
     Attributes:
     ----------
     :param url: String. The url path of the HTTP request.
@@ -1057,14 +1066,19 @@ class JsBase:
     """
     method_type = JsUtils.jsConvertData('GET', None)
     url = JsUtils.jsConvertData(url, None)
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    url_params = []
     if components is not None:
-      if jsData is None:
-        jsData = components
-      else:
-        for c in components:
-          request.data.add(c)
-    request.send(jsData, stringify=is_json)
+      for component in components:
+        if isinstance(component, tuple):
+          url_params.append('"%s=" + %s' % (component[0], component[1].dom.content.toStr()))
+        else:
+          url_params.append('"%s=" + %s' % (component.htmlCode, component.dom.content.toStr()))
+    if jsData is not None:
+      for k, v in jsData.items():
+        url_params.append('"%s=" + %s' % (k, JsUtils.jsConvertData(v, None)))
+    url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    request.send({}, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request

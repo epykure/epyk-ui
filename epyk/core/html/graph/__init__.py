@@ -11,3 +11,6 @@ from . import GraphSparklines
 from . import GraphCanvas
 from . import GraphGoogle
 from . import GraphApexCharts
+from . import GraphRoughViz
+from . import GraphChartCss
+from . import GraphFrappe
