@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.17] - 2021-05-09
+
+### Added
 - from_plot() to the image and animated image components to load from a plot object.
 - from_base64() to load 
 - add from_plots to carousel, tiny slider
