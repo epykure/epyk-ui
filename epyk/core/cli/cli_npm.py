@@ -14,15 +14,6 @@ from epyk.core.cli import utils
 
 
 def install_all_parser(subparser):
-  """
-  Description:
-  ------------
-  Parser for the install all CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=install_all)
   subparser.add_argument('-p', '--path', help='''The UI project path''')
 
@@ -54,15 +45,6 @@ def install_all(args):
 
 
 def install_parser(subparser):
-  """
-  Description:
-  ------------
-  Parser for the install CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=install)
   subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
   subparser.add_argument('-p', '--path', required=True, help='''The UI project path''')
@@ -86,15 +68,6 @@ def install(args):
 
 
 def update_parser(subparser):
-  """
-  Description:
-  ------------
-  Parser for the update CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=update)
   subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
   subparser.add_argument('-p', '--path', required=True, help='''The UI project path''')
@@ -117,15 +90,6 @@ def update(args):
 
 
 def npm_parser(subparser):
-  """
-  Description:
-  ------------
-  Parser for the npm CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=npm)
   subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
   subparser.add_argument('-s', '--server', required=True, help='''''')
@@ -147,15 +111,6 @@ def npm(args):
 
 
 def requirements_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the requirements CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   parser.set_defaults(func=requirements)
   parser.add_argument('-p', "--path", help="The UI work ath")
   parser.add_argument('-r', "--page", required=True, help="The report name")
@@ -184,15 +139,6 @@ def requirements(args):
 
 
 def angular_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the angular CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   parser.set_defaults(func=angular)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The Angular application name")
@@ -219,15 +165,6 @@ def angular(args):
 
 
 def vue_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the vue CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   parser.set_defaults(func=vue)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The Vue application name")
@@ -254,15 +191,6 @@ def vue(args):
 
 
 def react_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the vue CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   parser.set_defaults(func=react)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The React application name")

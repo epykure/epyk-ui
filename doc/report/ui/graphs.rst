@@ -12,14 +12,17 @@ graphs Interface
     /report/ui/graphs/Billboard
     /report/ui/graphs/C3
     /report/ui/graphs/Canvas
+    /report/ui/graphs/CompChartCss
     /report/ui/graphs/ChartJs
     /report/ui/graphs/D3
     /report/ui/graphs/DC
+    /report/ui/graphs/CompChartFrappe
     /report/ui/graphs/ChartGoogle
     /report/ui/graphs/Nvd3
     /report/ui/graphs/Plotly
     /report/ui/graphs/Plotly2D
     /report/ui/graphs/Plotly3D
+    /report/ui/graphs/CompRoughViz
     /report/ui/graphs/Sparkline
     /report/ui/graphs/SVG
     /report/ui/graphs/Vis

@@ -16,7 +16,7 @@ def get_report_path(project_path, raise_error=True):
   Attributes:
   ----------
   :param project_path: String. The project path.
-  :param raise_error. Boolean. Flag to raise an error.
+  :param raise_error. Boolean. Optional. Flag to raise an error.
   """
   ui_path = os.path.join(project_path, 'ui')
   if not os.path.exists(ui_path):
@@ -36,12 +36,12 @@ def get_page(mod, template=False):
   """
   Description:
   ------------
-  Get the page object from the imported module
+  Get the page object from the imported module.
 
   Attributes:
   ----------
-  :param mod: Module. The Python imported module used to build the page
-  :param template: Boolean
+  :param mod: Module. The Python imported module used to build the page.
+  :param template: Boolean. Optional.
   """
   if hasattr(mod, 'get_page'):
     try:

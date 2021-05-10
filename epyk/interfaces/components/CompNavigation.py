@@ -790,6 +790,8 @@ class Banners:
       div.style.css.min_height = Defaults_html.LINE_HEIGHT
     div.style.css.background_color = background or self.page.theme.greys[1]
     div.style.css.z_index = 110
+    div.style.css.left = 0
+    div.style.css.z_index = 500
     div.style.css.text_align = align
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"

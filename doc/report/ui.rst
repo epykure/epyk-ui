@@ -2,8 +2,8 @@
 UI Interface
 ============
 
-The UI interface allows you to access the different parts of the framework without having to know the underlying details
-how these components are built.
+The UI interface allows you to access the different parts of the framework without having to know the underlying details how these components
+are built.
 
 External Interfaces:
 ********************
@@ -31,7 +31,7 @@ Interfaces per Categories:
 There are links to existing Web Framework to rely on their components:
 
 
-Full list of 75 Interfaces:
+Full list of 78 Interfaces:
 *******************************************
 
 .. toctree::
@@ -91,14 +91,17 @@ Full list of 75 Interfaces:
     /report/ui/graphs/Billboard
     /report/ui/graphs/C3
     /report/ui/graphs/Canvas
+    /report/ui/graphs/CompChartCss
     /report/ui/graphs/ChartJs
     /report/ui/graphs/D3
     /report/ui/graphs/DC
+    /report/ui/graphs/CompChartFrappe
     /report/ui/graphs/ChartGoogle
     /report/ui/graphs/Nvd3
     /report/ui/graphs/Plotly
     /report/ui/graphs/Plotly2D
     /report/ui/graphs/Plotly3D
+    /report/ui/graphs/CompRoughViz
     /report/ui/graphs/Sparkline
     /report/ui/graphs/SVG
     /report/ui/graphs/Vis

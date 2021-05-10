@@ -3,6 +3,10 @@ Ready to use examples
 
 This section will details some examples available on `Github <https://github.com/epykure/epyk-templates>`_
 
+It will illustrate some example and provide more explanation concerning the modules and functions used.
+
+More ready to use dashboards are available in the `Epyk Gallery <https://epykure.github.io/demos/>`_
+
 .. note:: This is a collaborative framework so not hesitate to share your work to add more examples to this list.
 
 Statics

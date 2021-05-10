@@ -4,6 +4,9 @@ HtmlButton Module
 .. autoclass:: epyk.core.html.HtmlButton.Button
 	:members:
 
+.. autoclass:: epyk.core.html.HtmlButton.ButtonData
+	:members:
+
 .. autoclass:: epyk.core.html.HtmlButton.ButtonFilter
 	:members:
 

@@ -16,6 +16,9 @@ OptChartC3 Module
 .. autoclass:: epyk.core.html.options.OptChartC3.OptionEpochs
 	:members:
 
+.. autoclass:: epyk.core.html.options.OptChartC3.OptionPadding
+	:members:
+
 .. autoclass:: epyk.core.html.options.OptChartC3.OptionTick
 	:members:
 

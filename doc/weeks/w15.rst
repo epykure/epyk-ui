@@ -1,0 +1,55 @@
+Data Science (week 14)
+=========================
+
+Changelog details
+-----------------
+
+::
+
+    ## [1.5.13] - 2021-04-18
+
+    ### Added
+    - DatePicker component option.
+    - String primitive functions padStart, padEnd...
+    - Component texts.date
+    - interface cob entry point.
+    - New components class in the base HTML class.
+
+    ### Changed
+    - Button colored padding.
+    - SelectPicker dom content value.
+    - Tabulator wrapper Documentation.
+    - Some improvements in the documentation formatting.
+    - Align interface builder attributes.
+
+    ### Fixed
+    - Bug fix datePicker JavaScript Options.
+    - Tabulator tree management.
+    - Fix shortcut bar components management
+    - Fix icon CSS color management.
+
+
+    ## [1.5.12] - 2021-04-16
+
+    ### Added
+    - Add gradient_text function to CSS properties.
+    - Add rotate function to CSS properties.
+    - Add margins shortcut for template configs.
+    - Add width parameter for the powered by component.
+    - Add dark mode to color themes.
+    - Introduce position to div
+    - Add options for navigation points.
+
+    ### Changed
+    - Add the template attribute for the body component to the __init__.
+    - Change the parameters for div and introduce the position to align with row.
+    - Change some icons component styles.
+
+    ### Fixed
+    - Change color for hover on button icons.
+    - Add the start event for the countdown component.
+    - Consider the template of the body for navigation components (side panels)
+    - Bug fix for the texts.button component.
+    - Fix options for Images and Carousels.
+    - Fix html_code issue for content tables in text components.
+

@@ -1,4 +1,6 @@
 """
+Description:
+------------
 
 epyk_export.exe
 """
@@ -12,21 +14,78 @@ import traceback
 from epyk.core.cli import utils
 
 
-def transpile_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the transpile CLI.
+"""
+Section dedicated to the various CLI entry points parsers
+"""
 
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
+
+def transpile_parser(subparser):
   subparser.set_defaults(func=transpile)
   subparser.add_argument('-n', '--name',  help='''The name of the page to be transpiled (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-s', '--split', help='''Y. N flag, Split the files to html, css and js''')
   subparser.add_argument('-o', '--output', help='''The output path''')
+
+
+def angular_parser(subparser):
+  subparser.set_defaults(func=angular)
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def vue_parser(subparser):
+  subparser.set_defaults(func=vue)
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def react_parser(subparser):
+  subparser.set_defaults(func=react)
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def node_parser(subparser):
+  subparser.set_defaults(func=node)
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def deno_parser(subparser):
+  subparser.set_defaults(func=deno)
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def html_parser(subparser):
+  subparser.set_defaults(func=transpile)
+  subparser.add_argument(
+    '-n', '--name', required=True, help='''The name of the page to be transpiled (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-split', '--split', default="N", help='''Split the files: -split N''')
+
+
+def page_parser(subparser):
+  subparser.set_defaults(func=page)
+  subparser.add_argument('-n', '--name', help='''The name of the page''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+def demo_parser(subparser):
+  subparser.set_defaults(func=demo)
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+
+
+"""
+Section dedicated to the various CLI entry points.
+
+Each of then will be linked to a dedicated parser method.
+"""
 
 
 def transpile(args):
@@ -37,9 +96,10 @@ def transpile(args):
 
   Attributes:
   ----------
-  :param parser: -p, The path where the new environment will be created: -p /foo/bar
-  :param parser: -n, The name of the page to be transpiled: -n home.
-  :param parser: -s, Y / N Flag, to specify if the files should be split input 3 modules.
+  :param name: -p, The path where the new environment will be created: -p /foo/bar
+  :param path: -n, The name of the page to be transpiled: -n home.
+  :param split: -s, Y / N Flag, to specify if the files should be split input 3 modules.
+  :param output: -0. String. Optional. The output destination path.
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
@@ -81,21 +141,6 @@ def transpile(args):
       print(traceback.format_exc())
 
 
-def angular_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the angular CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=angular)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-
-
 def angular(args):
   """
   Description:
@@ -119,103 +164,29 @@ def angular(args):
     view_folder = settings.ANGULAR_VIEWS_PATH
   mod = __import__(args.name, fromlist=['object'])
   page = utils.get_page(mod)
-  app = page.outs.publish(server="angular", app_path=angular_app_path, module="MyModule", selector='mymodule', target_folder=view_folder, auto_route=auto_route)
+  app = page.outs.publish(
+    server="angular", app_path=angular_app_path, module="MyModule", selector='mymodule', target_folder=view_folder,
+    auto_route=auto_route)
   if install_modules:
     server_path, app_name = os.path.split(angular_app_path)
     app._app_path = server_path
     app.cli(app_name).npm(page.imports().requirements)
 
 
-def vue_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the vue CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=vue)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-
-
-def vue():
+def vue(args):
   pass
 
 
-def react_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the react CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=react)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-
-
-def react():
+def react(args):
   pass
 
 
-def node_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the node CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=node)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-
-
-def node():
+def node(args):
   pass
 
 
-def deno_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the deno CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=deno)
-  subparser.add_argument('-n', '--name',  required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-
-
-def deno():
+def deno(args):
   pass
-
-
-def html_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the transpile CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=transpile)
-  subparser.add_argument('-n', '--name', required=True, help='''The name of the page to be transpiled (without the extension)''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-split', '--split', default="N", help='''Split the files: -split N''')
 
 
 def html(args):
@@ -238,21 +209,6 @@ def html(args):
   page = utils.get_page(mod)
   output = page.outs.html_file(path="", name=args.name, options={"split": False})
   print(output)
-
-
-def page_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the page CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=page)
-  subparser.add_argument('-n', '--name', help='''The name of the page''')
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
 
 
 def page(args):
@@ -289,20 +245,6 @@ page = pk.Page()
 # It can allow to start creating the page on the server side and just having to enrich it on the UI
 ''')
   print("Epyk page created %s" % os.path.join(project_path, "%s.py" % name))
-
-
-def demo_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the demo CLI.
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
-  subparser.set_defaults(func=demo)
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
 
 
 def demo(args):
@@ -359,7 +301,9 @@ toggle.click([
 
 def main():
   """
-
+  Description:
+  ------------
+  The main function for all the export CLI entry points.
   """
   parser_map = {
     'demo': (demo_parser, '''Create a demo page'''),

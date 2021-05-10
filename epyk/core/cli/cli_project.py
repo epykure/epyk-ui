@@ -15,15 +15,6 @@ from epyk.core.py.PyMarkdown import MarkDown
 
 
 def new_parsers(subparser):
-  """
-  Description:
-  ------------
-  Paser for the new CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=new)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-n', '--name', default='NewEnv', help='''The name of the new environment: -n MyEnv''')
@@ -57,15 +48,6 @@ def new(args):
 
 
 def app_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the app CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=app)
   subparser.add_argument('-t', '--type', required=True, help='''The application framework''')
   subparser.add_argument('-s', '--server', required=True, help='''The NodeJs server path''')
@@ -103,15 +85,6 @@ def app(args):
 
 
 def add_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the add CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=add)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
 
@@ -180,16 +153,9 @@ VUE_VIEWS_PATH = None
 
 
 def compile_parser(subparser):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param subparser:
-  """
   subparser.set_defaults(func=page)
-  subparser.add_argument('-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-t', '--theme', help='''The theme in the studio for the page''')
 
@@ -224,16 +190,9 @@ def compile(args):
 
 
 def translate_parser(subparser):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param subparser:
-  """
   subparser.set_defaults(func=page)
-  subparser.add_argument('-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-t', '--theme', help='''The theme in the studio for the page''')
 
@@ -267,17 +226,9 @@ page.headers.dev()
 
 
 def page_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the page CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=page)
-  subparser.add_argument('-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
+  subparser.add_argument(
+    '-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-t', '--type', help='''''')
 
@@ -313,18 +264,11 @@ page.headers.dev()
 
 
 def transpile_all_parser(subparser):
-  """
-  Description:
-  ------------
-  Paser for the transpile_all CLI
-
-  Attributes:
-  ----------
-  :param subparser: subparser
-  """
   subparser.set_defaults(func=transpile_all)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-s', '--split', required=False, default=False, help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument(
+    '-s', '--split', required=False, default=False,
+    help='''The path where the new environment will be created: -p /foo/bar''')
 
 
 def transpile_all(args):
@@ -379,7 +323,7 @@ def main():
   """
   Description:
   ------------
-  Main entry point for the various project command lines
+  Main entry point for the various project command lines.
   """
   parser_map = {
     'new': (new_parsers, '''Create new environment'''),

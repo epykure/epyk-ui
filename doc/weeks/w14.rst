@@ -1,0 +1,79 @@
+Web development (week 14)
+=========================
+
+
+Changelog details
+-----------------
+
+::
+
+    ## [1.5.11] - 2021-04-11
+
+    ### Added
+    - Add plot shortcut with kind to align with matplotlib.
+    - Add plot function to the base property charts to switch chart families.
+    - Add slider javascript functions.
+    - Add hamburger Icon.
+    - Add hamburger Panel.
+    - New slider max and min component for range.
+    - Introduce Charts google options module.
+    - Create a palette internal module to manage color changes for charts.
+
+    ### Changed
+    - Change records name to record in all charts.
+    - Change slider style.
+    - Remove label from core switch component.
+    - Set code from texts as readonly.
+    - Full revamping of C3 and Billboard options management.
+
+    ### Fixed
+    - Fix data transformation for scatter charts (with distinct agg)
+    - Fix color definition for charts. Always rely on theme.charts list.
+    - FIx bug when using page.imports.google_products(['charts']) without google packages.
+    - Fix the way slider ranges are handled.
+    - Improve way columns and data are defaulted for charts interfaces.
+
+
+    ## [1.5.10] - 2021-04-07
+
+    ### Added
+    - Add ek shortcut for Page and events.
+
+    ### Changed
+
+    ### Fixed
+    - Fix chartsJs tooltips.
+    - Fix chartsJs Scatter
+
+
+    ## [1.5.9] - 2021-04-05
+
+    ### Added
+    - Add input number styles.
+    - Add fields.number interface.
+    - Add XMLHttpRequest timeout.
+    - Add data apexCharts shortcut for events.
+    - Add new input data in data_urls (owid repo)
+    - Add trigger shortcut to dom property.
+    - Add Poller components.
+    - Add CSS calc for width.
+    - Add more and filter button.
+    - Add Github standard text reference component.
+    - New Apex Gauge component.
+
+    ### Changed
+    - Change button live style.
+    - Change Rich, Vignets and number interfaces.
+    - Change data default values for Sparkline interfaces.
+    - Add nowrap style to list of links.
+    - Include the color reference for the standard color names in charts.
+    - Fix toMoney formatter for ApexCharts (to be done for other charts).
+
+    ### Fixed
+    - Link builder function.
+    - Extensible search class width.
+    - List tag position.
+    - Fix jqueryui dependency with popperjs.
+    - Handle not checked state for radio.
+    - Height for the chart.
+    - Update ApexChart package version.

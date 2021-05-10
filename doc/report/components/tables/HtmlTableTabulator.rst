@@ -55,6 +55,9 @@ HtmlTableTabulator Module
 .. autoclass:: epyk.core.html.tables.HtmlTableTabulator.Mutators
 	:members:
 
+.. autoclass:: epyk.core.html.options.Options
+	:members:
+
 .. autoclass:: epyk.core.html.tables.HtmlTableTabulator.Persistence
 	:members:
 

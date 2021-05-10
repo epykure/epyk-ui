@@ -50,22 +50,30 @@ You can find examples of what Epyk can do right here:
 - `Websites <https://github.com/epykure/epyk-templates/tree/master/websites>`_
 - `Jupyter Playground <https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/tutorials/components/00_components.ipynb>`_
 
+Also get online demo from the `Epyk Gallery <https://epykure.github.io/demos/>`_
+
+.. image:: _static/gallery_1.PNG
+    :align: center
+
 
 Coming Soon
 ================================
 
 Please see below the 2021 road map of notifications on Twitter:
 
-- W13:  Dashboards
-- W14:  Web sites, UX / UI Development
-- W15:  Epyk for Data Science
-- W16:  Epyk and Backend Servers (Fast API)
-- W17:  Epyk documentation
-- W18:  Epyk & Jupyter
-- W19:  Epyk Studio
-- W20:  Epyk with web framework (Vue, Angular or React)
-- W21:  Crypto Currency tracker with Epyk
+.. raw:: html
 
+    <ul>
+        <li><del>W13:  Dashboards</del><a href="./weeks/w13.html">  [+ details]</a></li>
+        <li><del>W14:  Web sites, UX / UI Development</del><a href="./weeks/w14.html">  [+ details]</a></li>
+        <li><del>W15:  Epyk for Data Science</del><a href="./weeks/w15.html">  [+ details]</a></li>
+        <li><del>W16:  Epyk and Backend Servers (Fast API)</del><a href="./weeks/w16.html">  [+ details]</a></li>
+        <li><del>W17:  Epyk documentation</del><a href="./weeks/w17.html">  [+ details]</a></li>
+        <li>W18:  Epyk & Jupyter<a href="./weeks/w18.html">  [+ details]</a></li>
+        <li>W19:  Epyk Studio</li>
+        <li>W20:  Epyk with web framework (Vue, Angular or React)</li>
+        <li>W21:  Crypto Currency tracker with Epyk</li>
+    </ul>
 
 Do not hesitate to follow us on `Twitter <https://twitter.com/Epykure1>`_ or to help us improving our code by
 sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
@@ -82,4 +90,3 @@ sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
     intro/design-architecture-details.rst
     intro/security-control.rst
     intro/advanced-features.rst
-

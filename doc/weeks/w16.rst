@@ -1,0 +1,50 @@
+Backend Server (week 15)
+=======================
+
+
+Changelog details
+-----------------
+
+::
+
+    ## [1.5.15] - 2021-04-24
+
+    ### Added
+
+    - Add the shortcut properties margin_h, margin_v, padding_h, padding_h
+    - Add the CssLine to CssClass conversion.
+    - Add the style.clear_class() method.
+    - Add the important method to CSSInline object.
+    - Add leave function to the input component to map the onBlur event.
+
+    ### Changed
+
+    - Change the nav interface argument with components.
+    - Change the Autocomplete style and add the borders property.
+    - Change JsHtml content function to return string from Markdown.
+
+    ### Fixed
+    - Fix update component.
+    - Link Update component to the JsHtmlRich dom definition.
+    - Link Markdown component to the JsHtmlRich dom definition.
+    - Minor fix on some JsSelect features.
+
+
+    ## [1.5.14] - 2021-04-21
+
+    ### Added
+    - Add CSS Inline shortcut.
+    - Add body.template property to easy the configuration.
+    - Add pulse icon dom event.
+    - Add new button refresh.
+    - Add borders option for Input components.
+    - Add style.shadows various flavours.
+    - Add profile to post request (first version).
+
+    ### Changed
+    - Components minor still improvements.
+
+    ### Fixed
+    - Components documentation.
+    - Fix icon.date and remove the input text.
+    - Fix Markdown display  in Console component.

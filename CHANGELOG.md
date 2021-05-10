@@ -1,10 +1,14 @@
 ## [Unreleased]
 
 ### Added
+- Documentation sections.
 
 ### Changed
+- Online documentation
+- Structure and documentation for the CLI.
 
 ### Fixed
+- Some CLI entry points.
 
 
 ## [1.5.17] - 2021-05-09

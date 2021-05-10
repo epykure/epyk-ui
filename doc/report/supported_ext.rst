@@ -3,11 +3,11 @@ Supported Libraries and Frameworks
 ==================================
 
 A toolbox to multiple external libraries. Epyk will interface with the most popular JavaScript and Css libraries from 
-a vast number of components.
+the vast number of components.
 
 This will be fully transparent :doc:`all_components` will include to the page their external resources.
 
-109 Libraries
+111 Libraries
 ============
 
 - `accounting, version 0.4.1 <https://openexchangerates.github.io/accounting.js/>`_
@@ -16,7 +16,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `promise-polyfill, version 8.2.0 <https://github.com/taylorhakes/promise-polyfill>`_
 - `url-search-params, version 1.1.0 <https://github.com/taylorhakes/promise-polyfill>`_
 - `babel-polyfill, version 7.4.4 <https://babeljs.io/>`_
-- `bootstrap, version 4.5.3 <https://getbootstrap.com/>`_
+- `bootstrap, version 4.6.0 <https://getbootstrap.com/>`_
 - `moment, version 2.29.1 <https://momentjs.com/>`_
 - `ag-grid-community, version 25.0.1 <https://www.ag-grid.com/javascript-grid/>`_
 - `tabulator-tables, version 4.9.3 <http://tabulator.info/>`_
@@ -85,7 +85,9 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `crossfilter, version 1.3.12 <http://square.github.io/crossfilter/>`_
 - `apexcharts, version 3.26.0 <https://apexcharts.com/>`_
 - `dc, version 4.2.3 <https://dc-js.github.io/dc.js/examples/>`_
-- `billboard.js, version 2.1.4 <https://naver.github.io/billboard.js/release/latest/doc/>`_
+- `billboard.js, version 3.0.3 <https://naver.github.io/billboard.js/release/latest/doc/>`_
+- `rough-viz, version 1.0.6 <https://github.com/jwilber/roughViz>`_
+- `frappe-charts, version 1.5.1 <https://frappe.io/charts/docs>`_
 - `chart.js, version 2.9.4 <https://www.chartjs.org/>`_
 - `chartjs-plugin-dragdata, version latest <https://www.chartjs.org/>`_
 - `chartjs-plugin-annotation, version 0.5.7 <https://www.chartjs.org/>`_
@@ -95,7 +97,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `chartjs-plugin-zoom, version 0.7.7 <https://www.chartjs.org/>`_
 - `chartjs-chart-geo, version 2.1.0 <https://github.com/sgratzl/chartjs-chart-geo>`_
 - `hammer, version 2.0.8 <http://hammerjs.github.io/>`_
-- `@popperjs/core, version 2.6.0 <https://github.com/popperjs/popper-core>`_
+- `@popperjs/core, version 2.9.2 <https://github.com/popperjs/popper-core>`_
 - `bootstrap-select, version 1.13.18 <http://silviomoreto.github.io/bootstrap-select/>`_
 - `ajax-bootstrap-select, version 1.4.5 <https://github.com/truckingsim/Ajax-Bootstrap-Select>`_
 - `vis, version 4.21.0 <http://visjs.org/>`_
