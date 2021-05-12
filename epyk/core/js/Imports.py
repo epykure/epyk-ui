@@ -1017,7 +1017,8 @@ JS_IMPORTS = {
     'version': '1.5.1',
     'register': {'alias': 'Frappe', 'module': 'frappe-charts.min.iife'},
     'modules': [
-      {'script': 'frappe-charts.min.iife.js', 'path': 'frappe-charts@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}
+      {'script': 'frappe-charts.min.iife.js', 'path': 'frappe-charts@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}
     ],
 
   },
@@ -1436,7 +1437,8 @@ CSS_IMPORTS = {
 
   'frappe-charts': {
     'modules': [
-      {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+      {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
   '@chartshq/muze': {
     'modules': [

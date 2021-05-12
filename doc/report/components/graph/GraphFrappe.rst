@@ -22,6 +22,3 @@ GraphFrappe Module
 .. autoclass:: epyk.core.html.graph.GraphFrappe.FrappePie
 	:members:
 
-.. autoclass:: epyk.core.html.graph.GraphFrappe.FrappeScatter
-	:members:
-

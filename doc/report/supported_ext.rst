@@ -7,7 +7,7 @@ the vast number of components.
 
 This will be fully transparent :doc:`all_components` will include to the page their external resources.
 
-111 Libraries
+112 Libraries
 ============
 
 - `accounting, version 0.4.1 <https://openexchangerates.github.io/accounting.js/>`_
@@ -88,6 +88,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `billboard.js, version 3.0.3 <https://naver.github.io/billboard.js/release/latest/doc/>`_
 - `rough-viz, version 1.0.6 <https://github.com/jwilber/roughViz>`_
 - `frappe-charts, version 1.5.1 <https://frappe.io/charts/docs>`_
+- `@chartshq/muze, version 2.0.0 <https://muzejs.org/>`_
 - `chart.js, version 2.9.4 <https://www.chartjs.org/>`_
 - `chartjs-plugin-dragdata, version latest <https://www.chartjs.org/>`_
 - `chartjs-plugin-annotation, version 0.5.7 <https://www.chartjs.org/>`_

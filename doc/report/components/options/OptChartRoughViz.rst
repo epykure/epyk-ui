@@ -10,6 +10,9 @@ OptChartRoughViz Module
 .. autoclass:: epyk.core.html.options.Options
 	:members:
 
+.. autoclass:: epyk.core.html.options.OptChartRoughViz.OptionsChartSharedRoughViz
+	:members:
+
 .. autoclass:: epyk.core.html.options.OptChartRoughViz.RoughVizBar
 	:members:
 

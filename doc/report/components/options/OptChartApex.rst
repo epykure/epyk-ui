@@ -136,9 +136,9 @@ OptChartApex Module
 .. autoclass:: epyk.core.html.options.OptChartApex.OptionsPie
 	:members:
 
-.. autoclass:: epyk.core.html.options.OptChartApex.plotOptionsRadial
+.. autoclass:: epyk.core.html.options.OptChartApex.OptionsPlotRadial
 	:members:
 
-.. autoclass:: epyk.core.html.options.OptChartApex.plotOptionsRadialBar
+.. autoclass:: epyk.core.html.options.OptChartApex.OptionsPlotRadialBar
 	:members:
 
