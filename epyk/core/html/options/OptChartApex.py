@@ -1317,7 +1317,7 @@ class OptionPlotOptionsBar(Options):
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
-class plotOptionsRadialBar(Options):
+class OptionsPlotRadialBar(Options):
 
   @property
   def hollow(self):
@@ -1359,11 +1359,11 @@ class OptionPlotOptions(Options):
     return self._config_sub_data("bar", OptionPlotOptionsBar)
 
 
-class plotOptionsRadial(Options):
+class OptionsPlotRadial(Options):
 
   @property
   def radialBar(self):
-    return self._config_sub_data("radialBar", plotOptionsRadialBar)
+    return self._config_sub_data("radialBar", OptionsPlotRadialBar)
 
   @property
   def dataLabels(self):
@@ -1476,4 +1476,4 @@ class OptionsPie(OptionsLine):
 
   @property
   def plotOptions(self):
-    return self._config_sub_data("plotOptions", plotOptionsRadial)
+    return self._config_sub_data("plotOptions", OptionsPlotRadial)

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
-from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsD3
 from epyk.core.html.options import OptChartRoughViz
 
@@ -19,6 +18,33 @@ class RoughViz(Html.Html):
     self._d3, self._chart, self._datasets, self._data_attrs, self._attrs = None, None, [], {}, {}
     self.chartId = "%s_obj" % self.htmlCode
     self.options.element = "#%s" % self.htmlCode
+
+  @property
+  def shared(self):
+    """
+    Description:
+    -----------
+    All the common properties shared between all the charts.
+    This will ensure a compatibility with the plot method.
+
+    Usage::
+
+      b = page.ui.charts.roughviz.plot(languages, y=["rating", 'change'], x='name', width=300)
+      b.shared.x_label("Test X")
+      b.shared.y_label("Test Y")
+    """
+    return OptChartRoughViz.OptionsChartSharedRoughViz(self)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Chart specific options.
+
+    :rtype: OptChartRoughViz.RoughVizLine
+    """
+    return super().options
 
   @property
   def datasets(self):
@@ -61,9 +87,8 @@ class RoughViz(Html.Html):
     :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None)
-    self._datasets.append(data)
-    return data
+    dataset = self.options.data.add(label, data)
+    return dataset
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """

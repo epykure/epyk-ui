@@ -40,10 +40,64 @@ class CompChartFrappe:
            options=None, html_code=None):
     line_chart = graph.GraphFrappe.Frappe(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
     return line_chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
-    line_chart = graph.GraphFrappe.FrappeScatter(self.page, width, height, html_code, options, profile)
+  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+          options=None, html_code=None):
+    line_chart = graph.GraphFrappe.FrappeBar(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    return line_chart
+
+  def percentage(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, html_code=None):
+    line_chart = graph.GraphFrappe.FrappePercentage(self.page, width, height, html_code, options, profile)
+    line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    return line_chart
+
+  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, html_code=None):
+    line_chart = graph.GraphFrappe.FrappeDonut(self.page, width, height, html_code, options, profile)
+    line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    return line_chart
+
+  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, html_code=None):
+    line_chart = graph.GraphFrappe.FrappePie(self.page, width, height, html_code, options, profile)
+    line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    return line_chart
+
+  def heatmap(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+              options=None, html_code=None):
+    line_chart = graph.GraphFrappe.FrappeHeatmap(self.page, width, height, html_code, options, profile)
+    line_chart.options.height = height[0]
+    line_chart.colors(self.page.theme.charts)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
     return line_chart

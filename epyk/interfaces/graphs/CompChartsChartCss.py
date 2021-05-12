@@ -39,14 +39,37 @@ class CompChartCss:
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
     line_chart = graph.GraphChartCss.ChartCss(self.page, width, height, html_code, options, profile)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    if len(data["datasets"]) > 1:
+      line_chart.options.multiple()
     return line_chart
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+          options=None, html_code=None):
     line_chart = graph.GraphChartCss.ChartCssBar(self.page, width, height, html_code, options, profile)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
+    return line_chart
+
+  def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, html_code=None):
+    line_chart = graph.GraphChartCss.ChartCssBarArea(self.page, width, height, html_code, options, profile)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
     return line_chart
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
     line_chart = graph.GraphChartCss.ChartCssBarStacked(self.page, width, height, html_code, options, profile)
+    data = self.page.data.c3.y(record or [], y_columns, x_axis)
+    line_chart.labels(data["labels"])
+    for i, dataset in enumerate(data["datasets"]):
+      line_chart.add_dataset(dataset, data["series"][i])
     return line_chart

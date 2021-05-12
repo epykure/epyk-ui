@@ -414,7 +414,10 @@ class Options(DataClass):
       elif hasattr(v, 'toStr'):
         js_attrs.append("%s: %s" % (k, v.toStr()))
       else:
-        js_attrs.append("%s: %s" % (k, json.dumps(v)))
+        if k in self.__config_sub__enum_levels:
+          js_attrs.append("%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
+        else:
+          js_attrs.append("%s: %s" % (k, json.dumps(v)))
     return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
   def config_html(self):

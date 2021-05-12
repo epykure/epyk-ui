@@ -1022,6 +1022,17 @@ JS_IMPORTS = {
 
   },
 
+  # MuzeJs module
+  '@chartshq/muze': {
+    'website': 'https://muzejs.org/',
+    'version': '2.0.0',
+    'register': {'alias': 'muze ', 'module': 'muze'},
+    'modules': [
+      {'script': 'muze.js', 'path': '@chartshq/muze@2.0.0/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}
+    ],
+
+  },
+
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
@@ -1426,6 +1437,10 @@ CSS_IMPORTS = {
   'frappe-charts': {
     'modules': [
       {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  '@chartshq/muze': {
+    'modules': [
+      {'script': 'muze.css', 'path': '@chartshq/muze@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
   # Chart.css
   'charts.css': {

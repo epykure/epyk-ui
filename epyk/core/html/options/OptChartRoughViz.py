@@ -3,6 +3,45 @@ from epyk.core.html.options import Options
 from epyk.core.html.options import OptChart
 
 
+class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Not yet available.
+
+    Related Pages:
+
+      https://github.com/frappe/charts/issues/219
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.xLabel = value
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Not yet available.
+
+    Related Pages:
+
+      https://github.com/frappe/charts/issues/219
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.yLabel = value
+
+
 class OptionData(Options):
   @property
   def labels(self):
@@ -592,8 +631,9 @@ class RoughVizLine(RoughVizBar):
   @property
   def data(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return self._config_sub_data("data", OptionDataXY)
 

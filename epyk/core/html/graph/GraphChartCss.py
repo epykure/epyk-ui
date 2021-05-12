@@ -1,102 +1,121 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 from epyk.core.html import Html
-from epyk.core.js import JsUtils
+from epyk.core.css.styles.attributes import CssInline
+from epyk.core.html.options import OptChartCss
 
 
 class ChartCss(Html.Html):
   requirements = ('charts.css', )
   name = 'ChartCss'
+  _chart__type = "line"
+  _option_cls = OptChartCss.ChartCssOptions
 
   def __init__(self,  report, width, height, html_code, options, profile):
     super(ChartCss, self).__init__(
       report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.attr["class"].clear()
-    self.attr["class"].add("charts-css line")
+    self.attr["class"].add("charts-css %s" % self._chart__type)
+    self._datasets, self._labels, self.row_style = [], [], CssInline()
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Set the ChartCss options.
+
+      https://chartscss.org/charts/area/
+
+    :rtype: OptChartCss.ChartCssOptions
+    """
+    return super().options
+
+  def labels(self, values):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param values: List. The different values for the x axis.
+    """
+    self._labels = values
+
+  def dataset(self, i=None):
+    """
+    Description:
+    -----------
+    The data property of a ChartJs chart.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/master/general/data-structures
+
+    Attributes:
+    ----------
+    :param i: Integer. Optional. The series index according to the y_columns.
+
+    :rtype: JsChartJs.DataSetPie
+    """
+    if i is None:
+      return self._datasets[-1]
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+    """
+    Description:
+    ------------
+    Add a new Dataset to the chart list of Datasets.
+
+    Usage::
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param data: List. The list of points (float).
+    :param label: List. Optional. The list of points (float).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Float. Optional. The opacity level for the content.
+    """
+    self._datasets.append([label] + data)
 
   def __str__(self):
-    return '''
-<table %s>
-
-  <caption> Front End Developer Salary </caption>
-
-  <tbody>
-    <tr>
-      <td style="--start: 0.2; --size: 0.4"> <span class="data"> $ 40K </span> </td>
-    </tr>
-    <tr>
-      <td style="--start: 0.4; --size: 0.8"> <span class="data"> $ 80K </span> </td>
-    </tr>
-    <tr>
-      <td style="--start: 0.8; --size: 0.6"> <span class="data"> $ 60K </span> </td>
-    </tr>
-    <tr>
-      <td style="--start: 0.6; --size: 1.0"> <span class="data"> $ 100K </span> </td>
-    </tr>
-    <tr>
-      <td style="--start: 1.0; --size: 0.3"> <span class="data"> $ 30K </span> </td>
-    </tr>
-  </tbody>
-
-</table>
-''' % self.get_attrs(pyClassNames=self.style.get_classes())
+    html_frg = [['<th scope="row" style="%s"> %s </th>' % (
+      self.row_style, self._labels[i])] for i in range(len(self._datasets[0][1:]))]
+    html_frg_head, sections = [], len(self._labels)
+    for series in self._datasets:
+      #html_frg_head.append('<th scope="col"> %s </th>' % series[0])
+      for i, y in enumerate(series[1:]):
+        html_frg[i].append('<td style="--start: %s; --size: %s"><span class="data"> %s </span></td>' % (i/sections, y/100, y))
+    html_frg_trs = ["".join(frg) for frg in html_frg]
+    return '''<table %s><caption>%s</caption><thead>%s</thead><tbody><tr>%s</tr></tbody></table>
+      ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.options.title,
+             "".join(html_frg_head), "</tr><tr>".join(html_frg_trs))
 
 
-class ChartCssBar(Html.Html):
+class ChartCssBar(ChartCss):
   requirements = ('charts.css', )
   name = 'ChartCss Bar'
+  _chart__type = "column"
 
-  def __init__(self,  report, width, height, html_code, options, profile):
-    super(ChartCssBar, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
-    self.attr["class"].clear()
-    self.attr["class"].add("charts-css [ column ] [ show-primary-axis show-4-secondary-axes ] [ data-spacing-4 reverse-data ]")
 
-  def __str__(self):
-    return '''
-  <table %s>
-    <caption> Front End Developer Salary </caption>
-    <thead>
-      <tr>
-        <th scope="col"> Year </th>
-        <th scope="col"> Income </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <th scope="row"> 2016 </th>
-        <td style="--size: calc( 40 / 100 );"> $ 40K </td>
-      </tr>
-      <tr>
-        <th scope="row"> 2017 </th>
-        <td style="--size: calc( 60 / 100 );"> $ 60K </td>
-      </tr>
-      <tr>
-        <th scope="row"> 2018 </th>
-        <td style="--size: calc( 75 / 100 );"> $ 75K </td>
-      </tr>
-      <tr>
-        <th scope="row"> 2019 </th>
-        <td style="--size: calc( 90 / 100 );"> $ 90K </td>
-      </tr>
-      <tr>
-        <th scope="row"> 2020 </th>
-        <td style="--size: calc( 100 / 100 );"> $ 100K <br> </td>
-      </tr>
-    </tbody>
-
-  </table> 
-  ''' % self.get_attrs(pyClassNames=self.style.get_classes())
+class ChartCssBarArea(ChartCss):
+  requirements = ('charts.css', )
+  name = 'ChartCss Area'
+  _chart__type = "area"
 
 
 class ChartCssBarStacked(ChartCssBar):
   requirements = ('charts.css', )
   name = 'ChartCss Stacked Bar'
+  _chart__type = "bar"
 
-  def __init__(self,  report, width, height, html_code, options, profile):
-    super(ChartCssBar, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
-    self.attr["class"].clear()
-    self.attr["class"].add("charts-css column multiple stacked")
+  def __init__(self, report, width, height, html_code, options, profile):
+    super(ChartCssBar, self).__init__(report, width, height, html_code, options, profile)
+    self.options.multiple()
+    self.attr["class"].add("stacked")

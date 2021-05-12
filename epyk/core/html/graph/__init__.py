@@ -14,3 +14,4 @@ from . import GraphApexCharts
 from . import GraphRoughViz
 from . import GraphChartCss
 from . import GraphFrappe
+from . import GraphMuzeJs
