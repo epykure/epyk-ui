@@ -28,13 +28,14 @@ We started the implementation of Epyk already few years ago in order to help Pyt
 With this idea we started to create Epyk, a kind of transpiler which is dedicated to assist from Python the developers to develop rich web UI. 
 It will try, thanks to the autocompletion provided by the library, to familiarise the developer / data scientist in the wording of web technologies. Indeed we tried as much as possible to keep the same naming convention for CSS attributes and Javascript function to simplify the review of the transpiled HTML page if needed.
 
-Today Epyk is a bit more than a transpiler as it will encompass more than <h1 style="display:inline-block">100</h1> JavaScript and CSS modules. 
+Today Epyk is a bit more than a transpiler as it will encompass more than [**100** JavaScript](https://epyk-ui.readthedocs.io/en/latest/report/supported_ext.html#libraries) and CSS modules.
 
 Most of the popular web libraries (JQuery, Bootstrap, ApexCharts, ChartJs, Tabulator, AgGrid...) are available from the Epyk components. The resulting page transpiled will only import the ones needed for the selected components.
 
 <div align="center" >
     <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/ui_1.PNG?raw=true">
 </div>
+
 
 Library's target
 ****************
@@ -116,7 +117,7 @@ The Framework can be included within a Jupyter or JupyterLab project. But this w
 The generated Web pages are compatible with the common modern web frameworks.
 
 <div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/architecture.PNG">
+    <img width=300 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/architecture.PNG">
 </div>
 
 
@@ -127,40 +128,36 @@ This encourages the collaboration and breaks the IT silos. It can fully work in 
 and improve directly the final product. Any work done on the side within Jupyter or standalone Python scripts can be easily integrated !
 
 <div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/benefits.PNG">
+    <img width=300 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/benefits.PNG">
 </div>
 
-Examples are available for some web servers:
+Epyk can be integrated to any Python web servers and can be linked to JavaScript web framework.
+It is collaborative library focusing on the data transformation and promoting the team collaboration.
 
-In Python
-- [Tornado](https://github.com/epykure/epyk-tornado)
-- [Flask](https://github.com/epykure/epyk-flask)
-- [Django](https://github.com/epykure/epyk-django)
-- [Uvicorn](https://github.com/marlyk/epyk-uvicorn)
-- [FastAPI](https://github.com/epykure/epyk-fastapi)
+<div align="center" >
+    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/design_3.PNG?raw=true">
+</div>
 
-In JavaScript, TypeScript or Rust
-- [Angular](https://github.com/epykure/epyk-angular) 
-- [Vue](https://github.com/epykure/epyk-vue)
-- [React](https://github.com/epykure/epyk-react)
-- [Node](https://github.com/epykure/epyk-nodejs)
-- [Deno](https://github.com/epykure/epyk-deno)
+Have a look at the [Design and Architecture](https://epyk-ui.readthedocs.io/en/latest/intro/design-architecture-details.html) documentation to get more details.
 
 Usage
 ======
 
 First install Epyk to your Python environment
 
+From static pages
+*****************
+
 ```py
 pip install epyk
 ```
 
-Create a report and change CSS3 or add JavaScript events
+Create a report and change CSS3 or add JavaScript events.
 
 ```py
-from epyk.core.Page import Report
+import epyk as pk
 
-page = Report()
+page = pk.Page()
 page.headers.dev()
 
 button = page.ui.button("Click me")
@@ -170,8 +167,12 @@ button.click([
 ])
 .... 
 
+# Then to produce the html page
 page.outs.html_file(path="/templates", name="test")
 ```
+
+Using a web server
+******************
 
 Go to the next level and add real time flux in few lines or code. Epyk allows to integrate concepts of Reactive programming thanks
 to Python 3 and asyncio. All the features available in JavaScript (socket, websocket, observable ...) can be used as long as the underlying webserver is compatible.
@@ -223,8 +224,19 @@ def new_news(message):
 
 ```
 
-Export the result in a local HTML page. More examples are available on the [official repository](https://github.com/epykure/epyk-templates)
+From Notebooks
+*****************
 
-Also available on Github or in [Jupyter](https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/index.ipynb)
+We maintain a separate Github repository of Jupyter Notebooks that contain an
+interactive tutorial and examples:
+
+https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/
+
+To launch a live notebook server with those notebook using [binder](https://mybinder.org/) click on one of the following badge:
+
+[![Binder](https://beta.mybinder.org/badge.svg)](hhttps://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/index.ipynb)
+
+
+More examples are available on the [official repository](https://github.com/epykure/epyk-templates)
 
 Please get in touch if there is any feature you feel Epyk-UI needs.
