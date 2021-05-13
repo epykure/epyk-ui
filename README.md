@@ -1,9 +1,13 @@
 
 ![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png)
 
-A module to link Python ecosystem to the JavaScript one.
 
-**Epyk Studio is a wrapper to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+A single module to link Python ecosystem to the Web.
+
+**Epyk Studio is a rich transpiler to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
 or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio)**
 
 
@@ -12,8 +16,26 @@ or contribute to the project on the [Github repository](https://github.com/epyku
 
 
 Presentation
-================================
-The goal of Epyk is to ensure the implementation of a coherent system using a minimum of layers.
+=============
+
+About the project
+*****************
+We started the implementation of Epyk already few years ago in order to help Python developers (from beginner to advanced) to present their work to clients or colleagues. At this time there were only few packages in Python available and it was quite difficult for people to move to web technologies like JS, HTML and CSS.
+
+With this idea we started to create Epyk, a kind of transpiler which is dedicated to assist from Python the developers to develop rich web UI. 
+It will try, thanks to the autocompletion provided by the library, to familiarise the developer / data scientist in the wording of web technologies. Indeed we tried as much as possible to keep the same naming convention for CSS attributes and Javascript function to simplify the review of the transpiled HTML page if needed.
+
+Today Epyk is a bit more than a transpiler as it will encompass more than <h1>100</h1> JavaScript and CSS modules. 
+
+Most of the popular web libraries (JQuery, Bootstrap, ApexCharts, ChartJs, Tabulator, AgGrid...) are available from the Epyk components. The resulting page transpiled will only import the ones needed for the selected components.
+
+<div align="center" >
+    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/ui_1.PNG?raw=true">
+</div>
+
+Library's target
+****************
+Epyk's is to ensure the implementation of a coherent system using a minimum of layers.
 With Epyk the user stays in the Python layer to drive and optimize the data transformation.
 This Framework also encourages the implementation of Micro services and cloud based architecture.
 
@@ -21,8 +43,20 @@ This Framework also encourages the implementation of Micro services and cloud ba
     <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
 </div>
 
+The full documentation is available on [Read the Docs](https://epyk-ui.readthedocs.io/en/latest/)
+
+In the [Template Repository](https://github.com/epykure/epyk-templates/tree/master/tutos) lot of examples are available to run as static pages or with underlying Python servers:
+
+_ fastapi_viewer.py: A simple interactive web page to display data from pandas_datareader.
+- fastapi_viewer_logs.py: An interactive web page to display log messages based on user inputs/filters
+- fastapi_webscraping.py: An example of report extracting data from a website to analyse the prices
+- fastapi_db.py : An App to display documentation and allow a versioning in a SqLite database.
+
+Also a [Gallery](https://epykure.github.io/demos/) is available to get more visible results
+
+
 Quickstart
-================================
+==========
 
 For people impatient to understand the concept, you can test the below minimalist dashboard.
 
@@ -33,12 +67,12 @@ Install Epyk
 The below code will create a simple interactive dashboard relying on internal mock data.
 
 ```py
-from epyk.core.Page import Report
+import epyk as pk
 
+# Just to get mock data to test
 from epyk.tests import mocks
 
-
-page = Report()
+page = pk.Page()
 page.headers.dev()
 
 js_data = page.data.js.record(data=mocks.languages)
@@ -59,8 +93,13 @@ select.change([
 ])
 ```
 
+More information in the doc [Getting started with Epyk](https://epyk-ui.readthedocs.io/en/latest/intro/getting-started-with-epyk.html)
+
+
 Compatibility
 ================================
+
+**No dependency hence  the library can be integrated to any existing Python project**
 
 Epyk is compatible with the most common Web Python Frameworks (Flask and Django).
 By default, the server package embeds a Flask app as it is easier to install and ready to use.
