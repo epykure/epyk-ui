@@ -43,7 +43,7 @@ With Epyk the user stays in the Python layer to drive and optimize the data tran
 This Framework also encourages the implementation of Micro services and cloud based architecture.
 
 <div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
+    <img width=400 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
 </div>
 
 The full documentation is available on [Read the Docs](https://epyk-ui.readthedocs.io/en/latest/)
@@ -56,6 +56,10 @@ _ fastapi_viewer.py: A simple interactive web page to display data from pandas_d
 - fastapi_db.py : An App to display documentation and allow a versioning in a SqLite database.
 
 Also a [Gallery](https://epykure.github.io/demos/) is available to get more visible results
+
+<div align="center" >
+    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/gallery_1.PNG?raw=true">
+</div>
 
 
 Quickstart
