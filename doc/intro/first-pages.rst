@@ -139,6 +139,47 @@ For example, the below will change the color and the background color::
     :alt: Epyk Studio dashboard
     :align: center
 
+
+Offline mode
+############
+
+It is possible to run offline but this will require to get the list of external packages downloaded first.
+
+To do so from a script some functions and CLI are embedded in the library.
+
+1. Get the list of requirements.
+
+At the end of any script is it possible to call ``page.imports.requirements`` to get the list of all the external packages.
+This will return the different alias (the npm aliases) used to defined an external package (some JavaScript and CSS pages)::
+
+    page = pk.Page()
+    page.headers.dev()
+
+    page.body.template.style.configs.doc(background="white")
+    ...
+
+    print(",".join([r for r in page.imports.requirements]))
+
+    epyk_npm.exe install -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
+
+2. Install the packages locally
+
+A CLI is available to install all the packages to a dedicated path::
+
+    epyk_npm.exe install -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
+
+*By default this will download the package and create a statics folder at the root*
+
+3. Set a offline mode
+
+Then change the outs definition to set the path of the external packages::
+
+    page.imports.static_url = "C:\epyks\statics"
+    page.outs.html_file(name="test.html", options={"split": True, "minify": False, "static_path": page.imports.static_url})
+
+In the function ``page.outs.html_file`` some options are available to split the outputs and change the formatting.
+
+
 Other use cases
 ***************
 

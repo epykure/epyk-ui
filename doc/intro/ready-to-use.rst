@@ -9,8 +9,23 @@ More ready to use dashboards are available in the `Epyk Gallery <https://epykure
 
 .. note:: This is a collaborative framework so not hesitate to share your work to add more examples to this list.
 
-Statics
-*******
+
+Epyk for beginners
+******************
+
+This should a easy start for people not really familiar with either Python or JavaScript but eager to learn and produce results
+quickly (without to deal with thousand of packages, technologies and concepts).
+
+The below links will propose two approaches according to your appetite:
+
+<ul>
+    <li><a href="../guides/beginner-py.html">Python beginner like Data Scientist, Business analyst....</a></li>
+    <li><a href="../guides/beginner-js.html"JavaScript beginner like UI, UX developers...</a></li>
+</ul>
+
+
+Statics Page
+************
 
 .. toctree::
     :maxdepth: 1
@@ -21,9 +36,11 @@ Statics
     /../guides/epyk-example-static_4.rst
     /../guides/epyk-example-static_5.rst
 
+Web server integration
+**********************
 
 Flask
-*****
+_____
 
 .. toctree::
     :maxdepth: 1
@@ -33,7 +50,7 @@ Flask
 
 
 Fast API
-********
+________
 
 .. toctree::
     :maxdepth: 1

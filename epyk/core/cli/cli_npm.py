@@ -6,6 +6,7 @@ epyk_npm.exe
 
 import sys
 import os
+import json
 import argparse
 
 from epyk.core.js import Imports
@@ -47,7 +48,8 @@ def install_all(args):
 def install_parser(subparser):
   subparser.set_defaults(func=install)
   subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
-  subparser.add_argument('-p', '--path', required=True, help='''The UI project path''')
+  subparser.add_argument('-p', '--path', help='''The UI project path''')
+  subparser.add_argument('-f', '--force', help='''Y / N flag to Force the package update''')
 
 
 def install(args):
@@ -59,18 +61,26 @@ def install(args):
 
   The install will rely on the version and configuration in the Imports module
 
+  Usage::
+
+      print(",".join(list(page.imports.requirements)))
+
+      epyk_npm.exe install -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
+
   Attributes:
   ----------
-  :param parser: -pkg, String, The packages list comma separated
-  :param parser: -p, The project path
+  :param packages: -pkg. The packages list comma separated.
+  :param path: -p. Optional. The project path. Default current path.
+  :param force: -f. Optional. Force the update of the already installed packages. Default N.
   """
-  PyNpm.install(args.packages.split(","), path=args.path, is_node_server=False, update=False)
+  project_path = args.path or os.path.join(os.getcwd(), "statics")
+  PyNpm.install(project_path, args.packages.split(","), node_server=False, update=args.force == 'Y')
 
 
 def update_parser(subparser):
   subparser.set_defaults(func=update)
   subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
-  subparser.add_argument('-p', '--path', required=True, help='''The UI project path''')
+  subparser.add_argument('-p', '--path', help='''The UI project path''')
 
 
 def update(args):
@@ -79,14 +89,25 @@ def update(args):
   ------------
   Install only the defined packages locally.
 
-  The install will rely on the version and configuration in the Imports module
+  The install will rely on the version and configuration in the Imports module.
+
+.. seealso::
+
+  This is equivalent to epyk_npm.exe install -f=Y
+
+  Usage::
+
+      print(",".join(list(page.imports.requirements)))
+
+      epyk_npm.exe update -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
 
   Attributes:
   ----------
-  :param parser: -pkg, String, The packages list comma separated
-  :param parser: -p, The project path
+  :param packages: -pkg. The packages list comma separated.
+  :param path: -p. Optional. The project path. Default current path.
   """
-  PyNpm.install(args.packages.split(","), path=args.path, is_node_server=False, update=True)
+  project_path = args.path or os.path.join(os.getcwd(), "statics")
+  PyNpm.install(project_path, args.packages.split(","), node_server=False, update=True)
 
 
 def npm_parser(subparser):
@@ -112,8 +133,9 @@ def npm(args):
 
 def requirements_parser(parser):
   parser.set_defaults(func=requirements)
-  parser.add_argument('-p', "--path", help="The UI work ath")
-  parser.add_argument('-r', "--page", required=True, help="The report name")
+  parser.add_argument('-p', "--path", help="The UI work path")
+  parser.add_argument('-e', "--exception", help="Y / N Flag to mention if the process needs to stop when error to find a report")
+  parser.add_argument('-r', "--pages", help="The report names")
 
 
 def requirements(args):
@@ -124,21 +146,55 @@ def requirements(args):
 
   Attributes:
   ----------
-  :param parser: -p, the workspace path (Optional if run directly in the project root)
-  :param parser: -r, The page name (without the .py extension)
+  :param path: -p, the workspace path (Optional if run directly in the project root)
+  :param exception: -e, Y/N flag
+  :param page: -r, The page name (without the .py extension)
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
 
-  reprot_path = utils.get_report_path(project_path)
-  sys.path.append(reprot_path)
-  mod = __import__(args.page, fromlist=['object'])
-  page = utils.get_page(mod)
-  page.html()
-  return page.imports().requirements
+  requirements, reports_count = {}, 0
+  if args.pages is None:
+    scripts = []
+    for fp in os.listdir(project_path):
+      if fp.endswith(".py"):
+        scripts.append(fp)
+  else:
+    scripts = args.pages.split(",")
+
+  for script in scripts:
+    if script.endswith(".py"):
+      mod_name = script[:-3]
+    else:
+      mod_name = script
+      script = "%s.py" % script
+    report_path = utils.get_report_path(project_path, args.exception=="Y", report=script)
+    sys.path.append(report_path)
+    mod = __import__(mod_name, fromlist=['object'])
+    page = utils.get_page(mod)
+    page.outs.html()
+
+    for pkg in page.imports.requirements:
+      versions = page.imports.jsImports[pkg]['versions']
+      requirements[(pkg, versions[0])] = requirements.get((pkg, versions[0]), 0) + 1
+    reports_count += 1
+  results = []
+  for k, v in requirements.items():
+    results.append({"name": k[0], "version": k[1], "count": v, "latest": PyNpm.Npm().version(k[0]),
+                    "usage": "%0.1f%%" % (100 * v / reports_count)})
+  return results
 
 
 def angular_parser(parser):
+  """
+  Description:
+  ------------
+  Paser for the angular CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
   parser.set_defaults(func=angular)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The Angular application name")
@@ -165,6 +221,15 @@ def angular(args):
 
 
 def vue_parser(parser):
+  """
+  Description:
+  ------------
+  Paser for the vue CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
   parser.set_defaults(func=vue)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The Vue application name")
@@ -191,6 +256,15 @@ def vue(args):
 
 
 def react_parser(parser):
+  """
+  Description:
+  ------------
+  Paser for the vue CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
   parser.set_defaults(func=react)
   parser.add_argument('-s', "--server", required=True, help="The nodeJs server path")
   parser.add_argument('-n', "--name", required=True, help="The React application name")

@@ -31,7 +31,7 @@ Interfaces per Categories:
 There are links to existing Web Framework to rely on their components:
 
 
-Full list of 79 Interfaces:
+Full list of 78 Interfaces:
 *******************************************
 
 .. toctree::
@@ -97,7 +97,6 @@ Full list of 79 Interfaces:
     /report/ui/graphs/DC
     /report/ui/graphs/CompChartFrappe
     /report/ui/graphs/ChartGoogle
-    /report/ui/graphs/CompMuzeJs
     /report/ui/graphs/Nvd3
     /report/ui/graphs/Plotly
     /report/ui/graphs/Plotly2D

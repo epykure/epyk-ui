@@ -6,7 +6,7 @@ import os
 from epyk.core.Page import Report
 
 
-def get_report_path(project_path, raise_error=True):
+def get_report_path(project_path, raise_error=True, report=None):
   """
   Description:
   ------------
@@ -17,12 +17,29 @@ def get_report_path(project_path, raise_error=True):
   ----------
   :param project_path: String. The project path.
   :param raise_error. Boolean. Optional. Flag to raise an error.
+  :param report: Page. Optional. The web page object.
   """
-  ui_path = os.path.join(project_path, 'ui')
-  if not os.path.exists(ui_path):
-    reports_path = os.path.join(project_path, 'reports')
+  ui_path, reports_path = os.path.join(project_path, 'ui'), None
+  possible_structure = [("ui", ), ("ui", 'reports'), ("reports", )]
+  if report is not None:
+    if os.path.exists(os.path.join(project_path, report)):
+      reports_path = project_path
+    else:
+      for k in possible_structure:
+        t_path = os.path.join(project_path, *k)
+        if os.path.exists(os.path.join(t_path, report)):
+          reports_path = project_path
+          break
+
   else:
-    reports_path = os.path.join(project_path, 'ui', 'reports')
+    if not os.path.exists(ui_path):
+      reports_path = os.path.join(project_path, 'reports')
+    else:
+      reports_path = os.path.join(project_path, 'ui', 'reports')
+
+  if reports_path is None:
+    reports_path = project_path
+
   if not os.path.exists(reports_path):
     if raise_error:
       raise Exception("Cannot find ui or reports path in this project")
