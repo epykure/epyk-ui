@@ -4,8 +4,8 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![PyPI download total](https://img.shields.io/pypi/dt/epyk.svg)](https://pypi.python.org/pypi/epyk/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/epyk.svg)](https://pypi.python.org/pypi/epyk/)
+[![Documentation Status](https://readthedocs.org/projects/epyk-ui/badge/?version=latest)](http://epyk.readthedocs.io/?badge=latest)
 
 
 A single module to link Python ecosystem to the Web.
