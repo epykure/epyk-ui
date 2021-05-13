@@ -3,7 +3,10 @@
 
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![PyPI download total](https://img.shields.io/pypi/dt/epyk.svg)](https://pypi.python.org/pypi/epyk/)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/epyk.svg)](https://pypi.python.org/pypi/epyk/)
+
 
 A single module to link Python ecosystem to the Web.
 
@@ -25,7 +28,7 @@ We started the implementation of Epyk already few years ago in order to help Pyt
 With this idea we started to create Epyk, a kind of transpiler which is dedicated to assist from Python the developers to develop rich web UI. 
 It will try, thanks to the autocompletion provided by the library, to familiarise the developer / data scientist in the wording of web technologies. Indeed we tried as much as possible to keep the same naming convention for CSS attributes and Javascript function to simplify the review of the transpiled HTML page if needed.
 
-Today Epyk is a bit more than a transpiler as it will encompass more than <h1>100</h1> JavaScript and CSS modules. 
+Today Epyk is a bit more than a transpiler as it will encompass more than <h1 style="display:inline-block">100</h1> JavaScript and CSS modules. 
 
 Most of the popular web libraries (JQuery, Bootstrap, ApexCharts, ChartJs, Tabulator, AgGrid...) are available from the Epyk components. The resulting page transpiled will only import the ones needed for the selected components.
 
