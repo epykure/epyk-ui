@@ -5,7 +5,6 @@
 from epyk.core import html
 
 from epyk.interfaces.graphs import CompChartsApex
-from epyk.interfaces.graphs import CompChartsMuzeJs
 from epyk.interfaces.graphs import CompChartsBillboard
 from epyk.interfaces.graphs import CompChartsDc
 from epyk.interfaces.graphs import CompChartsRoughViz
@@ -432,19 +431,6 @@ class Graphs:
       https://chartscss.org/
     """
     return CompChartsChartCss.CompChartCss(self)
-
-  @property
-  def muzeJs(self):
-    """
-    Description:
-    ------------
-    Create Tableau-like data visualizations in browser, powered by WebAssembly.
-
-    Related Pages:
-
-      https://muzejs.org/
-    """
-    return CompChartsMuzeJs.CompMuzeJs(self)
 
   @html.Html.css_skin()
   def menu(self, chart, height=(18, 'px'), options=None, post=None, profile=None):

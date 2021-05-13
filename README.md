@@ -234,7 +234,7 @@ https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/
 
 To launch a live notebook server with those notebook using [binder](https://mybinder.org/) click on one of the following badge:
 
-[![Binder](https://beta.mybinder.org/badge.svg)](hhttps://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/index.ipynb)
+[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/epykure/epyk-templates-notebooks/master)
 
 
 More examples are available on the [official repository](https://github.com/epykure/epyk-templates)

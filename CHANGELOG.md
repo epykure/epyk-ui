@@ -4,7 +4,6 @@
 - Documentation sections.
 - Add Frappe Charts.
 - Add ChartCss.
-- test MuzeJs.
 
 ### Changed
 - Online documentation
@@ -12,7 +11,8 @@
 
 ### Fixed
 - Some CLI entry points.
-- Improve wrapper to RoughViz
+- Improve wrapper to RoughViz.
+- Fix NPM CLI.
 
 
 ## [1.5.17] - 2021-05-09

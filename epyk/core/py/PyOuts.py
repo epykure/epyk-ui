@@ -431,6 +431,10 @@ class PyOuts:
       page.ui.text("This is a text")
       page.outs.html_file()
 
+      # To generate multiple files using local packages
+      page.imports.static_url = "C:\epyks\statics"
+      page.outs.html_file(name="test.html", options={"split": True, "minify": True, "static_path": page.imports.static_url})
+
     Attributes:
     ----------
     :param path: String. Optional. The path in which the output files will be created.
@@ -446,6 +450,7 @@ class PyOuts:
       os.makedirs(path)
     if name is None:
       name = int(time.time())
+    name = name if not name.endswith(".html") else name[:-5]
     html_file_path = os.path.join(path, "%s.html" % name)
     htmlParts = []
     cssParts = dict(self._report.body.style.get_classes_css())
@@ -463,10 +468,11 @@ class PyOuts:
     if options.get("split", False):
       css_filename = "%s.min" % name if options.get("minify", False) else name
       js_filename = "%s.min" % name if options.get("minify", False) else name
+      static_url = self._report.imports.static_url or "."
       results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
-        results['cssImports'], options.get("css_route", './css'), css_filename)
+        results['cssImports'], options.get("css_route", '%s/css' % static_url), css_filename)
       body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
-        body, options.get("js_route", './js'), js_filename)
+        body, options.get("js_route", '%s/js' % static_url), js_filename)
       static_path = path
       if options.get("static_path") is not None:
         static_path = os.path.join(path, options.get("static_path"))

@@ -2165,7 +2165,7 @@ class ImportModule:
         if not node_path.endswith("/"):
           node_path += "/"
         new_css["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
-      self._css = new_css
+      self._css["main"] = new_css
     self.overriden = True
 
 
@@ -2707,7 +2707,7 @@ class ImportManager:
   """
 
   online = True
-  static_path = '/static'
+  _static_path = None
 
   def __init__(self, report=None):
     """
@@ -2766,6 +2766,16 @@ class ImportManager:
           main_keys.append(k)
           versions.append(v)
         import_cict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
+
+  @property
+  def static_url(self):
+    return self._static_path
+
+  @static_url.setter
+  def static_url(self, path):
+    if path is not None:
+      self.online = False
+    self._static_path = path
 
   def add(self, alias):
     """
@@ -2958,8 +2968,7 @@ class ImportManager:
         continue
 
       if not self.online:
-        self.pkgs.get(css_alias).set_local(static_url=self.static_path)
-
+        self.pkgs.get(css_alias).set_local(static_url=self.static_url)
       if css_alias in _SERVICES:
         # Add services url
         for service in _SERVICES[css_alias].get('css', []):
@@ -3024,7 +3033,7 @@ class ImportManager:
         continue
 
       if not self.online:
-        self.pkgs.get(js_alias).set_local(static_url=self.static_path)
+        self.pkgs.get(js_alias).set_local(static_url=self.static_url)
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
         if self._report._node_modules is not None:
@@ -3386,33 +3395,6 @@ class ImportManager:
         self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config.get("version", ''))
     return self
 
-  # def getPackages(self, static_path=None, reload=False, exclude=None):
-  #   """
-  #   Description:
-  #   ------------
-  #   Download all the CSS and Js packages from the official CDNJS configured in the configuration.
-  #   It is possible to get the configuration settings by calling the function getPackageInfo(aliasName) attached to the report
-  #
-  #   Usage:
-  #   -----
-  #
-  #   Attributes:
-  #   ----------
-  #   :param static_path: The package reference in the above list
-  #   :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
-  #   :param exclude: Optional.
-  #
-  #   :return: The Python Import manager
-  #   """
-  #   if exclude is None:
-  #     exclude = []
-  #   if not static_path.endswith("static"):
-  #     static_path = os.path.join(static_path, "static")
-  #   aliases = list(set(list(CSS_IMPORTS.keys()) + list(JS_IMPORTS.keys())))
-  #   for alias in aliases:
-  #     self.getPackage(alias, static_path=static_path, reload=reload)
-  #   return self
-
   def to_requireJs(self, data, excluded_packages=None):
     """
     Description:
@@ -3563,11 +3545,11 @@ class ImportManager:
     for alias in aliases:
       if alias in JS_IMPORTS:
         for m in JS_IMPORTS[alias]['modules']:
-          m.update({'path': '', 'cdnjs': end_points or self.static_path})
+          m.update({'path': '', 'cdnjs': end_points or self.static_url})
     for alias in aliases:
       if alias in CSS_IMPORTS:
         for m in CSS_IMPORTS[alias]['modules']:
-          m.update({'path': '', 'cdnjs': end_points or self.static_path})
+          m.update({'path': '', 'cdnjs': end_points or self.static_url})
 
   @property
   def pkgs(self):

@@ -98,6 +98,22 @@ Very few changes are required to add a backend post to an underlying service::
 .. image:: ../_static/anim_ui_2.gif
     :align: center
 
+Dependencies
+************
+
+Epyk does not require any python dependency. The idea of this library is to code with any packages or frameworks used in both
+Python and JavaScript side. Thus it will not impose any library to run. Obviously component are done in a way to deal with
+records (list of dictionaries) which are common objects in Pandas.
+
+The only thing required to work is an internet connection to be able to retrieve the external packages on which Epyk leverage
+to render the page.
+
+Those packages are not part of the project and they are developed independently.
+
+.. seealso::
+  his is not a new Visualisation library with some core Javascript embedded modules, this is a unique library which
+  link your python code to external and already popular JavaScript and CSS packages
+
 
 First Page
 ************
