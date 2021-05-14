@@ -18,7 +18,7 @@ or contribute to the project on the [Github repository](https://github.com/epyku
 *For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)*
 
 
-This project is a active and constant improvement so do not forget to run the below command to always get the latest version install.
+This project is in active and constant improvement so do not forget to run the below command to always get the latest version install.
 
 ```
 pip install epyk --upgrade
