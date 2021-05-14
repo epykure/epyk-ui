@@ -18,10 +18,11 @@ or contribute to the project on the [Github repository](https://github.com/epyku
 *For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)*
 
 
-<div markdown="1" style="background:#F1F8FF;border:1px solid #1283C4;padding:5px">
-This project is a active and constant improvement so do not forget to run the <b>pip install epyk --upgrade</b> command
-to get the latest version install.
-</div>
+This project is a active and constant improvement so do not forget to run the below command to always get the latest version install.
+
+```
+pip install epyk --upgrade
+```
 
 
 Presentation
