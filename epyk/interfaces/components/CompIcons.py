@@ -864,7 +864,7 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="", width=(None, 'px'),
+  def twitter(self, text=None, url="https://twitter.com/Epykure1", position=None, tooltip="", width=(None, 'px'),
               html_code=None, options=None, profile=None):
     """
     Description:
@@ -901,7 +901,7 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def twitch(self, text=None, url="https://www.twitch.tv/", position=None, tooltip="", width=(None, 'px'),
+  def twitch(self, text=None, url="https://www.twitch.tv/epykure1", position=None, tooltip="", width=(None, 'px'),
              html_code=None, options=None, profile=None):
     """
     Description:
@@ -977,12 +977,13 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="",
+  def linkedIn(self, text=None, url="https://www.linkedin.com/in/epykure-python-58278a1b8/", position=None, tooltip="",
                width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
-
+    Create a linkedIn icon button which will by default point to the epykure account.
+    Epykure account is the official account for the development of this framework.
 
     Usage::
 
@@ -994,10 +995,10 @@ class Icons:
 
     Attributes:
     ----------
-    :param text:
-    :param url:
+    :param text: String. Optional. The text for the Icon.
+    :param url: String. Optional. The url when clicked.
     :param position:
-    :param tooltip:
+    :param tooltip: String. Optional. The tooltip when the mouse is hove.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -1053,11 +1054,14 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def github(self, text=None, url="https://github.com/", position=False, tooltip="Go the the Github project",
+  def github(self, text=None, url="https://github.com/epykure/epyk-ui", position=None, tooltip="Go the the Github project",
              width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
+    Link to a Github repository.
+
+    By default this icon button will redirect to the Epyk UI repository.
 
     Usage::
 
@@ -1069,8 +1073,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param text:
-    :param url:
+    :param text: String. optional. The text on the icon.
+    :param url: String. Optional. The url link.
     :param position:
     :param tooltip:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -1078,11 +1082,9 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if width[0] is None:
-      width = (self.page.body.style.globals.font.size, 'px')
-    options = options or {"target": "_blank", "font-factor": 14}
+    options = options or {"target": "_blank", "font-factor": -2}
     icon = self.awesome('fab fa-github', text, tooltip, position, width, width, html_code, options, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.css({"text-align": "center", "line-height": '%s%s' % (self.page.body.style.globals.font.size, 'px')})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.page.js.navigateTo(url, options=options)])
