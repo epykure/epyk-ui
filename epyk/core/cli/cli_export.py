@@ -197,9 +197,9 @@ def html(args):
 
   Attributes:
   ----------
-  :param parser: -p, The path where the new environment will be created: -p /foo/bar
-  :param parser: -n, The name of the page to be transpiled: -n home
-  :param parser: -split, Y / N Flag to specify if the result should be splitting in several files
+  :param path: -p, The path where the new environment will be created: -p /foo/bar
+  :param name: -n, The name of the page to be transpiled: -n home
+  :param split: -split, Y / N Flag to specify if the result should be splitting in several files
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)

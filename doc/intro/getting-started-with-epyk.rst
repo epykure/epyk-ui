@@ -47,7 +47,7 @@ For a quick examples it is possible to use the below CLI::
 
     epyk.exe demo
 
-Ths will generate the below script epyk_demo.py in the current directly::
+The will generate the below script epyk_demo.py in the current directly::
 
     epyk.exe transpile -n=epyk_demo
 
