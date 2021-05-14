@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.18] - 2021-05-14
+
+### Added
 - Documentation sections.
 - Add Frappe Charts.
 - Add ChartCss.
