@@ -10,11 +10,7 @@
 
 A single module to link Python ecosystem to the Web.
 
-Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !
-
-**Epyk Studio is a rich transpiler to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
-or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released**
-
+**Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !**
 
 *FAQ*
 *For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)*
@@ -247,5 +243,12 @@ To launch a live notebook server with those notebook using [binder](https://mybi
 
 
 More examples are available on the [official repository](https://github.com/epykure/epyk-templates)
+
+Coming soon
+===========
+
+Epyk Studio is a rich and collaborative framework to simplify the use of this library with bespoke configuration / styles. You can start downloading it [here](https://pypi.org/project/epyk-studio/) 
+or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released
+
 
 Please get in touch if there is any feature you feel Epyk-UI needs.
