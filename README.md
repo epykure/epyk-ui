@@ -2,7 +2,7 @@
 ![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png)
 
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/epykure/epyk-ui/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/epyk.svg)](https://pypi.python.org/pypi/epyk/)
 [![Documentation Status](https://readthedocs.org/projects/epyk-ui/badge/?version=latest)](http://epyk-ui.readthedocs.io/?badge=latest)
