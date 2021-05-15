@@ -31,6 +31,43 @@ to write log messages to the console (F12 in the browser)::
     def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
 
 
+Styles & Configuration
+**********************
+
+CSS Style
+_________
+
+It is possible to use CSS inline properties or bespoke CSS classes in order to change the display of components.
+Quite a few examples are available but the easiest is to use ``style.css`` properties::
+
+    button = page.ui.buttons.colored("Test")
+    button.style.css.color = "yellow" # Change the text color
+    button.style.css.position = "fixed"
+    button.style.css.bottom = 10 # Default will use px
+    button.style.css.right = 10 # Default will use px
+
+More examples are available in the section :doc:`intro/extensions`
+
+CSS effects
+___________
+
+It is also possible to use predefined CSS effects and animates::
+
+    title2 = page.ui.titles.title("Epyk in few words", align="center")
+    title2.style.effects.shiny_text("green")
+
+
+    title1 = page.ui.titles.title("A vast selection of Charts", align="center")
+    title1.style.effects.down(start=-10)
+
+
+Interactivity & events
+*********************
+
+Component events
+________________
+
+
 Community
 **********
 
@@ -46,7 +83,7 @@ shared in the popular online editors.
 
 
 To Pyk
-__________
+______
 
 
 
