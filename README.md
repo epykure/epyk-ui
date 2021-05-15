@@ -10,8 +10,10 @@
 
 A single module to link Python ecosystem to the Web.
 
+Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !
+
 **Epyk Studio is a rich transpiler to simplify the use of this module with bespoke configuration / styles. You can download it [here](https://pypi.org/project/epyk-studio/) 
-or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio)**
+or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released**
 
 
 *FAQ*
