@@ -8,9 +8,8 @@
 [![Documentation Status](https://readthedocs.org/projects/epyk-ui/badge/?version=latest)](http://epyk-ui.readthedocs.io/?badge=latest)
 
 
-A single module to link Python ecosystem to the Web.
-
-**Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !**
+**A single module to link Python ecosystem to the Web.
+Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !**
 
 *FAQ*
 *For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)*
