@@ -532,7 +532,8 @@ class Images:
     return html_id
 
   @html.Html.css_skin()
-  def carousel(self, images=None, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
+  def carousel(self, images=None, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None,
+               profile=None):
     """
     Description:
     ------------
@@ -758,3 +759,89 @@ class Images:
     div.style.css.border = "1px solid black"
     div.style.css.vertical_align = "middle"
     return div
+
+  def gallery(self, images=None, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+    Mosaic of pictures.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Related Pages:
+
+    Underlying HTML Objects:
+
+    Templates:
+
+    Attributes:
+    ----------
+    :param images: List. Optional. The list with the pictures.
+    :param columns: Integer. Optional. The number of column for the mosaic component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    dflt_options = {}
+    if options is not None:
+      dflt_options.update(options)
+    grid = self.page.ui.grid(width=width, height=height, options=dflt_options, profile=profile)
+    grid.style.css.margin_top = 20
+    grid.style.css.overflow = 'hidden'
+    grid.style.css.margin_bottom = 20
+    row = self.page.ui.row(options=dflt_options)
+    grid.images = []
+    grid.texts = {}
+    for i, image in enumerate(images):
+      if dflt_options.get("max") is not None and len(grid.images) > dflt_options.get("max"):
+        break
+
+      if i % columns == 0:
+        grid.add(row)
+        row = self.page.ui.row(options=dflt_options)
+      text = None
+      if not hasattr(image, 'options'):
+        if isinstance(image, dict):
+          if 'htmlCode' not in image:
+            image["htmlCode"] = "%s_%s" % (grid.htmlCode, i)
+          if 'align' not in image:
+            image['align'] = "center"
+          if "text" in image:
+            text = self.page.ui.text(image["text"], options=dflt_options)
+            text.style.css.bold()
+            text.style.css.white_space = "nowrap"
+            grid.texts[i] = text
+            del image["text"]
+
+          image = self.page.ui.img(**image)
+        else:
+          image = self.page.ui.img(image, html_code="%s_%s" % (grid.htmlCode, i), align="center")
+        image.style.css.font_factor(15)
+        image.style.add_classes.div.border_hover()
+        image.style.css.text_align = "center"
+        grid.images.append(image)
+      if text is not None:
+        text.style.css.display = "inline-block"
+        text.style.css.width = "100%"
+        text.style.css.text_align = "center"
+        row.add(self.page.ui.col([image, text], align="center", options=dflt_options))
+      else:
+        row.add(image)
+      row.attr["class"].add("mt-3")
+      for r in row:
+        r.attr["class"].add("px-1")
+      image.parent = row[-1]
+    if len(row):
+      for i in range(columns - len(row)):
+        row.add(self.page.ui.text("&nbsp;"))
+      for r in row:
+        r.attr["class"].add("px-1")
+      row.attr["class"].add("mt-3")
+      grid.add(row)
+    grid.style.css.color = self.page.theme.greys[6]
+    return grid

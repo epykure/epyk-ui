@@ -1091,7 +1091,7 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def python(self, text=None, url="https://pypi.org/", position=None, tooltip="Like or package",
+  def python(self, text=None, url="https://pypi.org/", position=None, tooltip="",
              width=(25, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
@@ -1117,9 +1117,11 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("fab fa-python", text, tooltip, position, width, width, html_code, options, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
+    icon = self.awesome(
+      "fab fa-python", text, tooltip, position, width if text is None else "auto", None, html_code, options, profile)
+    icon.css({"border-radius": "%spx" % width[0], "padding-bottom": "3px", "text-align": "center",
+              "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.page.js.navigateTo(url)])
     return icon
@@ -1617,6 +1619,89 @@ class Icons:
     More custom toggles icons.
     """
     return Toggles(self)
+
+  def gallery(self, icons=None, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+    Mosaic of pictures.
+
+    :tags:
+    :categories:
+
+    Usage:
+    -----
+
+    Related Pages:
+
+    Underlying HTML Objects:
+
+    Templates:
+
+    Attributes:
+    ----------
+    :param icons: List. Optional. The list with the pictures.
+    :param columns: Integer. Optional. The number of column for the mosaic component.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    dflt_options = {}
+    if options is not None:
+      dflt_options.update(options)
+    grid = self.page.ui.grid(width=width, height=height, options=dflt_options, profile=profile)
+    grid.style.css.margin_top = 20
+    grid.style.css.overflow = 'hidden'
+    grid.style.css.margin_bottom = 20
+    row = self.page.ui.row(options=dflt_options)
+    grid.icons = []
+    grid.texts = {}
+    for i, icon in enumerate(icons):
+      if dflt_options.get("max") is not None and len(grid.icons) > dflt_options.get("max"):
+        break
+
+      if i % columns == 0:
+        grid.add(row)
+        row = self.page.ui.row(options=dflt_options)
+      text = None
+      if not hasattr(icon, 'options'):
+        if isinstance(icon, dict):
+          if 'html_code' not in icon:
+            icon["html_code"] = "%s_%s" % (grid.htmlCode, i)
+          if 'align' not in icon:
+            icon['align'] = "center"
+          if "text" in icon:
+            text = self.page.ui.text(icon["text"], options=dflt_options)
+            text.style.css.bold()
+            text.style.css.white_space = "nowrap"
+            grid.texts[i] = text
+            del icon["text"]
+
+          icon = self.page.ui.icon(**icon)
+        else:
+          icon = self.page.ui.icon(icon, html_code="%s_%s" % (grid.htmlCode, i), align="center")
+        icon.style.css.font_factor(15)
+        icon.style.css.text_align = "center"
+        grid.icons.append(icon)
+      if text is not None:
+        text.style.css.display = "inline-block"
+        text.style.css.width = "100%"
+        text.style.css.text_align = "center"
+        row.add(self.page.ui.col([icon, text], align="center", options=dflt_options))
+      else:
+        row.add(icon)
+      row.attr["class"].add("mt-3")
+      icon.parent = row[-1]
+    if len(row):
+      for i in range(columns - len(row)):
+        row.add(self.page.ui.text("&nbsp;"))
+      row.attr["class"].add("mt-3")
+      grid.add(row)
+    grid.style.css.color = self.page.theme.greys[6]
+    grid.style.css.padding_top = 5
+    grid.style.css.padding_bottom = 5
+    return grid
 
 
 class Toggles:

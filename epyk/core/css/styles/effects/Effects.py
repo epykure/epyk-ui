@@ -248,7 +248,7 @@ class Effects:
     if self.component is not None:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    attrs = {"from": {"transform": "translateY(-100%)"}, "to": {"transform": "translateY(0)"}}
+    attrs = {"from": {"transform": "translateY(%s%%)" % start}, "to": {"transform": "translateY(0)"}}
     self._report.body.style.css_class.keyframes(name, attrs)
     return name
 
