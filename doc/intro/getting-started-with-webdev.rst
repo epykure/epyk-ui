@@ -46,7 +46,7 @@ Quite a few examples are available but the easiest is to use ``style.css`` prope
     button.style.css.bottom = 10 # Default will use px
     button.style.css.right = 10 # Default will use px
 
-More examples are available in the section :doc:`intro/extensions`
+More examples are available in the section :doc:`extensions`
 
 CSS effects
 ___________
