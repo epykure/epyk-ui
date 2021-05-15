@@ -246,7 +246,7 @@ More examples are available on the [official repository](https://github.com/epyk
 Coming soon
 ===========
 
-Epyk Studio is a rich and collaborative framework to simplify the use of this library with bespoke configuration / styles. You can start downloading it [here](https://pypi.org/project/epyk-studio/) 
+**Epyk Studio** is a rich and collaborative framework to simplify the use of this library with bespoke configuration / styles. You can start downloading it [here](https://pypi.org/project/epyk-studio/) 
 or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released
 
 
