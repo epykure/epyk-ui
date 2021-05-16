@@ -93,4 +93,5 @@ sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
     intro/design-architecture-details.rst
     intro/security-control.rst
     intro/advanced-features.rst
+    intro/external-packages.rst
     intro/extensions.rst
