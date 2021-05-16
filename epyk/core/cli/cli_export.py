@@ -25,6 +25,7 @@ def transpile_parser(subparser):
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-s', '--split', help='''Y. N flag, Split the files to html, css and js''')
   subparser.add_argument('-o', '--output', help='''The output path''')
+  subparser.add_argument('-c', '--colors', help='''The colors to the used for the theme''')
 
 
 def angular_parser(subparser):
@@ -100,6 +101,8 @@ def transpile(args):
   :param path: -n, The name of the page to be transpiled: -n home.
   :param split: -s, Y / N Flag, to specify if the files should be split input 3 modules.
   :param output: -0. String. Optional. The output destination path.
+  :param output: -0. String. Optional. The output destination path.
+  :param colors: String. Optional. The list of colors as string commas delimited.
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
@@ -130,7 +133,7 @@ def transpile(args):
     try:
       start = time.time()
       mod = __import__(v, fromlist=['object'])
-      page = utils.get_page(mod)
+      page = utils.get_page(mod, colors=args.colors)
       if settings is not None:
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
       output = page.outs.html_file(

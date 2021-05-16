@@ -14,6 +14,26 @@ from epyk.core.js.JsUtils import jsWrap
 
 Page = Rpt.Report
 
+
+def rename_css_cls(mappings):
+  """
+  Description:
+  ------------
+  Change the name of the CSS classes in the framework.
+  This function need to be used before the creation of any component in the page.
+
+  This will not change the content. it will only rename them.
+  To remove a CSS classe or to change it in a component type have a look at components_skin
+
+  Attributes:
+  ----------
+  :param mappings: Dictionary. The CSS class names to be renamed.
+  """
+  from epyk.core.css import Classes
+
+  Classes.OVERRIDES = mappings
+
+
 #
 # def from_ipynb(filename, page=None):
 #   page = page or Page()

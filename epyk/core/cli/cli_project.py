@@ -266,6 +266,7 @@ page.headers.dev()
 def transpile_all_parser(subparser):
   subparser.set_defaults(func=transpile_all)
   subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-c', '--colors', help='''The colors to the used for the theme''')
   subparser.add_argument(
     '-s', '--split', required=False, default=False,
     help='''The path where the new environment will be created: -p /foo/bar''')
@@ -295,7 +296,7 @@ def transpile_all(args):
       try:
         mod = __import__(view_name, fromlist=['object'])
         importlib.reload(mod)
-        page = utils.get_page(mod, template=True)
+        page = utils.get_page(mod, template=True, colors=args.colors)
         page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
         if not os.path.exists(settings.VIEWS_FOLDER):
           # If it is not an aboslute path

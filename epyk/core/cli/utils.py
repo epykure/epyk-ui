@@ -3,7 +3,8 @@ Utilities for the various CLI
 """
 
 import os
-from epyk.core.Page import Report
+
+from epyk.core.css.themes.Theme import ThemeDefault
 
 
 def get_report_path(project_path, raise_error=True, report=None):
@@ -49,7 +50,7 @@ def get_report_path(project_path, raise_error=True, report=None):
   return reports_path
 
 
-def get_page(mod, template=False):
+def get_page(mod, template=False, colors=None):
   """
   Description:
   ------------
@@ -59,7 +60,13 @@ def get_page(mod, template=False):
   ----------
   :param mod: Module. The Python imported module used to build the page.
   :param template: Boolean. Optional.
+  :param colors: String. Optional. The list of colors as string commas delimited.
   """
+
+  if colors is not None:
+    old_colors = ThemeDefault._colors
+    ThemeDefault._colors = colors.split(",")
+
   if hasattr(mod, 'get_page'):
     try:
       from epyk_studio.core.Page import Report
@@ -67,11 +74,18 @@ def get_page(mod, template=False):
       page = Report()
       page.json_config_file = mod.__name__
     except Exception as err:
+      from epyk.core.Page import Report
+
       page = Report()
       page.json_config_file = mod.__name__
     if template and hasattr(mod, 'INPUTS'):
       page.inputs = {i: "%%(%s)s" % i for i in mod.INPUTS}
     mod.get_page(page)
+
+    if colors is not None:
+      ThemeDefault._colors = old_colors
     return page
 
+  if colors is not None:
+    ThemeDefault._colors = old_colors
   return mod.page
