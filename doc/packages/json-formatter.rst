@@ -1,17 +1,19 @@
-Slideshow
-=========
+Json Formatter
+==============
 
-Component full documentation available here: https://github.com/ganlanyuan/tiny-slider
-NPM alias: ``tiny-slider``
+Component full documentation available here: https://github.com/mohsen1/json-formatter-js
+NPM alias: ``json-formatter-js``
 Package Type: JavaScript
+
 
 ---------------------
 
-The package slideshow from Tiny slider is available in the framework by using the following component::
 
-    ss = page.ui.slideshow([page.ui.text("Great results %s" % i) for i in range(20)])
+The package json-formatter-js is available in the framework by using the following component::
 
-The above will display a slide object with simple text elements.
+    js_formatter = page.ui.json({"foo": 42})
+
+The above will display a tree object as shown here. https://azimi.me/json-formatter-js/
 
 Each of the functions and properties when they are wrapping an core API function will point to its documentation in the doc string.
 Do not hesitate to have a look at it and either to challenge the library to get new features or to check with use if something is not correct.
@@ -19,26 +21,22 @@ Do not hesitate to have a look at it and either to challenge the library to get 
 Options
 *******
 
-Then exactly in the same way it is mentioned in the slideshow documentation it is possible to add options to this
-component. All the options are available from the ``component.options`` property::
+Then exactly in the same way it is mentioned in the documentation it is possible to add options to this
+component from the Python. All the options are available from the ``component.options`` property::
 
-    ss.options.autoplay = False
-    ss.options.items = 4
+    js_formatter.options.hoverPreviewEnabled = False
 
-The above will disable the autoplay and change the number of items per page. More information in the package documentation
-available from there Github repository.
 
 Events
 ******
 
 All the component events are available from the component ``.js`` property.
-Basically by adding the below it will go to the next element when a button is clicked::
+Basically by adding the below it will open the tree up to n level::
 
     btn = page.ui.button("Click")
     btn.click([
-        ss.js.next()
+        js_formatter.js.openAtDepth(3)
     ])
-
 
 .. note::
     The js property must be added to a JavaScript event to be rendered as string to the page during the transpiling.
@@ -49,4 +47,9 @@ Style
 
 This component will have some predefined CSS class in order to change the nav bar and the button but it is possible
 as any other component to change the style by using the ``style.css`` property.
+
+The below will add a border to the component::
+
+    js_formatter.style.css.border = "1px solid black"
+
 
