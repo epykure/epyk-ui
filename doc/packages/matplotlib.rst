@@ -1,6 +1,13 @@
 Matplotlib
 ==========
 
+- Documentation: https://matplotlib.org/
+- pypi alias: ``matplotlib``
+- Package Type: Python
+
+
+---------------------
+
 Using a simple image component::
 
     import epyk as pk

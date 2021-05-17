@@ -1,9 +1,10 @@
 Slideshow
 =========
 
-Component full documentation available here: https://github.com/ganlanyuan/tiny-slider
-NPM alias: ``tiny-slider``
-Package Type: JavaScript
+- Documentation: https://github.com/ganlanyuan/tiny-slider
+- NPM alias: ``tiny-slider``
+- Package Type: JavaScript
+
 
 ---------------------
 
@@ -13,8 +14,8 @@ The package slideshow from Tiny slider is available in the framework by using th
 
 The above will display a slide object with simple text elements.
 
-Each of the functions and properties when they are wrapping an core API function will point to its documentation in the doc string.
-Do not hesitate to have a look at it and either to challenge the library to get new features or to check with use if something is not correct.
+Each of the functions and properties, when they are wrapping an core API function, will point from the doc string in the framework to its external documentation.
+Do not hesitate to have a look at it and either to challenge the library to get new features or to check with us if something does not seem correct.
 
 Options
 *******

@@ -1,9 +1,9 @@
 Json Formatter
 ==============
 
-Component full documentation available here: https://github.com/mohsen1/json-formatter-js
-NPM alias: ``json-formatter-js``
-Package Type: JavaScript
+- Documentation: https://github.com/mohsen1/json-formatter-js
+- NPM alias: ``json-formatter-js``
+- Package Type: JavaScript
 
 
 ---------------------
@@ -15,8 +15,8 @@ The package json-formatter-js is available in the framework by using the followi
 
 The above will display a tree object as shown here. https://azimi.me/json-formatter-js/
 
-Each of the functions and properties when they are wrapping an core API function will point to its documentation in the doc string.
-Do not hesitate to have a look at it and either to challenge the library to get new features or to check with use if something is not correct.
+Each of the functions and properties, when they are wrapping an core API function, will point from the doc string in the framework to its external documentation.
+Do not hesitate to have a look at it and either to challenge the library to get new features or to check with us if something does not seem correct.
 
 Options
 *******
