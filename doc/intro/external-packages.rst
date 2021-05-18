@@ -4,6 +4,11 @@ External resources
 Python Packages
 ***************
 
+Those packages are not included in the library as we wanted Epyk to be generic and with no dependency those as
+useful but not mandatory.
+
+This section will illustrate how to link those to Epyk components.
+
 .. toctree::
     :maxdepth: 1
 
@@ -14,6 +19,8 @@ Python Packages
 
 JavaScript Packages
 *******************
+
+The full and up to date list of packages in Epyk is available in the section :doc:`../report/supported_ext`
 
 .. toctree::
     :maxdepth: 1
