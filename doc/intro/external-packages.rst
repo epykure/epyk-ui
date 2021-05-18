@@ -22,6 +22,8 @@ JavaScript Packages
 
 The full and up to date list of packages in Epyk is available in the section :doc:`../report/supported_ext`
 
+This section will illustrate how to use them and also how to learn their API.
+
 .. toctree::
     :maxdepth: 1
 
