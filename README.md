@@ -250,4 +250,9 @@ Coming soon
 or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released
 
 
+Feedback and Contribution
+=========================
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
 Please get in touch if there is any feature you feel Epyk-UI needs.
