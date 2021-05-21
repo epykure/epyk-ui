@@ -50,6 +50,8 @@ class Skins:
     component = Winter.Rains(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -73,6 +75,8 @@ class Skins:
     component = Winter.WinterSnow(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -96,6 +100,8 @@ class Skins:
     component = Movies.Matrix(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -119,6 +125,8 @@ class Skins:
     component = Movies.Doctor(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -142,6 +150,8 @@ class Skins:
     component = Parties.Fireworks(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -165,6 +175,8 @@ class Skins:
     component = Parties.Birthday(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white
@@ -194,6 +206,8 @@ class Skins:
     component = Summer.Lights(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1
     component.style.css.position = "fixed"
+    component.style.css.left = 0
+    component.style.css.top = 0
     self.page.theme.dark = True
     self.page.body.style.css.background = self.page.theme.black
     self.page.body.style.css.color = self.page.theme.white

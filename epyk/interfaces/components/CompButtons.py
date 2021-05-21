@@ -1143,7 +1143,7 @@ class Buttons:
     return c
 
   @html.Html.css_skin()
-  def thumbs_up(self, width=(None, "%"), height=(None, "px"), align="left", html_code=None, tooltip=None, profile=None,
+  def thumbs_up(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None, profile=None,
                 options=None):
     """
     Description:
@@ -1176,7 +1176,7 @@ class Buttons:
     return but
 
   @html.Html.css_skin()
-  def thumbs_down(self, width=(None, "%"), height=(None, "px"), align="left", html_code=None, tooltip=None,
+  def thumbs_down(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None,
                   profile=None, options=None):
     """
     Description:

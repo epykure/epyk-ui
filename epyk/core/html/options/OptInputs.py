@@ -314,23 +314,200 @@ class OptionsInputInteger(OptionsInput):
 
 
 class OptionsTimePicker(OptionsInput):
+  component_properties = ('listWidth', )
 
   @property
-  def timeFormat(self):
+  def appendTo(self):
     """
     Description:
     ------------
-    string The format of the time string displayed in the input and the menu items in the combobox.
-    Available modifiers are:
+    Override where the dropdown is appended.
+
+    Takes either a string to use as a selector, a function that gets passed the clicked input element as argument or a
+    jquery object to use directly.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get("body")
 
-  @timeFormat.setter
-  def timeFormat(self, value):
+  @appendTo.setter
+  def appendTo(self, value):
+    self._config(value)
+
+  @property
+  def className(self):
+    """
+    Description:
+    ------------
+    A class name to apply to the HTML element that contains the timepicker dropdown.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(None)
+
+  @className.setter
+  def className(self, value):
+    self._config(value)
+
+  @property
+  def closeOnWindowScroll(self):
+    """
+    Description:
+    ------------
+    Close the timepicker when the window is scrolled. (Replicates <select> behavior.)
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @closeOnWindowScroll.setter
+  def closeOnWindowScroll(self, value):
+    self._config(value)
+
+  def disableTimeRanges(self, values):
+    """
+    Description:
+    ------------
+    Disable selection of certain time ranges. Input is an array of time pairs,
+    like [['3:00am', '4:30am'], ['5:00pm', '8:00pm']].
+
+    The start of the interval will be disabled but the end won't.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config(values)
+
+  @property
+  def disableTextInput(self):
+    """
+    Description:
+    ------------
+    Disable typing in the timepicker input box; force users to select from list.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @disableTextInput.setter
+  def disableTextInput(self, flag):
+    self._config(flag)
+
+  @property
+  def disableTouchKeyboard(self):
+    """
+    Description:
+    ------------
+    Disable the onscreen keyboard for touch devices. There can be instances where Firefox or Chrome have touch events
+    enabled (such as on Surface tablets but not actually be a touch device.
+    In this case disableTouchKeyboard will prevent the timepicker input field from being focused.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @disableTouchKeyboard.setter
+  def disableTouchKeyboard(self, flag):
+    self._config(flag)
+
+  @property
+  def durationTime(self):
+    """
+    Description:
+    ------------
+    The time against which showDuration will compute relative times. Accepts a time string, Date object,
+    integer seconds from midnight, or a function that returns one of those types.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(None)
+
+  @durationTime.setter
+  def durationTime(self, value):
+    self._config(value)
+
+  @property
+  def forceRoundTime(self):
+    """
+    Description:
+    ------------
+    Force update the time to step settings as soon as it loses focus.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @forceRoundTime.setter
+  def forceRoundTime(self, flag):
+    self._config(flag)
+
+  @property
+  def lang(self):
+    """
+    Description:
+    ------------
+    Language constants used in the timepicker. Can override the defaults by passing an object with one or more of the
+    following properties: decimal, mins, hr, hrs.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(None)
+
+  @lang.setter
+  def lang(self, mapping):
+    self._config(mapping)
+
+  @property
+  def listWidth(self):
+    """
+    Description:
+    ------------
+    Set this to override CSS styling and set the list width to match the input element's width. Set to 1 to match input
+    width, 2 to double input width, .5 to halve input width, etc. Set to null to let CSS determine the list width.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(1)
+
+  @listWidth.setter
+  def listWidth(self, num):
+    self._config(num)
+
+  @property
+  def maxTime(self):
+    """
+    Description:
+    ------------
+    The time that should appear last in the dropdown list. Can be used to limit the range of time options.
+    Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get("24 hours after minTime")
+
+  @maxTime.setter
+  def maxTime(self, value):
     self._config(value)
 
   @property
@@ -338,227 +515,261 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    A Date object or string. Only the time parts (getHours, getMinutes) of the object are important.
-    Time entries before minTime won't be displayed/allowed.
+    The time that should appear first in the dropdown list.
+    Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get("12:00am")
 
   @minTime.setter
   def minTime(self, value):
     self._config(value)
 
   @property
-  def minHour(self):
+  def noneOption(self):
     """
     Description:
     ------------
-    int. Time entries with an 24-hour part before minHour won't be displayed/allowed. Ignored if minTime is set.
+    Adds one or more custom options to the top of the dropdown.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get(False)
 
-  @minHour.setter
-  def minHour(self, number):
-    self._config(number)
-
-  @property
-  def minMinutes(self):
-    """
-    Description:
-    ------------
-    int Time entries with minutes part before minMinutes won't be displayed/allowed. Ignored if minTime is set.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(True)
-
-  @minMinutes.setter
-  def minMinutes(self, number):
-    self._config(number)
-
-  @property
-  def maxTime(self):
-    """
-    Description:
-    ------------
-    A Date object or string. Only the time parts (getHours, getMinutes) of the object are important.
-    Time entries after minTime won't be displayed/allowed.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(True)
-
-  @maxTime.setter
-  def maxTime(self, number):
-    self._config(number)
-
-  @property
-  def maxHour(self):
-    """
-    Description:
-    ------------
-    int. Time entries with an 24-hour part after maxHour won't be displayed/allowed. Ignored if maxTime is set.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(True)
-
-  @maxHour.setter
-  def maxHour(self, number):
-    self._config(number)
-
-  @property
-  def maxMinutes(self):
-    """
-    Description:
-    ------------
-    int. Time entries with minutes part after maxHour won't be displayed/allowed. Ignored if maxTime is set.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(True)
-
-  @maxMinutes.setter
-  def maxMinutes(self, number):
-    self._config(number)
-
-  @property
-  def startTime(self):
-    """
-    Description:
-    ------------
-    A Date object or string. The time of the first item in the combobox when the input field is empty.
-    If the input field is not empty the first item will be the next allowed time entry.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(True)
-
-  @startTime.setter
-  def startTime(self, value):
+  @noneOption.setter
+  def noneOption(self, value):
     self._config(value)
 
   @property
-  def startHour(self):
+  def orientation(self):
     """
     Description:
     ------------
-    int The 24-hour part of the first item in the combobox when the input field is empty.
-    If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
+    By default the timepicker dropdown will be aligned to the bottom right of the input element,
+    or aligned to the top left if there isn't enough room below the input.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get("l")
 
-  @startHour.setter
-  def startHour(self, number):
-    self._config(number)
+  @orientation.setter
+  def orientation(self, value):
+    self._config(value)
+
+  def roundingFunction(self):
+    """
+    Description:
+    ------------
+    Function used to compute rounded times. The function will receive time in seconds and a settings object as arguments.
+    The function should handle a null value for seconds. default: round to nearest step.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get("l")
 
   @property
-  def startMinutes(self):
+  def scrollDefault(self):
     """
     Description:
     ------------
-    int The minutes part of the first item in the combobox when the input field is empty.
-    If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
+    If no time value is selected, set the dropdown scroll position to show the time provided, e.g. "09:00".
+    Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get(None)
 
-  @startMinutes.setter
-  def startMinutes(self, number):
-    self._config(number)
-
-  @property
-  def interval(self):
-    """
-    Description:
-    ------------
-    int Separation in minutes between time entries in the dropdown menu.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-    """
-    return self._config_get(15)
-
-  @interval.setter
-  def interval(self, value):
+  @scrollDefault.setter
+  def scrollDefault(self, value):
     self._config(value)
 
   @property
-  def dynamic(self):
+  def selectOnBlur(self):
     """
     Description:
     ------------
-    boolean If a date is already selected and dynamic is true, the items in the dropdown will be arranged so that
-    the first item is chronologically right after the selected time entry.
+    Update the input with the currently highlighted time value when the timepicker loses focus.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get(False)
 
-  @dynamic.setter
-  def dynamic(self, flag):
+  @selectOnBlur.setter
+  def selectOnBlur(self, flag):
     self._config(flag)
 
   @property
-  def scrollbar(self):
+  def show2400(self):
     """
     Description:
     ------------
-    boolean Whether the scrollbars should be displayed or not.
+    Show "24:00" as an option when using 24-hour time format. You must also set timeFormat for this option to work.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
-    return self._config_get(True)
+    return self._config_get(False)
 
-  @scrollbar.setter
-  def scrollbar(self, flag):
+  @show2400.setter
+  def show2400(self, flag):
     self._config(flag)
 
   @property
-  def zindex(self):
+  def showDuration(self):
     """
     Description:
     ------------
-    int The value for the z-index property of the timepicker's container <div>.
+    Shows the relative time for each item in the dropdown. minTime or durationTime must be set.
 
     Related Pages:
 
-      https://timepicker.co/options/
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @showDuration.setter
+  def showDuration(self, flag):
+    self._config(flag)
+
+  @property
+  def showOn(self):
+    """
+    Description:
+    ------------
+    Display a timepicker dropdown when the input fires a particular event.
+    Set to null or an empty array to disable automatic display.
+    Setting should be an array of strings. default: ['focus'].
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @showOn.setter
+  def showOn(self, flag):
+    self._config(flag)
+
+  @property
+  def step(self):
+    """
+    Description:
+    ------------
+    The amount of time, in minutes, between each item in the dropdown.
+    Alternately, you can specify a function to generate steps dynamically.
+    The function will receive a count integer (0, 1, 2...) and is expected to return a step integer.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(30)
+
+  @step.setter
+  def step(self, num):
+    self._config(num)
+
+  @property
+  def stopScrollPropagation(self):
+    """
+    Description:
+    ------------
+    When scrolling on the edge of the picker, it prevent parent containers () to scroll.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(False)
+
+  @stopScrollPropagation.setter
+  def stopScrollPropagation(self, flag):
+    self._config(flag)
+
+  @property
+  def timeFormat(self):
+    """
+    Description:
+    ------------
+    How times should be displayed in the list and input element. Uses PHP's date() formatting syntax.
+    Characters can be escaped with a preceeding double slash (e.g. H\\hi).
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get('g:ia')
+
+  @timeFormat.setter
+  def timeFormat(self, value):
+    self._config(value)
+
+  @property
+  def typeaheadHighlight(self):
+    """
+    Description:
+    ------------
+    Highlight the nearest corresponding time option as a value is typed into the form input.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
     """
     return self._config_get(True)
 
-  @zindex.setter
-  def zindex(self, number):
-    self._config(number)
+  @typeaheadHighlight.setter
+  def typeaheadHighlight(self, flag):
+    self._config(flag)
+
+  @property
+  def useSelect(self):
+    """
+    Description:
+    ------------
+    Convert the input to an HTML <SELECT> control. This is ideal for small screen devices,
+    or if you want to prevent the user from entering arbitrary values.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(True)
+
+  @useSelect.setter
+  def useSelect(self, flag):
+    self._config(flag)
+
+  @property
+  def wrapHours(self):
+    """
+    Description:
+    ------------
+    If a time greater than 24 hours (27:30, for example) is entered, apply modolo 24 to create a valid time.
+    Setting this to false will cause an input of 27:30 to result in a timeFormatError event.
+
+    Related Pages:
+
+      https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+    """
+    return self._config_get(True)
+
+  @wrapHours.setter
+  def wrapHours(self, flag):
+    self._config(flag)
 
 
 class OptionAutoComplete(OptionsInput):

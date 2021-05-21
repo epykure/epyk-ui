@@ -202,7 +202,8 @@ class PyOuts:
             onloadParts.append(
               "%s.on('%s', '%s', function(event){%s})" % (source, event, event_fncs['sub_items'], str_fncs))
           else:
-            onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+            onloadParts.append("%s.%s('%s', function(event){%s})" % (
+              source, event_fncs.get("fncType", "addEventListener"), event, str_fncs))
 
       for event, source_fncs in component._browser_data['keys'].items():
         for source, event_fncs in source_fncs.get_event().items():
@@ -224,12 +225,16 @@ class PyOuts:
       importMng = Imports.ImportManager(report=self._report)
     results = {
       'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self._report.properties.css.text),
-      'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
+      'cssContainer': ";".join(
+        ["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
-      'jsFrgsCommon': onloadPartsCommon, # This is only used in some specific web frameworks and it is better to keep the data as list
+      # This is only used in some specific web frameworks and it is better to keep the data as list
+      'jsFrgsCommon': onloadPartsCommon,
       'jsFrgs': ";".join(onloadParts),
-      'cssImports': importMng.cssResolve(self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
-      'jsImports': importMng.jsResolve(self._report.jsImports, self._report.jsLocalImports, excluded=self.excluded_packages)
+      'cssImports': importMng.cssResolve(
+        self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
+      'jsImports': importMng.jsResolve(
+        self._report.jsImports, self._report.jsLocalImports, excluded=self.excluded_packages)
     }
     return results
 

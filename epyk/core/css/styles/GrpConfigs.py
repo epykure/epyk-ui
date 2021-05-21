@@ -38,6 +38,8 @@ class ClsConfigs:
 
     Usage::
 
+        page = pk.Page()
+        page.body.template.style.configs.box()
 
     Attributes:
     ----------
@@ -147,6 +149,9 @@ class ClsConfigs:
     TODO: Find way to set the container to the middle of the page.
 
     Usage::
+
+       page = pk.Page()
+       page.body.template.style.configs.doc(background="white")
 
     Attributes:
     ----------

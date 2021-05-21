@@ -2,15 +2,17 @@ import json
 
 from epyk.core import Page as Rpt
 from epyk.core.data import events
+from epyk.core.data import datamap as js_datamap
 from epyk.core.data import components as inputs
 from epyk.core.html import Defaults as settings
 
+from epyk.core.css import themes
 from epyk.core.css.styles.attributes import CssInline
 
 # Add JavaScript shortcuts
-from epyk.core.js import std
-from epyk.core.js import expr
-from epyk.core.js.JsUtils import jsWrap
+from epyk.core.js import std as js_std
+from epyk.core.js import expr as js_expr
+from epyk.core.js.JsUtils import jsWrap as js_wrap
 
 Page = Rpt.Report
 

@@ -247,7 +247,7 @@ class Number(Html.Html):
       self.link.attr['target'] = '_self'
       self.span = self.link
     self.link.style.css.font_factor(10)
-    self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "100%", "margin": 0},
+    self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "auto", "margin": "auto"},
                    position=options.get('label', 'before'), html_code=self.htmlCode)
     self.css({"display": "inline-block", 'padding': '5%', 'clear': 'both', 'margin': '2px'})
     self.style.css.text_align = "center"
@@ -300,8 +300,9 @@ class Delta(Html.Html):
     self.style.css.position = "relative"
     if self.helper is not None:
       self.helper.style.css.position = "absolute"
-      self.helper.style.css.bottom = 1
-      self.helper.style.css.right = 5
+      self.helper.style.css.bottom = 5
+      self.helper.style.css.right = 0
+      self.style.css.padding_right = 17
     if 'url' in records:
       self._jsStyles["url"] = records['url']
     if components is not None:

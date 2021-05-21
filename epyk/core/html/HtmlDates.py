@@ -193,7 +193,7 @@ class TimePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  def change(self, js_funcs, profile=None):
+  def change(self, js_funcs, profile=None, on_ready=False):
     """
     Description:
     -----------
@@ -217,7 +217,7 @@ class TimePicker(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self.input.change(js_funcs, profile)
+    self.input.change(js_funcs, profile, on_ready=on_ready)
     return self
 
   def __str__(self):

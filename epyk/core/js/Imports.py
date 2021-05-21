@@ -669,13 +669,14 @@ JS_IMPORTS = {
 
   # Jquery timepicker width CDN links
   'timepicker': {
-    'website': 'https://timepicker.co/',
-    'version': '1.13.16',
+    'website': 'https://www.jonthornton.com/jquery-timepicker/',
+    'version': '1.13.18',
     'register': {'alias': 'timepicker', 'module': 'jquery.timepicker.min'},
     'repository': 'https://github.com/jonthornton/jquery-timepicker',
     'req': [
       {'alias': 'jquery'},
-      {'alias': 'jqueryui'}],
+      #{'alias': 'jqueryui'}
+    ],
     'modules': [
       {'script': 'jquery.timepicker.min.js', 'path': 'jquery-timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},

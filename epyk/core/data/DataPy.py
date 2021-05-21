@@ -179,6 +179,9 @@ class Plotly:
       for y in y_columns:
         series = {'x': [], 'y': [], 'text': []}
         for rec in data:
+          if not x_axis in rec:
+            continue
+
           series["x"].append(rec[x_axis])
           series["y"].append(rec[y])
         results.append(series)

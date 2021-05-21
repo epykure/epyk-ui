@@ -13,7 +13,7 @@ class Vignets:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def bubble(self, records=None, width=(50, "px"), height=(110, 'px'), color=None, background_color=None,
+  def bubble(self, records=None, width=(70, "px"), height=("auto", ''), color=None, background_color=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -55,8 +55,12 @@ class Vignets:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    div = self.page.ui.div(width=width, height=height, profile=profile, options=options, helper=helper)
-    bubble = self.page.ui.div(width=width, height=(height[0]-60, height[1]), profile=profile)
+    div = self.page.ui.div(width=width, height=height, profile=profile, options=options)
+    div.style.css.position = "relative"
+    bubble = self.page.ui.div(width=width, height=width, profile=profile, helper=helper)
+    if helper is not None:
+      bubble.helper.style.css.right = 0
+      bubble.helper.style.css.bottom = 0
     div.number = self.page.ui.text(records["value"], width=width)
     if records.get("url") is not None:
       div.title = self.page.ui.link(records["title"], url=records['url'], profile=profile)
@@ -64,14 +68,14 @@ class Vignets:
     else:
       div.title = self.page.ui.text(records["title"])
     div.title.style.css.bold()
-    div.number.style.css.line_height = height[0]-60
+    div.number.style.css.line_height = width[0]
     div.number.style.css.text_align = "center"
-    div.number.style.css.font_size = height[0]-90
+    div.number.style.css.font_size = width[0] - 45
     bubble += div.number
-    bubble.style.css.background_color = background_color or self.page.theme.success[1]
+    bubble.style.css.background_color = background_color or self.page.theme.colors[-1]
     bubble.style.css.color = color or self.page.theme.greys[0]
     bubble.style.css.borders_light()
-    bubble.style.css.border_radius = height[0]-60
+    bubble.style.css.border_radius = width[0]
     bubble.style.css.middle()
     div.style.css.text_align = "center"
     div += bubble
@@ -143,6 +147,7 @@ class Vignets:
       self.page, number, components, label, width, ("auto", ""), profile, dflt_options, helper))
 
     container = self.page.ui.div([pre_components], align=align, height=height, width=width, profile=profile, options=options)
+    container.number = pre_components[-1]
     container.build = pre_components[-1].build
     if title is not None:
       container.title = title

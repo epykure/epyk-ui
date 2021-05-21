@@ -37,6 +37,9 @@ Styles & Configuration
 CSS Style
 _________
 
+Properties
+**********
+
 It is possible to use CSS inline properties or bespoke CSS classes in order to change the display of components.
 Quite a few examples are available but the easiest is to use ``style.css`` properties::
 
@@ -47,6 +50,21 @@ Quite a few examples are available but the easiest is to use ``style.css`` prope
     button.style.css.right = 10 # Default will use px
 
 More examples are available in the section :doc:`extensions`
+
+Virtual classes
+***************
+
+There are some shortcuts available to perform common and standard style changes. For example to change a style by putting
+the mouse hover a component can be done::
+
+    p = page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+    p.style.hover({"color": "red"})
+
+Or a bit more complex by doing, it is possible to add a full CSS class structure to a specific component::
+
+    p = page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+    p.style.add_custom_class({"_attrs": {"color": "green"}, "_hover": {"color": "blue"}}, to_component=True)
+
 
 CSS effects
 ___________

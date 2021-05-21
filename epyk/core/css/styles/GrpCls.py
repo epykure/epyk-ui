@@ -503,7 +503,7 @@ class ClassHtml:
       self.__css_virtual[key_selector] = {}
     self.__css_virtual[key_selector].update(attrs)
 
-  def add_custom_class(self, css_attrs, classname=None, selector=None, is_class=True):
+  def add_custom_class(self, css_attrs, classname=None, selector=None, is_class=True, to_component=False):
     """
     Description:
     -----------
@@ -517,15 +517,23 @@ class ClassHtml:
 
       page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
+      p = page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+      p.style.add_custom_class({"_attrs": {"color": "green"}, "_hover": {"color": "blue"}})
+
     Attributes:
     ----------
     :param css_attrs: Dictionary. Nested dictionary with the different attributes.
     :param classname: String. Optional. The classname in the CSS definition.
     :param selector: String. Optional. The class selector (if it is not a classname using . but a strict definition).
     :param is_class: Boolean. Optional. Automatically transform the name to a CSS class definition by adding a .
+    :param to_component:
     """
     if classname is None:
-      cls_def = {"classname": False, '_selector': selector}
+      classname = "Virtual%s" % abs(hash(str(css_attrs)))
+      if to_component:
+        cls_def = {"classname": classname}
+      else:
+        cls_def = {"classname": False, '_selector': selector}
     else:
       cls_def = {"classname": classname}
     if '_attrs' not in css_attrs and '_hover' not in css_attrs:
@@ -534,7 +542,10 @@ class ClassHtml:
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
     cls_obj = v_cls(self.component.page)
-    self.classList['other'].add(cls_obj)
+    if to_component:
+      self.classList['main'].add(cls_obj)
+    else:
+      self.classList['other'].add(cls_obj)
     return cls_def
 
   def no_class(self):

@@ -4,12 +4,20 @@
 - Add gallery for images and icons
 - Add option for colors to the transpile CLIs.
 - Add shortcut to change the OVERRIDES method in the CSS Classes module.
+- Add new pk. method links.
+- Introduce the async option for builders (for potential promise)
 
 ### Changed
+- Improve documentation.
+- Input background default color.
+- Adjust skins background position.
+- Remove the dependency on Jquery UI for Jquery TimePicker.
 
 ### Fixed
 - Fix bug on some predefined icons.
 - Fix effects.
+- Fix plotly data processing on Python.
+- Fix the iimePicker object.
 
 
 ## [1.5.18] - 2021-05-14

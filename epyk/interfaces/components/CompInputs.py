@@ -33,7 +33,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
@@ -68,7 +68,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
@@ -105,7 +105,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
@@ -138,7 +138,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
@@ -171,7 +171,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
@@ -184,6 +184,7 @@ class Inputs:
     """
     Description:
     ------------
+    A lightweight, customizable javascript timepicker plugin for jQuery inspired by Google Calendar.
 
     Usage::
 
@@ -201,13 +202,13 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    dflt_options = {'timeFormat': 'HH:mm:ss'}
+    dflt_options = {'timeFormat': 'h:i:s'}
     dflt_options.update(options or {})
-    html_input_t = html.HtmlInput.InputTime(self.page, text, placeholder, width, height, html_code,
-                                            dflt_options, attrs or {}, profile)
+    html_input_t = html.HtmlInput.InputTime(
+      self.page, text, placeholder, width, height, html_code, dflt_options, attrs or {}, profile)
     return html_input_t
 
   def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), html_code=None, options=None,
@@ -232,7 +233,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_date = html.HtmlInput.InputDate(self.page, text, placeholder, width, height, html_code, options,
@@ -261,7 +262,7 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
@@ -289,13 +290,13 @@ class Inputs:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the componet.
+    :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     attrs = attrs or {}
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.page, value, min_val, max_val, step, placeholder, width, height,
-                                           html_code, options or {}, attrs, profile)
+                                           html_code, options or {"background": False}, attrs, profile)
     return html_range
 
   def _output(self, value="", options=None, profile=False):
@@ -617,8 +618,8 @@ class Inputs:
       "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    editor = html.HtmlTextEditor.Editor(self.page, text, language, width, height, html_code, dflt_options,
-                                        profile)
+    editor = html.HtmlTextEditor.Editor(
+      self.page, text, language, width, height, html_code, dflt_options, profile)
     return editor
 
   @html.Html.css_skin()

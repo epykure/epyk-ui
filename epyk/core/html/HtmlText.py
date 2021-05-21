@@ -619,8 +619,7 @@ class BlockQuote(Html.Html):
 
   def __init__(self, report, text, author, color, width, height, html_code, helper, options, profile):
     super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, html_code=html_code, profile=profile,
-                                     css_attrs={"width": width, "height": height, 'color': color,
-                                                "white-space": 'nowrap'})
+                                     css_attrs={"width": width, "height": height, 'color': color})
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
 

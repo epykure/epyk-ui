@@ -123,7 +123,7 @@ class CssInputRangeThumb(CssStyle.Style):
 
   def customize(self):
     self.webkit_slider_thumb.css({
-      "background": self.page.theme.success[1],
+      "background": self.page.theme.colors[-1],
       'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
       'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 

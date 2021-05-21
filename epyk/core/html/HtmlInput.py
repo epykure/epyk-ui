@@ -444,7 +444,7 @@ class InputTime(Input):
     return self._js
 
   _js__builder__ = '''
-      if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)} 
+      if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)}
       %(jqId)s.timepicker(options); ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -462,14 +462,13 @@ class InputTime(Input):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event:
-    :param on_ready:
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self.on("change", js_funcs, profile, self.dom.jquery.varId, on_ready)
+    self._browser_data['mouse']['change'][self.dom.jquery.varId]["fncType"] = "on"
     return self
 
   def __str__(self):
@@ -665,7 +664,8 @@ class InputRange(Input):
     if self.options.output:
       self.style.css.position = "relative"
       self.output = self._report.ui.inputs._output(text).css({
-        "width": '15px', "text-align": 'center', "margin-left": '2px', "position": "absolute", 'color': self._report.theme.success[1]})
+        "width": '15px', "text-align": 'center', "margin-left": '2px', "position": "absolute",
+        'color': self._report.theme.colors[-1]})
       self.append_child(self.output)
       self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlCode})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -902,6 +902,8 @@ class FieldRange(Field):
                                           width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldRange, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
                                      options, profile)
+    if icon is not None and html_input.options.output:
+      html_input.output.style.css.margin_left = 25
     if html_input.options.output:
       self.style.css.min_height = 45
 

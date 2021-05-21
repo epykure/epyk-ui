@@ -145,6 +145,38 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     """
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
+  def hide(self):
+    """
+    Description:
+    -----------
+    Close the timepicker dropdown.
+
+    Usage::
+
+      input.js.hide()
+
+    Related Pages:
+
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+    """
+    return JsObjects.JsObjects.get("%s.timepicker('hide')" % self._src.dom.jquery.varId)
+
+  def show(self):
+    """
+    Description:
+    -----------
+    Display the timepicker dropdown.
+
+    Usage::
+
+      input.js.hide()
+
+    Related Pages:
+
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+    """
+    return JsObjects.JsObjects.get("%s.timepicker('show')" % self._src.dom.jquery.varId)
+
 
 class JsHtmlSlider(JsHtml.JsHtml):
 

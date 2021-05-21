@@ -321,7 +321,7 @@ class Html:
   the same signature and return).
   """
   requirements = None
-  builder_name, _js__builder__ = None, None
+  builder_name, _js__builder__, async_builder = None, None, False
   _option_cls = Options
 
   def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
@@ -1619,8 +1619,12 @@ class Html:
     if not self.builder_name or self._js__builder__ is None:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
-    self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
-      self.builder_name, self._js__builder__))
+    if self.async_builder:
+      self.page.properties.js.add_constructor(self.builder_name, "async function %s(htmlObj, data, options){%s}" % (
+        self.builder_name, self._js__builder__))
+    else:
+      self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
+        self.builder_name, self._js__builder__))
     self.options.builder = self.builder_name
 
     # check if there is no nested HTML components in the data
@@ -1629,7 +1633,8 @@ class Html:
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    fnc_call = "%s(%s, %s, %s)" % (self.builder_name, component_id or self.dom.varId, js_data, self.options.config_js(options))
+    fnc_call = "%s(%s, %s, %s)" % (
+      self.builder_name, component_id or self.dom.varId, js_data, self.options.config_js(options))
     profile = self.with_profile(profile, event="Builder")
     if profile:
       fnc_call = JsUtils.jsConvertFncs(
