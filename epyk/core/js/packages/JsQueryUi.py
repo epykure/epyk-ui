@@ -1192,7 +1192,9 @@ class Datepicker(JQueryUI):
     """
     Description:
     ------------
-    Sets the date for the datepicker. The new date may be a Date object or a string in the current date format (e.g., "01/26/2009"), a number of days from today (e.g., +7) or a string of values and periods ("y" for years, "m" for months, "w" for weeks, "d" for days, e.g., "+1m +7d"), or null to clear the selected date.
+    Sets the date for the datepicker. The new date may be a Date object or a string in the current date format (e.g.,
+    "01/26/2009"), a number of days from today (e.g., +7) or a string of values and periods
+    ("y" for years, "m" for months, "w" for weeks, "d" for days, e.g., "+1m +7d"), or null to clear the selected date.
 
     Related Pages:
 

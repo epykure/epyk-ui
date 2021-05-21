@@ -1286,7 +1286,6 @@ class OptionsDatePicker(OptionsInput):
     else:
       self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
-
   @dayNames.setter
   def dayNames(self, value):
     self._config(value)

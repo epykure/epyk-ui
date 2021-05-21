@@ -28,6 +28,8 @@ _______
 
     /../packages/flask_1.rst
     /../packages/flask_2.rst
+    /../packages/fastapi.rst
+    /../packages/tornado.rst
 
 
 JavaScript Packages
@@ -47,6 +49,8 @@ _________
     /../packages/json-formatter.rst
     /../packages/font-awesome.rst
     /../packages/mathjax.rst
+    /../packages/jquery.rst
+    /../packages/jqueryui.rst
 
 
 UI Frameworks
