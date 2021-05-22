@@ -92,6 +92,44 @@ Window
 .. autoclass:: epyk.core.js.Js.JsUrl
   :members:
 
+WebWorkers
+---------
+
+Web Workers are a simple means for web content to run scripts in background threads.
+The worker thread can perform tasks without interfering with the user interface.
+
+It is possible to create and to use web worker with Epyk. To do so it is possible to use them in a dedicated page or
+in a Jupyter Notebook::
+
+    w2 = page.js.worker()
+    w2.connect(content='''
+    self.addEventListener('message', function(e) {
+      var data = e.data; console.log(data);
+      switch (data.cmd) {
+        case 'add':
+          self.postMessage('Result: ' + (data.value1 + data.value2 + data.value3)); break;
+        case 'mult':
+          self.postMessage('Result: ' + (data.value1 * data.value2 * data.value3)); break;
+        case 'stop':
+          self.postMessage('WORKER STOPPED: ' + data.msg + '. (buttons will no longer work)');
+          self.close(); break;
+        default:
+          self.postMessage('Unknown command: ' + data.msg);
+      };
+    }, false);
+    ''')
+
+    slider = page.ui.slider()
+    number = page.ui.fields.number()
+
+    div = page.ui.div()
+    page.ui.button("Add").click([w2.postMessage({'cmd': 'add', 'value1': 2}, components=[(slider, "value2"), (number, "value3")])])
+    page.ui.button("Mult").click([w2.postMessage({'cmd': 'mult', 'value1': 5}, components=[(slider, "value2"), (number, "value3")])])
+
+    page.ui.button("Stop worker").click([w2.postMessage({'cmd': 'stop'})])
+
+More details on the web workers are available in the functions documentation.
+
 Websocket
 ---------
 

@@ -12,12 +12,14 @@
 - Input background default color.
 - Adjust skins background position.
 - Remove the dependency on Jquery UI for Jquery TimePicker.
+- Change the content of field.number to return a float.
 
 ### Fixed
 - Fix bug on some predefined icons.
 - Fix effects.
-- Fix plotly data processing on Python.
-- Fix the iimePicker object.
+- Fix Plotly data processing on Python.
+- Fix the TimePicker object.
+- Fix to make web workers available in Jupyter.
 
 
 ## [1.5.18] - 2021-05-14

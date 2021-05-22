@@ -744,8 +744,8 @@ class FieldInput(Field):
   def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
     html_input = report.ui.inputs.input(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
                                         options=options)
-    super(FieldInput, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
-                                     profile)
+    super(FieldInput, self).__init__(
+      report, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldAutocomplete(Field):

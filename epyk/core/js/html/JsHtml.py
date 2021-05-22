@@ -374,6 +374,9 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
 
     """
+    if self._src.attr.get('type') == "number":
+      return ContentFormatters(self._report, "parseFloat(%s.value)" % self.varName)
+
     return ContentFormatters(self._report, "%s.value" % self.varName)
 
   def empty(self):

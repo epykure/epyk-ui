@@ -40,6 +40,17 @@ class DatePicker(Html.Html):
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
   @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the DatePicker properties.
+
+    :rtype: OptCalendars.OptionDatePicker
+    """
+    return super().options
+
+  @property
   def dom(self):
     """
     Description:
@@ -216,6 +227,7 @@ class TimePicker(Html.Html):
     ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.input.change(js_funcs, profile, on_ready=on_ready)
     return self

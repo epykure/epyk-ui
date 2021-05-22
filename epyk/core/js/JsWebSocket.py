@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
+from epyk.core.js.objects import JsData
 from epyk.core.js.primitives import JsObjects
 
 
@@ -291,9 +292,9 @@ class Worker:
 
     Attributes:
     ----------
-    :param htmlCode:
-    :param src:
-    :param server:
+    :param htmlCode: String. Optional. The Id of the script.
+    :param src: String. Optional.
+    :param server: Boolean. Optional. Specify if the page is running on a server.
     """
     self._src, self.__server = src, server
     self._selector = htmlCode or "worker_%s" % id(self)
@@ -304,14 +305,23 @@ class Worker:
     """
     Description:
     ------------
-
+    Get the event data from the web worker
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
-  def connect(self, script=None, content=None):
+  def connect(self, script=None, content=None, url=None):
     """
     Description:
     ------------
+    Create the worker content.
+
+    Only one of the three parameter is needed.
+
+    .. note::
+
+      The JavaScript content used in a web worker need to be written in a way that he can be put in one line.
+      In order to be compatible with Jupyter this content need to be loaded from Js and this can only be done by loading a plain
+      text in one line.
 
     Related Pages:
 
@@ -320,27 +330,40 @@ class Worker:
 
     Attributes:
     ----------
-    :param script: String.
-    :param content: String.
+    :param script: String. Optional. The full path of the file with the javaScript content.
+    :param content: String. Optional. The JavaScript content.
+    :param url: String. Optional. The link of the worker module to be included to the page.
     """
     if not self.__server or content is not None:
-      # load the file and put this to Js Blobs
+      script_content = [
+        'if(document.getElementById("js_%(id)s") != null){document.getElementById("js_%(id)s").remove()}' % {"id": self._selector},
+        'var wkScript = document.createElement("script")',
+        'wkScript.setAttribute("id", "js_%s")' % self._selector]
       if script is not None:
         with open(script) as f:
-          self._src._props['js']['workers']['js_%s' % self._selector] = f.read()
+          script_content.append('wkScript.textContent = "%s"' % f.read().strip().replace("\n", ""))
+      elif url is not None:
+        script_content.append('wkScript.setAttribute("src", %s)' % JsUtils.jsConvertData(url, None))
       else:
-        self._src._props['js']['workers']['js_%s' % self._selector] = content
+        script_content.append('wkScript.textContent = "%s"' % content.strip().replace("\n", ""))
+      script_content.append('document.head.appendChild(wkScript)')
       self._src._props['js']['builders'].add('''
-        var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
-        %(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {'selector': self._selector})
+        %(content)s; var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
+        %(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {
+          "content": ";".join(script_content), 'selector': self._selector})
     else:
       self._src._props['js']['builders'].add("%s = new Worker('%s')" % (self._selector, script))
     return JsObjects.JsVoid("%s = new Worker('%s')" % (self._selector, script))
 
-  def postMessage(self, data):
+  def postMessage(self, data, components=None):
     """
     Description:
     ------------
+    Post a message to the webworker.
+
+    Usage::
+
+      page.ui.button("Add").click([w2.postMessage({'cmd': 'add', 'value1': 2}, components=[(slider, "value2")])])
 
     Related Pages:
 
@@ -349,8 +372,12 @@ class Worker:
     Attributes:
     ----------
     :param data:
+    :param components: HTML components. A list of html component or tuples with the alias
     """
-    data = JsUtils.jsConvertData(data, None)
+    if components is not None:
+      data = JsData.Datamap(components=components, attrs=data)
+    else:
+      data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
   def on(self, eventType, jsFncs, profile=None):
