@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.19] - 2021-05-22
+
+### Added
 - Add gallery for images and icons
 - Add option for colors to the transpile CLIs.
 - Add shortcut to change the OVERRIDES method in the CSS Classes module.
