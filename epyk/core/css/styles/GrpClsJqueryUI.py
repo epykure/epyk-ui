@@ -8,9 +8,10 @@ class ClassSlider(GrpCls.ClassHtml):
 
   def __init__(self, component):
     super(ClassSlider, self).__init__(component)
-    self._css_ui_active, self._css_ui_header = 2 * [None]
-    self.classList['main'].add(self.cls_ui_active)
-    self.classList['main'].add(self.cls_ui_header)
+    self._css_ui_active, self._css_ui_header, self._css_ui_slider = 3 * [None]
+    self.classList['other'].add(self.cls_ui_active)
+    self.classList['other'].add(self.cls_ui_header)
+    self.classList['other'].add(self.cls_ui_slider)
 
   @property
   def css(self):
@@ -42,6 +43,20 @@ class ClassSlider(GrpCls.ClassHtml):
     if self._css_class is None:
       self._css_class = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).basic()
     return self._css_class
+
+  @property
+  def cls_ui_slider(self):
+    """
+    Description:
+    -----------
+    Add the predefined CSS class style for the active slider.
+    Class override on the existing one in the package.
+
+    :rtype: Classes.CatalogInput.CatalogInput
+    """
+    if self._css_ui_slider is None:
+      self._css_ui_slider = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).slider()
+    return self._css_ui_slider
 
   @property
   def cls_ui_active(self):

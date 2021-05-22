@@ -248,6 +248,8 @@ class Plotly2D:
       https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
       https://plot.ly/javascript/
 
+    Attributes:
+    ----------
     :param record:
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_columns: List. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -257,16 +259,16 @@ class Plotly2D:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
 
-    :rtype: graph.GraphPlotly.Chart
+    :rtype: graph.GraphPlotly.Bar
     """
     data = []
     histo_axis = ('y', y_columns) if y_columns is not None else ('x', x_columns)
-    for rec in record:
-      for y in histo_axis[1]:
-        series = {histo_axis[0]: []}
+    for y in histo_axis[1]:
+      series = {histo_axis[0]: []}
+      for rec in record:
         if y in rec:
           series[histo_axis[0]].append(float(rec[y]))
-        data.append(series)
+      data.append(series)
     histo_chart = graph.GraphPlotly.Bar(self.page, width, height, options or {}, html_code, profile)
     histo_chart.colors(self.page.theme.charts)
     for d in data:

@@ -1,5 +1,6 @@
 
 from epyk.core.html.options import Options
+from epyk.core.js import JsUtils
 
 
 class OptionsSlider(Options):
@@ -149,6 +150,54 @@ class OptionsSlider(Options):
   @range.setter
   def range(self, value):
     self._config(value)
+
+  def slide(self, jsFncs=None, profile=None, show=True):
+    """
+    Description:
+    -----------
+    Triggered on every mouse move during slide.
+    The value provided in the event as ui.value represents the value that the handle will have as a result of
+    the current movement.
+
+    Related Pages:
+
+      https://api.jqueryui.com/slider/
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param show: Boolean. Optional. Show the value in a popup.
+    """
+    if show:
+      value = '''
+              var delay = function() {
+                  if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
+                  else {var label = $('<span></span>'); $(ui.handle).append(label)}
+                  $(label).html(ui.value).position({
+                      my: 'center top', at: 'center bottom', of: ui.handle, offset: "0, 10"})};
+              setTimeout(delay, 5)'''
+      if jsFncs is None:
+        jsFncs = []
+      jsFncs.append(value)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+
+  def create(self, jsFncs=None, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when the slider is created.
+
+    Related Pages:
+
+      https://api.jqueryui.com/slider/
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    self._config("function (){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def step(self):

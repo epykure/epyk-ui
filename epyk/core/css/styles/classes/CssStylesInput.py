@@ -194,6 +194,11 @@ class CssUIActive(CssStyle.Style):
                     'background-color': self.page.theme.notch()})
 
 
+class CssUISlider(CssStyle.Style):
+  classname = "ui-slider-handle"
+  _focus = {'outline': 0}
+
+
 class CssUIWidgetHeader(CssStyle.Style):
   classname = "ui-widget-header"
 

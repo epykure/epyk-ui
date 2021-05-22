@@ -13,6 +13,12 @@ class CatalogInput(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesInput.CssUIActive)
 
+  def slider(self):
+    """
+
+    """
+    return self._set_class(CssStylesInput.CssUISlider)
+
   def widget_header(self):
     return self._set_class(CssStylesInput.CssUIWidgetHeader)
 

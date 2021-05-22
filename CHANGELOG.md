@@ -20,6 +20,7 @@
 - Fix Plotly data processing on Python.
 - Fix the TimePicker object.
 - Fix to make web workers available in Jupyter.
+- Fix data input for Histogram for Plotly.
 
 
 ## [1.5.18] - 2021-05-14
