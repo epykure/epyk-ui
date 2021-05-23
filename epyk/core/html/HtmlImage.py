@@ -105,6 +105,7 @@ class Image(Html.Html):
     str_io = io.BytesIO()
     plt.savefig(str_io, format='jpg')
     str_io.seek(0)
+    plt.close(1)
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text):
@@ -203,6 +204,7 @@ class AnimatedImage(Html.Html):
     str_io = io.BytesIO()
     plt.savefig(str_io, format='jpg')
     str_io.seek(0)
+    plt.close(1)
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text):

@@ -22,7 +22,7 @@ Using a simple image component::
     plt.plot(x, y)
 
     img1 = page.ui.img(width=(50, "%"))
-    img1.from_plot(plot1[0])
+    img1.from_plot(plt)
     img1.style.css.display = "inline-block"
 
 Using animated image::
