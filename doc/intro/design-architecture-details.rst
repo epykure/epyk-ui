@@ -59,6 +59,34 @@ Imports.py is the module used to add the external files to the page. It will man
 .. image:: ../_static/design_7.PNG
     :align: center
 
+Common API to easy the migration
+********************************
+
+The spirit of the framework is to benefit from the rich ecosystem but to not be attached to one library or framework.
+Thus there is a common API for components to easy this transition.
+
+For example for charts::
+
+    import epyk as pk
+
+    url_data = "https://raw.githubusercontent.com/vega/datalib/master/test/data/stocks.csv"
+
+    page = pk.Page()
+
+    data = page.py.requests.csv(url_data)
+    formatted_data = []
+    agg_data = {}
+    for rec in data:
+        agg_data.setdefault(rec["date"], {})[rec["symbol"]] = float(rec["price"])
+        agg_data[rec["date"]]["date"] = rec["date"]
+    chart = page.ui.charts.chartJs.bar(list(agg_data.values()), y_columns=["MSFT", "AMZN", "IBM"], x_axis="date")
+    page.outs.jupyter()
+
+
+.. note::
+  Specific ``.options`` or ``.js`` functions will not be necessarily compatible between libraries.
+  We are introducing the concept of `.shared` properties to solve this issue.
+
 
 Collaborative platform
 **********************
