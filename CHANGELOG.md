@@ -5,6 +5,7 @@
 ### Changed
 
 ### Fixed
+- Bug fixes for NVD3, C3 and DC in Jupyter.
 
 
 ## [1.5.19] - 2021-05-22

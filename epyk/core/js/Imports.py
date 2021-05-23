@@ -934,6 +934,7 @@ JS_IMPORTS = {
     'website': 'http://nvd3.org/',
     'repository': 'https://github.com/novus/nvd3',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
+    'register': {'alias': 'nvd3', 'module': 'nv.d3.min', 'npm': 'nvd3'},
     'version': '1.8.6',
     'modules': [
       {'script': 'nv.d3.min.js', 'node_path': 'build/', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}],
@@ -956,6 +957,7 @@ JS_IMPORTS = {
     'website': 'http://square.github.io/crossfilter/',
     'repository': 'https://github.com/crossfilter/crossfilter',
     'version': '1.3.12',
+    'register': {'alias': 'crossfilter', 'module': 'crossfilter.min', 'npm': 'crossfilter'},
     'modules': [
       {'script': 'crossfilter.min.js', 'path': 'crossfilter/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -974,6 +976,7 @@ JS_IMPORTS = {
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
     'repository': 'https://github.com/dc-js/dc.js',
+    'register': {'alias': 'dc', 'module': 'dc.min', 'npm': 'dc'},
     'req': [
       {'alias': 'd3'},
       {'alias': 'crossfilter'},
