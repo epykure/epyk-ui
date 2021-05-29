@@ -807,4 +807,3 @@ class Tags(JsHtml.JsHtmlRich):
     Return a count of categories currently used to filter the data.
     """
     return self.content.dict.keys()
-

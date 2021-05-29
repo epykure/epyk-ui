@@ -400,7 +400,7 @@ class Texts:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_formula = html.HtmlTextComp.Formula(self.page, text, width, height, color, html_code, helper, options, profile)
-    html_formula.style.css.text_align = align
+    html_formula.style.css.text_align = "%s !IMPORTANT" % align
     if align in ["center", 'right']:
       html_formula.style.css.margin = "auto"
       html_formula.style.css.display = "block"

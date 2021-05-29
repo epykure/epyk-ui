@@ -135,7 +135,7 @@ class DC(JsPackage):
 
 
 class Line(DC):
-  chartFnc = "lineChart"
+  chartFnc = "LineChart"
 
   def curve(self, fnc):
     return self.fnc("curve(%s)" % fnc)
@@ -168,7 +168,7 @@ class Line(DC):
 
 
 class Bar(DC):
-  chartFnc = "barChart"
+  chartFnc = "BarChart"
 
   def controlsUseVisibility(self, flag):
     """
@@ -192,7 +192,7 @@ class Bar(DC):
 
 
 class Row(DC):
-  chartFnc = "rowChart"
+  chartFnc = "RowChart"
 
   def elasticY(self, flag):
     """
@@ -217,7 +217,7 @@ class Row(DC):
 
 
 class Pie(DC):
-  chartFnc = "pieChart"
+  chartFnc = "PieChart"
 
   def slicesCap(self, value):
     """
@@ -269,26 +269,26 @@ class Pie(DC):
 
 
 class Series(DC):
-  chartFnc = "seriesChart"
+  chartFnc = "SeriesChart"
 
   def line(self):
     self._sub_chart = Line(src=self.src, setVar=False)
-    self._sub_chart._selector = "new dc.lineChart(c)"
+    self._sub_chart._selector = "new dc.LineChart(c)"
     return self
 
   def scatter(self):
     self._sub_chart = Scatter(src=self.src, setVar=False)
-    self._sub_chart._selector = "new dc.scatterPlot(c)"
+    self._sub_chart._selector = "new dc.ScatterPlot(c)"
     return self
 
   def bubble(self):
     self._sub_chart = Bubble(src=self.src, setVar=False)
-    self._sub_chart._selector = "new dc.bubbleChart(c)"
+    self._sub_chart._selector = "new dc.BubbleChart(c)"
     return self
 
   def bar(self):
     self._sub_chart = Bar(src=self.src, setVar=False)
-    self._sub_chart._selector = "new dc.barChart(c)"
+    self._sub_chart._selector = "new dc.BarChart(c)"
     return self
 
   def seriesAccessor(self, jsFncs, profile=False):
@@ -372,7 +372,7 @@ class Series(DC):
 
 
 class Scatter(DC):
-  chartFnc = "scatterPlot"
+  chartFnc = "ScatterPlot"
 
   def radiusValueAccessorByKey(self, index=None, str_format=None):
     """
@@ -435,7 +435,7 @@ class Scatter(DC):
 
 
 class Bubble(Scatter):
-  chartFnc = "bubbleChart"
+  chartFnc = "BubbleChart"
 
   def keyAccessor(self, index=None):
     if index is None:
@@ -461,7 +461,7 @@ class Bubble(Scatter):
 
 
 class Sunburst(DC):
-  chartFnc = "sunburstChart"
+  chartFnc = "SunburstChart"
 
   def innerRadius(self, value):
     """
@@ -492,7 +492,7 @@ class Sunburst(DC):
 
 
 class Composite(DC):
-  chartFnc = "compositeChart"
+  chartFnc = "CompositeChart"
 
   def x(self):
     pass
@@ -525,7 +525,7 @@ class Composite(DC):
 
 
 class BoxPlot(DC):
-  chartFnc = "boxPlot"
+  chartFnc = "BoxPlot"
 
   def elasticY(self, flag):
     """
@@ -547,4 +547,4 @@ class BoxPlot(DC):
 
 
 class GeoChoropleth(DC):
-  chartFnc = "geoChoroplethChart"
+  chartFnc = "GeoChoroplethChart"

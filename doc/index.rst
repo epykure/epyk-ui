@@ -71,11 +71,12 @@ Please see below the 2021 road map of notifications on Twitter:
         <li><del>W16:  Epyk and Backend Servers (Fast API)</del><a href="./weeks/w16.html">  [+ details]</a></li>
         <li><del>W17:  Epyk documentation I</del><a href="./weeks/w17.html">  [+ details]</a></li>
         <li><del>W18:  Epyk documentation II</del><a href="./weeks/w17.html">  [+ details]</a></li>
-        <li>W19:  Epyk & Jupyter<a href="./weeks/w18.html">  [+ details]</a></li>
-        <li>W20:  Gallery and Demos</li>
-        <li>W21:  Epyk Studio</li>
-        <li>W22:  Epyk with web framework (Vue, Angular or React)</li>
-        <li>W23:  Crypto Currency tracker with Epyk</li>
+        <li><del>W19:  Epyk & Jupyter</del><a href="./weeks/w18.html">  [+ details]</a></li>
+        <li><del>W20:  Gallery and Demos</del><a href="https://epykure.github.io/demos/">  [+ details]</a></li>
+        <li><del>W21:  Gallery and Demos</del><a href="https://epykure.github.io/demos/">  [+ details]</a></li>
+        <li>W22:  Epyk Studio</li>
+        <li>W23:  Epyk with web framework (Vue, Angular or React)</li>
+        <li>W24:  Crypto Currency tracker with Epyk</li>
     </ul>
 
 Do not hesitate to follow us on `Twitter <https://twitter.com/Epykure1>`_ or to help us improving our code by
@@ -95,3 +96,4 @@ sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
     intro/advanced-features.rst
     intro/external-packages.rst
     intro/extensions.rst
+    intro/bugs_todo.rst

@@ -2205,7 +2205,8 @@ class CssMixin:
   @text_align.setter
   def text_align(self, val):
     val = val if val is not None else 'None'
-    if Defaults_css.CSS_EXCEPTIONS and val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
+    first_val = val.split(" ")[0]
+    if Defaults_css.CSS_EXCEPTIONS and first_val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
 
     self.css({"text-align": val})

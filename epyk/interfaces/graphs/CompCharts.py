@@ -3,6 +3,7 @@
 
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
@@ -96,6 +97,8 @@ class Graphs:
     if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     html_skillbar = html.HtmlEvent.SkillBar(
       self.page, records, y_column, x_axis, title, width, height, html_code, options, profile)

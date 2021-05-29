@@ -130,8 +130,8 @@ class Titles:
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    html_title = html.HtmlTags.HtmlGeneric(self.page, "div", text, width, height, html_code, tooltip,
-                                           dflt_options, profile)
+    html_title = html.HtmlTags.HtmlGeneric(
+      self.page, "div", text, width, height, html_code, tooltip, dflt_options, profile)
     html_title.style.css.font_size = self.page.body.style.globals.font.normal(8)
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 10

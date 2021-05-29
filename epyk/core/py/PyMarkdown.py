@@ -11,6 +11,7 @@ RULES = {
   '\*(.*)\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "*%s*", 'tag': "<i>%s</i>"},
   '\*\*(.*)\*\*': {'cls': 'ui.tags.i', 'attrs': ["text"], 'pattern': "**%s**", 'tag': "<b>%s</b>"},
   '\_\_(.*)\_\_': {'cls': 'ui.tags.b', 'attrs': ["text"], 'pattern': "__%s__"},
+  '``(.*)``': {'cls': 'ui.texts.code', 'attrs': ["text"], 'pattern': "``%s``", 'tag': "<code>%s</code>"},
   '^## (.*)$': {'cls': 'ui.subtitle', 'attrs': ["text"], 'pattern': "## %s"},
   '^=======': {'cls': 'ui.layouts.underline', 'attrs': None, 'pattern': "======="},
   '^------': {'cls': 'ui.layouts.accentuate', 'attrs': None, 'pattern': "------"},
@@ -161,7 +162,6 @@ class MarkDown:
 
       else:
         if line:
-          print(line)
           components.append(self.page.ui.texts.paragraph(line, options={"markdown": True}))
           if css_attrs is not None:
             components[-1].css(css_attrs)
@@ -187,4 +187,20 @@ class MarkDown:
       m = re.findall(r, data, re.MULTILINE)
       for v in m:
         data = data.replace(interface["pattern"] % v, interface["tag"] % v)
-    return data
+
+    multi_lines_component = None
+    converted_data = []
+    for rec in data.split("\n"):
+      if rec.startswith("-"):
+        if multi_lines_component is None:
+          multi_lines_component = {"type": 'list', "records": []}
+        multi_lines_component["records"].append({"text": rec[1:].strip()})
+      elif multi_lines_component is not None and multi_lines_component["type"] == "list":
+        converted_data.append("<ul style='margin:5px 0'>")
+        for li in multi_lines_component["records"]:
+          converted_data.append("<li>%s</li>" % li["text"])
+        converted_data.append("</ul>")
+        multi_lines_component = None
+      if multi_lines_component is None:
+        converted_data.append(rec)
+    return "\n".join(converted_data)

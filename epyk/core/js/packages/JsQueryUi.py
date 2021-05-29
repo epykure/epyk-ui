@@ -577,6 +577,26 @@ class ProgressBar(JQueryUI):
     jsValue = JsUtils.jsConvertData(jsValue, None)
     return JsObjects.JsObjects.get('%s.progressbar("value", %s)' % (self._src.dom.jquery.varId, jsValue))
 
+  def add(self, jsValue=None):
+    """
+    Description:
+    ------------
+    Add value to the progress bar.
+
+    Attributes:
+    ----------
+    :param jsValue: Float | JsObject. The value to be added to the current state.
+    """
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%(varId)s.progressbar("value", %(varId)s.progressbar("value") + %(jsValue)s)' % {
+      "varId": self._src.dom.jquery.varId, "jsValue": jsValue})
+
+  def tooltip(self, jsValue=None, options=None):
+
+     return JsObjects.JsVoid(''' let options = %(options)s;
+     %(varId)s.find('div').attr("title", ""+ (%(varId)s.progressbar("value") / options.max * 100).toFixed(2) +"%% ("+ %(varId)s.progressbar("value") +" / "+ options.max +")")
+ ''' % {"varId": self._src.dom.jquery.varId, 'options': self._src.options.config_js(options)})
+
 
 class Menu(JQueryUI):
 

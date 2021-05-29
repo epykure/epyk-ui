@@ -76,5 +76,5 @@ class AppRoute:
     This will provide some information concerning the configuration of the local Jupyter instance.
 
     """
-    return jupyter.Jupyter()
+    return jupyter.Jupyter(self.page)
 

@@ -30,6 +30,7 @@ class JqueryVertorMap:
     version = self.page.imports.jsImports["jqvmap"]['versions'][0]
     self.page.imports.addPackage('jqvm-%s' % name, {
       'version': version, 'req': [{'alias': 'jqvmap'}],
+      'register': {'alias': 'map_%s' % name, 'module': 'jquery.vmap.%s' % name, 'npm_path': 'dist/maps/continents/'},
       'modules': [
         {'script': 'jquery.vmap.%s.js' % name, 'node_path': 'dist/maps/continents/' if continent else 'dist/maps/',
          'path': 'jqvmap/%(version)s/maps/continents/' if continent else 'jqvmap/%(version)s/maps/'}]})

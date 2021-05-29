@@ -169,6 +169,7 @@ JS_IMPORTS = {
   'accounting': {
     "repository": "https://github.com/openexchangerates/accounting.js",
     "version": "0.4.1",
+    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting'},
     'v_prefix': 'v',
     'modules': [
       {'script': 'accounting.min.js', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -533,6 +534,7 @@ JS_IMPORTS = {
     "repository": 'https://github.com/nicolaskruchten/pivottable',
     'version': '2.23.0',
     'website': 'https://github.com/nicolaskruchten/pivottable',
+    'register': {'alias': 'PivotTable', 'module': 'pivot.min'},
     'modules': [
       {'script': 'pivot.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -625,6 +627,7 @@ JS_IMPORTS = {
     'req': [{'alias': 'jquery'}],
     'website': 'https://www.10bestdesign.com/jqvmap/',
     'repository': "https://github.com/10bestdesign/jqvmap/",
+    'register': {'alias': 'jqvmap', 'module': 'jquery.vmap.min', 'npm': 'jqvmap', "init_fnc": 'jQuery = $'},
     'version': '1.5.1',
     'modules': [
       {'script': 'jquery.vmap.min.js', 'node_path': 'dist/', 'path': 'jqvmap/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -643,6 +646,7 @@ JS_IMPORTS = {
     'req': [{'alias': 'jquery'}],
     'version': '2.1.2',
     'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
+    'register': {'alias': 'sparkline', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
     'modules': [
       {'script': 'jquery.sparkline.min.js', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -957,7 +961,7 @@ JS_IMPORTS = {
     'website': 'http://square.github.io/crossfilter/',
     'repository': 'https://github.com/crossfilter/crossfilter',
     'version': '1.3.12',
-    'register': {'alias': 'crossfilter', 'module': 'crossfilter.min', 'npm': 'crossfilter'},
+    'register': {'alias': 'xfilter', 'module': 'crossfilter.min', 'npm': 'crossfilter'},
     'modules': [
       {'script': 'crossfilter.min.js', 'path': 'crossfilter/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -966,9 +970,12 @@ JS_IMPORTS = {
   'apexcharts': {
     'website': 'https://apexcharts.com/',
     'repository': 'https://github.com/apexcharts/apexcharts.js',
-    'version': '3.26.0',
+    'version': '3.26.3',
+    'register': {'alias': 'ApexCharts', 'module': 'dist/apexcharts.amd', 'npm': 'apexcharts'},
     'modules': [
-      {'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
+      #{'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
+      # https://cdn.jsdelivr.net/npm/apexcharts@3.26.3/dist/apexcharts.amd.js
+      {'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts@%(version)s/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}
     ],
   },
 
@@ -981,7 +988,7 @@ JS_IMPORTS = {
       {'alias': 'd3'},
       {'alias': 'crossfilter'},
     ],
-    'version': '4.2.3',
+    'version': '4.2.7',
     'modules': [
       {'script': 'dc.min.js', 'node_path': 'dist/', 'path': 'dc/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -993,7 +1000,7 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'req': [{'alias': 'd3'}],
+    'req': [{'alias': 'd3', "version": "6.7.0"}],
     'version': '3.0.3',
     'register': {'alias': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
     'modules': [
@@ -3382,6 +3389,8 @@ class ImportManager:
         if "cdnjs" not in mod:
           mod["cdnjs"] = CDNJS_REPO
         mod_entry['js'].setdefault('modules', []).append(mod)
+        if 'register' in config:
+          mod_entry['js']['register'] = config['register']
         if 'req' in config:
           for req in config['req']:
             if req['alias'] in JS_IMPORTS:

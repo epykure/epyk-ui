@@ -146,7 +146,7 @@ class Youtube(Html.Html):
     ----------
     :param youtube_link: String. The youtube link of the online video.
     """
-    return 'http://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
+    return 'https://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
 
 
 class Camera(Html.Html):

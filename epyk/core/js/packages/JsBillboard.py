@@ -8,6 +8,7 @@ from epyk.core.js.packages import JsC3
 
 
 class Billboard(JsC3.C3):
+  lib_alias = {'js': "billboard.js", 'css': 'billboard.js'}
 
   def export(self):
     """

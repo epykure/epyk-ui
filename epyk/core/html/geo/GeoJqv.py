@@ -16,6 +16,7 @@ class JqueryVectorMap(Html.Html):
     super(JqueryVectorMap, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                           css_attrs={"width": width, "height": height})
     self.chartId = "%s_obj" % self.htmlCode
+    self.style.css.display = "inline-block"
 
   def click(self,  js_funcs, profile=None, source_event=None, on_ready=False):
     """

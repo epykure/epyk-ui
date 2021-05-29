@@ -44,9 +44,23 @@ class ClsFormula(GrpCls.ClassHtml):
 
   def __init__(self, component):
     super(ClsFormula, self).__init__(component)
-    self._css_container, self._css_mjx = 2 * [None]
+    self._css_container, self._css_mjx, self._css_display = 3 * [None]
     self.classList['other'].add(self.cls_container)
     self.classList['other'].add(self.cls_mjx)
+    self.classList['other'].add(self.cls_display)
+
+  @property
+  def cls_display(self):
+    """
+    Description:
+    -----------
+
+    :rtype: Classes.CatalogText.CatalogFormulas
+    """
+    if self._css_display is None:
+      self._css_display = Classes.CatalogText.CatalogFormulas(
+        self.component.page, self.classList['other']).display()
+    return self._css_display
 
   @property
   def cls_container(self):

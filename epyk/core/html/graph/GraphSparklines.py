@@ -12,6 +12,7 @@ from epyk.core.css.styles import GrpClsChart
 from epyk.core.html.options import OptSparkline
 
 # TODO add event and tooltip style
+# TODO Fix display tooltips in Jupyter
 
 
 class Sparklines(Html.Html):

@@ -182,7 +182,7 @@ class CatalogFormulas(Catalog.CatalogGroup):
     """
     Description:
     ------------
-    Group for the CSS Class for the codemirror container.
+    Group for the CSS Class for the Mathjax container.
     """
     return self._set_class(CssStylesCode.Mjx)
 
@@ -190,6 +190,14 @@ class CatalogFormulas(Catalog.CatalogGroup):
     """
     Description:
     ------------
-    Group for the CSS Class for the codemirror container.
+    Group for the CSS Class for the Mathjax container.
     """
     return self._set_class(CssStylesCode.MjxContainer)
+
+  def display(self):
+    """
+    Description:
+    ------------
+    Group for the CSS Class for the Mathjax display.
+    """
+    return self._set_class(CssStylesCode.MjxDisplay)

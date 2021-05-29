@@ -14,6 +14,7 @@ from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.html import JsHtmlList
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
+from epyk.core.js.packages import JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsJqueryUI
@@ -576,17 +577,33 @@ class SkillBar(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: OptSliders.OptionsSlider
+    :rtype: OptSliders.OptionsSkillbars
     """
     return super().options
 
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    The JavaScript predefined functions for this component.
+
+    :return: A Javascript object
+
+    :rtype: JsComponents.SkillBar
+    """
+    if self._js is None:
+      self._js = JsComponents.SkillBar(self, varName=self.dom.varName, report=self.page)
+    return self._js
+
   _js__builder__ = ''' 
-      var table = htmlObj.querySelector("table");
-      table.innerHTML = "";
+      var table = htmlObj.querySelector("table"); table.innerHTML = "";
+      var thead = document.createElement("thead"); var tbody = document.createElement("tbody");
+      tbody.style["box-sizing"] = "border-box";
+      table.appendChild(thead); table.appendChild(tbody);
       data.forEach(function(rec, i){
         var tooltip = "";
-        if (typeof rec.tooltip !== "undefined"){
-          var tooltip = rec.tooltip};
+        if (typeof rec.tooltip !== "undefined"){var tooltip = rec.tooltip};
         if (typeof rec.url !== "undefined") {
           var content = document.createElement("a"); content.href =  rec.url} 
         else {
@@ -596,12 +613,11 @@ class SkillBar(Html.Html):
         var tr = document.createElement("tr");
         tr.style.width = options.width + "px"; tr.title = tooltip;
         var col = document.createElement("td");
-        col.style.textAlign = "center";
-        col.style.padding = "0 5px";
+        col.style.textAlign = "right"; col.style.padding = "0 5px";
         var p = document.createElement("span"); p.innerHTML = rec.label;
         col.appendChild(p); tr.appendChild(col);
         var row = document.createElement("td");
-        row.style.paddingLeft = "2px";
+        row.style["box-sizing"] = "border-box";
         row.style.width = "100%";
         var div = document.createElement("div");
         div.style.width = rec.value.toFixed(2) + "%";
@@ -616,7 +632,7 @@ class SkillBar(Html.Html):
         if (options.percentage){ div.appendChild(content)} 
         else { div.innerHTML = "&nbsp;"; div.title = rec.value.toFixed(2) + "%" }
         row.appendChild(div); tr.appendChild(row);
-        table.appendChild(tr)
+        tbody.appendChild(tr)
       })'''
 
   def __str__(self):

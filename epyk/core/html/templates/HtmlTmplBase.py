@@ -28,9 +28,9 @@ JUPYTER = '''
 %(cssImports)s
 </head>
 <body>
-%(content)s
+<div id="result_cell_%(pageId)s">%(content)s</div>
 <script>
-require.config({ paths:%(paths)s});
+require.config({paths:%(paths)s});
 %(jsFrgs_in_req)s
 </script>
 <body>

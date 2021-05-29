@@ -127,6 +127,7 @@ class PyOuts:
   def __init__(self, report=None, options=None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
+    self.__requireJs = None
 
   def _to_html_obj(self, htmlParts=None, cssParts=None, split_js=False):
     """
@@ -246,14 +247,18 @@ class PyOuts:
 
     This is what will use IPython in order to display the results in cells.
     """
-    results = self._to_html_obj()
-    if self._report is not None:
-      importMng = self._report.imports
+    if self.__requireJs is not None:
+      results = self.__requireJs
     else:
-      importMng = Imports.ImportManager(report=self._report)
-    require_js = importMng.to_requireJs(results, self.excluded_packages)
-    results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
-    results['jsFrgs_in_req'] = require_js['jsFrgs']
+      results = self._to_html_obj()
+      if self._report is not None:
+        importMng = self._report.imports
+      else:
+        importMng = Imports.ImportManager(report=self._report)
+      require_js = importMng.to_requireJs(results, self.excluded_packages)
+      results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
+      results['jsFrgs_in_req'] = require_js['jsFrgs']
+    results["pageId"] = id(self._report)
     return self.html_tmpl.strip() % results
 
   def jupyterlab(self):
@@ -277,7 +282,7 @@ class PyOuts:
     self.excluded_packages = ['bootstrap']
     return self
 
-  def jupyter(self):
+  def jupyter(self, verbose=False, requireJs=None, closure=True):
     """
     Description:
     ------------
@@ -294,9 +299,43 @@ class PyOuts:
 
       https://jupyter.org/
 
-    :return: The ouput object with the function _repr_html_
+    Attributes:
+    ----------
+    :param verbose: Boolean. Optional. Get the excluded packages.
+    :param requireJs: Dictionary. Optional. The requirements overrides from the apps property.
+    :param closure: Boolean. Optional.
+
+    :return: The output object with the function _repr_html_
     """
+    if closure:
+      self._report._props['js']['onReady'].append('''
+var outputCell = document.getElementById("result_cell_%(pageId)s").parentNode.parentNode.parentNode.parentNode.getElementsByClassName("output_prompt")[0];
+document.getElementById("result_cell_%(pageId)s").parentNode.parentNode.parentNode.parentNode.getElementsByClassName("out_prompt_overlay")[0].display = "none";
+var icon = outputCell.getElementsByTagName("div")[0];
+if (typeof icon === "undefined"){
+  let iconCell = document.createElement('div'); iconCell.innerHTML = "&#8722;"; 
+  iconCell.style["font-size"] = "25px"; iconCell.style.cursor = "pointer"; iconCell.style.color = "black"; iconCell.style.margin = "5px 0";
+  let iconRunCell = document.createElement('div'); iconRunCell.innerHTML = "&nbsp;"; iconRunCell.style.margin = "5px 0";
+  iconRunCell.style["font-size"] = "15px"; iconRunCell.style.cursor = "pointer"; iconRunCell.style["line-height"] = "15px";
+  iconRunCell.className = "fa-step-forward fa"; iconRunCell.style.color = "black";
+  iconRunCell.addEventListener("click", function(){
+    this.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('run_this_cell')[0].dispatchEvent(new Event('click'))
+  });
+  iconCell.addEventListener("click", function(){
+     if(this.innerText == "−"){
+        this.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('input')[0].style.display = 'none';
+        this.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('output_prompt')[0].firstChild.style.display = 'none';
+        this.innerHTML = "&#43;";
+    } else {
+        this.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('input')[0].style.display = 'flex';
+        this.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('output_prompt')[0].firstChild.style.display = 'block';
+        this.innerHTML = "&#8722;";}
+  });
+  outputCell.appendChild(iconRunCell); outputCell.appendChild(iconCell); iconCell.dispatchEvent(new Event('click'));
+};  
+''' % {"pageId": id(self._report)})
     self.html_tmpl = HtmlTmplBase.JUPYTER
+    self.__requireJs = requireJs
     try:
       import notebook
 
@@ -305,6 +344,9 @@ class PyOuts:
       for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
         if f == "font-awesome":
           continue
+
+        if verbose:
+          print("Package already available in Jupyter: %s" % f)
 
         self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
     except Exception as err:

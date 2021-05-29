@@ -36,3 +36,10 @@ class MjxContainer(CssStyle.Style):
 
   def customize(self):
     self.css({'outline': "1px solid %s" % self.page.theme.notch()})
+
+
+class MjxDisplay(CssStyle.Style):
+  classname = "MathJax_Display"
+
+  def customize(self):
+    self.css({'display': "inline-block"}, important=True)

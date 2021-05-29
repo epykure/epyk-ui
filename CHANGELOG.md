@@ -5,7 +5,35 @@
 ### Changed
 
 ### Fixed
+
+
+## [1.5.20] - 2021-05-29
+
+### Added
+- Options to display matplotlib figures.
+- Add bugs and todo section in the doc.
+- Add skillbar options.
+- Add skillbar javascript events.
+- Add headers argument to js.post and js.get.
+- Add progressbar add js function.
+- Add outs options for Jupyter.
+- first version of the page.apps.juputer extension.
+
+
+### Changed
+- Change text builder filter.
+- Jupyter HTML template for cells.
+- Extend div operator for contentFormatters.
+- Update DC charts.
+- Add list to Python Markdown module.
+
+### Fixed
 - Bug fixes for NVD3, C3 and DC in Jupyter.
+- Fix mathJax display for Jupyter.
+- Fix use of !IMPORTANT in CSS property setters.
+- Fix Jqv Map display property.
+- Bug fix on the use of the get method for options.
+- Fix pivotTable.
 
 
 ## [1.5.19] - 2021-05-22

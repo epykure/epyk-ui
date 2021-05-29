@@ -982,6 +982,10 @@ class JsBase:
       self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
     else:
       self._src.jsLocalImports.add("%s/%s" % (path, filename))
+    self.page.imports.addPackage('local_%s' % filename[:-3], {'version': "",
+      'register': {'alias': 'local_%s' % filename[:-3], 'module': filename[:-3], 'npm_path': 'dist/maps/continents/'},
+      'modules': [{'script': filename, "path": '', 'cdnjs': path}]})
+    self.page.jsImports.add('local_%s' % filename[:-3])
     return self
 
   def extendProto(self, pyClass, fncName, jsFncs, pmts=None, profile=False):
@@ -1041,7 +1045,7 @@ class JsBase:
     method_type = JsUtils.jsConvertData(method_type, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
 
-  def get(self, url, jsData=None, varName="response", is_json=True, components=None):
+  def get(self, url, jsData=None, varName="response", is_json=True, components=None, headers=None):
     """
     Description:
     ------------
@@ -1061,6 +1065,7 @@ class JsBase:
     :param varName: String. Optional. The variable name created in the Javascript (default response).
     :param is_json: Boolean. Optional. Specify the type of object passed.
     :param components: HTML component. Optional. This will add the component value to the request object.
+    :param headers: Dictionary. Optional. The request headers.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1081,9 +1086,12 @@ class JsBase:
     request.send({}, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    if headers is not None:
+      for k, v in headers.items():
+        request.setRequestHeader(k, v)
     return request
 
-  def post(self, url, jsData=None, varName="response", is_json=True, components=None, profile=None):
+  def post(self, url, jsData=None, varName="response", is_json=True, components=None, profile=None, headers=None):
     """
     Description:
     ------------
@@ -1097,6 +1105,7 @@ class JsBase:
     :param is_json: Boolean. Optional. Specify the type of object passed.
     :param components: HTML component. Optional. This will add the component value to the request object.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param headers: Dictionary. Optional. The request headers.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1116,6 +1125,9 @@ class JsBase:
     request.send(jsData, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+    if headers is not None:
+      for k, v in headers.items():
+        request.setRequestHeader(k, v)
     return request
 
   def request_rpc(self, varName, method_type, fnc, url, extra_params=None):

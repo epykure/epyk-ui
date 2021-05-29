@@ -1,13 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Module in charge of the PivotTable library
-
-Related Pages:
-
-		https://pivottable.js.org/examples/
-"""
 
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
@@ -130,16 +123,16 @@ class PivotUITable(PivotTable):
     return super().options
 
   _js__builder__ = '''
-        %(jqId)s.pivotUI(data, options)
-        ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+      %(jqId)s.pivotUI(data, options)
+      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
 class PivotAggregator:
 
   def __init__(self, report, options):
-    self.report, self.options = report, options
+    self.page, self.options = report, options
 
-  def sumOverSum(self, cola):
+  def sumOverSum(self, cols):
     """
     Description:
     ------------
@@ -148,11 +141,11 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param cola:
+    :param cols: List. The columns to be added up.
     """
-    cola = JsUtils.jsConvertData(cola, None)
-    self.options.aggregator = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cola
-    self.options.aggregatorName = "sumOverSum"
+    cols = JsUtils.jsConvertData(cols, None)
+    self.options.aggregator = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cols
+    self.options.aggregatorName = "Sum over Sum"
 
   def count(self):
     """
@@ -162,7 +155,7 @@ class PivotAggregator:
     Usage::
     """
     self.options.aggregator = '$.pivotUtilities.aggregators["Count"]()'
-    self.options.aggregatorName = "count"
+    self.options.aggregatorName = "Count"
 
   def sum(self, col1):
     """
@@ -173,10 +166,11 @@ class PivotAggregator:
 
     Attributes:
     ----------
+    :param col1: String. The column name.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     self.options.aggregator = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
-    self.options.aggregatorName = "sum"
+    self.options.aggregatorName = "Sum"
 
   def max(self, col1):
     """
@@ -187,9 +181,9 @@ class PivotAggregator:
 
     Attributes:
     ----------
+    :param col1: String. The column name.
     """
-    self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)")
-    self.options.aggregatorName = "Max"
+    self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)", "Max")
 
   def min(self, col1):
     """
@@ -200,10 +194,9 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1:
+    :param col1: String. The column name.
     """
-    self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)")
-    self.options.aggregatorName = "Min"
+    self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)", "Min")
 
   def absSum(self, col1):
     """
@@ -216,61 +209,108 @@ class PivotAggregator:
     ----------
     :param col1:
     """
-    self.singleFactorFormulas(col1, "+= Math.abs(col1)")
-    self.options.aggregatorName = "sum (abs)"
+    self.singleFactorFormulas(col1, "+= Math.abs(col1)", "sum (abs)")
 
-  def singleFactorFormulas(self, col1, formula):
+  def quick(self, col1, name, formula):
     """
     Description:
     ------------
+    Add a fix formula without input options.
 
     Usage::
 
+      tb = page.ui.tables.pivot(languages, ['name'], ['type'])
+      tb.aggregators.quick("change", "Abs Change", "+= Math.abs(col1)")
+
     Attributes:
     ----------
-    :param col1:
-    :param formula:
+    :param col1: String. The column name.
+    :param name: String. The function name.
+    :param formula: String. The formula to be applied.
     """
     col1 = JsUtils.jsConvertData(col1, None)
-    self.options.aggregator = '''
-      function(keyAgg) { 
-        return function(data, rowKey, colKey) {
-          return {
-            tmpVal: 0, numInputs: 1,
-            push: function(record){
-              const col1 = record[keyAgg]; this.tmpVal %s; return this.tmpVal},
-            value: function() { return this.tmpVal; },
-            format: function(x) { return x; },
-          }}}(%s)''' % (formula, col1)
-    self.options.aggregatorName = "diff Abs Agg"
+    fnc = '''function(attributeArray) { 
+return function(){
+  var attribute = attributeArray[0];
+  return function(data, rowKey, colKey) {
+    return {
+      tmpVal: 0, numInputs: 0,
+      push: function(record){
+        const col1 = record[attribute]; this.tmpVal %s; return this.tmpVal},
+      value: function() { return this.tmpVal; },
+      format: function(x) { return x; },
+  }}}}''' % formula
+    self.page.properties.js.add_builders("$.pivotUtilities.aggregators['%(name)s'] = %(fnc)s([%(col)s])" % {
+      "name": name, "fnc": fnc, "col": col1})
+    self.options.aggregatorName = name  # "diff Abs Agg"
+    self.options.aggregator = "$.pivotUtilities.aggregators['%(name)s']()" % {"name": name}
 
-  def twoFactorFormulas(self, col1, col2, formula):
+  def singleFactorFormulas(self, col1, formula, name):
     """
     Description:
     ------------
 
+    TODO: Find way to set the column name on init
+
     Usage::
+
+      tb = page.ui.tables.pivot(languages, ['name'], ['type'])
+      tb.aggregators.absSum('rating')
 
     Attributes:
     ----------
-    :param col1:
-    :param col2:
-    :param formula:
+    :param col1: String. The column name.
+    :param formula: String. The formula to be applied.
+    :param name: String. The function name.
+    """
+    col1 = JsUtils.jsConvertData(col1, None)
+    fnc = '''function(attributeArray) { 
+var attribute = attributeArray[0];
+return function(data, rowKey, colKey) {
+  return {
+    tmpVal: 0, numInputs: 1,
+    push: function(record){
+      const col1 = record[attribute]; this.tmpVal %s; return this.tmpVal},
+    value: function() { return this.tmpVal; },
+    format: function(x) { return x; },
+  }}}''' % formula
+    self.options.aggregatorName = name # "diff Abs Agg"
+    self.options.aggregator = "$.extend($.pivotUtilities.aggregators, {'%(name)s': function(){return %(fnc)s}() })['%(name)s']([%(col)s])" % {"name": name, "fnc": fnc, "col": col1}
+
+  def twoFactorFormulas(self, col1, col2, name, formula):
+    """
+    Description:
+    ------------
+    Create a two factor function.
+
+    TODO: Find way to set the column name on init
+
+    Usage::
+
+      tb = page.ui.tables.pivot(languages, ['name'], ['type'])
+      tb.aggregators.diffAbsolute('change', 'rating')
+
+    Attributes:
+    ----------
+    :param col1: String. The column name.
+    :param col2: String. The column name.
+    :param name: String. The function name.
+    :param formula: String. The formula to be applied.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     col2 = JsUtils.jsConvertData(col2, None)
-    self.options.aggregator = '''
-      function(keyAgg, key2Agg) { 
-        return function(data, rowKey, colKey) {
-          return {
-            tmpVal: 0, numInputs: 2,
-            push: function(record){
-              const col1 = record[keyAgg]; const col2 = record[key2Agg]; this.tmpVal %s; return this.tmpVal},
-            value: function() { return this.tmpVal; },
-            format: function(x) { return x; },
-          };
-        };
-      }(%s, %s)''' % (formula, col1, col2)
+    fnc = '''function(attributeArray) { 
+var keyAgg = attributeArray[0]; var key2Agg = attributeArray[1];
+return function(data, rowKey, colKey) {
+  return {
+    tmpVal: 0, numInputs: 2,
+    push: function(record){
+      const col1 = record[keyAgg]; const col2 = record[key2Agg]; this.tmpVal %s; return this.tmpVal},
+    value: function() { return this.tmpVal; },
+    format: function(x) { return x; },
+  };
+}}''' % formula
+    self.options.aggregator = "$.extend($.pivotUtilities.aggregators, {'%(name)s': function(){return %(fnc)s}() })['%(name)s']([%(col1)s, %(col2)s])" % {"name": name, "fnc": fnc, "col1": col1, "col2": col2}
     self.options.aggregatorName = "diff Abs Agg"
 
   def diffAbsolute(self, col1, col2, formula="+= col1 - col2"):
@@ -282,28 +322,32 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1:
-    :param col2:
-    :param formula:
+    :param col1: String. The column name.
+    :param col2: String. The column name.
+    :param formula: String. The formula to be applied.
     """
-    self.twoFactorFormulas(col1, col2, formula)
-    self.options.aggregatorName = "diff Abs Agg"
+    self.twoFactorFormulas(col1, col2, "diff Abs Agg", formula)
 
   def custom(self, name, js_def):
     """
     Description:
     ------------
+    Add a custom aggregator function.
 
     Usage::
 
-    https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
 
     Attributes:
     ----------
-    :param name:
-    :param js_def:
+    :param name: String. The function name.
+    :param js_def: String. The function definition
     """
-    self.options.aggregator = js_def
+    self.page.properties.js.add_builders("$.pivotUtilities.aggregators['%(name)s'] = %(fnc)s" % {
+      "name": name, "fnc": js_def.strip()})
+    self.options.aggregator = "$.pivotUtilities.aggregators['%(name)s']()" % {"name": name}
     self.options.aggregatorName = name
 
 

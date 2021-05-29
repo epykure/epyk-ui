@@ -164,6 +164,12 @@ class ContentFormatters:
   def __ne__(self, obj):
     return "%s <> %s" % (self.selector, JsUtils.jsConvertData(obj, None))
 
+  def __truediv__(self, obj):
+    return JsObjects.JsObjects.get("%s / %s" % (self.selector, JsUtils.jsConvertData(obj, None)))
+
+  def __floordiv__(self, obj):
+    return JsObjects.JsObjects.get("%s // %s" % (self.selector, JsUtils.jsConvertData(obj, None)))
+
   def isTrue(self):
     return JsObjects.JsObjects.get("%s == true" % self.selector)
 

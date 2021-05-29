@@ -449,7 +449,7 @@ class Text(Html.Html):
   _js__builder__ = '''
       var content = data;
       if(options.reset){htmlObj.innerHTML = ""}; 
-      if(data != ''){ 
+      if(data !== ''){ 
         if(options.showdown){
           var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(data)} 
         if((options.maxlength != undefined) && (data.length > options.maxlength)){
@@ -457,7 +457,8 @@ class Text(Html.Html):
           if(options.markdown){htmlObj.innerHTML = content +"..."} else {htmlObj.innerHTML = content +"..."}; 
           htmlObj.title = data} 
         else{
-          if(options.markdown){htmlObj.innerHTML = content} else {htmlObj.innerHTML = content}}};
+          if(options.markdown){htmlObj.innerHTML = content} 
+          else {htmlObj.innerHTML = content}}};
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
       '''
 
@@ -666,11 +667,11 @@ class Title(Html.Html):
       self.style.add_classes.text.title()
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': self.page.body.style.globals.font.normal(5)})
     if align == 'center':
-      self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': 'center'})
+      self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': 'center'})
     elif align is not None:
-      self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': align})
+      self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': align})
     else:
-      self.css({'display': 'block', "margin-right": "10px"})
+      self.css({'display': 'inline-block'}) # , "margin-right": "10px"
     if hasattr(report, '_content_table') and not report._content_table.options.manual and self.__options.content_table:
       report._content_table.add_title(self, level=level)
 
@@ -922,7 +923,7 @@ class Highlights(Html.Html):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height},
                                      html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
-    self.color = color if color is not None else self._report.theme.greys[-1]
+    self.style.css.color = color if color is not None else self._report.theme.greys[-1]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0},
                    options={'content_table': False})

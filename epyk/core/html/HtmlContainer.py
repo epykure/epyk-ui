@@ -375,13 +375,13 @@ class Div(Html.Html):
 
       if hasattr(component, 'options'):
         self.__add__(component)
-        if self.options.get("position", None) is not None:
-          component.style.css.vertical_align = self.options["position"]
+        if self.options.get(None, "position") is not None:
+          component.style.css.vertical_align = self.options.get(None, "position")
       else:
         self.val.append(obj)
     self.tag = tag
     # Add the component predefined elements
-    self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
+    self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family", None))
     self.add_label(label, html_code=self.htmlCode)
     self.add_helper(helper)
     if helper is not None:
@@ -439,7 +439,7 @@ class Div(Html.Html):
   def __add__(self, component):
     """ Add items to a container """
     if isinstance(component, list):
-      component = self._report.ui.row(component, position=self.options.get("position"))
+      component = self._report.ui.row(component, position=self.options.get(None, "position"))
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
     if self.options.inline:
