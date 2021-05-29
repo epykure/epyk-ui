@@ -1,0 +1,65 @@
+Jupyter (week 21)
+=================
+
+Quite a lot of changes to integrate PivotTable, JqVMaps and other Charting libraries to Jupyter.
+Also some bug fixes to the components like SkillBars, Slider...
+
+Also some extra features dedicated to Jupyter:
+- page.apps.jupyter to perform some action to the notebook.
+- The use of external JavaScript pages.
+- Change the juputer outs with an extra parameter.
+
+
+Changelog details
+-----------------
+
+### Added
+- Options to display matplotlib figures.
+- Add bugs and todo section in the doc.
+- Add skillbar options.
+- Add skillbar javascript events.
+- Add headers argument to js.post and js.get.
+- Add progressbar add js function.
+- Add outs options for Jupyter.
+- first version of the page.apps.juputer extension.
+
+
+### Changed
+- Change text builder filter.
+- Jupyter HTML template for cells.
+- Extend div operator for contentFormatters.
+- Update DC charts.
+- Add list to Python Markdown module.
+
+### Fixed
+- Bug fixes for NVD3, C3 and DC in Jupyter.
+- Fix mathJax display for Jupyter.
+- Fix use of !IMPORTANT in CSS property setters.
+- Fix Jqv Map display property.
+- Bug fix on the use of the get method for options.
+- Fix pivotTable.
+
+
+## [1.5.19] - 2021-05-22
+
+### Added
+- Add gallery for images and icons
+- Add option for colors to the transpile CLIs.
+- Add shortcut to change the OVERRIDES method in the CSS Classes module.
+- Add new pk. method links.
+- Introduce the async option for builders (for potential promise)
+
+### Changed
+- Improve documentation.
+- Input background default color.
+- Adjust skins background position.
+- Remove the dependency on Jquery UI for Jquery TimePicker.
+- Change the content of field.number to return a float.
+
+### Fixed
+- Fix bug on some predefined icons.
+- Fix effects.
+- Fix Plotly data processing on Python.
+- Fix the TimePicker object.
+- Fix to make web workers available in Jupyter.
+- Fix data input for Histogram for Plotly.
