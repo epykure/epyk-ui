@@ -51,6 +51,7 @@ _________
     /../packages/mathjax.rst
     /../packages/jquery.rst
     /../packages/jqueryui.rst
+    /../packages/pivottable.rst
 
 
 UI Frameworks

@@ -24,3 +24,4 @@ as any other component to change the style by using the ``style.css`` property.
 The below will add a border to the component::
 
     formulas.style.css.color = "green"
+
