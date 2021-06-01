@@ -4,6 +4,9 @@ Design & Architecture
 Architecture
 ************
 
+.. image:: ../_static/epyk_target.PNG
+    :align: center
+
 Page
 ####
 
