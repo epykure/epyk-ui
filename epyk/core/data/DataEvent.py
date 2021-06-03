@@ -139,6 +139,20 @@ class DataEvents:
     return JsObjects.JsObjects.get("value")
 
   @property
+  def response(self):
+    """
+    Description:
+    ------------
+    Get the response from a promise event in the then statement.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsObjects.get("response")
+
+  @property
   def event(self):
     """
     Description:
@@ -194,6 +208,21 @@ class DataEvents:
     from epyk.core.js.objects import JsEvents
 
     return JsEvents.KeyboardEvent()
+
+  @property
+  def d3(self):
+    """
+    Description:
+    ------------
+    Get a D3 component. Wrap the d3.select(this) statement.
+
+    Related Pages:
+
+      https://www.tutorialspoint.com/d3js/d3js_selections.htm
+    """
+    from epyk.core.js.packages import JsD3
+
+    return JsD3.D3Select(selector="d3.select(this)", setVar=False)
 
 
 class DataFile:

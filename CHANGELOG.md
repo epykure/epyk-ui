@@ -3,6 +3,7 @@
 ### Added
 - Add JavaScript Fetch API.
 - Add Logging service with page.js.console.service.
+- Add POST and GET async flag.
 
 ### Changed
 
