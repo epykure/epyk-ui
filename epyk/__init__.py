@@ -16,6 +16,8 @@ from epyk.core.js.JsUtils import jsWrap as js_wrap
 
 Page = Rpt.Report
 
+LOG_SERVICE = None
+
 
 def rename_css_cls(mappings):
   """

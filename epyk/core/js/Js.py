@@ -44,6 +44,9 @@ class JsConsole:
     https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
   """
 
+  def __init__(self, page=None):
+    self.page = page
+
   @property
   def debugger(self):
     """
@@ -287,6 +290,24 @@ class JsConsole:
 
     return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % varName)
 
+  def service(self, msg, headers=None):
+    """
+    Description:
+    ------------
+    Send logs to the backend.
+
+    Attributes:
+    ----------
+    :param msg: String. The log message to be sent to the backend.
+    :param headers: Dictionary the service headers.
+    """
+    from epyk import LOG_SERVICE
+
+    if LOG_SERVICE is None:
+      raise Exception("Log service must be defined pk.LOG_SERVICE = <service_url>")
+
+    return self.page.post(LOG_SERVICE, {"content": msg}, headers=headers)
+
 
 class JsJson:
   """
@@ -518,7 +539,7 @@ class JsBase:
     # The underlying source object is not supposed to be touched in the underlying classes
     self._src = src if src else self.__internal()
     self.component, self.page = component, src
-    self.console = JsConsole()
+    self.console = JsConsole(self)
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
     self.performance = JsPerformance.JsPerformance(self)

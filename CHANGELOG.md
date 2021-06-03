@@ -1,7 +1,8 @@
 ## [Unreleased]
 
 ### Added
-- Add JavaScript Fetch API
+- Add JavaScript Fetch API.
+- Add Logging service with page.js.console.service.
 
 ### Changed
 
