@@ -519,14 +519,14 @@ class XMLHttpRequestErrors:
 
 class XMLHttpRequest:
 
-  def __init__(self, report, varName, method_type, url, data=None):
+  def __init__(self, report, varName, method_type, url, data=None, asynchronous=False):
     self.data = JsData.Datamap() if data is None else data
     self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
-    self.varId, self.profile, self.timeout = varName, False, None
+    self.varId, self.profile, self.timeout, self.asynchronous = varName, False, None, asynchronous
     if url is not None:
       self.open(method_type, url)
 

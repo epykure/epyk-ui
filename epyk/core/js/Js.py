@@ -306,7 +306,7 @@ class JsConsole:
     if LOG_SERVICE is None:
       raise Exception("Log service must be defined pk.LOG_SERVICE = <service_url>")
 
-    return self.page.post(LOG_SERVICE, {"content": msg}, headers=headers)
+    return self.page.post(LOG_SERVICE, {"content": msg}, headers=headers, asynchronous=True)
 
 
 class JsJson:
@@ -1066,7 +1066,7 @@ class JsBase:
     method_type = JsUtils.jsConvertData(method_type, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
 
-  def get(self, url, jsData=None, varName="response", is_json=True, components=None, headers=None):
+  def get(self, url, jsData=None, varName="response", is_json=True, components=None, headers=None, asynchronous=False):
     """
     Description:
     ------------
@@ -1087,6 +1087,7 @@ class JsBase:
     :param is_json: Boolean. Optional. Specify the type of object passed.
     :param components: HTML component. Optional. This will add the component value to the request object.
     :param headers: Dictionary. Optional. The request headers.
+    :param asynchronous: Boolean. Async flag: true (asynchronous) or false (synchronous).
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -1103,7 +1104,7 @@ class JsBase:
       for k, v in jsData.items():
         url_params.append('"%s=" + %s' % (k, JsUtils.jsConvertData(v, None)))
     url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url, asynchronous=asynchronous)
     request.send({}, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
@@ -1112,7 +1113,8 @@ class JsBase:
         request.setRequestHeader(k, v)
     return request
 
-  def post(self, url, jsData=None, varName="response", is_json=True, components=None, profile=None, headers=None):
+  def post(self, url, jsData=None, varName="response", is_json=True, components=None, profile=None, headers=None,
+           asynchronous=False):
     """
     Description:
     ------------
@@ -1127,12 +1129,13 @@ class JsBase:
     :param components: HTML component. Optional. This will add the component value to the request object.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param headers: Dictionary. Optional. The request headers.
+    :param asynchronous: Boolean. Async flag: true (asynchronous) or false (synchronous).
 
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData('POST', None)
     url = JsUtils.jsConvertData(url, None)
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url, asynchronous=asynchronous)
     request.profile = profile
     if components is not None:
       if jsData is None:
