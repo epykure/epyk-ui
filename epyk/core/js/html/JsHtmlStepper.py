@@ -76,7 +76,7 @@ class JsShapes:
     """
     Description:
     ------------
-
+    Put a triangle shape to the step.
     """
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
