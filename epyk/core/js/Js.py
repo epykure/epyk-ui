@@ -1161,6 +1161,40 @@ class JsBase:
     rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path, 'extra_params': extra_params}
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url, rpc_params)
 
+  def fetch(self, url, options=None, profile=False, async_await=False):
+    """
+    Description:
+    ------------
+    The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
+    such as requests and responses.
+
+    Usage::
+
+      page.ui.button("Click").click([
+        page.js.fetch("test", {"method": "POST"}).then([
+          page.js.console.log(pk.events.response)
+        ])
+      ])
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+    Attributes:
+    ----------
+    :param url: String. The target url.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param async_await: Boolean. Optional.
+    """
+    fetch_name = "await fetch" if async_await else "fetch"
+    if options is None:
+      return JsObjects.JsPromise("%s(%s)" % (fetch_name, JsUtils.jsConvertData(url, None)), profile, async_await)
+
+    return JsObjects.JsPromise(
+      "%s(%s, %s)" % (fetch_name, JsUtils.jsConvertData(url, None), JsUtils.jsConvertData(options, None)),
+      profile, async_await)
+
   @property
   def fncs(self):
     """

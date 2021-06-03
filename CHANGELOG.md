@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 ### Added
+- Add JavaScript Fetch API
 
 ### Changed
 

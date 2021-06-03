@@ -382,8 +382,8 @@ class JsObjects:
 
 class JsPromise:
 
-  def __init__(self, jsObj):
-    self._jsObj = jsObj
+  def __init__(self, jsObj, profile=False, async_await=False):
+    self._jsObj, self.profile, self.async_await = jsObj, profile, async_await
     self.__then, self.__catch = [], []
 
   def then(self, jsFnc):
@@ -421,9 +421,11 @@ class JsPromise:
   def toStr(self):
     result = [str(self._jsObj)]
     if self.__then:
-      result.append("then(function(fulfilled){%s})" % ";".join(self.__then))
+      result.append(
+        "then(function(response){%s})" % JsUtils.jsConvertFncs(self.__then, toStr=True, profile=self.profile))
     if self.__catch:
-      result.append("catch(function(error){%s})" % ";".join(self.__catch))
+      result.append(
+        "catch(function(error){%s})" % JsUtils.jsConvertFncs(self.__catch, toStr=True, profile=self.profile))
     return ".".join(result)
 
   def __str__(self):
