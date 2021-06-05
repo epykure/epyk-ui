@@ -5,6 +5,7 @@
 - Add Logging service with page.js.console.service.
 - Add POST and GET async flag.
 - Add width to base charts options.
+- Add concept of cell for outs.jupyter()
 
 ### Changed
 - New youtube component.
@@ -13,6 +14,8 @@
 ### Fixed
 - QRCode Jupyter style (padding issue).
 - Align media options.
+- Register more modules to Imports.py for Jupyter.
+
 
 ## [1.5.20] - 2021-05-29
 

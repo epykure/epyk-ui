@@ -127,7 +127,7 @@ class PyOuts:
   def __init__(self, report=None, options=None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
-    self.__requireJs = None
+    self.__requireJs, self.__jupyter_cell = None, False
 
   def _to_html_obj(self, htmlParts=None, cssParts=None, split_js=False):
     """
@@ -154,6 +154,9 @@ class PyOuts:
 
         if component.options.managed:
           htmlParts.append(component.html())
+          # For cells in Jupyter notebooks
+          if self.__jupyter_cell:
+            component.options.managed = False
         #
         cssParts.update(component.style.get_classes_css())
     onloadParts, onloadPartsCommon = list(self._report.properties.js.frgs), {}
@@ -278,6 +281,7 @@ class PyOuts:
 
       https://jupyter.org/
     """
+    self.__jupyter_cell = True
     self.html_tmpl = HtmlTmplBase.JUPYTERLAB
     self.excluded_packages = ['bootstrap']
     return self
@@ -335,14 +339,14 @@ if (typeof icon === "undefined"){
 };  
 ''' % {"pageId": id(self._report)})
     self.html_tmpl = HtmlTmplBase.JUPYTER
-    self.__requireJs = requireJs
+    self.__requireJs, self.__jupyter_cell = requireJs, True
     try:
       import notebook
 
       self.excluded_packages = []
       nb_path = os.path.split(notebook.__file__)[0]
       for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
-        if f == "font-awesome":
+        if f in ["font-awesome", "moment"]:
           continue
 
         if verbose:

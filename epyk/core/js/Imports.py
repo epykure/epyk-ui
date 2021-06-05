@@ -183,6 +183,7 @@ JS_IMPORTS = {
       {'script': 'qrcode.min.js', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'repository': 'https://github.com/llyys/qrcodejs',
+    'register': {'alias': 'Qrcode', 'module': 'qrcode.min', 'npm': 'qrcodejs'},
     'website': 'https://davidshimjs.github.io/qrcodejs/'},
 
   # data transformation
@@ -245,6 +246,7 @@ JS_IMPORTS = {
   'moment': {
     "version": "2.29.1",
     'repository': 'https://github.com/moment/moment',
+    'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
     'modules': [
       {'script': 'moment.min.js', 'node_path': 'min/', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -3431,6 +3433,8 @@ class ImportManager:
       if excluded_packages is not None and m in excluded_packages:
         continue
 
+      if not self.online:
+        self.pkgs.get(m).set_local(static_url=self.static_url)
       if 'register' in JS_IMPORTS[m]:
         alias = JS_IMPORTS[m]['register']['alias']
         first_module = JS_IMPORTS[m]['modules'][0]
@@ -3438,9 +3442,13 @@ class ImportManager:
           first_module['version'] = JS_IMPORTS[m]['version']
         if m in m_versions:
           first_module['version'] = m_versions[m]
-        results['paths'][alias] = "%s/%s%s" % (
-          first_module['cdnjs'], first_module['path'] % first_module,
-          JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
+        if not self.online:
+          self.pkgs.get(m).set_local(static_url=self.static_url)
+          results['paths'][alias] = list(self.jsImports[m]["main"].keys())[0][:-3]
+        else:
+          results['paths'][alias] = "%s/%s%s" % (
+            first_module['cdnjs'], first_module['path'] % first_module,
+            JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
         alias_to_name[m] = alias
         name_to_alias[alias] = m
         if 'req' in JS_IMPORTS[m]:
