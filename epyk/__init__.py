@@ -12,7 +12,7 @@ from epyk.core.css.styles.attributes import CssInline
 # Add JavaScript shortcuts
 from epyk.core.js import std as js_std
 from epyk.core.js import expr as js_expr
-from epyk.core.js.JsUtils import jsWrap as js_wrap
+from epyk.core.js.JsUtils import jsWrap as js_callback
 
 Page = Rpt.Report
 

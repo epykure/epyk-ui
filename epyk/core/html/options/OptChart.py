@@ -1,17 +1,38 @@
 
 from epyk.core.html.options import Options
+from epyk.core.js import JsUtils
 import abc
 
 
 class OptionsChart(Options):
-  component_properties = ("opacity", )
+  component_properties = ("opacity", "get_width", "get_height")
 
   @property
-  def width(self):
-    return self._config_get(None)
+  def get_width(self):
+    """
+    Description:
+    -----------
+    Get the container available with in pixel (including the padding).
+    """
+    return self._config_get(JsUtils.jsWrap(
+      "function(component){return component.clientWidth - (parseFloat(component.style.paddingLeft) + parseFloat(component.style.paddingRight)) }"))
 
-  @width.setter
-  def width(self, num):
+  @get_width.setter
+  def get_width(self, num):
+    self._config(num)
+
+  @property
+  def get_height(self):
+    """
+    Description:
+    -----------
+    Get the container available height in pixel (including the padding).
+    """
+    return self._config_get(JsUtils.jsWrap(
+      "function(component){return component.clientHeight - (parseFloat(component.style.paddingTop) + parseFloat(component.style.paddingBottom))}"))
+
+  @get_height.setter
+  def get_height(self, num):
     self._config(num)
 
   @property

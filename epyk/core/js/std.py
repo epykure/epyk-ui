@@ -107,7 +107,7 @@ def comment(value):
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
-def var(name, value=None, global_scope=False):
+def var(name, value=None, global_scope=False, depth=False):
   """
   Description:
   ------------
@@ -115,9 +115,10 @@ def var(name, value=None, global_scope=False):
 
   Attributes:
   ----------
-  :param name: String. The variable name
-  :param value: Object. Optional. The object
-  :param global_scope: Boolean. Optional. The variable scope
+  :param name: String. The variable name.
+  :param value: Object. Optional. The object.
+  :param global_scope: Boolean. Optional. The variable scope.
+  :param depth: Boolean. Optional. Set to true of it is a nested object.
   """
   if global_scope:
     name = "window['%s']" % name
@@ -125,9 +126,9 @@ def var(name, value=None, global_scope=False):
     return JsObjects.JsObject.JsObject.get(name)
 
   if global_scope:
-    return JsObjects.JsVoid("%s = %s" % (name, JsUtils.jsConvertData(value, None)))
+    return JsObjects.JsVoid("%s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
-  return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None)))
+  return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
 def recordset(name, value=None, global_scope=False):
@@ -154,7 +155,7 @@ def recordset(name, value=None, global_scope=False):
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None)))
 
 
-def let(name, value):
+def let(name, value, depth=False):
   """
   Description:
   ------------
@@ -164,17 +165,20 @@ def let(name, value):
 
   Redeclaring a var variable with let, in the same scope, or in the same block, is not allowed:
 
-  https://www.w3schools.com/js/js_let.asp
+  Related Pages:
+
+      https://www.w3schools.com/js/js_let.asp
 
   Attributes:
   ----------
-  :param name:
-  :param value:
+  :param name: String. The variable name.
+  :param value: Object. Optional. The object.
+  :param depth: Boolean. Optional. Set to true of it is a nested object.
   """
-  return JsObjects.JsVoid("let %s = %s" % (name, JsUtils.jsConvertData(value, None)))
+  return JsObjects.JsVoid("let %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
-def const(name, value=None):
+def const(name, value=None, depth=False):
   """
   Description:
   ------------
@@ -184,14 +188,17 @@ def const(name, value=None):
 
   Redeclaring or reassigning an existing const variable, in the same scope, or in the same block, is not allowed:
 
-  https://www.w3schools.com/js/js_const.asp
+  Related Pages:
+
+      https://www.w3schools.com/js/js_const.asp
 
   Attributes:
   ----------
-  :param name:
-  :param value:
+  :param name: String. The variable name.
+  :param value: Object. Optional. The object.
+  :param depth: Boolean. Optional. Set to true of it is a nested object.
   """
-  return JsObjects.JsVoid("const %s = %s" % (name, JsUtils.jsConvertData(value, None)))
+  return JsObjects.JsVoid("const %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
 debugger = JsObjects.JsVoid("debugger")

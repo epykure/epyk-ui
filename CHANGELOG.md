@@ -8,15 +8,19 @@
 - Add concept of cell for outs.jupyter().
 - Add new Jupyter apps features (draft).
 - Add play and stop icons shortcuts.
+- Add depth for JavaScript variable serialisation.
+- Improve D3 charts interface with more entries.
 
 ### Changed
 - New youtube component.
 - Add try except to the pyNpm package.
+- Change name js_wrap to js_callback.
 
 ### Fixed
 - QRCode Jupyter style (padding issue).
 - Align media options.
 - Register more modules to Imports.py for Jupyter.
+- Fix D3 charts.
 
 
 ## [1.5.20] - 2021-05-29

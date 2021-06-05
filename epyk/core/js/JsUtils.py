@@ -129,11 +129,16 @@ def jsConvertData(jsData, jsFnc, depth=False):
       return jsData.toStr()
     else:
       try:
-        if depth and isinstance(jsData, dict):
-          result = []
-          for k, v in jsData.items():
-            result.append("%s: %s" % (k, jsConvertData(v, jsFnc, depth=depth)))
-          return "{%s}" % ", ".join(result)
+        if depth:
+          if isinstance(jsData, dict):
+            result = []
+            for k, v in jsData.items():
+              result.append("%s: %s" % (k, jsConvertData(v, jsFnc, depth=depth)))
+            return "{%s}" % ", ".join(result)
+
+          else:
+            result = [jsConvertData(v, jsFnc, depth=depth) for v in jsData]
+            return "[%s]" % ", ".join(result)
 
         return JsObject.JsObject(json.dumps(jsData))
 

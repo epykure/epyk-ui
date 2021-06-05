@@ -83,7 +83,7 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param datasets:
+    :param datasets: List. The data set object.
     """
     if datasets is None:
       self.fnc("data()")
@@ -140,8 +140,42 @@ class D3Select(JsPackage):
       self.fnc("datum(%s)" % JsUtils.jsConvertData(datasets, None))
     return self
 
-  def filter(self, fnc):
-    pass
+  def filter(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    You can filter a selection using D3’s .filter method.
+    The first argument is a function which returns true if the element should be included.
+    The filtered selection is returned by the filter method so you can continue chaining selection methods.
+
+    Related Pages:
+
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    return self.fnc("filter(function(d, i) {%s} )" % (
+      JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+
+  def sort(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    return self.fnc("sort(function(a, b) {%s} )" % (
+      JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
 
   def enter(self):
     """
@@ -173,7 +207,8 @@ class D3Select(JsPackage):
     """
     Description:
     -----------
-    If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or before the next following sibling in the update selection if this is an enter selection.
+    If the specified type is a string, appends a new element of this type (tag name) as the last child of each
+    selected element, or before the next following sibling in the update selection if this is an enter selection.
 
     Related Pages:
 
@@ -184,13 +219,12 @@ class D3Select(JsPackage):
     :param htmlType:
     """
     return self.fnc("append(%s)" % JsUtils.jsConvertData(htmlType, None))
-    #return D3Html(self.src, "%s.append(%s)" % (self.toStr(), JsUtils.jsConvertData(htmlType, None)), htmlType, setVar=setVar)
 
   def rappend(self, htmlType):
     """
     Description:
     -----------
-    Recursive append function without defining the variable on the javascript side
+    Recursive append function without defining the variable on the javascript side.
 
     Attributes:
     ----------
@@ -201,31 +235,119 @@ class D3Select(JsPackage):
   def insert(self, htmlType, id):
     pass
 
-  def style(self, key, val):
-    pass
-
-  def attr(self, key, val):
+  def style(self, key, val=None, callback=None):
     """
     Description:
     -----------
+    Update the style.
+
+    Related Pages:
+
+      https://www.d3indepth.com/selections/
 
     Attributes:
     ----------
-    :param key:
-    :param val:
+    :param key: String. The attribute key.
+    :param val: String. Optional. The attribute value.
+    :param callback: String. Optional. A javascript callback function using d (data) and i (index).
     """
+    if val is None and callback is None:
+      raise Exception("Either val or callback must be defined")
+
+    if callback is not None:
+      return self.fnc("style(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
+
+    return self.fnc("style(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
+
+  def property(self, key, val=None, callback=None):
+    """
+    Description:
+    -----------
+    Update an element's property.
+
+    Related Pages:
+
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param key: String. The attribute key.
+    :param val: String. Optional. The attribute value.
+    :param callback: String. Optional. A javascript callback function using d (data) and i (index).
+    """
+    if val is None and callback is None:
+      raise Exception("Either val or callback must be defined")
+
+    if callback is not None:
+      return self.fnc("property(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
+
+    return self.fnc("property(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
+
+  def attr(self, key, val=None, callback=None):
+    """
+    Description:
+    -----------
+    Update an attribute.
+
+    Related Pages:
+
+      https://gramener.github.io/d3js-playbook/events.html
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param key: String. The attribute key.
+    :param val: String. Optional. The attribute value.
+    :param callback: String. Optional. A javascript callback function using d (data) and i (index).
+    """
+    if val is None and callback is None:
+      raise Exception("Either val or callback must be defined")
+
+    if callback is not None:
+      return self.fnc("attr(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
+
     return self.fnc("attr(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
 
-  def text(self, data):
+  def text(self, data=None, column=None):
+    """
+    Description:
+    -----------
+    Update the text content.
+
+    Related Pages:
+
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param data: Value. Optional. A Javascript function or a fixed value.
+    :param column: String. Optional. the column name in the record.
+    """
+    if data is None and column is None:
+      return self.fnc("text(function(d) { return d })")
+
+    if column is not None:
+      return self.fnc("text(function(d) { return d[%s]; })" % JsUtils.jsConvertData(column, None))
+
+    return self.fnc("text(%s)" % JsUtils.jsConvertData(data, None))
+
+  def transition(self, duration=None):
     """
     Description:
     -----------
 
+    Related Pages:
+
+      https://gramener.github.io/d3js-playbook/events.html
+
     Attributes:
     ----------
-    :param data:
+    :param duration: Integer. Optional. The time in ms used for the transition state.
     """
-    return self.fnc("text(function(column) { return column; })")
+    if duration is None:
+      return self.fnc("transition()")
+
+    return self.fnc("transition().duration(%s)" % duration)
 
   def html(self, jsData=None):
     """
@@ -246,15 +368,67 @@ class D3Select(JsPackage):
 
   def call(self, fnc_name):
     """
+    Description:
+    -----------
+    The .call method allows a function to be called into which the selection itself is passed as the first argument.
 
     Attributes:
     ----------
-    :param fnc_name:
+    :param fnc_name: String. A function name.
     """
-    return self.fnc("call(%s)" % JsUtils.jsConvertData(fnc_name, None))
+    return self.fnc("call(%s)" % fnc_name)
 
-  def on(self, eventType, fnc):
-    pass
+  def on(self, eventType, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Add an event to the component.
+
+    Attributes:
+    ----------
+    :param eventType: String. The event name.
+    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    self.style("cursor", "pointer")
+    return self.fnc("on(%s, function(data) {%s} )" % (
+      JsUtils.jsConvertData(eventType, None), JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+
+  def hover(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Mouse pointer has moved onto the element or its children.
+
+    Related Pages:
+
+      https://gramener.github.io/d3js-playbook/events.html
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    return self.on("mouseover", jsFncs, profile)
+
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Element has been clicked.
+
+    Related Pages:
+
+      https://gramener.github.io/d3js-playbook/events.html
+      https://www.d3indepth.com/selections/
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    return self.on("click", jsFncs, profile)
 
   def remove(self):
     """
@@ -273,7 +447,8 @@ class D3Select(JsPackage):
     """
     Description:
     -----------
-    Inserts clones of the selected elements immediately following the selected elements and returns a selection of the newly added clones.
+    Inserts clones of the selected elements immediately following the selected elements and returns a selection of
+    the newly added clones.
 
     Related Pages:
 
@@ -308,16 +483,8 @@ class D3Select(JsPackage):
     """
     return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3Type, None))
 
-  # def var(self, varName):
-  #   """
-  #
-  #   :param variable_name:
-  #   :return:
-  #   """
-  #   return D3Select(self.src, selector=varName)
 
-
-class D3ForceSimulation(object):
+class D3ForceSimulation:
   _package = ['d3-force']
 
   def __init__(self, id=None, d3Type=None):
@@ -368,7 +535,7 @@ class D3ForceSimulation(object):
     pass
 
 
-class D3ForceManyBody(object):
+class D3ForceManyBody:
   def strength(self):
     pass
 
@@ -379,22 +546,24 @@ class D3ForceManyBody(object):
     pass
 
 
-class D3ForceCollide(object):
+class D3ForceCollide:
   def __init__(self, radius=None):
     """
-    Creates a new circle collision force with the specified radius. If radius is not specified, it defaults to the constant one for all nodes.
+    Creates a new circle collision force with the specified radius.
+    If radius is not specified, it defaults to the constant one for all nodes.
 
     Documentation:
         - https://github.com/d3/d3-force#forceCollide
 
     :param radius:
-    :return:
     """
     pass
 
   def radius(self, fnc):
     """
-    If radius is specified, sets the radius accessor to the specified number or function, re-evaluates the radius accessor for each node, and returns this force. If radius is not specified, returns the current radius accessor
+    If radius is specified, sets the radius accessor to the specified number or function,
+    re-evaluates the radius accessor for each node, and returns this force.
+    If radius is not specified, returns the current radius accessor
 
     Documentation:
       - https://github.com/d3/d3-force#forceCollide
@@ -406,13 +575,13 @@ class D3ForceCollide(object):
 
   def strength(self, strength):
     """
-    If strength is specified, sets the force strength to the specified number in the range [0,1] and returns this force. If strength is not specified, returns the current strength which defaults to 0.
+    If strength is specified, sets the force strength to the specified number in the range [0,1] and returns this force.
+    If strength is not specified, returns the current strength which defaults to 0.
 
     Documentation:
       - https://github.com/d3/d3-force#forceCollide
 
     :param strength:
-    :return:
     """
     pass
 
@@ -424,12 +593,11 @@ class D3ForceCollide(object):
       - https://github.com/d3/d3-force#forceCollide
 
     :param iterations:
-    :return:
     """
     pass
 
 
-class D3ForceCenter(object):
+class D3ForceCenter:
   def __init__(self):
     pass
 
@@ -440,7 +608,7 @@ class D3ForceCenter(object):
     pass
 
 
-class D3Event(object):
+class D3Event:
   def __init__(self):
     """
 
@@ -469,7 +637,7 @@ class D3Event(object):
     pass
 
 
-class D3Pack(object):
+class D3Pack:
   def __init__(self):
     """
 
@@ -530,7 +698,7 @@ class D3Pack(object):
     pass
 
 
-class D3Band(object):
+class D3Band:
   """
   https://github.com/d3/d3-scale/blob/master/README.md#band-scales
   """
@@ -589,7 +757,7 @@ class D3Band(object):
     return strData
 
 
-class D3File(object):
+class D3File:
 
   def __init__(self, src, filename, selector):
     self._f, self.src, self._selector = filename, src, selector
@@ -724,10 +892,10 @@ class D3File(object):
     return "%s(%s, function(row, err){%s})" % (self._selector, file, ";".join(self._js_frg))
 
 
-class D3Svg(object):
-  def __init__(self, src, selector, varName=None):
+class D3Svg:
+  def __init__(self, src, selector, varName=None, setVar=None, parent=None):
     self.src, self._selector, self.varName = src, selector, varName
-    self._js = []
+    self._js, self.setVar, self.component = [], setVar, parent
 
   def line(self):
     self._js.append("line()")
@@ -741,9 +909,17 @@ class D3Svg(object):
     self._js.append("y(function(d) { return x(d.date1); })")
     return self
 
+  def selectAll(self, tag):
+    """
+
+    :return:
+    """
+    self._js.append("selectAll(%s)" % JsUtils.jsConvertData(tag, None))
+    return D3Select(self.src, selector=self.toStr(), setVar=self.setVar, parent=self.component)
+
   def toStr(self):
     content = [self._selector] + self._js
-    if self.varName is not None:
+    if self.varName is not None and self.setVar:
       return "var %s = %s" % (self.varName, ".".join(content))
 
     return ".".join(content)
@@ -769,7 +945,9 @@ class D3Request(JsPackage):
     """
     Description:
     -----------
-    If timeout is specified, sets the timeout attribute of the request to the specified number of milliseconds and returns this request instance. If timeout is not specified, returns the current response timeout, which defaults to 0.
+    If timeout is specified, sets the timeout attribute of the request to the specified number of milliseconds and
+    returns this request instance. If timeout is not specified, returns the current response timeout,
+    which defaults to 0.
 
     Related Pages:
 
@@ -817,6 +995,7 @@ class D3Request(JsPackage):
     Attributes:
     ----------
     :param jsFncs:
+    :param profile:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -858,7 +1037,8 @@ class JsD3(JsPackage):
     """
     Description:
     -----------
-    Sends http request to the specified url to load .csv file or data and executes callback function with parsed csv data objects.
+    Sends http request to the specified url to load .csv file or data and executes callback function with parsed
+    csv data objects.
 
     Related Pages:
 
@@ -874,7 +1054,8 @@ class JsD3(JsPackage):
     """
     Description:
     -----------
-    Sends http request to the specified url to load a .tsv file or data and executes callback function with parsed tsv data objects.
+    Sends http request to the specified url to load a .tsv file or data and executes callback function with parsed
+    tsv data objects.
 
     Related Pages:
 
@@ -994,7 +1175,9 @@ class JsD3(JsPackage):
     Description:
     -----------
     Fetches the DSV file at the specified input URL.
-    If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields. An optional row conversion function may be specified to map and filter row objects to a more-specific representation; see dsv.parse for details.
+    If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
+    An optional row conversion function may be specified to map and filter row objects to a more-specific
+    representation; see dsv.parse for details.
 
     Related Pages:
 
@@ -1029,7 +1212,8 @@ class JsD3(JsPackage):
     Description:
     -----------
     Constructs a new band scale with the specified domain and range, no padding, no rounding and center alignment.
-    If domain is not specified, it defaults to the empty domain. If range is not specified, it defaults to the unit range [0, 1].
+    If domain is not specified, it defaults to the empty domain.
+    If range is not specified, it defaults to the unit range [0, 1].
 
     Attributes:
     ----------
