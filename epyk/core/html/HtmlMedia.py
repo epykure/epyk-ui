@@ -77,8 +77,8 @@ class Media(Html.Html):
     htmlObj.appendChild(source)'''
 
   def __str__(self):
-    if 'autoplay' in self._jsStyles:
-      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    if self.options.autoplay:
+      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self.options.autoplay, None))
     self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
     if self.options.controls:
       self.attr["controls"] = True
@@ -109,8 +109,8 @@ class Audio(Media):
     htmlObj.appendChild(source)'''
 
   def __str__(self):
-    if 'autoplay' in self._jsStyles:
-      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    if self.options.autoplay:
+      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self.options.autoplay, None))
     self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
     return '<audio %(attrs)s>%(source)s</audio>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
                                                     "source": self.val}
@@ -121,15 +121,14 @@ class Youtube(Html.Html):
 
   def __init__(self, report, link, width, height, html_code, profile, options):
     super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, html_code=html_code,
-                                  profile=profile)
-    self._jsStyles = options
-    self._jsStyles['src'] = link
+                                  profile=profile, options=options)
+    self.video = report.ui.layouts.iframe(link)
+    self.video.options.managed = False
 
   def __str__(self):
-    opts = " ".join(["%s='%s'" % (k, v) for k, v in self._jsStyles.items()])
     return '''
-      <div %(attrs)s><iframe %(options)s></iframe></div>
-      ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'link': self.val, 'options': opts}
+      <div %(attrs)s>%(iframe)s</div>
+      ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "iframe": self.video.html()}
 
   @staticmethod
   def get_embed_link(youtube_link):
@@ -184,6 +183,6 @@ class Camera(Html.Html):
     return self._dom
 
   def __str__(self):
-    if 'autoplay' in self._jsStyles:
-      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    if self.options.autoplay:
+      self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self.options.autoplay, None))
     return '<video %s></video><img src="">' % self.get_attrs(pyClassNames=self.style.get_classes())

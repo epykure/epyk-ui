@@ -1083,6 +1083,20 @@ class Row(Html.Html):
       col.set_size(vals[i])
     return self
 
+  def set_width_cols(self, *args):
+    """
+    Description:
+    ------------
+    Force the width of the different columns in the tow component.
+
+    Attributes:
+    ----------
+    :param args: Tuples. The width object (value, unit).
+    """
+    for i, val in enumerate(list(args)):
+      self[i].style.css.width = "%s%s" % (val[0], val[1])
+    return self
+
   def __len__(self):
     return len(self.val)
 

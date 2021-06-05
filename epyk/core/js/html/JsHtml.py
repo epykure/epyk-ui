@@ -1500,7 +1500,7 @@ class JsMedia(JsHtml):
     """
     Description:
     -----------
-    Start the cmera.
+    Start the camera.
     This can only work with https and localhost urls.
 
     Related Pages:

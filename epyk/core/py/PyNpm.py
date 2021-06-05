@@ -791,7 +791,13 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   if packages is None:
     packages = Imports.JS_IMPORTS.keys()
   for pkg_alias in packages:
-    pkg = npm.package(pkg_alias)
+    try:
+      pkg = npm.package(pkg_alias)
+    except:
+      if verbose:
+        print("Error with %s" % pkg_alias)
+      continue
+
     if pkg is not None:
       pkg.get_files(out_path=modules_path, update=update, verbose=verbose)
     else:

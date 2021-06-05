@@ -7,6 +7,14 @@ class OptionsChart(Options):
   component_properties = ("opacity", )
 
   @property
+  def width(self):
+    return self._config_get(None)
+
+  @width.setter
+  def width(self, num):
+    self._config(num)
+
+  @property
   def height(self):
     return self._config_get(None)
 

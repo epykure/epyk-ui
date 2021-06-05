@@ -4,11 +4,15 @@
 - Add JavaScript Fetch API.
 - Add Logging service with page.js.console.service.
 - Add POST and GET async flag.
+- Add width to base charts options.
 
 ### Changed
+- New youtube component.
+- Add try except to the pyNpm package.
 
 ### Fixed
-
+- QRCode Jupyter style (padding issue).
+- Align media options.
 
 ## [1.5.20] - 2021-05-29
 
