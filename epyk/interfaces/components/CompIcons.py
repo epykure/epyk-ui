@@ -219,6 +219,60 @@ class Icons:
     return components
 
   @html.Html.css_skin()
+  def play(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+           html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Shortcut to the play icon.
+
+    Usage::
+
+      page.ui.icons.play()
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome(
+      'fas fa-play', text, tooltip, position, width, height, html_code, options, profile)
+    return components
+
+  @html.Html.css_skin()
+  def stop(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+           html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Shortcut to the stop icon.
+
+    Usage::
+
+      page.ui.icons.stop()
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome(
+      'fas fa-stop', text, tooltip, position, width, height, html_code, options, profile)
+    return components
+
+  @html.Html.css_skin()
   def zoom_out(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
                html_code=None, options=None, profile=None):
     """

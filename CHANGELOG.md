@@ -7,6 +7,7 @@
 - Add width to base charts options.
 - Add concept of cell for outs.jupyter().
 - Add new Jupyter apps features (draft).
+- Add play and stop icons shortcuts.
 
 ### Changed
 - New youtube component.
