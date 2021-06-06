@@ -4,6 +4,7 @@
 from epyk.core.html import Html
 from epyk.core.js.packages import JsQuery
 from epyk.core.html.options import OptJqvM
+from epyk.core.js.packages import JsQueryVectorMap
 
 
 class JqueryVectorMap(Html.Html):
@@ -18,7 +19,7 @@ class JqueryVectorMap(Html.Html):
     self.chartId = "%s_obj" % self.htmlCode
     self.style.css.display = "inline-block"
 
-  def click(self,  js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
     Description:
     -----------
@@ -43,6 +44,40 @@ class JqueryVectorMap(Html.Html):
       js_funcs = [js_funcs]
     self.options.onRegionClick(js_funcs, profile)
     return self
+
+  def drag(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: String. Optional. The source target for the event.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    """
+    source_event = source_event or JsQuery.decorate_var(self.htmlCode, convert_var=False)
+    self.on("drag", js_funcs, profile, source_event=source_event, on_ready=on_ready)
+    self._browser_data['mouse']["drag"][source_event]['fncType'] = "on"
+    return self
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+    :return: A Javascript Dom object functions.
+
+    :rtype: JsQueryVectorMap.JQVMap
+    """
+    if self._js is None:
+      self._js = JsQueryVectorMap.JQVMap(
+        self, varName=JsQuery.decorate_var(self.htmlCode, convert_var=False), report=self.page)
+    return self._js
 
   @property
   def options(self):

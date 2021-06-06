@@ -12,7 +12,8 @@ class OptionsJqVM(Options):
     """
     Description:
     -----------
-    The map alias.
+    Map you want to load. Must include the javascript file with the name of the map you want.
+    Available maps with this library are world_en, usa_en, europe_en and germany_en
 
     Usage::
 
@@ -31,10 +32,11 @@ class OptionsJqVM(Options):
     self._config(value)
 
   @property
-  def multiSelectRegion (self):
+  def multiSelectRegion(self):
     """
     Description:
     -----------
+    Whether to enable more than one region to be selected at a time.
 
     Usage::
 
@@ -48,7 +50,7 @@ class OptionsJqVM(Options):
     """
     return self._config_get(False)
 
-  @multiSelectRegion .setter
+  @multiSelectRegion.setter
   def multiSelectRegion(self, flag):
     self._config(flag)
 
@@ -57,7 +59,7 @@ class OptionsJqVM(Options):
     """
     Description:
     -----------
-    Border Color to use to outline map objects
+    Border Color to use to outline map objects.
 
     Usage::
 
@@ -164,15 +166,16 @@ class OptionsJqVM(Options):
     return self._config_get("#ffffff")
 
   @color.setter
-  def color(self, color):
-    self._config(color)
+  def color(self, value):
+    self._config(value)
 
   @property
   def colors(self):
     """
     Description:
     -----------
-    Colors of individual map regions. Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
+    Colors of individual map regions.
+    Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
     Usage::
@@ -188,8 +191,8 @@ class OptionsJqVM(Options):
     return self._config_get(None)
 
   @colors.setter
-  def colors(self, colors):
-    self._config(colors)
+  def colors(self, values):
+    self._config(values)
 
   @property
   def hoverColor(self):
@@ -219,7 +222,8 @@ class OptionsJqVM(Options):
     """
     Description:
     -----------
-    Colors of individual map regions when mouse pointer is over it. Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
+    Colors of individual map regions when mouse pointer is over it.
+    Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
     Usage::
@@ -263,6 +267,15 @@ class OptionsJqVM(Options):
 
   @property
   def selectedColor(self):
+    """
+    Description:
+    -----------
+    Color for a region when you select it.
+
+    Related Pages:
+
+      https://www.10bestdesign.com/jqvmap/documentation/
+    """
     return self._config_get(self._report._report.theme.colors[-1])
 
   @selectedColor.setter
@@ -271,6 +284,11 @@ class OptionsJqVM(Options):
 
   @property
   def selectedRegions(self):
+    """
+    Description:
+    -----------
+    This is the Region that you are looking to have preselected (two letter ISO code, defaults to null ).
+    """
     return self._config_get(None)
 
   @selectedRegions.setter
@@ -279,19 +297,29 @@ class OptionsJqVM(Options):
 
   @property
   def enableZoom(self):
+    """
+    Description:
+    -----------
+    Whether to Enable Map Zoom ( true or false, defaults to true)
+    """
     return self._config_get(False)
 
   @enableZoom.setter
-  def enableZoom(self, bool):
-    self._config(bool)
+  def enableZoom(self, flag):
+    self._config(flag)
 
   @property
   def showTooltip(self):
+    """
+    Description:
+    -----------
+    Whether to show Tooltips on Mouseover ( true or false, defaults to true )
+    """
     return self._config_get(True)
 
   @showTooltip.setter
-  def showTooltip(self, bool):
-    self._config(bool)
+  def showTooltip(self, flag):
+    self._config(flag)
 
   @property
   def scaleColors(self):
@@ -328,6 +356,13 @@ class OptionsJqVM(Options):
 
   @property
   def normalizeFunction(self):
+    """
+    Description:
+    -----------
+    This function can be used to improve results of visualizations for data with non-linear nature.
+    Function gets raw value as the first parameter and should return value which will be used in calculations of color,
+    with which particular region will be painted.
+    """
     return self._config_get('polynomial')
 
   @normalizeFunction.setter
@@ -338,6 +373,8 @@ class OptionsJqVM(Options):
     """
     Description:
     -----------
+    Callback function which will be called when the user clicks the region path.
+    Country code will be passed to the callback as argument.
 
     Related Pages:
 

@@ -10,11 +10,13 @@
 - Add play and stop icons shortcuts.
 - Add depth for JavaScript variable serialisation.
 - Improve D3 charts interface with more entries.
+- Add Colors and predefined Palettes.
 
 ### Changed
 - New youtube component.
 - Add try except to the pyNpm package.
 - Change name js_wrap to js_callback.
+- Improve the JQVMap interface with more options.
 
 ### Fixed
 - QRCode Jupyter style (padding issue).

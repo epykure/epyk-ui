@@ -550,6 +550,15 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'require.min.js', 'path': 'require.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # topojson
+  'topojson': {
+    'website': 'https://requirejs.org/',
+    'version': '3.0.2',
+    'repository': 'https://github.com/requirejs/r.js',
+    'register': {'alias': 'topojson', 'module': 'topojson.min'},
+    'modules': [
+      {'script': 'topojson.min.js', 'path': 'topojson/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   # Pivot Table SubTotal
   'subtotal': {
     'req': [{'alias': 'pivottable'}],
