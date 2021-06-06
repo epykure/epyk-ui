@@ -75,10 +75,10 @@ Please see below the 2021 road map of notifications on Twitter:
         <li><del>W20:  Gallery and Demos</del><a href="https://epykure.github.io/demos/">  [+ details]</a></li>
         <li><del>W21:  Gallery and Demos</del><a href="./weeks/w21.html">  [+ details]</a></li>
         <li><del>W22:  Charts and Maps</del></li>
-        <li>W23:  Epyk Studio & Gallery</li>
-        <li>W24:  Epyk - External Libraries for Layouts & components (Bootstrap, Materials, Canvas, ToastUI...)</li>
-        <li>W25:  Epyk with web framework (Vue, Angular or React)</li>
-        <li>W26:  Crypto Currency tracker with Epyk</li>
+        <li>W23:  Map and Geo</li>
+        <li>W24:  Epyk Studio & Gallery</li>
+        <li>W25:  Epyk - External Libraries for Layouts & components (Bootstrap, Materials, Canvas, ToastUI...)</li>
+        <li>W26:  Epyk with web framework (Vue, Angular or React)</li>
     </ul>
 
 Do not hesitate to follow us on `Twitter <https://twitter.com/Epykure1>`_ or to help us improving our code by
