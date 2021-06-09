@@ -31,7 +31,7 @@ Interfaces per Categories:
 There are links to existing Web Framework to rely on their components:
 
 
-Full list of 78 Interfaces:
+Full list of 80 Interfaces:
 *******************************************
 
 .. toctree::
@@ -78,9 +78,11 @@ Full list of 78 Interfaces:
     /report/ui/geo/BubbleMaps
     /report/ui/geo/ChartJs
     /report/ui/geo/Choropleth
+    /report/ui/geo/D3
     /report/ui/geo/Dc
     /report/ui/geo/GeoGoogle
     /report/ui/geo/JqueryVertorMap
+    /report/ui/geo/GeoLeaflet
     /report/ui/geo/Plotly
     /report/ui/geo/PlotlyBubble
     /report/ui/geo/PlotlyChoropleth

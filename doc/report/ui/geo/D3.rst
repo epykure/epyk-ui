@@ -1,0 +1,5 @@
+D3 Interface
+============
+
+.. autoclass:: epyk.interfaces.geo.CompGeoD3.D3
+	:members:

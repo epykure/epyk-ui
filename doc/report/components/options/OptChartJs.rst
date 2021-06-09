@@ -4,9 +4,6 @@ OptChartJs Module
 .. autoclass:: epyk.core.html.options.OptChartJs.ChartJsOptions
 	:members:
 
-.. autoclass:: epyk.core.data.DataClass.DataClass
-	:members:
-
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionAxes
 	:members:
 
@@ -26,6 +23,9 @@ OptChartJs Module
 	:members:
 
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionChartJsPlugins
+	:members:
+
+.. autoclass:: epyk.core.html.options.OptChartJs.OptionChartJsSize
 	:members:
 
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionChartJsTooltips
@@ -82,7 +82,13 @@ OptChartJs Module
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionScales
 	:members:
 
+.. autoclass:: epyk.core.html.options.OptChartJs.OptionScalesGeo
+	:members:
+
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionTitle
+	:members:
+
+.. autoclass:: epyk.core.html.options.Options
 	:members:
 
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionsBar

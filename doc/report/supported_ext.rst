@@ -7,7 +7,7 @@ the vast number of components.
 
 This will be fully transparent :doc:`all_components` will include to the page their external resources.
 
-112 Libraries
+113 Libraries
 ============
 
 - `accounting, version 0.4.1 <https://openexchangerates.github.io/accounting.js/>`_
@@ -47,6 +47,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `json-formatter-js, version 2.3.4 <https://azimi.me/json-formatter-js/>`_
 - `pivottable, version 2.23.0 <https://github.com/nicolaskruchten/pivottable>`_
 - `requirejs, version 2.3.6 <https://requirejs.org/>`_
+- `topojson, version 3.0.2 <https://requirejs.org/>`_
 - `subtotal, version  <http://nagarajanchinnasamy.com/subtotal/examples/>`_
 - `pivot-c3, version 2.23.0 <https://github.com/nicolaskruchten/pivottable>`_
 - `pivot-plotly, version 2.23.0 <https://github.com/nicolaskruchten/pivottable>`_
@@ -57,7 +58,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `jquery-sparkline, version 2.1.2 <https://omnipotent.net/jquery.sparkline/#s-about>`_
 - `jqueryui, version 1.12.1 <http://jquery.com/>`_
 - `jquery-bracket, version 0.11.1 <http://www.aropupu.fi/bracket/>`_
-- `timepicker, version 1.13.16 <https://timepicker.co/>`_
+- `timepicker, version 1.13.18 <https://www.jonthornton.com/jquery-timepicker/>`_
 - `jquery-context-menu, version  <http://swisnl.github.io/jQuery-contextMenu/demo.html>`_
 - `jquery-scrollbar, version  <http://manos.malihu.gr/jquery-custom-content-scroller/>`_
 - `pdfmake, version 0.1.70 <>`_
@@ -83,13 +84,13 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `nvd3, version 1.8.6 <http://nvd3.org/>`_
 - `c3, version 0.7.20 <https://c3js.org/>`_
 - `crossfilter, version 1.3.12 <http://square.github.io/crossfilter/>`_
-- `apexcharts, version 3.26.0 <https://apexcharts.com/>`_
-- `dc, version 4.2.3 <https://dc-js.github.io/dc.js/examples/>`_
+- `apexcharts, version 3.26.3 <https://apexcharts.com/>`_
+- `dc, version 4.2.7 <https://dc-js.github.io/dc.js/examples/>`_
 - `billboard.js, version 3.0.3 <https://naver.github.io/billboard.js/release/latest/doc/>`_
 - `rough-viz, version 1.0.6 <https://github.com/jwilber/roughViz>`_
 - `frappe-charts, version 1.5.1 <https://frappe.io/charts/docs>`_
 - `@chartshq/muze, version 2.0.0 <https://muzejs.org/>`_
-- `chart.js, version 2.9.4 <https://www.chartjs.org/>`_
+- `chart.js, version 3.3.2 <https://www.chartjs.org/>`_
 - `chartjs-plugin-dragdata, version latest <https://www.chartjs.org/>`_
 - `chartjs-plugin-annotation, version 0.5.7 <https://www.chartjs.org/>`_
 - `chartjs-plugin-datalabels, version 0.7.0 <https://chartjs-plugin-datalabels.netlify.app/>`_

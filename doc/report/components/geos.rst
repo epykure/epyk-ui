@@ -6,6 +6,7 @@ Geo Components
     :maxdepth: 1
     
     /report/components/geo/GeoChartJs
+    /report/components/geo/GeoD3
     /report/components/geo/GeoDc
     /report/components/geo/GeoGoogle
     /report/components/geo/GeoJqv
