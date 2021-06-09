@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.21] - 2021-06-09
+
+### Added
 - Add JavaScript Fetch API.
 - Add Logging service with page.js.console.service.
 - Add POST and GET async flag.
