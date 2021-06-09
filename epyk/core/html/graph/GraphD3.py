@@ -12,6 +12,7 @@ from epyk.core.html.options import OptChart
 class Script(Html.Html):
   name = 'D3 Script'
   _option_cls = OptChart.OptionsChart
+  requirements = ('d3', )
 
   def __init__(self, report, data, width, height, html_code, options, profile):
     super(Script, self).__init__(report, data, html_code=html_code, profile=profile, options=options,

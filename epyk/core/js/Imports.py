@@ -1059,12 +1059,12 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
-    'version': '2.9.4', # 3.1.1
+    'version': '3.3.2', # 2.9.4
     'v_prefix': 'v',
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'modules': [
-      {'script': 'Chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-dragdata': {
@@ -1390,6 +1390,7 @@ JS_IMPORTS = {
     'version': '1.7.1',
     'website': 'https://leafletjs.com/',
     'repository': 'https://github.com/Leaflet/Leaflet',
+    'register': {'alias': 'L', 'module': 'leaflet', 'npm': 'leaflet'},
     'modules': [
       {'script': 'leaflet.js', 'node_path': 'dist/', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -1451,12 +1452,6 @@ CSS_IMPORTS = {
       {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]
   },
-
-  # ChartJs modules width CDN links
-  'chart.js': {
-    'modules': [
-      {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
-
   'frappe-charts': {
     'modules': [
       {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/',
@@ -3164,82 +3159,6 @@ class ImportManager:
     """
     return self.jsResolve(set(JS_IMPORTS.keys()))
 
-  # def getPackage(self, alias, version=None, static_path=None, with_dep=False, reload=True):
-  #   """
-  #   Description:
-  #   ------------
-  #   Function in charge of downloading the different external CSS and JS packages locally.
-  #   This will guarantee the install without having to get any extra features saved on a repository.
-  #   Saved copies of the modules can be done in order to guarantee a offline mode
-  #
-  #   Usage:
-  #   -----
-  #
-  #     Imports.ImportManager(report=Report()).getPackage('jqueryui')
-  #
-  #   Attributes:
-  #   ----------
-  #   :param alias: String. The package reference in the above list
-  #   :param version: String. Optional. The package version to retrieve
-  #   :param static_path: Optional. The path in which the files should be copied to
-  #   :param with_dep: Optional. Flag to specify if the dependencies should be updated. Default False
-  #   :param reload: Optional. Flag to force the package reloading if the folder already exists. Default Yes
-  #
-  #   """
-  #   if not hasattr(self._report, "py"):
-  #     from epyk.core.py.PyRest import PyRest
-  #     webscrapper = PyRest().webscrapping
-  #   else:
-  #     webscrapper = self._report.py.requests.webscrapping
-  #
-  #   if not static_path.endswith("static"):
-  #     static_path = os.path.join(static_path, "static")
-  #   packages = {}
-  #   _static_path = os.path.join(os.path.dirname(__file__), '..', '..', 'static') if static_path is None else static_path
-  #   if not _static_path.endswith("static"):
-  #     _static_path = os.path.join(_static_path, "static")
-  #   for pckg in [JS_IMPORTS, CSS_IMPORTS]:
-  #     if with_dep:
-  #       for depAlias in self.cleanImports([alias], pckg):
-  #         if depAlias != alias:
-  #           self.getPackage(depAlias, reload=reload)
-  #     if 'package' in pckg.get(alias, {}):
-  #       packages[alias] = os.path.join(_static_path, pckg[alias]['package']['folder'])
-  #     for mod in pckg.get(alias, {}).get('modules', []):
-  #       if 'version' not in mod:
-  #         mod['version'] = pckg.get(alias, {})['version']
-  #       _version = self.reqVersion.get(alias, mod['version']) if version is None else version
-  #       script = "".join([mod['path'] % {'version': _version}, mod['script']])
-  #       path = os.path.join(_static_path, mod['path'] % {'version': _version})
-  #       if not os.path.exists(path):
-  #         os.makedirs(path)
-  #       reloadModule = True
-  #       extFilePath = r"%s\%s" % (path, mod['script'])
-  #       if os.path.exists(extFilePath) and not reload:
-  #         reloadModule = False
-  #
-  #       if reloadModule:
-  #         page = webscrapper("%s/%s" % (mod['cdnjs'], script))
-  #         if hasattr(page, 'code') and page.code == 404:
-  #           logging.warning(" # Error - %s: Script %s/%s not found " % (alias, mod['cdnjs'], script))
-  #           continue
-  #
-  #         try:
-  #           extFileName = open(extFilePath, "wb")
-  #           extFileName.write(page)
-  #           extFileName.close()
-  #           logging.warning("  > %s - %s, version %s. Done !" % (alias, mod['script'], _version))
-  #         except Exception as err:
-  #           logging.warning(" # Exception - %s: %s/%s, %s" % (alias, mod['script'], _version, err))
-  #           logging.warning(err)
-  #       else:
-  #         logging.warning("  > %s - %s, version %s. Already defined !" % (alias, mod['script'], _version))
-  #
-  #   if len(packages) > 0:
-  #     logging.warning("Downloading %s packages, this might take few minutes" % len(packages))
-  #     for pckg, folder in packages.items():
-  #       self.getFullPackage(pckg, version=version, static_path=static_path, reload=reload)
-
   def getFullPackage(self, alias, version=None, static_path=None, reload=False):
     """
     Description:
@@ -3308,37 +3227,7 @@ class ImportManager:
         logging.warning("  < Package %s already loaded " % alias)
     return self
 
-  # def package(self, alias):
-  #   """
-  #   Description:
-  #   ------------
-  #   Returns the packages used in the Framework for both Js and CSS perimeters.
-  #
-  #   Usage:
-  #   -----
-  #
-  #     >>> len(ImportManager().package('jqueryui')['modules'])
-  #   4
-  #
-  #   Attributes:
-  #   ----------
-  #   :param alias: The package reference in the above lists
-  #
-  #   :return: A dictionary with the package details
-  #   """
-  #   res = {}
-  #   if alias in CSS_IMPORTS:
-  #     res.update(CSS_IMPORTS[alias])
-  #   if alias in JS_IMPORTS:
-  #     for k, v in JS_IMPORTS[alias].items():
-  #       if k in res:
-  #         if isinstance(v, list):
-  #           res[k].extend(v)
-  #       else:
-  #         res[k] = v
-  #   return res
-
-  def setVersion(self, alias, version):
+  def setVersion(self, alias, version, js=None, css=None):
     """
     Description:
     ------------
@@ -3350,12 +3239,40 @@ class ImportManager:
     ----------
     :param alias: String. The package reference in the above list.
     :param version: String. The new version to be used globally.
+    :param js: Dictionary. Optional.
+    :param css: Dictionary. Optional.
     """
     self.reqVersion[alias] = version
     for modType in [CSS_IMPORTS, JS_IMPORTS]:
       if alias in modType:
         for mod in modType[alias].get('modules', []):
           mod['version'] = version
+    if js is not None:
+      if not js:
+        if alias in JS_IMPORTS:
+          del self.jsImports[alias]
+          del JS_IMPORTS[alias]
+
+      else:
+        self.jsImports[alias] = {'main': collections.OrderedDict(), 'dep': [], 'versions': version}
+        for k, v in js.items():
+          JS_IMPORTS[alias][k] = v
+          if k == k:
+            for module in js["modules"]:
+              module["path"] = module["path"] % {"version": version}
+              self.jsImports[alias]['main']["%(cdnjs)s/%(path)s%(script)s" % module] = version
+    if css is not None:
+      if not css:
+        if alias in CSS_IMPORTS:
+          del self.cssImports[alias]
+          del CSS_IMPORTS[alias]
+
+      else:
+        for k, v in css.items():
+          CSS_IMPORTS.setdefault(alias, {})[k] = v
+        for module in css["modules"]:
+          module["path"] = module["path"] % {"version": version}
+          self.cssImports.setdefault(alias, {}).setdefault('main', {})["%(cdnjs)s/%(path)s%(script)s" % module] = version
 
   def addPackage(self, alias, config):
     """

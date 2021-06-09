@@ -1,11 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# TODO: Align this module with the Js one
-
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
-from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
@@ -37,62 +34,87 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     self.component.options.scales.yAxes.scaleLabel.label(value)
 
 
-class OptionAxesTicks(DataClass):
+class OptionAxesTicks(Options):
 
   @property
   def fontColor(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["fontColor"]
+    return self._config_get()
 
   @fontColor.setter
   def fontColor(self, val):
-    self._attrs["fontColor"] = val
+    self._config(val)
 
   @property
   def fontSize(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["fontSize"]
+    return self._config_get()
 
   @fontSize.setter
   def fontSize(self, val):
-    self._attrs["fontSize"] = val
+    self._config(val)
 
   @property
   def beginAtZero(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["beginAtZero"]
+    return self._config_get()
 
   @beginAtZero.setter
   def beginAtZero(self, val):
-    self._attrs["beginAtZero"] = val
+    self._config(val)
 
   @property
   def max(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["max"]
+    return self._config_get()
 
   @max.setter
   def max(self, val):
-    self._attrs["max"] = val
+    self._config(val)
 
   @property
   def min(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["min"]
+    return self._config_get()
 
   @min.setter
   def min(self, val):
-    self._attrs["min"] = val
+    self._config(val)
 
   @property
   def mirror(self):
@@ -106,44 +128,59 @@ class OptionAxesTicks(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["mirror"]
+    return self._config_get()
 
   @mirror.setter
   def mirror(self, val):
-    self._attrs["mirror"] = val
+    self._config(val)
 
   @property
   def suggestedMin(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["suggestedMin"]
+    return self._config_get()
 
   @suggestedMin.setter
   def suggestedMin(self, val):
-    self._attrs["suggestedMin"] = val
+    self._config(val)
 
   @property
   def suggestedMax(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["suggestedMax"]
+    return self._config_get()
 
   @suggestedMax.setter
   def suggestedMax(self, val):
-    self._attrs["suggestedMax"] = val
+    self._config(val)
 
   @property
   def stepSize(self):
     """
-    https://www.chartjs.org/docs/latest/charts/line.html
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["stepSize"]
+    return self._config_get()
 
   @stepSize.setter
   def stepSize(self, val):
-    self._attrs["stepSize"] = val
+    self._config(val)
 
   @packageImport("accounting")
   def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
@@ -160,7 +197,10 @@ class OptionAxesTicks(DataClass):
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
-    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s';}" % (factor, digits, thousand_sep, alias))
+    self._config(
+      "function(label, index, labels) {var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'}" % (
+        factor, digits, thousand_sep, alias), name="callback", js_type=True)
+    return self
 
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -178,7 +218,9 @@ class OptionAxesTicks(DataClass):
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s)}" % (symbol, digit, thousand_sep, decimal_sep))
+    self._config("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s)}" % (
+      symbol, digit, thousand_sep, decimal_sep), name="callback", js_type=True)
+    return self
 
   @packageImport("accounting")
   def toNumber(self, digit=0, thousand_sep="."):
@@ -196,17 +238,29 @@ class OptionAxesTicks(DataClass):
     Attributes:
     ----------
     :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep:  The thousand symbol separator
+    :param thousand_sep: The thousand symbol separator
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    self._attrs["callback"] = JsObjects.JsVoid("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (digit, thousand_sep))
+    self._config("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (
+      digit, thousand_sep), name="callback", js_type=True)
+    return self
 
   def mapTo(self, mapping):
-    self._attrs["callback"] = JsObjects.JsVoid(
-      "function(label, index, labels) {var mapping = %s; if (labels in mapping){return mapping[labels]}; return labels}" % mapping)
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param mapping:
+    """
+    self._config(
+      "function(label, index, labels) {var mapping = %s; if (labels in mapping){return mapping[labels]}; return labels}" % mapping,
+      name="callback", js_type=True)
+    return self
 
 
-class OptionLabels(DataClass):
+class OptionLabels(Options):
 
   @property
   def fontColor(self):
@@ -214,14 +268,14 @@ class OptionLabels(DataClass):
     Description:
     -----------
     """
-    return self._attrs["fontColor"]
+    return self._config_get()
 
   @fontColor.setter
   def fontColor(self, val):
-    self._attrs["fontColor"] = val
+    self._config(val)
 
 
-class OptionAxesGridLine(DataClass):
+class OptionAxesGridLine(Options):
 
   @property
   def display(self):
@@ -234,11 +288,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def circular(self):
@@ -251,11 +305,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["circular"]
+    return self._config_get()
 
   @circular.setter
   def circular(self, val):
-    self._attrs["circular"] = val
+    self._config(val)
 
   @property
   def color(self):
@@ -269,11 +323,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["color"]
+    return self._config_get()
 
   @color.setter
   def color(self, val):
-    self._attrs["color"] = val
+    self._config(val)
 
   @property
   def borderDash(self):
@@ -286,11 +340,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["borderDash"]
+    return self._config_get()
 
   @borderDash.setter
   def borderDash(self, val):
-    self._attrs["borderDash"] = val
+    self._config(val)
 
   @property
   def borderDashOffset(self):
@@ -303,11 +357,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["borderDashOffset"]
+    return self._config_get()
 
   @borderDashOffset.setter
   def borderDashOffset(self, val):
-    self._attrs["borderDashOffset"] = val
+    self._config(val)
 
   @property
   def lineWidth(self):
@@ -320,11 +374,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["lineWidth"]
+    return self._config_get()
 
   @lineWidth.setter
   def lineWidth(self, val):
-    self._attrs["lineWidth"] = val
+    self._config(val)
 
   @property
   def drawBorder(self):
@@ -337,11 +391,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["drawBorder"]
+    return self._config_get()
 
   @drawBorder.setter
   def drawBorder(self, val):
-    self._attrs["drawBorder"] = val
+    self._config(val)
 
   @property
   def drawOnChartArea(self):
@@ -355,11 +409,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["drawOnChartArea"]
+    return self._config_get()
 
   @drawOnChartArea.setter
   def drawOnChartArea(self, val):
-    self._attrs["drawOnChartArea"] = val
+    self._config(val)
 
   @property
   def drawTicks(self):
@@ -372,11 +426,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["drawTicks"]
+    return self._config_get()
 
   @drawTicks.setter
   def drawTicks(self, val):
-    self._attrs["drawTicks"] = val
+    self._config(val)
 
   @property
   def tickMarkLength(self):
@@ -389,11 +443,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["tickMarkLength"]
+    return self._config_get()
 
   @tickMarkLength.setter
   def tickMarkLength(self, val):
-    self._attrs["tickMarkLength"] = val
+    self._config(val)
 
   @property
   def zeroLineWidth(self):
@@ -406,11 +460,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["zeroLineWidth"]
+    return self._config_get()
 
   @zeroLineWidth.setter
   def zeroLineWidth(self, val):
-    self._attrs["zeroLineWidth"] = val
+    self._config(val)
 
   @property
   def zeroLineColor(self):
@@ -423,11 +477,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["zeroLineColor"]
+    return self._config_get()
 
   @zeroLineColor.setter
   def zeroLineColor(self, val):
-    self._attrs["zeroLineColor"] = val
+    self._config(val)
 
   @property
   def zeroLineBorderDash(self):
@@ -440,11 +494,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["zeroLineBorderDash"]
+    return self._config_get()
 
   @zeroLineBorderDash.setter
   def zeroLineBorderDash(self, val):
-    self._attrs["zeroLineBorderDash"] = val
+    self._config(val)
 
   @property
   def zeroLineBorderDashOffset(self):
@@ -457,11 +511,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["zeroLineBorderDashOffset"]
+    return self._config_get()
 
   @zeroLineBorderDashOffset.setter
   def zeroLineBorderDashOffset(self, val):
-    self._attrs["zeroLineBorderDashOffset"] = val
+    self._config(val)
 
   @property
   def offsetGridLines(self):
@@ -474,11 +528,11 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["offsetGridLines"]
+    return self._config_get()
 
   @offsetGridLines.setter
   def offsetGridLines(self, val):
-    self._attrs["offsetGridLines"] = val
+    self._config(val)
 
   @property
   def z(self):
@@ -491,38 +545,38 @@ class OptionAxesGridLine(DataClass):
 
       https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
     """
-    return self._attrs["z"]
+    return self._config_get()
 
   @z.setter
   def z(self, val):
-    self._attrs["z"] = val
+    self._config(val)
 
 
-class OptionAxesScaleLabel(DataClass):
+class OptionAxesScaleLabel(Options):
 
   @property
   def display(self):
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def fontColor(self):
-    return self._attrs["fontColor"]
+    return self._config_get()
 
   @fontColor.setter
   def fontColor(self, val):
-    self._attrs["fontColor"] = val
+    self._config(val)
 
   @property
   def labelString(self):
-    return self._attrs["labelString"]
+    return self._config_get()
 
   @labelString.setter
   def labelString(self, val):
-    self._attrs["labelString"] = val
+    self._config(val)
 
   def label(self, value):
     """
@@ -534,49 +588,55 @@ class OptionAxesScaleLabel(DataClass):
     ----------
     :param value: String. The label value.
     """
-    self._attrs["labelString"] = value
-    self._attrs["display"] = True
+    self.labelString = value
+    self.display = True
 
 
-class OptionDisplayFormats(DataClass):
+class OptionDisplayFormats(Options):
 
   @property
   def quarter(self):
-    return self._attrs["quarter"]
+    return self._config_get()
 
   @quarter.setter
   def quarter(self, val):
-    self._attrs["quarter"] = val
+    self._config(val)
 
 
-class OptionAxesTime(DataClass):
+class OptionAxesTime(Options):
 
   @property
   def displayFormats(self):
-    return self.sub_data("displayFormats", OptionDisplayFormats)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionDisplayFormats
+    """
+    return self._config_sub_data("displayFormats", OptionDisplayFormats)
 
 
-class OptionAxes(DataClass):
+class OptionAxes(Options):
 
   @property
   def display(self):
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def distribution(self):
-    return self._attrs["distribution"]
+    return self._config_get()
 
   @distribution.setter
   def distribution(self, val):
-    self._attrs["distribution"] = val
+    self._config(val)
 
   @property
   def type(self):
-    return self._attrs["type"]
+    return self._config_get()
 
   @type.setter
   def type(self, val):
@@ -586,7 +646,7 @@ class OptionAxes(DataClass):
       Imports.JS_IMPORTS["chart.js"]["req"] = [{'alias': 'moment'}]
       # Add the package moment.js is time is used
       #self._report.jsImports.add("moment")
-    self._attrs["type"] = val
+    self._config(val)
 
   @property
   def stacked(self):
@@ -598,11 +658,11 @@ class OptionAxes(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["stacked"]
+    return self._config_get()
 
   @stacked.setter
   def stacked(self, val):
-    self._attrs["stacked"] = val
+    self._config(val)
 
   @property
   def id(self):
@@ -614,11 +674,11 @@ class OptionAxes(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["id"]
+    return self._config_get()
 
   @id.setter
   def id(self, val):
-    self._attrs["id"] = val
+    self._config(val)
 
   @property
   def offset(self):
@@ -630,11 +690,11 @@ class OptionAxes(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["offset"]
+    return self._config_get()
 
   @offset.setter
   def offset(self, val):
-    self._attrs["offset"] = val
+    self._config(val)
 
   @property
   def position(self):
@@ -646,11 +706,11 @@ class OptionAxes(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["position"]
+    return self._config_get()
 
   @position.setter
   def position(self, val):
-    self._attrs["position"] = val
+    self._config(val)
 
   @property
   def stepSize(self):
@@ -665,11 +725,11 @@ class OptionAxes(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["stepSize"]
+    return self._config_get()
 
   @stepSize.setter
   def stepSize(self, val):
-    self._attrs["stepSize"] = val
+    self._config(val)
 
   @property
   def ticks(self):
@@ -677,9 +737,9 @@ class OptionAxes(DataClass):
     Description:
     ------------
 
-    :return:
+    :rtype: OptionAxesTicks
     """
-    return self.sub_data("ticks", OptionAxesTicks)
+    return self._config_sub_data("ticks", OptionAxesTicks)
 
   @property
   def time(self):
@@ -687,18 +747,38 @@ class OptionAxes(DataClass):
     Description:
     ------------
 
+    :rtype: OptionAxesTime
     """
-    return self.sub_data("time", OptionAxesTime)
+    return self._config_sub_data("time", OptionAxesTime)
 
   @property
   def gridLines(self):
-    return self.sub_data("gridLines", OptionAxesGridLine)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionAxesGridLine
+    """
+    return self._config_sub_data("gridLines", OptionAxesGridLine)
 
   @property
   def scaleLabel(self):
-    return self.sub_data("scaleLabel", OptionAxesScaleLabel)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionAxesScaleLabel
+    """
+    return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
   def add_label(self, text, color=None):
+    """
+    Description:
+    ------------
+
+    :param text:
+    :param color:
+    """
     self.scaleLabel.display = True
     self.scaleLabel.labelString = text
     if color is not None:
@@ -710,13 +790,15 @@ class OptionAxes(DataClass):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param vals:
     """
-    self._attrs["type"] = "category"
-    self._attrs["labels"] = vals
+    self.type = "category"
+    self.labels = vals
 
 
-class OptionScales(DataClass):
+class OptionScales(Options):
 
   @property
   def xAxes(self):
@@ -741,7 +823,13 @@ class OptionScales(DataClass):
     return self.y_axis()
 
   def add_y_axis(self):
-    return self.sub_data_enum("yAxes", OptionAxes)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionAxes
+    """
+    return self._config_sub_data_enum("yAxes", OptionAxes)
 
   def y_axis(self, i=None):
     """
@@ -754,13 +842,13 @@ class OptionScales(DataClass):
 
     :rtype: OptionAxes
     """
-    if "yAxes" not in self._attrs:
+    if "yAxes" not in self.js_tree:
       self.add_y_axis()
 
     if i is None:
-      return self._attrs["yAxes"][-1]
+      return self.js_tree["yAxes"][-1]
 
-    return self._attrs["yAxes"][i]
+    return self.js_tree["yAxes"][i]
 
   def add_x_axis(self):
     """
@@ -770,7 +858,7 @@ class OptionScales(DataClass):
 
     :rtype: OptionAxes
     """
-    return self.sub_data_enum("xAxes", OptionAxes)
+    return self._config_sub_data_enum("xAxes", OptionAxes)
 
   def x_axes(self, i=None):
     """
@@ -783,27 +871,58 @@ class OptionScales(DataClass):
 
     :rtype: OptionAxes
     """
-    if "xAxes" not in self._attrs:
+    if "xAxes" not in self.js_tree:
       self.add_x_axis()
 
     if i is None:
-      return self._attrs["xAxes"][-1]
+      return self.js_tree["xAxes"][-1]
 
-    return self._attrs["xAxes"][i]
+    return self.js_tree["xAxes"][i]
 
 
-class OptionScaleGeo(DataClass):
+class OptionScalesGeo(Options):
+
+  @property
+  def xy(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleGeo
+    """
+    return self._config_sub_data("xy", OptionScaleGeo)
+
+
+class OptionScaleGeo(Options):
 
   @property
   def projection(self):
-    return self._attrs["projection"]
+    return self._config_get()
 
   @projection.setter
   def projection(self, val):
-    self._attrs["projection"] = val
+    self._config(val)
+
+  @property
+  def projectionScale(self):
+    return self._config_get()
+
+  @projectionScale.setter
+  def projectionScale(self, num):
+    self._config(num)
+
+  def set_projection(self, jsFncs, profile=None):
+    """
+
+    :param jsFncs:
+    :param profile:
+    """
+    self._config(
+      "function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile),
+      name="projection", js_type=True)
 
 
-class OptionPadding(DataClass):
+class OptionPadding(Options):
 
   @property
   def left(self):
@@ -815,11 +934,11 @@ class OptionPadding(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["left"]
+    return self._config_get()
 
   @left.setter
   def left(self, val):
-    self._attrs["left"] = val
+    self._config(val)
 
   @property
   def right(self):
@@ -831,11 +950,11 @@ class OptionPadding(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["right"]
+    return self._config_get()
 
   @right.setter
   def right(self, val):
-    self._attrs["right"] = val
+    self._config(val)
 
   @property
   def top(self):
@@ -847,11 +966,11 @@ class OptionPadding(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["top"]
+    return self._config_get()
 
   @top.setter
   def top(self, val):
-    self._attrs["top"] = val
+    self._config(val)
 
   @property
   def bottom(self):
@@ -863,25 +982,37 @@ class OptionPadding(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["bottom"]
+    return self._config_get()
 
   @bottom.setter
   def bottom(self, val):
-    self._attrs["bottom"] = val
+    self._config(val)
 
 
-class OptionLayout(DataClass):
+class OptionLayout(Options):
 
   @property
   def padding(self):
-    return self.sub_data("padding", OptionPadding)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPadding
+    """
+    return self._config_sub_data("padding", OptionPadding)
 
 
-class OptionLegend(DataClass):
+class OptionLegend(Options):
 
   @property
   def labels(self):
-    return self.sub_data("labels", OptionLabels)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLabels
+    """
+    return self._config_sub_data("labels", OptionLabels)
 
   @property
   def align(self):
@@ -895,11 +1026,11 @@ class OptionLegend(DataClass):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs.get("align", "center")
+    return self._config_get("center")
 
   @align.setter
   def align(self, val):
-    self._attrs["align"] = val
+    self._config(val)
 
   @property
   def display(self):
@@ -913,11 +1044,11 @@ class OptionLegend(DataClass):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs.get("display", True)
+    return self._config_get(True)
 
   @display.setter
-  def display(self, bool):
-    self._attrs["display"] = bool
+  def display(self, flag):
+    self._config(flag)
 
   @property
   def position(self):
@@ -932,11 +1063,11 @@ class OptionLegend(DataClass):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs["position"]
+    return self._config_get()
 
   @position.setter
   def position(self, val):
-    self._attrs["position"] = val
+    self._config(val)
 
   @property
   def reverse(self):
@@ -950,11 +1081,11 @@ class OptionLegend(DataClass):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs.get("reverse", False)
+    return self._config_get(False)
 
   @reverse.setter
-  def reverse(self, bool):
-    self._attrs["align"] = bool
+  def reverse(self, flag):
+    self._config(flag)
 
   @property
   def rtl(self):
@@ -968,14 +1099,14 @@ class OptionLegend(DataClass):
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
     """
-    return self._attrs.get("rtl", False)
+    return self._config_get(False)
 
   @rtl.setter
   def rtl(self, flag):
-    self._attrs["rtl"] = flag
+    self._config(flag)
 
 
-class OptionPoint(DataClass):
+class OptionPoint(Options):
 
   @property
   def radius(self):
@@ -983,14 +1114,14 @@ class OptionPoint(DataClass):
     Description:
     ------------
     """
-    return self._attrs.get("radius", False)
+    return self._config_get(False)
 
   @radius.setter
   def radius(self, num):
-    self._attrs["radius"] = num
+    self._config(num)
 
 
-class OptionLine(DataClass):
+class OptionLine(Options):
 
   @property
   def tension(self):
@@ -998,28 +1129,40 @@ class OptionLine(DataClass):
     Description:
     ------------
     """
-    return self._attrs.get("tension", None)
+    return self._config_get()
 
   @tension.setter
   def tension(self, num):
-    self._attrs["tension"] = num
+    self._config(num)
 
 
-class OptionElements(DataClass):
+class OptionElements(Options):
 
   @property
   def point(self):
-    return self.sub_data("point", OptionPoint)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPoint
+    """
+    return self._config_sub_data("point", OptionPoint)
 
 
 class OptionElementsLine(OptionElements):
 
   @property
   def line(self):
-    return self.sub_data("line", OptionLine)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLine
+    """
+    return self._config_sub_data("line", OptionLine)
 
 
-class OptionTitle(DataClass):
+class OptionTitle(Options):
 
   @property
   def display(self):
@@ -1032,122 +1175,202 @@ class OptionTitle(DataClass):
       https://www.chartjs.org/docs/latest/configuration/title.html
 
     """
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def text(self):
-    return self._attrs["text"]
+    return self._config_get()
 
   @text.setter
   def text(self, val):
-    self._attrs["text"] = val
+    self._config(val)
 
   @property
   def position(self):
-    return self._attrs["position"]
+    return self._config_get()
 
   @position.setter
   def position(self, val):
-    self._attrs["position"] = val
+    self._config(val)
 
   @property
   def fontSize(self):
-    return self._attrs["fontSize"]
+    return self._config_get()
 
   @fontSize.setter
   def fontSize(self, val):
-    self._attrs["fontSize"] = val
+    self._config(val)
 
   @property
   def fontFamily(self):
-    return self._attrs["fontFamily"]
+    return self._config_get()
 
   @fontFamily.setter
   def fontFamily(self, val):
-    self._attrs["fontFamily"] = val
+    self._config(val)
 
   @property
   def fontColor(self):
-    return self._attrs["fontColor"]
+    return self._config_get()
 
   @fontColor.setter
   def fontColor(self, val):
-    self._attrs["fontColor"] = val
+    self._config(val)
 
   @property
   def fontStyle(self):
-    return self._attrs["fontStyle"]
+    return self._config_get()
 
   @fontStyle.setter
   def fontStyle(self, val):
-    self._attrs["fontStyle"] = val
+    self._config(val)
 
   @property
   def padding(self):
-    return self._attrs["padding"]
+    return self._config_get()
 
   @padding.setter
   def padding(self, val):
-    self._attrs["padding"] = val
+    self._config(val)
 
   @property
   def lineHeight(self):
-    return self._attrs["lineHeight"]
+    return self._config_get()
 
   @lineHeight.setter
   def lineHeight(self, val):
-    self._attrs["lineHeight"] = val
+    self._config(val)
+
+
+class OptionChartJsSize(Options):
+
+  @property
+  def height(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get()
+
+  @height.setter
+  def height(self, val):
+    self._config(val)
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get()
+
+  @width.setter
+  def width(self, val):
+    self._config(val)
 
 
 class ChartJsOptions(OptChart.OptionsChart):
 
   @property
+  def indexAxis(self):
+    return self._config_get()
+
+  @indexAxis.setter
+  @JsUtils.fromVersion({"chart.js": "3.0.0"})
+  def indexAxis(self, flag):
+    self._config(flag)
+
+  @property
   def responsive(self):
-    return self._attrs["responsive"]
+    return self._config_get()
 
   @responsive.setter
   def responsive(self, flag):
-    self.add("responsive", flag)
+    self._config(flag)
 
   @property
   def maintainAspectRatio(self):
-    return self._attrs["maintainAspectRatio"]
+    return self._config_get(True)
 
   @maintainAspectRatio.setter
   def maintainAspectRatio(self, flag):
-    self.add("maintainAspectRatio", flag)
+    self._config(flag)
 
   @property
   def elements(self):
-    return self.sub_data("elements", OptionElements)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionElements
+    """
+    return self._config_sub_data("elements", OptionElements)
 
   @property
   def scales(self):
-    return self.sub_data("scales", OptionScales)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScales
+    """
+    return self._config_sub_data("scales", OptionScales)
 
   @property
   def layout(self):
-    return self.sub_data("layout", OptionLayout)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLayout
+    """
+    return self._config_sub_data("layout", OptionLayout)
 
   @property
   def title(self):
-    return self.sub_data("title", OptionTitle)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("title", OptionTitle)
 
   @property
   def legend(self):
-    return self.sub_data("legend", OptionLegend)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLegend
+    """
+    return self._config_sub_data("legend", OptionLegend)
 
   @property
   def plugins(self):
-    return self.sub_data("plugins", OptionChartJsPlugins)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsPlugins
+    """
+    return self._config_sub_data("plugins", OptionChartJsPlugins)
 
   @property
   def tooltips(self):
-    return self.sub_data("tooltips", OptionChartJsTooltips)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltips
+    """
+    return self._config_sub_data("tooltips", OptionChartJsTooltips)
 
   def add_title(self, text, color=None):
     """
@@ -1165,8 +1388,12 @@ class ChartJsOptions(OptChart.OptionsChart):
       self.title.fontColor = color
     return self
 
+  @property
+  def size(self):
+    return self._config_sub_data("size", OptionChartJsSize)
 
-class OptionPieAnimation(DataClass):
+
+class OptionPieAnimation(Options):
 
   @property
   def animateRotate(self):
@@ -1178,11 +1405,11 @@ class OptionPieAnimation(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["animateRotate"]
+    return self._config_get()
 
   @animateRotate.setter
   def animateRotate(self, val):
-    self.attr("animateRotate", val)
+    self._config(val)
 
   @property
   def animateScale(self):
@@ -1194,11 +1421,11 @@ class OptionPieAnimation(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["animateScale"]
+    return self._config_get()
 
   @animateScale.setter
   def animateScale(self, val):
-    self.attr("animateScale", val)
+    self._config(val)
 
 
 class OptionsBar(ChartJsOptions):
@@ -1227,7 +1454,13 @@ class OptionsPie(ChartJsOptions):
 
   @property
   def tooltips(self):
-    return self.sub_data("tooltips", OptionChartJsPieTooltips)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsPieTooltips
+    """
+    return self._config_sub_data("tooltips", OptionChartJsPieTooltips)
 
   @property
   def cutoutPercentage(self):
@@ -1239,11 +1472,11 @@ class OptionsPie(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["cutoutPercentage"]
+    return self._config_get()
 
   @cutoutPercentage.setter
   def cutoutPercentage(self, val):
-    self._attrs["cutoutPercentage"] = val
+    self._config(val)
 
   @property
   def rotation(self):
@@ -1255,11 +1488,11 @@ class OptionsPie(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["rotation"]
+    return self._config_get()
 
   @rotation.setter
   def rotation(self, val):
-    self._attrs["rotation"] = val
+    self._config(val)
 
   @property
   def circumference(self):
@@ -1271,15 +1504,21 @@ class OptionsPie(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/line.html
     """
-    return self._attrs["circumference"]
+    return self._config_get()
 
   @circumference.setter
   def circumference(self, val):
-    self._attrs["circumference"] = val
+    self._config(val)
 
   @property
   def animation(self):
-    return self.sub_data("animation", OptionPieAnimation)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPieAnimation
+    """
+    return self._config_sub_data("animation", OptionPieAnimation)
 
 
 class OptionsLine(ChartJsOptions):
@@ -1294,11 +1533,11 @@ class OptionsLine(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/polar.html
     """
-    return self._attrs["showLines"]
+    return self._config_get()
 
   @showLines.setter
   def showLines(self, val):
-    self._attrs["showLines"] = val
+    self._config(val)
 
   @property
   def spanGaps(self):
@@ -1310,15 +1549,21 @@ class OptionsLine(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/polar.html
     """
-    return self._attrs["spanGaps"]
+    return self._config_get()
 
   @spanGaps.setter
   def spanGaps(self, val):
-    self._attrs["spanGaps"] = val
+    self._config(val)
 
   @property
   def elements(self):
-    return self.sub_data("elements", OptionElementsLine)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionElementsLine
+    """
+    return self._config_sub_data("elements", OptionElementsLine)
 
 
 class OptionsPolar(ChartJsOptions):
@@ -1333,18 +1578,24 @@ class OptionsPolar(ChartJsOptions):
 
       https://www.chartjs.org/docs/latest/charts/polar.html
     """
-    return self._attrs["startAngle"]
+    return self._config_get()
 
   @startAngle.setter
   def startAngle(self, val):
-    self._attrs["startAngle"] = val
+    self._config(val)
 
   @property
   def animation(self):
-    return self.sub_data("animation", OptionPieAnimation)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPieAnimation
+    """
+    return self._config_sub_data("animation", OptionPieAnimation)
 
 
-class OptionChartJsTooltipsCallbacks(DataClass):
+class OptionChartJsTooltipsCallbacks(Options):
 
   @property
   def label(self):
@@ -1356,11 +1607,11 @@ class OptionChartJsTooltipsCallbacks(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/polar.html
     """
-    return self._attrs["label"]
+    return self._config_get()
 
   @label.setter
   def label(self, val):
-    self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) { return '%s' }" % val)
+    self._config("function(tooltipItem, data) { return '%s' }" % val, js_type=True)
 
   @packageImport("accounting")
   def labelNumber(self, digit=0, thousand_sep=".", decimal_sep=","):
@@ -1377,9 +1628,9 @@ class OptionChartJsTooltipsCallbacks(DataClass):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     if self.component._attrs["type"] == 'horizontalBar':
-      self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
+      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
-      self._attrs["label"] = JsObjects.JsVoid("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep))
+      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
   @packageImport("accounting")
   def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -1398,12 +1649,11 @@ class OptionChartJsTooltipsCallbacks(DataClass):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     if self.component._attrs["type"] == 'horizontalBar':
-      self._attrs["label"] = JsObjects.JsVoid(
-      "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep))
+      self._config("function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
-      self._attrs["label"] = JsObjects.JsVoid(
+      self._config(
         "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (
-        symbol, digit, thousand_sep, decimal_sep))
+        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
   @property
   def value(self):
@@ -1415,11 +1665,11 @@ class OptionChartJsTooltipsCallbacks(DataClass):
 
       https://www.chartjs.org/docs/latest/charts/polar.html
     """
-    return self._attrs["value"]
+    return self._config_get()
 
   @value.setter
   def value(self, val):
-    self._attrs["value"] = val
+    self._config(val)
 
 
 class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
@@ -1435,9 +1685,9 @@ class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
     :param digit: String. Optional. Decimal point separator
     :param thousand_sep: String. Optional. thousands separator
     """
-    self._attrs["label"] = JsObjects.JsVoid(
-      "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
-      digit, thousand_sep))
+    self._config(
+        "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
+        digit, thousand_sep), name="label", js_type=True)
 
   @packageImport("accounting")
   def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
@@ -1455,42 +1705,54 @@ class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._attrs["label"] = JsObjects.JsVoid(
-      "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
-      symbol, digit, thousand_sep, decimal_sep))
+    self._config(
+        "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
+        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
 
-class OptionChartJsTooltips(DataClass):
+class OptionChartJsTooltips(Options):
 
   @property
   def mode(self):
-    return self._attrs["mode"]
+    return self._config_get()
 
   @mode.setter
   def mode(self, value):
-    self._attrs["mode"] = value
+    self._config(value)
 
   @property
   def intersect(self):
-    return self._attrs["intersect"]
+    return self._config_get()
 
   @intersect.setter
   def intersect(self, flag):
-    self._attrs["intersect"] = flag
+    self._config(flag)
 
   @property
   def callbacks(self):
-    return self.sub_data("callbacks", OptionChartJsTooltipsCallbacks)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltipsCallbacks
+    """
+    return self._config_sub_data("callbacks", OptionChartJsTooltipsCallbacks)
 
 
-class OptionChartJsPieTooltips(DataClass):
+class OptionChartJsPieTooltips(Options):
 
   @property
   def callbacks(self):
-    return self.sub_data("callbacks", OptionChartJsTooltipsPieCallbacks)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltipsPieCallbacks
+    """
+    return self._config_sub_data("callbacks", OptionChartJsTooltipsPieCallbacks)
 
 
-class OptionChartJsPlugins(DataClass):
+class OptionChartJsPlugins(Options):
 
   @property
   @packageImport('chartjs-plugin-labels')
@@ -1503,9 +1765,11 @@ class OptionChartJsPlugins(DataClass):
     Related Pages:
 
       https://github.com/emn178/chartjs-plugin-labels
+
+    :rtype: ChartJsLabels.Labels
     """
     from epyk.core.html.graph.exts import ChartJsLabels
-    return self.sub_data("labels", ChartJsLabels.Labels)
+    return self._config_sub_data("labels", ChartJsLabels.Labels)
 
   @property
   @packageImport('chartjs-plugin-datalabels')
@@ -1518,9 +1782,11 @@ class OptionChartJsPlugins(DataClass):
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/
+
+    :rtype: ChartJsLabels.Datalabels
     """
     from epyk.core.html.graph.exts import ChartJsDataLabels
-    return self.sub_data("datalabels", ChartJsDataLabels.Datalabels)
+    return self._config_sub_data("datalabels", ChartJsDataLabels.Datalabels)
 
   @property
   @packageImport('chartjs-plugin-zoom')
@@ -1533,9 +1799,11 @@ class OptionChartJsPlugins(DataClass):
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
+
+    :rtype: ChartJsZoom.Zoom
     """
     from epyk.core.html.graph.exts import ChartJsZoom
-    return self.sub_data("zoom", ChartJsZoom.Zoom)
+    return self._config_sub_data("zoom", ChartJsZoom.Zoom)
 
   @property
   @packageImport('chartjs-plugin-crosshair')
@@ -1547,9 +1815,11 @@ class OptionChartJsPlugins(DataClass):
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
+
+    :rtype: ChartJsCrosshair.Crosshair
     """
     from epyk.core.html.graph.exts import ChartJsCrosshair
-    return self.sub_data("crosshair", ChartJsCrosshair.Crosshair)
+    return self._config_sub_data("crosshair", ChartJsCrosshair.Crosshair)
 
   @property
   @packageImport('chartjs-plugin-annotation')
@@ -1562,99 +1832,142 @@ class OptionChartJsPlugins(DataClass):
     This plugin draws lines and boxes on the chart area.
 
     Annotations work with line, bar, scatter and bubble charts that use linear, logarithmic, time, or category scales.
-    Annotations will not work on any chart that does not have exactly two axes, including pie, radar, and polar area charts.
+    Annotations will not work on any chart that does not have exactly two axes, including pie, radar,
+    and polar area charts.
 
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
+
+    :rtype: ChartJsAnnotation.Annotation
     """
     from epyk.core.html.graph.exts import ChartJsAnnotation
-    return self.sub_data("annotation", ChartJsAnnotation.Annotation)
+    return self._config_sub_data("annotation", ChartJsAnnotation.Annotation)
 
 
-class OptionGeoColorScale(DataClass):
+class OptionGeoColorScale(Options):
 
   @property
   def display(self):
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def quantize(self):
-    return self._attrs["quantize"]
+    return self._config_get()
 
   @quantize.setter
   def quantize(self, val):
-    self._attrs["quantize"] = val
+    self._config(val)
 
   @property
   def position(self):
-    return self._attrs["position"]
+    return self._config_get()
 
   @position.setter
   def position(self, val):
-    self._attrs["position"] = val
+    self._config(val)
 
   @property
   def legend(self):
-    return self.sub_data("legend", OptionLegend)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLegend
+    """
+    return self._config_sub_data("legend", OptionLegend)
 
 
-class OptionGeoRadiusScale(DataClass):
+class OptionGeoRadiusScale(Options):
 
   @property
   def display(self):
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def size(self):
-    return self._attrs["size"]
+    return self._config_get()
 
   @size.setter
   def size(self, val):
-    self._attrs["size"] = val
+    self._config(val)
 
 
-class OptionGeo(DataClass):
+class OptionGeo(Options):
 
   @property
   def colorScale(self):
-    return self.sub_data("colorScale", OptionGeoColorScale)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionGeoColorScale
+    """
+    return self._config_sub_data("colorScale", OptionGeoColorScale)
 
   @property
   def radiusScale(self):
-    return self.sub_data("radiusScale", OptionGeoRadiusScale)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionGeoRadiusScale
+    """
+    return self._config_sub_data("radiusScale", OptionGeoRadiusScale)
 
 
 class OptionsGeo(ChartJsOptions):
 
   @property
   def showOutline(self):
-    return self._attrs["showOutline"]
+    return self._config_get()
 
   @showOutline.setter
   def showOutline(self, val):
-    self._attrs["showOutline"] = val
+    self._config(val)
 
   @property
   def showGraticule(self):
-    return self._attrs["showGraticule"]
+    return self._config_get()
 
   @showGraticule.setter
   def showGraticule(self, val):
-    self._attrs["showGraticule"] = val
+    self._config(val)
 
   @property
   def scale(self):
-    return self.sub_data("scale", OptionScaleGeo)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleGeo
+    """
+    return self._config_sub_data("scale", OptionScaleGeo)
+
+  @property
+  def scales(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScalesGeo
+    """
+    return self._config_sub_data("scales", OptionScalesGeo)
 
   @property
   def geo(self):
-    return self.sub_data("geo", OptionGeo)
+    """
+    Description:
+    ------------
+
+    :rtype: OptionGeo
+    """
+    return self._config_sub_data("geo", OptionGeo)

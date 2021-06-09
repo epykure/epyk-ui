@@ -1024,6 +1024,51 @@ class D3Request(JsPackage):
     return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
 
 
+class D3GeoProjection(JsPackage):
+  lib_alias = {"js": 'd3'}
+
+  def center(self, lat, long):
+    """
+    Description:
+    -----------
+    """
+    return self.fnc("center([%s, %s])" % (lat, long))
+
+  def scale(self, num):
+    """
+    Description:
+    -----------
+
+    :param num:
+    """
+    return self.fnc("scale(%s)" % num)
+
+  def rotate(self):
+    pass
+  
+  def translate(self):
+    pass
+
+
+class D3GeoPath(JsPackage):
+  lib_alias = {"js": 'd3'}
+
+  def projection(self, proj):
+    pass
+
+
+class D3Geo:
+
+  def mercator(self):
+    pass
+
+  def equirectangular(self):
+    pass
+
+  def path(self):
+    return D3GeoPath()
+
+
 class JsD3(JsPackage):
 
   lib_alias = {"js": 'd3'}

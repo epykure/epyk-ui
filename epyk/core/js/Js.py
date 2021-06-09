@@ -111,6 +111,8 @@ class JsConsole:
     if skip_data_convert:
       return JsFncs.JsFunction("console.log(%s)" % jsData)
 
+    if isinstance(jsData, list):
+      jsData = JsUtils.jsWrap(JsUtils.jsConvertFncs(jsData, toStr=True))
     # display directly the content of the component
     if hasattr(jsData, 'dom'):
       return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData.dom.content, jsConvFnc))

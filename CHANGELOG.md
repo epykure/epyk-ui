@@ -10,20 +10,23 @@
 - Add play and stop icons shortcuts.
 - Add depth for JavaScript variable serialisation.
 - Improve D3 charts interface with more entries.
-- Add Colors and predefined Palettes.
+- Geo charts: Add Colors and predefined Palettes.
+- Geo charts: Add leaflet map (in progress)
+- Geo charts: Add D3
 
 ### Changed
 - New youtube component.
 - Add try except to the pyNpm package.
 - Change name js_wrap to js_callback.
 - Improve the JQVMap interface with more options.
+- Add chart container for the chartJs charts.
 
 ### Fixed
 - QRCode Jupyter style (padding issue).
 - Align media options.
 - Register more modules to Imports.py for Jupyter.
 - Fix D3 charts.
-
+- Upgrade ChartJs version (and backward compatibility with the function set_version()). (in progress)
 
 ## [1.5.20] - 2021-05-29
 

@@ -485,7 +485,7 @@ class PlotlyChoropleth:
       line_chart.add_trace(record)
     return line_chart
 
-  def europe(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
+  def europe(self, record=None, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
              height=(430, "px"), html_code=None):
     """
     Description:
@@ -511,7 +511,7 @@ class PlotlyChoropleth:
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code:
     """
-    map_chart = self.world(record, size_col, country_col, profile, options, width, height, html_code)
+    map_chart = self.world(record or [], size_col, country_col, profile, options, width, height, html_code)
     map_chart.layout.geo.scope = 'europe'
     return map_chart
 

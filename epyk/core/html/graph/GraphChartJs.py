@@ -147,9 +147,12 @@ class Chart(Html.Html):
       report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self._chart, self._datasets, self._data_attrs, self._attrs = None, [], {}, {}
     self.style.css.margin_top = 10
+    self.style.css.position = "relative"
     self.chartId = "%s_obj" % self.htmlCode
     self.options.type = self._chart__type
+    self.options.maintainAspectRatio = False
     self._attrs["type"] = self._chart__type
+    self.attr["class"].add("chart-container")
 
   def activePoints(self, i=None):
     """
@@ -484,10 +487,9 @@ class Chart(Html.Html):
       return """Object.assign(window['%(chartId)s'].data, %(chartFnc)s(%(data)s, %(options)s)); 
         window['%(chartId)s'].update()""" % {
         'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
-        "options":  self.options.config_js(options)}
-
-    return '%s = new Chart(%s.getContext("2d"), %s)' % (
-      self.chartId, component_id or self.dom.varId, self.getCtx(options))
+        "options": self.options.config_js(options)}
+    return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
+      "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
   def loading(self, status=True):
     """
@@ -527,7 +529,8 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<canvas %s></canvas>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s><canvas id="%s"></canvas></div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.htmlCode)
 
 
 class Fabric(Html.Html):

@@ -5,6 +5,7 @@ import os
 
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
+from epyk.core.js import Imports
 
 
 class ChartJs:
@@ -13,6 +14,34 @@ class ChartJs:
     self.page = ui.page
     self.chartFamily = "ChartJs"
     self.opacity = 0.6
+
+  def set_version(self, v):
+    """
+    Description:
+    ------------
+    Change the version of the chartJs package.
+    Use **self.page.imports.pkgs.chart_js.version** to get the current version.
+
+    Usage::
+
+      page.ui.charts.chartJs.set_version("2.9.4").line(languages, y_columns=['change'], x_axis="name")
+
+    Attributes:
+    ----------
+    :param v: String. THe version number.
+    """
+    if v.startswith("2"):
+      self.page.imports.setVersion("chart.js", v, js={'register': {
+        'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'}, 'modules': [
+        {'script': 'Chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]},
+                                   css={'modules': [
+        {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]})
+    if v.startswith("3"):
+      self.page.imports.setVersion("chart.js", v, js={'register': {
+        'alias': 'chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'}, 'modules': [
+        {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]},
+                                   css=False)
+    return self
 
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
@@ -431,7 +460,11 @@ class ChartJs:
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
-    bar_chart = graph.GraphChartJs.ChartHBar(self.page, width, height, html_code, options, profile)
+    if self.page.imports.pkgs.chart_js.version[0].startswith("2"):
+      bar_chart = graph.GraphChartJs.ChartHBar(self.page, width, height, html_code, options, profile)
+    else:
+      bar_chart = graph.GraphChartJs.ChartBar(self.page, width, height, html_code, options, profile)
+      bar_chart.options.indexAxis = 'y'
     bar_chart.colors(self.page.theme.charts)
     bar_chart.labels(data['labels'])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True

@@ -3,17 +3,16 @@
 
 from epyk.core.html.graph import GraphChartJs
 from epyk.core.html.options import OptChartJs
+from epyk.core.js.packages import JsChartJs
 
 
 class Choropleth(GraphChartJs.Chart):
   name = 'ChartJs Choropleth'
   requirements = ('chartjs-chart-geo', )
-  geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
+  #geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
+  geo_map = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
   _option_cls = OptChartJs.OptionsGeo
-
-  def __init__(self, report, width, height, html_code, options, profile):
-    super(Choropleth, self).__init__(report, width, height, html_code, options, profile)
-    self._attrs['type'] = 'choropleth'
+  _chart__type = "choropleth"
 
   @property
   def options(self):
@@ -43,10 +42,15 @@ class Choropleth(GraphChartJs.Chart):
                     chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
               })
+              delete chartContext.options.type;
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
         )''' % {
       "chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
+
+  def __str__(self):
+    self.page.properties.js.add_builders(self.refresh())
+    return '<canvas %s></canvas>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class ChoroplethUs(Choropleth):
@@ -87,6 +91,37 @@ class ChoroplethUs(Choropleth):
         )''' % {
       "chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
 
+  def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None):
+    """
+    Description:
+    ------------
+    Add a new Dataset to the chart list of Datasets.
+
+    Usage::
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param data: List. The list of points (float).
+    :param label: String. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param opacity: Float. Optional. The opacity level for the content.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param alias: String. The chart alias name visible in the legend. Default the label.
+    """
+    data = JsChartJs.DataSetBar(self._report, attrs={})
+    self._datasets.append(data)
+    alias = alias or label
+    #if alias not in self.options.y_columns:
+    #  self.options.y_columns.append(alias)
+    #  self.options.props[alias] = {"type": kind or self.options.type, 'fill': False}
+    if kind == "line":
+      data.fill = None
+    return data
+
 
 class ChoroplethCountry(Choropleth):
   name = 'ChartJs Choropleth Country'
@@ -112,11 +147,12 @@ class ChoroplethCountry(Choropleth):
         fetch('%(map)s').then(
           function(r){r.json().then(function(geoData){
               var chartContext = %(ctx)s;
-              chartContext.data = {labels: [], datasets: [{label: 'Countries', data: []}]};
+              chartContext.data = {labels: [], datasets: [{label: 'Countries', data: [] }]};
               geoData.features.forEach(function(g){
                   chartContext.data.labels.push(g.properties.name);
                   chartContext.data.datasets[0].data.push({value: Math.random()*100, feature: g});
               })
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
+              %(chartId)s.scale.projection.center([78.9629, 23.5937]).scale(1000);
           })}
-        )''' % {"chartId": self.chartId, "varId": self.dom.varId, "ctx": self.getCtx(), 'map': self.geo_map}
+        )''' % {"chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
