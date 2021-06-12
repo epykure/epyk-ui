@@ -661,6 +661,11 @@ class Npm:
     Get the package information from the NPM registry.
     This will return only the exact match in the repository.
 
+    Usage::
+
+      pkg = PyNpm.Npm().package('chart.js')
+      print(pkg.date)
+
     Attributes:
     ----------
     :param name: String. The package alias name in NPM.
@@ -677,6 +682,15 @@ class Npm:
     Description:
     -----------
     Get the list of packages from the NPM registry matching the name.
+
+    Usage::
+
+      result = PyNpm.Npm().search('chart.js')
+      print(result)
+
+    Related Pages:
+
+      https://itnext.io/increasing-an-npm-packages-search-score-fb557f859300
 
     Attributes:
     ----------
