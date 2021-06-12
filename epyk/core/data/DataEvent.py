@@ -224,6 +224,12 @@ class DataEvents:
 
     return JsD3.D3Select(selector="d3.select(this)", setVar=False)
 
+  @property
+  def leaflet(self):
+    from epyk.core.js.packages import JsLeaflet
+
+    return JsLeaflet.LEvent(selector="d3.select(this)", setVar=False)
+
 
 class DataFile:
 

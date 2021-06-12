@@ -24,6 +24,8 @@ BANKING_DATA = 'https://raw.githubusercontent.com/juliencohensolal/BankMarketing
 
 PIVOTTABLE_DATA = "https://pivottable.js.org/examples/mps.json"
 
+DEMO_COUNTRY = "https://raw.githubusercontent.com/datasets/population/master/data/population.csv"
+
 
 #####################################################################################################################
 # AG GRID

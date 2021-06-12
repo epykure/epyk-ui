@@ -2591,7 +2591,7 @@ class CssMixin:
         val = "%spx" % val
       self.css({"width": val})
 
-  def width_calc(self, with_in_px, container_width=100):
+  def width_calc(self, width_in_px, container_width=100):
     """
     Description:
     ------------
@@ -2603,11 +2603,15 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param with_in_px: Integer. The width used by other components in the line.
+    :param width_in_px: Integer. The width used by other components in the line.
     :param container_width: Integer. The percentage width to be used by the component in total. Default 100%.
     """
     self.display = "inline-block"
-    self.width = "calc(%s%% - %spx)" % (container_width, with_in_px)
+    if container_width is None:
+      container_width = self.width
+    else:
+      container_width = "%s%%" % container_width
+    self.width = "calc(%s - %spx)" % (container_width, width_in_px)
     return self
 
   @property

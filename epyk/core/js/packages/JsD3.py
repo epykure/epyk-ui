@@ -1045,7 +1045,7 @@ class D3GeoProjection(JsPackage):
 
   def rotate(self):
     pass
-  
+
   def translate(self):
     pass
 

@@ -20,6 +20,9 @@ class Chart(Html.Html):
     super(Chart, self).__init__(
       report, [], html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile, options=options)
     self.style.css.margin_top = 10
+    self.style.css.padding = 5
+    if width[1] == "%":
+      self.style.css.width_calc(10, None)
 
   @property
   def options(self):

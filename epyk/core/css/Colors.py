@@ -329,7 +329,7 @@ def colors(start, end, steps):
   if start.upper() in defined:
     start = defined[start.upper()]['hex']
   if end.upper() in defined:
-    start = defined[end.upper()]['hex']
+    end = defined[end.upper()]['hex']
   colors_panel = [start]
   for i in range(steps-2):
     colors_panel.append(gradient(start, end, 1.0 / (steps-1) * (i + 1)))

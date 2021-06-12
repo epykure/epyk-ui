@@ -439,3 +439,6 @@ class Options(DataClass):
       if k not in self.js_tree:
         html_attrs[k] = v
     return html_attrs
+
+  def __str__(self):
+    return str(self.config_js())

@@ -13,6 +13,22 @@ class Attrs(Properties.CssMixin):
     self._report = component.page
     self.page = component.page
 
+  @property
+  def fill(self):
+    return self.css("fill")
+
+  @fill.setter
+  def fill(self, val):
+    self.css({"fill": val})
+
+  @property
+  def fill_opacity(self):
+    return self.css("fill-opacity")
+
+  @fill_opacity.setter
+  def fill_opacity(self, num):
+    self.css({"fill-opacity": num})
+
   def css(self, attrs, value=None, important=False):
     """
     Description:
@@ -148,3 +164,7 @@ class CssInline(Attrs):
     """
     v_cls = type(classname, (Style, ), {"_attrs": self.attrs})
     return v_cls(None)
+
+  def define_class(self, classname, page):
+    v_cls = page.body.style.custom_class({"_attrs": self.attrs}, classname)
+    return v_cls
