@@ -50,8 +50,6 @@ class Chart(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object.
 
     :rtype: OptChartC3.C3
@@ -82,7 +80,9 @@ class Chart(Html.Html):
     -----------
     JC3 reference API.
 
-    https://c3js.org/reference.html#api-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-show
 
     :return: A Javascript object
 
@@ -297,6 +297,7 @@ class ChartScatter(ChartLine):
 
 class ChartPie(ChartLine):
   _type = 'pie'
+  _option_cls = OptChartC3.C3Pie
 
   _js__builder__ = '''
       if(data.python){ 
@@ -361,13 +362,16 @@ class ChartPie(ChartLine):
       else:
         self.options.data.columns[series_index].append(value)
       if series_index is None:
-        self.options.data.colors[self._labels[i]] = self.options.colors[len(self.options.data.columns)]
+        series_index = len(self.options.data.columns)
+        if series_index < len(self.options.colors):
+          self.options.data.colors[self._labels[i]] = self.options.colors[series_index]
         self.options.data.types[self._labels[i]] = kind or self._type
     return self.options.data
 
 
 class ChartDonut(ChartPie):
   _type = 'donut'
+  _option_cls = OptChartC3.C3Donut
 
 
 class ChartGauge(ChartPie):
@@ -402,4 +406,5 @@ class ChartBubble(ChartLine):
 
 class ChartRadar(ChartLine):
   _type = 'radar'
+  _option_cls = OptChartC3.C3Radar
 

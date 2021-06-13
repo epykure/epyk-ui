@@ -307,6 +307,7 @@ class ChartScatter(ChartLine):
 
 class ChartPie(ChartLine):
   _type = 'pie'
+  _option_cls = OptChartC3.C3Pie
 
   _js__builder__ = '''
       if(data.python){ 
@@ -374,13 +375,16 @@ class ChartPie(ChartLine):
       else:
         self.options.data.columns[series_index].append(value)
       if series_index is None:
-        self.options.data.colors[self._labels[i]] = self.options.colors[len(self.options.data.columns)]
+        series_index = len(self.options.data.columns)
+        if series_index < len(self.options.colors):
+          self.options.data.colors[self._labels[i]] = self.options.colors[series_index]
         self.options.data.types[self._labels[i]] = kind or self._type
     return self.options.data
 
 
 class ChartDonut(ChartPie):
   _type = 'donut'
+  _option_cls = OptChartC3.C3Donut
 
 
 class ChartGauge(ChartPie):
