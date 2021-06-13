@@ -1008,6 +1008,17 @@ JS_IMPORTS = {
     ]
   },
 
+  # Vega lite charts
+  'vega': {
+    'website': 'https://vega.github.io/vega-lite/',
+    'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
+    'register': {'alias': 'vega', 'module': 'vega.min'},
+    'version': '5.20.2',
+    'modules': [
+      {'script': 'vega.min.js', 'node_path': 'dist/', 'path': 'vega/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
+  },
+
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
