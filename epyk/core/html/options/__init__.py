@@ -442,3 +442,28 @@ class Options(DataClass):
 
   def __str__(self):
     return str(self.config_js())
+
+
+class Enums:
+
+  def __init__(self, options, name):
+    self.__option = options
+    self._report = options._report
+    self.__name = name
+
+  def _set_value(self, name=None, value=None, js_type=False):
+    """
+    Description:
+    ------------
+    Set the option value for a class with different functions.
+    This function should be derived in the various package options to create static and documented enumerations.
+
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the attributes.
+    :param value: String. The value to be added to the attributes.
+    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    """
+    self.__option._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
+    if js_type:
+      self.__option.js_type[name or sys._getframe().f_back.f_code.co_name] = True

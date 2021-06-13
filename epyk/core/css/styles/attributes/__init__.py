@@ -13,22 +13,6 @@ class Attrs(Properties.CssMixin):
     self._report = component.page
     self.page = component.page
 
-  @property
-  def fill(self):
-    return self.css("fill")
-
-  @fill.setter
-  def fill(self, val):
-    self.css({"fill": val})
-
-  @property
-  def fill_opacity(self):
-    return self.css("fill-opacity")
-
-  @fill_opacity.setter
-  def fill_opacity(self, num):
-    self.css({"fill-opacity": num})
-
   def css(self, attrs, value=None, important=False):
     """
     Description:
@@ -119,6 +103,38 @@ class CssInline(Attrs):
     if component is not None:
       self._report = component.page
       self.page = component.page
+
+  @property
+  def stroke_dasharray(self):
+    return self.css("stroke-dasharray")
+
+  @stroke_dasharray.setter
+  def stroke_dasharray(self, val):
+    self.css({"stroke-dasharray": val})
+
+  @property
+  def stroke_width(self):
+    return self.css("stroke-width")
+
+  @stroke_width.setter
+  def stroke_width(self, val):
+    self.css({"stroke-width": val})
+
+  @property
+  def fill(self):
+    return self.css("fill")
+
+  @fill.setter
+  def fill(self, val):
+    self.css({"fill": val})
+
+  @property
+  def fill_opacity(self):
+    return self.css("fill-opacity")
+
+  @fill_opacity.setter
+  def fill_opacity(self, num):
+    self.css({"fill-opacity": num})
 
   def to_dict(self, copy=False):
     """

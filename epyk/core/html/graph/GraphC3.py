@@ -46,8 +46,6 @@ class Chart(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage::
-
     :return: A Javascript Dom object.
 
     :rtype: OptChartC3.C3
@@ -107,8 +105,6 @@ class Chart(Html.Html):
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
-
-    Usage::
 
     Attributes:
     ----------

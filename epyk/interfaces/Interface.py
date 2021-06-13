@@ -102,6 +102,9 @@ class Components:
     self.section = self.layouts.section
     self.composite = self.rich.composite
 
+    # Set the default chart to be ApexCharts
+    self.chart = self.charts.apex
+
   def css(self, css_attrs):
     """
     Description:

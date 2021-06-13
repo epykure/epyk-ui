@@ -49,10 +49,15 @@ class D3:
       self.page.ext_packages = self.page.ext_packages or {}
       dependencies.append({'alias': 'd3', 'version': d3_version} if d3_version is not None else "d3")
 
-      self.page.ext_packages[name] = {
+      register = {'alias': name, 'module': scripts[0][1][:-3]}
+      if "init_fnc" in options:
+        register = {'alias': name, 'module': scripts[0][1][:-3], "init_fnc": options["init_fnc"]}
+        del options["init_fnc"]
+
+      self.page.imports.addPackage(name, {
           'version': '', 'req': [{'alias': d} if not isinstance(d, dict) else d for d in dependencies],
-          'register': {'alias': name, 'module': scripts[0][1][:-3]},
-          'modules': [{'script': split_url[1], 'path': '', 'cdnjs': split_url[0]} for split_url in scripts]}
+          'register': register,
+          'modules': [{'script': split_url[1], 'path': '', 'cdnjs': split_url[0]} for split_url in scripts]})
       self.page.jsImports.add(name)
     else:
       self.page.jsImports.add("d3")
@@ -86,6 +91,8 @@ class D3:
     :param excluded_words: list of words to be excluded from the display.
     """
     scripts = ["https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"]
+    options = options or {}
+    options["init_fnc"] = "d3.layout.cloud = clouds"
     chart = self.script(
       'clouds', scripts, None, "3.5.17", profile=profile, options=options, width=width, height=height, html_code=html_code)
     chart.colors(self.page.theme.charts)
@@ -109,7 +116,6 @@ function draw(words) {
         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"})
       .text(function(d) { return d.text; })}
 ''')
-    self.page.ext_packages["clouds"]["register"]["init_fnc"] = "d3.layout.cloud = clouds"
     if not isinstance(data, list):
       count_words = {}
       for phrase in data.split("\n"):
