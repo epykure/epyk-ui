@@ -1,10 +1,20 @@
 ## [Unreleased]
 
 ### Added
+- New vega chart libs.
+- Add leaflet event object.
+- Add SVG style properties to CssInline.
+- Add __str__ method to options objects.
+- Add charts categories.
+- Add default chart family to Apex Charts.
+- Create Enum class.
 
 ### Changed
+- Change default padding for C3 and billboard.
 
 ### Fixed
+- Bug fix for D3 word cloud init func.
+- bug fix end range color function.
 
 
 ## [1.5.21] - 2021-06-09
