@@ -127,7 +127,7 @@ class PyOuts:
   def __init__(self, report=None, options=None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
-    self.__requireJs, self.__jupyter_cell = None, False
+    self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False
 
   def _to_html_obj(self, htmlParts=None, cssParts=None, split_js=False):
     """
@@ -261,6 +261,8 @@ class PyOuts:
       require_js = importMng.to_requireJs(results, self.excluded_packages)
       results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
       results['jsFrgs_in_req'] = require_js['jsFrgs']
+    if self.__requireJs_attrs:
+      results.update(self.__requireJs_attrs)
     results["pageId"] = id(self._report)
     return self.html_tmpl.strip() % results
 
@@ -286,7 +288,7 @@ class PyOuts:
     self.excluded_packages = ['bootstrap']
     return self
 
-  def jupyter(self, verbose=False, requireJs=None, closure=True):
+  def jupyter(self, verbose=False, requireJs=None, closure=True, requirejs_path=None, requirejs_func=None):
     """
     Description:
     ------------
@@ -308,6 +310,8 @@ class PyOuts:
     :param verbose: Boolean. Optional. Get the excluded packages.
     :param requireJs: Dictionary. Optional. The requirements overrides from the apps property.
     :param closure: Boolean. Optional.
+    :param requirejs_path: Dictionary. Optional.
+    :param requirejs_func: String. Optional.
 
     :return: The output object with the function _repr_html_
     """
@@ -340,6 +344,10 @@ if (typeof icon === "undefined"){
 ''' % {"pageId": id(self._report)})
     self.html_tmpl = HtmlTmplBase.JUPYTER
     self.__requireJs, self.__jupyter_cell = requireJs, True
+    if requirejs_path is not None:
+      self.__requireJs_attrs["paths"] = requirejs_path
+    if requirejs_func is not None:
+      self.__requireJs_attrs["jsFrgs_in_req"] = requirejs_func
     try:
       import notebook
 

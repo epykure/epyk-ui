@@ -230,6 +230,10 @@ class DataEvents:
 
     return JsLeaflet.LEvent(selector="d3.select(this)", setVar=False)
 
+  @property
+  def geolocationPosition(self):
+    return GeolocationCoordinates("navPos")
+
 
 class DataFile:
 
@@ -456,3 +460,159 @@ class DataPrimitives:
       return JsObjects.JsDate.JsDate(data, varName=name, setVar=False)
 
     return JsObjects.JsDate.JsDate.get(name)
+
+
+class GeolocationCoordinates:
+
+  def __init__(self, varName):
+    self.varName = varName
+
+  @property
+  def coords(self):
+    """
+    Description:
+    ------------
+    Returns a GeolocationCoordinates object defining the current location.
+
+    This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+    """
+    from epyk.core.js.primitives import JsObject
+
+    return JsObject.JsObject.get(self.varName)
+
+  @property
+  def accuracy(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the accuracy of the latitude and longitude properties, expressed in meters.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.accuracy" % self.varName)
+
+  @property
+  def altitudeAccuracy(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the accuracy of the altitude expressed in meters. This value can be null
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.altitudeAccuracy" % self.varName)
+
+  @property
+  def heading(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the direction towards which the device is facing. This value, specified in degrees, indicates how far off from heading true north the device is.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.heading" % self.varName)
+
+  @property
+  def altitude(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the position's altitude in meters, relative to sea level.
+    This value can be null if the implementation cannot provide the data.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition/coords
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.altitude" % self.varName)
+
+  @property
+  def latitude(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the position's latitude in decimal degrees.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition/coords
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.latitude" % self.varName)
+
+  @property
+  def longitude(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the position's longitude in decimal degrees.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition/coords
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.longitude" % self.varName)
+
+  @property
+  def speed(self):
+    """
+    Description:
+    ------------
+    Returns a double representing the velocity of the device in meters per second. This value can be null.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition/coords
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.coords.speed" % self.varName)
+
+  @property
+  def timestamp(self):
+    """
+    Description:
+    ------------
+    Returns a DOMTimeStamp representing the time at which the location was retrieved.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber.get("%s.timestamp" % self.varName)
+
+  def toStr(self):
+    from epyk.core.js.primitives import JsObject
+
+    return JsObject.JsObject.get(self.varName)

@@ -555,7 +555,7 @@ class Billboard:
     pie_chart.labels(data['labels'])
     pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
-      pie_chart.add_dataset(d, data['series'][i])
+      pie_chart.add_dataset(d, data['series'])
     return pie_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),

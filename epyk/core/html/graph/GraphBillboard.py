@@ -259,14 +259,17 @@ class ChartLine(Chart):
 
 class ChartSpline(ChartLine):
   _type = 'spline'
+  _option_cls = OptChartC3.C3Spline
 
 
 class ChartArea(ChartLine):
   _type = 'area'
+  _option_cls = OptChartC3.C3Area
 
 
 class ChartBar(ChartLine):
   _type = 'bar'
+  _option_cls = OptChartC3.C3Bar
 
 
 class ChartScatter(ChartLine):
@@ -376,6 +379,7 @@ class ChartDonut(ChartPie):
 
 class ChartGauge(ChartPie):
   _type = 'gauge'
+  _option_cls = OptChartC3.C3Gauge
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     if data:

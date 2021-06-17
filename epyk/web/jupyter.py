@@ -51,6 +51,34 @@ class Jupyter:
     results['jsFrgs_in_req'] = require_js['jsFrgs']
     return results
 
+  def requirejs_path(self, jsFncs=None, verbose=False, excluded_packages=None):
+    """
+    Description:
+    ------------
+    Return the requirejs path dictionary.
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param verbose: Boolean. Optional. Display version details (default False).
+    :param excluded_packages: Optional.
+    """
+    return self.requireJs(jsFncs, verbose, excluded_packages)["paths"]
+
+  def requirejs_func(self, jsFncs=None, verbose=False, excluded_packages=None):
+    """
+    Description:
+    ------------
+    Return the requirejs path functions as a string.
+
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param verbose: Boolean. Optional. Display version details (default False).
+    :param excluded_packages: Optional.
+    """
+    return self.requireJs(jsFncs, verbose, excluded_packages)["jsFrgs_in_req"]
+
   def add_cell(self, html_code):
     pass
 

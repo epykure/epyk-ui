@@ -161,7 +161,7 @@ class JsObject:
     if varName is None:
       return self
 
-    if self.varName is not None and self.varName.startswith("window."):
+    if (self.varName is not None and (self.varName.startswith("window.") or self.varName.startswith("window["))) or (varName is not None and (varName.startswith("window.") or varName.startswith("window["))):
       varType = ""
     if varName != self.varName:
       if len(self._js) == 1:

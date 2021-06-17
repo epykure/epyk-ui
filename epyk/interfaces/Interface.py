@@ -102,8 +102,10 @@ class Components:
     self.section = self.layouts.section
     self.composite = self.rich.composite
 
-    # Set the default chart to be ApexCharts
-    self.chart = self.charts.apex
+    # Set the default chart to be ChartJs
+    # TODO fix ApexChart and BillboardJs
+    self.chart = self.charts.chartJs
+    self.analytics = self.charts.c3
 
   def css(self, css_attrs):
     """
