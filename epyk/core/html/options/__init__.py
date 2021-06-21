@@ -16,6 +16,7 @@ from epyk.core.js import JsUtils
 
 class Options(DataClass):
   component_properties = ()
+  with_builder = True
 
   def __init__(self, report, attrs=None, options=None, js_tree=None):
     super(Options, self).__init__(report, attrs, options)
@@ -274,8 +275,9 @@ class Options(DataClass):
 
   @builder.setter
   def builder(self, value):
-    self.js_type["builder"] = True
-    self._config(value)
+    if self.with_builder:
+      self.js_type["builder"] = True
+      self._config(value)
 
   @property
   def style(self):

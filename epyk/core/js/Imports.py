@@ -801,7 +801,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-axis',
     'v_prefix': 'v',
     'version': '3.0.0',
-    'register': {'alias': 'd3Axis', 'module': 'd3-axis.min'},
+    'register': {'variable': 'd3Axis', 'module': 'd3-axis.min'},
     'modules': [
       {'script': 'd3-axis.min.js', 'path': 'd3-axis@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -810,7 +810,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-ease',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Ease', 'module': 'd3-ease.min'},
+    'register': {'variable': 'd3Ease', 'module': 'd3-ease.min'},
     'modules': [
       {'script': 'd3-ease.min.js', 'path': 'd3-ease@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -819,7 +819,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-dsv',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Dsv', 'module': 'd3-dsv.min'},
+    'register': {'variable': 'd3Dsv', 'module': 'd3-dsv.min'},
     'modules': [
       {'script': 'd3-dsv.min.js', 'path': 'd3-dsv@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -828,7 +828,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-dispatch',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Dispatch', 'module': 'd3-dispatch.min'},
+    'register': {'variable': 'd3Dispatch', 'module': 'd3-dispatch.min'},
     'modules': [
       {'script': 'd3-dispatch.min.js', 'path': 'd3-dispatch@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -845,7 +845,7 @@ JS_IMPORTS = {
       {'alias': 'd3-interpolate'},
       {'alias': 'd3-timer'},
     ],
-    'register': {'alias': 'd3Transition', 'module': 'd3-transition.min'},
+    'register': {'variable': 'd3Transition', 'module': 'd3-transition.min'},
     'modules': [
       {'script': 'd3-transition.min.js', 'path': 'd3-transition@%(version)s/dist/', 'cdnjs': JSDELIVER}
     ]},
@@ -855,7 +855,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-selection',
     'v_prefix': 'v',
     'version': '3.0.0',
-    'register': {'alias': 'd3Selection', 'module': 'd3-selection.min'},
+    'register': {'variable': 'd3Selection', 'module': 'd3-selection.min'},
     'modules': [
       {'script': 'd3-selection.min.js', 'path': 'd3-selection@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -864,7 +864,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-interpolate',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Interpolate', 'module': 'd3-interpolate.min'},
+    'register': {'variable': 'd3Interpolate', 'module': 'd3-interpolate.min'},
     'req': [
       {'alias': 'd3-color'}
     ],
@@ -876,7 +876,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-time-format',
     'v_prefix': 'v',
     'version': '4.0.0',
-    'register': {'alias': 'd3TimeFormat', 'module': 'd3-time-format.min'},
+    'register': {'variable': 'd3TimeFormat', 'module': 'd3-time-format.min'},
     'req': [
       {'alias': 'd3-time'}],
     'modules': [
@@ -887,7 +887,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-time',
     'v_prefix': 'v',
     'version': '3.0.0',
-    'register': {'alias': 'd3Time', 'module': 'd3-time.min'},
+    'register': {'variable': 'd3Time', 'module': 'd3-time.min'},
     'req': [
         {'alias': 'd3-array'},
     ],
@@ -899,7 +899,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-array',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Array', 'module': 'd3-array.min'},
+    'register': {'variable': 'd3Array', 'module': 'd3-array.min'},
     'modules': [
       {'script': 'd3-array.min.js', 'path': 'd3-array@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -908,7 +908,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-format',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Format', 'module': 'd3-format.min'},
+    'register': {'variable': 'd3Format', 'module': 'd3-format.min'},
     'modules': [
       {'script': 'd3-format.min.js', 'path': 'd3-format@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -917,7 +917,7 @@ JS_IMPORTS = {
       'website': 'https://github.com/d3/d3-timer',
       'version': '3.0.1',
       'v_prefix': 'v',
-      'register': {'alias': 'd3Timer', 'module': 'd3-timer.min'},
+      'register': {'variable': 'd3Timer', 'module': 'd3-timer.min'},
       'modules': [
         {'script': 'd3-timer.min.js', 'path': 'd3-timer@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -926,7 +926,7 @@ JS_IMPORTS = {
       'website': 'https://github.com/d3/d3-collection',
       'version': '1.0.7',
       'v_prefix': 'v',
-      'register': {'alias': 'd3Collection', 'module': 'd3-collection.min'},
+      'register': {'variable': 'd3Collection', 'module': 'd3-collection.min'},
       'modules': [
         {'script': 'd3-collection.min.js', 'path': 'd3-collection@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -935,7 +935,7 @@ JS_IMPORTS = {
       'website': 'https://github.com/d3/d3-scale',
       'v_prefix': 'v',
       'version': '4.0.0',
-      'register': {'alias': 'd3Scale', 'module': 'd3-scale.min'},
+      'register': {'variable': 'd3Scale', 'module': 'd3-scale.min'},
       'req': [
         {'alias': 'd3-array'},
         {'alias': 'd3-format'},
@@ -950,7 +950,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-color',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Color', 'module': 'd3-color.min'},
+    'register': {'variable': 'd3Color', 'module': 'd3-color.min'},
     'modules': [
       {'script': 'd3-color.min.js', 'path': 'd3-color@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -962,7 +962,7 @@ JS_IMPORTS = {
     'req': [
       {'alias': 'd3-interpolate'},
     ],
-    'register': {'alias': 'd3Brush', 'module': 'd3-brush.min'},
+    'register': {'variable': 'd3Brush', 'module': 'd3-brush.min'},
     'modules': [
       {'script': 'd3-brush.min.js', 'path': 'd3-brush@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -975,7 +975,7 @@ JS_IMPORTS = {
       {'alias': 'd3-selection'},
       {'alias': 'd3-dispatch'},
     ],
-    'register': {'alias': 'd3Drag', 'module': 'd3-drag.min'},
+    'register': {'variable': 'd3Drag', 'module': 'd3-drag.min'},
     'modules': [
       {'script': 'd3-drag.min.js', 'path': 'd3-drag@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -987,7 +987,7 @@ JS_IMPORTS = {
     'req': [
       {'alias': 'd3-path'},
     ],
-    'register': {'alias': 'd3Shape', 'module': 'd3-shape.min'},
+    'register': {'variable': 'd3Shape', 'module': 'd3-shape.min'},
     'modules': [
       {'script': 'd3-shape.min.js', 'path': 'd3-shape@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -1001,7 +1001,7 @@ JS_IMPORTS = {
       {'alias': 'd3-selection'},
       {'alias': 'd3-transition'},
     ],
-    'register': {'alias': 'd3Zoom', 'module': 'd3-zoom.min'},
+    'register': {'variable': 'd3Zoom', 'module': 'd3-zoom.min'},
     'modules': [
       {'script': 'd3-zoom.min.js', 'path': 'd3-zoom@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -1010,7 +1010,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/d3/d3-path',
     'v_prefix': 'v',
     'version': '3.0.1',
-    'register': {'alias': 'd3Path', 'module': 'd3-path.min'},
+    'register': {'variable': 'd3Path', 'module': 'd3-path.min'},
     'modules': [
       {'script': 'd3-path.min.js', 'path': 'd3-path@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
@@ -1065,15 +1065,25 @@ JS_IMPORTS = {
     ]
   },
 
+  'svgjs': {
+    'version': '2.6.2',
+    'register': {'alias': 'svg', 'module': 'svg.min', 'npm': 'svgjs', #"init_fnc": "window.SVG = svg"
+                 },
+    'modules': [
+      {'script': 'svg.min.js', 'path': 'svgjs@%(version)s/dist/', 'cdnjs': JSDELIVER}
+    ]
+  },
+
   'apexcharts': {
+    'req_js': [ # depn only for requirejs
+      {'alias': 'svgjs'},
+    ],
     'website': 'https://apexcharts.com/',
     'repository': 'https://github.com/apexcharts/apexcharts.js',
     'version': '3.27.1',
-    'register': {'alias': 'apex', 'module': 'dist/apexcharts.amd', 'npm': 'apexcharts', "init_fnc": "window['ApexCharts'] = window['Apex']"},
+    'register': {'alias': 'ApexCharts', 'module': 'apexcharts.min', 'npm': 'apexcharts'},
     'modules': [
-      #{'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}
-      # https://cdn.jsdelivr.net/npm/apexcharts@3.26.3/dist/apexcharts.amd.js
-      {'script': 'apexcharts.min.js', 'node_path': 'dist/', 'path': 'apexcharts@%(version)s/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}
+      {'script': 'apexcharts.min.js', 'path': 'apexcharts@%(version)s/dist/', 'cdnjs': JSDELIVER}
     ],
   },
 
@@ -1095,28 +1105,82 @@ JS_IMPORTS = {
     ]
   },
 
-  # Vega lite charts
+  # Vega Charts
   'vega': {
     'website': 'https://vega.github.io/vega-lite/',
     'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
     'register': {'alias': 'vega', 'module': 'vega.min'},
     'version': '5.20.2',
     'modules': [
-      {'script': 'vega.min.js', 'node_path': 'dist/', 'path': 'vega/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'vega.min.js', 'path': 'vega@%(version)s/build/', 'cdnjs': JSDELIVER},
+    ]
+  },
+
+  # JS VEGA Utils
+  "vega-tooltip": {
+    'req_js': [
+      {"alias": "vega-util"}
     ],
+    'website': 'https://github.com/vega/vega-util/',
+    'register': {'variable': 'vegaTooltip', 'module': 'vega-tooltip.min'},
+    'version': '0.25.1',
+    'modules': [
+      {'script': 'vega-tooltip.min.js', 'path': 'vega-tooltip@%(version)s/build/', 'cdnjs': JSDELIVER},
+    ]
+  },
+  # JS VEGA Utils
+  "vega-util": {
+    'website': 'https://github.com/vega/vega-util/',
+    'register': {'variable': 'vegaUtil', 'module': 'vega-util.min'},
+    'version': '1.16.1',
+    'modules': [
+      {'script': 'vega-util.min.js', 'path': 'vega-util@%(version)s/build/', 'cdnjs': JSDELIVER},
+    ]
+  },
+
+  # JS VEGA Lite
+  'vega-lite': {
+    'req': [
+      {"alias": "vega"}
+    ],
+    'req_js': [
+      {"alias": "vega-tooltip"},
+      {"alias": "vega"},
+    ],
+    'website': 'https://vega.github.io/vega-lite/',
+    'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
+    'register': {'variable': 'vegaLite', 'module': 'vega-lite.min'},
+    'version': '5.1.0',
+    'modules': [
+      {'script': 'vega-lite.min.js', 'path': 'vega-lite@%(version)s/build/', 'cdnjs': JSDELIVER},
+    ]
+  },
+
+  # JS VEGA Embded
+  'vega-embed': {
+    'req': [
+      {"alias": "vega-lite"}
+    ],
+    'website': 'https://vega.github.io/vega-embed/',
+    'repository': 'https://github.com/vega/vega-embed?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+    'register': {'variable': 'vegaEmbed', 'module': 'vega-embed.min'},
+    'version': '6.18.2',
+    'modules': [
+      {'script': 'vega-embed.min.js', 'path': 'vega-embed@%(version)s/build/', 'cdnjs': JSDELIVER},
+    ]
   },
 
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'req': [
-      #{'alias': 'd3', "version": "6.7.0"},
+    'req_js': [
       {'alias': 'd3-axis'},
       {'alias': 'd3-color'},
       {'alias': 'd3-ease'},
       {'alias': 'd3-dsv'},
       {'alias': 'd3-brush'},
       {'alias': 'd3-drag'},
+      {'alias': 'd3-selection'},
       {'alias': 'd3-scale'},
       {'alias': 'd3-shape'},
       {'alias': 'd3-time-format'},
@@ -1125,7 +1189,7 @@ JS_IMPORTS = {
       {'alias': 'd3-zoom'},
     ],
     'version': '3.0.3',
-    'register': {'alias': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
+    'register': {'variable': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
     'modules': [
       {'script': 'billboard.min.js', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -2989,7 +3053,7 @@ class ImportManager:
       self.getModules(modules, req, folder, module_details)
     return modules
 
-  def getReq(self, mod, modules, import_hierarchy=None):
+  def getReq(self, mod, modules, import_hierarchy=None, use_require_js=False):
     """
     Description:
     ------------
@@ -3006,7 +3070,7 @@ class ImportManager:
     :param mod: String. The alias of the external package.
     :param modules: List. The list of packages aliases in the inverse dependency order.
     :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
-
+    :param use_require_js: Boolean. Optional. Define if this is using requirejs to load imports. Default False.
     """
     import_hierarchy = import_hierarchy or JS_IMPORTS
     if isinstance(mod, dict):
@@ -3033,10 +3097,14 @@ class ImportManager:
           self.jsImports[mod['alias']]['dep'][i] = path
       mod = mod['alias']
     modules.append(mod)
-    for req in import_hierarchy.get(mod, {}).get("req", []):
-      self.getReq(req, modules, import_hierarchy)
+    req_key = "req"
+    if use_require_js:
+      if "req_js" in import_hierarchy.get(mod, {}):
+        req_key = "req_js"
+    for req in import_hierarchy.get(mod, {}).get(req_key, []):
+      self.getReq(req, modules, import_hierarchy, use_require_js=use_require_js)
 
-  def cleanImports(self, imports, import_hierarchy=None):
+  def cleanImports(self, imports, import_hierarchy=None, use_require_js=False):
     """
     Description:
     ------------
@@ -3051,12 +3119,13 @@ class ImportManager:
     ----------
     :param imports: List. An array with the list of aliases for the external packages.
     :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
+    :param use_require_js: Boolean. Optional. Define if this is using requirejs to load imports. Default False.
 
     :return: Return the list with the full list of aliases (including dependencies)
     """
     import_resolved = []
     for mod in imports:
-      self.getReq(mod, import_resolved, import_hierarchy or JS_IMPORTS)
+      self.getReq(mod, import_resolved, import_hierarchy or JS_IMPORTS, use_require_js=use_require_js)
     for a in set(import_resolved):
       if a in PACKAGE_STATUS:
         if not PACKAGE_STATUS[a].get("allowed", True):
@@ -3458,23 +3527,23 @@ class ImportManager:
     :param data: Dictionary. The Report modules to resolve.
     :param excluded_packages: List. Optional. The packages to exclude.
     """
-    deps_level, alias_to_name, name_to_alias, results = {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
+    deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
     m_versions = {}
     # Check first if some specific versions are required for the packages
     for m in self._report.jsImports:
-      for req in JS_IMPORTS[m].get('req', []):
+      req_alias = "req_js" if "req_js" in JS_IMPORTS[m] else "req"
+      for req in JS_IMPORTS[m].get(req_alias, []):
         if 'version' in req:
           m_versions[req['alias']] = req['version']
-
     # Produce the dependency tree for requirejs
-    for m in self.cleanImports(self._report.jsImports, JS_IMPORTS):
+    for m in self.cleanImports(self._report.jsImports, JS_IMPORTS, use_require_js=True):
       if excluded_packages is not None and m in excluded_packages:
         continue
 
       if not self.online:
         self.pkgs.get(m).set_local(static_url=self.static_url)
       if 'register' in JS_IMPORTS[m]:
-        alias = JS_IMPORTS[m]['register']['alias']
+        alias = JS_IMPORTS[m]['register'].get('alias', m)
         first_module = JS_IMPORTS[m]['modules'][0]
         if 'version' not in first_module:
           first_module['version'] = JS_IMPORTS[m]['version']
@@ -3482,40 +3551,40 @@ class ImportManager:
           first_module['version'] = m_versions[m]
         if not self.online:
           self.pkgs.get(m).set_local(static_url=self.static_url)
-          results['paths'][alias] = list(self.jsImports[m]["main"].keys())[0][:-3]
+          results['paths']["'%s'" % alias] = list(self.jsImports[m]["main"].keys())[0][:-3]
         else:
-          results['paths'][alias] = "%s/%s%s" % (
+          results['paths']["'%s'" % alias] = "%s/%s%s" % (
             first_module['cdnjs'], first_module['path'] % first_module,
             JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
         alias_to_name[m] = alias
+        alias_to_var[m] = JS_IMPORTS[m]['register'].get('variable', alias)
         name_to_alias[alias] = m
-        if 'req' in JS_IMPORTS[m]:
-          max_level = max(
-            [deps_level[alias['alias']] if alias['alias'] in deps_level else -1 for alias in JS_IMPORTS[m]['req']])
-          deps_level[m] = max_level + 1
+        req_alias = 'req_js' if 'req_js' in JS_IMPORTS[m] else "req"
+        if req_alias in JS_IMPORTS[m]:
+          req_levels = [deps_level.get(req_def["alias"], -1) for req_def in JS_IMPORTS[m][req_alias]]
+          deps_level[m] = max(req_levels) + 1
         else:
           deps_level[m] = 0
-
     # Create the chains of modules to be loaded
     level, group = None, []
     for k, v in sorted(deps_level.items(), key=lambda item: item[1])[::-1]:
       if level is None:
         level = v
       if level != v:
-        for g in group:
+        for g, var in group:
           if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
             results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
         results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
-          "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
-        level, group = v, [alias_to_name[k]]
+          "', '".join([g for g, _ in group]), ", ".join([g for _, g in group]), results['jsFrgs'])
+        level, group = v, [(alias_to_name[k], alias_to_var[k])]
       else:
-        group.append(alias_to_name[k])
+        group.append((alias_to_name[k], alias_to_var[k]))
     if group:
-      for g in group:
+      for g, var in group:
         if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
           results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
-        "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
+        "', '".join([g for g, _ in group]), ", ".join([g for _, g in group]), results['jsFrgs'])
     return results
 
   def show(self, all=False):

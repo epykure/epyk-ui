@@ -1,13 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.data.DataClass import DataClass
-
 from epyk.core.html import Html
 from epyk.core.css import Colors
 
 from epyk.core.js.packages import JsBillboard
-from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChartC3
 

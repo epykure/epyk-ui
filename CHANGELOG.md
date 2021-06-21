@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.5.22] - 2021-06-21
+
+### Added
 - New vega chart libs.
 - Add leaflet event object.
 - Add SVG style properties to CssInline.
@@ -8,13 +17,20 @@
 - Add charts categories.
 - Add default chart family to Apex Charts.
 - Create Enum class.
+- Add first implementation of Vega Lite charts wrapper.
+- Add req_js entry in Imports for requireJs.
 
 ### Changed
 - Change default padding for C3 and billboard.
+- Clean up billboard module.
+- Change register keywords in Imports new variable one.
+- Improve leaflet.
 
 ### Fixed
 - Bug fix for D3 word cloud init func.
 - bug fix end range color function.
+- Fix issue with requireJs links
+- Add SVG underlying for ApexCharts (to be confirmed).
 
 
 ## [1.5.21] - 2021-06-09
