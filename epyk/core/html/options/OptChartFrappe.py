@@ -244,11 +244,11 @@ class FrappeDataset(Options):
     ------------
 
     """
-    return self._config_get(name="type")
+    return self._config_get(name="chartType")
 
   @kind.setter
   def kind(self, value):
-    self._config(value, name="type")
+    self._config(value, name="chartType")
 
   @property
   def name(self):

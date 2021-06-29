@@ -53,6 +53,7 @@ class Chart(Html.Html):
     :param data:
     :param options:
     :param profile:
+    :param component_id:
     """
     return self.dom.render().toStr()
 

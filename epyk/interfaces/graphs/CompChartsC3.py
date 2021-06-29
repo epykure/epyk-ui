@@ -71,11 +71,11 @@ class C3:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartLine(self.page, width, height, html_code, options, profile)
-    line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
-    line_chart.options.axis.x.tick.count = 5
-    line_chart.options.axis.x.tick.rotate = 0
-    line_chart.options.axis.x.tick.multiline = False
+    line_chart.colors(self.page.theme.charts)
+    #line_chart.options.axis.x.tick.count = 5
+    #line_chart.options.axis.x.tick.rotate = 0
+    #line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
@@ -149,7 +149,7 @@ class C3:
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
-    line_chart._type = 'step'
+    line_chart.options.type = 'step'
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -295,7 +295,6 @@ class C3:
     line_chart = graph.GraphC3.ChartBar(self.page, width, height, html_code, options, profile)
     line_chart.colors(self.page.theme.charts)
     line_chart.labels(data['labels'])
-    line_chart.options.axis.x.tick.count = 5
     line_chart.options.axis.x.tick.rotate = 0
     line_chart.options.axis.x.tick.multiline = False
     for i, d in enumerate(data['datasets']):
@@ -484,6 +483,10 @@ class C3:
     :tags:
     :categories:
 
+    Related Pages:
+
+      https://c3js.org/samples/chart_stanford.html
+
     Usage::
 
     Attributes:
@@ -498,15 +501,20 @@ class C3:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     epoch, labels, series = [], [], []
-    for rec in record:
-      epoch.append(rec[epoch_col])
-      labels.append(rec[x_axis])
-      series.append([rec.get(c)for c in y_columns])
+    if record:
+      for rec in record:
+        epoch.append(rec[epoch_col])
+        labels.append(rec[x_axis])
+        series.append([rec.get(c)for c in y_columns])
     line_chart = graph.GraphC3.ChartStanford(self.page, width, height, html_code, options, profile)
-    line_chart.labels(labels)
     line_chart.colors(self.page.theme.charts)
-    line_chart.epoch(epoch, epoch_col)
-    for i, y in enumerate(y_columns):
-      line_chart.add_dataset(series[i], y)
+    line_chart.options.point.r = 2
+    if record:
+      line_chart.labels(labels)
+      line_chart.epoch(epoch, epoch_col)
+      for i, y in enumerate(y_columns):
+        line_chart.add_dataset(series[i], y)
     return line_chart

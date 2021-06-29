@@ -217,6 +217,7 @@ class D3Select(JsPackage):
     Attributes:
     ----------
     :param htmlType:
+    :param setVar:
     """
     return self.fnc("append(%s)" % JsUtils.jsConvertData(htmlType, None))
 
@@ -364,6 +365,14 @@ class D3Select(JsPackage):
     return self.fnc("html(function(d) { return %s; })" % jsData)
 
   def htmlByKey(self, data):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    """
     return self.fnc("html(function(d) {console.log('rrr'+ d); return d[%s]; })" % JsUtils.jsConvertData(data, None))
 
   def call(self, fnc_name):
@@ -434,8 +443,10 @@ class D3Select(JsPackage):
     """
     Description:
     -----------
-    Removes the selected elements from the document. Returns this selection (the removed elements) which are now detached from the DOM.
-    There is not currently a dedicated API to add removed elements back to the document; however, you can pass a function to selection.append or selection.insert to re-add elements.
+    Removes the selected elements from the document.
+    Returns this selection (the removed elements) which are now detached from the DOM.
+    There is not currently a dedicated API to add removed elements back to the document; however, you can pass a
+    function to selection.append or selection.insert to re-add elements.
 
     Related Pages:
 
@@ -456,7 +467,7 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param deep: If deep is truthy, the descendant nodes of the selected elements will be cloned as well
+    :param deep: Boolean. Optional. If deep is truthy, the descendant nodes of the selected elements will be cloned as well
     """
     return self.fnc("clone(%s)" % JsUtils.jsConvertData(deep, None))
 
@@ -478,7 +489,11 @@ class D3Select(JsPackage):
 
   def selectAll(self, d3Type):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param d3Type:
     """
     return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3Type, None))
@@ -561,37 +576,51 @@ class D3ForceCollide:
 
   def radius(self, fnc):
     """
+    Description:
+    -----------
     If radius is specified, sets the radius accessor to the specified number or function,
     re-evaluates the radius accessor for each node, and returns this force.
     If radius is not specified, returns the current radius accessor
 
-    Documentation:
-      - https://github.com/d3/d3-force#forceCollide
+    Related Pages:
 
+      https://github.com/d3/d3-force#forceCollide
+
+    Attributes:
+    ----------
     :param fnc:
-    :return:
     """
     pass
 
   def strength(self, strength):
     """
+    Description:
+    -----------
     If strength is specified, sets the force strength to the specified number in the range [0,1] and returns this force.
     If strength is not specified, returns the current strength which defaults to 0.
 
-    Documentation:
-      - https://github.com/d3/d3-force#forceCollide
+    Related Pages:
 
+      https://github.com/d3/d3-force#forceCollide
+
+    Attributes:
+    ----------
     :param strength:
     """
     pass
 
   def iterations(self, iterations):
     """
+    Description:
+    -----------
     If iterations is specified, sets the number of iterations per application to the specified number and returns this force
 
-    Documentation:
-      - https://github.com/d3/d3-force#forceCollide
+    Related Pages:
 
+      https://github.com/d3/d3-force#forceCollide
+
+    Attributes:
+    ----------
     :param iterations:
     """
     pass
@@ -651,13 +680,18 @@ class D3Pack:
 
   def size(self, number):
     """
-    If size is specified, sets this pack layout’s size to the specified two-element array of numbers [width, height] and returns this pack layout. If size is not specified, returns the current size, which defaults to [1, 1]
+    Description:
+    -----------
+    If size is specified, sets this pack layout’s size to the specified two-element array of numbers [width, height]
+    and returns this pack layout. If size is not specified, returns the current size, which defaults to [1, 1]
 
-    Documentation:
-      - https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
+    Related Pages:
 
+      https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
+
+    Attributes:
+    ----------
     :param number:
-    :return:
     """
     pass
 
@@ -712,9 +746,12 @@ class D3Band:
 
   def domain(self, domain=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param domain:
-    :return:
     """
     if domain is None:
       self._js.append("domain()")
@@ -722,16 +759,22 @@ class D3Band:
 
   def range(self, range=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param range:
-    :return:
     """
 
   def rangeRound(self, range):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param range:
-    :return:
     """
 
   def round(self):
@@ -761,7 +804,7 @@ class D3File:
 
   def __init__(self, src, filename, selector):
     self._f, self.src, self._selector = filename, src, selector
-    self._js_frg, self._js_ids, self._js_then = [], set(), None
+    self._js_frg, self._js_ids, self._js_thens, self.profile = [], set(), [], None
 
   def records(self, jsId):
     """
@@ -770,7 +813,7 @@ class D3File:
 
     Attributes:
     ----------
-    :param jsId:
+    :param jsId: String. The variable id to store the records.
     """
     self._js_frg.append("%s.push(row)" % jsId)
     return self
@@ -782,88 +825,149 @@ class D3File:
 
     Attributes:
     ----------
-    :param jsId:
-    :param column:
+    :param jsId: String. The variable id to store the records.
+    :param column: String | Js Object. The column name.
     """
-    if not jsId in self._js_ids:
+    if jsId not in self._js_ids:
       column = JsUtils.jsConvertData(column, None)
       self._js_frg.append("%s.push(row[%s])" % (jsId, column))
       self._js_ids.add(jsId)
     return JsObject.JsObject(jsId, isPyData=False)
 
-  def filter(self, rules):
+  def filter(self, rules, keep=True):
     """
     Description:
     -----------
+    Add a filter on a row. The rule needs to be fully defined.
 
-    csv.filter("row['direction'] != 'Decreasing'")
+    Usage::
+
+      csv.filter("row['direction'] != 'Decreasing'")
 
     Attributes:
     ----------
     :param rules:
+    :param keep: Boolean. Optional.
     """
     if not isinstance(rules, list):
       rules = [rules]
-    self._js_frg.append("if(%s){ return; }" % "&&".join(rules))
+    if not keep:
+      self._js_frg.append("if(%s){ return; }" % "&&".join(rules))
+    else:
+      self._js_frg.append("if(!(%s)){ return; }" % "&&".join(rules))
     return self
 
-  def filterCol(self, column, value, type="=="):
+  def filterCol(self, column, value, operator="==", keep=True):
     """
     Description:
     -----------
+    Add a filter on a specific column. Those functions can be chained.
+
+    Usage::
+
+      text = page.ui.input("Italy")
+        page.ui.button("Click").click([
+          page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).filterCol("Year", "2000", ">").row(
+            page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
+        ])
 
     Attributes:
     ----------
-    :param column:
-    :param value:
-    :param type:
+    :param column: String | JsObject. The column name.
+    :param value: String | JsObject. The column value.
+    :param operator: String. Optional. The comparison operator.
+    :param keep: Boolean. Optional.
     """
     column = JsUtils.jsConvertData(column, None)
     value = JsUtils.jsConvertData(value, None)
-    self._js_frg.append("if(row[%s] %s %s){ return; }" % (column, type, value))
+    if not keep:
+      self._js_frg.append("if(row[%s] %s %s){ return; }" % (column, operator, value))
+    else:
+      self._js_frg.append("if(!(row[%s] %s %s)){ return; }" % (column, operator, value))
     return self
 
-  def callback(self, jsFnc):
+  def callback(self, jsFnc, profile=None):
     """
     Description:
     -----------
 
+    Usage::
+
     Attributes:
     ----------
-    :param jsFnc:
+    :param jsFnc: String. Javascript function.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._js_frg.append(jsFnc)
+    self.profile = profile
     return self
 
   def then(self, jsFncs, profile=False):
     """
     Description:
     -----------
-    As the file loading wiht D3 is a promise, it is possible to put events when the response is received.
+    As the file loading with D3 is a promise, it is possible to put events when the response is received.
     This could allow the loading of components.
+
+    Add a post process after on the entire data.
+
+    This function can be chained.
+
+    Usage::
+
+      text = page.ui.input("Italy")
+        page.ui.button("Click").click([
+          page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).filterCol("Year", "2000", ">").row(
+            page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
+        ])
 
     Attributes:
     ----------
-    :param jsFncs: A list or String. Javascript events.
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._js_then = ".then(function(data) {%s})" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    self._js_thens.append(
+      "then(function(data) {%s; return data})" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    return self
+
+  def cast(self, columns, to="float", profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param columns:
+    :param to:
+    :param profile:
+    """
+    for column in columns:
+      if to == "float":
+        self._js_frg.append(JsUtils.jsConvertFncs(
+          "row['%(col)s'] = parseFloat(row['%(col)s'])" % {"col": column}, toStr=True, profile=profile))
+      elif to == "int":
+        self._js_frg.append(JsUtils.jsConvertFncs(
+          "row['%(col)s'] = parseInt(row['%(col)s'])" % {"col": column}, toStr=True, profile=profile))
     return self
 
   def row(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
 
-    :param jsFncs:
-    :return:
+    Attributes:
+    ----------
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._js_frg.append(
-      "function(data) {data.foreach(function(row){ %s } )" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    self._js_frg.append(JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
     return self
 
-  def get(self, jsFncs):
+  def get(self, jsFncs, profile=None):
     """
     Description:
     -----------
@@ -872,24 +976,39 @@ class D3File:
 
       https://github.com/d3/d3-request
 
+    Usage::
+
+      text = page.ui.input("Italy")
+      page.ui.button("Click").click([
+        page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).filterCol("Year", "2000", ">").row(
+          page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
+      ])
+
     Attributes:
     ----------
-    :param jsFncs:
+    :param jsFncs: List | String. Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.then(jsFncs)
+    return self.then(jsFncs, profile)
 
   def toStr(self):
     file = JsUtils.jsConvertData(self._f, None)
     if self._js_ids:
-      if self._js_then is not None:
-        return "%s; %s(%s, function(row, err){%s})%s" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg), self._js_then)
+      if self._js_thens:
+        return "%s; %s(%s, function(row, err){%s; return row}).%s" % (
+          ";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file,
+          JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile), ".".join(self._js_thens))
 
-      return "%s; %s(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg))
+      return "%s; %s(%s, function(row, err){%s; return row})" % (
+        ";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file,
+        JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile))
 
-    if self._js_then is not None:
-      return "%s(%s, function(row, err){%s})%s" % (self._selector, file, ";".join(self._js_frg), self._js_then)
+    if self._js_thens:
+      return "%s(%s, function(row, err){%s; return row}).%s" % (
+        self._selector, file, JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile), ".".join(self._js_thens))
 
-    return "%s(%s, function(row, err){%s})" % (self._selector, file, ";".join(self._js_frg))
+    return "%s(%s, function(row, err){%s; return row})" % (
+      self._selector, file, JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile))
 
 
 class D3Svg:
@@ -911,8 +1030,12 @@ class D3Svg:
 
   def selectAll(self, tag):
     """
+    Description:
+    -----------
 
-    :return:
+    Attributes:
+    ----------
+    :param tag:
     """
     self._js.append("selectAll(%s)" % JsUtils.jsConvertData(tag, None))
     return D3Select(self.src, selector=self.toStr(), setVar=self.setVar, parent=self.component)
@@ -995,7 +1118,7 @@ class D3Request(JsPackage):
     Attributes:
     ----------
     :param jsFncs:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -1039,6 +1162,8 @@ class D3GeoProjection(JsPackage):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param num:
     """
     return self.fnc("scale(%s)" % num)
@@ -1078,6 +1203,7 @@ class JsD3(JsPackage):
   def svg(self):
     return D3Svg(self.src, selector="%s.svg" % self._selector)
 
+  @JsUtils.fromVersion({"d3": "4.0.0"})
   def csv(self, url):
     """
     Description:
@@ -1095,6 +1221,7 @@ class JsD3(JsPackage):
     """
     return D3File(self.src, url, selector="%s.csv" % self._selector)
 
+  @JsUtils.fromVersion({"d3": "4.0.0"})
   def tsv(self, url):
     """
     Description:
@@ -1112,6 +1239,7 @@ class JsD3(JsPackage):
     """
     return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
+  @JsUtils.fromVersion({"d3": "4.0.0"})
   def xml(self, url):
     """
     Description:
@@ -1130,6 +1258,7 @@ class JsD3(JsPackage):
     """
     return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
+  @JsUtils.fromVersion({"d3": "4.0.0"})
   def json(self, url):
     """
     Description:

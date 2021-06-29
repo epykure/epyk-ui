@@ -15,6 +15,7 @@ class Chart(Html.Html):
   name = 'Billboard'
   requirements = ('billboard.js', )
   _option_cls = OptChartC3.C3
+  _type = None
 
   def __init__(self, report, width, height, html_code, options, profile):
     self.height, self._d3 = height[0], None
@@ -22,6 +23,7 @@ class Chart(Html.Html):
                                 profile=profile, options=options)
     self.style.css.margin_top = 10
     self.style.css.padding = 5
+    self.options.type = self._type
     if width[1] == "%":
       self.style.css.width_calc(10, None)
 
@@ -102,6 +104,7 @@ class Chart(Html.Html):
     """
     Description:
     -----------
+    Add a click event on a chart.
 
     Attributes:
     ----------
@@ -121,8 +124,6 @@ class Chart(Html.Html):
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
-
-    Usage::
 
     Attributes:
     ----------
@@ -174,7 +175,7 @@ class Chart(Html.Html):
     :param component_id: String. Optional. The component reference (the htmlCode).
     """
     if data is not None:
-      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      js_convertor = "%s%s" % (self.name, self.__class__.__name__)
       self.page.properties.js.add_constructor(
         js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
       profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
@@ -182,9 +183,10 @@ class Chart(Html.Html):
         js_func_builder = JsUtils.jsConvertFncs(
           ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
-      return '%(chartId)s.unload(); %(chartId)s.load(%(chartFnc)s(%(data)s, %(options)s))' % {
+      return '%(chartId)s.unload({done: function() {%(chartId)s.load(%(chartFnc)s(%(data)s, %(options)s)) }})' % {
         'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
         "options": self.options.config_js(options)}
+
     return '%s = bb.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
 
   def __str__(self):
@@ -218,12 +220,13 @@ class ChartLine(Chart):
     """
     Description:
     -----------
+    Add a dataset to the chart.
 
     Attributes:
     ----------
-    :param data:
-    :param name:
-    :param kind:
+    :param data: List. The dataset to be added to the chart.
+    :param name: String. The name (alias) of the dataset.
+    :param kind: String. Optional. The type of chart.
     """
     self.options.data.columns.append([name] + data)
     self.options.data.colors[name] = self.options.colors[len(self.options.data.colors)]
@@ -240,17 +243,20 @@ class ChartLine(Chart):
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});
-        data.forEach(function(rec){ 
+        data.forEach(function(rec, i){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
-        columns = []; columns.push(['x'].concat(labels));
+              var label = rec[options.x_column];
+              if (!(label in uniqLabels)){var label = ""+ rec[options.x_column];
+                labels.push(label); uniqLabels[label] = true};
+                temp[name][label] = rec[name]}})});
+        columns = [];
         options.y_columns.forEach(function(series){
           dataSet = [series];
           labels.forEach(function(x){
-            if(temp[series][x] == undefined){dataSet.push(null)} else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
-        var result = {columns: columns}
+            if(temp[series][x] == undefined){dataSet.push(null)} 
+            else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
+        var result = {columns: columns, type: options.type, categories: labels, axes: options.axis}
       }; return result'''
 
 
@@ -272,6 +278,21 @@ class ChartBar(ChartLine):
 class ChartScatter(ChartLine):
   _type = 'scatter'
 
+  def labels(self, labels, series_id='x'):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+
+    Attributes:
+    ----------
+    :param labels: List.
+    :param series_id: String. Optional. The series ID.
+    """
+    pass
+
   _js__builder__ = '''
       if(data.python){ 
         result = {'columns': [], type: options.type};
@@ -281,14 +302,12 @@ class ChartScatter(ChartLine):
         });
       } else {
         var tempVal = {}; var tempX = {}; var labels = []; 
-        options.y_columns.forEach(function(series){tempVal[series] = []; tempX[series +"_x"] = []});
+        options.y_columns.forEach(function(series){tempVal[series] = [series]; tempX[series +"_x"] = [series +"_x"]});
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
             if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in tempVal[name])){
-                tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
-              else {tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}}})});
-        result = {'columns': [], 'xs': {}};
+              tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}})});
+        result = {'columns': [], 'xs': {}, type: options.type, axes: options.axis}; 
         options.y_columns.forEach(function(series){
           result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); 
           result.xs[series] = series +"_x"})
@@ -317,12 +336,12 @@ class ChartPie(ChartLine):
               else{temp[rec[options.x_column]][name] += rec[name]}}})});
         columns = []; var labels = Object.keys(labels); var count = 0;
         for(var series in temp){
-          var values = [count]; count += 1;
+          var values = [series]; count += 1;
           labels.forEach(function(label){
             if(temp[series][label] !== undefined){
               values.push(temp[series][label])} else{values.push(null)}});
           columns.push(values)};
-        var result = {columns: columns};
+        var result = {columns: columns, type: options.type};
       }; return result'''
 
   def labels(self, labels, series_id='x'):
@@ -332,8 +351,8 @@ class ChartPie(ChartLine):
 
     Attributes:
     ----------
-    :param labels:
-    :param series_id:
+    :param labels: List.
+    :param series_id: String. Optional.
     """
     self._labels = labels
 
@@ -346,7 +365,7 @@ class ChartPie(ChartLine):
 
     Attributes:
     ----------
-    :param values: List. The series of numbers to be added to the chart
+    :param values: List. The series of numbers to be added to the chart.
     :param name: String. The series name.
     :param kind: String. Optional. The chart type.
     """
@@ -379,6 +398,17 @@ class ChartGauge(ChartPie):
   _option_cls = OptChartC3.C3Gauge
 
   def build(self, data=None, options=None, profile=None, component_id=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data: List. The dataset to be added to the chart.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param component_id: String. Optional. The component reference (the htmlCode).
+    """
     if data:
       return '%(chartId)s.load({columns: [["data", %(value)s]]})' % {'chartId': self.chartId, 'value': data}
 
@@ -391,9 +421,9 @@ class ChartGauge(ChartPie):
 
     Attributes:
     ----------
-    :param name:
-    :param value:
-    :param kind:
+    :param value: List. The series of numbers to be added to the chart.
+    :param name: String. The series name.
+    :param kind: String. Optional. The chart type.
     """
     self.options.data.columns.append(["data", value])
     self.options.data.colors["data"] = self.options.colors[len(self.options.data.colors)]
@@ -405,7 +435,7 @@ class ChartBubble(ChartLine):
   _type = 'bubble'
 
 
-class ChartRadar(ChartLine):
+class ChartRadar(ChartPie):
   _type = 'radar'
   _option_cls = OptChartC3.C3Radar
 

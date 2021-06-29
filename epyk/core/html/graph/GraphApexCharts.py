@@ -232,7 +232,7 @@ class Chart(Html.Html):
     :param component_id: String. Not used.
     """
     if data is not None:
-      js_convertor = "%s%s" % (self.name, self.__class__.name)
+      js_convertor = "%s%s" % (self.name, self.__class__.__name__)
       self.page.properties.js.add_constructor(
         js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
       profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
@@ -240,9 +240,9 @@ class Chart(Html.Html):
         js_func_builder = JsUtils.jsConvertFncs(
           ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
-      return "%s.updateOptions(%s(%s, %s))" % (
+      return "%s.updateOptions(%s(%s, %s)); %s.update()" % (
         "window['%s']" % self.chartId, js_convertor, JsUtils.jsConvertData(data, None),
-        self.options.config_js(options).toStr())
+        self.options.config_js(options).toStr(), self.chartId)
 
     return JsUtils.jsConvertFncs([self.js.new(
       self.dom.varId, self.options.config_js(options), "window['%s']" % self.chartId), self.js.render()],
@@ -331,5 +331,58 @@ class RadialBar(Chart):
     Python can pass some options to the JavaScript layer.
 
     :rtype: OptChartApex.OptionsPie
+    """
+    return super().options
+
+
+class Bubble(Chart):
+  _option_cls = OptChartApex.OptionsArea
+
+  _js__builder__ = '''
+       if(data.python){
+         result = {series: [], labels: data.labels};
+         data.datasets.forEach(function(dataset, i){
+           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+           if(typeof dataset.hoverBackgroundColor === "undefined"){
+             dataset.hoverBackgroundColor = options.background_colors[i]};
+           if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
+           dataset.name = data.series[i];
+           result.series.push(dataset) })
+       } else{
+         var temp = {}; var labels = []; var uniqLabels = {}; 
+         options.y_columns.forEach(function(series){temp[series] = {}});
+         data.forEach(function(rec){ 
+           options.y_columns.forEach(function(name){ 
+           if(rec[name] !== undefined){
+             if (!(rec[options.x_axis] in uniqLabels)){labels.push(rec[options.x_axis]); 
+             uniqLabels[rec[options.x_axis]] = true}; 
+             temp[name][rec[options.x_axis]] = rec[name]}})
+         }); 
+         result = {series: [], type: options.chart.type };
+         options.y_columns.forEach(function(series, i){
+             dataSet = {label: series, data: [], color: options.colors[i], type: options.chart.type, borderWidth: 2, backgroundColor: 'rgb(255, 99, 132)'};
+             if ((typeof options.attrs !== 'undefined') && (typeof options.attrs[series] !== 'undefined')){
+               for(var attr in options.attrs[series]){dataSet[attr] = options.attrs[series][attr]}}
+             else if(typeof options.commons !== 'undefined'){
+               for(var attr in options.commons){dataSet[attr] = options.commons[attr]}}
+               labels.forEach(function(x){
+                 if (typeof temp[series][x] === "undefined"){dataSet.data.push(null)} 
+                 else {dataSet.data.push({x: x, r: 100, y: temp[series][x]})}}); 
+           result.series.push(dataSet)})
+       }; return result;
+       '''
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+
+    :rtype: OptChartApex.OptionFill
     """
     return super().options

@@ -1,11 +1,9 @@
 
-from epyk.core.data.DataClass import DataClass
-
+from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
 
 
-class ZoomRange(DataClass):
+class ZoomRange(Options):
 
   @property
   def x(self):
@@ -17,11 +15,11 @@ class ZoomRange(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["x"]
+    return self._config_get(None)
 
   @x.setter
   def x(self, num):
-    self._attrs["x"] = num
+    self._config(num)
 
   @property
   def y(self):
@@ -33,14 +31,14 @@ class ZoomRange(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["y"]
+    return self._config_get(None)
 
   @y.setter
   def y(self, num):
-    self._attrs["y"] = num
+    self._config(num)
 
 
-class ZoomAttrs(DataClass):
+class ZoomAttrs(Options):
 
   @property
   def enabled(self):
@@ -52,11 +50,11 @@ class ZoomAttrs(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["enabled"]
+    return self._config_get()
 
   @enabled.setter
   def enabled(self, flag):
-    self._attrs["enabled"] = flag
+    self._config(flag)
 
   @property
   def mode(self):
@@ -68,19 +66,31 @@ class ZoomAttrs(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["mode"]
+    return self._config_get()
 
   @mode.setter
   def mode(self, value):
-    self._attrs["mode"] = value
+    self._config(value)
 
   @property
   def rangeMin(self):
-    return self.sub_data("rangeMin", ZoomRange)
+    """
+    Description:
+    -----------
+
+    :rtype: ZoomRange
+    """
+    return self._config_sub_data("rangeMin", ZoomRange)
 
   @property
   def rangeMax(self):
-    return self.sub_data("rangeMax", ZoomRange)
+    """
+    Description:
+    -----------
+
+    :rtype: ZoomRange
+    """
+    return self._config_sub_data("rangeMax", ZoomRange)
 
   @property
   def speed(self):
@@ -92,11 +102,11 @@ class ZoomAttrs(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["speed"]
+    return self._config_get()
 
   @speed.setter
   def speed(self, num):
-    self._attrs["speed"] = num
+    self._config(num)
 
   @property
   def threshold(self):
@@ -108,11 +118,11 @@ class ZoomAttrs(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["threshold"]
+    return self._config_get()
 
   @threshold.setter
   def threshold(self, num):
-    self._attrs["threshold"] = num
+    self._config(num)
 
 
 class ZoomPan(ZoomAttrs):
@@ -121,7 +131,7 @@ class ZoomPan(ZoomAttrs):
     """
     Description:
     -----------
-    Function called while the user is zooming
+    Function called while the user is zooming.
 
     Attributes:
     ----------
@@ -130,14 +140,13 @@ class ZoomPan(ZoomAttrs):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onPan"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onPanComplete(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Function called while the user is zooming
+    Function called while the user is zooming.
 
     Attributes:
     ----------
@@ -146,8 +155,7 @@ class ZoomPan(ZoomAttrs):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onPanComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class ZoomZoom(ZoomAttrs):
@@ -157,26 +165,29 @@ class ZoomZoom(ZoomAttrs):
     """
     Description:
     -----------
-    Enable drag-to-zoom behavior
+    Enable drag-to-zoom behavior.
     """
-    return self._attrs["drag"]
+    return self._config_get()
 
   @drag.setter
   def drag(self, flag):
-    self._attrs["drag"] = flag
+    self._config(flag)
 
   @property
   def sensitivity(self):
     """
+    Description:
+    -----------
+
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
     """
-    return self._attrs["sensitivity"]
+    return self._config_get()
 
   @sensitivity.setter
   def sensitivity(self, num):
-    self._attrs["sensitivity"] = num
+    self._config(num)
 
   def onZoom(self, js_funcs, profile=None):
     """
@@ -191,8 +202,7 @@ class ZoomZoom(ZoomAttrs):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onZoom"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onZoomComplete(self, js_funcs, profile=None):
     """
@@ -207,11 +217,10 @@ class ZoomZoom(ZoomAttrs):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onZoomComplete"] = JsObjects.JsVoid("function(data) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
-class Zoom(DataClass):
+class Zoom(Options):
 
   def set_default(self, mode="xy"):
     """
@@ -234,9 +243,21 @@ class Zoom(DataClass):
 
   @property
   def pan(self):
-    return self.sub_data("pan", ZoomPan)
+    """
+    Description:
+    -----------
+
+    :rtype: ZoomPan
+    """
+    return self._config_sub_data("pan", ZoomPan)
 
   @property
   def zoom(self):
-    return self.sub_data("zoom", ZoomZoom)
+    """
+    Description:
+    -----------
+
+    :rtype: ZoomZoom
+    """
+    return self._config_sub_data("zoom", ZoomZoom)
 

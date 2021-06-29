@@ -9,8 +9,8 @@ from epyk.core.js.packages import JsChartJs
 class Choropleth(GraphChartJs.Chart):
   name = 'ChartJs Choropleth'
   requirements = ('chartjs-chart-geo', )
-  #geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
-  geo_map = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
+  geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
+  #geo_map = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
   _option_cls = OptChartJs.OptionsGeo
   _chart__type = "choropleth"
 
@@ -42,7 +42,9 @@ class Choropleth(GraphChartJs.Chart):
                     chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
               })
-              delete chartContext.options.type;
+              if(typeof window.%(chartId)s !== 'undefined'){
+                %(chartId)s.destroy()
+              };
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
         )''' % {
@@ -85,7 +87,10 @@ class ChoroplethUs(Choropleth):
                   if (g.properties.name in chartData){ 
                     chartContext.data.datasets[0].data.push({value: chartData[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
-              })
+              });
+              if(typeof window.%(chartId)s !== 'undefined'){
+                %(chartId)s.destroy()
+              };
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
           })}
         )''' % {
@@ -151,7 +156,10 @@ class ChoroplethCountry(Choropleth):
               geoData.features.forEach(function(g){
                   chartContext.data.labels.push(g.properties.name);
                   chartContext.data.datasets[0].data.push({value: Math.random()*100, feature: g});
-              })
+              });
+              if(typeof window.%(chartId)s !== 'undefined'){
+                %(chartId)s.destroy()
+              };
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
               %(chartId)s.scale.projection.center([78.9629, 23.5937]).scale(1000);
           })}

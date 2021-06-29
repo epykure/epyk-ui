@@ -1105,7 +1105,8 @@ class JsBase:
     if jsData is not None:
       for k, v in jsData.items():
         url_params.append('"%s=" + %s' % (k, JsUtils.jsConvertData(v, None)))
-    url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
+    if url_params:
+      url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url, asynchronous=asynchronous)
     request.send({}, stringify=is_json)
     if is_json:

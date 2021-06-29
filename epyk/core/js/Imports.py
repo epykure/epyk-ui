@@ -1156,7 +1156,7 @@ JS_IMPORTS = {
     ]
   },
 
-  # JS VEGA Embded
+  # JS VEGA Embed
   'vega-embed': {
     'req': [
       {"alias": "vega-lite"}
@@ -1173,7 +1173,7 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard.js': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'req_js': [
+    'req': [
       {'alias': 'd3-axis'},
       {'alias': 'd3-color'},
       {'alias': 'd3-ease'},
@@ -1188,7 +1188,7 @@ JS_IMPORTS = {
       {'alias': 'd3-interpolate'},
       {'alias': 'd3-zoom'},
     ],
-    'version': '3.0.3',
+    'version': '3.1.1',
     'register': {'variable': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
     'modules': [
       {'script': 'billboard.min.js', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -1297,12 +1297,12 @@ JS_IMPORTS = {
 
   # ChartJs addon to add some Geo charts
   'chartjs-chart-geo': {
-      'version': '2.1.0',
+      'version': '3.1.0',
       'website': 'https://github.com/sgratzl/chartjs-chart-geo',
       'req': [{'alias': 'chart.js'}],
       'modules': [
-        {'script': 'Chart.Geo.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/',
-         'cdnjs': 'https://cdn.jsdelivr.net/npm'}
+        {'script': 'index.umd.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/',
+         'cdnjs': JSDELIVER}
       ]},
 
   # For ChartJs Zoom to get the gesture details.

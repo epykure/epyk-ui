@@ -1,11 +1,9 @@
 
-from epyk.core.data.DataClass import DataClass
-
+from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
 
 
-class Line(DataClass):
+class Line(Options):
 
   @property
   def color(self):
@@ -17,11 +15,11 @@ class Line(DataClass):
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get('#F66')
+    return self._config_get('#F66')
 
   @color.setter
-  def color(self, color):
-    self.set(color)
+  def color(self, c):
+    self._config(c)
 
   @property
   def width(self):
@@ -33,14 +31,14 @@ class Line(DataClass):
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get(1)
+    return self._config_get(1)
 
   @width.setter
   def width(self, num):
-    self.set(num)
+    self._config(num)
 
 
-class Sync(DataClass):
+class Sync(Options):
 
   @property
   def enabled(self):
@@ -53,99 +51,99 @@ class Sync(DataClass):
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @enabled.setter
   def enabled(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   @property
   def group(self):
     """
     Description:
     -----------
-    Limit crosshair syncing to charts belonging to the same 'group'
+    Limit crosshair syncing to charts belonging to the same 'group'.
 
     Related Pages:
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get(1)
+    return self._config_get(1)
 
   @group.setter
   def group(self, num):
-    self.set(num)
+    self._config(num)
 
   @property
   def suppressTooltips(self):
     """
     Description:
     -----------
-    Allows for suppressing tooltips when showing a synced crosshair
+    Allows for suppressing tooltips when showing a synced crosshair.
 
     Related Pages:
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @suppressTooltips.setter
   def suppressTooltips(self, flag):
-    self.set(flag)
+    self._config(flag)
 
 
-class Zoom(DataClass):
+class Zoom(Options):
 
   @property
   def enabled(self):
     """
     Description:
     -----------
-    Enable or disable zooming by drag and drop
+    Enable or disable zooming by drag and drop.
 
     Related Pages:
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @enabled.setter
   def enabled(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   @property
   def zoomboxBackgroundColor(self):
     """
     Description:
     -----------
-    Background color of the zoombox
+    Background color of the zoombox.
 
     Related Pages:
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get('rgba(66,133,244,0.2)')
+    return self._config_get('rgba(66,133,244,0.2)')
 
   @zoomboxBackgroundColor.setter
   def zoomboxBackgroundColor(self, color):
-    self.set(color)
+    self._config(color)
 
   @property
   def zoomboxBorderColor(self):
     """
     Description:
     -----------
-    Border color of the zoombox
+    Border color of the zoombox.
 
     Related Pages:
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get('#48F')
+    return self._config_get('#48F')
 
   @zoomboxBorderColor.setter
   def zoomboxBorderColor(self, color):
-    self.set(color)
+    self._config(color)
 
   @property
   def zoomButtonText(self):
@@ -158,11 +156,11 @@ class Zoom(DataClass):
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get('Reset Zoom')
+    return self._config_get('Reset Zoom')
 
   @zoomButtonText.setter
   def zoomButtonText(self, text):
-    self.set(text)
+    self._config(text)
 
   @property
   def zoomButtonClass(self):
@@ -175,14 +173,14 @@ class Zoom(DataClass):
 
       https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
-    return self.get('reset-zoom')
+    return self._config_get('reset-zoom')
 
   @zoomButtonClass.setter
   def zoomButtonClass(self, text):
-    self.set(text)
+    self._config(text)
 
 
-class Crosshair(DataClass):
+class Crosshair(Options):
 
   @property
   def line(self):
@@ -193,21 +191,25 @@ class Crosshair(DataClass):
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
+
+    :rtype: Line
     """
-    return self.sub_data("line", Line)
+    return self._config_sub_data("line", Line)
 
   @property
   def sync(self):
     """
     Description:
     -----------
-    The plugin allows for syncing crosshairs over multiple charts
+    The plugin allows for syncing crosshairs over multiple charts.
 
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
+
+    :rtype: Sync
     """
-    return self.sub_data("sync", Sync)
+    return self._config_sub_data("sync", Sync)
 
   @property
   def zoom(self):
@@ -219,25 +221,27 @@ class Crosshair(DataClass):
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
+
+    :rtype: Zoom
     """
-    return self.sub_data("zoom", Zoom)
+    return self._config_sub_data("zoom", Zoom)
 
   @property
   def snapToDataPoint(self):
     """
     Description:
     -----------
-    The plugin allows snapping to datapoints when used with line charts
+    The plugin allows snapping to datapoints when used with line charts.
 
     Related Pages:
 
       https://canvasjs.com/docs/charts/chart-options/axisx/crosshair/snap-to-datapoint/
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @snapToDataPoint.setter
   def snapToDataPoint(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   def beforeZoom(self, js_funcs, profile=None):
     """
@@ -256,8 +260,8 @@ class Crosshair(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["beforeZoom"] = JsObjects.JsVoid("function(start, end) {%s}" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config(
+      "function(start, end){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def afterZoom(self, js_funcs, profile=None):
     """
@@ -276,6 +280,7 @@ class Crosshair(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["afterZoom"] = JsObjects.JsVoid("function(start, end) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config(
+      "function(start, end){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+
 

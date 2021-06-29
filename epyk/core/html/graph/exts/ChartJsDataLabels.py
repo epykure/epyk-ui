@@ -1,11 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass, DataEnum
-
-from epyk.core.js.primitives import JsObjects
+from epyk.core.html.options import Options, Enums
 
 
-class EnumDisplays(DataEnum):
-  js_conversion = True
+class EnumDisplays(Enums):
 
   def withoutZeros(self):
     """
@@ -17,7 +14,7 @@ class EnumDisplays(DataEnum):
     -----
 
     """
-    return self.set(JsObjects.JsVoid("function(context) {return context.dataset.data[context.dataIndex] !== 0}"))
+    return self._set_value("function(context){return context.dataset.data[context.dataIndex] !== 0}", js_type=True)
 
   def aboveThreshold(self, value, included=True, absolute=False):
     """
@@ -39,9 +36,9 @@ class EnumDisplays(DataEnum):
     else:
       expr = "context.dataset.data[context.dataIndex]"
     if included:
-      return self.set(JsObjects.JsVoid("function(context) {return %s >= %s}" % (expr, value)))
+      return self._set_value("function(context) {return %s >= %s}" % (expr, value), js_type=True)
 
-    return self.set(JsObjects.JsVoid("function(context) {return %s > %s}" % (expr, value)))
+    return self._set_value("function(context) {return %s > %s}" % (expr, value), js_type=True)
 
   def belowThreshold(self, value, included=True, absolute=False):
     """
@@ -63,14 +60,12 @@ class EnumDisplays(DataEnum):
     else:
       expr = "context.dataset.data[context.dataIndex]"
     if included:
-      return self.set(JsObjects.JsVoid("function(context) {return %s <= %s}" % (expr, value)))
+      return self._set_value("function(context){return %s <= %s}" % (expr, value), js_type=True)
 
-    return self.set(JsObjects.JsVoid("function(context) {return %s < %s}" % (expr, value)))
+    return self._set_value("function(context){return %s < %s}" % (expr, value), js_type=True)
 
 
-class EnumFormatters(DataEnum):
-
-  js_conversion = True
+class EnumFormatters(Enums):
 
   def details(self, digit=0, thousand_sep="."):
     """
@@ -86,7 +81,9 @@ class EnumFormatters(DataEnum):
     :param digit: Integer. Optional. The number of digits.
     :param thousand_sep: String. Optional. The separator for the thousand.
     """
-    return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (digit, thousand_sep)))
+    return self._set_value(
+      "function(value, context){return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (
+        digit, thousand_sep), js_type=True)
 
   def label(self):
     """
@@ -97,10 +94,10 @@ class EnumFormatters(DataEnum):
     -----
 
     """
-    return self.set(JsObjects.JsVoid("function(value, context) {return context.dataset.label}"))
+    return self._set_value("function(value, context) {return context.dataset.label}", js_type=True)
 
 
-class Datalabels(DataClass):
+class Datalabels(Options):
   component_properties = ("color", )
 
   @property
@@ -110,18 +107,15 @@ class Datalabels(DataClass):
     -----------
     The align option defines the position of the label relative to the anchor point position and orientation.
 
-    Usage:
-    -----
-
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
     """
-    return self.get("center")
+    return self._config_get("center")
 
   @align.setter
   def align(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def backgroundColor(self):
@@ -134,11 +128,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @backgroundColor.setter
   def backgroundColor(self, color):
-    self.set(color)
+    self._config(color)
 
   @property
   def borderColor(self):
@@ -151,11 +145,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @borderColor.setter
   def borderColor(self, color):
-    self.set(color)
+    self._config(color)
 
   @property
   def borderRadius(self):
@@ -168,11 +162,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @borderRadius.setter
   def borderRadius(self, num):
-    self.set(num)
+    self._config(num)
 
   @property
   def borderWidth(self):
@@ -185,28 +179,29 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @borderWidth.setter
   def borderWidth(self, num):
-    self.set(num)
+    self._config(num)
 
   @property
   def clamp(self):
     """
     Description:
     -----------
-    The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the associated element.
+    The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the
+    associated element.
 
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#clamping
     """
-    return self.get(False)
+    return self._config_get(False)
 
   @clamp.setter
   def clamp(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   @property
   def clip(self):
@@ -219,11 +214,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#overlap
     """
-    return self.get(False)
+    return self._config_get(False)
 
   @clip.setter
   def clip(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   @property
   def display(self):
@@ -235,11 +230,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#rotation
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @display.setter
-  def display(self, bool):
-    self.set(bool)
+  def display(self, flag):
+    self._config(flag)
 
   @property
   def anchor(self):
@@ -252,11 +247,11 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
     """
-    return self.get("center")
+    return self._config_get("center")
 
   @anchor.setter
   def anchor(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def color(self):
@@ -269,15 +264,19 @@ class Datalabels(DataClass):
 
       https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
     """
-    return self.get('#F66')
+    return self._config_get('#F66')
 
   @color.setter
-  def color(self, color):
-    self.set(color)
+  def color(self, c):
+    self._config(c)
 
   @property
   def displays(self):
-    return self.sub_data("display", EnumDisplays)
+    """
+
+    :rtype: EnumDisplays
+    """
+    return EnumDisplays(self, "display")
 
   @property
   def formatters(self):
@@ -289,8 +288,10 @@ class Datalabels(DataClass):
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#data-transformation
+
+    :rtype: EnumFormatters
     """
-    return self.sub_data("formatter", EnumFormatters)
+    return EnumFormatters(self, "formatter")
 
   @property
   def formatter(self):
@@ -314,7 +315,8 @@ class Datalabels(DataClass):
     """
     Description:
     -----------
-    This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the label center.
+    This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the
+    label center.
 
     Related Pages:
 
@@ -331,7 +333,8 @@ class Datalabels(DataClass):
     """
     Description:
     -----------
-    The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing the label text.
+    The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing
+    the label text.
 
     Related Pages:
 

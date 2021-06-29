@@ -102,7 +102,8 @@ class DC:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     if isinstance(y_columns, list):
-      line_chart = self.series(record, y_columns, x_axis, 'line', title, profile, options, width, height, html_code)
+      line_chart = self.series(
+        record or [], y_columns, x_axis, 'line', title, profile, options, width, height, html_code)
     else:
       line_chart = GraphDC.ChartLine(self.page, width, height, title, options or {}, html_code, profile)
       line_chart.dom.height(height[0]).x().yAxisLabel(y_columns).renderArea(True)
@@ -133,6 +134,7 @@ class DC:
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param series_type:
     :param title: String. Optional. The chart title.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.

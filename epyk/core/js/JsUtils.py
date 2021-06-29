@@ -59,7 +59,7 @@ def fromVersion(data):
       for k, v in data.items():
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
-            if mod['version'] < v:
+            if mod.get('version', Imports.JS_IMPORTS[k]['version']) < v:
               raise Exception("Function %s can only be used from %s version %s (current %s)" % (
                 func.__name__, k, v, mod['version']))
 
@@ -97,7 +97,7 @@ def untilVersion(data, newFeature):
       for k, v in data.items():
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
-            if mod['version'] > v:
+            if mod.get('version', Imports.JS_IMPORTS[k]['version']) > v:
               raise Exception("Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (func.__name__, k, v, mod['version'], newFeature))
 
       return func(*args, **kwargs)

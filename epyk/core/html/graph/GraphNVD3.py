@@ -19,6 +19,8 @@ class Chart(Html.Html):
     super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._d3, self.html_items, self._datasets, self._labels = None, [], [], None
+    self.style.css.margin_left = 10
+    self.style.css.margin_right = 10
 
   @property
   def shared(self):
@@ -195,6 +197,7 @@ class Chart(Html.Html):
         bg_colors.append(h[0])
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
+    self.dom.color(line_colors)
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
 
@@ -233,6 +236,8 @@ class Chart(Html.Html):
                                   "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
   def __str__(self):
+    self.style.css.width = "calc(100%% - %spx)" % (
+      int(self.style.css.margin_left[:-2]) + int(self.style.css.margin_right[:-2]))
     self.page.properties.js.add_builders(self.build())
     str_items = "".join([h.html() for h in self.html_items])
     return '%s<svg %s></svg>' % (str_items, self.get_attrs(pyClassNames=self.style.get_classes()))
@@ -261,14 +266,14 @@ class ChartLine(Chart):
           result.push( {key: data.series[i], values: rec, labels: data.labels} )})
       } else {
         var temp = {}; var labels = []; var uniqLabels = {};
-        options.y_columns.forEach(function(series){temp[series] = {}}) ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 
           options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
+            if(typeof rec[name] !== undefined){
               if (!(rec[options.x_axis] in uniqLabels)){
                 labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
               temp[name][rec[options.x_axis]] = rec[name]}})
-        }); result = []; 
+        }); result = [];
         options.y_columns.forEach(function(series){
           dataSet = {key: series, values: [], labels: labels};
           labels.forEach(function(x, i){
@@ -393,6 +398,7 @@ class ChartBar(Chart):
         bg_colors.append(h[0])
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
+    self.dom.color(line_colors)
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
 
@@ -712,7 +718,7 @@ class ChartSunbrust(Chart):
     Attributes:
     ----------
     :param data:
-    :param name:
+    :param name: String. Optional.
     """
     for i, rec in enumerate(data):
       rec['color'] = self._report.theme.colors[i+1]

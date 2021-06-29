@@ -380,9 +380,6 @@ class Options(DataClass):
     The returned dictionary is a copy so it can be changed or used in other processes.
     To change the internal component property, the options property should be used.
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param attrs: Dictionary. Optional. The extra or overridden options.
@@ -400,14 +397,17 @@ class Options(DataClass):
           js_attrs.append("%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
         else:
           if k in attrs:
-            v = attrs[k]
+            if hasattr(attrs[k], "toStr"):
+              v = attrs[k].toStr()
+              self.js_type[k] = True
+            else:
+              v = attrs[k]
           if k in self.js_type or hasattr(v, 'toStr'):
             js_attrs.append("%s: %s" % (k, v))
           else:
             js_attrs.append("%s: %s" % (k, json.dumps(v)))
       return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
-    #
     tmp_tree = dict(self.js_tree)
     tmp_tree.update(attrs)
     for k, v in tmp_tree.items():
@@ -432,9 +432,6 @@ class Options(DataClass):
 
     The returned dictionary is a copy so it can be changed or used in other processes.
     To change the internal component property, the options property should be used.
-
-    Usage:
-    -----
     """
     html_attrs = {}
     for k, v in self._attrs.items():
@@ -462,10 +459,10 @@ class Enums:
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the attributes.
-    :param value: String. The value to be added to the attributes.
+    :param name: String. Optional. The key to be added to the attributes.
+    :param value: String. Optional. The value to be added to the attributes.
     :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
     """
     self.__option._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
     if js_type:
-      self.__option.js_type[name or sys._getframe().f_back.f_code.co_name] = True
+      self.__option.js_type[name or self.__name] = True

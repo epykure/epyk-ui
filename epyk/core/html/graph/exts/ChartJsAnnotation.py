@@ -1,28 +1,26 @@
 
-from epyk.core.data.DataClass import DataClass
-
+from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
 
 
-class Annotations(DataClass):
+class Annotations(Options):
 
   @property
   def drawTime(self):
     """
     Description:
     -----------
-    Overrides annotation.drawTime if set
+    Overrides annotation.drawTime if set.
 
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('afterDraw')
+    return self._config_get('afterDraw')
 
   @drawTime.setter
   def drawTime(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def type(self):
@@ -34,11 +32,11 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('line')
+    return self._config_get('line')
 
   @type.setter
   def type(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def mode(self):
@@ -50,11 +48,11 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('horizontal')
+    return self._config_get('horizontal')
 
   @mode.setter
   def mode(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def scaleID(self):
@@ -66,11 +64,11 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('y-axis-0')
+    return self._config_get('y-axis-0')
 
   @scaleID.setter
   def scaleID(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def value(self):
@@ -82,11 +80,11 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('25')
+    return self._config_get('25')
 
   @value.setter
-  def value(self, value):
-    self.set(value)
+  def value(self, v):
+    self._config(v)
 
   @property
   def borderColor(self):
@@ -98,11 +96,11 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('red')
+    return self._config_get('red')
 
   @borderColor.setter
   def borderColor(self, color):
-    self.set(color)
+    self._config(color)
 
   @property
   def borderWidth(self):
@@ -114,18 +112,17 @@ class Annotations(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get(2)
+    return self._config_get(2)
 
   @borderWidth.setter
   def borderWidth(self, num):
-    self.set(num)
+    self._config(num)
 
   def onClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Fires when the user clicks this annotation on the chart
-    (be sure to enable the event in the events array below).
+    Fires when the user clicks this annotation on the chart (be sure to enable the event in the events array below).
     
     Related Pages:
 
@@ -138,11 +135,10 @@ class Annotations(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onClick"] = JsObjects.JsVoid(
-      "function(event) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    self._config("function(event){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
-class Annotation(DataClass):
+class Annotation(Options):
 
   @property
   def drawTime(self):
@@ -154,11 +150,11 @@ class Annotation(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get('afterDatasetsDraw')
+    return self._config_get('afterDatasetsDraw')
 
   @drawTime.setter
   def drawTime(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def events(self):
@@ -170,11 +166,11 @@ class Annotation(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get(['click'])
+    return self._config_get(['click'])
 
   @events.setter
   def events(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def dblClickSpeed(self):
@@ -186,11 +182,11 @@ class Annotation(DataClass):
 
       https://github.com/chartjs/chartjs-plugin-annotation
     """
-    return self.get(350)
+    return self._config_get(350)
 
   @dblClickSpeed.setter
   def dblClickSpeed(self, value):
-    self.set(value)
+    self._config(value)
 
   @property
   def annotations(self):
@@ -202,5 +198,7 @@ class Annotation(DataClass):
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
+
+    :rtype: Annotations
     """
-    return self.sub_data("annotations", Annotations)
+    return self._config_sub_data("annotations", Annotations)

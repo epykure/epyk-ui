@@ -1,11 +1,9 @@
 
-from epyk.core.data.DataClass import DataClass
-
+from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
 
 
-class DragOptions(DataClass):
+class DragOptions(Options):
 
   @property
   def showTooltip(self):
@@ -17,14 +15,14 @@ class DragOptions(DataClass):
 
       https://github.com/chrispahm/chartjs-plugin-dragdata
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @showTooltip.setter
   def showTooltip(self, flag):
-    self.set(flag)
+    self._config(flag)
 
 
-class DragData(DataClass):
+class DragData(Options):
 
   @property
   def dragX(self):
@@ -32,11 +30,11 @@ class DragData(DataClass):
     Description:
     -----------
     """
-    return self.get(False)
+    return self._config_get(False)
 
   @dragX.setter
   def dragX(self, flag):
-    self.set(flag)
+    self._config(flag)
 
   @property
   def dragDataRound(self):
@@ -44,25 +42,27 @@ class DragData(DataClass):
     Description:
     -----------
     """
-    return self.get(0)
+    return self._config_get(0)
 
   @dragDataRound.setter
   def dragDataRound(self, num):
-    self.set(num)
+    self._config(num)
 
   @property
   def dragOptions(self):
     """
     Description:
     -----------
+
+    :rtype: DragOptions
     """
-    return self.sub_data("dragOptions", DragOptions)
+    return self._config_sub_data("dragOptions", DragOptions)
 
   def onDragStart(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Called before zooming, return false to prevent the zoom
+    Called before zooming, return false to prevent the zoom.
 
     Related Pages:
 
@@ -75,14 +75,14 @@ class DragData(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onDragStart"] = JsObjects.JsVoid("function(event, element) { %s }" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config(
+      "function(event, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onDrag(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Change cursor style to grabbing during drag action
+    Change cursor style to grabbing during drag action.
 
     Related Pages:
 
@@ -95,14 +95,15 @@ class DragData(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onDrag"] = JsObjects.JsVoid("function(event, datasetIndex, index, value) {%s}" % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile))
+    self._config(
+      "function(event, datasetIndex, index, value){%s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onDragEnd(self, js_funcs, profile=None):
     """
     Description:
     -----------
-    Restore default cursor style upon drag release
+    Restore default cursor style upon drag release.
 
     Related Pages:
 
@@ -115,5 +116,6 @@ class DragData(DataClass):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._attrs["onDragEnd"] = JsObjects.JsVoid(
-      "function(event, datasetIndex, index, value) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    self._config(
+      "function(event, datasetIndex, index, value){%s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), js_type=True)

@@ -3,6 +3,7 @@
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
+from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChartFrappe
 from epyk.core.js.packages import JsFrappe
 
@@ -110,6 +111,30 @@ class Frappe(Html.Html):
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
     return self.options.data.add_data(data, label, kind or "line")
 
+  _js__builder__ = '''
+    if(data.python){ 
+      result = {'columns': [], type: options.type};
+      result['columns'].push(['x'].concat(data.labels));
+      data.series.forEach(function(name, i){
+        result['columns'].push([name].concat(data.datasets[i]));
+      }); 
+    } else {
+      var temp = {}; var labels = []; var uniqLabels = {};
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if (!(rec[options.x_column] in uniqLabels)){
+              labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      result = {labels: labels, datasets: []};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {name: series, values: []};
+        labels.forEach(function(x){
+          if(temp[series][x] == undefined){dataSet.values.push(null)} 
+          else {dataSet.values.push(temp[series][x])}}); result.datasets.push(dataSet)});
+    }; return result'''
+
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
     Description:
@@ -124,7 +149,12 @@ class Frappe(Html.Html):
     :param component_id: String. Not used.
     """
     if data is not None:
-      return self.js.update(data)
+      js_convertor = "%s%s" % (self.name.replace(" ", ""), self.__class__.__name__)
+      self.page.properties.js.add_constructor(
+        js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
+      return '%(chartId)s.update(%(chartFnc)s(%(data)s, %(options)s))' % {
+        'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
+        "options": self.options.config_js(options)}
 
     return '''%(chartId)s = new frappe.Chart("#%(hmlCode)s", %(config)s)
     ''' % {"chartId": self.chartId, "chartType": self._chart__type, "hmlCode": component_id or self.htmlCode,

@@ -69,6 +69,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
@@ -112,6 +113,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Chart(self.page, width, height, html_code, dfl_options, profile)
@@ -157,6 +159,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Bar(self.page, width, height, html_code, dfl_options, profile)
@@ -200,6 +203,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Bar(self.page, width, height, html_code, dfl_options, profile)
@@ -244,6 +248,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Area(self.page, width, height, html_code, dfl_options, profile)
@@ -287,6 +292,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Chart(self.page, width, height, html_code, dfl_options, profile)
@@ -326,6 +332,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Pie(self.page, width, height, html_code, dfl_options, profile)
@@ -335,7 +342,7 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def pie(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
     """
     Description:
@@ -354,7 +361,7 @@ class ApexChart:
     Attributes:
     ----------
     :param record: List of dict. The Python list of dictionaries.
-    :param y_column: String. The columns corresponding to keys in the dictionaries in the record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. The width of the component in the page, default (100, '%').
@@ -365,9 +372,10 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
-    data = self.page.data.chartJs.y(record or [], [y_column], x_axis)
+    data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
     chart = graph.GraphApexCharts.Pie(self.page, width, height, html_code, dfl_options, profile)
     chart.colors(self.page.theme.charts)
     chart.options.chart.type = "pie"
@@ -408,6 +416,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
@@ -451,6 +460,7 @@ class ApexChart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"series": []}
+    dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
     chart = graph.GraphApexCharts.Pie(self.page, width, height, html_code, dfl_options, profile)
@@ -487,10 +497,10 @@ class ApexChart:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": []}
+    dfl_options = {"series": [], 'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}}
     if options is not None:
       dfl_options.update(options)
-    chart = graph.GraphApexCharts.Area(self.page, width, height, html_code, dfl_options, profile)
+    chart = graph.GraphApexCharts.Bubble(self.page, width, height, html_code, dfl_options, profile)
     chart.colors(self.page.theme.charts)
     chart.options.chart.type = "bubble"
     return chart
