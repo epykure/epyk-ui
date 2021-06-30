@@ -298,7 +298,7 @@ class Delta(Html.Html):
     self.css({"color": self.val['color']})
     self.options.label = records.get('label', '')
     self.style.css.position = "relative"
-    if self.helper is not None:
+    if self.helper is not None and self.helper:
       self.helper.style.css.position = "absolute"
       self.helper.style.css.bottom = 5
       self.helper.style.css.right = 0

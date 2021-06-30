@@ -1885,7 +1885,7 @@ class Body(Html):
     :param end_point: String. Optional. The url for the configuration files.
     :param sync: Boolean. Optional. Specify if the type of loading event.
     """
-    if self._report.json_config_file is None:
+    if self.page.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
     js_funcs = js_funcs or []
@@ -1905,8 +1905,9 @@ class Body(Html):
         rawFile.send(null)} 
       else {var data = window['page_config']; %(fncs)s}''' % {
       "sync": JsUtils.jsConvertData(not sync, None), "lang": JsUtils.jsConvertData(lang, None), 'url': end_point,
-      'json': self._report.json_config_file,
-      'fncs': JsUtils.jsConvertFncs(js_funcs + [c.build(self._report.js.objects.get("data['%s']" % c.htmlCode)) for c in components], toStr=True)}
+      'json': self.page.json_config_file,
+      'fncs': JsUtils.jsConvertFncs(js_funcs + [
+        c.build(self.page.js.objects.get("data['%s']" % c.htmlCode)) for c in components or []], toStr=True)}
 
   def set_content(self, page, page_content):
     """
