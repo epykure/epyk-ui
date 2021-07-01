@@ -384,6 +384,9 @@ class Vis:
     :param y_columns:
     :param x_axis:
     """
+    if not data:
+      return []
+
     agg_data = {}
     for rec in data:
       for y in y_columns:

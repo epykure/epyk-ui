@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class AutoFill(DataClass):
+class AutoFill(Options):
 
   def activate(self):
     self.columns = ":not(:first-child)"
@@ -19,11 +19,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.alwaysAsk
     """
-    return self._attrs["alwaysAsk"]
+    return self._config_get()
 
   @alwaysAsk.setter
   def alwaysAsk(self, val):
-    self._attrs["alwaysAsk"] = val
+    self._config(val)
 
   @property
   def columns(self):
@@ -36,11 +36,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.columns
     """
-    return self._attrs["alwaysAsk"]
+    return self._config_get()
 
   @columns.setter
   def columns(self, val):
-    self._attrs["columns"] = val
+    self._config(val)
 
   @property
   def enable(self):
@@ -53,11 +53,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.enable
     """
-    return self._attrs["enable"]
+    return self._config_get()
 
   @enable.setter
   def enable(self, val):
-    self._attrs["enable"] = val
+    self._config(val)
 
   @property
   def focus(self):
@@ -70,11 +70,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.focus
     """
-    return self._attrs["focus"]
+    return self._config_get()
 
   @focus.setter
   def focus(self, val):
-    self._attrs["focus"] = val
+    self._config(val)
 
   @property
   def horizontal(self):
@@ -87,11 +87,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.horizontal
     """
-    return self._attrs["horizontal"]
+    return self._config_get()
 
   @horizontal.setter
   def horizontal(self, val):
-    self._attrs["horizontal"] = val
+    self._config(val)
 
   @property
   def update(self):
@@ -104,11 +104,11 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.update
     """
-    return self._attrs["update"]
+    return self._config_get()
 
   @update.setter
   def update(self, val):
-    self._attrs["update"] = val
+    self._config(val)
 
   @property
   def vertical(self):
@@ -121,8 +121,8 @@ class AutoFill(DataClass):
 
       https://datatables.net/reference/option/autoFill.vertical
     """
-    return self._attrs["vertical"]
+    return self._config_get()
 
   @vertical.setter
   def vertical(self, val):
-    self._attrs["vertical"] = val
+    self._config(val)

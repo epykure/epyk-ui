@@ -31,6 +31,15 @@ class Tabulators:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
+    #self.page.jsImports.add('tabulator-numbers')
+    #self.page.jsImports.add('tabulator-icons')
+    #self.page.jsImports.add('tabulator-inputs')
+    #self.page.jsImports.add('tabulator-drop')
+    #self.page.jsImports.add('tabulator-mutators-inputs')
+    #self.page.jsImports.add('editors-inputs')
+    #self.page.jsImports.add('editors-dates')
+    #self.page.jsImports.add('editors-selects')
+
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:
@@ -44,8 +53,14 @@ class Tabulators:
     if not records or len(records) < table_options_dflts["paginationSize"]:
       del table_options_dflts["pagination"]
 
+    json = {}
+    if 'json' in table_options_dflts:
+      json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
+      del table_options_dflts["json"]
+
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
                                                  table_options_dflts, profile)
+    table._json_config = json
     table.options.layout.fitColumns()
     for c in cols + rows:
       table.add_column(c)

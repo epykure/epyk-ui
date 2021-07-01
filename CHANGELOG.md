@@ -6,6 +6,28 @@
 
 ### Fixed
 
+## [Unreleased]
+
+### Added
+- Add new entry for packages to the __init__
+- Improve Options with an Enums which can be extended thanks to _add_value.
+- new class variable for the Enums delimiter and js_conversion to always consider values as Js.
+- Create Options modules for Tables libraries.
+- Migration of the Tabulator and DataTable extension to the Options framework.
+- Add hot_imports to the js function to load JavaScript module from an event._
+
+[] Add filter options
+
+### Changed
+- ChartJs's options migrated to the standard framework,
+- Migration of ChartJs extensions to the Options framework
+- Improve modules documentation for options.
+- Change ChartJs function to align with ChartJs v3.
+
+### Fixed
+- Bug fix in data transformation from Charts.
+- Fix C3 and Billboards options.
+
 
 ## [1.5.22] - 2021-06-21
 

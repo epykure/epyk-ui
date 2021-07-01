@@ -1,9 +1,9 @@
 
-from epyk.core.data.DataClass import DataClass
-from epyk.core.data.DataClass import DataEnum
+from epyk.core.html.options import Options
+from epyk.core.html.options import Enums
 
 
-class EnumStyleOptions(DataEnum):
+class EnumStyleOptions(Enums):
 
   def api(self):
     """
@@ -15,7 +15,7 @@ class EnumStyleOptions(DataEnum):
 
       https://datatables.net/reference/option/select.style
     """
-    return self.set()
+    return self._set_value()
 
   def single(self):
     """
@@ -27,7 +27,7 @@ class EnumStyleOptions(DataEnum):
 
       https://datatables.net/reference/option/select.style
     """
-    return self.set()
+    return self._set_value()
 
   def multi(self):
     """
@@ -39,7 +39,7 @@ class EnumStyleOptions(DataEnum):
 
       https://datatables.net/reference/option/select.style
     """
-    return self.set()
+    return self._set_value()
 
   def os(self):
     """
@@ -51,7 +51,7 @@ class EnumStyleOptions(DataEnum):
 
       https://datatables.net/reference/option/select.style
     """
-    return self.set()
+    return self._set_value()
 
   def multi_shift(self):
     """
@@ -63,16 +63,20 @@ class EnumStyleOptions(DataEnum):
 
       https://datatables.net/reference/option/select.style
     """
-    return self.set("multi+shift")
+    return self._set_value(value="multi+shift")
 
 
-class Select(DataClass):
+class Select(Options):
 
   def activate(self):
     """
-    Enable and configure the Scroller extension for DataTables
+    Description:
+    -----------
+    Enable and configure the Scroller extension for DataTables.
 
-    https://datatables.net/reference/option/scroller
+    Related Pages:
+
+      https://datatables.net/reference/option/scroller
     """
     self.info = False
     self.items = 'row'
@@ -81,15 +85,19 @@ class Select(DataClass):
   @property
   def info(self):
     """
+    Description:
+    -----------
     Enable / disable the display for item selection information in the table summary
 
-    https://datatables.net/reference/option/select.info
+    Related Pages:
+
+      https://datatables.net/reference/option/select.info
     """
-    return self._attrs["info"]
+    return self._config_get()
 
   @info.setter
   def info(self, val):
-    self._attrs["info"] = val
+    self._config(val)
 
   @property
   def blurable(self):
@@ -102,11 +110,11 @@ class Select(DataClass):
 
       https://datatables.net/reference/option/select.blurable
     """
-    return self._attrs["blurable"]
+    return self._config_get()
 
   @blurable.setter
   def blurable(self, val):
-    self._attrs["blurable"] = val
+    self._config(val)
 
   @property
   def items(self):
@@ -119,11 +127,11 @@ class Select(DataClass):
 
       https://datatables.net/reference/option/select.items
     """
-    return self._attrs["items"]
+    return self._config_get()
 
   @items.setter
   def items(self, val):
-    self._attrs["items"] = val
+    self._config(val)
 
   @property
   def style(self):
@@ -136,11 +144,11 @@ class Select(DataClass):
 
       https://datatables.net/reference/option/select.style
     """
-    return self._attrs["style"]
+    return self._config_get()
 
   @style.setter
   def style(self, val):
-    self._attrs["style"] = val
+    self._config(val)
 
   @property
   def toggleable(self):
@@ -153,8 +161,8 @@ class Select(DataClass):
 
       https://datatables.net/reference/option/select.toggleable
     """
-    return self._attrs["toggleable"]
+    return self._config_get()
 
   @toggleable.setter
   def toggleable(self, val):
-    self._attrs["toggleable"] = val
+    self._config(val)

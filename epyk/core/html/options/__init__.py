@@ -21,6 +21,7 @@ class Options(DataClass):
   def __init__(self, report, attrs=None, options=None, js_tree=None):
     super(Options, self).__init__(report, attrs, options)
     self.js_type, self.__config_sub_levels, self.__config_sub__enum_levels = {}, set(), set()
+    self.value_enums = {}
     # By default it is the component dictionary
     self.js_tree = self._report._jsStyles if js_tree is None else js_tree
     self.js = None
@@ -134,7 +135,7 @@ class Options(DataClass):
     :param clsObj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__config_sub__enum_levels.add(name)
-    enum_data = clsObj(self._report, js_tree={})
+    enum_data = clsObj(self.component, js_tree={})
     self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 
@@ -391,6 +392,8 @@ class Options(DataClass):
         if k not in tmp_tree:
           tmp_tree[k] = v
       for k, v in tmp_tree.items():
+        if k in self.value_enums:
+          v = self.value_enums[k].join(v)
         if k in self.__config_sub_levels:
           js_attrs.append("%s: %s" % (k, v.config_js(attrs=attrs.get(k, {})).toStr()))
         elif k in self.__config_sub__enum_levels:
@@ -403,9 +406,19 @@ class Options(DataClass):
             else:
               v = attrs[k]
           if k in self.js_type or hasattr(v, 'toStr'):
-            js_attrs.append("%s: %s" % (k, v))
+            # Improve this when all options are moved to the js_type model
+            if v is None:
+              js_attrs.append("%s: %s" % (k, json.dumps(v)))
+            else:
+              js_attrs.append("%s: %s" % (k, v))
           else:
-            js_attrs.append("%s: %s" % (k, json.dumps(v)))
+            if isinstance(v, dict):
+              v_items = []
+              for k1, v1 in v.items():
+                v_items.append("%s: %s" % (k1, JsUtils.jsConvertData(v1, None)))
+              js_attrs.append("%s: {%s}" % (k, ", ".join(v_items)))
+            else:
+              js_attrs.append("%s: %s" % (k, json.dumps(v)))
       return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
     tmp_tree = dict(self.js_tree)
@@ -444,13 +457,34 @@ class Options(DataClass):
 
 
 class Enums:
+  delimiter = None
+  js_conversion = False
 
   def __init__(self, options, name):
     self.__option = options
-    self._report = options._report
+    self.component = options.component
+    self._report = self.component
     self.__name = name
 
-  def _set_value(self, name=None, value=None, js_type=False):
+  @property
+  def key(self):
+    """
+    Description:
+    ------------
+    Returns the predefined enumeration key which will be added with this object.
+    """
+    return self.__name
+
+  @property
+  def item(self):
+    """
+    Description:
+    ------------
+    Return the option object on which the key, value will be added.
+    """
+    return self.__option
+
+  def _set_value(self, name=None, value=None, js_type=None):
     """
     Description:
     ------------
@@ -463,6 +497,34 @@ class Enums:
     :param value: String. Optional. The value to be added to the attributes.
     :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
     """
-    self.__option._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
-    if js_type:
+    self.item._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
+    if js_type is not None:
+      if js_type:
+        self.__option.js_type[name or self.__name] = True
+    elif self.js_conversion:
       self.__option.js_type[name or self.__name] = True
+    return self
+
+  def _add_value(self, name=None, value=None, js_type=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name: String. Optional. The key to be added to the attributes.
+    :param value: String. Optional. The value to be added to the attributes.
+    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    """
+    key = name or sys._getframe().f_back.f_code.co_name
+    if key not in self.__option.js_tree:
+      self.__option.js_tree[key] = []
+
+    if js_type is None:
+      js_type = self.js_conversion
+    if js_type:
+      self.__option.js_tree[key].append(value)
+    else:
+      self.__option.js_tree[key].append(JsUtils.jsConvertData(value, None))
+    self.__option.value_enums[key] = self.delimiter
+    return self

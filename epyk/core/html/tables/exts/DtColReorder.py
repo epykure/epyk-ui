@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class ColReorder(DataClass):
+class ColReorder(Options):
 
   def activate(self):
     """
@@ -28,11 +28,11 @@ class ColReorder(DataClass):
 
       https://datatables.net/reference/option/colReorder.enable
     """
-    return self._attrs["enable"]
+    return self._config_get()
 
   @enable.setter
   def enable(self, val):
-    self._attrs["enable"] = val
+    self._config(val)
 
   @property
   def fixedColumnsLeft(self):
@@ -45,11 +45,11 @@ class ColReorder(DataClass):
 
       https://datatables.net/reference/option/colReorder.fixedColumnsLeft
     """
-    return self._attrs["fixedColumnsLeft"]
+    return self._config_get()
 
   @fixedColumnsLeft.setter
   def fixedColumnsLeft(self, val):
-    self._attrs["fixedColumnsLeft"] = val
+    self._config(val)
 
   @property
   def fixedColumnsRight(self):
@@ -62,11 +62,11 @@ class ColReorder(DataClass):
 
       https://datatables.net/reference/option/colReorder.fixedColumnsRight
     """
-    return self._attrs["fixedColumnsRight"]
+    return self._config_get()
 
   @fixedColumnsRight.setter
   def fixedColumnsRight(self, val):
-    self._attrs["fixedColumnsRight"] = val
+    self._config(val)
 
   @property
   def order(self):
@@ -79,18 +79,18 @@ class ColReorder(DataClass):
 
       https://datatables.net/reference/option/colReorder.order
     """
-    return self._attrs["order"]
+    return self._config_get()
 
   @order.setter
   def order(self, val):
-    self._attrs["order"] = val
+    self._config(val)
 
   @property
   def realtime(self):
     """
     """
-    return self._attrs["realtime"]
+    return self._config_get()
 
   @realtime.setter
   def realtime(self, val):
-    self._attrs["realtime"] = val
+    self._config(val)

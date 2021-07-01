@@ -1,9 +1,9 @@
 
 from epyk.core.js.packages import packageImport
-from epyk.core.data.DataClass import DataGroup
+from epyk.core.html.options import Enums
 
 
-class ExtsMutators(DataGroup):
+class ExtsMutators(Enums):
 
   @packageImport('tabulator-mutators-inputs')
   def number(self, green=None, red=None, threshold=0, cssMapping=None, **kwargs):
@@ -11,21 +11,25 @@ class ExtsMutators(DataGroup):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param green:
     :param red:
-    :param css:
+    :param threshold:
+    :param cssMapping:
     :param kwargs:
     """
-    self._attrs["mutator"] = 'formatNumbers'
+    self._set_value(value="formatNumbers")
     if cssMapping is None:
-      self._attrs["mutatorParams"] = {True: {}, False: {}}
+      mutatorParams = {True: {}, False: {}}
     else:
-      self._attrs["mutatorParams"] = cssMapping
-    self._attrs["mutatorParams"]['threshold'] = threshold
-    self._attrs["mutatorParams"][False]['color'] = red or self._report._report.theme.danger[0]
-    self._attrs["mutatorParams"][True]['color'] = green or self._report._report.theme.success[0]
+      mutatorParams = cssMapping
+    mutatorParams['threshold'] = threshold
+    mutatorParams[False]['color'] = red or self.component.page.theme.danger[0]
+    mutatorParams[True]['color'] = green or self.component.page.theme.success[0]
     if kwargs:
-      self._attrs["mutatorParams"].update(kwargs)
+      mutatorParams.update(kwargs)
+    self._set_value(value=mutatorParams, name="mutatorParams")
     return self
 
   @packageImport('tabulator-mutators-inputs')
@@ -34,15 +38,16 @@ class ExtsMutators(DataGroup):
     Description:
     -----------
 
-    :param green:
-    :param red:
-    :param css:
+    Attributes:
+    ----------
+    :param cssMapping:
     :param kwargs:
     """
-    self._attrs["mutator"] = 'formatStrings'
-    self._attrs["mutatorParams"] = {'cssMapping': cssMapping}
+    self._set_value(value="formatStrings")
+    mutatorParams = {'cssMapping': cssMapping}
     if kwargs:
-      self._attrs["mutatorParams"].update(kwargs)
+      mutatorParams.update(kwargs)
+    self._set_value(value=mutatorParams, name="mutatorParams")
     return self
 
   def custom(self, mutator, mutatorParams, moduleAlias):
@@ -50,14 +55,18 @@ class ExtsMutators(DataGroup):
     Description:
     -----------
 
-    http://tabulator.info/docs/4.0/mutators
+    Related Pages:
 
+      http://tabulator.info/docs/4.0/mutators
+
+    Attributes:
+    ----------
     :param mutator:
     :param mutatorParams:
     :param moduleAlias:
     """
-    self._report.jsImports.add(moduleAlias)
-    self._attrs["mutator"] = mutator
-    self._attrs['mutatorParams'] = mutatorParams
+    self.component.jsImports.add(moduleAlias)
+    self._set_value(value=mutator)
+    self._set_value(value=mutatorParams, name='mutatorParams')
     return self
 

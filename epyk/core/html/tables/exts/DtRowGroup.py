@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class RowGroup(DataClass):
+class RowGroup(Options):
 
   def activate(self):
     self.dataSrc = 'group'
@@ -19,11 +19,11 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.className
     """
-    return self._attrs["className"]
+    return self._config_get()
 
   @className.setter
   def className(self, val):
-    self._attrs["className"] = val
+    self._config(val)
 
   @property
   def dataSrc(self):
@@ -36,11 +36,11 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.className
     """
-    return self._attrs["dataSrc"]
+    return self._config_get()
 
   @dataSrc.setter
   def dataSrc(self, val):
-    self._attrs["dataSrc"] = val
+    self._config(val)
 
   @property
   def emptyDataGroup(self):
@@ -53,11 +53,11 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.emptyDataGroup
     """
-    return self._attrs["emptyDataGroup"]
+    return self._config_get()
 
   @emptyDataGroup.setter
   def emptyDataGroup(self, val):
-    self._attrs["emptyDataGroup"] = val
+    self._config(val)
 
   @property
   def enable(self):
@@ -70,11 +70,11 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.enable
     """
-    return self._attrs["enable"]
+    return self._config_get()
 
   @enable.setter
   def enable(self, val):
-    self._attrs["enable"] = val
+    self._config(val)
 
   @property
   def endClassName(self):
@@ -87,11 +87,11 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.endClassName
     """
-    return self._attrs["endClassName"]
+    return self._config_get()
 
   @endClassName.setter
   def endClassName(self, val):
-    self._attrs["endClassName"] = val
+    self._config(val)
 
   @property
   def startClassName(self):
@@ -104,8 +104,8 @@ class RowGroup(DataClass):
 
       https://datatables.net/reference/option/rowGroup.startClassName
     """
-    return self._attrs["startClassName"]
+    return self._config_get()
 
   @startClassName.setter
   def startClassName(self, val):
-    self._attrs["startClassName"] = val
+    self._config(val)

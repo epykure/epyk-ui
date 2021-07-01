@@ -1,9 +1,8 @@
 
+from epyk.core.html.options import Options
 
-from epyk.core.data.DataClass import DataClass
 
-
-class Scroller(DataClass):
+class Scroller(Options):
 
   def activate(self):
     """
@@ -29,11 +28,11 @@ class Scroller(DataClass):
 
       https://datatables.net/reference/option/scroller.boundaryScale
     """
-    return self._attrs["boundaryScale"]
+    return self._config_get()
 
   @boundaryScale.setter
   def boundaryScale(self, val):
-    self._attrs["boundaryScale"] = val
+    self._config(val)
 
   @property
   def displayBuffer(self):
@@ -46,11 +45,11 @@ class Scroller(DataClass):
 
       https://datatables.net/reference/option/scroller.displayBuffer
     """
-    return self._attrs["displayBuffer"]
+    return self._config_get()
 
   @displayBuffer.setter
   def displayBuffer(self, val):
-    self._attrs["displayBuffer"] = val
+    self._config(val)
 
   @property
   def loadingIndicator(self):
@@ -63,11 +62,11 @@ class Scroller(DataClass):
 
       https://datatables.net/reference/option/scroller.loadingIndicator
     """
-    return self._attrs["loadingIndicator"]
+    return self._config_get()
 
   @loadingIndicator.setter
   def loadingIndicator(self, val):
-    self._attrs["loadingIndicator"] = val
+    self._config(val)
 
   @property
   def rowHeight(self):
@@ -80,11 +79,11 @@ class Scroller(DataClass):
 
       https://datatables.net/reference/option/scroller.rowHeight
     """
-    return self._attrs["rowHeight"]
+    return self._config_get()
 
   @rowHeight.setter
   def rowHeight(self, val):
-    self._attrs["rowHeight"] = val
+    self._config(val)
 
   @property
   def serverWait(self):
@@ -97,8 +96,8 @@ class Scroller(DataClass):
 
       https://datatables.net/reference/option/scroller.serverWait
     """
-    return self._attrs["serverWait"]
+    return self._config_get()
 
   @serverWait.setter
   def serverWait(self, val):
-    self._attrs["serverWait"] = val
+    self._config(val)

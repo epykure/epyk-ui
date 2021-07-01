@@ -1,11 +1,11 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class KeyTable(DataClass):
+class KeyTable(Options):
 
   def activate(self):
-    self.columns = ":not(:first-child)"
+    self.component.options.columns = ":not(:first-child)"
     return self
 
   @property
@@ -15,11 +15,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.blurable
     """
-    return self._attrs["blurable"]
+    return self._config_get()
 
   @blurable.setter
   def blurable(self, val):
-    self._attrs["blurable"] = val
+    self._config(val)
 
   @property
   def className(self):
@@ -28,11 +28,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.className
     """
-    return self._attrs["className"]
+    return self._config_get()
 
   @className.setter
   def className(self, val):
-    self._attrs["className"] = val
+    self._config(val)
 
   @property
   def clipboard(self):
@@ -41,11 +41,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.clipboard
     """
-    return self._attrs["clipboard"]
+    return self._config_get()
 
   @clipboard.setter
   def clipboard(self, val):
-    self._attrs["clipboard"] = val
+    self._config(val)
 
   @property
   def clipboardOrthogonal(self):
@@ -54,11 +54,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.clipboardOrthogonal
     """
-    return self._attrs["clipboardOrthogonal"]
+    return self._config_get()
 
   @clipboardOrthogonal.setter
   def clipboardOrthogonal(self, val):
-    self._attrs["clipboardOrthogonal"] = val
+    self._config(val)
 
   @property
   def columns(self):
@@ -67,11 +67,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.columns
     """
-    return self._attrs["columns"]
+    return self._config_get()
 
   @columns.setter
   def columns(self, val):
-    self._attrs["columns"] = val
+    self._config(val)
 
   @property
   def focus(self):
@@ -80,11 +80,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.focus
     """
-    return self._attrs["focus"]
+    return self._config_get()
 
   @focus.setter
   def focus(self, val):
-    self._attrs["focus"] = val
+    self._config(val)
 
   @property
   def keys(self):
@@ -93,11 +93,11 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.keys
     """
-    return self._attrs["keys"]
+    return self._config_get()
 
   @keys.setter
   def keys(self, val):
-    self._attrs["keys"] = val
+    self._config(val)
 
   @property
   def tabIndex(self):
@@ -106,8 +106,8 @@ class KeyTable(DataClass):
 
     https://datatables.net/reference/option/keys.tabIndex
     """
-    return self._attrs["tabIndex"]
+    return self._config_get()
 
   @tabIndex.setter
   def tabIndex(self, val):
-    self._attrs["tabIndex"] = val
+    self._config(val)

@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class FixedColumns(DataClass):
+class FixedColumns(Options):
 
   def activate(self):
     """
@@ -27,25 +27,25 @@ class FixedColumns(DataClass):
 
       https://datatables.net/reference/option/fixedColumns.heightMatch
     """
-    return self._attrs["heightMatch"]
+    return self._config_get()
 
   @heightMatch.setter
   def heightMatch(self, val):
-    self._attrs["heightMatch"] = val
+    self._config(val)
 
   @property
   def leftColumns(self):
-    return self._attrs["leftColumns"]
+    return self._config_get()
 
 
   @leftColumns.setter
   def leftColumns(self, val):
-    self._attrs["leftColumns"] = val
+    self._config(val)
 
   @property
   def rightColumns(self):
-    return self._attrs["rightColumns"]
+    return self._config_get()
 
   @rightColumns.setter
   def rightColumns(self, val):
-    self._attrs["rightColumns"] = val
+    self._config(val)

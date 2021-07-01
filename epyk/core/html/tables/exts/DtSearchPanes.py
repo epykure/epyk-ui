@@ -1,94 +1,96 @@
-from epyk.core.data.DataClass import DataClass
+
+from epyk.core.html.options import Options
 
 
-class SearchPanes(DataClass):
+class SearchPanes(Options):
 
-  class DtOps(DataClass):
+  class DtOps(Options):
     @property
     def paging(self):
-      return self._attrs['paging']
+      return self._config_get()
 
     @paging.setter
     def paging(self, val):
-      self._attrs['paging'] = val
+      self._config(val)
 
     @property
     def pagingType(self):
-      return self._attrs['pagingType']
+      return self._config_get()
 
     @pagingType.setter
     def pagingType(self, val):
-      self._attrs['pagingType'] = val
+      self._config(val)
 
     @property
     def searching(self):
-      return self._attrs['searching']
+      return self._config_get()
 
     @searching.setter
     def searching(self, val):
-      self._attrs['searching'] = val
+      self._config(val)
 
-  class Panes(DataClass):
+  class Panes(Options):
 
-    class Options(DataClass):
+    class Options(Options):
+
       @property
       def label(self):
-        return self._attrs['label']
+        return self._config_get()
 
       @label.setter
       def label(self, val):
-        self._attrs['label'] = val
+        self._config(val)
 
 
-    class DtOps(DataClass):
+    class DtOps(Options):
       @property
       def paging(self):
-        return self._attrs['paging']
+        return self._config_get()
 
       @paging.setter
       def paging(self, val):
-        self._attrs['paging'] = val
+        self._config(val)
 
       @property
       def pagingType(self):
-        return self._attrs['pagingType']
+        return self._config_get()
 
       @pagingType.setter
       def pagingType(self, val):
-        self._attrs['pagingType'] = val
+        self._config(val)
 
       @property
       def searching(self):
-        return self._attrs['searching']
+        return self._config_get()
 
       @searching.setter
       def searching(self, val):
-        self._attrs['searching'] = val
+        self._config(val)
 
 
     @property
     def className(self):
-      return self._attrs['className']
+      return self._config_get()
 
     @className.setter
     def className(self, val):
-      self._attrs['className'] = val
+      self._config(val)
 
     @property
     def header(self):
-      return self._attrs['header']
+      return self._config_get()
 
     @header.setter
     def header(self, val):
-      self._attrs['header'] = val
+      self._config(val)
 
     @property
     def panes_options(self):
-      return self.sub_data_enum('options', self.Options)
+      return self._config_sub_data_enum('options', self.Options)
 
     @property
     def dtOpts(self):
-      return self.sub_data('dtOpts', self.DtOps)
+      return self._config_sub_data('dtOpts', self.DtOps)
 
 
   @property
@@ -106,11 +108,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.cascadePanes
     """
-    return self._attrs['cascadePanes']
+    return self._config_get()
 
   @cascadePanes.setter
   def cascadePanes(self, val):
-    self._attrs['cascadePanes'] = val
+    self._config(val)
 
   @property
   def clear(self):
@@ -127,11 +129,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.clear
     """
-    return self._attrs['clear']
+    return self._config_get()
 
   @clear.setter
   def clear(self, val):
-    self._attrs['clear'] = val
+    self._config(val)
 
   @property
   def columns(self):
@@ -149,11 +151,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.columns
     """
-    return self._attrs['columns']
+    return self._config_get()
 
   @columns.setter
   def columns(self, val):
-    self._attrs['columns'] = val
+    self._config(val)
 
   @property
   def controls(self):
@@ -169,11 +171,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.controls
     """
-    return self._attrs['controls']
+    return self._config_get()
 
   @controls.setter
   def controls(self, val):
-    self._attrs['controls'] = val
+    self._config(val)
 
   @property
   def dataLength(self):
@@ -186,11 +188,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.dataLength
     """
-    return self._attrs['dataLength']
+    return self._config_get()
 
   @dataLength.setter
   def dataLength(self, val):
-    self._attrs['dataLength'] = val
+    self._config(val)
 
   @property
   def emptyMessage(self):
@@ -203,11 +205,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.emptyMessage
     """
-    return self._attrs['emptyMessage']
+    return self._config_get()
 
   @emptyMessage.setter
   def emptyMessage(self, val):
-    self._attrs['emptyMessage'] = val
+    self._config(val)
 
   @property
   def hideCount(self):
@@ -221,11 +223,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.hideCount
     """
-    return self._attrs['hideCount']
+    return self._config_get()
 
   @hideCount.setter
   def hideCount(self, val):
-    self._attrs['hideCount'] = val
+    self._config(val)
 
   @property
   def layout(self):
@@ -240,11 +242,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.layout
     """
-    return self._attrs['layout']
+    return self._config_get()
 
   @layout.setter
   def layout(self, val):
-    self._attrs['layout'] = val
+    self._config(val)
 
   @property
   def orderable(self):
@@ -257,28 +259,11 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.orderable
     """
-    return self._attrs['orderable']
-
-  @orderable.setter
-  def layout(self, val):
-    self._attrs['orderable'] = val
-
-  @property
-  def orderable(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will be displayed with the ordering buttons included in the interface, allowing the user to change the order of the selections in each pane.
-    However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed in any of the panes.
-    Related Pages:
-
-      https://datatables.net/reference/option/searchPanes.orderable
-    """
-    return self._attrs['orderable']
+    return self._config_get()
 
   @orderable.setter
   def orderable(self, val):
-    self._attrs['orderable'] = val
+    self._config(val)
 
   @property
   def threshold(self):
@@ -291,11 +276,11 @@ class SearchPanes(DataClass):
     --------------
     https://datatables.net/reference/option/searchPanes.threshold
     """
-    return self._attrs['threshold']
+    return self._config_get()
 
   @threshold.setter
   def threshold(self, val):
-    self._attrs['threshold'] = val
+    self._config(val)
 
   @property
   def viewTotal(self):
@@ -310,11 +295,11 @@ class SearchPanes(DataClass):
     --------------
     https://datatables.net/reference/option/searchPanes.viewTotal
     """
-    return self._attrs['viewTotal']
+    return self._config_get()
 
   @viewTotal.setter
   def viewTotal(self, val):
-    self._attrs['viewTotal'] = val
+    self._config(val)
 
   @property
   def dtOpts(self):
@@ -327,7 +312,7 @@ class SearchPanes(DataClass):
 
       https://datatables.net/reference/option/searchPanes.dtOpts
     """
-    return self.sub_data('dtOps', self.DtOps)
+    return self._config_sub_data('dtOps', self.DtOps)
 
   @property
   def panes(self):
@@ -338,4 +323,4 @@ class SearchPanes(DataClass):
     --------------
     https://datatables.net/reference/option/searchPanes.panes
     """
-    return self.sub_data_enum('panes', self.Panes)
+    return self._config_sub_data_enum('panes', self.Panes)

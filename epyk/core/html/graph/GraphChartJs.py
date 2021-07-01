@@ -17,8 +17,8 @@ class ChartJsActivePoints:
 
   def __init__(self, chart_id, i, page):
     self.chartId = chart_id
-    self.num = i or self.index
     self._report = page
+    self.num = i or self.index
 
   @property
   def index(self):
@@ -34,6 +34,10 @@ class ChartJsActivePoints:
 
     :return: A javaScript number.
     """
+    if min(self._report.imports.pkgs.chart_js.version) > '3.0.0':
+      return JsObject.JsObject.get(
+        "%s.getElementsAtEventForMode(event, 'nearest', {intersect: true}, true)[0].datasetIndex" % self.chartId)
+
     return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.chartId)
 
   @property
@@ -105,6 +109,10 @@ class ChartJsActivePoints:
       line = page.ui.charts.chartJs.line()
       line.click([line.activePoints().label])
     """
+    if min(self._report.imports.pkgs.chart_js.version) > '3.0.0':
+      return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)].index]" % (
+        self.chartId, self.num))
+
     return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (
       self.chartId, self.num))
 
@@ -248,8 +256,6 @@ class Chart(Html.Html):
     -----------
     Shortcut property to all the external plugins defined in the framework.
 
-    Usage::
-
     Related Pages:
 
       https://www.chartjs.org/docs/2.7.2/notes/extensions.html
@@ -383,9 +389,14 @@ class Chart(Html.Html):
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    tmp_js_funcs = [
-      "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
-      "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    else:
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return super(Chart, self).click(tmp_js_funcs, profile)
 
   def dblclick(self, js_funcs, profile=False, source_event=None, on_ready=False):
@@ -405,8 +416,14 @@ class Chart(Html.Html):
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    tmp_js_funcs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
-                    "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    else:
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return super(Chart, self).dblclick(tmp_js_funcs, profile)
 
   def hover(self, js_funcs, profile=False, source_event=None):
@@ -425,9 +442,14 @@ class Chart(Html.Html):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     """
-    tmp_js_funcs = [
-      "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
-      "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+    else:
+      tmp_js_funcs = [
+        "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return self.on("mouseover", tmp_js_funcs, profile)
 
   @property
@@ -704,6 +726,7 @@ class ChartLine(Chart):
     :param label: List. Optional. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
+    :param kind: String. Optional. The chart type.
     """
     data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None)
     self._datasets.append(data)

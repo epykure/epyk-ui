@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class DataBreakPoints(DataClass):
+class DataBreakPoints(Options):
 
   @property
   def name(self):
@@ -14,11 +14,11 @@ class DataBreakPoints(DataClass):
 
       https://datatables.net/reference/option/responsive.breakpoints
     """
-    return self._attrs["name"]
+    return self._config_get()
 
   @name.setter
   def name(self, val):
-    self._attrs["name"] = val
+    self._config(val)
 
   @property
   def width(self):
@@ -30,14 +30,14 @@ class DataBreakPoints(DataClass):
 
       https://datatables.net/reference/option/responsive.breakpoints
     """
-    return self._attrs["width"]
+    return self._config_get()
 
   @width.setter
   def width(self, val):
-    self._attrs["width"] = val
+    self._config(val)
 
 
-class DataDetails(DataClass):
+class DataDetails(Options):
 
   @property
   def type(self):
@@ -49,11 +49,11 @@ class DataDetails(DataClass):
 
       https://datatables.net/reference/option/responsive.details
     """
-    return self._attrs["type"]
+    return self._config_get()
 
   @type.setter
   def type(self, val):
-    self._attrs["type"] = val
+    self._config(val)
 
   @property
   def display(self):
@@ -66,11 +66,11 @@ class DataDetails(DataClass):
 
       https://datatables.net/reference/option/responsive.details.display
     """
-    return self._attrs["display"]
+    return self._config_get()
 
   @display.setter
   def display(self, val):
-    self._attrs["display"] = val
+    self._config(val)
 
   @property
   def renderer(self):
@@ -83,11 +83,11 @@ class DataDetails(DataClass):
 
       https://datatables.net/reference/option/responsive.details.renderer
     """
-    return self._attrs["renderer"]
+    return self._config_get()
 
   @renderer.setter
   def renderer(self, val):
-    self._attrs["renderer"] = val
+    self._config(val)
 
   @property
   def target(self):
@@ -99,14 +99,14 @@ class DataDetails(DataClass):
 
       https://datatables.net/reference/option/responsive.details.target
     """
-    return self._attrs["target"]
+    return self._config_get()
 
   @target.setter
   def target(self, val):
-    self._attrs["target"] = val
+    self._config(val)
 
 
-class Responsive(DataClass):
+class Responsive(Options):
 
   def activate(self):
     self.details.type = "column"
@@ -125,7 +125,7 @@ class Responsive(DataClass):
 
     :rtype: DataDetails
     """
-    return self.sub_data("details", DataDetails)
+    return self._config_sub_data("details", DataDetails)
 
   @property
   def breakpoints(self):
@@ -141,7 +141,7 @@ class Responsive(DataClass):
 
     :rtype: DataBreakPoints
     """
-    return self.sub_data("breakpoints", DataBreakPoints)
+    return self._config_sub_data("breakpoints", DataBreakPoints)
 
   @property
   def orthogonal(self):
@@ -157,8 +157,8 @@ class Responsive(DataClass):
 
       https://datatables.net/reference/option/responsive.details.target
     """
-    return self._attrs["orthogonal"]
+    return self._config_get()
 
   @orthogonal.setter
   def orthogonal(self, val):
-    self._attrs["orthogonal"] = val
+    self._config(val)

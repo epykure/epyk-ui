@@ -1,21 +1,24 @@
 
 
-from epyk.core.js.packages import packageImport
-from epyk.core.data.DataClass import DataGroup
+from epyk.core.html.options import Enums
 
 
-class ExtsValidators(DataGroup):
+class ExtsValidators(Enums):
 
   def custom(self, validator, moduleAlias):
     """
     Description:
     -----------
 
-    http://tabulator.info/docs/4.0/mutators
+    Related Pages:
 
+      http://tabulator.info/docs/4.0/mutators
+
+    Attributes:
+    ----------
     :param validator:
     :param moduleAlias:
     """
-    self._report.jsImports.add(moduleAlias)
-    self._attrs["validator"] = validator
+    self.component.jsImports.add(moduleAlias)
+    self._set_value(value=validator)
     return self

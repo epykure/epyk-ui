@@ -59,7 +59,7 @@ class JsObjects:
 
     :return: The Javascript result object from a post or any other AJAX calls.
 
-    :rtype: XMLHttpRequest.
+    :rtype: XMLHttpRequest
     """
     return XMLHttpRequest.get("result")
 
@@ -128,11 +128,11 @@ class JsObjects:
     """
     Description:
     -----------
-    Interface to the Javascript Object primitive
+    Interface to the Javascript Object primitive.
 
     Attributes:
     ----------
-    :param varName: String. Optional. The variable name.
+    :param varName: String. The variable name.
 
     :return: The requested Python JsObject primitive
     """
@@ -310,6 +310,7 @@ class JsObjects:
     The NaN property is the same as the Number.Nan property.
 
     Related Pages:
+
       https://www.w3schools.com/jsref/jsref_number_nan.asp
       https://www.w3schools.com/jsref/jsref_isnan.asp
     """
@@ -353,7 +354,7 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param varName: A string with of the existing variable name
+    :param varName: String. A string with of the existing variable name.
     """
     return JsData.RawData.get(self._jsObj, varName)
 
@@ -361,14 +362,25 @@ class JsObjects:
     """
     Description:
     -----------
+    Increment a counter.
 
     Attributes:
     ----------
-    :param incr:
+    :param incr: String, the variable name used to store the counter.
     """
     return JsObject.JsObject("%s++" % incr)
 
   def function(self, args, returns, eval=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param args:
+    :param returns:
+    :param eval:
+    """
     params, values = [], []
     for i, v in enumerate(args):
       if i > 0:
@@ -377,41 +389,171 @@ class JsObjects:
         params.append("x")
       values.append(str(v))
     if eval:
-      return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (", ".join(params), returns, ", ".join(values)))
+      return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (
+        ", ".join(params), returns, ", ".join(values)))
+
+
+class JsPromiseRecords:
+
+  def __init__(self, promise):
+    self.promise = promise
+
+  def get(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.promise.then("function(data){%s}" % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile))
+    return self
+
+  def cast(self, columns, to="float", profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param columns:
+    :param to:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    cast_cols = {}
+    str_frg = []
+    if not isinstance(to, dict):
+      for c in columns:
+        cast_cols[c] = to
+    else:
+      cast_cols = to
+    for col, kind in cast_cols.items():
+      if kind == "float":
+        str_frg.append("row['%(col)s'] = parseFloat(row['%(col)s'])" % {"col": col})
+      elif kind == "int":
+        str_frg.append("row['%(col)s'] = parseInt(row['%(col)s'])" % {"col": col})
+    return self.row(str_frg)
+
+  def row(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = []
+    self.promise.then(
+      "function(data){let result = []; data.forEach(function(row){%s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile))
+    return self
+
+  def filterCol(self, column, value, operator="==", keep=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param column:
+    :param value:
+    :param operator:
+    :param keep:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    value = JsUtils.jsConvertData(value, None)
+    if not keep:
+      self.promise.then(
+        "function(data){let result = []; data.forEach(function(row){if(!(row[%s] %s %s)){result.push(row)}}); return result}" % (column, operator, value))
+    else:
+      self.promise.then(
+        "function(data){let result = []; data.forEach(function(row){if(row[%s] %s %s){result.push(row)}}); return result}" % (column, operator, value))
+    return self
+
+  def toStr(self):
+    return self.promise.toStr()
+
+  def __str__(self):
+    return self.toStr()
 
 
 class JsPromise:
 
   def __init__(self, jsObj, profile=False, async_await=False):
     self._jsObj, self.profile, self.async_await = jsObj, profile, async_await
-    self.__then, self.__catch = [], []
+    self.__thens, self.__catch = [], []
 
-  def then(self, jsFnc):
+  def then(self, jsFncs, profile=None):
     """
     Description:
     -----------
+    Add a new post processing step to a then statement.
 
     Attributes:
     ----------
-    :param jsFnc: String | List. The Javascript functions
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = []
-    self.__then.extend(jsFnc)
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__thens.append(JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
     return self
 
-  def catch(self, jsFnc):
+  def csvRows(self, jsFncs, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.then(["function(response){ return response.text()}"], profile)
+    return self.then(["function(data){let result = []; data.split('\\n').forEach(function(line){let row = line.split(','); %s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)], profile)
+
+  def csvtoRecords(self, jsFncs=None, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFnc: String | List. The Javascript functions
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFnc, list):
-      jsFnc = []
-    self.__catch.extend(jsFnc)
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.then(["function(response){ return response.text()}"], profile)
+    return JsPromiseRecords(self.then(['''function(response){
+    let fileContent = response.split(/\\r?\\n/); let data = [];
+    let fileHeader = fileContent[0].split(',');
+    for (var i=1; i < fileContent.length; i++){
+      let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
+      %s; data.push(row)}; 
+    return data}
+    ''' % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile)], profile))
+
+  def catch(self, jsFncs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__catch.extend(jsFncs)
     return self
 
   @property
@@ -420,9 +562,9 @@ class JsPromise:
 
   def toStr(self):
     result = [str(self._jsObj)]
-    if self.__then:
-      result.append(
-        "then(function(response){%s})" % JsUtils.jsConvertFncs(self.__then, toStr=True, profile=self.profile))
+    if self.__thens:
+      for then_step in self.__thens:
+        result.append("then(%s)" % then_step)
     if self.__catch:
       result.append(
         "catch(function(error){%s})" % JsUtils.jsConvertFncs(self.__catch, toStr=True, profile=self.profile))
@@ -697,7 +839,7 @@ class XMLHttpRequest:
     self.__headers[name] = value
     return self
 
-  def onSuccess(self, jsFncs):
+  def onSuccess(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -711,7 +853,10 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if profile is not None:
+      self.profile = profile
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__req_success = jsFncs
@@ -720,7 +865,7 @@ class XMLHttpRequest:
       self.__req_success.append("console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
     return self
 
-  def onerror(self, jsFncs):
+  def onerror(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -734,7 +879,10 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param jsFncs: String | List. The Javascript functions
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if profile is not None:
+      self.profile = profile
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     if self.__on.get("onerror") is None:
@@ -779,7 +927,7 @@ class XMLHttpRequest:
       self.__on["onloadend"] = []
     return XMLHttpRequestErrors(self.__on["onloadend"], self._src, self)
 
-  def ontimeout(self, jsFncs, timeout=2000):
+  def ontimeout(self, jsFncs, timeout=2000, profile=None):
     """
     Description:
     ------------
@@ -793,14 +941,17 @@ class XMLHttpRequest:
     ----------
     :param jsFncs: String | List. The Javascript functions.
     :param timeout: Integer. Optional. Time in milliseconds.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if profile is not None:
+      self.profile = profile
     self.timeout = timeout
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__on["ontimeout"] = jsFncs
     return self
 
-  def onloadend(self, jsFncs):
+  def onloadend(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -809,13 +960,16 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if profile is not None:
+      self.profile = profile
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__on["onloadend"] = jsFncs
     return self
 
-  def onloadstart(self, jsFncs):
+  def onloadstart(self, jsFncs, profile=None):
     """
     Description:
     ------------
@@ -825,7 +979,10 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if profile is not None:
+      self.profile = profile
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__on["onloadstart"] = jsFncs

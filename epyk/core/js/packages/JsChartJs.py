@@ -100,12 +100,47 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if self.src.page.imports.pkgs.chart_js.version:
+      return self.getElementsAtEventForMode(jsFncs, profile=profile)
+    else:
+      if not isinstance(jsFncs, list):
+        jsFncs = [jsFncs]
+      return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (
+        self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)), isPyData=False)
+
+  @JsUtils.fromVersion({'chart.js': '3.0.0'})
+  def getElementsAtEventForMode(self, jsFncs, mode="nearest", options=None, useFinalPosition=True, profile=False):
+    """
+    Description:
+    -----------
+    Calling getElementsAtEventForMode(e, mode, options, useFinalPosition) on your Chart instance passing an event and a
+    mode will return the elements that are found. The options and useFinalPosition arguments are passed through to the
+    handlers.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/api.html
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param mode:
+    :param options:
+    :param useFinalPosition:
+    :param profile:
+    """
+    mode = JsUtils.jsConvertData(mode, None)
+    options = options or {"intersect": True}
+    options = JsUtils.jsConvertData(options, None)
+    useFinalPosition = JsUtils.jsConvertData(useFinalPosition, None)
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (
-      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)), isPyData=False)
+    return JsObjects.JsArray.JsArray("%s.getElementsAtEventForMode(%s, %s, %s, %s)" % (
+      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), mode, options, useFinalPosition),
+                                     isPyData=False)
 
   def add(self, point, values):
     """

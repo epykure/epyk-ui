@@ -1977,3 +1977,29 @@ class JsBase:
     Shortcut to predefined temporary messages displayed to the UI.
     """
     return JsMsgAlerts.Msg(self._src)
+
+  def hot_imports(self, script, jsFuncs, profile=None):
+    """
+    Description:
+    ------------
+    Add a Javascript module and then run function once it is loaded.
+
+    Related Pages:
+
+      https://cleverbeagle.com/blog/articles/tutorial-how-to-load-third-party-scripts-dynamically-in-javascript
+
+    Attributes:
+    ----------
+    :param script: String. A script name. A Js extension.
+    :param jsFuncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    js_script = JsUtils.jsConvertData(script, None)
+    js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
+    return JsObjects.JsVoid('''
+let scriptElementId = "pkg_"+ %(script)s;    
+let existingScript = document.getElementById(scriptElementId);
+if (!existingScript && (scriptElementId !== 'pkg_undefined')) {
+  const script = document.createElement('script'); script.src = %(script)s; script.id = scriptElementId;
+  document.body.appendChild(script); script.onload = function(){%(fncs)s; };}
+else { %(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})

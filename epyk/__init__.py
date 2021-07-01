@@ -17,6 +17,8 @@ from epyk.core.js import std as js_std
 from epyk.core.js import expr as js_expr
 from epyk.core.js.JsUtils import jsWrap as js_callback
 
+from epyk.core.js.Imports import Package as package
+
 Page = Rpt.Report
 
 LOG_SERVICE = None

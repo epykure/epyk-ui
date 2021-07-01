@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class InnerButtons(DataClass):
+class InnerButtons(Options):
 
   @property
   def text(self):
@@ -14,11 +14,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.text
     """
-    return self._attrs['text']
+    return self._config_get()
 
   @text.setter
   def text(self, val):
-    self._attrs['text'] = val
+    self._config(val)
 
   @property
   def action(self):
@@ -31,11 +31,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.action
     """
-    return self._attrs['action']
+    return self._config_get()
 
   @action.setter
   def action(self, val):
-    self._attrs['action'] = val
+    self._config(val)
 
   @property
   def attr(self):
@@ -48,11 +48,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.attr
     """
-    return self._attrs['attr']
+    return self._config_get()
 
   @attr.setter
   def attr(self, val):
-    self._attrs['attr'] = val
+    self._config(val)
 
   @property
   def className(self):
@@ -64,11 +64,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.className
     """
-    return self._attrs['className']
+    return self._config_get()
 
   @className.setter
   def className(self, val):
-    self._attrs['className'] = val
+    self._config(val)
 
   @property
   def available(self):
@@ -80,11 +80,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.available
     """
-    return self._attrs['available']
+    return self._config_get()
 
   @available.setter
   def available(self, val):
-    self._attrs['available'] = val
+    self._config(val)
 
   @property
   def enabled(self):
@@ -97,11 +97,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.enabled
     """
-    return self._attrs["enabled"]
+    return self._config_get()
 
   @enabled.setter
   def enabled(self, val):
-    self._attrs["enabled"] = val
+    self._config(val)
 
   @property
   def extend(self):
@@ -114,11 +114,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.extend
     """
-    return self._attrs["extend"]
+    return self._config_get()
 
   @extend.setter
   def extend(self, val):
-    self._attrs["extend"] = val
+    self._config(val)
 
   @property
   def key(self):
@@ -131,11 +131,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.key
     """
-    return self._attrs["key"]
+    return self._config_get()
 
   @key.setter
   def key(self, val):
-    self._attrs["key"] = val
+    self._config(val)
 
   @property
   def name(self):
@@ -148,11 +148,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.name
     """
-    return self._attrs["name"]
+    return self._config_get()
 
   @name.setter
   def name(self, val):
-    self._attrs["name"] = val
+    self._config(val)
 
   @property
   def tag(self):
@@ -165,11 +165,11 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.tag
     """
-    return self._attrs["tag"]
+    return self._config_get()
 
   @tag.setter
   def tag(self, val):
-    self._attrs["tag"] = val
+    self._config(val)
 
   @property
   def titleAttr(self):
@@ -183,103 +183,102 @@ class InnerButtons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.titleAttr
     """
-    return self._attrs["titleAttr"]
+    return self._config_get()
 
   @titleAttr.setter
   def titleAttr(self, val):
-    self._attrs["titleAttr"] = val
+    self._config(val)
 
-class Buttons(DataClass):
 
-  class Dom(DataClass):
+class Buttons(Options):
 
-    class Container(DataClass):
+  class Dom(Options):
+
+    class Container(Options):
       @property
       def tag(self):
-        return self._attrs['tag']
+        return self._config_get()
 
       @tag.setter
       def tag(self, val):
-        self._attrs['tag'] = val
+        self._config(val)
 
       @property
       def className(self):
-        return self._attrs['className']
+        return self._config_get()
 
       @className.setter
       def className(self, val):
-        self._attrs['className'] = val
+        self._config(val)
 
-
-    class ButtonLiner(DataClass):
+    class ButtonLiner(Options):
       @property
       def tag(self):
-        return self._attrs['tag']
+        return self._config_get()
 
       @tag.setter
       def tag(self, val):
-        self._attrs['tag'] = val
+        self._config(val)
 
       @property
       def className(self):
-        return self._attrs['className']
+        return self._config_get()
 
       @className.setter
       def className(self, val):
-        self._attrs['className'] = val
+        self._config(val)
 
 
-    class Collection(DataClass):
+    class Collection(Options):
       @property
       def tag(self):
-        return self._attrs['tag']
+        return self._config_get()
 
       @tag.setter
       def tag(self, val):
-        self._attrs['tag'] = val
+        self._config(val)
 
       @property
       def className(self):
-        return self._attrs['className']
+        return self._config_get()
 
       @className.setter
       def className(self, val):
-        self._attrs['className'] = val
+        self._config(val)
 
 
-    class DomButton(DataClass):
+    class DomButton(Options):
       @property
       def tag(self):
-        return self._attrs['tag']
+        return self._config_get()
 
       @tag.setter
       def tag(self, val):
-        self._attrs['tag'] = val
+        self._config(val)
 
       @property
       def className(self):
-        return self._attrs['className']
+        return self._config_get()
 
       @className.setter
       def className(self, val):
-        self._attrs['className'] = val
+        self._config(val)
 
       @property
       def disabled(self):
-        return self._attrs['disabled']
+        return self._config_get()
 
       @disabled.setter
       def disabled(self, val):
-        self._attrs['disabled'] = val
+        self._config(val)
 
       @property
       def active(self):
-        return self._attrs['active']
+        return self._config_get()
 
       @active.setter
       def active(self, val):
-        self._attrs['active'] = val
-
+        self._config(val)
 
     @property
     def buttonContainer(self):
@@ -292,8 +291,10 @@ class Buttons(DataClass):
       Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.buttonContainer
+
+      :rtype:
       """
-      return self.sub_data('buttonContainer', self.Container)
+      return self._config_sub_data('buttonContainer', self.Container)
 
     @property
     def buttonLiner(self):
@@ -307,7 +308,7 @@ class Buttons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.buttonLiner
       """
-      return self.sub_data('buttonLiner', self.ButtonLiner)
+      return self._config_sub_data('buttonLiner', self.ButtonLiner)
 
     @property
     def collection(self):
@@ -320,7 +321,7 @@ class Buttons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.collection
       """
-      return self.sub_data('collection', self.Collection)
+      return self._config_sub_data('collection', self.Collection)
 
     @property
     def button(self):
@@ -333,7 +334,7 @@ class Buttons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.button
       """
-      return self.sub_data('button', self.DomButton)
+      return self._config_sub_data('button', self.DomButton)
 
 
   @property
@@ -347,19 +348,23 @@ class Buttons(DataClass):
 
       https://datatables.net/reference/option/buttons.buttons.enabled
     """
-    return self._attrs["enabled"]
+    return self._config_get()
 
   @enabled.setter
   def enabled(self, val):
-    self._attrs["enabled"] = val
+    self._config(val)
 
   @property
   def buttons(self):
-    return self.sub_data_enum('buttons', InnerButtons)
+    """
+
+    :rtype: InnerButtons
+    """
+    return self._config_sub_data_enum('buttons', InnerButtons)
 
   @property
   def dom(self):
-    return self.sub_data('dom', self.Dom)
+    return self._config_sub_data('dom', self.Dom)
 
   @property
   def name(self):
@@ -371,8 +376,8 @@ class Buttons(DataClass):
 
       https://datatables.net/reference/option/buttons.name
     """
-    return self._attrs['name']
+    return self._config_get()
 
   @name.setter
   def name(self, val):
-    self._attrs['name'] = val
+    self._config(val)

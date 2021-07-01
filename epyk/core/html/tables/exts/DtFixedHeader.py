@@ -1,8 +1,8 @@
 
-from epyk.core.data.DataClass import DataClass
+from epyk.core.html.options import Options
 
 
-class FixedHeater(DataClass):
+class FixedHeater(Options):
 
   def activate(self):
     """
@@ -14,32 +14,32 @@ class FixedHeater(DataClass):
 
   @property
   def header(self):
-    return self._attrs["header"]
+    return self._config_get()
 
   @header.setter
   def header(self, val):
-    self._attrs["header"] = val
+    self._config(val)
 
   @property
   def headerOffset(self):
-    return self._attrs["header"]
+    return self._config_get()
 
   @headerOffset.setter
   def headerOffset(self, val):
-    self._attrs["headerOffset"] = val
+    self._config(val)
 
   @property
   def footer(self):
-    return self._attrs["footer"]
+    return self._config_get()
 
   @footer.setter
   def footer(self, val):
-    self._attrs["footer"] = val
+    self._config(val)
 
   @property
   def footerOffset(self):
-    return self._attrs["footerOffset"]
+    return self._config_get()
 
   @footerOffset.setter
   def footerOffset(self, val):
-    self._attrs["footerOffset"] = val
+    self._config(val)

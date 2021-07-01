@@ -20,8 +20,7 @@ class OptionsPivot(Options):
 
   @aggregator.setter
   def aggregator(self, attrs):
-    self.js_type['aggregator'] = True
-    self._config(attrs)
+    self._config(attrs, js_type=True)
 
   @property
   def aggregatorName(self):
@@ -159,8 +158,7 @@ class OptionsPivot(Options):
 
   @dataClass.setter
   def dataClass(self, attrs):
-    self.js_type['dataClass'] = True
-    self._config(attrs)
+    self._config(attrs, js_type=True)
 
   @property
   def filter(self):
@@ -178,8 +176,7 @@ class OptionsPivot(Options):
 
   @filter.setter
   def filter(self, attrs):
-    self.js_type['filter'] = True
-    self._config(attrs)
+    self._config(attrs, js_type=True)
 
   @property
   def sorters(self):
@@ -331,8 +328,7 @@ class OptionsPivotUI(OptionsPivot):
 
   @onRefresh.setter
   def onRefresh(self, attrs):
-    self.js_type['onRefresh'] = True
-    self._config(attrs)
+    self._config(attrs, js_type=True)
 
   @property
   def menuLimit(self):
@@ -419,8 +415,7 @@ class OptionsPivotUI(OptionsPivot):
 
   @renderer.setter
   def renderer(self, value):
-    self.js_type['renderers'] = True
-    self._config(value)
+    self._config(value, js_type=True)
 
   @property
   def renderers(self):
@@ -436,8 +431,7 @@ class OptionsPivotUI(OptionsPivot):
 
   @renderers.setter
   def renderers(self, value):
-    self.js_type['renderers'] = True
-    self._config(value)
+    self._config(value, js_type=True)
 
   @property
   def rendererName(self):
