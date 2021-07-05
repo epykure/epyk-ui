@@ -157,11 +157,13 @@ class Choropleth:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.Choropleth(self.page, width, height, html_code, options or {}, profile)
-    geo_chart.options.scale.projection = "equalEarth"
+    #geo_chart.options.scale.projection = "equalEarth"
+    # geo_chart.options.legend.display = False
+    geo_chart.options.scales.xy.projection = "equalEarth"
     #geo_chart.options.scale.projection = "equirectangular"
     #geo_chart.options.geo.colorScale.display = True
     geo_chart.options.showOutline = True
-    geo_chart.options.legend.display = False
+    geo_chart.options.plugins.legend.display = False
     geo_chart.options.showGraticule = True
     return geo_chart
 

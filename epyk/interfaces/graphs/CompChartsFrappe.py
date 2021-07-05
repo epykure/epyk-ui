@@ -38,6 +38,36 @@ class CompChartFrappe:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
+    """
+    Description:
+    ------------
+    Create a line chart from Frappe Chart libraries.
+
+    Usage::
+
+      c = page.ui.charts.frappe.line(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.ui.button("Click").click([
+      page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+         filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").get(
+           [#"data = data.slice(1)",
+          c.build(pk.events.data)])
+      ])
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    :param width:
+    :param height:
+    :param options:
+    :param html_code:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.Frappe(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)
@@ -49,17 +79,77 @@ class CompChartFrappe:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
+    """
+    Description:
+    ------------
+    Create a bar chart from Frappe Chart libraries.
+
+    Usage::
+
+      c = page.ui.charts.frappe.bar(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.ui.button("Click").click([
+      page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+         filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").get(
+           [#"data = data.slice(1)",
+          c.build(pk.events.data)])
+      ])
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    :param width:
+    :param height:
+    :param options:
+    :param html_code:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.FrappeBar(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)
     data = self.page.data.c3.y(record or [], y_columns, x_axis)
     line_chart.labels(data["labels"])
     for i, dataset in enumerate(data["datasets"]):
-      line_chart.add_dataset(dataset, data["series"][i])
+      line_chart.add_dataset(dataset, data["series"][i], kind='bar')
     return line_chart
 
   def percentage(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+                 options=None, html_code=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      c = page.ui.charts.frappe.percentage(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.ui.button("Click").click([
+        page.js.fetch(data_urls.DEMO_COUNTRY).csvtoRecords().filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+          filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").
+          get([
+            c.build(pk.events.data),
+        ])
+      ])
+
+    Attributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    :param width:
+    :param height:
+    :param options:
+    :param html_code:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.FrappePercentage(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)
@@ -70,7 +160,9 @@ class CompChartFrappe:
     return line_chart
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+            options=None, html_code=None):
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.FrappeDonut(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)
@@ -81,7 +173,9 @@ class CompChartFrappe:
     return line_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+          options=None, html_code=None):
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.FrappePie(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)
@@ -93,6 +187,8 @@ class CompChartFrappe:
 
   def heatmap(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     line_chart = graph.GraphFrappe.FrappeHeatmap(self.page, width, height, html_code, options, profile)
     line_chart.options.height = height[0]
     line_chart.colors(self.page.theme.charts)

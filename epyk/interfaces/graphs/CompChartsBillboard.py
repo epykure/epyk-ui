@@ -71,7 +71,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     line_chart.options.axis.x.tick.count = 5
     line_chart.options.axis.x.tick.rotate = 0
@@ -89,8 +90,6 @@ class Billboard:
 
     :tags:
     :categories:
-
-    Usage::
 
     Related Pages:
 
@@ -113,7 +112,8 @@ class Billboard:
     line_chart = graph.GraphBillboard.ChartLine(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-line-range"
     line_chart.colors(self.page.theme.charts)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
@@ -129,6 +129,9 @@ class Billboard:
     :categories:
 
     Usage::
+
+      c = page.ui.charts.bb.bubble(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
 
     Related Pages:
 
@@ -149,7 +152,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     bubble_chart = graph.GraphBillboard.ChartBubble(self.page, width, height, html_code, options, profile)
-    bubble_chart.labels(data['labels'])
+    if data['labels']:
+      bubble_chart.labels(data['labels'])
     bubble_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       bubble_chart.add_dataset(d, data['series'][i])
@@ -186,7 +190,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     radar_chart = graph.GraphBillboard.ChartRadar(self.page, width, height, html_code, options, profile)
-    radar_chart.labels(data['labels'])
+    if data['labels']:
+      radar_chart.labels(data['labels'])
     radar_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(d, data['series'][i])
@@ -203,6 +208,10 @@ class Billboard:
     :categories:
 
     Usage::
+
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.spline(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
 
     Related Pages:
 
@@ -223,7 +232,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -240,6 +250,10 @@ class Billboard:
     :categories:
 
     Usage::
+
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.step(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
 
     Related Pages:
 
@@ -261,7 +275,8 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartSpline(self.page, width, height, html_code, options, profile)
     line_chart.options.type = 'step'
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -278,6 +293,10 @@ class Billboard:
     :categories:
 
     Usage::
+
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.area(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
 
     Related Pages:
 
@@ -298,7 +317,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -336,7 +356,8 @@ class Billboard:
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartArea(self.page, width, height, html_code, options, profile)
     line_chart.options.type = "area-step"
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -427,6 +448,11 @@ class Billboard:
 
     Usage::
 
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.stacked(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
+      c.options.axis.x.tick.count = 5
+
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart
@@ -446,7 +472,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     line_chart = graph.GraphBillboard.ChartBar(self.page, width, height, html_code, options, profile)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     line_chart.options.data.groups = [data['series']]
     for i, d in enumerate(data['datasets']):
@@ -464,6 +491,11 @@ class Billboard:
     :categories:
 
     Usage::
+
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.hbar(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
+      c.options.axis.x.tick.count = 5
 
     Related Pages:
 
@@ -496,6 +528,11 @@ class Billboard:
 
     Usage::
 
+      data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
+      c = page.ui.charts.bb.scatter(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      c.options.axis.y.tick.formats.scale(1000000)
+      c.options.axis.x.tick.count = 5
+
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot
@@ -515,7 +552,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis, options={"agg":  options.get('agg', 'distinct')})
     line_chart = graph.GraphBillboard.ChartScatter(self.page, width, height, html_code, options, profile)
-    line_chart.labels(data['labels'])
+    if data['labels']:
+      line_chart.labels(data['labels'])
     line_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(d, data['series'][i])
@@ -552,7 +590,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartPie(self.page, width, height, html_code, options, profile)
-    pie_chart.labels(data['labels'])
+    if data['labels']:
+      pie_chart.labels(data['labels'])
     pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(d, data['series'])
@@ -589,7 +628,8 @@ class Billboard:
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
     data = self.page.data.bb.y(record or [], y_columns, x_axis)
     pie_chart = graph.GraphBillboard.ChartDonut(self.page, width, height, html_code, options, profile)
-    pie_chart.labels(data['labels'])
+    if data['labels']:
+      pie_chart.labels(data['labels'])
     pie_chart.colors(self.page.theme.charts)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(d, data['series'][i])

@@ -36,8 +36,8 @@ class Vis2D:
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-           html_code=None):
+  def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
+           options=None, html_code=None):
     """
     Description:
     -----------
@@ -53,8 +53,9 @@ class Vis2D:
 
     Related Pages:
     --------------
-    http://www.chartjs.org/
-    https://visjs.github.io/vis-timeline/examples/graph2d/16_bothAxisTitles.html
+
+      http://www.chartjs.org/
+      https://visjs.github.io/vis-timeline/examples/graph2d/16_bothAxisTitles.html
 
     Attributes:
     ----------
@@ -67,7 +68,7 @@ class Vis2D:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
-    data = self.page.data.vis.xy(record, y_columns, x_axis)
+    data = self.page.data.vis.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphVis.ChartLine(self.page, width, height, html_code, options, profile)
     for d in data:
       line_chart.add_items(d)

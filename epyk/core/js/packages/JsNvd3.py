@@ -31,7 +31,7 @@ class JsNvd3Axis:
     self._js.append("axisLabel(%s)" % text)
     return self
 
-  def tickFormat(self, jsFnc):
+  def tickFormat(self, jsFnc, profile=None):
     """
     Description:
     ------------
@@ -45,7 +45,7 @@ class JsNvd3Axis:
     ----------
     :param jsFnc:
     """
-    self._js.append("tickFormat(%s)" % jsFnc)
+    self._js.append("tickFormat(tickFormat(function(d,i){ %s })" % jsFnc)
     return self
 
   def tickNumberFormat(self, digit=1):
@@ -105,7 +105,7 @@ class JsNvd3Axis:
     return self
 
   @packageImport("accounting")
-  def tickSymbol(self, symbol="", digit=0, thousand_sep=",", decimal_sep=".", factor=None, alias=None):
+  def tickSymbol(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     """
     Description:
     ------------
@@ -121,10 +121,11 @@ class JsNvd3Axis:
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    fmt = JsUtils.jsConvertData(fmt, None)
     if factor is not None:
       alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
-      self._js.append("tickFormat(function(d,i){ return accounting.formatMoney(d/%s, %s, %s, %s, %s) })" % (
-        factor, JsUtils.jsConvertData("%s%s" % (alias, symbol), None), digit, thousand_sep, decimal_sep))
+      self._js.append("tickFormat(function(d,i){ return accounting.formatMoney(d/%s, %s, %s, %s, %s, %s) })" % (
+        factor, JsUtils.jsConvertData("%s%s" % (alias, symbol), None), digit, thousand_sep, decimal_sep, fmt))
     else:
       self._js.append("tickFormat(function(d,i){ return accounting.formatMoney(d, %s, %s, %s, %s) })" % (
         symbol, digit, thousand_sep, decimal_sep))

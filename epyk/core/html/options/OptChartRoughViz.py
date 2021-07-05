@@ -5,6 +5,15 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
 
+  def x_format(self, jsFncs, profile=None):
+    pass
+
+  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    pass
+
+  def x_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    pass
+
   def x_label(self, value):
     """
     Description:
@@ -22,6 +31,19 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
     :param value: String. The axis label.
     """
     self.component.options.xLabel = value
+    return self
+
+  def x_tick_count(self, num):
+    return self
+
+  def y_format(self, jsFncs, profile=None):
+    pass
+
+  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    pass
+
+  def y_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    pass
 
   def y_label(self, value):
     """
@@ -40,6 +62,10 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
     :param value: String. The axis label.
     """
     self.component.options.yLabel = value
+    return self
+
+  def y_tick_count(self, num):
+    return self
 
 
 class OptionData(Options):

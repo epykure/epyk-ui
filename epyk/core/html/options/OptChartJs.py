@@ -9,6 +9,18 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
 
+  def x_format(self, jsFncs, profile=None):
+    self.component.options.xAxes.ticks.callback(jsFncs, profile)
+    return self
+
+  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.scales.xAxes.ticks.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def x_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.scales.xAxes.ticks.scale(factor, alias, digits, thousand_sep)
+    return self
+
   def x_label(self, value):
     """
     Description:
@@ -20,6 +32,23 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     :param value: String. The axis label.
     """
     self.component.options.scales.xAxes.scaleLabel.label(value)
+    return self
+
+  def x_tick_count(self, num):
+    self.component.options.scales.xAxes.ticks.maxTicksLimit = num
+    return self
+
+  def y_format(self, jsFncs, profile=None):
+    self.component.options.yAxes.ticks.callback(jsFncs, profile)
+    return self
+
+  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.scales.yAxes.ticks.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def y_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.scales.yAxes.ticks.scale(factor, alias, digits, thousand_sep)
+    return self
 
   def y_label(self, value):
     """
@@ -32,6 +61,11 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     :param value: String. The axis label.
     """
     self.component.options.scales.yAxes.scaleLabel.label(value)
+    return self
+
+  def y_tick_count(self, num):
+    self.component.options.scales.yAxes.ticks.maxTicksLimit = num
+    return self
 
 
 class OptionAxesTicks(Options):
@@ -135,6 +169,21 @@ class OptionAxesTicks(Options):
     self._config(val)
 
   @property
+  def maxTicksLimit(self):
+    """
+    Description:
+    ------------
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @maxTicksLimit.setter
+  def maxTicksLimit(self, val):
+    self._config(val)
+
+  @property
   def suggestedMin(self):
     """
     Description:
@@ -203,7 +252,7 @@ class OptionAxesTicks(Options):
     return self
 
   @packageImport("accounting")
-  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     """
     Description:
     -----------
@@ -215,11 +264,12 @@ class OptionAxesTicks(Options):
     :param thousand_sep:
     :param decimal_sep:
     """
-    symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._config("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s)}" % (
-      symbol, digit, thousand_sep, decimal_sep), name="callback", js_type=True)
+    if not alias:
+      alias = {1000: "k", 1000000: "m"}.get(factor, alias)
+    self._config("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s, '%s')}" % (
+      "'%s'+ %s" % (alias, symbol), digit, thousand_sep, decimal_sep, fmt), name="callback", js_type=True)
     return self
 
   @packageImport("accounting")
@@ -228,8 +278,6 @@ class OptionAxesTicks(Options):
     Description:
     -----------
     Convert to number using the accounting Javascript module-
-
-    Usage::
 
     Related Pages:
 
@@ -243,6 +291,38 @@ class OptionAxesTicks(Options):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     self._config("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (
       digit, thousand_sep), name="callback", js_type=True)
+    return self
+
+  def callback(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html
+
+    Attributes:
+    ----------
+    """
+    self._config("function(val, index) {return (function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().split('T')[0]}", js_type=True)
+    return self
+
+  def userCallback(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+    Convert to number using the accounting Javascript module-
+
+    Related Pages:
+
+      https://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    """
+    self._config("function(label, index, labels) {console.log(label); return 1}", js_type=True)
     return self
 
   def mapTo(self, mapping):
@@ -858,7 +938,7 @@ class OptionScales(Options):
 
     :rtype: OptionAxes
     """
-    return self._config_sub_data_enum("xAxes", OptionAxes)
+    return self._config_sub_data("x", OptionAxes)
 
   def x_axes(self, i=None):
     """
@@ -871,13 +951,15 @@ class OptionScales(Options):
 
     :rtype: OptionAxes
     """
-    if "xAxes" not in self.js_tree:
+    return self.add_x_axis()
+
+    if "x" not in self.js_tree:
       self.add_x_axis()
 
     if i is None:
-      return self.js_tree["xAxes"][-1]
+      return self.js_tree["x"][-1]
 
-    return self.js_tree["xAxes"][i]
+    return self.js_tree["x"][i]
 
 
 class OptionScalesGeo(Options):
@@ -913,7 +995,11 @@ class OptionScaleGeo(Options):
 
   def set_projection(self, jsFncs, profile=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param profile:
     """
@@ -1390,6 +1476,12 @@ class ChartJsOptions(OptChart.OptionsChart):
 
   @property
   def size(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionChartJsSize
+    """
     return self._config_sub_data("size", OptionChartJsSize)
 
 
@@ -1924,6 +2016,19 @@ class OptionGeo(Options):
     return self._config_sub_data("radiusScale", OptionGeoRadiusScale)
 
 
+class OptionPlugins(Options):
+
+  @property
+  def legend(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLegend
+    """
+    return self._config_sub_data("legend", OptionLegend)
+
+
 class OptionsGeo(ChartJsOptions):
 
   @property
@@ -1971,3 +2076,13 @@ class OptionsGeo(ChartJsOptions):
     :rtype: OptionGeo
     """
     return self._config_sub_data("geo", OptionGeo)
+
+  @property
+  def plugins(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPlugins
+    """
+    return self._config_sub_data("plugins", OptionPlugins)

@@ -15,8 +15,9 @@
 - Create Options modules for Tables libraries.
 - Migration of the Tabulator and DataTable extension to the Options framework.
 - Add hot_imports to the js function to load JavaScript module from an event._
-
-[] Add filter options
+- Apex charts add activePoints.
+- Create NVD3 dedicated options module.
+- Add packages definition in Imports.py
 
 ### Changed
 - ChartJs's options migrated to the standard framework,

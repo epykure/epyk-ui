@@ -8,6 +8,145 @@ from epyk.core.js.packages import JsApexChart
 from epyk.core.js import JsUtils
 
 
+class ApexActivePoints:
+
+  def __init__(self, chart_id, i, page):
+    self.chartId = chart_id
+    self._report = page
+    self.num = i or self.index
+
+  @property
+  def index(self):
+    """
+    Description:
+    -----------
+    Get the active series index.
+
+    :return: A javaScript number.
+    """
+    return JsUtils.jsWrap("config.seriesIndex")
+
+  @property
+  def config(self):
+    """
+    Description:
+    -----------
+    Get the event / chart detailed configuration.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript dictionary.
+    """
+    return JsUtils.jsWrap("config")
+
+  @property
+  def datasetLabel(self):
+    """
+    Description:
+    -----------
+    Return the name of the selected dataset.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript string
+    """
+    return JsUtils.jsWrap("config.config.series[%s].name" % self.num)
+
+  @property
+  def dataset(self):
+    """
+    Description:
+    -----------
+    Return the selected dataset.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript dictionary
+    """
+    return JsUtils.jsWrap("config.config.series[%s]" % self.num)
+
+  @property
+  def value(self):
+    """
+    Description:
+    -----------
+    Return the value for the selected point of the dataset.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return:
+    """
+    return JsUtils.jsWrap("config.config.series[%s].data[%s]" % (self.num, self.dataPointIndex))
+
+  @property
+  def label(self):
+    """
+    Description:
+    -----------
+    Return the x label for the selected point.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript object.
+    """
+    return JsUtils.jsWrap("config.globals.categoryLabels[%s]" % self.dataPointIndex)
+
+  @property
+  def dataPointIndex(self):
+    """
+    Description:
+    -----------
+    Get the index of the selected point.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript number
+    """
+    return JsUtils.jsWrap("config.dataPointIndex")
+
+  @property
+  def event(self):
+    """
+    Description:
+    -----------
+    Get the original JavaScript event object.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A JavaScript event object.
+    """
+    return JsUtils.jsWrap("event")
+
+  @property
+  def chartContext(self):
+    """
+    Description:
+    -----------
+    Get the full chart context.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    :return: A Javascript dictionary
+    """
+    return JsUtils.jsWrap("chartContext")
+
+
 class Chart(Html.Html):
   name = 'ApexCharts'
   requirements = ('apexcharts', )
@@ -21,6 +160,32 @@ class Chart(Html.Html):
     self.options.yaxis.labels.formatters.toNumber()
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
+
+  def activePoints(self, i=None):
+    """
+    Description:
+    -----------
+    The current active points selected by an event on a chart.
+
+    Usage::
+
+        library = "apex"
+        kind = "line"
+        c = page.ui.charts.plot(library, data.to_dict('records'), kind=kind, y=["Value"], x="Year", height=(500, "px"))
+
+        c.click([
+          page.js.console.log(c.activePoints().label)
+        ])
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/chart/events/
+
+    Attributes:
+    ----------
+    :param i: Integer. Optional. The series index. Default it is the series clicked.
+    """
+    return ApexActivePoints(self.chartId, i, self.page)
 
   @property
   def shared(self):
@@ -285,7 +450,7 @@ class Area(Chart):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: OptChartApex.OptionFill
+    :rtype: OptChartApex.OptionsArea
     """
     return super().options
 
@@ -383,6 +548,6 @@ class Bubble(Chart):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: OptChartApex.OptionFill
+    :rtype: OptChartApex.OptionsArea
     """
     return super().options

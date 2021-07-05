@@ -7,6 +7,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
 from epyk.core.html.options import OptChart
+from epyk.core.html.options import OptChartNvd3
 
 
 class Chart(Html.Html):
@@ -32,10 +33,10 @@ class Chart(Html.Html):
 
     Usage::
 
-      line = page.ui.charts.bb.bar()
+      line = page.ui.charts.nvd3.bar()
       line.shared.x_label("x axis")
     """
-    return OptChart.OptionsChartSharedNVD3(self)
+    return OptChartNvd3.OptionsChartSharedNVD3(self)
 
   @property
   def options(self):
@@ -57,8 +58,6 @@ class Chart(Html.Html):
     Description:
     ------------
     Return the Javascript variable of the chart.
-
-    Usage::
     """
     return "%s_obj" % self.htmlCode
 
@@ -69,8 +68,6 @@ class Chart(Html.Html):
     -----------
     Property to the last dataset added to the NVD3 chart.
     Use the function traces to get a specific series from the chart object.
-
-    Usage::
     """
     return self._datasets[-1]
 

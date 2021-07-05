@@ -9,17 +9,55 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedApex(OptChart.OptionsChartShared):
 
+  def x_format(self, jsFncs, profile=None):
+    self.component.options.xaxis.labels.formatter(jsFncs, profile)
+    return self
+
+  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.xaxis.labels.formatters.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def x_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.xaxis.labels.formatters.scale(factor, alias, digits, thousand_sep)
+    return self
+
   def x_label(self, value):
     """
     Description:
     -----------
     Set the label of the x axis.
 
+    Related Pages:
+
+      https://apexcharts.com/docs/options/xaxis/
+
     Attributes:
     ----------
     :param value: String. The axis label.
     """
     self.component.options.xaxis.title.text = value
+    return self
+
+  def x_tick_count(self, num):
+    """
+    Description:
+    -----------
+    Number of Tick Intervals to show.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/xaxis/
+
+    Attributes:
+    ----------
+    :param num: Integer. The number of ticks
+    """
+    self.component.options.xaxis.tickAmount = num
+    return self
+
+  def y_format(self, jsFncs, profile=None):
+    self.component.options.yaxis.labels.formatter(jsFncs, profile)
+    return self
 
   def y_label(self, value):
     """
@@ -27,11 +65,41 @@ class OptionsChartSharedApex(OptChart.OptionsChartShared):
     -----------
     Set the label of the y axis.
 
+    Related Pages:
+
+      https://apexcharts.com/docs/options/yaxis/
+
     Attributes:
     ----------
     :param value: String. The axis label.
     """
     self.component.options.yaxis.title.text = value
+    return self
+
+  def y_tick_count(self, num):
+    """
+    Description:
+    -----------
+    Number of Tick Intervals to show.
+
+    Related Pages:
+
+      https://apexcharts.com/docs/options/yaxis/
+
+    Attributes:
+    ----------
+    :param num: Integer. The number of ticks
+    """
+    self.component.options.yaxis.tickAmount = num
+    return self
+
+  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.yaxis.labels.formatters.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def y_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.yaxis.labels.formatters.scale(factor, alias, digits, thousand_sep)
+    return self
 
 
 class OptionHover(Options):
@@ -89,6 +157,12 @@ class OptionMarkers(Options):
 
   @property
   def hover(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionHover
+    """
     return self._config_sub_data("hover", OptionHover)
 
 
@@ -165,10 +239,25 @@ class OptionDropShadow(Options):
 class OptionLabels(Options):
 
   def formatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionStyle
+    """
     return self._config_sub_data("style", OptionStyle)
 
   @property
@@ -234,16 +323,40 @@ class OptionXaxis(Options):
 
   @property
   def title(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTitle
+    """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def labels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionLabels
+    """
     return self._config_sub_data("labels", OptionLabels)
 
   def axisTicks(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionAxisTicks
+    """
     return self._config_sub_data("axisTicks", OptionAxisTicks)
 
   def axisBorder(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionAxisBorder
+    """
     return self._config_sub_data("axisBorder", OptionAxisBorder)
 
   @property
@@ -283,10 +396,22 @@ class OptionYaxis(Options):
 
   @property
   def title(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTitle
+    """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def labels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionLabels
+    """
     return self._config_sub_data("labels", OptionLabels)
 
   @property
@@ -314,6 +439,12 @@ class OptionYaxis(Options):
     self._config(flag)
 
   def axisTicks(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionAxisTicks
+    """
     return self._config_sub_data("axisTicks", OptionAxisTicks)
 
   @property
@@ -375,10 +506,22 @@ class OptionGrid(Options):
 
   @property
   def row(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionRow
+    """
     return self._config_sub_data("row", OptionRow)
 
   @property
   def padding(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionPadding
+    """
     return self._config_sub_data("padding", OptionPadding)
 
 
@@ -451,6 +594,12 @@ class OptionAnimations(Options):
 
   @property
   def dynamicAnimation(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDynamicAnimations
+    """
     return self._config_sub_data("dynamicAnimation", OptionDynamicAnimations)
 
 
@@ -472,7 +621,7 @@ class OptionEvents(Options):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config(
-      "function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
+      "function(event, chartContext, config){let data = config.config.series[config.seriesIndex].data[config.dataPointIndex]; %s}" % JsUtils.jsConvertFncs(
         jsFncs, toStr=True, profile=profile), js_type=True)
 
   def mouseMove(self, jsFncs, profile=None):
@@ -687,22 +836,52 @@ class OptionChart(Options):
 
   @property
   def zoom(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionZoom
+    """
     return self._config_sub_data("zoom", OptionZoom)
 
   @property
   def events(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionEvents
+    """
     return self._config_sub_data("events", OptionEvents)
 
   @property
   def animations(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionAnimations
+    """
     return self._config_sub_data("animations", OptionAnimations)
 
   @property
   def dropShadow(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDropShadow
+    """
     return self._config_sub_data("dropShadow", OptionDropShadow)
 
   @property
   def toolbar(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionToolbar
+    """
     return self._config_sub_data("toolbar", OptionToolbar)
 
   @property
@@ -715,6 +894,12 @@ class OptionChart(Options):
 
   @property
   def sparkline(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionSparkline
+    """
     return self._config_sub_data("sparkline", OptionSparkline)
 
   @property
@@ -764,6 +949,15 @@ class OptionValue(Options):
     self._config("%spx" % num)
 
   def formatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(
       jsFncs, toStr=True, profile=profile), js_type=True)
 
@@ -791,6 +985,15 @@ class OptionTotal(Options):
     self._config(value)
 
   def formatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(
       jsFncs, toStr=True, profile=profile), js_type=True)
 
@@ -808,34 +1011,50 @@ class OptionFormatters:
   @packageImport("accounting")
   def toNumber(self, digit=0, thousand_sep="."):
     """
+    Description:
+    -----------
 
-    :param digit:
-    :param thousand_sep:
+    Attributes:
+    ----------
+    :param digit: Integer. Optional.
+    :param thousand_sep: String. Optional.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     self.__option._config("function (value){return accounting.formatNumber(value, %s, %s)}" % (
       digit, thousand_sep), self.__name, True)
 
   @packageImport("accounting")
-  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s"):
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     """
+    Description:
+    -----------
 
-    :param symbol:
-    :param digit:
-    :param thousand_sep:
-    :param decimal_sep:
-    :param fmt:
+    Attributes:
+    ----------
+    :param symbol: String. Optional.
+    :param digit: Integer. Optional.
+    :param thousand_sep: String. Optional.
+    :param decimal_sep: String. Optional.
+    :param fmt: String. Optional.
+    :param factor: Number. Optional.
+    :param alias: String. Optional.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self.__option._config("function (value){return accounting.formatMoney(value, %s, %s, %s, %s, %s)}" % (
-      symbol, digit, thousand_sep, decimal_sep, fmt), self.__name, True)
+    if not alias:
+      alias = {1000: "k", 1000000: "m"}.get(factor, alias)
+    self.__option._config("function (value){return accounting.formatMoney(value/%s, %s, %s, %s, %s, '%s')}" % (
+      factor or 1, "'%s' + %s" % (alias, symbol), digit, thousand_sep, decimal_sep, fmt), self.__name, True)
 
   @packageImport("accounting")
   def toPercent(self, symbol="%", digit=0, thousand_sep=".", decimal_sep=","):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -867,6 +1086,14 @@ class OptionFormatters:
       factor, digits, thousand_sep, alias), self.__name, True)
 
   def mapTo(self, mapping):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param mapping:
+    """
     self.__option._config(
       "function (value){var mapping = %s; if (value in mapping){return mapping[value]}; return value}" % mapping,
       self.__name, js_type=True)
@@ -885,8 +1112,12 @@ class OptionDataLabels(Options):
   @property
   def textAnchor(self):
     """
+    Description:
+    -----------
 
-    https://apexcharts.com/docs/options/datalabels/
+    Related Pages:
+
+      https://apexcharts.com/docs/options/datalabels/
     """
     return self._config_get()
 
@@ -904,21 +1135,54 @@ class OptionDataLabels(Options):
 
   @property
   def name(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionName
+    """
     return self._config_sub_data("name", OptionName)
 
   @property
   def value(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionValue
+    """
     return self._config_sub_data("value", OptionValue)
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionStyle
+    """
     return self._config_sub_data("style", OptionStyle)
 
   @property
   def total(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTotal
+    """
     return self._config_sub_data("total", OptionTotal)
 
   def formatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
@@ -1008,6 +1272,12 @@ class OptionTitle(Options):
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionStyle
+    """
     return self._config_sub_data("style", OptionStyle)
 
 
@@ -1066,12 +1336,27 @@ class OptionLegend(Options):
 
   @property
   def labels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionLabels
+    """
     return self._config_sub_data("labels", OptionLabels)
 
 
 class OptionY(Options):
 
   def formatter(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
@@ -1126,10 +1411,22 @@ class OptionTooltip(Options):
 
   @property
   def y(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionY
+    """
     return self._config_sub_data("y", OptionY)
 
   @property
   def fixed(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionFixed
+    """
     return self._config_sub_data("fixed", OptionFixed)
 
 
@@ -1212,6 +1509,12 @@ class OptionFill(Options):
 
   @property
   def gradient(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionGradient
+    """
     return self._config_sub_data("gradient", OptionGradient)
 
 
@@ -1246,6 +1549,12 @@ class OptionResponsive(Options):
 
   @property
   def opts(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionsLine
+    """
     return self._config_sub_data("options", OptionsLine)
 
 
@@ -1280,6 +1589,12 @@ class OptionTheme(Options):
 
   @property
   def monochrome(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionMonochrome
+    """
     return self._config_sub_data("monochrome", OptionMonochrome)
 
 
@@ -1314,6 +1629,12 @@ class OptionPlotOptionsBar(Options):
 
   @property
   def dataLabels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDataLabels
+    """
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
@@ -1321,6 +1642,12 @@ class OptionsPlotRadialBar(Options):
 
   @property
   def hollow(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionHollow
+    """
     return self._config_sub_data("hollow", OptionHollow)
 
   @property
@@ -1349,6 +1676,12 @@ class OptionsPlotRadialBar(Options):
 
   @property
   def dataLabels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDataLabels
+    """
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
@@ -1356,6 +1689,12 @@ class OptionPlotOptions(Options):
 
   @property
   def bar(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionPlotOptionsBar
+    """
     return self._config_sub_data("bar", OptionPlotOptionsBar)
 
 
@@ -1363,10 +1702,22 @@ class OptionsPlotRadial(Options):
 
   @property
   def radialBar(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionsPlotRadialBar
+    """
     return self._config_sub_data("radialBar", OptionsPlotRadialBar)
 
   @property
   def dataLabels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDataLabels
+    """
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
 
@@ -1374,57 +1725,133 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def chart(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionChart
+    """
     return self._config_sub_data("chart", OptionChart)
 
   @property
   def grid(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionGrid
+    """
     return self._config_sub_data("grid", OptionGrid)
 
   @property
   def markers(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionMarkers
+    """
     return self._config_sub_data("markers", OptionMarkers)
 
   @property
   def title(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTitle
+    """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def subtitle(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTitle
+    """
     return self._config_sub_data("subtitle", OptionTitle)
 
   @property
   def stroke(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionStroke
+    """
     return self._config_sub_data("stroke", OptionStroke)
 
   @property
   def dataLabels(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionDataLabels
+    """
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
   @property
   def legend(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionLegend
+    """
     return self._config_sub_data("legend", OptionLegend)
 
   @property
   def xaxis(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionXaxis
+    """
     return self._config_sub_data("xaxis", OptionXaxis)
 
   @property
   def yaxis(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionYaxis
+    """
     return self._config_sub_data("yaxis", OptionYaxis)
 
   @property
   def tooltip(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionTooltip
+    """
     return self._config_sub_data("tooltip", OptionTooltip)
 
   @property
   def theme(self):
     """
+    Description:
+    -----------
 
     https://apexcharts.com/docs/options/theme/
+
+    :rtype: OptionTheme
     """
     return self._config_sub_data("theme", OptionTheme)
 
   def add_series(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionSeries
+    """
     return self._config_sub_data_enum("series", OptionSeries)
 
   def get_series(self, i=0):
@@ -1435,6 +1862,12 @@ class OptionsLine(OptChart.OptionsChart):
     return self.js_tree.get("series", [])
 
   def add_responsive(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionResponsive
+    """
     return self._config_sub_data_enum("responsive", OptionResponsive)
 
   def get_responsive(self, i=0):
@@ -1445,6 +1878,12 @@ class OptionsArea(OptionsLine):
 
   @property
   def fill(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionFill
+    """
     return self._config_sub_data("fill", OptionFill)
 
 
@@ -1453,6 +1892,12 @@ class OptionsBar(OptionsLine):
 
   @property
   def plotOptions(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionPlotOptions
+    """
     return self._config_sub_data("plotOptions", OptionPlotOptions)
 
 
@@ -1476,4 +1921,10 @@ class OptionsPie(OptionsLine):
 
   @property
   def plotOptions(self):
+    """
+    Description:
+    -----------
+
+    :rtype: OptionsPlotRadial
+    """
     return self._config_sub_data("plotOptions", OptionsPlotRadial)

@@ -5,8 +5,72 @@ import logging
 
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
+from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
+
+
+class OptionsChartSharedC3(OptChart.OptionsChartShared):
+
+  def x_format(self, jsFncs, profile=None):
+    pass
+
+  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.axis.x.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def x_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.axis.x.tick.formats.scale(factor, alias, digits, thousand_sep)
+    return self
+
+  def x_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the x axis.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-label
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.axis.x.label.text = value
+    return self
+
+  def x_tick_count(self, num):
+    self.component.options.axis.x.tick.count = num
+    return self
+
+  def y_format(self, jsFncs, profile=None):
+    pass
+
+  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    self.component.options.axis.y.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
+    return self
+
+  def y_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+    self.component.options.axis.x.tick.formats.scale(factor, alias, digits, thousand_sep)
+    return self
+
+  def y_label(self, value):
+    """
+    Description:
+    -----------
+    Set the label of the y axis.
+
+    Attributes:
+    ----------
+    :param value: String. The axis label.
+    """
+    self.component.options.axis.y.label.text = value
+    return self
+
+  def y_tick_count(self, num):
+    self.component.options.axis.y.tick.count = num
+    return self
 
 
 class EnumAxisTypes(Enums):
@@ -59,6 +123,81 @@ class EnumAxisTypes(Enums):
 
 
 class EnumTickFormat(Enums):
+
+  def format(self):
+    """
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/demo/#Chart.TimeseriesChart
+    """
+    self._set_value(value='''
+      function(index, categoryName){var label = new Date(categoryName);
+        return label.getFullYear() +"-"+ (label.getMonth() + 1) +"-"+ label.getDate()}''', js_type=True)
+
+  @packageImport("accounting")
+  def toNumber(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+    Convert to number using the accounting Javascript module-
+
+    Related Pages:
+
+      https://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param digit: Integer. The number of digit to be displayed
+    :param thousand_sep: The thousand symbol separator
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    self._set_value(value="function(value) {return accounting.formatNumber(value, %s, %s)}" % (
+      digit, thousand_sep), js_type=True)
+    return self
+
+  @packageImport("accounting")
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param symbol: String. Optional.
+    :param digit: Integer. Optional.
+    :param thousand_sep: String. Optional.
+    :param decimal_sep: String. Optional.
+    :param fmt: String. Optional.
+    :param factor: Number. Optional.
+    :param alias: String. Optional.
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    if not alias:
+      alias = {1000: "k", 1000000: "m"}.get(factor, alias)
+    self._set_value(value="function (value){return accounting.formatMoney(value/%s, %s, %s, %s, %s, '%s')}" % (
+      factor or 1, "'%s'+ %s" % (alias, symbol), digit, thousand_sep, decimal_sep, fmt), js_type=True)
+
+  @packageImport("accounting")
+  def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param factor:
+    :param alias:
+    :param digits:
+    :param thousand_sep:
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
+    self._set_value(value="function(value) {return accounting.formatNumber(value/%s, %s, %s) + '%s'}" % (
+        factor, digits, thousand_sep, alias), js_type=True)
+    return self
 
   def yy_mm_dd(self):
     """
@@ -259,37 +398,6 @@ class EnumLegendPosition(Enums):
       https://naver.github.io/billboard.js/demo/#Legend.LegendPosition
     """
     self._set_value()
-
-
-class OptionsChartSharedC3(OptChart.OptionsChartShared):
-
-  def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-label
-
-    Attributes:
-    ----------
-    :param value: String. The axis label.
-    """
-    self.component.options.axis.x.label.text = value
-
-  def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
-
-    Attributes:
-    ----------
-    :param value: String. The axis label.
-    """
-    self.component.options.axis.y.label.text = value
 
 
 class OptionPadding(Options):
@@ -972,6 +1080,8 @@ class OptionsLabel(Options):
 
       https://c3js.org/reference.html#donut-label-format
 
+    Attributes:
+    ----------
     :param jsFunc:
     :param profile:
     """
@@ -3515,6 +3625,25 @@ class C3Bubble(C3):
     return self._config_sub_data("bubble", OptionsBubble)
 
 
+class C3StanfordData(OptionsData):
+
+  @property
+  def epochs(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/demo/#Chart.BubbleDimensionChart
+    """
+    return self._config_get()
+
+  @epochs.setter
+  def epochs(self, value):
+    self._config(value)
+
+
 class C3Stanford(OptChart.OptionsChart):
 
   @property
@@ -3536,6 +3665,16 @@ class C3Stanford(OptChart.OptionsChart):
     :rtype: OptionsPoints
     """
     return self._config_sub_data("point", OptionsPoints)
+
+  @property
+  def data(self):
+    """
+    Description:
+    ------------
+
+    :rtype: C3StanfordData
+    """
+    return self._config_sub_data("data", C3StanfordData)
 
   @property
   def grid(self):

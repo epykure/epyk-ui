@@ -2289,7 +2289,7 @@ class ImportModule:
     Get the package path used to retrieve the various modules.
     """
     mod = JS_IMPORTS[self._name]['modules'][0]
-    mod["version"] = self.version
+    mod["version"] = self.version[0]
     mod["path"] = mod["path"] % mod
     return "%(cdnjs)s/%(path)s" % mod
 
@@ -2319,6 +2319,14 @@ class ImportModule:
       print(pkgs.tabulator.scripts)
     """
     return self._js["main"].keys() | self._css["main"].keys()
+
+  @property
+  def js(self):
+    return list(self._js["main"].keys())
+
+  @property
+  def css(self):
+    return list(self._css["main"].keys())
 
   def from_cdnjs(self):
     """
@@ -2360,6 +2368,494 @@ class ImportModule:
         new_css["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
       self._css["main"] = new_css
     self.overriden = True
+
+
+class ImportPackagesPivotExts:
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+  @property
+  def c3(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("pivot-c3", self._js, self._css)
+
+  @property
+  def plotly(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("pivot-plotly", self._js, self._css)
+
+  @property
+  def d3(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("pivot-d3", self._js, self._css)
+
+  @property
+  def subtotal(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("subtotal", self._js, self._css)
+
+
+class ImportPackagesCodeMirrorExts:
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+  @property
+  def search(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-search", self._js, self._css)
+
+  @property
+  def placeholder(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-placeholder", self._js, self._css)
+
+  @property
+  def trailingspace(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-trailingspace", self._js, self._css)
+
+  @property
+  def fullscreen(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-fullscreen", self._js, self._css)
+
+  @property
+  def highlighter(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-highlighter", self._js, self._css)
+
+  @property
+  def hint(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-hint", self._js, self._css)
+
+  @property
+  def panel(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-panel", self._js, self._css)
+
+  @property
+  def fold(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("codemirror-fold", self._js, self._css)
+
+
+class ImportPackagesD3Exts:
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+  @property
+  def tip(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-tip", self._js, self._css)
+
+  @property
+  def axis(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-axis", self._js, self._css)
+
+  @property
+  def ease(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-ease", self._js, self._css)
+
+  @property
+  def dsv(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-dsv", self._js, self._css)
+
+  @property
+  def dispatch(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-dispatch", self._js, self._css)
+
+  @property
+  def transition(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-transition", self._js, self._css)
+
+  @property
+  def selection(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-selection", self._js, self._css)
+
+  @property
+  def interpolate(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-interpolate", self._js, self._css)
+
+  @property
+  def time_format(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-time-format", self._js, self._css)
+
+  @property
+  def time(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-time", self._js, self._css)
+
+  @property
+  def array(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-array", self._js, self._css)
+
+  @property
+  def format(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-format", self._js, self._css)
+
+  @property
+  def timer(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-timer", self._js, self._css)
+
+  @property
+  def collection(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-collection", self._js, self._css)
+
+  @property
+  def scale(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-scale", self._js, self._css)
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-color", self._js, self._css)
+
+  @property
+  def brush(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-brush", self._js, self._css)
+
+  @property
+  def drag(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-drag", self._js, self._css)
+
+  @property
+  def shape(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-shape", self._js, self._css)
+
+  @property
+  def zoom(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-zoom", self._js, self._css)
+
+  @property
+  def path(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("d3-path", self._js, self._css)
+
+
+class ImportPackagesDataTableExts:
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+
+class ImportPackagesChartJsExts:
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+
+class ImportPackagesTabulatorExts:
+
+  def __init__(self, js, css):
+    self._js = js
+    self._css = css
+
+  @property
+  def formatter_inputs(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("tabulator-inputs", self._js, self._css)
+
+  @property
+  def formatter_icons(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("tabulator-icons", self._js, self._css)
+
+  @property
+  def formatter_numbers(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("tabulator-numbers", self._js, self._css)
+
+  @property
+  def formatter_drops(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("tabulator-drop", self._js, self._css)
+
+  @property
+  def mutators_inputs(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("tabulator-mutators-inputs", self._js, self._css)
+
+  @property
+  def editors_inputs(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("editors-inputs", self._js, self._css)
+
+  @property
+  def editors_dates(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("editors-dates", self._js, self._css)
+
+  @property
+  def editors_selects(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return ImportModule("editors-selects", self._js, self._css)
 
 
 class ImportPackages:
@@ -2477,6 +2973,19 @@ class ImportPackages:
       https://www.chartjs.org/
     """
     return ImportModule("chart.js", self._js, self._css)
+
+  @property
+  def chart_js_extensions(self):
+    """
+    Description:
+    ------------
+    Simple yet flexible JavaScript charting for designers & developers.
+
+    Related Pages:
+
+      https://www.chartjs.org/
+    """
+    return ImportPackagesChartJsExts(self._js, self._css)
 
   @property
   def crossfilter(self):
@@ -2679,6 +3188,15 @@ class ImportPackages:
     return ImportModule("tabulator-tables", self._js, self._css)
 
   @property
+  def tabulator_extensions(self):
+    """
+    Description:
+    ------------
+    Get all the defined extension for tabulator.
+    """
+    return ImportPackagesTabulatorExts(self._js, self._css)
+
+  @property
   def datatables(self):
     """
     Description:
@@ -2690,6 +3208,15 @@ class ImportPackages:
       https://datatables.net/
     """
     return ImportModule("tabulator-tables", self._js, self._css)
+
+  @property
+  def datatable_extensions(self):
+    """
+    Description:
+    ------------
+    Get all the defined extension for DataTable.
+    """
+    return ImportPackagesDataTableExts(self._js, self._css)
 
   @property
   def mathjax(self):
@@ -2835,6 +3362,13 @@ class ImportPackages:
       https://codemirror.net
     """
     return ImportModule("codemirror", self._js, self._css)
+
+  @property
+  def codemirror_extensions(self):
+    """
+
+    """
+    return ImportPackagesCodeMirrorExts(self._js, self._css)
 
   @property
   def highlight(self):
@@ -3703,3 +4237,37 @@ class ImportManager:
       return ""
 
     return JS_IMPORTS[alias].get('website', "")
+
+
+class Package:
+
+  @property
+  def all(self):
+    """
+    Description:
+    ------------
+    Get the definition of the package defined in this version of the package.
+    This will simplify the compatibility with the interface.
+    """
+    return ImportManager().pkgs
+
+  @classmethod
+  def avoid_cache(cls, name):
+    """
+    Description:
+    ------------
+    This will allow to create and change external packages.
+    It will add a unique ID to make sure the browser will always try to reload it.
+
+    Usage::
+
+      return jsonify({
+        "import_pkg": pk.package.avoid_cache(r"/static/formatters-numbers-new.js")})
+
+    Attributes:
+    ----------
+    :param name: String. The package name.
+    """
+    import random
+
+    return "%s?version=%s" % (name, random.random())

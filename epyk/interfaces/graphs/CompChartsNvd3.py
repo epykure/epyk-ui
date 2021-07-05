@@ -70,7 +70,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis, options={"agg":  options.get('agg', 'distinct')})
     line_chart = graph.GraphNVD3.ChartScatter(self.page, width, height, options, html_code, profile)
     line_chart.colors(self.page.theme.charts)
@@ -91,6 +91,18 @@ class Nvd3:
 
     Usage::
 
+      c = page.ui.charts.nvd3.line(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      page.ui.button("Click").click([
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.js.fetch(data_urls.DEMO_COUNTRY).csvtoRecords().filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+        filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").
+        get([
+          c.build(pk.events.data)
+          #"console.log(row)"
+        ])
+      ])
+
     Related Pages:
 
       http://nvd3.org/examples/line.html
@@ -107,7 +119,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
@@ -145,7 +157,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartCumulativeLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
@@ -183,7 +195,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartFocusLine(self.page, width, height, options, html_code, profile)
     line_chart.dom.useInteractiveGuideline(True)
@@ -205,6 +217,18 @@ class Nvd3:
 
     Usage::
 
+      c = page.ui.charts.nvd3.bar(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      page.ui.button("Click").click([
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.js.fetch(data_urls.DEMO_COUNTRY).csvtoRecords().filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+        filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").
+        get([
+          c.build(pk.events.data)
+          #"console.log(row)"
+        ])
+      ])
+
     Related Pages:
 
       http://nvd3.org/examples/discreteBar.html
@@ -221,7 +245,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartBar(self.page, width, height, options, html_code, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -244,6 +268,18 @@ class Nvd3:
 
     Usage::
 
+      c = page.ui.charts.nvd3.hbar(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      page.ui.button("Click").click([
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.js.fetch(data_urls.DEMO_COUNTRY).csvtoRecords().filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+        filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").
+        get([
+          c.build(pk.events.data)
+          #"console.log(row)"
+        ])
+      ])
+
     Related Pages:
 
       http://nvd3.org/examples/discreteBar.html
@@ -260,7 +296,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartHorizontalBar(self.page, width, height, options, html_code, profile)
     bar_chart.dom.x(column="label").y(column="y")
@@ -297,7 +333,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartMultiBar(self.page, width, height, options, html_code, profile)
     bar_chart.colors(self.page.theme.charts)
@@ -336,7 +372,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.page, width, height, options, html_code, profile)
     histo_chart.dom.x(column="label").y(column="y")
@@ -373,7 +409,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.page, width, height, options, html_code, profile)
     histo_chart.dom.x(column="label").y(column="y")
@@ -410,7 +446,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.labely(record or [], y_columns, x_axis)
     area_chart = graph.GraphNVD3.ChartArea(self.page, width, height, options, html_code, profile)
     area_chart.colors(self.page.theme.charts)
@@ -447,7 +483,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options, html_code, profile)
     pie_chart.colors(self.page.theme.charts)
@@ -468,6 +504,8 @@ class Nvd3:
 
     Usage::
 
+      c = page.ui.charts.nvd3.donut(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+
     Related Pages:
 
       http://nvd3.org/examples/pie.html
@@ -484,7 +522,7 @@ class Nvd3:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_axis': x_axis})
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options, html_code, profile)
     pie_chart.dom.x(column="x").y(column="y").donut(True)

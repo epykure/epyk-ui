@@ -20,6 +20,16 @@ class VegaEmbedded:
 
     Usage::
 
+      c = page.ui.charts.vega.plot(y=["Value"], x="Year", kind="point", height=(500, "px"))
+      text = page.ui.input("Italy")
+      slider = page.ui.sliders.range(minimum=1990, maximum=2020)
+      page.ui.button("Click").click([
+      page.js.d3.csv(data_urls.DEMO_COUNTRY).filterCol("Country Name", text.dom.content).cast(["Year", "Value"]).
+         filterCol("Year", slider.dom.min_select, ">").filterCol("Year", slider.dom.max_select, "<").get(
+           [#"data = data.slice(1)",
+          c.build(pk.events.data)])
+      ])
+
     Attributes:
     ----------
     :param record: List. Optional. The list of dictionaries with the input data.
@@ -33,7 +43,7 @@ class VegaEmbedded:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     line_chart = graph.GraphVega.VegaEmdedCharts(self.page, [], width, height, html_code, options, profile)
-    line_chart.options.spec.mark = kind
+    line_chart.options.spec.mark = {"scatter": "point"}.get(kind, kind)
     if width[1] == "px":
       line_chart.options.width = width[0]
     else:
@@ -44,6 +54,9 @@ class VegaEmbedded:
     if record is not None:
       line_chart.options.data.name = "table"
       line_chart.options.data.values = record
+    else:
+      line_chart.options.data.name = "table"
+      line_chart.options.data.values = []
 
     if x is not None:
       xaxis = line_chart.options.spec.encoding.x

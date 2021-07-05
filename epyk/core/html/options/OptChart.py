@@ -170,6 +170,49 @@ class OptionsChartShared(abc.ABC):
     self.component = component
 
   @abc.abstractmethod
+  def x_format(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+
+  @abc.abstractmethod
+  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    :param fmt:
+    :param factor:
+    :param alias:
+    """
+
+  @abc.abstractmethod
+  def x_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param factor:
+    :param alias:
+    :param digits:
+    :param thousand_sep:
+    """
+
+  @abc.abstractmethod
   def x_label(self, value):
     """
     Description:
@@ -179,6 +222,60 @@ class OptionsChartShared(abc.ABC):
     Attributes:
     ----------
     :param value: String. The axis label.
+    """
+
+  @abc.abstractmethod
+  def x_tick_count(self, num):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param num:
+    """
+
+  @abc.abstractmethod
+  def y_format(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+
+  @abc.abstractmethod
+  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    :param fmt:
+    :param factor:
+    :param alias:
+    """
+
+  @abc.abstractmethod
+  def y_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param factor:
+    :param alias:
+    :param digits:
+    :param thousand_sep:
     """
 
   @abc.abstractmethod
@@ -193,33 +290,14 @@ class OptionsChartShared(abc.ABC):
     :param value: String. The axis label.
     """
 
-
-class OptionsChartSharedNVD3(OptionsChartShared):
-
-  def x_label(self, value):
+  @abc.abstractmethod
+  def y_tick_count(self, num):
     """
     Description:
     -----------
-    Set the label of the x axis.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-label
 
     Attributes:
     ----------
-    :param value: String. The axis label.
+    :param num:
     """
-    self.component.dom.xAxis.axisLabel(value)
 
-  def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
-
-    Attributes:
-    ----------
-    :param value: String. The axis label.
-    """
-    self.component.dom.yAxis.axisLabel(value)
