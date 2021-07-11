@@ -471,7 +471,7 @@ class Report:
 
       https://www.w3schools.com/html/default.asp
 
-    :rtype: Interface.Components
+    :rtype: Interface.WebComponents
     """
     if self._ui is None:
       self._ui = Interface.WebComponents(self)

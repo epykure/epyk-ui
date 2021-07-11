@@ -392,6 +392,9 @@ class JsNvd3(JsPackage):
   def noData(self):
     pass
 
+  def color(self, colors):
+    pass
+
 
 class JsNvd3Area(JsNvd3):
   chartFnc = "stackedAreaChart"

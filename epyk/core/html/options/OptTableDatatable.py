@@ -6,6 +6,7 @@ from epyk.core.js.packages import packageImport
 
 class EnumStyleOptions(Enums):
   js_conversion = True
+  delimiter = " "
 
   def __wrap(self, name, header_only=False, body_only=False):
     """
@@ -25,12 +26,12 @@ class EnumStyleOptions(Enums):
     :param body_only:
     """
     if header_only:
-      return self._set_value(value='dt-head-%s' % name)
+      return self._add_value(value='dt-head-%s' % name)
 
     if body_only:
-      return self._set_value(value='dt-body-%s' % name)
+      return self._add_value(value='dt-body-%s' % name)
 
-    return self._set_value(value='dt-%s' % name)
+    return self._add_value(value='dt-%s' % name)
 
   def left(self, header_only=False, body_only=False):
     """
@@ -229,7 +230,7 @@ class Column(Options):
 
     :rtype: EnumStyleOptions
     """
-    return self.has_attribute(EnumStyleOptions)
+    return EnumStyleOptions(self, "className")
 
   @property
   def contentPadding(self):

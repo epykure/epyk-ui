@@ -18,7 +18,6 @@ class Table(Html.Html):
 
   def __init__(self, report, records, width, height, html_code, options, profile):
     data, columns, self._json_config = [], [], {}
-    print(options)
     super(Table, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     if records is not None:
@@ -76,7 +75,7 @@ class Table(Html.Html):
     ------------
     Tabulator table options.
 
-    :rtype: TableConfig
+    :rtype: OptTableTabulator.TableConfig
     """
     return super().options
 

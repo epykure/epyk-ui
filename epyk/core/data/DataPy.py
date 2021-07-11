@@ -894,7 +894,7 @@ class SelectionBox:
     """
     result = {}
     for rec in records:
-      result[rec[column]] = {'name': rec[column], 'value': rec[column].strip()}
+      result[rec[column]] = {'name': rec[column], 'value': str(rec[column]).strip()}
     return [result[k] for k in sorted(result.keys())]
 
   @staticmethod
@@ -1078,7 +1078,7 @@ class Tree:
           tree[-1]["css"] = options["styles"]["node"]
         self.__add_level(fp_path, tree[-1]["items"], root, excluded_folders, make_url=make_url, options=options)
       elif fp.endswith(".py"):
-        tree.append({"value": fp, "_path": fp_path}) # "url": "/code_frame?classpath=%s&script=%s" % (root, fp_path)
+        tree.append({"value": fp, "_path": fp_path})  # "url": "/code_frame?classpath=%s&script=%s" % (root, fp_path)
         if options.get("styles", {}).get("leaf") is not None:
           tree[-1]["css"] = options["styles"]["leaf"]
         if make_url is not None:

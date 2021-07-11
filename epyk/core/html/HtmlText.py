@@ -34,6 +34,27 @@ class Label(Html.Html):
       self.set_attrs(name='title', value=tooltip)
 
   @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage::
+
+      div = page.ui.label(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+
+  @property
   def id_html(self):
     """
     Description:
