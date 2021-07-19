@@ -122,6 +122,7 @@ class ExternalLink(Html.Html):
 
 class DataLink(Html.Html):
   name = 'Data link'
+  filename = "Download"
 
   def __init__(self, report, text, value, width, height, fmt, options, profile):
     super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile, options=options,
@@ -144,5 +145,6 @@ class DataLink(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {
-      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'], 'format': self.format}
+    return '<a %(attr)s href="#" download="%(filename)s.%(format)s" type="text/%(format)s">%(val)s</a>' % {
+      "filename": self.filename, 'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'],
+      'format': self.format}

@@ -131,7 +131,7 @@ class Buttons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
-    component.style.css.background = color or self.page.theme.colors[-1]
+    component.style.css.background = color or self.page.theme.notch(4)
     component.style.css.border = "1px solid %s" % (color or self.page.theme.colors[-1])
     component.style.css.color = self.page.theme.colors[0]
     component.style.css.margin_top = 5

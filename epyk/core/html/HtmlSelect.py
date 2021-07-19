@@ -57,7 +57,7 @@ class Select(Html.Html):
   def __init__(self, report, records, html_code, width, height, profile, multiple, options):
     super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
-    self._vals = records
+    self._vals, self.button_css = records, None
     if html_code in self._report.inputs:
       for v in self._vals:
         if v['value'] == self._report.inputs[html_code]:
@@ -238,6 +238,9 @@ class Select(Html.Html):
         self.page.css.customText('.%s_background {background: %s !IMPORTANT}' % (
           self.htmlCode, self.attr.get("data-background")))
       self.attr['class'].add("%s_background" % self.htmlCode)
+    if self.button_css is not None:
+      self.page.css.customText('.%s_button_bespoke {%s}' % (self.htmlCode, ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in self.button_css.items()])))
+      self.attr['class'].insert(0, "%s_button_bespoke" % self.htmlCode)
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
 

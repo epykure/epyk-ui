@@ -514,7 +514,7 @@ class Panels:
     return h_drawer
 
   @html.Html.css_skin()
-  def hamburger(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"),
+  def hamburger(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"),
                 html_code=None, helper=None, options=None, profile=False):
     """
     Description:

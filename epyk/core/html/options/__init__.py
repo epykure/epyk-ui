@@ -516,7 +516,7 @@ class Enums:
     :param value: String. Optional. The value to be added to the attributes.
     :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
     """
-    key = name or sys._getframe().f_back.f_code.co_name
+    key = name or self.__name
     if key not in self.__option.js_tree:
       self.__option.js_tree[key] = []
 

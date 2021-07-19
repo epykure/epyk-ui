@@ -2668,9 +2668,29 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"z-index": val})
 
-  def middle(self):
+  def middle(self, line_height=None):
+    """
+    Description:
+    ------------
+    Set the vertical align to middle and also the line height is a value is supplied.
+
+    Usage::
+
+      htmlObj.style.css.middle(25)
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_dim_line-height.asp
+      https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
+
+    Attributes:
+    ----------
+    :param line_height: Integer. Optional. Set the line height CSS property.
+    """
     self.vertical_align = "middle"
     self.text_align = "center"
+    if line_height is not None:
+      self.line_height = line_height
     return self
 
   def sticky(self, top=0, bottom=None, left=None, right=None, z_index=400):

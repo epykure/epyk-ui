@@ -52,6 +52,7 @@ class Tabulators:
 
     if not records or len(records) < table_options_dflts["paginationSize"]:
       del table_options_dflts["pagination"]
+      del table_options_dflts["paginationSize"]
 
     json = {}
     if 'json' in table_options_dflts:
@@ -61,7 +62,7 @@ class Tabulators:
     table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
                                                  table_options_dflts, profile)
     table._json_config = json
-    table.options.layout.fitColumns()
+    table.options.layouts.fitColumns()
     for c in cols + rows:
       table.add_column(c)
     if rows:
@@ -116,7 +117,7 @@ class Tabulators:
     table = html_tables.HtmlTableTabulator.TableTree(
       self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
-    table.options.layout.fitColumns()
+    table.options.layouts.fitColumns()
     for c in cols + rows:
       table.add_column(c)
     table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {

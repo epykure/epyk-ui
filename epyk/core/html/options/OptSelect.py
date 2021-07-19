@@ -510,7 +510,8 @@ class OptionsSelectJs(OptionsSelect):
     """
     Description:
     ------------
-    The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have been selected.
+    The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have
+    been selected.
 
     Related Pages:
 
@@ -623,8 +624,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @selectOnTab.setter
-  def selectOnTab(self, bool):
-    self._config(bool)
+  def selectOnTab(self, flag):
+    self._config(flag)
 
   @property
   def showContent(self):
@@ -675,8 +676,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showSubtext.setter
-  def showSubtext(self, bool):
-    self._config(bool)
+  def showSubtext(self, flag):
+    self._config(flag)
 
   @property
   def showTick(self):
@@ -692,8 +693,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showTick.setter
-  def showTick(self, bool):
-    self._config(bool)
+  def showTick(self, flag):
+    self._config(flag)
 
   @property
   def size(self):
@@ -823,8 +824,8 @@ class OptionsSelectJs(OptionsSelect):
     """
     Description:
     ------------
-    This is useful in cases where the window has areas that the dropdown menu should not cover - for instance a fixed header.
-    When set to an integer, the same padding will be added to all sides.
+    This is useful in cases where the window has areas that the dropdown menu should not cover -
+    for instance a fixed header. When set to an integer, the same padding will be added to all sides.
     Alternatively, an array of integers can be used in the format [top, right, bottom, left].
 
     Related Pages:

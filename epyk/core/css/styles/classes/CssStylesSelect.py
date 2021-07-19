@@ -93,11 +93,11 @@ class CssSelectOptionActive(CssStyle.Style):
 
 
 class CssSelectOptionSelected(CssStyle.Style):
-  classname = "selected"
+  classname = "dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus"
 
   def customize(self):
     self.css({
-      'background': self.page.theme.colors[-1],
+      'background-color': self.page.theme.notch(-1),
       "color": self.page.theme.greys[0]}, important=True)
 
 

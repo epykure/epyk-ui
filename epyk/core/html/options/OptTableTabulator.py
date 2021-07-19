@@ -34,6 +34,18 @@ class EnumLayout(Enums):
     """
     return self._set_value()
 
+  def fitData(self):
+    """
+    Description:
+    -----------
+    http://tabulator.info/docs/4.1/layout#fittodata.
+
+    Related Pages:
+
+      http://tabulator.info/examples/4.9
+    """
+    return self._set_value()
+
   def fitDataTable(self):
     """
     Description:
@@ -2592,6 +2604,27 @@ class TableConfig(Options):
 
   @property
   def layout(self):
+    """
+    Description:
+    -----------
+    Layout mode for the table columns.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.2/options
+    """
+    return self._config_get()
+
+  @layout.setter
+  def layout(self, val):
+    self._config(val)
+
+  @property
+  def layouts(self):
     """
     Description:
     -----------

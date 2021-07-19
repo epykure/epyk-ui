@@ -42,14 +42,14 @@ class Datatables:
 
     table = html_tables.HtlmTableDatatable.Table(self.page, data, width, height, html_code, options,
                                                  profile)
-    table.config.autoWidth = True
-    table.config.scrollCollapse = True
+    table.options.autoWidth = True
+    table.options.scrollCollapse = True
     for c in cols + rows:
-      col_def = table.config.columns
+      col_def = table.options.columns
       col_def.title = c
       col_def.className.center()
     table.style.themes.compact()
-    table.config.scrollX = True
+    table.options.scrollX = True
     return table
 
   def heatmap(self):

@@ -676,7 +676,6 @@ class Nvd3:
 
     candle_chart = graph.GraphNVD3.ChartCandlestick(self.page, width, height, options, html_code, profile)
     candle_chart.dom.x(column='date').y(column='close')
-    candle_chart.colors(self.page.theme.charts)
     candle_chart.dom.xAxis.tickDateFormat()
     for s in all_series:
       candle_chart.add_trace(s)

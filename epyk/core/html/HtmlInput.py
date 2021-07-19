@@ -715,8 +715,8 @@ class Field(Html.Html):
     self.input = html_input
     self.append_child(self.input)
     self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
-                  css={"margin-left": '5px', 'color': self._report.theme.colors[-1]})
-    self.css({"margin-top": '2px'})
+                  css={"margin-left": '5px', 'color': self.page.theme.colors[-1]})
+    self.css({"margin-top": '2px', "margin-bottom": '2px'})
 
   @property
   def dom(self):
@@ -970,6 +970,8 @@ class FieldSelect(Field):
     html_input = report.ui.select(report.inputs.get(html_code, value),
                                   "%s_input" % html_code if html_code is not None else html_code,
                                   width=(100, "%"), options=options)
+    html_input.options.iconBase = "iconBase"
+    html_input.options.tickIcon = "fa fa-check"
     super(FieldSelect, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
                                       profile)
     if label is not None:
