@@ -103,7 +103,7 @@ def header(step=0):
   return "%s%s" % (Font.header_size+step, Font.unit)
 
 
-def inline(css_attrs):
+def inline(css_attrs, important=False):
   """
   Description:
   ------------
@@ -121,7 +121,11 @@ def inline(css_attrs):
   Attributes:
   ----------
   :param css_attrs: Dictionary. The CSS Attributes.
+  :param important: Boolean. Optional. Set the attributes to important. Default False
   """
+  if important:
+    return ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in css_attrs.items()])
+
   return ";".join(["%s: %s" % (k, v) for k, v in css_attrs.items()])
 
 

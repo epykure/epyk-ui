@@ -166,7 +166,7 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_item_options is None:
       self._css_item_options = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['main']).option()
+        self.component.page, self.classList['other']).option()
     return self._css_item_options
 
   @property
@@ -179,7 +179,7 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_item_option is None:
       self._css_item_option = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['main']).item()
+        self.component.page, self.classList['other']).item()
     return self._css_item_option
 
   @property

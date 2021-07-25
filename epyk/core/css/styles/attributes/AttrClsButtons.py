@@ -13,7 +13,6 @@ class AttrButton(Attrs):
 
   def __init__(self, component):
     super(AttrButton, self).__init__(component)
-    self.font_size = component.page.body.style.globals.font.normal()
 
 
 class AttrBadge(Attrs):

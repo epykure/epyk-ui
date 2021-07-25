@@ -47,21 +47,22 @@ class CssSelectToggle(CssStyle.Style):
   def customize(self):
     self.css({
       "background-color": 'inherit',
-      'font-size': self.page.body.style.globals.font.normal()}, important=True)
+      'font-size': 'inherit'}, important=True)
 
 
 class CssSelectToggleNoBg(CssStyle.Style):
 
   def customize(self):
-    self.css({'font-size': self.page.body.style.globals.font.normal()}, important=True)
+    self.css({'font-size': 'inherit'}, important=True)
 
 
 class CssSelectOption(CssStyle.Style):
-  classname = "dropdown-menu"
+  classname = "dropdown-menu.show"
 
   def customize(self):
     self.css({
-      'font-size': self.page.body.style.globals.font.normal(),
+      'font-size': 'inherit',
+      'z-index': 260,
       'background-color': self.page.theme.greys[0]}, important=True)
 
 

@@ -77,7 +77,7 @@ class CatalogLayout(Catalog.CatalogGroup):
     :param max_width: Tuple. Optional. The maximum with for the component. Default 100%.
     """
     cssObj = CssStylesSearch.CssSearchExt(self.page, html_id=self._html_id)
-    cssObj.classname = "%s_%s%s" % (cssObj.classname, max_width[0], max_width[1])
+    cssObj.classname = "%s_%s" % (cssObj.classname, max_width[0])
     cssObj.hover.css({"width": "%s%s" % (max_width[0], max_width[1])})
     return self._add_class(cssObj)
 

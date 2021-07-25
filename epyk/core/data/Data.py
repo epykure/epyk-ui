@@ -20,7 +20,7 @@ import json
 import pickle
 import importlib
 
-
+from epyk.core.data import DataCore
 from epyk.core.data import DataPy
 from epyk.core.data import DataGrpc
 
@@ -51,8 +51,6 @@ class DataJs:
 
     :rtype: DataCore.DataGlobal
     """
-    from epyk.core.data import DataCore
-
     return DataCore.DataGlobal(varName, data, self._report)
 
   def list(self, varName, data):
@@ -64,9 +62,7 @@ class DataJs:
     Attributes:
     ----------
     :param varName: String. The Javascript variable name.
-    :param data: List. Object passed to the Javascript layer.
-
-    :rtype:
+    :param data: List. Object passed to the Javascript layer.W
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().array(data, varName=varName, setVar=True, report=self._report)
@@ -113,8 +109,6 @@ class DataJs:
 
     :rtype: DataCore.ServerConfig
     """
-    from epyk.core.data import DataCore
-
     return DataCore.ServerConfig(hostname, port, self._report)
 
 
@@ -261,13 +255,11 @@ class DataSrc:
         path = self._report.run.local_path.replace(self._report.run.report_name, report_name)
       cache_path = os.path.join(path, "tmp")
       if not os.path.exists(cache_path):
-        os.mkdir(cache_path) # Create the path to store the temp files
+        os.mkdir(cache_path)  # Create the path to store the temp files
       file_path = os.path.join(path, "tmp", code)
       if os.path.exists(file_path):
         file_obj = open(file_path, 'rb')
         return pickle.load(file_obj)
-
-      return None
 
   def save_cache(self, data, code, is_secured=False, if_missing=True):
     """
@@ -311,7 +303,7 @@ class DataSrc:
         path = self._report.run.local_path.replace(self._report.run.report_name, report_name)
       cachePath = os.path.join(path, "data")
       if not os.path.exists(cachePath):
-        os.mkdir(cachePath) # Create the path to store the temp files
+        os.mkdir(cachePath)  # Create the path to store the temp files
       filePath = os.path.join(path, "data", "%s.csv" % filename)
       return open(filePath)
 
@@ -392,9 +384,10 @@ class DataSrc:
     ----------
     :param filename: The pdf file name
     :param path: The file path
+
     :return: A pdf object from PyPDF2
     """
-    pyPDF2 = requires("PyPDF2", reason='Missing Package', install='PyPDF2', sourceScript=__file__, raiseExcept=True)
+    pyPDF2 = requires("PyPDF2", reason='Missing Package', install='PyPDF2', source_script=__file__, raise_except=True)
     pdf_data = pyPDF2.PdfFileReader(os.path.join(path, filename))
     return pdf_data
 
@@ -423,7 +416,7 @@ class DataSrc:
 
     :return: The SOAP services
     """
-    soap = requires("zeep", reason='Missing Package', install="zeep", sourceScript=__file__, raiseExcept=True)
+    soap = requires("zeep", reason='Missing Package', install="zeep", source_script=__file__, raise_except=True)
     return soap.Client(wsdl).service
 
   def rest(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
@@ -498,7 +491,7 @@ class DataSrc:
 
     :return: A xml object
     """
-    bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', sourceScript=__file__, raiseExcept=True)
+    bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', source_script=__file__, raise_except=True)
     headers = {'User-Agent': 'Mozilla/5.0', 'accept': 'application/xml;q=0.9, */*;q=0.8'}
     response = self._report.py.requests.get(url, headers=headers, proxy=proxy)
     xml_soup = bs4.BeautifulSoup(response,)
@@ -530,7 +523,7 @@ class DataSrc:
 
     :return: A xml object
     """
-    bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', sourceScript=__file__, raiseExcept=True)
+    bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', source_script=__file__, raise_except=True)
     headers = {
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       'Accept-Encoding': 'none',
@@ -561,7 +554,8 @@ class DataSrc:
     :param url: The RPC service url
     :param data: The input data for the service
     """
-    http_client = requires("jsonrpcclient.clients.http_client", reason='Missing Package', install="jsonrpcclient[requests]", sourceScript=__file__, raiseExcept=True)
+    http_client = requires("jsonrpcclient.clients.http_client", reason='Missing Package',
+                           install="jsonrpcclient[requests]", source_script=__file__, raise_except=True)
     client = http_client.HTTPClient(url)
     if headers is not None:
       client.session.headers.update(headers)
@@ -601,5 +595,5 @@ class DataSrc:
 
     :rtype: DataGrpc.DataGrpc
     """
-    requires("grpc", reason='Missing Package', install='grpcio', sourceScript=__file__, raiseExcept=True)
+    requires("grpc", reason='Missing Package', install='grpcio', source_script=__file__, raise_except=True)
     return DataGrpc.DataGrpc(serviceName, path, module, host, port)

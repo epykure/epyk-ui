@@ -173,7 +173,6 @@ class ClassInputAutocomplete(ClassInput):
   def __init__(self, component):
     super(ClassInputAutocomplete, self).__init__(component)
     self._css_autocomplete, self._css_menu_item, self._css_class, self._css_item_active = 4 * [None]
-    self.classList['main'].add(self.cls_input)
     self.classList['other'].add(self.cls_autocomplete)
     self.classList['other'].add(self.cls_menu_item)
     self.classList['other'].add(self.cls_item_active)
@@ -221,17 +220,3 @@ class ClassInputAutocomplete(ClassInput):
       self._css_menu_item = Classes.CatalogInput.CatalogDate(
         self.component.page, self.classList['other']).autocomplete_menu()
     return self._css_menu_item
-
-  @property
-  def cls_input(self):
-    """
-    Description:
-    ------------
-    The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object.
-
-    :rtype: Classes.CatalogInput.CatalogInput
-    """
-    if self._css_class is None:
-      self._css_class = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).basic()
-    return self._css_class
