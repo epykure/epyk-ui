@@ -66,9 +66,13 @@ class JsProperties:
     :param builder_def: String. The builder definition.
     """
     if isinstance(builder_def, list):
-      self._context['builders'].extend(builder_def)
+      for builder in builder_def:
+        self.add_builders(builder)
     else:
-      self._context['builders'].append(builder_def)
+      if hasattr(builder_def, 'toStr'):
+        self._context['builders'].append(builder_def.toStr())
+      else:
+        self._context['builders'].append(builder_def)
 
   def add_on_ready(self, builder_def):
     """
