@@ -621,7 +621,7 @@ class OptionEvents(Options):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config(
-      "function(event, chartContext, config){let data = config.config.series[config.seriesIndex].data[config.dataPointIndex]; %s}" % JsUtils.jsConvertFncs(
+      "function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
         jsFncs, toStr=True, profile=profile), js_type=True)
 
   def mouseMove(self, jsFncs, profile=None):

@@ -18,7 +18,7 @@ class OptionsText(Options):
 
       https://www.w3schools.com/tags/att_global_contenteditable.asp
     """
-    return self._report.attr.get("contenteditable", False)
+    return self.component.attr.get("contenteditable", False)
 
   @editable.setter
   def editable(self, flag):
@@ -38,7 +38,7 @@ class OptionsText(Options):
 
       https://www.w3schools.com/tags/att_global_spellcheck.asp
     """
-    return self._report.attr.get("spellcheck", False)
+    return self.component.attr.get("spellcheck", False)
 
   @spellcheck.setter
   def spellcheck(self, flag):

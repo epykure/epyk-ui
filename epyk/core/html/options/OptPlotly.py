@@ -80,11 +80,27 @@ class OptionConfig(OptChart.OptionsChart):
 
       https://plot.ly/javascript/configuration-options/
     """
-    return self.get(True)
+    return self._config_get(True)
 
   @responsive.setter
   def responsive(self, val):
-    self.set(val)
+    self._config(val)
+
+  @property
+  def displayModeBar(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/configuration-options/
+    """
+    return self._config_get(True)
+
+  @displayModeBar.setter
+  def displayModeBar(self, flag):
+    self._config(flag)
 
   @property
   def editable(self):
@@ -96,11 +112,11 @@ class OptionConfig(OptChart.OptionsChart):
 
       https://plot.ly/javascript/configuration-options/
     """
-    return self.get(False)
+    return self._config_get(False)
 
   @editable.setter
   def editable(self, val):
-    self.set(val)
+    self._config(val)
 
   @property
   def staticPlot(self):
@@ -112,11 +128,11 @@ class OptionConfig(OptChart.OptionsChart):
 
       https://plot.ly/javascript/configuration-options/
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @staticPlot.setter
   def staticPlot(self, val):
-    self.set(val)
+    self._config(val)
 
   @property
   def scrollZoom(self):
@@ -128,20 +144,8 @@ class OptionConfig(OptChart.OptionsChart):
 
       https://plot.ly/javascript/configuration-options/
     """
-    return self.get(None)
+    return self._config_get(None)
 
   @scrollZoom.setter
   def scrollZoom(self, val):
-    self.set(val)
-
-  @property
-  def managed(self):
-    """
-    Description:
-    ------------
-    """
-    return self.get(True)
-
-  @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+    self._config(val)

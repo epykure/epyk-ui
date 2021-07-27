@@ -4,7 +4,7 @@ from epyk.core.js import JsUtils
 
 
 class OptionsSlider(Options):
-  component_properties = ("css", )
+  component_properties = ("css", 'show_min_max', "force_show_current")
 
   @property
   def animate(self):
@@ -40,8 +40,25 @@ class OptionsSlider(Options):
   def css(self, value):
     self._config(value)
 
-  def change(self, jsFncs):
-    self._config(jsFncs, js_type=True)
+  @property
+  def handler_css(self):
+    """
+    Description:
+    ------------
+    Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
+
+    Related Pages:
+
+      https://api.jqueryui.com/slider/#option-animate
+    """
+    return self._config_get()
+
+  @handler_css.setter
+  def handler_css(self, value):
+    self._config(value)
+
+  def change(self, jsFncs, profile=None, options=None):
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def classes(self):
@@ -116,6 +133,36 @@ class OptionsSlider(Options):
     self._config(value)
 
   @property
+  def show_min_max(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(True)
+
+  @show_min_max.setter
+  def show_min_max(self, flag):
+    if not flag:
+      self.component.style.css.padding = 0
+    self._config(flag)
+
+  @property
+  def force_show_current(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(False)
+
+  @force_show_current.setter
+  def force_show_current(self, flag):
+    if not flag:
+      self.component.style.css.padding = 0
+    self._config(flag)
+
+  @property
   def orientation(self):
     """
     Description:
@@ -151,7 +198,7 @@ class OptionsSlider(Options):
   def range(self, value):
     self._config(value)
 
-  def slide(self, jsFncs=None, profile=None, show=True):
+  def slide(self, jsFncs=None, profile=None, readout=True, readout_level="handle", readout_format=True, options=None):
     """
     Description:
     -----------
@@ -162,25 +209,70 @@ class OptionsSlider(Options):
     Related Pages:
 
       https://api.jqueryui.com/slider/
+      https://jqueryui.com/position/
 
     Attributes:
     ----------
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param show: Boolean. Optional. Show the value in a popup.
+    :param readout: Boolean. Optional. Show the value in a popup.
+    :param readout_level: Dictionary. Optional.
+    :param readout_format: Dictionary | String. Optional.
+    :param options:
     """
-    if show:
-      value = '''
-              var delay = function() {
-                  if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
-                  else {var label = $('<span></span>'); $(ui.handle).append(label)}
-                  $(label).html(ui.value).position({
-                      my: 'center top', at: 'center bottom', of: ui.handle, offset: "0, 10"})};
-              setTimeout(delay, 5)'''
+    if readout:
+      if readout_level == "slider":
+        if readout_format is True:
+          readout_format = {"type": "number", "precision": 0, "thousand": ",", "decimal": "."}
+        elif isinstance(readout_format, int):
+          readout_format = {"type": "number", "precision": readout_format, "thousand": ",", "decimal": "."}
+        if readout_format and readout_format["type"] in ("number", "money"):
+          self.component.page.jsImports.add("accounting")
+          fmt_html = "accounting.formatNumber(ui.value, %s)" % readout_format
+        else:
+          if self.component.is_range:
+            fmt_html = "ui.values[0] +' - '+ ui.values[1]"
+          else:
+            fmt_html = "ui.value"
+        if self.component.is_range:
+          options = options or {"position": "absolute", "right": "-45px", "top": "-8px", "font-size": "10px"}
+        else:
+          options = options or {"position": "absolute", "right": "-35px", "top": "-8px", "font-size": "10px"}
+        value = '''
+            var delay = function() {
+                if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
+                else {
+                   var label = $('<output></output>'); label.css(%(options)s);
+                   $("#%(htmlCode)s").append(label)}
+                $(label).html(%(fmt_html)s);
+            };
+            setTimeout(delay, 5)''' % {"htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
+      else:
+        if readout_format is True:
+          readout_format = {"type": "number", "precision": 0, "thousand": ",", "decimal": "."}
+        elif isinstance(readout_format, int):
+          readout_format = {"type": "number", "precision": readout_format, "thousand": ",", "decimal": "."}
+        options = options or {"my": "center top", "at": "center bottom", "offset": "0, 10"}
+        if readout_format and readout_format["type"] in ("number", "money"):
+          self.component.page.jsImports.add("accounting")
+          fmt_html = "accounting.formatNumber(ui.value, %s)" % readout_format
+        else:
+          if self.component.is_range:
+            fmt_html = "ui.values[0] +' - '+ ui.values[1]"
+          else:
+            fmt_html = "ui.value"
+        value = '''
+            var delay = function() {
+                if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
+                else {var label = $('<span></span>'); $(ui.handle).append(label)}
+                var options = %(options)s; options.of = ui.handle;
+                $(label).html(%(fmt_html)s).position(options)
+            }; setTimeout(delay, 5)''' % {"options": options, "fmt_html": fmt_html}
       if jsFncs is None:
         jsFncs = []
       jsFncs.append(value)
     self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self.force_show_current = False
 
   def create(self, jsFncs=None, profile=None):
     """
