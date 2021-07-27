@@ -1978,7 +1978,7 @@ class JsBase:
     """
     return JsMsgAlerts.Msg(self._src)
 
-  def hot_imports(self, script, jsFuncs, profile=None):
+  def import_js(self, script, jsFuncs, profile=None):
     """
     Description:
     ------------
@@ -1996,10 +1996,35 @@ class JsBase:
     """
     js_script = JsUtils.jsConvertData(script, None)
     js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
-    return JsObjects.JsVoid('''
+    return JsUtils.jsWrap('''
 let scriptElementId = "pkg_"+ %(script)s;    
 let existingScript = document.getElementById(scriptElementId);
 if (!existingScript && (scriptElementId !== 'pkg_undefined')) {
   const script = document.createElement('script'); script.src = %(script)s; script.id = scriptElementId;
   document.body.appendChild(script); script.onload = function(){%(fncs)s; };}
-else { %(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
+else {%(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
+
+  def import_css(self, script):
+    """
+    Description:
+    ------------
+    Add CSS file on the fly from a JavaScript event.
+
+    Related Pages:
+
+      https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page
+
+    Attributes:
+    ----------
+    :param script: String. A script name. A CSS extension.
+    """
+    css_script = JsUtils.jsConvertData(script, None)
+    return JsUtils.jsWrap('''
+let styleElementId = "css_"+ %(file)s;    
+let existingStyle = document.getElementById(styleElementId);
+if (!existingStyle && (styleElementId !== 'css_')) {
+  var fileref = document.createElement("link"); fileref.id = styleElementId;
+  fileref.setAttribute("rel", "stylesheet"); fileref.setAttribute("type", "text/css");
+  fileref.setAttribute("href", %(file)s); console.log("loaded");
+  document.getElementsByTagName("head")[0].appendChild(fileref)
+}''' % {"file": css_script})
