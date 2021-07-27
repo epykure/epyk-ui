@@ -158,6 +158,15 @@ class Required:
       self.css[package] = version or '*'
       self._page.cssImport.add(package)
       html_types.add('css')
+    if self._page.ext_packages is not None and package in self._page.ext_packages:
+      for mod in self._page.ext_packages[package]['modules']:
+        if mod['script'].endswith(".css"):
+          self._page.cssImport.add(package)
+          html_types.add('css')
+        elif mod['script'].endswith(".js"):
+          self._page.jsImports.add(package)
+          html_types.add('js')
+
     if not html_types and verbose:
       logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
 
@@ -856,11 +865,11 @@ class Html:
           del input_options['position']
         del input_options['autocomplete']
 
-        self.input = self._report.ui.inputs.autocomplete(text, width=(100, '%'), options=input_options)
+        self.input = self._report.ui.inputs.autocomplete(text, width=(100, '%'), html_code="%s_input" % self.htmlCode, options=input_options)
         self.input.options.appendTo = "#%s" % self.htmlCode
         self.input.options.position()
       else:
-        self.input = self._report.ui.inputs.input(text, options=options)
+        self.input = self._report.ui.inputs.input(text, html_code="%s_input" % self.htmlCode, options=options)
       if position == "before":
         self.prepend_child(self.input)
       else:
@@ -1552,7 +1561,7 @@ class Html:
       self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, js_funcs, profile=None, source_event=None):
+  def paste(self, js_funcs, profile=None, source_event=None, components=None):
     """
     Description:
     -----------
@@ -1566,8 +1575,9 @@ class Html:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    data_map = self.page.js.data.datamap(components, {"clipboard": self._report.js.objects.event.clipboardData.text})
     str_fncs = JsUtils.jsConvertFncs(
-      ["var data = %s" % self._report.js.objects.event.clipboardData.text] + js_funcs, toStr=True)
+      ["var data = %s" % data_map.toStr()] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, js_funcs=None, profile=None):
