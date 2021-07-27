@@ -208,9 +208,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param traces:
@@ -223,6 +220,18 @@ class JsPlotly(JsPackage):
 
     position = JsUtils.jsConvertData(position, None)
     return JsObjects.JsVoid("Plotly.addTraces(%s, %s, %s)" % (htmlCode or self.src.dom.varName, traces, position))
+
+  def deleteAllTraces(self, htmlCode=None):
+    """
+    Description:
+    ------------
+    Remove all the traces defined in the chart.
+
+    Attributes:
+    ----------
+    :param htmlCode:
+    """
+    return JsObject.JsObject.get("%(graphId)s.data = []" % {"graphId": htmlCode or self.src.dom.varName})
 
   def deleteTraces(self, positions, htmlCode=None):
     """
