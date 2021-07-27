@@ -294,7 +294,8 @@ class AutoComplete(Input):
 
   _js__builder__ = '''
     if(typeof data === 'object'){%(jqId)s.autocomplete(Object.assign(data, options))}
-    else{%(jqId)s.autocomplete(options)}''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    else{%(jqId)s.autocomplete(options)}
+    ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def options(self):
@@ -716,7 +717,7 @@ class Field(Html.Html):
     self.append_child(self.input)
     self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
                   css={"margin-left": '5px', 'color': self.page.theme.colors[-1]})
-    self.css({"margin-top": '2px', "margin-bottom": '2px'})
+    self.css({"margin-top": '5px'})
 
   @property
   def dom(self):
@@ -900,8 +901,8 @@ class FieldRange(Field):
     html_input = report.ui.inputs.d_range(report.inputs.get(html_code, value),
                                           min_val=min_val, max_val=max_val, step=step,
                                           width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldRange, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
-                                     options, profile)
+    super(FieldRange, self).__init__(
+      report, html_input, label, icon, width, height, html_code, helper, options, profile)
     if icon is not None and html_input.options.output:
       html_input.output.style.css.margin_left = 25
     if html_input.options.output:
@@ -1183,8 +1184,6 @@ class Search(Html.Html):
     else:
       self.icon = False
     self.style.css.position = "relative"
-    #self.style.css.border_bottom_width = options["border"]
-    #self.style.css.border_bottom_style = "solid"
 
     if options.get("position", 'left') == 'left':
       self.input.css({"text-align": 'left', 'padding-left': '2px', 'padding-right': '2px'})
