@@ -234,11 +234,13 @@ class Datamap:
     """
     Description:
     -----------
+    Add an HTML component to the object.
+    The key will be the html_code.
 
     Attributes:
     ----------
-    :param component:
-    :param htmlCode:
+    :param component: HTML. The HTML component.
+    :param htmlCode: String. Optional. The Html code.
     """
     self._data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     return self
@@ -324,6 +326,20 @@ class FormData:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
+  def add(self, component, htmlCode=None):
+    """
+    Description:
+    ------------
+    Add an HTML component to the object.
+    The key will be the html_code.
+
+    Attributes:
+    ----------
+    :param component: HTML. The HTML component.
+    :param htmlCode: String. Optional. The Html code.
+    """
+    return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(htmlCode or component.htmlCode, None), JsUtils.jsConvertData(component.dom.content, None))
+
   def update(self, attrs):
     """
     Description:
@@ -394,6 +410,7 @@ class JsData:
 
     return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
 
+  @property
   def formdata(self):
     """
     Description:
