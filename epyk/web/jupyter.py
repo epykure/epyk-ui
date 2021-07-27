@@ -2,7 +2,41 @@
 import os
 from epyk.core.js import JsUtils
 from epyk.core.py import PyNpm
+from epyk.core.css import Defaults as Defaults_css
 from epyk.web.components import widgets
+
+
+class NotebookJsCell:
+
+  def __init__(self, cell_ref):
+    self._cell_ref = cell_ref
+
+  def run(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    return JsUtils.jsWrap("window.Jupyter.notebook.execute_cells([%s])" % self._cell_ref)
+
+  def hide(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    return JsUtils.jsWrap("$(Jupyter.notebook.get_cell(%s).element).hide()" % self._cell_ref)
+
+  def show(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    return JsUtils.jsWrap("$(Jupyter.notebook.get_cell(%s).element).show()" % self._cell_ref)
 
 
 class NotebookJs:
@@ -18,12 +52,12 @@ class NotebookJs:
     :param component:
     """
     if hasattr(component, "dom"):
-      return "window.Jupyter.notebook.kernel.execute(\"%s = '\" + %s  + \"'\")" % (name, component.dom.content.toStr())
+      return "window.Jupyter.notebook.kernel.execute(\"%s = \" + JSON.stringify(%s)  + \"\")" % (name, component.dom.content.toStr())
 
     return "window.Jupyter.notebook.kernel.execute(\"%s = '\" + %s  + \"'\")" % (
       name, JsUtils.jsConvertData(component, None))
 
-  def run_cell(self, i):
+  def run_cell(self, i, hide=True):
     """
     Description:
     ------------
@@ -32,20 +66,20 @@ class NotebookJs:
     Attributes:
     ----------
     :param i: List | Integer. The cells indices.
+    :param hide: Boolean. Optional. hide the cell once run. Default True.
     """
     if isinstance(i, int):
       i = [i]
     return "window.Jupyter.notebook.execute_cells(%s)" % i
 
-  def run_next_cell(self):
-    """
-    Description:
-    ------------
-    Run the next cell.
-    """
-    return JsUtils.jsWrap("window.Jupyter.notebook.execute_cells([window.Jupyter.notebook.get_cell_elements().index($(event.target).parents('.cell'))+1])")
+  @property
+  def next_cell(self):
+    return NotebookJsCell("window.Jupyter.notebook.get_cell_elements().index($(event.target).parents('.cell'))+1")
 
-  def run_next_cells(self, n, start=0):
+  def cell_below(self, index):
+    return NotebookJsCell("window.Jupyter.notebook.get_cell_elements().index($(event.target).parents('.cell'))+%s" % index)
+
+  def run_next_cells(self, n, start=0, hide=True):
     """
     Description:
     ------------
@@ -54,7 +88,8 @@ class NotebookJs:
     Attributes:
     ----------
     :param n: Integer. The number of cells to run.
-    :param start: Integer. Optional. The index for the first table
+    :param start: Integer. Optional. The index for the first table.
+    :param hide: Boolean. Optional. hide the cell once run. Default True.
     """
     return JsUtils.jsWrap('''
 (function(n, start){
@@ -76,13 +111,107 @@ class NotebookDisplay:
 
   def __init__(self):
     self._html, self._js, self._css = [], {"start": [], "end": []}, []
+    self.page = None
+
+  def full_width(self, page=None):
+    """
+    Description:
+    ------------
+    Shortcut to set the width for a Jupter page.
+
+    Attributes:
+    ----------
+    :param page: Report. Optional. The web page or cell in the Jupyter notebook.
+    """
+    self.page = page or self.page
+    return self.style_container({"width": "100%"})
+
+  def full_page(self, page=None):
+    """
+    Description:
+    ------------
+    Shortcut to set the width for a Jupyter page.
+
+    Attributes:
+    ----------
+    :param page: Report. Optional. The web page or cell in the Jupyter notebook.
+    """
+    self.page = page or self.page
+    self.style_container({"width": "100%"})
+    self.style_prompt({"min-width": 0}, page=page)
+    self.style_notebook({"padding-top": 0, "padding-bottom": 0}, page=page)
+    if self.page is not None:
+      self.page.properties.css.add_text(".end_space {min-height: 0}")
+      return self
+
+    else:
+      return self.css(".end_space {min-height}")
+
+  def style_notebook(self, attrs, important=True, page=None):
+    """
+    Description:
+    ------------
+
+    :param attrs:
+    :param important:
+    :param page:
+    :return:
+    """
+    self.page = page or self.page
+    if self.page is not None:
+      self.page.properties.css.add_text("#notebook {%s}" % Defaults_css.inline(attrs, important))
+      return self
+
+    else:
+      return self.css("#notebook {%s}" % Defaults_css.inline(attrs, important))
+
+  def style_prompt(self, attrs, important=True, page=None):
+    """
+    Description:
+    ------------
+
+    :param attrs:
+    :param important:
+    :param page:
+    :return:
+    """
+    self.page = page or self.page
+    if self.page is not None:
+      self.page.properties.css.add_text(".prompt {%s}" % Defaults_css.inline(attrs, important))
+      return self
+
+    else:
+      return self.css(".prompt {%s}" % Defaults_css.inline(attrs, important))
+
+  def style_container(self, attrs, important=True, page=None):
+    """
+    Description:
+    ------------
+    Set the CSS style for the container page in a Jupyter Notebook.
+
+    Usage::
+
+      page = pk.Page()
+      pk.jupyter.Notebook.display.full_width(page)
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. Optional. The key, value pairs with the CSS attributes,
+    :param important: Boolean. Optional. Set all the CSS attributes are important.
+    :param page: Report. Optional. The web page or cell in the Jupyter notebook.
+    """
+    self.page = page or self.page
+    if self.page is not None:
+      self.page.properties.css.add_text(".container {%s}" % Defaults_css.inline(attrs, important))
+      return self
+
+    else:
+      return self.css(".container {%s}" % Defaults_css.inline(attrs, important))
 
   def clear_toolbar(self):
     """
     Description:
     ------------
-
-    :return:
     """
     return self.javascript('''
 $('#maintoolbar-container').find('div.btn-group:not([id])').remove();
