@@ -385,6 +385,44 @@ class DataFilters:
     self.__filters.add("_.sortBy(%%s, %s)" % column)
     return self
 
+  def pivot(self, column, value, p):
+    """
+    Description:
+    -----------
+    Pivot the data from rows (keys) to columns in the records.
+    This should reduce the size of the record and it will make it usable in charts.
+
+    Usages::
+
+      page.js.fetch(data_urls.C02_DATA).csvtoRecords().get([
+        page.js.console.log(page.data.js.record("data").filterGroup("test").pivot("country", "co2", "year"))
+      ])
+
+    Attributes:
+    ----------
+    :param column: String. The key in the record to be used as key for sorting.
+    :param value: String. The key in the record to be used as key for sorting.
+    :param p: String. The key used as pivot.
+    :param type: String | Tuple. Optional int, or float or (fnc, alias)
+    """
+    value = JsUtils.jsConvertData(value, None)
+    column = JsUtils.jsConvertData(column, None)
+    p = JsUtils.jsConvertData(p, None)
+    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
+    if type is not None:
+      groups = {"int": ["parseInt", "Integer"], "float": ["parseFloat", "Float"]}.get(type, type)
+      fnc_name = "SimplePivot%s" % groups[1]
+      val_fmt = "%s(t[v])" % groups[0]
+    else:
+      fnc_name, val_fmt = "SimplePivot", "t[v]"
+    constructors[fnc_name] = '''
+function %(fnc_name)s(r, k, v, p){
+var s = {}; r.forEach(function(t){if (t[p] in s){s[t[p]][t[k]] = %(vFmt)s} else {s[t[p]] = {[t[k]]: %(vFmt)s}}});
+var result = []; for (const [key, values] of Object.entries(s)) {result.push(Object.assign(values, {[p]: key}))}
+return result}''' % {"fnc_name": fnc_name, "vFmt": val_fmt}
+    self.__filters.add("%s(%%s, %s, %s, %s)" % (fnc_name, column, value, p))
+    return self
+
   def toStr(self):
     result = "%s"
     for rec in self.__filters[::-1]:
