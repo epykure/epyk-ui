@@ -701,6 +701,7 @@ class Inputs:
     html_s = html.HtmlInput.Search(self.page, text, placeholder, color, width, height, html_code, tooltip,
                                    extensible, dflt_options, profile)
     html_s.style.css.height = Defaults.LINE_HEIGHT + 5
+    html_s.style.css.margin_bottom = 10
     if align == "center":
       html_s.style.css.margin = "auto"
       html_s.style.css.display = "block"

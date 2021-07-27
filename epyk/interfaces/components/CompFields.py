@@ -55,7 +55,7 @@ class Fields:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param options: Dictionary. Optional. The component options.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param helper: String. Optional. A tooltip helper.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -640,8 +640,12 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
+    self.page.css.customText(
+      '::-webkit-file-upload-button {border: 1px solid %(c)s; background: %(c)s; color: %(fc)s; font-family: %(fm)s; font-sie: %(size)spx}' % {
+        "c": self.page.theme.notch(4), "fc": self.page.theme.white,
+        "fm": self.page.body.style.globals.font.family, "size": self.page.body.style.globals.font.size})
     html_input = html.HtmlInput.FieldFile(
-      self.page, value, label, placeholder, icon, width, height, html_code, helper, options, profile)
+      self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
     return html_input
 
   @html.Html.css_skin()
@@ -802,7 +806,7 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: String. Optional.
+    :param value: String. Optional. The value to be displayed to this component. Default False.
     :param label: String. Optional. The text of label to be added to the component.
     :param group_name: String. Optional. Group different radio together to only have 1 value selected.
     :param icon: String. Optional. The component icon content from font-awesome references.
@@ -822,7 +826,7 @@ class Fields:
     return html_input
 
   @html.Html.css_skin()
-  def range(self, value="", min_val=0, max_val=100, step=1, label=None, placeholder="", icon=None, width=(100, "%"),
+  def range(self, value="", min=0, max=100, step=1, label=None, placeholder="", icon=None, width=(100, "%"),
             height=(None, "px"), html_code=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -855,9 +859,9 @@ class Fields:
 
     Attributes:
     ----------
-    :param value:
-    :param min_val:
-    :param max_val:
+    :param value: String. Optional. The value to be displayed to this component. Default empty string.
+    :param min:
+    :param max:
     :param step:
     :param label:
     :param placeholder:
@@ -871,7 +875,7 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldRange(self.page, value, min_val, max_val, step, label, placeholder, icon, width,
+    html_input = html.HtmlInput.FieldRange(self.page, value, min, max, step, label, placeholder, icon, width,
                                            height, html_code, helper, options or {}, profile)
     return html_input
 
@@ -908,7 +912,7 @@ class Fields:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param multiple:
+    :param multiple: Boolean. Optional. Flag to specify the number of items to be selectable.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
@@ -921,6 +925,7 @@ class Fields:
     if multiple:
       html_input.input.attr['multiple'] = None
     html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
+    html_input.input.button_css = {"background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
     if width[0] == "auto":
       html_input.style.css.display = "inline-block"
     if selected is not None:
@@ -951,7 +956,7 @@ class Fields:
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. Optional. The value to be displayed to this component.
     :param label:
     :param icon:
     :param width:
@@ -1002,7 +1007,7 @@ class Fields:
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. Optional. The value to be displayed to this component.
     :param label:
     :param icon:
     :param width:
@@ -1058,7 +1063,7 @@ class Fields:
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. Optional. The value to be displayed to this component.
     :param label:
     :param icon:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -1107,7 +1112,7 @@ class Fields:
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. Optional. The value to be displayed to this component.
     :param label:
     :param icon:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -1189,7 +1194,7 @@ class Fields:
     Attributes:
     ----------
     :param label:
-    :param value:
+    :param value: String. Optional. The value to be displayed to this component. Default T.
     :param align:
     :param width:
     :param height:
@@ -1254,9 +1259,8 @@ class Fields:
     :param color: String. Optional. String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param height: Tuple. Optional. Integer for the component height.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     record = record or {"off": "Off", "on": "On"}
@@ -1276,6 +1280,80 @@ class Fields:
       div.label.style.css.width = '%spx' % Defaults.TEXTS_SPAN_WIDTH
       div.extend([div.label, div.input])
     return div
+
+  @html.Html.css_skin()
+  def slider(self, value=0, min=0, max=10, step=1, orientation='horizontal', label=None, width=(100, '%'),
+             height=(None, 'px'), html_code=None, options=None, range=False, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value: String. Optional. The value to be displayed to this component. Default 0.
+    :param min: Number. Optional.
+    :param max: Number. Optional.
+    :param step: Number. Optional.
+    :param orientation: String. Optional.
+    :param label: String. Optional. The toggle static label displayed.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param range:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    dfl_options = {"show_min_max": False, "force_show_current": True}
+    if options is not None:
+      dfl_options.update(options)
+    div = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
+    if range:
+      div.input = self.page.ui.sliders.range(
+        values=value, minimum=min, maximum=max, width=(Defaults.INPUTS_MIN_WIDTH, 'px'), height=None,
+        html_code=html_code, options=dfl_options)
+    else:
+      div.input = self.page.ui.slider(number=value, minimum=min, maximum=max, width=(Defaults.INPUTS_MIN_WIDTH, 'px'),
+                                      height=None, html_code=html_code, options=dfl_options)
+    div.input.style.css.margin = 0
+    div.style.css.margin_top = 5
+    div.input.options.step = step
+    if label is not None:
+      div.input.style.css.display = 'inline-block'
+      div.label = self.page.ui.text(
+        label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
+      div.label.style.css.display = 'inline-block'
+      div.label.style.css.margin = '0 5px'
+      div.label.style.css.width = '%spx' % Defaults.TEXTS_SPAN_WIDTH
+      div.extend([div.label, div.input])
+    if orientation == "vertical":
+      div.input.style.css.height = div.input.style.css.width
+      div.input.style.css.width = div.input.style.css.height
+      div.input.options.css = {"width": "5px", "background": "#bdbdbd"}
+      div.input.options.handler_css = {
+        "left": "-7px", "border-radius": '60px', "border": "1px solid grey", "background": "white"}
+    else:
+      div.input.style.css.line_height = height[0]
+      div.input.options.css = {"height": "5px", "background": "#bdbdbd"}
+      div.input.options.handler_css = {
+        "top": "-7px", "border-radius": '60px', "border": "1px solid grey", "background": "white"}
+    div.input.options.orientation = orientation
+    return div
+
+  @html.Html.css_skin()
+  def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
+              options=None, autocomplete=False, kind='select', profile=None):
+    if kind == 'select':
+      comp = self.page.ui.lists.filters(items, button, width, height, html_code, helper, options, autocomplete, profile)
+      comp.select.button_css = {
+        "background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
+    elif kind == 'input':
+      comp = self.page.ui.inputs.filters(items, button, width, height, html_code, helper, options, autocomplete, profile)
+    else:
+      raise Exception("Kind %s not defined" % kind)
+
+    return comp
 
 
 class Timelines:

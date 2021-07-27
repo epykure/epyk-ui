@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 
 
@@ -63,6 +64,9 @@ class Lists:
         for rec in records:
           if rec["value"] in selected:
             rec["selected"] = True
+
+      options["iconBase"] = "iconBase"
+      options["tickIcon"] = "fa fa-check"
       return html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
 
     if selected is not None:
@@ -938,4 +942,45 @@ class Lists:
       container = self.page.ui.menu(component, menu_items=menu_items)
     else:
       container = self.page.ui.menu(component, menu_items=menu_items, editable=editable)
+    return container
+
+  def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
+              options=None, autocomplete=False, profile=None):
+
+    options = options or {}
+    container = self.page.ui.div(width=width)
+    container.select = self.page.ui.select(
+      html_code="%s_select" % html_code if html_code is not None else html_code)
+    container.select.attr['data-width'] = '%spx' % options.get('width', Defaults.TEXTS_SPAN_WIDTH)
+    container.select.options.liveSearch = True
+    if autocomplete:
+      container.input = self.page.ui.inputs.autocomplete(
+        html_code="%s_input" % html_code if html_code is not None else html_code,
+        width=(Defaults.INPUTS_MIN_WIDTH, 'px'), options={"select": True})
+    else:
+      container.input = self.page.ui.input(
+        html_code="%s_input" % html_code if html_code is not None else html_code,
+        width=(Defaults.INPUTS_MIN_WIDTH, 'px'), options={"select": True})
+    container.input.style.css.text_align = 'left'
+    container.input.style.css.padding_left = 5
+    container.input.style.css.margin_left = 10
+    if button is None:
+      button = self.page.ui.buttons.colored("add")
+      button.style.css.margin_left = 10
+    container.button = button
+    container.clear = self.page.ui.icon("fas fa-times")
+    container.clear.style.css.color = self.page.theme.danger[1]
+    container.clear.style.css.margin_left = 20
+    container.clear.tooltip("Clear all filters")
+    container.add(self.page.ui.div([container.select, container.input, container.button, container.clear]))
+    container.filters = self.page.ui.panels.filters(
+      items, container.select.dom.content, (100, '%'), height, html_code, helper, options, profile)
+    container.add(container.filters)
+    container.clear.click([
+      container.filters.dom.clear()
+    ])
+    container.button.click([
+      container.filters.dom.add(container.input.dom.content, container.select.dom.content)
+    ])
+    container.input.enter(container.button.dom.events.trigger("click"))
     return container

@@ -86,3 +86,7 @@ OWID_BIRTH_OUT_MARRIAGE = "https://raw.githubusercontent.com/owid/owid-datasets/
 HEART_FAILURE_RECORDS = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/heart_failure_clinical_records_dataset.csv"
 COUNTRY_WISE_COVID = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/country_wise_covid.csv"
 NETFLIX_TITLE = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Science_in_100Days/master/Data/netflix_titles.csv"
+
+
+#
+C02_DATA = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
