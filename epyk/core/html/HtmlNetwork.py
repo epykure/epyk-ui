@@ -585,7 +585,7 @@ class DropFile(Html.Html):
     self.text.style.css.margin_bottom = 5
     self.text.style.css.padding_left = 5
     self.delimiter = self.page.ui.text(
-      delimiter, width=(25, 'px'), html_code="%s_delimiter" % self.htmlCode, options={"editable": True})
+      delimiter, width=(25, 'px'), html_code="%s_delimiter" % self.htmlCode)
     self.delimiter.options.managed = False
     self.delimiter.style.css.bold()
     self.delimiter.style.css.display = 'inline-block'
@@ -594,11 +594,19 @@ class DropFile(Html.Html):
     self.delimiter.style.css.margin_top = 5
     self.delimiter.style.css.margin_left = 5
     self.delimiter.style.css.margin_right = 5
+    self.delimiter.editable()
     self.delimiter.style.css.cursor = 'pointer'
-    self.delimiter.click(["document.execCommand('selectAll',false,null)"])
-    self.delimiter.keypress.enter(["event.preventDefault(); event.target.blur(); return"])
+    self.delete = self.page.ui.text("&#x274c;", width=(20, 'px'), html_code="%s_delete" % self.htmlCode)
+    self.delete.options.managed = False
+    self.delete.style.css.margin_top = -20
+    self.delete.style.css.hide()
+    self.delete.style.css.right = 0
+    self.delete.style.css.position = "absolute"
+    #self.delimiter.click(["document.execCommand('selectAll',false,null)"])
+    #self.delimiter.keypress.enter(["event.preventDefault(); event.target.blur(); return"])
     self.options.delimiter = self.delimiter.dom.content
     self.style.css.border = "1px solid %s" % report.theme.colors[-1]
+    self.style.css.position = "relative"
     if self.options.format != 'json':
       self.icon = self._report.ui.icon("fas fa-paste")
       self.icon.options.managed = False
@@ -607,7 +615,6 @@ class DropFile(Html.Html):
       self.icon.style.add_classes.icon.selected()
       self.icon.style.css.margin_left = 5
       self.icon.click(self.dom.events.trigger("paste"))
-
     self.sync = None
     if options is not None and options.get("sync"):
       self.sync = self._report.ui.icon("fas fa-sync-alt")
@@ -652,19 +659,27 @@ class DropFile(Html.Html):
     :param url: String. The transfer end point on the server
     """
     # TODO add if else statement for the allowed and forbidden extensions
-    post = self._report.js.post(url, self._report.js.objects.get("form_data"), is_json=False)
+    form_data = self.page.js.data.formdata.get("form_data")
+    post = self.page.js.post(url, form_data, is_json=False)
     return post
 
-  def drop(self, js_funcs, js_data=None, prevent_default=True, profile=None):
+  def drop(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
     """
     Description:
     -----------
     Add a drag and drop property to the element.
 
+    Usage::
+
+      drop_area.drop([
+        drop_area.transfer("<URL>")
+      ], components=[])
+
     Attributes:
     ----------
     :param js_funcs: List | String. The Javascript series of functions.
     :param js_data: Data. Optional. A datamap objection of a dictionary.
+    :param components: List. The different HTML objects to be added to the component.
     :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
@@ -672,17 +687,23 @@ class DropFile(Html.Html):
     """
     dft_fnc = ""
     if prevent_default:
-      dft_fnc = self._report.js.objects.event.preventDefault()
+      dft_fnc = self.page.js.objects.event.preventDefault()
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    form_data = self._report.js.data.formdata()
+    form_data = self.page.js.data.formdata
     new_js_funcs = [form_data.new("form_data"),
-                    form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])]
+                    form_data.append("%s_file" % self.htmlCode, self.page.js.objects.event.dataTransfer.files[0])]
+    if components is not None:
+      for component in components:
+        if isinstance(component, tuple):
+          new_js_funcs.append(form_data.add(component[0], component[1]))
+        else:
+          new_js_funcs.append(form_data.add(component))
     if js_data is not None:
       new_js_funcs.extend(form_data.update(js_data))
     new_js_funcs.extend(js_funcs)
     str_fncs = JsUtils.jsConvertFncs(
-      ["var data = %s" % self._report.js.objects.event.dataTransfer.files] + new_js_funcs, toStr=True, profile=profile)
+      ["var data = %s" % self.page.js.objects.event.dataTransfer.files] + new_js_funcs, toStr=True, profile=profile)
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
@@ -699,7 +720,7 @@ class DropFile(Html.Html):
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
-  def load(self, js_funcs, js_data=None, prevent_default=True, profile=None):
+  def load(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
     """
     Description:
     -----------
@@ -707,10 +728,17 @@ class DropFile(Html.Html):
 
     This function will first use as underlying the drop method to get the file dropped.
 
+    Usage::
+
+      drop_area.load([
+        drop_area.transfer("<URL>")
+      ], components=[])
+
     Attributes:
     ----------
     :param js_funcs: List. The Javascript series of functions.
     :param js_data: String. Optional. A datamap objection of a dictionary.
+    :param components: List. The different HTML objects to be added to the component.
     :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -718,6 +746,9 @@ class DropFile(Html.Html):
 
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    if components is None:
+      components = []
+    components.append(self.delimiter)
     return self.drop(['''
       var reader = new FileReader(); var f = data[data.length - 1];
        reader.onloadstart = function() {%s};
@@ -726,10 +757,11 @@ class DropFile(Html.Html):
        reader.readAsDataURL(f);
       ''' % (JsUtils.jsConvertFncs([self.loading()], toStr=True), JsUtils.jsConvertFncs(js_funcs + [
         self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows")),
-        self.text.build(events.file.description) if self.options.text else self.text.build("File Loaded")], toStr=True),
-         )], js_data=js_data, prevent_default=prevent_default, profile=profile)
+        self.text.build(events.file.description) if self.options.text else self.text.build("File Loaded"),
+        self.delete.dom.show(display_value="block")], toStr=True),
+       )], js_data=js_data, components=components, prevent_default=prevent_default, profile=profile)
 
-  def paste(self, js_funcs, profile=None, source_event=None):
+  def paste(self, js_funcs, components=None, profile=None, source_event=None):
     """
     Description:
     -----------
@@ -737,14 +769,21 @@ class DropFile(Html.Html):
     Attributes:
     ----------
     :param js_funcs: List | String. Javascript functions.
+    :param components: List. The different HTML objects to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    if components is None:
+      components = [self.delimiter]
+    else:
+      components.append(self.delimiter)
     return super(DropFile, self).paste([self.loading()] + js_funcs + [
-      self.text.build(self._report.js.objects.get("'Bespoke data Loaded, '+ (new Date).toISOString()")),
-      self.text.dom.setAttribute("title", self.dom.content.length.toString().add(" rows"))], profile, source_event)
+      self.text.build(self.page.js.objects.get("'Bespoke data Loaded, '+ (new Date).toISOString()")),
+      self.delete.dom.show(display_value="block"),
+      self.text.dom.setAttribute(
+        "title", self.dom.content.length.toString().add(" rows"))], profile, source_event, components=components)
 
   def __str__(self):
     if self.options.format == 'json':
@@ -752,18 +791,20 @@ class DropFile(Html.Html):
         <div %(strAttr)s>
           %(container)s
           %(text)s
+          %(delete)s
           <input id="%(htmlCode)s_report" style="display:none;"/>
         </div>
         ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
-               'container': self.container.html(), 'text': self.text.html()}
+               'container': self.container.html(), 'text': self.text.html(), 'delete': self.delete.html()}
 
     return '''
       <div %(strAttr)s>
         <div style='display:inline-block;padding-left:5px'>using %(delimiter)s delimiter (<i>TAB for tabulation</i>)%(paste)s %(sync)s</div>
         %(container)s
         %(text)s
+        %(delete)s
         <input id="%(htmlCode)s_report" style="display:none;"/>
       </div>
       ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
              'paste': self.icon.html(), 'sync': self.sync.html() if self.sync is not None else "",
-             'container': self.container.html(), 'text': self.text.html(), 'delimiter': self.delimiter.html()}
+             'container': self.container.html(), 'text': self.text.html(), 'delete': self.delete.html(), 'delimiter': self.delimiter.html()}
