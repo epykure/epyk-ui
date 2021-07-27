@@ -1036,8 +1036,12 @@ class XMLHttpRequest:
           else:
             self.data.attrs(obj)
 
-      if isinstance(jsonData, dict):
+      elif isinstance(jsonData, dict):
         self.data.update(jsonData)
+
+      else:
+        # formdata
+        self.data = jsonData
 
     if jsonData:
       if stringify:

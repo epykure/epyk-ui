@@ -524,7 +524,8 @@ class JsString(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param locale: String. The locale parameter indicates the locale to be used to convert to upper case according to any locale-specific case mappings
+    :param locale: String. The locale parameter indicates the locale to be used to convert to upper case according to
+    any locale-specific case mappings.
 
     :return: A String, representing the value of a string converted to uppercase
     """

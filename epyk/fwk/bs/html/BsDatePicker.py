@@ -52,7 +52,8 @@ class BsDate(html.Html.Html):
     """
     return self.__options
 
-  _js__builder__ = 'options.date = data; delete options.builder; $(htmlObj).datetimepicker(options)' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+  _js__builder__ = 'options.date = data; delete options.builder; $(htmlObj).datetimepicker(options)' % {
+    "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
