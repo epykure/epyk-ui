@@ -309,12 +309,14 @@ class Slider(Html.Html):
   requirements = ('jqueryui', )
   name = 'Slider'
   _option_cls = OptSliders.OptionsSlider
+  is_range = False
 
   def __init__(self, report, number, min_val, max_val, width, height, helper, options, html_code, profile):
     options.update({'max': max_val, 'min': min_val})
     super(Slider, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
-    self.style.css.padding = "0 10px"
+    if self.options.show_min_max:
+      self.style.css.padding = "0 10px"
     self.style.css.margin = "15px 0"
     self.add_helper(helper)
 
@@ -461,26 +463,44 @@ class Slider(Html.Html):
     return self._dom
 
   _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css)
+      if (typeof options.handler_css !== 'undefined'){
+        %(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
+    if self.options.force_show_current:
+      if self.options.force_show_current is True:
+        self.options.slide([], readout_level="slider", readout_format=None)
+      else:
+        self.options.slide([], readout_level="slider", readout_format=self.options.force_show_current)
     self.page.properties.js.add_builders(self.refresh())
+    if 'slide' in self.options.js_tree:
+      self.page.properties.js.add_builders(self.js.slide(self._vals))
+    if self.options.show_min_max:
+      return '''
+        <div %(strAttr)s>
+          <div style="width:100%%;height:20px">
+            <span style="float:left;display:inline-block">%(min)s</span>
+            <span style="float:right;display:inline-block">%(max)s</span>
+          </div>
+          <div id="%(htmlCode)s"></div>
+        </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
+                               "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
     return '''
-      <div %(strAttr)s>
-        <div style="width:100%%;height:20px">
-          <span style="float:left;display:inline-block">%(min)s</span>
-          <span style="float:right;display:inline-block">%(max)s</span>
-        </div>
-        <div id="%(htmlCode)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
-                             "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
+            <div %(strAttr)s>
+              <div id="%(htmlCode)s"></div>
+            </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
+                                   "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
 
 
 class Range(Slider):
   name = "Slider Range"
+  is_range = True
 
   _js__builder__ = '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
-        ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+      if (typeof options.handler_css !== 'undefined'){
+        %(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
+      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
 class SliderDate(Slider):
