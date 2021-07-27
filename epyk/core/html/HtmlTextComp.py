@@ -974,6 +974,9 @@ class Composite(Html.Html):
     if comp is not None:
       comp += new_comp
 
+  def set_builder(self, builder):
+    self.page.properties.js.add_builders(builder)
+
   def __str__(self):
     self.page.properties.js.add_builders(list(self.__builders))
     return self.val.html()
