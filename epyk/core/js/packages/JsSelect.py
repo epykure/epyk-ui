@@ -210,6 +210,19 @@ class JSelect(JsPackage):
     """
     return JsObjects.JsObjects.get("%s.selectpicker('selectAll')" % self._src.dom.jquery.varId)
 
+  def selectIndex(self, i):
+    """
+    Description:
+    ------------
+    This will select the option at the specified index.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/
+    """
+    return JsObjects.JsObjects.get("%(jqid)s.find('option')[%(index)s].setAttribute('selected', 'selected')" % {
+      'jqid': self._src.dom.jquery.varId, 'index': i})
+
   def render(self):
     """
     Description:
