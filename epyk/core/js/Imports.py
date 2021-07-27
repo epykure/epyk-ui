@@ -1,5 +1,5 @@
 """
-Core module in charge of linking the Python report request to the corresponding external pacakges required.
+Core module in charge of linking the Python report request to the corresponding external packages required.
 
 This package will resolve the external Javascript and CSS dependencies.
 
@@ -1019,7 +1019,8 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'repository': 'https://github.com/plotly/plotly.js',
     'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
-    'version': '1.58.4',
+    #'version': '1.58.4',
+    'version': '2.3.0',
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -2040,6 +2041,82 @@ BOOTSTRAP = {
     'modules': [
       {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',
        'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
+    ]
+
+  }
+}
+
+
+TOAST = {
+  'tui-date-picker': {
+    'version': 'latest',
+    'website': 'https://nhn.github.io/tui.date-picker/latest/',
+    'register': {'variable': 'tuiDate', 'module': 'tui-date-picker', "init_fnc": "console.log(tuiDate)"},
+    'req_js': [ # depn only for requirejs
+      {'alias': 'tui-time-picker'},
+    ],
+    'modules': [
+      {'script': 'tui-date-picker.css', 'path': 'tui.date-picker/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'tui-date-picker.js', 'path': 'tui.date-picker/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+    ]
+  },
+  'tui-time-picker': {
+    'version': 'latest',
+    'website': 'https://nhn.github.io/tui.date-picker/latest/',
+    'register': {'variable': 'tuiTime', 'module': 'tui-time-picker'},
+    'modules': [
+      {'script': 'tui-time-picker.css', 'path': 'tui.time-picker/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'tui-time-picker.js', 'path': 'tui.time-picker/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+    ]
+  },
+  'tui-code-snippet': {
+    'version': '1.5.2',
+    'website': 'https://nhn.github.io/tui.date-picker/latest/',
+    'register': {'variable': 'tuiSnippet', 'module': 'tui-code-snippet.min'},
+    'modules': [
+      {'script': 'tui-code-snippet.min.js', 'path': 'tui.code-snippet/v%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+    ]
+  },
+  'tui-calendar': {
+    'req': [
+      {'alias': 'tui-code-snippet'},
+      {'alias': 'tui-date-picker'},
+      {'alias': 'tui-time-picker'},
+    ],
+    'version': 'latest',
+    'register': {'variable': 'tuiCalendar', 'module': 'tui-calendar'},
+    'website': 'https://github.com/nhn/tui.calendar',
+    'modules': [
+      {'script': 'tui-calendar.js', 'path': 'tui-calendar/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'tui-calendar.css', 'path': 'tui-calendar/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+    ]
+  },
+  '@toast-ui/chart': {
+    'version': 'latest',
+    'register': {'variable': 'tuiCharts', 'module': 'toastui-chart.min'},
+    'website': 'https://github.com/nhn/tui.chart/tree/main/apps/chart',
+    'modules': [
+      {'script': 'toastui-chart.min.css', 'path': 'chart/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'toastui-chart.min.js', 'path': 'chart/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+    ]
+  },
+  '@toast-ui/editor': {
+    'version': 'latest',
+    'website': 'https://github.com/nhn/tui.editor/tree/master/apps/editor',
+    'modules': [
+      {'script': 'toastui-editor.min.css', 'path': 'editor/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'toastui-editor-all.min.js', 'path': 'editor/%(version)s/',
+       'cdnjs': 'https://uicdn.toast.com/'},
     ]
 
   }
@@ -3631,6 +3708,8 @@ class ImportManager:
           self.jsImports[mod['alias']]['dep'][i] = path
       mod = mod['alias']
     modules.append(mod)
+    if self._report.ext_packages is not None and mod in self._report.ext_packages:
+      import_hierarchy = self._report.ext_packages
     req_key = "req"
     if use_require_js:
       if "req_js" in import_hierarchy.get(mod, {}):
@@ -4076,11 +4155,15 @@ class ImportManager:
 
       if not self.online:
         self.pkgs.get(m).set_local(static_url=self.static_url)
-      if 'register' in JS_IMPORTS[m]:
-        alias = JS_IMPORTS[m]['register'].get('alias', m)
-        first_module = JS_IMPORTS[m]['modules'][0]
+
+      import_ref = JS_IMPORTS
+      if self._report.ext_packages is not None and m in self._report.ext_packages:
+        import_ref = self._report.ext_packages
+      if 'register' in import_ref[m]:
+        alias = import_ref[m]['register'].get('alias', m)
+        first_module = import_ref[m]['modules'][0]
         if 'version' not in first_module:
-          first_module['version'] = JS_IMPORTS[m]['version']
+          first_module['version'] = import_ref[m]['version']
         if m in m_versions:
           first_module['version'] = m_versions[m]
         if not self.online:
@@ -4089,13 +4172,13 @@ class ImportManager:
         else:
           results['paths']["'%s'" % alias] = "%s/%s%s" % (
             first_module['cdnjs'], first_module['path'] % first_module,
-            JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
+            import_ref[m]['register'].get('module', first_module['script'][:-3]))
         alias_to_name[m] = alias
-        alias_to_var[m] = JS_IMPORTS[m]['register'].get('variable', alias)
+        alias_to_var[m] = import_ref[m]['register'].get('variable', alias)
         name_to_alias[alias] = m
-        req_alias = 'req_js' if 'req_js' in JS_IMPORTS[m] else "req"
-        if req_alias in JS_IMPORTS[m]:
-          req_levels = [deps_level.get(req_def["alias"], -1) for req_def in JS_IMPORTS[m][req_alias]]
+        req_alias = 'req_js' if 'req_js' in import_ref[m] else "req"
+        if req_alias in import_ref[m]:
+          req_levels = [deps_level.get(req_def["alias"], -1) for req_def in import_ref[m][req_alias]]
           deps_level[m] = max(req_levels) + 1
         else:
           deps_level[m] = 0
