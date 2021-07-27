@@ -123,6 +123,7 @@ class HtmlNavBar(Html.Html):
       self._right = self._report.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
+      self._right.style.css.font_factor(0)
       self._right.options.managed = False
       self._vals.append(self._right)
     self._right.add(component)
