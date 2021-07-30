@@ -1,12 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import json
+
 
 class DataConfig:
+
+  def __init__(self):
+    self.keys = set()
 
   def __getitem__(self, key):
     from epyk.core.js.primitives import JsObjects
 
+    self.keys.add(key)
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
   def fromConfig(self, k, default=None, page=None, end_point="/static/configs"):
@@ -29,6 +35,7 @@ class DataConfig:
     if page.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
+    self.keys.add(k)
     return '''
       (function(){
         if (typeof window['page_config'] === 'undefined'){
@@ -48,6 +55,28 @@ class DataConfig:
         } else {return window['page_config']['%(key)s']}
       })(%(key)s)
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
+
+  def to_json(self, sort_keys=True, indent=4):
+    """
+    Description:
+    ------------
+    Return the json configuration inputs for the page.
+
+    TODO Add the object type to components.
+
+    Attributes:
+    ----------
+    :param sort_keys:
+    :param indent:
+    """
+    vals = {}
+    if sort_keys:
+      for k in sorted(self.keys):
+        vals[k] = ""
+    else:
+      for k in self.keys:
+        vals[k] = ""
+    return json.dumps(vals, indent=indent)
 
 
 class TabulatorEvents:

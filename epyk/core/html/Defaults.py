@@ -15,7 +15,7 @@ TABLE_FAMILY = "tabulator"
 ENTITIES_ADD_ON = ""
 
 # Constant for all the input components
-LINE_HEIGHT = 23
+LINE_HEIGHT = 18
 BIG_ICONS = 15
 
 #

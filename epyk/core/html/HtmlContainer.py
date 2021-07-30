@@ -250,13 +250,15 @@ class PanelSlide(Panel):
         title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
       self.text.style.css.bold()
       self.text.style.css.font_factor(2)
-    self.title = self._report.ui.div([self.icon, self.text])
+    self.title = self.page.ui.div([self.icon, self.text])
     self.title.options.managed = False
     self.title.style.css.white_space = "nowrap"
     self.title.style.css.padding = "5px 5px 0 0"
-    self.panel = self.page.ui.div()
-    self.panel.options.managed = False
     self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
+
+  @property
+  def panel(self):
+    return self.val[1]
 
   @property
   def options(self):
@@ -1095,6 +1097,11 @@ class Row(Html.Html):
     """
     for i, val in enumerate(list(args)):
       self[i].style.css.width = "%s%s" % (val[0], val[1])
+      if val[1] == "px":
+        if "col" in self[i].attr["class"]:
+          self[i].attr["class"].remove("col")
+        if 'my-auto' in self[i].attr["class"]:
+          self[i].attr["class"].remove("my-auto")
     return self
 
   def __len__(self):
