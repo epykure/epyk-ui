@@ -10,6 +10,7 @@ from epyk.core.html.options import OptInputs
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlInput
 from epyk.core.js.objects import JsComponents
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsTimepicker
@@ -67,8 +68,29 @@ class Input(Html.Html):
     :rtype: JsHtmlField.InputText
     """
     if self._js is None:
-      self._js = JsHtmlField.InputText(self, self._report)
+      self._js = JsHtmlField.InputText(self, self.page)
     return self._js
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Input Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage::
+
+      div = page.ui.input(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+
+    :rtype: JsHtmlInput.Inputs
+    """
+    if self._dom is None:
+      self._dom = JsHtmlInput.Inputs(self, report=self.page)
+    return self._dom
 
   @property
   def style(self):
@@ -219,7 +241,7 @@ class Input(Html.Html):
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger("input")])
+      self.page.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
   def readonly(self, flag=True):
@@ -366,7 +388,7 @@ class AutoComplete(Input):
     :rtype: JsQueryUi.Autocomplete
     """
     if self._js is None:
-      self._js = JsQueryUi.Autocomplete(self, report=self._report)
+      self._js = JsQueryUi.Autocomplete(self, report=self.page)
     return self._js
 
   def __str__(self):
@@ -427,7 +449,7 @@ class InputTime(Input):
     :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, report=self.page)
     return self._dom
 
   @property
@@ -441,7 +463,7 @@ class InputTime(Input):
     :rtype: JsTimepicker.Timepicker
     """
     if self._js is None:
-      self._js = JsTimepicker.Timepicker(self, report=self._report)
+      self._js = JsTimepicker.Timepicker(self, report=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -513,7 +535,7 @@ class InputDate(Input):
     :rtype: JsQueryUi.Datepicker
     """
     if self._js is None:
-      self._js = JsQueryUi.Datepicker(self, report=self._report)
+      self._js = JsQueryUi.Datepicker(self, report=self.page)
     return self._js
 
   @property
@@ -539,7 +561,7 @@ class InputDate(Input):
     :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self.page)
     return self._dom
 
   def excluded_dates(self, dts=None, js_funcs=None, profile=None):
@@ -599,7 +621,7 @@ class InputDate(Input):
     """
     dts = dts or []
     if css is not None:
-      self._report.body.style.custom_class(css, classname="%s a" % class_name)
+      self.page.body.style.custom_class(css, classname="%s a" % class_name)
     self.options.beforeShowDay(['''
         var utc = value.getTime() - value.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
         if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} 
@@ -664,9 +686,9 @@ class InputRange(Input):
     self.input.set_attrs(attrs={"type": "range", "min": min_val, "max": max_val, "step": step})
     if self.options.output:
       self.style.css.position = "relative"
-      self.output = self._report.ui.inputs._output(text).css({
+      self.output = self.page.ui.inputs._output(text).css({
         "width": '15px', "text-align": 'center', "margin-left": '2px', "position": "absolute",
-        'color': self._report.theme.colors[-1]})
+        'color': self.page.theme.colors[-1]})
       self.append_child(self.output)
       self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlCode})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -731,7 +753,7 @@ class Field(Html.Html):
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
-      self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
+      self._dom = JsHtmlField.JsHtmlFields(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -1002,7 +1024,7 @@ class Checkbox(Html.Html):
     :rtype: JsHtmlField.Check
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Check(self, report=self._report)
+      self._dom = JsHtmlField.Check(self, report=self.page)
     return self._dom
 
   _js__builder__ = '''htmlObj.checked = data.value; 
@@ -1037,7 +1059,7 @@ class Radio(Html.Html):
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
     self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
-                  css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+                  css={"margin-left": '5px', 'color': self.page.theme.success[1]})
 
   @property
   def dom(self):
@@ -1050,7 +1072,7 @@ class Radio(Html.Html):
     :rtype: JsHtmlField.Radio
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Radio(self, report=self._report)
+      self._dom = JsHtmlField.Radio(self, report=self.page)
     return self._dom
 
   @property
@@ -1064,7 +1086,7 @@ class Radio(Html.Html):
     :rtype: JsComponents.Radio
     """
     if self._js is None:
-      self._js = JsComponents.Radio(self, report=self._report)
+      self._js = JsComponents.Radio(self, report=self.page)
     return self._js
 
   _js__builder__ = '''htmlObj.checked = data.value; 
@@ -1132,7 +1154,7 @@ class TextArea(Html.Html):
     :rtype: JsHtmlField.Textarea
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Textarea(self, report=self._report)
+      self._dom = JsHtmlField.Textarea(self, report=self.page)
     return self._dom
 
   def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -1153,7 +1175,7 @@ class TextArea(Html.Html):
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger("input")])
+      self.page.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
   _js__builder__ = 'htmlObj.innerHTML = data'
@@ -1212,7 +1234,7 @@ class Search(Html.Html):
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
-      self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
+      self._dom = JsHtmlField.JsHtmlFields(self, report=self.page)
     return self._dom
 
   _js__builder__ = '''htmlObj.find('input').val(data)'''
