@@ -200,7 +200,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
     Description:
     ------------
     Change the name for a specific panel.
-    
+
     Attributes:
     ----------
     :param i: Integer. The panel index.
