@@ -1902,6 +1902,12 @@ class Body(Html):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
 
+    from epyk import configs
+
+    builders = []
+    for c in components:
+      configs.keys[c.htmlCode] = c.options.config_default
+      builders.append(c.build(self.page.js.objects.get("data['%s']" % c.htmlCode)))
     return '''
       if (typeof window['page_config'] === 'undefined'){
         var rawFile = new XMLHttpRequest(); const queryString = window.location.search;
@@ -1916,8 +1922,7 @@ class Body(Html):
       else {var data = window['page_config']; %(fncs)s}''' % {
       "sync": JsUtils.jsConvertData(not sync, None), "lang": JsUtils.jsConvertData(lang, None), 'url': end_point,
       'json': self.page.json_config_file,
-      'fncs': JsUtils.jsConvertFncs(js_funcs + [
-        c.build(self.page.js.objects.get("data['%s']" % c.htmlCode)) for c in components or []], toStr=True)}
+      'fncs': JsUtils.jsConvertFncs(js_funcs + builders, toStr=True)}
 
   def set_content(self, page, page_content):
     """
