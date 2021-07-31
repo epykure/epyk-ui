@@ -23,8 +23,10 @@ class DatePicker(Html.Html):
     # Add all the internal components input, label, icon and helper
     if width[0] is not None and width[1] == 'px':
       width = (width[0] - 30, width[1])
-    self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css(
-      {"padding": 0})
+    self.input = self.page.ui.inputs.d_date(self.val, width=width, height=height, options=options,
+      html_code="%s_input" % html_code if html_code is not None else html_code).css({"padding": 0})
+    if html_code is not None:
+      self.input.attr["name"] = "%s_input" % html_code
     self.prepend_child(self.input)
     if not self.input.options.inline and icon:
       self.add_icon(icon, html_code=self.htmlCode,
@@ -173,8 +175,11 @@ class TimePicker(Html.Html):
 
   def __init__(self, report, value, label, icon, color, html_code, profile, options, helper):
     super(TimePicker, self).__init__(report, None, html_code=html_code, profile=profile)
-    self.input = self._report.ui.inputs.d_time(value, options=options)
+    self.input = self._report.ui.inputs.d_time(value, options=options,
+         html_code="%s_input" % html_code if html_code is not None else html_code)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
+    if html_code is not None:
+      self.input.attr["name"] = "%s_input" % html_code
     self.prepend_child(self.input)
     self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self._report.theme.success[1]},
                   position="after", family=options.get("icon_family"))

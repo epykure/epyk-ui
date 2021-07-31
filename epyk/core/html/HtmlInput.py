@@ -37,9 +37,11 @@ class Input(Html.Html):
   def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
     super(Input, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
-    value = text['value'] if isinstance(text, dict) else text
+    value = text['value'] if isinstance(text, dict) else self._vals
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
+    if html_code is not None:
+      self.attr["name"] = html_code
     self.style.css.padding = 0
     self.__focus = False
     if self.options.background:
@@ -736,6 +738,9 @@ class Field(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = html_input
+    if html_code is not None:
+      if "name" not in self.input.attr:
+        self.input.attr["name"] = self.input.htmlCode
     self.append_child(self.input)
     self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
                   css={"margin-left": '5px', 'color': self.page.theme.colors[-1]})
@@ -766,6 +771,7 @@ class FieldInput(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
     html_input = report.ui.inputs.input(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+                                        html_code="%s_input" % html_code if html_code is not None else html_code,
                                         options=options)
     super(FieldInput, self).__init__(
       report, html_input, label, icon, width, height, html_code, helper, options, profile)

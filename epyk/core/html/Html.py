@@ -372,17 +372,17 @@ class Html:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (
           html_code, cleanData(html_code)))
 
-      if html_code in self._report.components:
+      if html_code in self.page.components:
         if html_code in ["content", "content_page", "page_nav_bar"]:
           raise Exception("Duplicated Html code '%s', this is used internally in the framework !" % html_code)
 
         raise Exception("Duplicated Html code '%s' in the script !" % html_code)
 
       self.__htmlCode = html_code
-      if html_code in self._report.inputs:
-        vals = self._report.inputs[html_code]
+      if html_code in self.page.inputs:
+        vals = self.page.inputs[html_code]
 
-    self._report.components[self.htmlCode] = self
+    self.page.components[self.htmlCode] = self
     self._vals = vals
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
     self._internal_components = [self.htmlCode]

@@ -397,6 +397,12 @@ class Div(Html.Html):
       self.set_attrs(name='contenteditable', value="true")
       self.css('overflow', 'auto')
 
+  def __enter__(self):
+    return self
+
+  def __exit__(self, type, value, traceback):
+    return True
+
   def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
     """
     Description:
@@ -940,6 +946,12 @@ class Col(Html.Html):
     if self.position == 'middle':
       self.attr["class"].add('my-auto')
 
+  def __enter__(self):
+    return self
+
+  def __exit__(self, type, value, traceback):
+    return True
+
   @property
   def options(self):
     """
@@ -1033,6 +1045,12 @@ class Row(Html.Html):
     self.style.css.justify_content = self.position
     if align == 'center':
       self.css({'margin': 'auto'})
+
+  def __enter__(self):
+    return self
+
+  def __exit__(self, type, value, traceback):
+    return True
 
   @property
   def options(self):
@@ -1149,6 +1167,12 @@ class Grid(Html.Html):
     if rows is not None:
       for row in rows:
         self.__add__(row)
+
+  def __enter__(self):
+    return self
+
+  def __exit__(self, type, value, traceback):
+    return True
 
   @property
   def options(self):
@@ -1612,6 +1636,7 @@ class Form(Html.Html):
   def __init__(self, report, components, helper):
     super(Form, self).__init__(report, [])
     self.style.css.padding = "5px"
+    self.method, self.action, self.label = None, None, None
     self.add_helper(helper)
     self.__submit, self._has_container = None, False
     for i, component in enumerate(components):
@@ -1623,25 +1648,45 @@ class Form(Html.Html):
     super(Form, self).__add__(component)
     return self
 
-  def submit(self, method, action="#", text="Submit"):
+  def extend(self, components):
     """
     Description:
-    -----------
-
+    ------------
+    Add multiple HTML components to the container.
 
     Attributes:
     ----------
-    :param method:
-    :param action:
-    :param text:
+    :param components: List. The list of components.
     """
-    if action is not None and method is not None:
-      self.attr.update({"action": action, "method": method})
+    for component in components:
+      self.add(component)
+    return self
 
-    self.__submit = self._report.ui.button(text).set_attrs({"type": 'submit'})
+  def __enter__(self):
+    return self
+
+  def __exit__(self, type, value, traceback):
+    if self.__submit is None:
+      self.submit(self.method, self.action, self.label)
+
+  def submit(self, method=None, action=None, text=None):
+    """
+    Description:
+    -----------
+    Add a submit event to the form.
+
+    Attributes:
+    ----------
+    :param method: String. Optional. The method used to transfer data.
+    :param action: String. Optional. The end point for the submit.
+    :param text: String. Optional. The text on the submit button.
+    """
+    self.attr.update({"action": action or self.action, "method": method or self.method})
+    self.__submit = self.page.ui.button(text).set_attrs({"type": 'submit'})
+    self.__submit.style.css.margin_top = 10
     self.__submit.options.managed = False
     if self._has_container:
-      self[0] + self.__submit
+      self[0].add(self.__submit)
     return self
 
   def __str__(self):
