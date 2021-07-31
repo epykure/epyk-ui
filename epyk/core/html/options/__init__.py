@@ -106,9 +106,6 @@ class Options(DataClass):
     Create a nested structure for the JavaScript configuration layer.
     This is required for Charts and Tables configurations.
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param name: String. The key to be added to the internal data dictionary.
@@ -126,9 +123,6 @@ class Options(DataClass):
     Description:
     ------------
 
-    Usage:
-    -----
-
     Attributes:
     ----------
     :param name: String. The key to be added to the internal data dictionary.
@@ -145,8 +139,7 @@ class Options(DataClass):
     ------------
     Add a custom JavaScript configuration.
 
-    Usage:
-    -----
+    Usage::
 
       chart = page.ui.charts.apex.scatter()
       chart.options.chart.zoom.custom_config("test", False)
@@ -169,8 +162,7 @@ class Options(DataClass):
     Check if the content of a property is defined to always be a JavaScript fragment.
     Thus the framework will not convert it to a Json content.
 
-    Usage:
-    -----
+    Usage::
 
       div = page.ui.div()
       print(div.options.isJsContent("inline"))
@@ -189,8 +181,7 @@ class Options(DataClass):
     Boolean flag to set if the component needs to be added to the page.
     If set to False the component has to be managed manually in the page.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       but.options.managed = False
@@ -213,8 +204,7 @@ class Options(DataClass):
     Boolean flag to set if extra logs need to be displayed.
     This could help in debugging, default is the page verbose flag (default is false).
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       but.options.verbose = True
@@ -237,8 +227,7 @@ class Options(DataClass):
     Boolean flag to set if extra logs need to be displayed.
     This could help in debugging, default is the page verbose flag (default is false).
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       but.options.verbose = True
@@ -262,8 +251,7 @@ class Options(DataClass):
     This will be used to automatically map the Python component to its corresponding JavaScript builder
     function used by the build method.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       but.options.builder = "Button"
@@ -328,8 +316,7 @@ class Options(DataClass):
     This function will return a dictionary with all the component attributes (required and optional) ones.
     It will provide the full available description of those components.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       pprint.pprint(but.options.details(), indent=4)
@@ -360,8 +347,7 @@ class Options(DataClass):
 
     To get the full definition of options the details method should be used.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       pprint.pprint(but.options.required(), indent=4)
@@ -379,8 +365,7 @@ class Options(DataClass):
 
     To get the full definition of options the details method should be used.
 
-    Usage:
-    -----
+    Usage::
 
       but = page.ui.button()
       pprint.pprint(but.options.optional(), indent=4)
