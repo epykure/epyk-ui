@@ -280,6 +280,24 @@ class OptionsSelectJs(OptionsSelect):
   component_properties = ("auto_select",)
 
   @property
+  def config_default(self):
+    """
+    Description:
+    -----------
+    The default value for the configuration in case of template.
+    Default value is an empty list.
+
+    Usage::
+
+      component.options.config_default = ["Test 1", "Test 2"]
+    """
+    return self.get([])
+
+  @config_default.setter
+  def config_default(self, flag):
+    self.set(flag)
+
+  @property
   def actionsBox(self):
     """
     Description:

@@ -7,12 +7,31 @@ import json
 class DataConfig:
 
   def __init__(self):
-    self.keys = set()
+    self.keys = {}
+    self.docs = {}
 
   def __getitem__(self, key):
     from epyk.core.js.primitives import JsObjects
 
-    self.keys.add(key)
+    self.keys[key] = ""
+    return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
+
+  def get(self, key, dfl="", doc=""):
+    """
+    Description:
+    ------------
+    Get the key from the configuration on the JavaScript side and add the documentation.
+
+    Attributes:
+    ----------
+    :param key: String. The key to look up from the JavaScript configuration.
+    :param dfl: Object. Optional. The default value in the configuration.
+    :param doc: String. Optional. The doc for this key in the Json.
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    self.keys[key] = dfl
+    self.docs[key] = doc
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
   def fromConfig(self, k, default=None, page=None, end_point="/static/configs"):
@@ -35,7 +54,7 @@ class DataConfig:
     if page.json_config_file is None:
       raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
 
-    self.keys.add(k)
+    self.keys[k] = default
     return '''
       (function(){
         if (typeof window['page_config'] === 'undefined'){
@@ -62,20 +81,19 @@ class DataConfig:
     ------------
     Return the json configuration inputs for the page.
 
-    TODO Add the object type to components.
-
     Attributes:
     ----------
-    :param sort_keys:
-    :param indent:
+    :param sort_keys: Boolean. Optional. Set the order for the keys.
+    :param indent: Integer. Optional. Add number of indent to the Json.
     """
     vals = {}
     if sort_keys:
       for k in sorted(self.keys):
-        vals[k] = ""
+        vals[k] = self.keys[k]
     else:
-      for k in self.keys:
-        vals[k] = ""
+      vals = self.keys
+    if self.docs:
+      vals["_comment"] = self.docs
     return json.dumps(vals, indent=indent)
 
 

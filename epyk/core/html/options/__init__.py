@@ -301,6 +301,24 @@ class Options(DataClass):
   def style(self, values):
     self._config(values)
 
+  @property
+  def config_default(self):
+    """
+    Description:
+    -----------
+    The default value for the configuration in case of template.
+    Default value is an empty string.
+
+    Usage::
+
+      component.options.config_default = {"value": "test"}
+    """
+    return self.get("")
+
+  @config_default.setter
+  def config_default(self, flag):
+    self.set(flag)
+
   def details(self):
     """
     Description:
