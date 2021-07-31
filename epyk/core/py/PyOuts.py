@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import json
 
@@ -502,13 +503,20 @@ if (typeof icon === "undefined"){
 
     :return: The file full path.
     """
+    # For templates configuration
+    from epyk import configs
+
     options = options or {}
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
     if not os.path.exists(path):
       os.makedirs(path)
     if name is None:
-      name = int(time.time())
+      if configs.keys:
+        name = self._report.json_config_file
+      else:
+        name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], int(time.time()))
+
     name = name if not name.endswith(".html") else name[:-5]
     html_file_path = os.path.join(path, "%s.html" % name)
     htmlParts = []
@@ -523,33 +531,35 @@ if (typeof icon === "undefined"){
         htmlParts.append(component.html())
       cssParts.update(component.style.get_classes_css())
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
-    results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False))
+    results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False) in (True, 'js'))
     if options.get("split", False):
-      css_filename = "%s.min" % name if options.get("minify", False) else name
-      js_filename = "%s.min" % name if options.get("minify", False) else name
-      static_url = self._report.imports.static_url or "."
-      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
-        results['cssImports'], options.get("css_route", '%s/css' % static_url), css_filename)
-      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
-        body, options.get("js_route", '%s/js' % static_url), js_filename)
       static_path = path
-      if options.get("static_path") is not None:
-        static_path = os.path.join(path, options.get("static_path"))
-      if not os.path.exists(os.path.join(static_path, 'css')):
-        os.makedirs(os.path.join(static_path, 'css'))
-      with open(os.path.join(static_path, 'css', "%s.css" % css_filename), "w") as f:
-        if options.get("minify", False):
-          f.write(results['cssStyle'].replace("\n", ""))
-        else:
-          f.write(results['cssStyle'])
-        results['cssStyle'] = "" # empty the styles as written in an external file.
-      if not os.path.exists(os.path.join(static_path, 'js')):
-        os.makedirs(os.path.join(static_path, 'js'))
-      with open(os.path.join(static_path, 'js', "%s.js" % js_filename), "w") as f:
-        fncs = []
-        for v in results['jsFrgsCommon'].values():
-          fncs.append(JsLinter.parse(v, minify=options.get("minify", False)))
-        f.write("\n\n".join(fncs))
+      static_url = self._report.imports.static_url or "."
+      if options["split"] is True or options["split"] == "css":
+        css_filename = "%s.min" % name if options.get("minify", False) else name
+        results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
+          results['cssImports'], options.get("css_route", '%s/css' % static_url), css_filename)
+        if options.get("static_path") is not None:
+          static_path = os.path.join(path, options.get("static_path"))
+        if not os.path.exists(os.path.join(static_path, 'css')):
+          os.makedirs(os.path.join(static_path, 'css'))
+        with open(os.path.join(static_path, 'css', "%s.css" % css_filename), "w") as f:
+          if options.get("minify", False):
+            f.write(results['cssStyle'].replace("\n", ""))
+          else:
+            f.write(results['cssStyle'])
+          results['cssStyle'] = "" # empty the styles as written in an external file.
+      if options["split"] is True or options["split"] == "js":
+        js_filename = "%s.min" % name if options.get("minify", False) else name
+        body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
+          body, options.get("js_route", '%s/js' % static_url), js_filename)
+        if not os.path.exists(os.path.join(static_path, 'js')):
+          os.makedirs(os.path.join(static_path, 'js'))
+        with open(os.path.join(static_path, 'js', "%s.js" % js_filename), "w") as f:
+          fncs = []
+          for v in results['jsFrgsCommon'].values():
+            fncs.append(JsLinter.parse(v, minify=options.get("minify", False)))
+          f.write("\n\n".join(fncs))
 
     # Add the worker sections when no server available
     for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
@@ -558,6 +568,10 @@ if (typeof icon === "undefined"){
       results['body'] = body
       results['header'] = self._report.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
+
+    if configs.keys:
+      with open(os.path.join(path, "%s.json" % name), "w") as fp:
+        fp.write(configs.to_json())
     return html_file_path
 
   def web(self):
