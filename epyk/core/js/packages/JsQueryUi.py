@@ -15,34 +15,35 @@ from epyk.core.js.statements import JsIf
 
 
 class JQueryUI(JsPackage):
-
   lib_alias = {"js": 'jqueryui', 'css': 'jqueryui'}
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, selector=None, setVar=True, report=None):
-    super(JQueryUI, self).__init__(src=htmlObj, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
-    self._src = htmlObj
+  def __init__(self, component, varName=None, selector=None, setVar=True, report=None):
+    super(JQueryUI, self).__init__(src=component, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
+    self._src = component
 
   def labels(self):
     """
+    Description:
+    -----------
     Finds all label elements associated with the first selected element.
-
-    :return:
     """
     self.fnc("labels()")
     return self
 
   def cssClip(self, css=None):
     """
+    Description:
+    -----------
     Getter/setter for an object version of the CSS clip property.
 
     Related Pages:
 
       https://api.jqueryui.com/cssClip/
 
+    Attributes:
+    ----------
     :param css:
-
-    :return:
     """
     if css is not None:
       self.fnc("cssClip(%s)" % JsUtils.jsConvertData(css, None))
@@ -52,15 +53,17 @@ class JQueryUI(JsPackage):
 
   def position(self, options=None):
     """
+    Description:
+    ------------
     The jQuery UI .position() method allows you to position an element relative to the window, document, another element, or the cursor/mouse, without worrying about offset parents.
 
     Related Pages:
 
       https://api.jqueryui.com/position/
 
-    :param options:
-
-    :return:
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The position definition.
     """
     if options is not None:
       self.fnc("position(%s)" % JsUtils.jsConvertData(options, None))
@@ -75,15 +78,13 @@ class JQueryUI(JsPackage):
     Enable draggable functionality on any DOM element.
     Move the draggable object by clicking on it with the mouse and dragging it anywhere within the viewport.
 
-    Example
-
     Related Pages:
 
       https://jqueryui.com/draggable/
 
     Attributes:
     ----------
-    :param options:
+    :param options: Dictionary. Optional. The draggable definition.
     """
     if options is not None:
       return self.fnc("draggable(%s)" % JsUtils.jsConvertData(options, None))
@@ -92,17 +93,17 @@ class JQueryUI(JsPackage):
 
   def droppable(self, options=None):
     """
+    Description:
+    ------------
     Enable any DOM element to be droppable, a target for draggable elements.
-
-    Example
 
     Related Pages:
 
       https://jqueryui.com/droppable/
 
-    :param options:
-
-    :return:
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The droppable definition.
     """
     if options is not None:
       self._js.append("droppable(%s)" % JsUtils.jsConvertData(options, None))
@@ -112,6 +113,8 @@ class JQueryUI(JsPackage):
 
   def sortable(self, options=None):
     """
+    Description:
+    ------------
     Enable a group of DOM elements to be sortable.
     Click on and drag an element to a new spot within the list, and the other items will adjust to fit.
     By default, sortable items share draggable properties.
@@ -120,9 +123,9 @@ class JQueryUI(JsPackage):
 
       https://jqueryui.com/sortable/
 
-    :param options:
-
-    :return:
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The sortable definition.
     """
     if options is not None:
       self._js.append("sortable(%s)" % JsUtils.jsConvertData(options, None))
@@ -132,18 +135,18 @@ class JQueryUI(JsPackage):
 
   def resizable(self, options=None):
     """
+    Description:
+    ------------
     Enable any DOM element to be resizable.
     With the cursor grab the right or bottom border and drag to the desired width or height.
-
-    Example
 
     Related Pages:
 
       https://jqueryui.com/resizable/#constrain-area
 
-    :param options:
-
-    :return:
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The resizable definition.
     """
     if options is not None:
       self._js.append("resizable(%s)" % JsUtils.jsConvertData(options, None))
@@ -153,6 +156,8 @@ class JQueryUI(JsPackage):
 
   def selectable(self, options=None):
     """
+    Description:
+    ------------
     Enable a DOM element (or group of elements) to be selectable.
     Draw a box with your cursor to select items. Hold down the Ctrl key to make multiple non-adjacent selections.
 
@@ -160,9 +165,9 @@ class JQueryUI(JsPackage):
 
       https://jqueryui.com/selectable/
 
-    :param options:
-
-    :return:
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The selectable definition.
     """
     if options is not None:
       self._js.append("selectable(%s)" % JsUtils.jsConvertData(options, None))
@@ -172,47 +177,53 @@ class JQueryUI(JsPackage):
 
   def addClass(self, cls_name, delay, callback):
     """
+    Description:
+    ------------
     Adds class(es) to elements while animating all style changes.
 
     Related Pages:
 
       https://jqueryui.com/addClass/
 
+    Attributes:
+    ----------
     :param cls_name:
     :param delay:
     :param callback:
-
-    :return:
     """
     self._js.append("addClass('%s', %s, %s)" % (cls_name, delay, ";".join(JsUtils.jsConvertFncs(callback))))
     return self
 
   def removeClass(self, cls_name, delay, callback):
     """
+    Description:
+    ------------
     Removes class(es) from elements while animating all style changes.
 
     Related Pages:
 
       https://jqueryui.com/removeClass/
 
+    Attributes:
+    ----------
     :param cls_name:
     :param delay:
     :param callback:
-
-    :return:
     """
     self._js.append("removeClass('%s', %s, %s)" % (cls_name, delay, ";".join(JsUtils.jsConvertFncs(callback))))
     return self
 
   def switchClass(self, cls_name, new_cls_name, delay):
     """
+    Description:
+    ------------
     Add and remove class(es) to elements while animating all style changes.
 
+    Attributes:
+    ----------
     :param cls_name:
     :param new_cls_name:
     :param delay:
-
-    :return:
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     new_cls_name = JsUtils.jsConvertData(new_cls_name, None)
@@ -221,16 +232,18 @@ class JQueryUI(JsPackage):
 
   def toggleClass(self, cls_name, delay):
     """
+    Description:
+    ------------
     Toggle class(es) on elements while animating all style changes.
 
     Related Pages:
 
       https://jqueryui.com/toggleClass/
 
+    Attributes:
+    ----------
     :param cls_name:
     :param delay:
-
-    :return:
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     self._js.append("toggleClass(%s, %s)" % (cls_name, delay))
@@ -238,18 +251,20 @@ class JQueryUI(JsPackage):
 
   def show(self, selected_effect=None, options=None, delay=None, callback=None):
     """
+    Description:
+    ------------
     Display elements using custom effects.
 
     Related Pages:
 
       https://jqueryui.com/show/
 
+    Attributes:
+    ----------
     :param selected_effect:
     :param options:
     :param delay:
     :param callback:
-
-    :return:
     """
     if selected_effect is None:
       self._js.append("show()")
@@ -262,18 +277,20 @@ class JQueryUI(JsPackage):
 
   def hide(self, selected_effect=None, options=None, delay=None, callback=None):
     """
+    Description:
+    ------------
     Display elements using custom effects.
 
     Related Pages:
 
       https://jqueryui.com/show/
 
+    Attributes:
+    ----------
     :param selected_effect:
     :param options:
     :param delay:
     :param callback:
-
-    :return:
     """
     if selected_effect is None:
       self._js.append("hide()")
@@ -286,16 +303,18 @@ class JQueryUI(JsPackage):
 
   def toggle(self, selected_effect, options, delay):
     """
+    Description:
+    ------------
 
     Related Pages:
 
       https://jqueryui.com/toggle/
 
+    Attributes:
+    ----------
     :param selected_effect:
     :param options:
     :param delay:
-
-    :return:
     """
     selected_effect = JsUtils.jsConvertData(selected_effect, None)
     options = JsUtils.jsConvertData(options, None)
@@ -304,16 +323,18 @@ class JQueryUI(JsPackage):
 
   def animate(self, css=None, delay=None):
     """
+    Description:
+    ------------
     Animate the properties of elements between colors.
 
     Related Pages:
 
       https://jqueryui.com/animate/
 
+    Attributes:
+    ----------
     :param css:
     :param delay:
-
-    :return:
     """
     self._js.append("animate(%s, %s)" % (JsUtils.jsConvertData(css, None), delay))
     return self
@@ -323,27 +344,31 @@ class JQueryUiDatePicker(JQueryUI):
 
   def setDefaults(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
 
   def formatDate(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
 
   def option(self, name, value):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return "$('#%s input').datepicker( 'option', '%s', %s)" % (self.src.htmlCode, name, json.dumps(value))
 
   def refresh(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
 
 
@@ -446,12 +471,34 @@ class Slider(JQueryUI):
     Related Pages:
 
       https://api.jqueryui.com/slider/#method-value
+
+    Attributes:
+    ----------
+    :param index:
+    :param jsData:
     """
     if jsData is None:
       return JsObjects.JsObjects.get('%s.slider("values", %s)' % (self._src.dom.jquery.varId, index))
 
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.slider("value", %s, %s)' % (self._src.dom.jquery.varId, index, jsData))
+
+  def slide(self, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    """
+    value = JsUtils.jsConvertData(value, None)
+    if self._src.is_range:
+      return JsObjects.JsObjects.get('%(id)s.slider("values", %(value)s); %(id)s.slider("option", "slide").call(%(id)s, null, {values: %(value)s})' % {
+                                     "id": self._src.dom.jquery.varId, "value": value})
+
+    return JsObjects.JsObjects.get('%(id)s.slider("value", %(value)s); %(id)s.slider("option", "slide").call(%(id)s, null, {value: %(value)s})' % {
+      "id": self._src.dom.jquery.varId, "value": value})
 
   def inRange(self, value):
     """
@@ -592,9 +639,17 @@ class ProgressBar(JQueryUI):
       "varId": self._src.dom.jquery.varId, "jsValue": jsValue})
 
   def tooltip(self, jsValue=None, options=None):
+    """
+    Description:
+    ------------
 
-     return JsObjects.JsVoid(''' let options = %(options)s;
-     %(varId)s.find('div').attr("title", ""+ (%(varId)s.progressbar("value") / options.max * 100).toFixed(2) +"%% ("+ %(varId)s.progressbar("value") +" / "+ options.max +")")
+    Attributes:
+    ----------
+    :param jsValue:
+    :param options:
+    """
+    return JsObjects.JsVoid(''' let options = %(options)s;
+%(varId)s.find('div').attr("title", ""+ (%(varId)s.progressbar("value") / options.max * 100).toFixed(2) +"%% ("+ %(varId)s.progressbar("value") +" / "+ options.max +")")
  ''' % {"varId": self._src.dom.jquery.varId, 'options': self._src.options.config_js(options)})
 
 
@@ -906,12 +961,20 @@ class Dialog(JQueryUI):
       https://api.jqueryui.com/dialog/#method-open
     """
     return JsObjects.JsVoid('''
-      var div = $(document.createElement("div"));
-      div.innerHTML = "wegegre";
-      div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
-      %s.append(div)''' % self._src.dom.jquery.varId)
+var div = $(document.createElement("div")); div.innerHTML = "wegegre";
+div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
+%s.append(div)''' % self._src.dom.jquery.varId)
 
   def dialog(self, event):
+    """
+    Description:
+    ------------
+
+
+    Attributes:
+    ----------
+    :param event:
+    """
     event = JsUtils.jsConvertData(event, None)
     return JsObjects.JsVoid("%s.dialog(%s)" % (self._src.dom.jquery.varId, event))
 
@@ -942,6 +1005,25 @@ class Dialog(JQueryUI):
 
     jsValue = JsUtils.jsConvertData(jsValue, None)
     return JsObjects.JsObjects.get('%s.dialog("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+
+class AutocompleteFormats:
+
+  def __init__(self, component):
+    self.component = component
+
+  def groups(self):
+    """
+    Description:
+    ------------
+
+    """
+    return JsUtils.jsWrap('''
+%s.autocomplete("instance")._renderItem = function( ul, item ) {
+  return $( "<li>" )
+    .append( "<div>" + item.label + "<br>" + item.category + "</div>" )
+    .appendTo( ul );
+}''' % self.component.dom.jquery.varId)
 
 
 class Autocomplete(JQueryUI):
@@ -998,7 +1080,8 @@ class Autocomplete(JQueryUI):
     """
     Description:
     ------------
-    Retrieves the autocomplete's instance object. If the element does not have an associated instance, undefined is returned.
+    Retrieves the autocomplete's instance object.
+    If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
 
@@ -1039,7 +1122,9 @@ class Autocomplete(JQueryUI):
     Description:
     ------------
     Triggers a search event and invokes the data source if the event is not canceled.
-    Can be used by a selectbox-like button to open the suggestions when clicked. When invoked with no parameters, the current input's value is used. Can be called with an empty string and minLength: 0 to display all items.
+    Can be used by a selectbox-like button to open the suggestions when clicked.
+    When invoked with no parameters, the current input's value is used. Can be called with an empty string
+    and minLength: 0 to display all items.
 
     Related Pages:
 
@@ -1061,6 +1146,41 @@ class Autocomplete(JQueryUI):
     """
     jsData = JsUtils.jsConvertData(jsData, None)
     return JsObjects.JsObjects.get('%s.autocomplete("option", "source", %s)' % (self._src.dom.jquery.varId, jsData))
+
+  def ui_item(self, field):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param field:
+    """
+    field = JsUtils.jsConvertData(field, None)
+    return JsObjects.JsObjects.get("ui.item[%s]" % field)
+
+  @property
+  def renderItems(self):
+    """
+    Description:
+    ------------
+
+    """
+    return AutocompleteFormats(self._src)
+
+  def renderItem(self, callback):
+    """
+    Description:
+    ------------
+
+    https://jqueryui.com/autocomplete/#custom-data
+
+    Attributes:
+    ----------
+    :param callback:
+
+    """
+    return JsUtils.jsWrap('%s.autocomplete("instance")._renderItem = %s' % (self._src.dom.jquery.varId, callback))
 
   def if_(self, jsRule, jsFncs):
     """
