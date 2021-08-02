@@ -61,13 +61,14 @@ class Plotly:
     :param html_code:
     """
     series = []
-    for i, l in enumerate(lon_columns):
-      series.append({'lon': [], 'lat': [], 'text': []})
-      for rec in record:
-        series[-1]['lon'].append(rec.get(l, 0))
-        series[-1]['lat'].append(rec.get(lat_columns[i], 0))
-        if text_columns is not None:
-          series[-1]['text'].append(rec.get(text_columns[i], 0))
+    if lon_columns is not None:
+      for i, l in enumerate(lon_columns):
+        series.append({'lon': [], 'lat': [], 'text': []})
+        for rec in record:
+          series[-1]['lon'].append(rec.get(l, 0))
+          series[-1]['lat'].append(rec.get(lat_columns[i], 0))
+          if text_columns is not None:
+            series[-1]['text'].append(rec.get(text_columns[i], 0))
     line_chart = geo.GeoPlotly.Scatter(
       self.page, width, height, options or {}, html_code, profile)
     line_chart.options.responsive = True
@@ -155,6 +156,33 @@ class Plotly:
     line_chart.layout.mapbox.center.lon = -90
     line_chart.layout.dragmode = 'zoom'
     line_chart.layout.zoom = 3
+    return line_chart
+
+  def mapbox(self, record, lon_columns=None, lat_columns=None, text_columns=None, profile=None, options=None,
+             width=(100, "%"), height=(None, "px"), html_code=None):
+    series = []
+    if lon_columns is not None:
+      for i, l in enumerate(lon_columns):
+        series.append({'lon': [], 'lat': [], 'text': []})
+        for rec in record:
+          series[-1]['lon'].append(rec.get(l, 0))
+          series[-1]['lat'].append(rec.get(lat_columns[i], 0))
+          if text_columns is not None:
+            series[-1]['text'].append(rec.get(text_columns[i], 0))
+    line_chart = geo.GeoPlotly.Scatter(
+      self.page, width, height, options or {}, html_code, profile)
+    line_chart.options.responsive = True
+    line_chart.layout.dragmode = "zoom"
+    line_chart.layout.mapbox.style = "white-bg"
+    line_chart.layout.mapbox.add_layers("raster",
+                                 [
+                                   "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"])
+    for i, s in enumerate(series):
+      line_chart.add_trace(s)
+      line_chart.data.marker.color = self.page.theme.colors[::-1][i]
+      line_chart.data.marker.size = 4
+    line_chart.layout.mapbox.style = "open-street-map"
+    line_chart.layout.no_margin()
     return line_chart
 
 
