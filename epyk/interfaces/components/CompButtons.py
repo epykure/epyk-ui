@@ -82,7 +82,6 @@ class Buttons:
     html_button.style.css.margin = "0"
     html_button.style.css.padding = 0
     html_button.style.css.padding_h = 5
-    html_button.style.css.line_height = Defaults_html.LINE_HEIGHT
     self.__align(html_button, align)
     return html_button
 
