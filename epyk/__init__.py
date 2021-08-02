@@ -19,6 +19,8 @@ from epyk.core.js.JsUtils import jsWrap as js_callback
 
 from epyk.core.js.Imports import Package as package
 
+from epyk.web import jupyter
+
 Page = Rpt.Report
 
 LOG_SERVICE = None
