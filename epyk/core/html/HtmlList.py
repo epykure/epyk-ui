@@ -376,6 +376,7 @@ class Items(Html.Html):
     super(Items, self).__init__(report, records, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, 'height': height})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+    self.__external_item = False
 
   @property
   def style(self):
@@ -512,7 +513,7 @@ class Items(Html.Html):
       js_funcs, toStr=True, profile=profile)
     return self
 
-  def add_type(self, name, item_def, dependencies=None):
+  def add_type(self, name, item_def=None, func_name=None, dependencies=None):
     """
     Description:
     ------------
@@ -524,20 +525,27 @@ class Items(Html.Html):
     ----------
     :param name: String. The reference of this type name in the framework.
     :param item_def: String. The definition of the items (examples in JsHtmlList.py).
+    :param func_name: String. The external function name used to build the items.
     :param dependencies: List. Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:
         if d in Imports.JS_IMPORTS:
-          self._report.jsImports.add(d)
+          self.page.jsImports.add(d)
         if d in Imports.CSS_IMPORTS:
-          self._report.cssImport.add(d)
+          self.page.cssImport.add(d)
     self.style.css.padding_left = 0
     self.css({"list-style": 'none'})
     self.options.items_type = name
-    item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
-    self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
-      item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def)))
+    if func_name is not None:
+      self.__external_item = True
+      item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
+      self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
+        item_type_name, JsHtmlList.JsItemsDef(self).custom("var item = %s(htmlObj, data, options)" % func_name)))
+    else:
+      item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
+      self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
+        item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def)))
     return self
 
   def select_type(self, name=None, style=None, selected_style=None):
@@ -568,10 +576,10 @@ class Items(Html.Html):
     item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
     self.options.style_select = "list_%s_selected" % self.options.items_type
     # add all the shape definitions
-    if not self.page.properties.js.has_constructor(item_type_name):
+    if not self.page.properties.js.has_constructor(item_type_name) and not self.__external_item:
       shapes = JsHtmlList.JsItemsDef(self)
       self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
-        item_type_name, getattr(shapes, self.options.items_type)(self._report)))
+        item_type_name, getattr(shapes, self.options.items_type)(self.page)))
     self.page.properties.js.add_builders(self.refresh())
     return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
