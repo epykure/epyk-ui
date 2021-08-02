@@ -5,6 +5,7 @@ import json
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSelect
+from epyk.core.data.DataPy import SelectionBox
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsList
@@ -132,6 +133,28 @@ class Select(Html.Html):
       self._js = JsSelect.JSelect(self, report=self.page)
     return self._js
 
+  @property
+  def parsers(self):
+    """
+    Description:
+    ------------
+    Set of functions to parse the data.
+    """
+    return SelectionBox
+
+  @property
+  def data(self):
+    """
+    Description:
+    ------------
+    Property to the underlying data from the select.
+    """
+    return self._vals
+
+  @data.setter
+  def data(self, parsed_values):
+    self._vals = parsed_values
+
   _js__builder__ = '''
       var selectObj = %s; selectObj.empty();
       const attrs = ['icon', 'content']; var selections = [];
@@ -142,6 +165,7 @@ class Select(Html.Html):
         var opt = document.createElement("OPTION"); opt.value = item.value;
         opt.text = (typeof item.name !== 'undefined')? item.name : item.value;
         if(opt.selected){selections.push(item.value)}
+        if(item.selected){selections.push(opt.value)}
         for(var a in attrs){var attrVal = item[attrs[a]];
           if (typeof attrVal !== 'undefined'){opt.setAttribute("data-"+ attrs[a], attrVal)}}
         selectObj.append(opt)}
