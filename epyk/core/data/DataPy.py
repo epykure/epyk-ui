@@ -66,13 +66,14 @@ class Plotly:
     """
     Description:
     -----------
+    Process a record to return an object for map charts.
 
     Attributes:
     ----------
-    :param data:
-    :param country_col:
-    :param size_col:
-    :param scale:
+    :param data: List. The main records.
+    :param country_col: String. The column name for the countries.
+    :param size_col: String. The column name for the values.
+    :param scale: Float. Optional. The factor to apply on the values
     """
     aggregated = {}
     for rec in data:
@@ -100,10 +101,10 @@ class Plotly:
 
     Attributes:
     ----------
-    :param data:
-    :param country_col:
-    :param size_col:
-    :param scale:
+    :param data: List. The data.
+    :param country_col: String. The country column name.
+    :param size_col: String. The size column alias.
+    :param scale: Number. Optional. A scaling factor for the points on the map.
     """
     aggregated = {}
     for rec in data:
@@ -208,10 +209,11 @@ class Plotly:
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-    :param text: String. The column corresponding to the key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param text: String. The column corresponding to the key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     if text is None:
       return Plotly.xy(data, y_columns, x_axis, options=options)
@@ -250,9 +252,9 @@ class Plotly:
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param z_axis:
     """
     agg_data, agg_z = {}, {}
@@ -288,9 +290,9 @@ class Plotly:
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: List of dict. The Python record.
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
     :param z_axis:
     :param dy:
     :param dx:
@@ -330,9 +332,9 @@ class Plotly:
 
     Attributes:
     ----------
-    :param data: List of dict. The Python recordset
-    :param columns: List. The key in the recordset to be used to build the row
-    :param dflt: Optional. The default value if key is missing
+    :param data: List of dict. The Python record.
+    :param columns: List. The key in the record to be used to build the row.
+    :param dflt: Optional. The default value if key is missing.
     """
     result = {'values': [], 'python': True, 'header': [[c] for c in columns]}
     if data is None:
@@ -414,12 +416,12 @@ class Vis:
     Attributes:
     ----------
     :param data:
-    :param start: String: The column in the record for the start date
+    :param start: String: The column in the record for the start date.
     :param content: String:
-    :param end: String: Optional. The column in the record for the end date
+    :param end: String: Optional. The column in the record for the end date.
     :param type: String. Optional.
     :param group:
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {'datasets': [], 'python': True}
     if data is None:
@@ -769,8 +771,9 @@ class Google:
     Attributes:
     ----------
     :param data: List of dict. The Python records.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     if data is None:
@@ -828,33 +831,38 @@ class Google:
 class Checkbox:
 
   @staticmethod
-  def from_records(data, column, all_checked=False):
+  def from_records(data, column, all_checked=False, apply_sort=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param data:
-    :param column:
-    :param all_checked:
+    :param data: List. A list of dictionaries.
+    :param column: String. The column name (key in the dictionary).
+    :param all_checked: Boolean. Optional.
+    :param apply_sort: Boolean. Optional.
     """
     result = [{"value": rec[column], "checked": all_checked} for rec in data]
     return result
 
   @staticmethod
-  def from_df(df, column, all_checked=False):
+  def from_df(df, column, all_checked=False, apply_sort=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param df:
-    :param column:
-    :param all_checked:
+    :param df: DataFrame. A pandas dataframe object.
+    :param column: String. The column name in the dataframe.
+    :param all_checked: Boolean. Optional.
+    :param apply_sort: Boolean. Optional.
     """
-    result = [{"value": rec[column], "checked": all_checked} for rec in df[column].unique().tolist()]
+    if sorted:
+      result = [{"value": rec[column], "checked": all_checked} for rec in sorted(df[column].unique().tolist())]
+    else:
+      result = [{"value": rec[column], "checked": all_checked} for rec in df[column].unique().tolist()]
     return result
 
   @staticmethod
@@ -866,6 +874,7 @@ class Checkbox:
     Attributes:
     ----------
     :param data:
+    :param checked:
     :param all_checked:
     """
     result = []
@@ -879,7 +888,7 @@ class Checkbox:
 class SelectionBox:
 
   @staticmethod
-  def from_records(records, column):
+  def from_records(records, column, apply_sort=False, with_count=False):
     """
     Description:
     ------------
@@ -891,6 +900,8 @@ class SelectionBox:
     ----------
     :param records:
     :param column:
+    :param apply_sort:
+    :param with_count:
     """
     result = {}
     for rec in records:
@@ -898,7 +909,7 @@ class SelectionBox:
     return [result[k] for k in sorted(result.keys())]
 
   @staticmethod
-  def from_df(df, column, all_checked=False):
+  def from_df(df, column, all_checked=False, apply_sort=False, with_count=False):
     """
     Description:
     ------------
@@ -911,11 +922,35 @@ class SelectionBox:
     :param df:
     :param column:
     :param all_checked:
+    :param apply_sort:
+    :param with_count:
     """
-    return [{'name': r, 'value': r} for r in df[column].unique().tolist()]
+    counters = df[column].value_counts().to_dict()
+    if apply_sort:
+      return [{'value': r, 'name': "%s (%s)" % (r, counters[r]) if with_count else r} for r in sorted(df[column].unique())]
+
+    return [{'value': r, 'name': "%s (%s)" % (r, counters[r]) if with_count else r} for r in df[column].unique().tolist()]
 
   @staticmethod
-  def from_list(values, all_checked=False):
+  def from_list(values, all_checked=False, apply_sort=False, with_count=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    -----
+
+    Attributes:
+    ----------
+    :param values:
+    :param all_checked:
+    :param apply_sort:
+    :param with_count:
+    """
+    return [{'name': r, 'value': r} for r in values]
+
+  @staticmethod
+  def from_dict(values, all_checked=False):
     """
     Description:
     ------------
@@ -928,10 +963,6 @@ class SelectionBox:
     :param values:
     :param all_checked:
     """
-    return [{'name': r, 'value': r} for r in values]
-
-  @staticmethod
-  def from_dict(values, all_checked=False):
     return [{'name': values[k], 'value': k} for k in sorted(values.keys())]
 
 
