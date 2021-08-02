@@ -2944,8 +2944,11 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.6/menu#cell-context
+
+    :rtype: RowContextMenu
     """
-    return RowContextMenu(self, "rowContextMenu")
+    contextMenu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
+    return contextMenu
 
   def rowClick(self, jsFncs, profile=None):
     """
