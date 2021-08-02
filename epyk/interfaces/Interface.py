@@ -21,6 +21,7 @@ from epyk.interfaces.graphs import CompCharts
 from epyk.interfaces.geo import CompGeo
 from epyk.interfaces.bs import Bs
 from epyk.interfaces.mt import Mt
+from epyk.interfaces.tui import IToastUI
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -173,6 +174,7 @@ class Components:
 
     Usage::
 
+      page.ui.codes
 
     Related Pages:
 
@@ -236,6 +238,7 @@ class Components:
     Group all the 3D charts.
 
     Usage::
+
     """
     return CompCharts.Chart3d(self)
 
@@ -247,8 +250,6 @@ class Components:
     Group all the 2D charts.
 
     Usage::
-
-    Templates:
 
     """
     return CompCharts.Chart2d(self)
@@ -262,6 +263,7 @@ class Components:
 
     Usage::
 
+      page.ui.titles.head("test")
     """
     return CompTitles.Titles(self)
 
@@ -273,8 +275,6 @@ class Components:
     Group all the UI components dedicated to produce links to another page or website.
 
     Usage::
-
-    Templates:
 
     """
     return CompLinks.Links(self)
@@ -288,8 +288,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompNavigation.Navigation(self)
 
@@ -301,8 +299,6 @@ class Components:
     Group all the UI components dedicated to produce Navigation bar components such as navigation bar, footer, banner...
 
     Usage::
-
-    Templates:
 
     """
     return CompNavigation.NavBars(self)
@@ -419,8 +415,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompTrees.Trees(self)
 
@@ -433,8 +427,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompGeo.Geo(self)
 
@@ -446,8 +438,6 @@ class Components:
     Group all the UI components dedicated to produce button or checkbox.
 
     Usage::
-
-    Templates:
 
     """
     return CompButtons.Buttons(self)
@@ -464,8 +454,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompTables.Tables(self)
 
@@ -477,8 +465,6 @@ class Components:
     Group all the UI steps components.
 
     Usage::
-
-    Templates:
 
     """
     return CompSteps.Steppers(self)
@@ -492,8 +478,7 @@ class Components:
 
     Usage::
 
-    Templates:
-
+    :rtype: CompDrawers.Drawers
     """
     return CompDrawers.Drawers(self)
 
@@ -505,8 +490,6 @@ class Components:
     Group all the UI steppers components.
 
     Usage::
-
-    Templates:
 
     """
     return CompSteppers.Steppers(self)
@@ -539,8 +522,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompInputs.Inputs(self)
 
@@ -556,8 +537,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompFields.Fields(self)
 
@@ -568,8 +547,6 @@ class Components:
     ------------
 
     Usage::
-
-    Templates:
 
     """
     return CompFields.Timelines(self)
@@ -585,8 +562,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompIcons.Icons(self)
 
@@ -599,8 +574,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompMenus.Menus(self)
 
@@ -612,8 +585,6 @@ class Components:
     Group all the UI panels.
 
     Usage::
-
-    Templates:
 
     """
     return CompPanels.Panels(self)
@@ -631,8 +602,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompLayouts.Layouts(self)
 
@@ -649,8 +618,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompForms.Forms(self)
 
@@ -663,8 +630,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompModals.Modals(self)
 
@@ -675,11 +640,9 @@ class Components:
     ------------
     Group all the UI components dedicated to produce charts.
 
-    Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis or even D3).
+    Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis, Frappe, Vega, Apex or even D3).
 
     Usage::
-
-    Templates:
 
     """
     return CompCharts.Graphs(self)
@@ -695,8 +658,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     """
     return CompTags.Tags(self)
 
@@ -708,8 +669,6 @@ class Components:
     Group all the component related to the time and calendar management.
 
     Usage::
-
-    Templates:
 
     """
     return CompCalendars.Calendar(self)
@@ -726,8 +685,6 @@ class Components:
       https://codepen.io/ibrahimjabbari/pen/ozinB
 
     Usage::
-
-    Templates:
 
     """
     return CompLayouts.Delimiter(self)
@@ -795,8 +752,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
 
     Attributes:
     ----------
@@ -812,10 +767,6 @@ class Components:
     ------------
 
     Usage::
-
-    Templates:
-
-
 
     Attributes:
     ----------
@@ -842,9 +793,6 @@ class Components:
       - icon component for the loading icon
 
     Usage::
-
-    Templates:
-
 
 
     Attributes:
@@ -898,7 +846,7 @@ class Components:
     html_breadcrumb.style.css.margin_top = 5
     return html_breadcrumb
 
-  def form(self, components=None, helper=None):
+  def form(self, components=None, helper=None, method="POST", action="#", label="Submit"):
     """
     Description:
     ------------
@@ -908,14 +856,18 @@ class Components:
 
       f = page.ui.form()
 
-    Templates:
-
     Attributes:
     ----------
     :param components: List. Optional. The HTML components to be added to the HTML form.
     :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param method: String. Optional. The method used to transfer data.
+    :param action: String. Optional. The end point for the submit.
+    :param label: String. Optional. The text on the submit button.
     """
     form = html.HtmlContainer.Form(self.page, components or [], helper)
+    form.method = method
+    form.label = label
+    form.action = action
     return form
 
   def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
@@ -925,9 +877,6 @@ class Components:
     HTML component to display a Json.
 
     Usage::
-
-    Templates:
-
 
     Related Pages:
 
@@ -958,9 +907,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
-
     Related Pages:
 
       https://github.com/ganlanyuan/tiny-slider
@@ -986,9 +932,6 @@ class Components:
     HTML component to display a QR Code from a string.
 
     Usage::
-
-    Templates:
-
 
     Related Pages:
 
@@ -1018,8 +961,6 @@ class Components:
     ------------
 
     Usage::
-
-    Templates:
 
 
     Attributes:
@@ -1080,8 +1021,6 @@ class Components:
 
     Usage::
 
-    Templates:
-
     Attributes:
     ----------
     :param package_name: String. The package name.
@@ -1100,9 +1039,6 @@ class Components:
     ------------
 
     Usage::
-
-    Templates:
-
 
     Attributes:
     ----------
@@ -1167,7 +1103,6 @@ class Components:
       else:
         post_url = post
         post = {}
-      #, jsData = None, varName = "response", is_json = True, components
       commands.extend([('ReSt', link), ("Build", refresh)])
     for typ, icon in commands:
       if icon:
@@ -1286,7 +1221,6 @@ class WebComponents:
 
     Usage::
 
-    Templates:
 
     :rtype: Components
     """
@@ -1305,9 +1239,6 @@ class WebComponents:
     Usage::
 
       icon = page.web.bs.icons.danger()
-
-    Templates:
-
 
     :rtype: Bs.Bootstrap
     """
@@ -1329,8 +1260,6 @@ class WebComponents:
     This will be available in the same way than ui is available for anything else in the core framework.
 
     Usage::
-
-    Templates:
 
 
     Related Pages:
@@ -1354,3 +1283,25 @@ class WebComponents:
 
       self.fwks["mt"] = Mt.Materials(self.page)
     return self.fwks["mt"]
+
+  @property
+  def tui(self):
+    """
+    Description:
+    ------------
+    Add the entire TOAST UI framework as a dependency to the framework.
+    This will enable more components to the framework.
+
+    Usage::
+
+      dt = page.web.tui.date()
+      cal = page.web.tui.calendar()
+
+    :rtype: IToastUI.Components
+    """
+    if self.page.ext_packages is None:
+      self.page.ext_packages = {}
+    self.page.ext_packages.update(Imports.TOAST)
+    if 'tui' not in self.fwks:
+      self.fwks["tui"] = IToastUI.Components(self.page)
+    return self.fwks["tui"]
