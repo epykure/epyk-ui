@@ -11,8 +11,15 @@
 
 
 ### Fixed
-- Pivot data transformation bug fix
+- 
 -
+
+
+## [1.5.25] - 2021-08-03
+
+### Fixed
+- Pivot data transformation bug fix.
+- Slider event bug fixes.
 
 
 ## [1.5.24] - 2021-08-03
