@@ -2,7 +2,7 @@
 
 
 ### Added
--
+- Toast Framework.
 -
 
 ### Changed
@@ -18,7 +18,6 @@
 ## [1.5.24] - 2021-08-03
 
 ### Added
-- Toast Framework.
 - Add select button style definition.
 - doc in the datapy shortcuts.
 - Add component argument to the paste function.
