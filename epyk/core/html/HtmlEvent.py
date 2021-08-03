@@ -386,7 +386,7 @@ class Slider(Html.Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.options.change("function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    self.options.change(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
   def start(self, js_funcs, profile=None):
