@@ -1,12 +1,56 @@
 ## [Unreleased]
 
+
 ### Added
+-
+-
 
 ### Changed
+-
+-
+
 
 ### Fixed
+-
+-
 
-## [Unreleased]
+
+## [1.5.24] - 2021-08-03
+
+### Added
+- Toast Framework.
+- Add select button style definition.
+- doc in the datapy shortcuts.
+- Add component argument to the paste function.
+- Improve slider and range slider display.
+- Add composite setbuilder method.
+- Improve network dropfile component.
+- Add field component slider and filter.
+- Add List component filter.
+- Add Toast packages.
+= Add HTML pages external configuration.
+- Add Panel js features.
+- Add Jupyter structure for widgets (Draft)
+
+### Changed
+- Label Rich dom definition.
+- New parameter for line-height to CSS middle function.
+- Change multi selectPicker icon base default.
+- Tabulator add layouts options.
+- Add options to the JavaScript pivot function.
+- Set font size in the nav bar.
+- Migration from _report to page property.
+
+### Fixed
+- CHartJs donut charts.
+- DataPy str conversion from list for select input component.
+- NVD3 colors function for all charts.
+- Doc link bug fixes for autocompletion.
+- Fix selected CSS style conflicts.
+- Bug fixes in the Import manager for extensions.
+
+
+## [1.5.23] - 2021-07-05
 
 ### Added
 - Add new entry for packages to the __init__

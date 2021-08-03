@@ -89,6 +89,33 @@ class LayoutCenter(GraphPlotly.Layout):
     self._attrs["lon"] = val
 
 
+class LayoutMapBoxLayer(GraphPlotly.Layout):
+
+  @property
+  def sourcetype(self):
+    return self._attrs["sourcetype"]
+
+  @sourcetype.setter
+  def sourcetype(self, val):
+    self._attrs["sourcetype"] = val
+
+  @property
+  def source(self):
+    return self._attrs["source"]
+
+  @source.setter
+  def source(self, val):
+    self._attrs["source"] = val
+
+  @property
+  def below(self):
+    return self._attrs["below"]
+
+  @below.setter
+  def below(self, val):
+    self._attrs["below"] = val
+
+
 class LayoutMapBox(GraphPlotly.Layout):
 
   @property
@@ -116,6 +143,24 @@ class LayoutMapBox(GraphPlotly.Layout):
     :rtype: LayoutCenter
     """
     return self.sub_data("center", LayoutCenter)
+
+  def add_layers(self, sourcetype, source, below="traces"):
+    """
+    Description:
+    -----------
+
+    :param sourcetype:
+    :param source:
+    :param below:
+
+    :rtype: LayoutMapBoxLayer
+    """
+    layer = self.sub_data_enum("layers", LayoutMapBoxLayer)
+    layer.sourcetype = sourcetype
+    layer.source = source
+    if below is not None:
+      layer.below = below
+    return layer
 
 
 class LayoutGeo(GraphPlotly.Layout):
@@ -145,6 +190,20 @@ class LayoutGeo(GraphPlotly.Layout):
     :rtype: LayoutMapBox
     """
     return self.sub_data("mapbox", LayoutMapBox)
+
+  def margin(self, r=None, t=None, b=None, l=None):
+    self._attrs["margin"] = {}
+    if r is not None:
+      self._attrs["margin"]["r"] = r
+    if t is not None:
+      self._attrs["margin"]["t"] = t
+    if b is not None:
+      self._attrs["margin"]["b"] = b
+    if l is not None:
+      self._attrs["margin"]["l"] = l
+
+  def no_margin(self):
+    self.margin(0, 0, 0, 0)
 
 
 class LayoutGeoMapGeo(LayoutGeo):
@@ -276,6 +335,14 @@ class DataScatterMapBox(GraphPlotly.DataChart):
   @lat.setter
   def lat(self, val):
     self._attrs["lat"] = val
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
 
 
 class DataChoropleth(GraphPlotly.DataChart):
