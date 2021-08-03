@@ -385,7 +385,7 @@ class DataFilters:
     self.__filters.add("_.sortBy(%%s, %s)" % column)
     return self
 
-  def pivot(self, column, value, p):
+  def pivot(self, column, value, p, type=None):
     """
     Description:
     -----------
@@ -411,8 +411,8 @@ class DataFilters:
     constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if type is not None:
       groups = {"int": ["parseInt", "Integer"], "float": ["parseFloat", "Float"]}.get(type, type)
-      fnc_name = "SimplePivot%s" % groups[1]
-      val_fmt = "%s(t[v])" % groups[0]
+      fnc_name = "SimplePivot%s" % groups[type][1]
+      val_fmt = "%s(t[v])" % groups[type][0]
     else:
       fnc_name, val_fmt = "SimplePivot", "t[v]"
     constructors[fnc_name] = '''
