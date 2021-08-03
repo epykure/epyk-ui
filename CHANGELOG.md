@@ -11,7 +11,7 @@
 
 
 ### Fixed
--
+- Pivot data transformation bug fix
 -
 
 
