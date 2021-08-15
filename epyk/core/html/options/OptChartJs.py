@@ -31,7 +31,11 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     ----------
     :param value: String. The axis label.
     """
-    self.component.options.scales.xAxes.scaleLabel.label(value)
+    if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
+      self.component.options.scales.xAxes.title.text = value
+      self.component.options.scales.xAxes.title.display = True
+    else:
+      self.component.options.scales.xAxes.scaleLabel.label(value)
     return self
 
   def x_tick_count(self, num):
@@ -60,7 +64,11 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     ----------
     :param value: String. The axis label.
     """
-    self.component.options.scales.yAxes.scaleLabel.label(value)
+    if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
+      self.component.options.scales.yAxes.title.text = value
+      self.component.options.scales.yAxes.title.display = True
+    else:
+      self.component.options.scales.yAxes.scaleLabel.label(value)
     return self
 
   def y_tick_count(self, num):
@@ -842,6 +850,22 @@ class OptionAxes(Options):
     return self._config_sub_data("gridLines", OptionAxesGridLine)
 
   @property
+  def title(self):
+    """
+    Description:
+    ------------
+    Namespace: options.scales[scaleId].title, it defines options for the scale title.
+    Note that this only applies to cartesian axes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/labelling.html
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("title", OptionTitle)
+
+  @property
   def scaleLabel(self):
     """
     Description:
@@ -909,21 +933,24 @@ class OptionScales(Options):
 
     :rtype: OptionAxes
     """
-    return self._config_sub_data_enum("yAxes", OptionAxes)
+    return self._config_sub_data("y", OptionAxes)
 
   def y_axis(self, i=None):
     """
     Description:
     ------------
-
+    
     Attributes:
     ----------
     :param i: Integer. optional. Default take the latest one.
 
     :rtype: OptionAxes
     """
+    if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
+      return self.add_y_axis()
+
     if "yAxes" not in self.js_tree:
-      self.add_y_axis()
+      self._config_sub_data_enum("yAxes", OptionAxes)
 
     if i is None:
       return self.js_tree["yAxes"][-1]
@@ -951,15 +978,16 @@ class OptionScales(Options):
 
     :rtype: OptionAxes
     """
-    return self.add_x_axis()
+    if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
+      return self.add_x_axis()
 
-    if "x" not in self.js_tree:
-      self.add_x_axis()
+    if "xAxes" not in self.js_tree:
+      self._config_sub_data_enum("xAxes", OptionAxes)
 
     if i is None:
-      return self.js_tree["x"][-1]
+      return self.js_tree["xAxes"][-1]
 
-    return self.js_tree["x"][i]
+    return self.js_tree["xAxes"][i]
 
 
 class OptionScalesGeo(Options):
