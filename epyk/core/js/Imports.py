@@ -1236,7 +1236,7 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
-    'version': '3.3.2', # 2.9.4
+    'version': '3.5.0', # 2.9.4
     'v_prefix': 'v',
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
@@ -2119,6 +2119,14 @@ TOAST = {
        'cdnjs': 'https://uicdn.toast.com/'},
     ]
 
+  },
+  'tui-grid': {
+    'version': 'latest',
+    'website': 'https://github.com/nhn/tui.grid',
+    'modules': [
+      {'script': 'tui-grid.min.css', 'path': 'grid/%(version)s/', 'cdnjs': 'https://uicdn.toast.com/'},
+      {'script': 'tui-grid.min.js', 'path': 'grid/%(version)s/', 'cdnjs': 'https://uicdn.toast.com/'},
+    ]
   }
 }
 
