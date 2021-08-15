@@ -939,7 +939,7 @@ class OptionScales(Options):
     """
     Description:
     ------------
-    
+
     Attributes:
     ----------
     :param i: Integer. optional. Default take the latest one.

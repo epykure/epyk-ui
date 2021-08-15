@@ -30,7 +30,7 @@ class ClsConfigs:
     self.component.style.css.margin = "%s%s %s%s" % (v[0], v[1], h[0], h[1])
     return self
 
-  def box(self, hexa_color=None, opacity=0.6, size=5, margin=5):
+  def box(self, hexa_color=None, opacity=0.6, size=5, margin_v=(10, 'px'), margin_h=(10, 'px'), background="white"):
     """
     Description:
     ------------
@@ -46,13 +46,17 @@ class ClsConfigs:
     :param hexa_color: String. Optional. The color code in hexadecimal format.
     :param opacity: Float. Optional. The opacity value between 0 and 1.
     :param size: Integer. Optional. The border size.
-    :param margin: Integer. Optional. The left and right margin in pixel.
+    :param margin_h: Integer. Optional. The left and right margin in pixel.
+    :param margin_v: Integer. Optional. The top and bottom margin in pixel.
+    :param background: String. Optional. The background color.
     """
-    self.component.style.css.background_color = "white"
     if self.component.style.css.padding is None:
       self.component.style.css.padding = 5
-    self.component.style.css.width = "calc(100%% - %spx)" % (2*margin)
-    self.component.style.css.margin = margin
+    self.component.style.css.width = "calc(100%% - %s%s)" % (2*margin_h[0], margin_h[1])
+    self.component.style.css.margin_v = "%s%s" % (margin_v[0], margin_v[1])
+    self.component.style.css.margin_h = "%s%s" % (margin_h[0], margin_h[1])
+    if background is not None:
+      self.component.style.css.background = background
     rgb = Colors.getHexToRgb(self.component.page.theme.greys[5] if hexa_color is None else hexa_color)
     self.component.style.css.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
       "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}

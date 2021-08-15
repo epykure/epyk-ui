@@ -2051,7 +2051,7 @@ TOAST = {
   'tui-date-picker': {
     'version': 'latest',
     'website': 'https://nhn.github.io/tui.date-picker/latest/',
-    'register': {'variable': 'tuiDate', 'module': 'tui-date-picker', "init_fnc": "console.log(tuiDate)"},
+    'register': {'variable': 'tuiDate', 'module': 'tui-date-picker'},
     'req_js': [ # depn only for requirejs
       {'alias': 'tui-time-picker'},
     ],
@@ -3548,36 +3548,53 @@ class ImportManager:
       # Apply the different reports overrides on the packages versions
       ovr_version.update(self._report._props.get('packages', {}))
     self.jsImports, self.cssImports, self.moduleConfigs, self.reqVersion = {}, {}, {}, {}
-    for folder, import_cict, import_type in [('js', self.jsImports, JS_IMPORTS), ('css', self.cssImports, CSS_IMPORTS)]:
-      for alias, definition in import_type.items():
-        main = collections.OrderedDict()
-        for i, mod in enumerate(definition['modules']):
-          if alias in ovr_version:
-            mod['version'] = ovr_version[alias]
-          #elif 'version' not in mod:
-          #  # take the version from the main package definition
-          #  mod['version'] = JS_IMPORTS[alias]["version"] if alias in JS_IMPORTS else CSS_IMPORTS[alias]["version"]
-          #script = "".join([mod['path'] % mod, mod['script']])
-          script_path = script_cdnjs_path(alias, mod)
-          if 'url' in definition:
-            main["%s%s" % (definition['url'], mod['script'])] = mod['version']
-          else:
-            main[script_path] = script_version(alias, mod)
-          #if online:
-          #  main["%s/%s" % (mod['cdnjs'], script)] = mod['version']
-          #elif 'url' in definition:
-          #  main["%s%s" % (definition['url'], script)] = mod['version']
-          #else:
-          #  main["%s/%s" % (STATIC_PATH.replace("\\", "/"), script)] = mod['version']
-        modules = collections.OrderedDict()
-        self.getModules(modules, alias, folder, import_type)
-        if 'config' in definition:
-          self.moduleConfigs[alias] = definition['config']
-        main_keys, versions = [], []
-        for k, v in main.items():
-          main_keys.append(k)
-          versions.append(v)
-        import_cict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
+    self.__add_imports([('js', self.jsImports, JS_IMPORTS), ('css', self.cssImports, CSS_IMPORTS)])
+
+  def __add_imports(self, modules, ovr_version=None):
+    for folder, import_dict, import_type in modules:
+      if folder is None:
+        for alias, definition in import_type.items():
+          main_css = collections.OrderedDict()
+          main_js = collections.OrderedDict()
+          for i, mod in enumerate(definition['modules']):
+            if ovr_version is not None and alias in ovr_version:
+              mod['version'] = ovr_version[alias]
+            else:
+              mod["version"] = definition["version"]
+            script_path = script_cdnjs_path(alias, mod)
+            main = main_js if script_path.endswith(".js") else main_css
+            if 'url' in definition:
+              main["%s%s" % (definition['url'], mod['script'])] = mod['version']
+            else:
+              main[script_path] = script_version(alias, mod)
+          modules = collections.OrderedDict()
+          self.getModules(modules, alias, folder, import_type)
+          if 'config' in definition:
+            self.moduleConfigs[alias] = definition['config']
+          if main_css:
+            self.cssImports[alias] = {'main': main_css, 'dep': list(modules.keys()), 'versions': list(main_css.values())}
+          if main_js:
+            self.jsImports[alias] = {'main': main_js, 'dep': list(modules.keys()), 'versions': list(main_js.values())}
+      else:
+        for alias, definition in import_type.items():
+          main = collections.OrderedDict()
+          for i, mod in enumerate(definition['modules']):
+            if ovr_version is not None and alias in ovr_version:
+              mod['version'] = ovr_version[alias]
+            script_path = script_cdnjs_path(alias, mod)
+            if 'url' in definition:
+              main["%s%s" % (definition['url'], mod['script'])] = mod['version']
+            else:
+              main[script_path] = script_version(alias, mod)
+          modules = collections.OrderedDict()
+          self.getModules(modules, alias, folder, import_type)
+          if 'config' in definition:
+            self.moduleConfigs[alias] = definition['config']
+          main_keys, versions = [], []
+          for k, v in main.items():
+            main_keys.append(k)
+            versions.append(v)
+          import_dict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
 
   @property
   def static_url(self):
@@ -3659,10 +3676,14 @@ class ImportManager:
     if isinstance(alias, dict):
       alias = alias['alias']
 
+    import_ref = JS_IMPORTS
+    if self._report.ext_packages is not None and alias in self._report.ext_packages:
+      import_ref = self._report.ext_packages
+
     for mod in module_details[alias]['modules']:
       if 'version' not in mod:
         # take the version from the main package definition
-        mod['version'] = JS_IMPORTS[alias]["version"] if alias in JS_IMPORTS else CSS_IMPORTS[alias]["version"]
+        mod['version'] = import_ref[alias]["version"] if alias in import_ref else CSS_IMPORTS[alias]["version"]
       script = "".join([mod['path'] % mod, mod['script']])
       if 'url' in module_details[alias]:
         modules["%s/%s" % (module_details[alias]['url'], script)] = True
@@ -3780,8 +3801,9 @@ class ImportManager:
     :return: The string to be added to the header.
     """
     css = []
+    self.__add_imports([(None, None, self._report.ext_packages)])
     # Import hierarchy will rely on the JS_IMPORT definition.
-    css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in CSS_IMPORTS or c in _SERVICES]
+    css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in self.cssImports or c in _SERVICES]
     for css_alias in css_aliases:
       if excluded is not None and css_alias in excluded:
         continue
@@ -3846,6 +3868,7 @@ class ImportManager:
     :return: The string to be added to the header
     """
     js = []
+    #self.__add_imports([(None, None, self._report.ext_packages)])
     js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
     for js_alias in js_aliases:
       if excluded is not None and js_alias in excluded:
@@ -4152,8 +4175,11 @@ class ImportManager:
     m_versions = {}
     # Check first if some specific versions are required for the packages
     for m in self._report.jsImports:
-      req_alias = "req_js" if "req_js" in JS_IMPORTS[m] else "req"
-      for req in JS_IMPORTS[m].get(req_alias, []):
+      import_ref = JS_IMPORTS
+      if self._report.ext_packages is not None and m in self._report.ext_packages:
+        import_ref = self._report.ext_packages
+      req_alias = "req_js" if "req_js" in import_ref[m] else "req"
+      for req in import_ref[m].get(req_alias, []):
         if 'version' in req:
           m_versions[req['alias']] = req['version']
     # Produce the dependency tree for requirejs
@@ -4206,8 +4232,11 @@ class ImportManager:
         group.append((alias_to_name[k], alias_to_var[k]))
     if group:
       for g, var in group:
-        if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
-          results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
+        import_ref = JS_IMPORTS
+        if self._report.ext_packages is not None and name_to_alias[g] in self._report.ext_packages:
+          import_ref = self._report.ext_packages
+        if 'init_fnc' in import_ref[name_to_alias[g]]['register']:
+          results['jsFrgs'] = "%s; %s" % (import_ref[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
         "', '".join([g for g, _ in group]), ", ".join([g for _, g in group]), results['jsFrgs'])
     return results
