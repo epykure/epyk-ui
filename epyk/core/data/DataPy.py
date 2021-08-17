@@ -642,9 +642,16 @@ class C3:
       for c in y_columns:
         for x, y in agg_data.get(c, {}).items():
           is_data["labels"].add(x)
-      for i, y in enumerate(y_columns):
-        is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in is_data["labels"]])
-        is_data["series"].append(y)
+
+      if options is not None and options.get("sorted", False):
+        is_data["labels"] = sorted(is_data["labels"])
+        for i, y in enumerate(y_columns):
+          is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in sorted(is_data["labels"])])
+          is_data["series"].append(y)
+      else:
+        for i, y in enumerate(y_columns):
+          is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in is_data["labels"]])
+          is_data["series"].append(y)
     return is_data
 
 

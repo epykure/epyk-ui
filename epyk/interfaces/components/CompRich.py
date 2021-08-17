@@ -181,7 +181,7 @@ class Rich:
 
   @html.Html.css_skin()
   def countdown(self, day, month, year, hour=0, minute=0, second=0, label=None, icon="fas fa-stopwatch",
-                time_ms_factor=1000, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None,
+                time_ms_factor=1000, width=(None, '%'), height=(None, 'px'), html_code=None, helper=None,
                 options=None, profile=None):
     """
     Description:

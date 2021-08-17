@@ -254,7 +254,8 @@ class CountDownDate(Html.Html):
     # timestamp in milliseconds
     self.timeInMilliSeconds = timestamp
     # Add the underlying components
-    self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
+    self.add_label(label, html_code=self.htmlCode, css={
+      "padding": '2px 0', 'height': 'auto', "width": "none", "line-height": "none"})
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
     self._jquery_ref = '#%s span' % self.htmlCode
@@ -262,13 +263,17 @@ class CountDownDate(Html.Html):
   _js__builder__ = '''
       var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
-
+      if(distance < 0){distance = -distance}
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
+      var dtString = [];
+      if(days > 0){dtString.push(days +"d")}
+      if(hours > 0){dtString.push(hours +"h")}
+      if(minutes > 0){dtString.push(minutes +"m")}
+      if(seconds > 0){dtString.push(seconds +"s")}
+      htmlObj.querySelector("span[name=dt_time]").innerHTML = dtString.join(" "); 
       if ((distance < 0) && (options.delete)){
         if(typeof options.end !== 'undefined'){eval(options.end)}
         htmlObj.remove(); if (options.reload){location.reload()}
@@ -296,7 +301,7 @@ class CountDownDate(Html.Html):
     self.page.properties.js.add_builders(
       '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
           ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
-    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<div %s><span name="dt_time"></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class LastUpdated(Html.Html):
