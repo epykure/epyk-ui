@@ -87,10 +87,10 @@ class Graphs:
 
     Attributes:
     ----------
-    :param records:
-    :param y_column:
-    :param x_axis:
-    :param title:
+    :param records: Array<dict>. Optional. The Python list of dictionaries.
+    :param y_column: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param title: String. Optional. The chart title.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -502,11 +502,11 @@ class Graphs:
 
     Attributes:
     ----------
-    :param chart:
-    :param height:
+    :param chart: Component. The chart component.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param post:
-    :param profile:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     # ("Csv", "fas fa-file-csv")
     commands = [("Clear", "fas fa-trash-alt")]
