@@ -582,21 +582,35 @@ class ChartJs:
     if data is None or y_columns is None:
       return is_data
 
-    agg_data, agg_r = {}, {}
+    agg_data, agg_r, y_axis = {}, {}, set()
     for rec in data:
       for i, y in enumerate(y_columns):
         if y in rec:
+          y_axis.add(rec[y])
           # agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-          agg_data.setdefault(y, {}).setdefault(rec[x_axis], []).append(float(rec[y]))
-        if z_axis is not None and i < len(z_axis):
-          agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
+          #agg_data.setdefault(y, {}).setdefault(rec[x_axis], []).append(float(rec[y]))
+          agg_data.setdefault(y, {}).setdefault(rec[x_axis], []).append(rec[y])
+        if z_axis is not None:
+          if len(z_axis) == 1:
+            agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[0]])
+          elif i < len(z_axis) and z_axis[i] in rec:
+            agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
     data = []
+    y_axis = sorted(list(y_axis))
     for c in y_columns:
       series = []
       for x, ys in agg_data.get(c, {}).items():
         is_data["labels"].add(x)
         for y in ys:
-          series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 2)})
+          label = ""
+          if options is not None and options.get("y_index"):
+            y = y_axis.index(y)
+            label = y
+          if options is not None and options.get("x_index"):
+            x = is_data["labels"].index(x)
+            label = x
+          #series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 2) / 10})
+          series.append({"label": label, "x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 0)})
       data.append(series)
     for i, l in enumerate(y_columns):
       is_data["datasets"].append({"data": data[i], 'label': l})
@@ -636,7 +650,7 @@ class C3:
       agg_data = {}
       for rec in data:
         for y in y_columns:
-          if y in rec:
+          if y in rec and rec[y] is not None:
             agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
 
       for c in y_columns:

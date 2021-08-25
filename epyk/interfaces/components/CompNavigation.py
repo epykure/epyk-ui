@@ -441,7 +441,7 @@ class Navigation:
         logo_url = logo
         logo = self.page.ui.div(height=options['logo_height'], width=options['logo_width'])
         if logo_url:
-          logo.style.css.background_url(logo_url, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
+          logo.style.css.background_url(logo_url) #, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
     components[-1].style.css.margin_right = 20
     if title is not None:
@@ -462,6 +462,16 @@ class Navigation:
     if options.get('status', False):
       html_nav.scroll = scroll
     html_nav.logo = logo
+
+    if options.get("scroll", True):
+      # https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
+      self.page.body.onReady([self.page.js.number(0, "window.prevScrollpos")])
+      self.page.body.scroll(['''var currentScrollPos = window.pageYOffset;
+if (window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"} 
+else {%(dom)s.style.top = "-%(height)spx"};
+window.prevScrollpos = currentScrollPos;
+''' % {"dom": html_nav.dom.varName, "height": height[0]}])
+
     html_nav.title = title
     html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]

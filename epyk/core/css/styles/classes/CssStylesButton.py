@@ -1,5 +1,6 @@
 
 from epyk.core.css.styles.classes import CssStyle
+from epyk.core.html import Defaults
 
 
 class CssBorderRadius(CssStyle.Style):
@@ -8,7 +9,7 @@ class CssBorderRadius(CssStyle.Style):
 
 class CssButtonBasic(CssStyle.Style):
   _attrs = {'font-weight': 'bold', 'padding': '2px 20px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
-            'border-radius': '4px', 'white-space': 'nowrap', 'display': 'inline-block', 'line-height': '30px',
+            'border-radius': '4px', 'white-space': 'nowrap', 'display': 'inline-block',
             '-webkit-appearance': 'none', '-moz-appearance': 'none'}
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
   _focus = {'outline': 0}
@@ -16,7 +17,7 @@ class CssButtonBasic(CssStyle.Style):
 
   def customize(self):
     self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit',
-              'background-color': self.page.theme.greys[0]})
+              'line-height': '%spx' % Defaults.LINE_HEIGHT, 'background-color': self.page.theme.greys[0]})
     self.hover.css(
       {'background-color': self.page.theme.colors[0],
        'color': self.page.theme.notch(),

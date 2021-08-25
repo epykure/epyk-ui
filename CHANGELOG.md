@@ -3,16 +3,26 @@
 
 ### Added
 - Toast Framework.
--
+- Add Toast DatePicker.
+- Add Toast Editor.
+- Add Toast Calendar.
+- Add Toast Charts.
+- Add Toast Grid.
+- Add option for C3 y transformation.
+- Add column style for fields.
 
 ### Changed
--
--
 
+- Change config predefined styles.
+- Change button style (default height).
+- Improve data transformation for x, y and r charts (bubble ones) .
+- Add scroll option to the navbar to hide it when scroll down.
 
 ### Fixed
 - 
--
+- Fix axes label for ChartJs.
+- Import manager for extensions.
+- Review builder for Countdown component.
 
 
 ## [1.5.25] - 2021-08-03

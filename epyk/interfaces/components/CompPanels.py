@@ -90,8 +90,8 @@ class Panels:
                                 'border-radius': '5px', 'color': self.page.theme.greys[-1]}}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper, dflt_options,
-                                        profile)
+    html_tabs = html.HtmlContainer.Tabs(
+      self.page, color, width, height, html_code, helper, dflt_options, profile)
     html_tabs.options.css_tab_clicked = {
       'color': html_tabs.page.theme.greys[0],
       'background': html_tabs.page.theme.colors[-1]}

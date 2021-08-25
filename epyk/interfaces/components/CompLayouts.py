@@ -86,6 +86,8 @@ class Layouts:
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
 
+    Tips: If background_color is True, the theme color will be used.
+
     :tags:
     :categories:
 
@@ -117,6 +119,8 @@ class Layouts:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     hr_html = self.page.ui.div(width=Arguments.size(width))
+    if background_color is True:
+      background_color = self.page.theme.notch()
     for _ in range(count):
       hr_html.hr = html.HtmlOthers.Hr(
         self.page, background_color, (100, '%'), Arguments.size(height), align, options, profile)

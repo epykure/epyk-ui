@@ -735,6 +735,11 @@ class Field(Html.Html):
     # Add the component predefined elements
     self.add_label(label, html_code=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
                    position=options.get("position", 'before'),  options=options)
+    if self.label and options.get("format") == "column":
+      self.label.style.css.float = None
+      self.label.style.css.display = "block"
+      self.label.style.css.color = self.page.theme.notch()
+      self.label.style.css.bold()
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = html_input

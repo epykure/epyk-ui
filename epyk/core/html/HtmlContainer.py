@@ -1377,10 +1377,10 @@ class Tabs(Html.Html):
     width = Arguments.size(width or self.options.width, unit="px")
     if not hasattr(div, 'options'):
       if div is None:
-        div = self._report.ui.div()
+        div = self.page.ui.div()
         show_div = []
       else:
-        div = self._report.ui.div(div)
+        div = self.page.ui.div(div)
         show_div = [div.dom.show()]
     else:
       show_div = [div.dom.show()]
@@ -1390,32 +1390,32 @@ class Tabs(Html.Html):
 
     self.__panels.append(name)
     if icon is not None:
-      tab = self._report.ui.div([
+      tab = self.page.ui.div([
         self._report.ui.icon(icon).css(
           {"display": 'block', 'color': 'inherit', "width": '100%',
            "font-size": self.page.body.style.globals.font.normal(4)}),
         name], width=width)
     else:
       if hasattr(name, "html"):
-        tab = self._report.ui.div(name, width=width)
+        tab = self.page.ui.div(name, width=width)
       else:
         html_code_tab = "%s_%s" % (self.htmlCode, JsUtils.getJsValid(name, False))
-        tab = self._report.ui.div(name, width=width, html_code=html_code_tab)
+        tab = self.page.ui.div(name, width=width, html_code=html_code_tab)
     tab_style = self.options.tab_style(name, css_tab)
     tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
-    tab.css(tab_style).css({"padding": '5px 0'})
+    tab.css(tab_style).css({"padding": '2px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
-    tab_container = self._report.ui.div(tab, width=width)
+    tab_container = self.page.ui.div(tab, width=width)
     tab_container.options.managed = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
     tab.click([
       self.dom.deselect_tabs(),
       tab.dom.setAttribute("data-selected", True).r,
-      self._report.js.getElementsByName(self.panels_name).all([
+      self.page.js.getElementsByName(self.panels_name).all([
         tab.dom.css(tab_style_clicked),
-        self._report.js.data.all.element.hide(),
+        self.page.js.data.all.element.hide(),
         tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
         ] + show_div)])
     tab.options.managed = False
@@ -1426,7 +1426,7 @@ class Tabs(Html.Html):
 
   def __str__(self):
     if self.__selected is not None:
-      self.__panel_objs[self.__selected]["content"].style.css.display = 'block'
+      self.__panel_objs[self.__selected]["content"].style.css.display = 'flex'
       self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
       self.__panel_objs[self.__selected]["tab"][0].attr["data-selected"] = 'true'
     content = []
