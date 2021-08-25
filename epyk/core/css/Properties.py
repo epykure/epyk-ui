@@ -380,7 +380,8 @@ class CssMixin:
     """
     if val is not None:
       self.css({"background-image": "url(%a)" % val})
-    self.css({"background-size": size})
+    if size is not None:
+      self.css({"background-size": size})
     self.css({"background-position": background_position})
     #self.css({"background-attachment": "fixed"})
     self.css({"background-repeat": repeat})
