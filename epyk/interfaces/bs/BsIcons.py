@@ -31,7 +31,7 @@ class Icons:
     return component
 
   def warning(self, icon="bi bi-exclamation-triangle-fill", text="", tooltip=None, position="center", width=(25, 'px'),
-             height=(25, 'px'), html_code=None, options=None, profile=None):
+              height=(25, 'px'), html_code=None, options=None, profile=None):
     component = self.icon(icon, text, tooltip, position, width, height, html_code, options, profile)
     component.style.css.color = self.page.theme.warning[1]
     return component

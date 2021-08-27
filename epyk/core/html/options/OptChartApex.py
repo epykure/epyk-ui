@@ -1839,7 +1839,9 @@ class OptionsLine(OptChart.OptionsChart):
     Description:
     -----------
 
-    https://apexcharts.com/docs/options/theme/
+    Related Pages:
+
+      https://apexcharts.com/docs/options/theme/
 
     :rtype: OptionTheme
     """

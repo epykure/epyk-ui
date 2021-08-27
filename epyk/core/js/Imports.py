@@ -15,14 +15,13 @@ import collections
 import logging
 
 try:
-    from urllib.parse import urlparse, urlencode
-    from urllib.request import urlopen, Request, ProxyHandler, build_opener, install_opener
-    from urllib.error import HTTPError
+  from urllib.parse import urlparse, urlencode
+  from urllib.request import urlopen, Request, ProxyHandler, build_opener, install_opener
+  from urllib.error import HTTPError
 except ImportError:
-    from urlparse import urlparse
-    from urllib import urlencode
-    from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
-
+  from urlparse import urlparse
+  from urllib import urlencode
+  from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
 
 # To fully disable the automatic pip install request when a package is missing
 AUTOLOAD = False
@@ -149,7 +148,6 @@ def installed_packages():
 # Module variable to be updated in environment to share info related to packages.
 PACKAGE_STATUS = {}
 
-
 CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
 JSDELIVER = "https://cdn.jsdelivr.net/npm"
 
@@ -161,9 +159,7 @@ NOTEBOOK_MAPPING = {
   'jquery-ui': 'jqueryui',
 }
 
-
 TABULATOR_EXTENSIONS = '0.0.29'
-
 
 JS_IMPORTS = {
   # numbers formatting
@@ -215,7 +211,6 @@ JS_IMPORTS = {
       {'script': 'url-search-params.js', 'path': 'url-search-params/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/taylorhakes/promise-polyfill'},
-
 
   # Common module for browser versions compatibilities
   'babel-polyfill': {
@@ -347,20 +342,20 @@ JS_IMPORTS = {
   },
 
   'tabulator-numbers': {
-      'req': [
-        {'alias': 'tabulator-tables'},
-        {'alias': 'accounting'},
-        {'alias': 'd3-scale'},
-      ],
-      'modules': [
-        # core only needed for Jupyter for some reasons
-        {'script': 'formatters-numbers.js', 'version': TABULATOR_EXTENSIONS,
-         'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
-        {'script': 'formatters-titles.js', 'version': TABULATOR_EXTENSIONS,
-         'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
-      ],
-      'website': 'http://tabulator.info/'
-    },
+    'req': [
+      {'alias': 'tabulator-tables'},
+      {'alias': 'accounting'},
+      {'alias': 'd3-scale'},
+    ],
+    'modules': [
+      # core only needed for Jupyter for some reasons
+      {'script': 'formatters-numbers.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+      {'script': 'formatters-titles.js', 'version': TABULATOR_EXTENSIONS,
+       'path': 'npm/tabulator-extensions@%(version)s/formatters/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
 
   # module for the awesome icons
   'font-awesome': {
@@ -381,7 +376,7 @@ JS_IMPORTS = {
     'modules': [
       {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'path': 'datatables/%(version)s/js/',
        'cdnjs': CDNJS_REPO},
-  ]},
+    ]},
 
   # Datatable Buttons
   'datatables-buttons': {
@@ -608,17 +603,17 @@ JS_IMPORTS = {
 
   # Pivot Table pivot D3 renderer
   'pivot-d3': {
-      'req': [
-        {'alias': 'd3', 'version': '3.5.5'},
-        {'alias': 'pivottable'}
-      ],
-      'node_folder': 'pivottable',
-      'version': '2.23.0',
-      'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
-      'website': 'https://github.com/nicolaskruchten/pivottable',
-      'modules': [
-        {'script': 'd3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
-  ]},
+    'req': [
+      {'alias': 'd3', 'version': '3.5.5'},
+      {'alias': 'pivottable'}
+    ],
+    'node_folder': 'pivottable',
+    'version': '2.23.0',
+    'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
+    'website': 'https://github.com/nicolaskruchten/pivottable',
+    'modules': [
+      {'script': 'd3_renderers.min.js', 'node_path': 'dist/', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
 
   # Jquery package width CDN links
   'jquery': {
@@ -691,7 +686,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/jonthornton/jquery-timepicker',
     'req': [
       {'alias': 'jquery'},
-      #{'alias': 'jqueryui'}
+      # {'alias': 'jqueryui'}
     ],
     'modules': [
       {'script': 'jquery.timepicker.min.js', 'path': 'jquery-timepicker/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -763,7 +758,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/mrrio/jspdf',
     'version': '2.3.0',
     'modules': [
-      {'reqAlias': 'jspdf', 'node_path': 'dist/',  'script': 'jspdf.umd.min.js',  'path': 'jspdf/%(version)s/',
+      {'reqAlias': 'jspdf', 'node_path': 'dist/', 'script': 'jspdf.umd.min.js', 'path': 'jspdf/%(version)s/',
        'cdnjs': CDNJS_REPO},
       {'script': 'polyfills.umd.min.js', 'path': 'jspdf/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
@@ -869,7 +864,7 @@ JS_IMPORTS = {
       {'alias': 'd3-color'}
     ],
     'modules': [
-        {'script': 'd3-interpolate.min.js', 'path': 'd3-interpolate@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
+      {'script': 'd3-interpolate.min.js', 'path': 'd3-interpolate@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
   # D3 Time format
   'd3-time-format': {
@@ -889,7 +884,7 @@ JS_IMPORTS = {
     'version': '3.0.0',
     'register': {'variable': 'd3Time', 'module': 'd3-time.min'},
     'req': [
-        {'alias': 'd3-array'},
+      {'alias': 'd3-array'},
     ],
     'modules': [
       {'script': 'd3-time.min.js', 'path': 'd3-time@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
@@ -914,36 +909,36 @@ JS_IMPORTS = {
 
   # D3 Timer
   'd3-timer': {
-      'website': 'https://github.com/d3/d3-timer',
-      'version': '3.0.1',
-      'v_prefix': 'v',
-      'register': {'variable': 'd3Timer', 'module': 'd3-timer.min'},
-      'modules': [
-        {'script': 'd3-timer.min.js', 'path': 'd3-timer@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
+    'website': 'https://github.com/d3/d3-timer',
+    'version': '3.0.1',
+    'v_prefix': 'v',
+    'register': {'variable': 'd3Timer', 'module': 'd3-timer.min'},
+    'modules': [
+      {'script': 'd3-timer.min.js', 'path': 'd3-timer@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
   # D3 collection
   'd3-collection': {
-      'website': 'https://github.com/d3/d3-collection',
-      'version': '1.0.7',
-      'v_prefix': 'v',
-      'register': {'variable': 'd3Collection', 'module': 'd3-collection.min'},
-      'modules': [
-        {'script': 'd3-collection.min.js', 'path': 'd3-collection@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
+    'website': 'https://github.com/d3/d3-collection',
+    'version': '1.0.7',
+    'v_prefix': 'v',
+    'register': {'variable': 'd3Collection', 'module': 'd3-collection.min'},
+    'modules': [
+      {'script': 'd3-collection.min.js', 'path': 'd3-collection@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
   # D3 Scale
   'd3-scale': {
-      'website': 'https://github.com/d3/d3-scale',
-      'v_prefix': 'v',
-      'version': '4.0.0',
-      'register': {'variable': 'd3Scale', 'module': 'd3-scale.min'},
-      'req': [
-        {'alias': 'd3-array'},
-        {'alias': 'd3-format'},
-        {'alias': 'd3-collection'},
-        {'alias': 'd3-interpolate'},
-        {'alias': 'd3-time-format'}],
-      'modules': [
-        {'script': 'd3-scale.min.js', 'path': 'd3-scale@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
+    'website': 'https://github.com/d3/d3-scale',
+    'v_prefix': 'v',
+    'version': '4.0.0',
+    'register': {'variable': 'd3Scale', 'module': 'd3-scale.min'},
+    'req': [
+      {'alias': 'd3-array'},
+      {'alias': 'd3-format'},
+      {'alias': 'd3-collection'},
+      {'alias': 'd3-interpolate'},
+      {'alias': 'd3-time-format'}],
+    'modules': [
+      {'script': 'd3-scale.min.js', 'path': 'd3-scale@%(version)s/dist/', 'cdnjs': JSDELIVER}]},
 
   # D3 color module
   'd3-color': {
@@ -1019,7 +1014,7 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'repository': 'https://github.com/plotly/plotly.js',
     'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
-    #'version': '1.58.4',
+    # 'version': '1.58.4',
     'version': '2.3.0',
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -1068,7 +1063,7 @@ JS_IMPORTS = {
 
   'svgjs': {
     'version': '2.6.2',
-    'register': {'alias': 'svg', 'module': 'svg.min', 'npm': 'svgjs', #"init_fnc": "window.SVG = svg"
+    'register': {'alias': 'svg', 'module': 'svg.min', 'npm': 'svgjs',  # "init_fnc": "window.SVG = svg"
                  },
     'modules': [
       {'script': 'svg.min.js', 'path': 'svgjs@%(version)s/dist/', 'cdnjs': JSDELIVER}
@@ -1076,7 +1071,7 @@ JS_IMPORTS = {
   },
 
   'apexcharts': {
-    'req_js': [ # depn only for requirejs
+    'req_js': [  # depn only for requirejs
       {'alias': 'svgjs'},
     ],
     'website': 'https://apexcharts.com/',
@@ -1236,7 +1231,7 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
-    'version': '3.5.0', # 2.9.4
+    'version': '3.5.0',  # 2.9.4
     'v_prefix': 'v',
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
@@ -1298,21 +1293,21 @@ JS_IMPORTS = {
 
   # ChartJs addon to add some Geo charts
   'chartjs-chart-geo': {
-      'version': '3.1.0',
-      'website': 'https://github.com/sgratzl/chartjs-chart-geo',
-      'req': [{'alias': 'chart.js'}],
-      'modules': [
-        {'script': 'index.umd.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/',
-         'cdnjs': JSDELIVER}
-      ]},
+    'version': '3.1.0',
+    'website': 'https://github.com/sgratzl/chartjs-chart-geo',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'index.umd.min.js', 'path': 'chartjs-chart-geo@%(version)s/build/',
+       'cdnjs': JSDELIVER}
+    ]},
 
   # For ChartJs Zoom to get the gesture details.
   'hammer': {
-      'version': '2.0.8',
-      'website': 'http://hammerjs.github.io/',
-      'modules': [
-        {'script': 'hammer.min.js', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
-      ],
+    'version': '2.0.8',
+    'website': 'http://hammerjs.github.io/',
+    'modules': [
+      {'script': 'hammer.min.js', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ],
   },
 
   # Cannot add properly the dependency in this one as my algorithm does not work for shared dependencies ....
@@ -1342,7 +1337,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/snapappointments/bootstrap-select',
     'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
-      {'alias': '@popperjs/core', 'version': '1.14.6'}, # Cannot be upgraded bug with bootstrap select
+      {'alias': '@popperjs/core', 'version': '1.14.6'},  # Cannot be upgraded bug with bootstrap select
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
@@ -1360,7 +1355,7 @@ JS_IMPORTS = {
     'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
     'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [{"alias": 'bootstrap-select'}
-    ],
+            ],
     'modules': [
       {'script': 'ajax-bootstrap-select.min.js', 'node_path': 'dist/js/',
        'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
@@ -1439,125 +1434,125 @@ JS_IMPORTS = {
   },
 
   'codemirror-search': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/search.html',
-      'modules': [
-        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'search.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
-         'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'jump-to-line.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'dialog.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/',
-         'cdnjs': CDNJS_REPO}
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/search.html',
+    'modules': [
+      {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'search.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
+       'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+      {'script': 'jump-to-line.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'dialog.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/dialog/',
+       'cdnjs': CDNJS_REPO}
+    ]},
 
   'codemirror-placeholder': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/placeholder.html',
-      'modules': [
-        {'script': 'placeholder.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/display/',
-         'cdnjs': CDNJS_REPO}
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/placeholder.html',
+    'modules': [
+      {'script': 'placeholder.js', 'node_path': 'addon/dialog/', 'path': 'codemirror/%(version)s/addon/display/',
+       'cdnjs': CDNJS_REPO}
+    ]},
 
   'codemirror-trailingspace': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/trailingspace.html',
-      'modules': [
-        {'script': 'trailingspace.js', 'node_path': 'addon/edit/', 'path': 'codemirror/%(version)s/addon/edit/',
-         'cdnjs': CDNJS_REPO}
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/trailingspace.html',
+    'modules': [
+      {'script': 'trailingspace.js', 'node_path': 'addon/edit/', 'path': 'codemirror/%(version)s/addon/edit/',
+       'cdnjs': CDNJS_REPO}
+    ]},
 
   'codemirror-fullscreen': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/trailingspace.html',
-      'modules': [
-        {'script': 'fullscreen.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
-         'cdnjs': CDNJS_REPO}
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/trailingspace.html',
+    'modules': [
+      {'script': 'fullscreen.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
+       'cdnjs': CDNJS_REPO}
+    ]},
 
   'codemirror-highlighter': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/matchhighlighter.html',
-      'modules': [
-        {'script': 'annotatescrollbar.js', 'node_path': 'addon/scroll/', 'path': 'codemirror/%(version)s/addon/scroll/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
-         'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
-        {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'match-highlighter.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
-         'cdnjs': CDNJS_REPO},
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/matchhighlighter.html',
+    'modules': [
+      {'script': 'annotatescrollbar.js', 'node_path': 'addon/scroll/', 'path': 'codemirror/%(version)s/addon/scroll/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'matchesonscrollbar.js', 'node_path': 'addon/search/',
+       'path': 'codemirror/%(version)s/addon/search/', 'cdnjs': CDNJS_REPO},
+      {'script': 'searchcursor.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'match-highlighter.js', 'node_path': 'addon/search/', 'path': 'codemirror/%(version)s/addon/search/',
+       'cdnjs': CDNJS_REPO},
+    ]},
 
   'codemirror-hint': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/complete.html',
-      'modules': [
-        {'script': 'show-hint.js', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/',
-         'cdnjs': CDNJS_REPO},
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/complete.html',
+    'modules': [
+      {'script': 'show-hint.js', 'node_path': 'addon/hint/', 'path': 'codemirror/%(version)s/addon/hint/',
+       'cdnjs': CDNJS_REPO},
+    ]},
 
   'codemirror-panel': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/panel.html#',
-      'modules': [
-        {'script': 'panel.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
-         'cdnjs': CDNJS_REPO},
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/panel.html#',
+    'modules': [
+      {'script': 'panel.js', 'node_path': 'addon/display/', 'path': 'codemirror/%(version)s/addon/display/',
+       'cdnjs': CDNJS_REPO},
+    ]},
 
   'codemirror-fold': {
-      'req': [
-        {'alias': 'codemirror'}
-      ],
-      'node_folder': 'codemirror',
-      'website': 'https://codemirror.net/demo/folding.html',
-      'modules': [
-        {'script': 'foldcode.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'foldgutter.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'brace-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'xml-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'indent-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'markdown-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-        {'script': 'comment-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
-         'cdnjs': CDNJS_REPO},
-  ]},
+    'req': [
+      {'alias': 'codemirror'}
+    ],
+    'node_folder': 'codemirror',
+    'website': 'https://codemirror.net/demo/folding.html',
+    'modules': [
+      {'script': 'foldcode.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'foldgutter.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'brace-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'xml-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'indent-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'markdown-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+      {'script': 'comment-fold.js', 'node_path': 'addon/fold/', 'path': 'codemirror/%(version)s/addon/fold/',
+       'cdnjs': CDNJS_REPO},
+    ]},
 
   # highlight
   'highlight.js': {
     'version': '10.4.1',
     'website': 'https://highlightjs.org/',
     'repository': 'https://github.com/highlightjs/highlight.js',
-    #'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
+    # 'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
     'modules': [
       {'script': 'highlight.min.js', 'node_path': 'lib/', 'path': 'highlight.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
@@ -1622,7 +1617,6 @@ JS_IMPORTS = {
   }
 }
 
-
 CSS_IMPORTS = {
   'jqueryui': {
     'modules': [
@@ -1658,12 +1652,12 @@ CSS_IMPORTS = {
     'modules': [{'script': 'material-icons.css', 'version': '3.0.2',
                  'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
     'assets': [
-        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2',
-         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2',
-         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2',
-         'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+      {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2',
+       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+      {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2',
+       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+      {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2',
+       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://google.github.io/material-design-icons/'},
 
@@ -1733,7 +1727,7 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'jquery.dataTables.min.css', 'version': '1.10.19', 'path': '%(version)s/css/',
        'cdnjs': 'https://cdn.datatables.net'}
-  ]},
+    ]},
 
   # Datatable Buttons
   'datatables-buttons': {
@@ -1845,7 +1839,7 @@ CSS_IMPORTS = {
                  'npm_path': 'css'},
     'website': 'https://fontawesome.com/',
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
-                    'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
+                'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
       {'script': 'all.css', 'version': '5.13.1', 'path': 'releases/v%(version)s/css/',
        'cdnjs': 'https://use.fontawesome.com'}],
@@ -1904,8 +1898,8 @@ CSS_IMPORTS = {
 
   'ajax-bootstrap-select': {
     'modules': [
-          {'script': 'ajax-bootstrap-select.min.css', 'node_path': 'dist/css/', 'version': '1.4.5',
-           'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'ajax-bootstrap-select.min.css', 'node_path': 'dist/css/', 'version': '1.4.5',
+       'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1999,16 +1993,15 @@ CSS_IMPORTS = {
   }
 }
 
-
 _SERVICES = {}
-
 
 MATERIAL_DESIGN_COMPONENTS = {
   'material-icons': {
     'website': 'https://material.io/resources/icons/?style=baseline',
     'services': [
       {'type': 'css', 'url': 'https://fonts.googleapis.com/icon',
-       'values': {'family': 'Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp'}},
+       'values': {
+         'family': 'Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp'}},
     ]
   },
 
@@ -2019,9 +2012,8 @@ MATERIAL_DESIGN_COMPONENTS = {
     'modules': [
       {'script': 'material-components-web.min.js', 'path': 'material-components-web/%(version)s/'},
       {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
-  ]},
+    ]},
 }
-
 
 BOOTSTRAP = {
   'bootstrap-datetimepicker': {
@@ -2046,19 +2038,18 @@ BOOTSTRAP = {
   }
 }
 
-
 TOAST = {
   'tui-date-picker': {
     'version': 'latest',
     'website': 'https://nhn.github.io/tui.date-picker/latest/',
     'register': {'variable': 'tuiDate', 'module': 'tui-date-picker'},
-    'req_js': [ # depn only for requirejs
+    'req_js': [  # depn only for requirejs
       {'alias': 'tui-time-picker'},
     ],
     'modules': [
-      {'script': 'tui-date-picker.css', 'path': 'tui.date-picker/%(version)s/',
+      {'script': 'tui-date-picker.min.css', 'path': 'tui.date-picker/%(version)s/',
        'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-date-picker.js', 'path': 'tui.date-picker/%(version)s/',
+      {'script': 'tui-date-picker.min.js', 'path': 'tui.date-picker/%(version)s/',
        'cdnjs': 'https://uicdn.toast.com/'},
     ]
   },
@@ -2074,11 +2065,11 @@ TOAST = {
     ]
   },
   'tui-code-snippet': {
-    'version': '1.5.2',
+    'version': 'latest',
     'website': 'https://nhn.github.io/tui.date-picker/latest/',
     'register': {'variable': 'tuiSnippet', 'module': 'tui-code-snippet.min'},
     'modules': [
-      {'script': 'tui-code-snippet.min.js', 'path': 'tui.code-snippet/v%(version)s/',
+      {'script': 'tui-code-snippet.min.js', 'path': 'tui.code-snippet/%(version)s/',
        'cdnjs': 'https://uicdn.toast.com/'},
     ]
   },
@@ -2092,9 +2083,9 @@ TOAST = {
     'register': {'variable': 'tuiCalendar', 'module': 'tui-calendar'},
     'website': 'https://github.com/nhn/tui.calendar',
     'modules': [
-      {'script': 'tui-calendar.js', 'path': 'tui-calendar/%(version)s/',
+      {'script': 'tui-calendar.min.js', 'path': 'tui-calendar/%(version)s/',
        'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-calendar.css', 'path': 'tui-calendar/%(version)s/',
+      {'script': 'tui-calendar.min.css', 'path': 'tui-calendar/%(version)s/',
        'cdnjs': 'https://uicdn.toast.com/'},
     ]
   },
@@ -2130,54 +2121,53 @@ TOAST = {
   }
 }
 
-
 GOOGLE_EXTENSIONS = {
   'charts': {'modules': [
-      {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
-    ],
+    {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+  ],
     'website': 'https://developers.google.com/chart/interactive/docs',
     'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['corechart']})}",
   },
   'geochart': {'modules': [
-        {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
-      ],
-      'website': 'https://developers.google.com/chart/interactive/docs',
-      'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['geochart']})}",
+    {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+  ],
+    'website': 'https://developers.google.com/chart/interactive/docs',
+    'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['geochart']})}",
   },
   'tables': {'modules': [
-          {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
-        ],
-        'website': 'https://developers.google.com/chart/interactive/docs',
-        'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['table']})}",
+    {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+  ],
+    'website': 'https://developers.google.com/chart/interactive/docs',
+    'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['table']})}",
 
-    },
+  },
   'gauge': {'modules': [
-        {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
-      ],
-      'website': 'https://developers.google.com/chart/interactive/docs',
-      'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['gauge']})}",
+    {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+  ],
+    'website': 'https://developers.google.com/chart/interactive/docs',
+    'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['gauge']})}",
 
   },
   'maps': {'modules': [
-      {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
-    ],
+    {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+  ],
     'website': 'https://developers.google.com/chart'
   },
   'streetview': {'modules': [
-      {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
-    ],
+    {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+  ],
     'website': 'https://developers.google.com/chart'
   },
   'visualization': {'modules': [
-      {'script': 'js?key=%(api_key)s&libraries=visualization', 'version': '', 'path': 'api/',
-       'cdnjs': 'https://maps.googleapis.com/maps'},
-    ],
+    {'script': 'js?key=%(api_key)s&libraries=visualization', 'version': '', 'path': 'api/',
+     'cdnjs': 'https://maps.googleapis.com/maps'},
+  ],
     'website': 'https://developers.google.com/chart',
     'launcher': "if(typeof google !== 'undefined'){google.charts.load('current', {'packages':['corechart']})}",
   },
   'captcha': {'modules': [
-      {'script': 'api.js?render=%(site_key)s', 'version': '', 'path': '', 'cdnjs': 'https://www.google.com/recaptcha'},
-    ],
+    {'script': 'api.js?render=%(site_key)s', 'version': '', 'path': '', 'cdnjs': 'https://www.google.com/recaptcha'},
+  ],
   }
 }
 
@@ -2334,7 +2324,6 @@ def extend_imports(extension):
 
 
 class ImportModule:
-
   overriden = False
 
   def __init__(self, name, js, css):
@@ -3539,8 +3528,8 @@ class ImportManager:
     self._report, ovr_version = report, {}
     if report is not None and report.ext_packages is not None:
       extend_imports(report.ext_packages)
-    #if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
-      # Force the version of some external Javascript or CSS packages
+    # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
+    # Force the version of some external Javascript or CSS packages
     #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
     #  ovr_version = getattr(packages, 'MODULES', {})
     if report is not None:
@@ -3552,6 +3541,9 @@ class ImportManager:
 
   def __add_imports(self, modules, ovr_version=None):
     for folder, import_dict, import_type in modules:
+      if folder is None and import_type is None:
+        continue
+
       if folder is None:
         for alias, definition in import_type.items():
           main_css = collections.OrderedDict()
@@ -3572,7 +3564,8 @@ class ImportManager:
           if 'config' in definition:
             self.moduleConfigs[alias] = definition['config']
           if main_css:
-            self.cssImports[alias] = {'main': main_css, 'dep': list(modules.keys()), 'versions': list(main_css.values())}
+            self.cssImports[alias] = {'main': main_css, 'dep': list(modules.keys()),
+                                      'versions': list(main_css.values())}
           if main_js:
             self.jsImports[alias] = {'main': main_js, 'dep': list(modules.keys()), 'versions': list(main_js.values())}
       else:
@@ -3671,11 +3664,11 @@ class ImportManager:
 
     :return: The list of modules
     """
-    if module_details is None:
-      module_details = dict(JS_IMPORTS)
     if isinstance(alias, dict):
       alias = alias['alias']
 
+    if module_details is None or alias not in module_details:
+      module_details = dict(JS_IMPORTS)
     import_ref = JS_IMPORTS
     if self._report.ext_packages is not None and alias in self._report.ext_packages:
       import_ref = self._report.ext_packages
@@ -3868,7 +3861,7 @@ class ImportManager:
     :return: The string to be added to the header
     """
     js = []
-    #self.__add_imports([(None, None, self._report.ext_packages)])
+    # self.__add_imports([(None, None, self._report.ext_packages)])
     js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
     for js_alias in js_aliases:
       if excluded is not None and js_alias in excluded:
@@ -3889,7 +3882,7 @@ class ImportManager:
               url_module = os.path.join(
                 self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
 
-        #if '/mode/' in url_module:
+        # if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
         js.append(
           '<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
@@ -4097,7 +4090,8 @@ class ImportManager:
           CSS_IMPORTS.setdefault(alias, {})[k] = v
         for module in css["modules"]:
           module["path"] = module["path"] % {"version": version}
-          self.cssImports.setdefault(alias, {}).setdefault('main', {})["%(cdnjs)s/%(path)s%(script)s" % module] = version
+          self.cssImports.setdefault(alias, {}).setdefault('main', {})[
+            "%(cdnjs)s/%(path)s%(script)s" % module] = version
 
   def addPackage(self, alias, config):
     """
@@ -4171,7 +4165,8 @@ class ImportManager:
     :param data: Dictionary. The Report modules to resolve.
     :param excluded_packages: List. Optional. The packages to exclude.
     """
-    deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
+    deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'],
+                                                                                       'paths': {}}
     m_versions = {}
     # Check first if some specific versions are required for the packages
     for m in self._report.jsImports:
@@ -4257,7 +4252,7 @@ class ImportManager:
         pkg = self.cleanImports(imp, repo)
         for c in pkg:
           for s in repo[c].get('modules', []):
-            if 'version' not in s:   # propagate the version number if not supplied from JS definition
+            if 'version' not in s:  # propagate the version number if not supplied from JS definition
               s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
@@ -4265,7 +4260,7 @@ class ImportManager:
       for mod in [CSS_IMPORTS, JS_IMPORTS]:
         for c, pkg in mod.items():
           for s in pkg.get('modules', []):
-            if 'version' not in s:   # propagate the version number if not supplied from JS definition
+            if 'version' not in s:  # propagate the version number if not supplied from JS definition
               s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
