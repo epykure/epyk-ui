@@ -74,10 +74,18 @@ class OptionGoogle(OptChart.OptionsChart):
 
   @property
   def vAxis(self):
+    """
+
+    :rtype: OptionAxis
+    """
     return self._config_sub_data("vAxis", OptionAxis)
 
   @property
   def hAxis(self):
+    """
+
+    :rtype: OptionAxis
+    """
     return self._config_sub_data("hAxis", OptionAxis)
 
   @property

@@ -263,6 +263,8 @@ class ToastDates:
     if options is not None:
       dfl_options.update(options)
     component = html.HtmlToastDates.DatePicker(self.page, width, height, html_code, dfl_options, profile)
+    if value is not None:
+      component.options.date = value
     return component
 
   def range(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
@@ -291,6 +293,8 @@ class ToastDates:
     if options is not None:
       dfl_options.update(options)
     component = html.HtmlToastDates.DatePickerRange(self.page, width, height, html_code, dfl_options, profile)
+    if value is not None:
+      component.options.date = value
     return component
 
   def calendar(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
@@ -319,6 +323,8 @@ class ToastDates:
     if options is not None:
       dfl_options.update(options)
     component = html.HtmlToastDates.DateCalendar(self.page, width, height, html_code, dfl_options, profile)
+    if value is not None:
+      component.options.date = value
     return component
 
 
