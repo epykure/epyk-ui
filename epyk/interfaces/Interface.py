@@ -1236,6 +1236,10 @@ class WebComponents:
     Add the entire Bootstrap framework as a dependency to the framework.
     This will enable more components to the framework.
 
+    ..note::
+
+      This will be using bootstrap 5.
+
     Usage::
 
       icon = page.web.bs.icons.danger()
@@ -1245,6 +1249,7 @@ class WebComponents:
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
     self.page.ext_packages.update(Imports.BOOTSTRAP)
+    self.page.imports.pkgs.bootstrap.version = "5.1.0"
     if 'bs' not in self.fwks:
       self.page.jsImports.add("bootstrap")
       self.page.cssImport.add("bootstrap")

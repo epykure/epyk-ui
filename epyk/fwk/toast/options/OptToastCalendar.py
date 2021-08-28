@@ -18,6 +18,42 @@ class EnumDates(Enums):
     """
     self._set_value(js_type=True)
 
+  def current(self):
+    """
+    Description:
+    ------------
+    Set the today date.
+
+    Related Pages:
+
+      https://nhn.github.io/tui.date-picker/latest/tutorial-example08-daterangepicker
+    """
+    self._set_value(value="new Date()", js_type=True)
+
+  def previous(self, n=1):
+    """
+    Description:
+    ------------
+    Set the today date.
+
+    Related Pages:
+
+      https://nhn.github.io/tui.date-picker/latest/tutorial-example08-daterangepicker
+    """
+    self._set_value(value="(function(){var dt = new Date(); dt.setDate(dt.getDate() - %s); return dt})()" % n, js_type=True)
+
+  def cob(self):
+    """
+    Description:
+    ------------
+    Set the today date.
+
+    Related Pages:
+
+      https://nhn.github.io/tui.date-picker/latest/tutorial-example08-daterangepicker
+    """
+    self._set_value(value="(function(){var cob = new Date(); var days = cob.getDay(); if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()", js_type=True)
+
 
 class EnumViews(Enums):
   def week(self):
@@ -149,6 +185,18 @@ class OptionDateInput(Options):
   def element(self, val):
     self._config(val)
 
+  @property
+  def format(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get("yyyy-MM-dd")
+
+  @format.setter
+  def format(self, val):
+    self._config(val)
+
 
 class EnumStyleDateTypes(Enums):
 
@@ -225,7 +273,21 @@ class OptionDate(Options):
 
   @date.setter
   def date(self, val):
-    self._config(val)
+    year, month, day = val.split("-")
+    self._config("new Date(%s, %s-1, %s)" % (year, month, day), js_type=True)
+
+  @property
+  def dates(self):
+    """
+    Description:
+    ------------
+    Initial date of the start picker. Set by a Date instance or a number(timestamp). (default: no initial date).
+
+    Related Pages:
+
+      http://nhn.github.io/tui.date-picker/latest/DateRangePicker
+    """
+    return EnumDates(self, "date")
 
   @property
   def defaultView(self):

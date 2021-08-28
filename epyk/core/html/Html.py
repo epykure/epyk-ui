@@ -320,6 +320,18 @@ class Components(collections.OrderedDict):
       if hasattr(component, "css"):
         component.css(attrs)
 
+  def add(self, component):
+    """
+    Description:
+    -----------
+    Standard way to add a component to the rodered dictionary.
+
+    Attributes:
+    ----------
+    :param component: HTML. HTML component.
+    """
+    self[component.htmlCode] = component
+
 
 class Html:
   """
@@ -1749,7 +1761,7 @@ class Html:
     """
     Description:
     -----------
-    Rendrer the HTML component to the JavaScript.
+    Render the HTML component to the JavaScript.
     This will be the main function called by the page to render all the component.s
 
     """
@@ -2055,3 +2067,65 @@ class Body(Html):
 
     return '<body %s>%s</body>' % (
       self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
+
+
+class Component(Html):
+
+  css_classes = ["btn-group"]
+
+  str_repr = '''
+<div {attrs}>
+  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    {text}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    {sub_items}
+  </ul>
+</div>
+'''
+
+  dyn_repr = '''<li>{sub_item}</li>'''
+
+  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+    super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
+    self.attr["class"].clear()
+    if self.css_classes is not None:
+      for cls in self.css_classes:
+        self.attr["class"].add(cls)
+    self.items = []
+
+  def add_item(self, component):
+    """
+    Description:
+    -----------
+
+    :param component:
+    """
+    component.attr["class"].add("dropdown-item")
+    self.components.add(component)
+    self.items.append(component)
+
+  def write_item(self, item):
+    """
+    Description:
+    -----------
+
+    :param item:
+    """
+    return {"sub_item": item.html()}
+
+  def write_values(self):
+    return {"text": self._vals}
+
+  def __str__(self):
+    values = self.write_values()
+    values["attrs"] = self.get_attrs(pyClassNames=self.style.get_classes())
+    values["htmlCode"] = self.htmlCode
+    if self.dyn_repr is not None:
+      str_frgs = []
+      for item in self.items:
+        str_frgs.append(self.dyn_repr.format(**self.write_item(item)))
+      values["sub_items"] = "".join(str_frgs)
+    if self._js__builder__ is not None:
+      self.page.properties.js.add_builders(self.refresh())
+    return self.str_repr.format(**values)

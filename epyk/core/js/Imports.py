@@ -2016,6 +2016,19 @@ MATERIAL_DESIGN_COMPONENTS = {
 }
 
 BOOTSTRAP = {
+  'tempusdominus-bootstrap-4': {
+    'version': '5.39.0',
+    'req': [
+      {'alias': 'font-awesome'},
+      {'alias': 'bootstrap'},
+      {'alias': 'moment'},
+      {'alias': 'jquery'}],
+    'website': 'https://getdatepicker.com/5-4/Installing/',
+    'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
+    'modules': [
+      {'script': 'tempusdominus-bootstrap-4.min.js', 'path': 'tempusdominus-bootstrap-4/%(version)s/js/'},
+      {'script': 'tempusdominus-bootstrap-4.min.css', 'path': 'tempusdominus-bootstrap-4/%(version)s/css/'},
+    ]},
   'bootstrap-datetimepicker': {
     'version': '4.17.47',
     'req': [
@@ -2028,7 +2041,7 @@ BOOTSTRAP = {
       {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
     ]},
   'bootstrap-icons': {
-    'version': '1.3.0',
+    'version': '1.5.0',
     'website': 'https://icons.getbootstrap.com/',
     'modules': [
       {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',
@@ -2353,7 +2366,7 @@ class ImportModule:
       for k, v in self._css["main"].items():
         new_css[k.replace(v, val)] = val
       self._css["versions"] = [val]
-      self._css = new_css
+      self._css["main"] = new_css
 
   @property
   def path(self):
