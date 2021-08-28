@@ -2,7 +2,7 @@
 
 
 ### Added
-- Toast Framework.
+- Toast Framework (first version).
 - Add Toast DatePicker.
 - Add Toast Editor.
 - Add Toast Calendar.
@@ -10,16 +10,17 @@
 - Add Toast Grid.
 - Add option for C3 y transformation.
 - Add column style for fields.
+- Add Bootstrap Dominus Tempus.
 
 ### Changed
-
+- Bootstrap Framework (first version using v5).
 - Change config predefined styles.
 - Change button style (default height).
 - Improve data transformation for x, y and r charts (bubble ones) .
 - Add scroll option to the navbar to hide it when scroll down.
 
 ### Fixed
-- 
+- Fix ImportManager CSS package version override.
 - Fix axes label for ChartJs.
 - Import manager for extensions.
 - Review builder for Countdown component.
