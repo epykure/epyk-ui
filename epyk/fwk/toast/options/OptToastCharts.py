@@ -115,9 +115,6 @@ class OptionsChartDataSeries(Options):
     Description:
     ------------
 
-    Related Pages:
-
-
     """
     return self._config_get()
 
@@ -413,6 +410,9 @@ class OptionsAxis(Options):
 
     Related Pages:
 
+    Attributes:
+    ----------
+    :param text: String.
 
     :rtype: OptionsTitle
     """
@@ -803,6 +803,8 @@ class OptionsTheme(Options):
   @property
   def series(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -869,6 +871,8 @@ class OptionsLegend(Options):
   @property
   def item(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -1100,6 +1104,8 @@ class OptionsResponsive(Options):
   @property
   def animation(self):
     """
+    Description:
+    ------------
 
     :rtype: OptionsAnimation
     """
@@ -1111,6 +1117,8 @@ class OptionsChartOpts(Options):
   @property
   def chart(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -1122,6 +1130,8 @@ class OptionsChartOpts(Options):
   @property
   def legend(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -1133,16 +1143,22 @@ class OptionsChartOpts(Options):
   @property
   def tooltip(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
-    :rtype: OptionsLegend
+    :rtype: OptionsTooltip
     """
     return self._config_sub_data("tooltip", OptionsTooltip)
 
   @property
   def theme(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
@@ -1153,6 +1169,9 @@ class OptionsChartOpts(Options):
   @property
   def series(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
@@ -1163,6 +1182,8 @@ class OptionsChartOpts(Options):
   @property
   def plot(self):
     """
+    Description:
+    ------------
 
     :rtype: OptionsChartPlot
     """
@@ -1181,6 +1202,9 @@ class OptionsChartOpts(Options):
   @property
   def yAxis(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
@@ -1204,6 +1228,8 @@ class OptionsChartOpts(Options):
   @property
   def responsive(self):
     """
+    Description:
+    ------------
 
     :rtype: OptionsResponsive
     """
@@ -1245,6 +1271,8 @@ class OptionsCharts(Options):
   @property
   def config(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -1256,6 +1284,8 @@ class OptionsCharts(Options):
   @property
   def data(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 
@@ -1299,6 +1329,9 @@ class OptionsChartSeriesPie(Options):
   @property
   def radiusRange(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
@@ -1312,6 +1345,9 @@ class OptionsChartPieOpts(OptionsChartOpts):
   @property
   def series(self):
     """
+    Description:
+    ------------
+
     Related Pages:
 
 
@@ -1325,6 +1361,8 @@ class OptionsChartsPie(OptionsCharts):
   @property
   def config(self):
     """
+    Description:
+    ------------
 
     Related Pages:
 

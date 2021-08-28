@@ -11,6 +11,7 @@
 - Add option for C3 y transformation.
 - Add column style for fields.
 - Add Bootstrap Dominus Tempus.
+- Add Component class for Framework integration.
 
 ### Changed
 - Bootstrap Framework (first version using v5).

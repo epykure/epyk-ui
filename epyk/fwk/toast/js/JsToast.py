@@ -18,6 +18,12 @@ class JsDebounce:
 
       https://nhn.github.io/tui.code-snippet/latest/tricks#debounce
 
+    Attributes:
+    ----------
+    :param jsFuncs: List | String. Javascript functions.
+    :param delay: Integer. The delay to run the function.
+    :param varName: String. the variable reference.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     delay = JsUtils.jsConvertData(delay, None)
     return JsUtils.jsWrap("window['%s'] = tui.util.debounce(function(){%s}, %s)" % (
@@ -28,8 +34,11 @@ class JsDebounce:
     """
     Description:
     ------------
+    Run the function.
 
-    :param varName:
+    Attributes:
+    ----------
+    :param varName: String. the variable reference.
     """
     return JsUtils.jsWrap("%s()" % varName)
 
@@ -49,6 +58,12 @@ class JsThrottle:
 
       https://nhn.github.io/tui.code-snippet/latest/tricks#throttle
 
+    Attributes:
+    ----------
+    :param jsFuncs: List | String. Javascript functions.
+    :param interval: Integer. The interval between two function trigger.
+    :param varName: String. the variable reference.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     interval = JsUtils.jsConvertData(interval, None)
     return JsUtils.jsWrap("window['%s'] = tui.util.throttle(function(){%s}, %s)" % (
@@ -59,13 +74,21 @@ class JsThrottle:
     """
     Description:
     ------------
+    Run the function.
 
-    :param varName:
+    Attributes:
+    ----------
+    :param varName: String. The variable reference.
     """
     return JsUtils.jsWrap("%s()" % varName)
 
   @staticmethod
   def reset(varName):
+    """
+    Attributes:
+    ----------
+    :param varName: String. The variable reference.
+    """
     return JsUtils.jsWrap("%s.reset()" % varName)
 
 
@@ -105,7 +128,7 @@ class Js:
     ----------
     :param start: Number. start index.
     :param end: Number. stop index.
-    :param step: Number. next visit index = current index + step.
+    :param step: Number. Optional. next visit index = current index + step.
     """
     return JsObjects.JsArray.JsArray.get("tui.util.range(%s, %s, %s)" % (start, end, step))
 

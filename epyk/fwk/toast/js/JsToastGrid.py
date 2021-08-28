@@ -32,6 +32,12 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#addCellClassName
+
+    Attributes:
+    ----------
+    :param rowKey:
+    :param columnName:
+    :param className:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     columnName = JsUtils.jsConvertData(columnName, None)
@@ -47,6 +53,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#addColumnClassName
+
+    Attributes:
+    ----------
+    :param columnName:
+    :param className:
     """
     columnName = JsUtils.jsConvertData(columnName, None)
     className = JsUtils.jsConvertData(className, None)
@@ -61,6 +72,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#addRowClassName
+
+    Attributes:
+    ----------
+    :param rowKey:
+    :param className:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     className = JsUtils.jsConvertData(className, None)
@@ -75,6 +91,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#appendRow
+
+    Attributes:
+    ----------
+    :param row:
+    :param options:
     """
     row = JsUtils.jsConvertData(row, None)
     options = JsUtils.jsConvertData(options, None)
@@ -89,6 +110,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#appendRows
+
+    Attributes:
+    ----------
+    :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.appendRows(%s)" % (self._src.var, data))
@@ -102,6 +127,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#appendTreeRow
+
+    Attributes:
+    ----------
+    :param row:
+    :param options:
     """
     row = JsUtils.jsConvertData(row, None)
     options = JsUtils.jsConvertData(options, None)
@@ -140,6 +170,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#blur
+
+    Attributes:
+    ----------
+    :param rowKey:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     return JsUtils.jsWrap("%s.check(%s)" % (self._src.var, rowKey))
@@ -153,6 +187,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#checkAll
+
+    Attributes:
+    ----------
+    :param allPage:
     """
     allPage = JsUtils.jsConvertData(allPage, None)
     return JsUtils.jsWrap("%s.checkAll(%s)" % (self._src.var, allPage))
@@ -179,6 +217,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#checkAll
+
+    Attributes:
+    ----------
+    :param type:
     """
     type = JsUtils.jsConvertData(type, None)
     return JsUtils.jsWrap("%s.clearModifiedData(%s)" % (self._src.var, type))
@@ -192,6 +234,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#collapse
+
+    Attributes:
+    ----------
+    :param rowKey:
+    :param recursive:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     recursive = JsUtils.jsConvertData(recursive, None)
@@ -254,6 +301,11 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#disableRow
+
+    Attributes:
+    ----------
+    :param rowKey:
+    :param withCheckbox:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     withCheckbox = JsUtils.jsConvertData(withCheckbox, None)
@@ -268,6 +320,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#disableRowCheck
+
+    Attributes:
+    ----------
+    :param rowKey:
     """
     rowKey = JsUtils.jsConvertData(rowKey, None)
     return JsUtils.jsWrap("%s.disableRowCheck(%s)" % (self._src.var, rowKey))
@@ -293,6 +349,10 @@ class JsGrid(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.grid/latest/Grid#enableColumn
+
+    Attributes:
+    ----------
+    :param columnName:
     """
     columnName = JsUtils.jsConvertData(columnName, None)
     return JsUtils.jsWrap("%s.enableColumn(%s)" % (self._src.var, columnName))

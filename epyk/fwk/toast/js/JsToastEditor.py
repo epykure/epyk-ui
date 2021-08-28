@@ -123,7 +123,6 @@ class Editor(JsPackage):
     Related Pages:
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#focus
-
     """
     return JsUtils.jsWrap("%s.focus()" % self._src.var)
 
@@ -412,7 +411,7 @@ class Editor(JsPackage):
 
     Attributes:
     ----------
-    :param height: String. editor height in pixel
+    :param height: String. editor height in pixel.
     """
     height = JsUtils.jsConvertData(height, None)
     return JsUtils.jsWrap("%s.setHeight(%s)" % (self._src.var, height))
@@ -429,8 +428,8 @@ class Editor(JsPackage):
 
     Attributes:
     ----------
-    :param html: String. html syntax text
-    :param cursorToEnd: Boolean. Optional. move cursor to contents end
+    :param html: String. html syntax text.
+    :param cursorToEnd: Boolean. Optional. move cursor to contents end.
     """
     html = JsUtils.jsConvertData(html, None)
     cursorToEnd = JsUtils.jsConvertData(cursorToEnd, None)
@@ -448,8 +447,8 @@ class Editor(JsPackage):
 
     Attributes:
     ----------
-    :param markdown: String. html syntax text
-    :param cursorToEnd: Boolean. Optional. move cursor to contents end
+    :param markdown: String. html syntax text.
+    :param cursorToEnd: Boolean. Optional. move cursor to contents end.
     """
     markdown = JsUtils.jsConvertData(markdown, None)
     cursorToEnd = JsUtils.jsConvertData(cursorToEnd, None)
@@ -484,7 +483,7 @@ class Editor(JsPackage):
 
     Attributes:
     ----------
-    :param placeholder: String. placeholder to set
+    :param placeholder: String. placeholder to set.
     """
     placeholder = JsUtils.jsConvertData(placeholder, None)
     return JsUtils.jsWrap("%s.setPlaceholder(%s)" % (self._src.var, placeholder))

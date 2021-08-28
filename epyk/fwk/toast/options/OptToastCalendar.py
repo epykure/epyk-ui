@@ -39,8 +39,13 @@ class EnumDates(Enums):
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/tutorial-example08-daterangepicker
+
+    Attributes:
+    ----------
+    :param n: Integer. Optional. The number of days in the past.
     """
-    self._set_value(value="(function(){var dt = new Date(); dt.setDate(dt.getDate() - %s); return dt})()" % n, js_type=True)
+    self._set_value(
+      value="(function(){var dt = new Date(); dt.setDate(dt.getDate() - %s); return dt})()" % n, js_type=True)
 
   def cob(self):
     """
@@ -771,9 +776,13 @@ class OptionsCalMonth(Options):
 
   def scheduleFilter(self, jsFuncs, profile):
     """
+    Description:
+    ------------
 
-    :param jsFuncs:
-    :param profile:
+    Attributes:
+    ----------
+    :param jsFuncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
 
@@ -907,8 +916,6 @@ class OptionCalendar(Options):
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar
-
-    :rtype: defaultView
     """
     return EnumViews(self, "defaultView")
 
@@ -1094,6 +1101,11 @@ class OptionCalendar(Options):
     """
     Description:
     -----------
+
+    Attributes:
+    ----------
+    :param name: String.
+    :param bgColor: String. Optional.
 
     :rtype: OptionCalendars
     """

@@ -45,7 +45,7 @@ class Calendar(JsPackage):
 
     Attributes:
     ----------
-    :param immediately: Boolean. Render it immediately.
+    :param immediately: Boolean. Optional. Render it immediately.
     """
     immediately = JsUtils.jsConvertData(immediately, None)
     return JsUtils.jsWrap("%s.clear(%s)" % (self._src.var, immediately))
@@ -63,7 +63,7 @@ class Calendar(JsPackage):
     Attributes:
     ----------
     :param schedules: Array. Schedule data list.
-    :param silent: Boolean. no auto render after creation when set true.
+    :param silent: Boolean. Optional. No auto render after creation when set true.
     """
     schedules = JsUtils.jsConvertData(schedules, None)
     silent = JsUtils.jsConvertData(silent, None)
@@ -83,7 +83,7 @@ class Calendar(JsPackage):
     ----------
     :param scheduleId: String. ID of schedule to delete.
     :param calendarId: String. The CalendarId of the schedule to delete.
-    :param silent: Boolean. No auto render after creation when set true.
+    :param silent: Boolean. Optional. No auto render after creation when set true.
     """
     scheduleId = JsUtils.jsConvertData(scheduleId, None)
     calendarId = JsUtils.jsConvertData(calendarId, None)
@@ -150,7 +150,7 @@ class Calendar(JsPackage):
     Attributes:
     ----------
     :param scheduleId: String. ID of schedule.
-    :param calendarId: String. calendarId of schedule
+    :param calendarId: String. calendarId of schedule.
     """
     scheduleId = JsUtils.jsConvertData(scheduleId, None)
     calendarId = JsUtils.jsConvertData(calendarId, None)

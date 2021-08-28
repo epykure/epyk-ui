@@ -26,7 +26,7 @@ class Charts(JsPackage):
     Attributes:
     ----------
     :param data: Array. Array of data to be added.
-    :param category:
+    :param category: String. Optional. The data type.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.addData(%s)" % (self._src.var, data))
@@ -108,7 +108,7 @@ class Charts(JsPackage):
     ----------
     :param seriesInfo: Dictionary. Information of the series for the tooltip to be displayed.
     """
-    options = JsUtils.jsConvertData(seriesInfo, None)
+    seriesInfo = JsUtils.jsConvertData(seriesInfo, None)
     return JsUtils.jsWrap("%s.showTooltip(%s)" % (self._src.var, seriesInfo))
 
   def updateOptions(self, options):
