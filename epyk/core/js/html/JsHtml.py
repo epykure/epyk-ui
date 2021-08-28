@@ -807,7 +807,8 @@ class JsHtmlRich(JsHtml):
     -----------
 
     """
-    if hasattr(self.component.options, "markdown"):
+    if hasattr(self.component.options, "markdown") and self.component.options.markdown:
+      self.page.jsImports.add("showdown") # Add the import in case it is not defined in the component
       return ContentFormatters(self._report, '''(function(domObl){const converter = new showdown.Converter();
         if(domObl.hasAttribute('data-value')){return converter.makeMarkdown(domObl.getAttribute('data-value'))} 
         else {return converter.makeMarkdown(domObl.innerHTML)}})(%(varName)s)''' % {"varName": self.varName})

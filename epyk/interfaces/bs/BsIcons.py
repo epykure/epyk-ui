@@ -22,8 +22,8 @@ class Icons:
     :param text:
     :param tooltip:
     """
-    component = self.page.ui.tags.i(text, width=width, height=height, tooltip=tooltip, html_code=html_code,
-                                         options=options, profile=profile)
+    component = self.page.ui.tags.i(
+      text, width=width, height=height, tooltip=tooltip, html_code=html_code, options=options, profile=profile)
     component.attr["class"].add(icon)
     component.style.css.inline_block()
     component.style.css.text_align = position

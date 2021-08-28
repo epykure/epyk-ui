@@ -816,7 +816,7 @@ class Composite(Html.Html):
   def __init__(self, report, schema, width, height, html_code, options, profile, helper):
     super(Composite, self).__init__(report, None, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
-    self.__builders, ref_map = set(), {}
+    self.__builders, ref_map, self.main = set(), {}, None
     self.add_helper(helper)
     self._set_comp(None, schema, self.__builders, ref_map)
     self.attr = self.val.attr
@@ -850,10 +850,10 @@ class Composite(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self.val, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self.val, report=self._report)
     return self._dom
 
   @dom.setter
@@ -872,6 +872,9 @@ class Composite(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtmlEmpty(self)
     return self._styleObj
+
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    return self.val.click(js_funcs, profile, source_event, on_ready)
 
   def __getitem__(self, i):
     return self.val.val[i]
@@ -937,7 +940,7 @@ class Composite(Html.Html):
       schema_child['args']['url'] = schema_child['args']['url'] % ref_map
     # delegate the htmlCode to the main component
     if comp is None:
-      del self._report.components[self.htmlCode]
+      del self.page.components[self.htmlCode]
 
       new_comp = self._get_comp_map[schema_child['type']](html_code=self.htmlCode, **schema_child.get('args', {}))
       self._vals = new_comp
@@ -973,6 +976,8 @@ class Composite(Html.Html):
       self._set_comp(new_comp, child, builders, ref_map)
     if comp is not None:
       comp += new_comp
+    if self.main is None:
+      self.main = self.val
 
   def set_builder(self, builder):
     self.page.properties.js.add_builders(builder)

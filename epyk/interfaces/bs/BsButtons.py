@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.interfaces import Arguments
+
 
 class Buttons:
 
   def __init__(self, ui):
     self.page = ui.page
 
-  def block(self, text, category="primary", fmt='sm'):
+  def block(self, text, category="primary", fmt='sm', width=(None, "%"), height=(None, "px")):
     """
     Description:
     ------------
@@ -18,7 +20,12 @@ class Buttons:
     :param category:
     :param fmt:
     """
-    schema = {"type": 'button', 'class': 'btn', 'arias': {'pressed': False}, 'css': None, 'args': {'text': text}}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if width[0] is None:
+      width = ("auto", '')
+    schema = {"type": 'button', 'class': 'btn', 'arias': {'pressed': False}, 'css': {
+      "width": "%s%s" % (width[0], width[1])}, 'args': {'text': text}}
     button = self.page.web.bs.composite(schema, options={"reset_class": True})
     button.attr['class'].add("btn-%s" % category)
     button.attr['class'].add("btn-%s" % fmt)
