@@ -741,6 +741,8 @@ class Texts:
     if options is not None:
       dflt_options.update(options)
     text = self.page.py.encode_html(text)
+    if color is True:
+      color = self.page.theme.notch()
     html_title = html.HtmlText.Title(self.page, text, level, name, contents, color, picture, icon,
                                      top, html_code, width, height, align, dflt_options, profile)
     html_title.style.css.text_transform = "uppercase"

@@ -682,11 +682,13 @@ class Title(Html.Html):
       self._name = contents.add(text, level or 1, name)
     if level is not None and level < 5:
       getattr(self.style.add_classes.text, "title_%s" % level)()
-      self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop,
+      self.css({'margin': '%spx 0 5px 0' % marginTop,
                 'font-size': self.page.body.style.globals.font.normal({1: 8, 2: 6, 3: 4, 4: 2}[level])})
     else:
       self.style.add_classes.text.title()
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': self.page.body.style.globals.font.normal(5)})
+    if color is not None:
+      self.style.css.color = color
     if align == 'center':
       self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': 'center'})
     elif align is not None:

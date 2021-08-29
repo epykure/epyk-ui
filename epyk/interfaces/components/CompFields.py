@@ -385,6 +385,9 @@ class Fields:
     options = options or {}
     html_input = html.HtmlInput.FieldInput(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options, profile)
+    if options.get("format") == "column":
+      html_input.input.style.css.text_align = "left"
+      html_input.input.style.css.padding_left = 3
     return html_input
 
   @html.Html.css_skin()

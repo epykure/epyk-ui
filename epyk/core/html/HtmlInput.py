@@ -740,6 +740,7 @@ class Field(Html.Html):
       self.label.style.css.display = "block"
       self.label.style.css.color = self.page.theme.notch()
       self.label.style.css.bold()
+      html_input.style.css.min_width = "100%"
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = html_input
