@@ -130,6 +130,8 @@ class ToastFields:
       component.label.style.css.display = "block"
       component.label.style.css.color = self.page.theme.notch()
       component.label.style.css.bold()
+    else:
+      component.style.css.remove("display")
     component.extend([component.label, component.input])
     return component
 
@@ -164,6 +166,8 @@ class ToastFields:
       component.label.style.css.display = "block"
       component.label.style.css.color = self.page.theme.notch()
       component.label.style.css.bold()
+    else:
+      component.style.css.remove("display")
     component.extend([component.label, component.input])
     return component
 
@@ -197,6 +201,8 @@ class ToastFields:
       component.label.style.css.display = "block"
       component.label.style.css.color = self.page.theme.notch()
       component.label.style.css.bold()
+    else:
+      component.style.css.remove("display")
     component.extend([component.label, component.input])
     return component
 
@@ -230,6 +236,8 @@ class ToastFields:
       component.label.style.css.display = "block"
       component.label.style.css.color = self.page.theme.notch()
       component.label.style.css.bold()
+    else:
+      component.style.css.remove("display")
     component.extend([component.label, component.input])
     return component
 

@@ -20,8 +20,10 @@ class CssToastTimePickerSelect(CssStyle.Style):
   Style override for the CSS class tui-timepicker-select
   """
   classname = "tui-timepicker-select"
+  _focus = {'outline': 0}
 
   def customize(self):
+    self.focus.css({"border-color": self.page.theme.notch()})
     self.css({
       'height': "%spx" % Defaults.LINE_HEIGHT, "padding": "0 0 0px 9px"}, important=True)
 
@@ -32,3 +34,33 @@ class ClassTimePicker(GrpCls.ClassHtml):
     super(ClassTimePicker, self).__init__(component)
     self.classList['main'].add(CssToastTimePicker(self.component.page))
     self.classList['main'].add(CssToastTimePickerSelect(self.component.page))
+
+
+class CssToastDatePickerInput(CssStyle.Style):
+  """
+  Style override for the CSS class tui-Datepicker-select
+  """
+  classname = "tui-datetime-input>input"
+  _focus = {'outline': 0}
+
+  def customize(self):
+    self.css({"border": "1px solid %s" % self.page.theme.greys[0]}, important=True)
+    self.focus.css({"border": "1px solid %s" % self.page.theme.notch()}, important=True)
+
+
+class CssToastDatePickerFocus(CssStyle.Style):
+  """
+  Style override for the CSS class tui-Datepicker-select
+  """
+  classname = "tui-datepicker-input"
+
+  def customize(self):
+    self.focus.css({"border": None}, important=True)
+
+
+class ClassDatePicker(GrpCls.ClassHtml):
+
+  def __init__(self, component):
+    super(ClassDatePicker, self).__init__(component)
+    self.classList['main'].add(CssToastDatePickerInput(self.component.page))
+    self.classList['main'].add(CssToastDatePickerFocus(self.component.page))

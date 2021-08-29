@@ -24,6 +24,19 @@ class DatePicker(Html.Html):
 htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Property to the CSS Style of the component.
+
+    :rtype: GrpClsToastDates.ClassDatePicker
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsToastDates.ClassDatePicker(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
     Description:

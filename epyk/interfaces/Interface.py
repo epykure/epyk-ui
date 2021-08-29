@@ -1224,9 +1224,7 @@ class WebComponents:
     """
     Description:
     ------------
-
-    Usage::
-
+    The internal components.
 
     :rtype: Components
     """
@@ -1250,10 +1248,10 @@ class WebComponents:
 
       icon = page.web.bs.icons.danger()
 
-    :rtype: BoostrapUI.Bootstrap
+    :rtype: BoostrapUI.Components
     """
     if 'bs' not in self.fwks:
-      self.fwks["bs"] = BoostrapUI.Bootstrap(self.page)
+      self.fwks["bs"] = BoostrapUI.Components(self.page)
     return self.fwks["bs"]
 
   @property
@@ -1271,12 +1269,12 @@ class WebComponents:
 
       https://material.io/develop/web/
 
-    :rtype: MaterialUI.Materials
+    :rtype: MaterialUI.Components
 
     :return: Python HTML object
     """
     if 'mt' not in self.fwks:
-      self.fwks["mt"] = MaterialUI.Materials(self.page)
+      self.fwks["mt"] = MaterialUI.Components(self.page)
     return self.fwks["mt"]
 
   @property
@@ -1307,7 +1305,8 @@ class WebComponents:
     """
     Description:
     ------------
-
+    Clarity is a scalable, customizable, open source design system bolstered by the people that build with it,
+    the people we build it for, and the community that makes us who we are.
 
     Related Pages:
 
@@ -1327,14 +1326,11 @@ class WebComponents:
     """
     Description:
     ------------
-
+    Evergreen is a React UI Framework for building ambitious products on the web. Brought to you by Segment.
 
     Related Pages:
 
       https://evergreen.segment.com/introduction/getting-started
-
-    Usage::
-
 
     :rtype: EvergreenUI.Components
     """

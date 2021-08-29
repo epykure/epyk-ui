@@ -3647,8 +3647,8 @@ class ImportManager:
       if a in PACKAGE_STATUS:
         if not PACKAGE_STATUS[a].get("allowed", True):
           raise Exception("Package %s not allowed" % a)
-        if self._report is not None and self._report.verbose:
-          logging.warning("%s: %s" % (a, PACKAGE_STATUS[a].get("info", "")))
+        if self._report is not None and "info" in PACKAGE_STATUS[a]:
+          logging.warning("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
       occurrences = [j for j, x in enumerate(import_resolved) if x == a]
       if len(occurrences) > 1:
         for j in occurrences[::-1][1:]:
