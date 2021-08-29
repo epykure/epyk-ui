@@ -3,6 +3,7 @@ from epyk.fwk.toast import html
 from epyk.fwk.toast.js import JsToast
 from epyk.core.js import JsUtils
 from epyk.interfaces import Arguments
+from epyk.fwk.toast import PkgImports
 
 
 class ToastGrids:
@@ -829,6 +830,9 @@ class Components:
 
   def __init__(self, page):
     self.page = page
+    if self.page.ext_packages is None:
+      self.page.ext_packages = {}
+    self.page.ext_packages.update(PkgImports.TOAST)
 
   def time(self, hour=None, minute=None, width=(170, "px"), height=(None, "px"), html_code=None, profile=None,
            options=None):
@@ -916,9 +920,10 @@ class Components:
 
     Attributes:
     ----------
-    :param profile:
+    :param value:
     :param width:
     :param height:
+    :param profile:
     :param options:
     :param html_code:
     """

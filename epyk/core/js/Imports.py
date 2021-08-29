@@ -2051,89 +2051,6 @@ BOOTSTRAP = {
   }
 }
 
-TOAST = {
-  'tui-date-picker': {
-    'version': 'latest',
-    'website': 'https://nhn.github.io/tui.date-picker/latest/',
-    'register': {'variable': 'tuiDate', 'module': 'tui-date-picker'},
-    'req_js': [  # depn only for requirejs
-      {'alias': 'tui-time-picker'},
-    ],
-    'modules': [
-      {'script': 'tui-date-picker.min.css', 'path': 'tui.date-picker/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-date-picker.min.js', 'path': 'tui.date-picker/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  },
-  'tui-time-picker': {
-    'version': 'latest',
-    'website': 'https://nhn.github.io/tui.date-picker/latest/',
-    'register': {'variable': 'tuiTime', 'module': 'tui-time-picker'},
-    'modules': [
-      {'script': 'tui-time-picker.css', 'path': 'tui.time-picker/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-time-picker.js', 'path': 'tui.time-picker/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  },
-  'tui-code-snippet': {
-    'version': 'latest',
-    'website': 'https://nhn.github.io/tui.date-picker/latest/',
-    'register': {'variable': 'tuiSnippet', 'module': 'tui-code-snippet.min'},
-    'modules': [
-      {'script': 'tui-code-snippet.min.js', 'path': 'tui.code-snippet/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  },
-  'tui-calendar': {
-    'req': [
-      {'alias': 'tui-code-snippet'},
-      {'alias': 'tui-date-picker'},
-      {'alias': 'tui-time-picker'},
-    ],
-    'version': 'latest',
-    'register': {'variable': 'tuiCalendar', 'module': 'tui-calendar'},
-    'website': 'https://github.com/nhn/tui.calendar',
-    'modules': [
-      {'script': 'tui-calendar.min.js', 'path': 'tui-calendar/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-calendar.min.css', 'path': 'tui-calendar/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  },
-  '@toast-ui/chart': {
-    'version': 'latest',
-    'register': {'variable': 'tuiCharts', 'module': 'toastui-chart.min'},
-    'website': 'https://github.com/nhn/tui.chart/tree/main/apps/chart',
-    'modules': [
-      {'script': 'toastui-chart.min.css', 'path': 'chart/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'toastui-chart.min.js', 'path': 'chart/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  },
-  '@toast-ui/editor': {
-    'version': 'latest',
-    'website': 'https://github.com/nhn/tui.editor/tree/master/apps/editor',
-    'modules': [
-      {'script': 'toastui-editor.min.css', 'path': 'editor/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'toastui-editor-all.min.js', 'path': 'editor/%(version)s/',
-       'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-
-  },
-  'tui-grid': {
-    'version': 'latest',
-    'website': 'https://github.com/nhn/tui.grid',
-    'modules': [
-      {'script': 'tui-grid.min.css', 'path': 'grid/%(version)s/', 'cdnjs': 'https://uicdn.toast.com/'},
-      {'script': 'tui-grid.min.js', 'path': 'grid/%(version)s/', 'cdnjs': 'https://uicdn.toast.com/'},
-    ]
-  }
-}
-
 GOOGLE_EXTENSIONS = {
   'charts': {'modules': [
     {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
@@ -3560,14 +3477,18 @@ class ImportManager:
       if folder is None:
         for alias, definition in import_type.items():
           main_css = collections.OrderedDict()
-          main_js = collections.OrderedDict()
+          main_js, main_js_types = collections.OrderedDict(), collections.OrderedDict()
           for i, mod in enumerate(definition['modules']):
             if ovr_version is not None and alias in ovr_version:
               mod['version'] = ovr_version[alias]
             else:
               mod["version"] = definition["version"]
             script_path = script_cdnjs_path(alias, mod)
-            main = main_js if script_path.endswith(".js") else main_css
+            if script_path.endswith(".js"):
+              main = main_js
+              main_js_types[script_path] = mod.get("type", 'text/javascript')
+            else:
+              main = main_css
             if 'url' in definition:
               main["%s%s" % (definition['url'], mod['script'])] = mod['version']
             else:
@@ -3580,18 +3501,22 @@ class ImportManager:
             self.cssImports[alias] = {'main': main_css, 'dep': list(modules.keys()),
                                       'versions': list(main_css.values())}
           if main_js:
-            self.jsImports[alias] = {'main': main_js, 'dep': list(modules.keys()), 'versions': list(main_js.values())}
+            self.jsImports[alias] = {'main': main_js, 'dep': list(modules.keys()), 'versions': list(main_js.values()),
+                                     "type": main_js_types}
       else:
         for alias, definition in import_type.items():
-          main = collections.OrderedDict()
+          main, main_types = collections.OrderedDict(), collections.OrderedDict()
           for i, mod in enumerate(definition['modules']):
             if ovr_version is not None and alias in ovr_version:
               mod['version'] = ovr_version[alias]
             script_path = script_cdnjs_path(alias, mod)
+            mod_type = "stylesheet" if script_path.endswith(".css") else 'text/javascript'
             if 'url' in definition:
               main["%s%s" % (definition['url'], mod['script'])] = mod['version']
+              main_types["%s%s" % (definition['url'], mod['script'])] = mod_type
             else:
               main[script_path] = script_version(alias, mod)
+              main_types[script_path] = mod_type
           modules = collections.OrderedDict()
           self.getModules(modules, alias, folder, import_type)
           if 'config' in definition:
@@ -3600,7 +3525,7 @@ class ImportManager:
           for k, v in main.items():
             main_keys.append(k)
             versions.append(v)
-          import_dict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
+          import_dict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions, "type": main_types}
 
   @property
   def static_url(self):
@@ -3897,8 +3822,9 @@ class ImportManager:
 
         # if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
+        mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
         js.append(
-          '<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
+          '<script language="javascript" type="%s" src="%s%s"></script>' % (mod_type, url_module, extra_configs))
     if local_js is not None and len(local_js) > 0:
       for local_js_file in local_js:
         js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)

@@ -21,7 +21,6 @@ from epyk.interfaces.graphs import CompCharts
 from epyk.interfaces.geo import CompGeo
 from epyk.interfaces.bs import Bs
 from epyk.interfaces.mt import Mt
-from epyk.interfaces.tui import IToastUI
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -46,6 +45,10 @@ from epyk.interfaces.components import CompPictos
 from epyk.interfaces.components import CompPollers
 
 from epyk.interfaces import Arguments
+
+from epyk.fwk.toast import UI as ToastUI
+from epyk.fwk.clr import UI as ClarityUI
+from epyk.fwk.evr import UI as EvergreenUI
 
 
 class Components:
@@ -1297,16 +1300,57 @@ class WebComponents:
     Add the entire TOAST UI framework as a dependency to the framework.
     This will enable more components to the framework.
 
+    Related Pages:
+
+      https://ui.toast.com/
+
     Usage::
 
       dt = page.web.tui.date()
       cal = page.web.tui.calendar()
 
-    :rtype: IToastUI.Components
+    :rtype: ToastUI.Components
     """
-    if self.page.ext_packages is None:
-      self.page.ext_packages = {}
-    self.page.ext_packages.update(Imports.TOAST)
     if 'tui' not in self.fwks:
-      self.fwks["tui"] = IToastUI.Components(self.page)
+      self.fwks["tui"] = ToastUI.Components(self.page)
     return self.fwks["tui"]
+
+  @property
+  def clr(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://clarity.design/
+
+    Usage::
+
+
+    :rtype: ClarityUI.Components
+    """
+    if 'clr' not in self.fwks:
+      self.fwks["clr"] = ClarityUI.Components(self.page)
+    return self.fwks["clr"]
+
+  @property
+  def evr(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://evergreen.segment.com/introduction/getting-started
+
+    Usage::
+
+
+    :rtype: EvergreenUI.Components
+    """
+    if 'evr' not in self.fwks:
+      self.fwks["evr"] = EvergreenUI.Components(self.page)
+    return self.fwks["evr"]
