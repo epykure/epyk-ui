@@ -1995,62 +1995,6 @@ CSS_IMPORTS = {
 
 _SERVICES = {}
 
-MATERIAL_DESIGN_COMPONENTS = {
-  'material-icons': {
-    'website': 'https://material.io/resources/icons/?style=baseline',
-    'services': [
-      {'type': 'css', 'url': 'https://fonts.googleapis.com/icon',
-       'values': {
-         'family': 'Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp'}},
-    ]
-  },
-
-  'material-components-web': {
-    'version': '10.0.0',
-    'website': 'https://material.io/components',
-    'register': {'alias': 'mdc', 'module': 'material-components-web.min', 'npm': 'mdc'},
-    'modules': [
-      {'script': 'material-components-web.min.js', 'path': 'material-components-web/%(version)s/'},
-      {'script': 'material-components-web.min.css', 'path': 'material-components-web/%(version)s/'}
-    ]},
-}
-
-BOOTSTRAP = {
-  'tempusdominus-bootstrap-4': {
-    'version': '5.39.0',
-    'req': [
-      {'alias': 'font-awesome'},
-      {'alias': 'bootstrap'},
-      {'alias': 'moment'},
-      {'alias': 'jquery'}],
-    'website': 'https://getdatepicker.com/5-4/Installing/',
-    'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
-    'modules': [
-      {'script': 'tempusdominus-bootstrap-4.min.js', 'path': 'tempusdominus-bootstrap-4/%(version)s/js/'},
-      {'script': 'tempusdominus-bootstrap-4.min.css', 'path': 'tempusdominus-bootstrap-4/%(version)s/css/'},
-    ]},
-  'bootstrap-datetimepicker': {
-    'version': '4.17.47',
-    'req': [
-      {'alias': 'moment'},
-      {'alias': 'bootstrap', 'version': '3.4.1'}],
-    'website': 'https://material.io/components',
-    'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
-    'modules': [
-      {'script': 'bootstrap-datetimepicker.min.js', 'path': 'bootstrap-datetimepicker/%(version)s/js/'},
-      {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
-    ]},
-  'bootstrap-icons': {
-    'version': '1.5.0',
-    'website': 'https://icons.getbootstrap.com/',
-    'modules': [
-      {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',
-       'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
-    ]
-
-  }
-}
-
 GOOGLE_EXTENSIONS = {
   'charts': {'modules': [
     {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},

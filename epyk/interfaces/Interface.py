@@ -46,9 +46,12 @@ from epyk.interfaces.components import CompPollers
 
 from epyk.interfaces import Arguments
 
+# External web frameworks
 from epyk.fwk.toast import UI as ToastUI
 from epyk.fwk.clr import UI as ClarityUI
 from epyk.fwk.evr import UI as EvergreenUI
+from epyk.fwk.bs import UI as BoostrapUI
+from epyk.fwk.mt import UI as MaterialUI
 
 
 class Components:
@@ -1247,16 +1250,10 @@ class WebComponents:
 
       icon = page.web.bs.icons.danger()
 
-    :rtype: Bs.Bootstrap
+    :rtype: BoostrapUI.Bootstrap
     """
-    if self.page.ext_packages is None:
-      self.page.ext_packages = {}
-    self.page.ext_packages.update(Imports.BOOTSTRAP)
-    self.page.imports.pkgs.bootstrap.version = "5.1.0"
     if 'bs' not in self.fwks:
-      self.page.jsImports.add("bootstrap")
-      self.page.cssImport.add("bootstrap")
-      self.fwks["bs"] = Bs.Bootstrap(self.page)
+      self.fwks["bs"] = BoostrapUI.Bootstrap(self.page)
     return self.fwks["bs"]
 
   @property
@@ -1274,22 +1271,12 @@ class WebComponents:
 
       https://material.io/develop/web/
 
-    :rtype: Mt.Materials
+    :rtype: MaterialUI.Materials
 
     :return: Python HTML object
     """
-    if self.page.ext_packages is None:
-      self.page.ext_packages = {}
-    self.page.ext_packages.update(Imports.MATERIAL_DESIGN_COMPONENTS)
     if 'mt' not in self.fwks:
-      self.page.jsImports.add("material-components-web")
-      self.page.cssImport.add("material-components-web")
-      self.page.css.customText('''
-:root {--mdc-theme-primary: %(color)s; --mdc-theme--on-primary: %(color)s; --mdc-theme--primary-bg: %(color)s;}
-.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
-          ''' % {"color": self.page.theme.success[1]})
-
-      self.fwks["mt"] = Mt.Materials(self.page)
+      self.fwks["mt"] = MaterialUI.Materials(self.page)
     return self.fwks["mt"]
 
   @property
