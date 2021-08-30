@@ -1020,10 +1020,13 @@ class Checkbox(Html.Html):
     super(Checkbox, self).__init__(report, {"value": flag}, html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height})
     self.set_attrs(attrs={"type": "checkbox"})
+    if group_name is not None:
+      self.attr["name"] = group_name
     self.set_attrs(attrs=attrs)
     self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
     self.style.css.line_height = Defaults.LINE_HEIGHT
     self._label = label or ''
+    self.style.add_classes.div.no_focus_outline()
 
   @property
   def dom(self):
@@ -1039,8 +1042,22 @@ class Checkbox(Html.Html):
       self._dom = JsHtmlField.Check(self, report=self.page)
     return self._dom
 
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    The Javascript functions defined for this component.
+    Those can be specific ones for the module or generic ones from the language.
+
+    :rtype: JsComponents.Radio
+    """
+    if self._js is None:
+      self._js = JsComponents.Radio(self, report=self.page)
+    return self._js
+
   _js__builder__ = '''htmlObj.checked = data.value; 
-      if(data.text !== null){
+      if((typeof data.text !== 'undefined') || (data.text !== null)){
         htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 

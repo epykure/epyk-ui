@@ -18,17 +18,57 @@ class Radio(JsPackage):
     """
     Description:
     -----------
-
+    Set the status of the Check / Radio component to checked.
     """
-    return JsObjects.JsObjects.get("%s.checked = true" % self._src.input.dom.varName)
+    return JsUtils.jsWrap("%s.checked = true" % self._src.dom.varName)
 
   def uncheck(self):
     """
     Description:
     -----------
-
+    Set the status of the Check / Radio component to unchecked.
     """
-    return JsObjects.JsObjects.get("%s.checked = false" % self._src.input.dom.varName)
+    return JsUtils.jsWrap("%s.checked = false" % self._src.dom.varName)
+
+  def is_checked(self, jsFuncs, elseFuncs=None, profile=None):
+    """
+    Description:
+    -----------
+    Condition on the status of the checkbox / Radio.
+    This will trigger the underlying JavaScript functions only if the box is checked.
+
+    Attributes:
+    ----------
+    :param jsFuncs: String | List. The Javascript functions.
+    :param elseFuncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
+    if elseFuncs is not None:
+      elseFuncs = JsUtils.jsConvertFncs(elseFuncs, toStr=True, profile=profile)
+      return JsUtils.jsWrap("if(%s.checked){%s} else {%s}" % (self._src.dom.varName, js_funcs, elseFuncs))
+
+    return JsUtils.jsWrap("if(%s.checked){%s}" % (self._src.dom.varName, js_funcs))
+
+  def is_checked(self, jsFuncs, elseFuncs=None, profile=None):
+    """
+    Description:
+    -----------
+    Condition on the status of the checkbox / Radio.
+    This will trigger the underlying JavaScript functions only if the box is not checked.
+
+    Attributes:
+    ----------
+    :param jsFuncs: String | List. The Javascript functions.
+    :param elseFuncs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
+    if elseFuncs is not None:
+      elseFuncs = JsUtils.jsConvertFncs(elseFuncs, toStr=True, profile=profile)
+      return JsUtils.jsWrap("if(!%s.checked){%s} else {%s}" % (self._src.dom.varName, js_funcs, elseFuncs))
+
+    return JsUtils.jsWrap("if(!%s.checked){%s}" % (self._src.dom.varName, js_funcs))
 
 
 class CheckButton(JsPackage):
@@ -42,7 +82,11 @@ class CheckButton(JsPackage):
     """
     Description:
     -----------
+    Set the status of the button component to checked.
 
+    Attributes:
+    ----------
+    :param color: String. Optional. The font color in the component. Default inherit.
     """
     times = self._src.options.icon_not_check
     check = self._src.options.icon_check
@@ -52,7 +96,11 @@ class CheckButton(JsPackage):
     """
     Description:
     -----------
+    Set the status of the button component to unchecked.
 
+    Attributes:
+    ----------
+    :param color: String. Optional. The font color in the component. Default inherit.
     """
     times = self._src.options.icon_not_check
     check = self._src.options.icon_check
@@ -104,8 +152,8 @@ class Menu(JsPackage):
 
     Attributes:
     ----------
-    :param value: String. The url link
-    :param target: String.  Teh target mode of the link component
+    :param value: String. The url link.
+    :param target: String. Optional. The target mode of the link component.
     """
     value = JsUtils.jsConvertData(value, None)
     target = JsUtils.jsConvertData(target, None)
@@ -179,6 +227,9 @@ class Alerts(JsPackage):
     Description:
     -----------
 
+    Attributes:
+    ----------
+    :param time:
     """
     time = time or self._src.options.time
     return JsObjects.JsVoid('''
@@ -201,9 +252,7 @@ class News(JsPackage):
     -----------
 
     """
-    return JsObjects.JsVoid('''
-      %(varName)s.innerHTML = '';  
-      ''' % {'varName': self.varName})
+    return JsObjects.JsVoid('''%(varName)s.innerHTML = '' ''' % {'varName': self.varName})
 
 
 class Chat(JsPackage):
@@ -232,7 +281,7 @@ class Room(JsPackage):
     """
     Description:
     -----------
-
+    Display dots in the status to inform user is typing.
     """
     return self._src.dom.querySelector("div[name=dots]").show(duration=3000)
 
