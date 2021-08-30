@@ -1045,6 +1045,10 @@ class Row(Html.Html):
     self.style.css.justify_content = self.position
     if align == 'center':
       self.css({'margin': 'auto'})
+    if options.get("size_cols"):
+      self.set_size_cols(*options["size_cols"])
+    if options.get("width_cols"):
+      self.set_width_cols(*options["width_cols"])
 
   def __enter__(self):
     return self

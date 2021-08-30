@@ -318,6 +318,55 @@ class JsItemsDef:
     item.appendChild(icons)'''
     return self._item(item_def)
 
+  def period(self, report):
+    """
+    Description:
+    ------------
+    Add text items to the list
+
+    Attributes:
+    ----------
+    :param report: Page object. The internal page object
+    """
+    item_def = '''
+    if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
+      data.content = converter.makeHtml(data.content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
+
+    function hashCode(str) { // java String#hashCode
+      var hash = 0; for (var i = 0; i < str.length; i++) {hash = str.charCodeAt(i) + ((hash << 5) - hash)} return hash}
+
+    function intToRGB(i){
+      var c = (i & 0x00FFFFFF).toString(16).toUpperCase(); return "00000".substring(0, 6 - c.length) + c}
+
+    var item = document.createElement("DIV"); var title = document.createElement("DIV");  
+    var titleValue = document.createElement("DIV");  
+    titleValue.innerHTML = data.title;  titleValue.style.fontWeight = "bold"
+    titleValue.style.fontSize = "15px"; titleValue.style.display = "inline-block"; 
+    item.style.verticalAlign = "top"; title.appendChild(titleValue);
+    
+    var msg = document.createElement("DIV"); msg.style.display = "inline-block"; msg.style.width = "calc(100% - 80px)";
+    msg.style.padding = "2px 2px 2px 5px"; msg.style["margin-left"] = "5px";
+
+    title.setAttribute('name', 'value'); item.setAttribute('data-valid', true);
+    if (typeof data.color === 'undefined') {data.color = "#aaaaaa"};
+    var content = document.createElement("DIV"); content.innerHTML = data.content;
+    msg.appendChild(title); msg.appendChild(content);
+    msg.style["border-left"] = "1px solid " + data.color;
+    
+    var dFrom = document.createElement("DIV"); item.appendChild(dFrom); dFrom.innerHTML = data.from;
+    dFrom.style.color = data.color; dFrom.style["font-size"] = "11px";
+    
+    item.appendChild(msg); item.style.margin = "0 5px 5px 5px";
+    
+    if (typeof data.to !== 'undefined'){
+      var dTo = document.createElement("DIV"); item.appendChild(dTo); dTo.innerHTML = data.to;
+      dTo.style.color = data.color; dTo.style["font-size"] = "11px";
+    };
+    
+    item.style.width = "calc(100% - 10px)"; item.style.padding = "5px"; item.style.border = "1px solid #e9e9e9";
+    '''
+    return self._item(item_def)
+
   def custom(self, item_def):
     """
     Description:
