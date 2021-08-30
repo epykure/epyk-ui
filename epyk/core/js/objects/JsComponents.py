@@ -50,7 +50,7 @@ class Radio(JsPackage):
 
     return JsUtils.jsWrap("if(%s.checked){%s}" % (self._src.dom.varName, js_funcs))
 
-  def is_checked(self, jsFuncs, elseFuncs=None, profile=None):
+  def is_not_checked(self, jsFuncs, elseFuncs=None, profile=None):
     """
     Description:
     -----------
