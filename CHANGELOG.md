@@ -14,6 +14,7 @@
 - Add Component class for Framework integration.
 - UI - Add new list item period.
 - Add size and width cols options for row container.
+- Add check / radio events.
 
 ### Changed
 - Bootstrap Framework (first version using v5).
