@@ -12,6 +12,8 @@
 - Add column style for fields.
 - Add Bootstrap Dominus Tempus.
 - Add Component class for Framework integration.
+- UI - Add new list item period.
+- Add size and width cols options for row container.
 
 ### Changed
 - Bootstrap Framework (first version using v5).
@@ -19,6 +21,7 @@
 - Change button style (default height).
 - Improve data transformation for x, y and r charts (bubble ones) .
 - Add scroll option to the navbar to hide it when scroll down.
+- Change color management in titles.
 
 ### Fixed
 - Fix ImportManager CSS package version override.
