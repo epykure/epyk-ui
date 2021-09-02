@@ -7,7 +7,7 @@ the vast number of components.
 
 This will be fully transparent :doc:`all_components` will include to the page their external resources.
 
-113 Libraries
+127 Libraries
 ============
 
 - `accounting, version 0.4.1 <https://openexchangerates.github.io/accounting.js/>`_
@@ -68,36 +68,50 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `clipboard, version 2.0.6 <https://clipboardjs.com/>`_
 - `d3, version 6.3.1 <https://d3js.org/>`_
 - `d3-tip, version 0.9.1 <>`_
-- `d3-ease, version 1.0.3 <https://github.com/d3/d3-ease>`_
-- `d3-dispatch, version 1.0.3 <https://github.com/d3/d3-dispatch>`_
-- `d3-transition, version 1.1.1 <https://github.com/d3/d3-interpolate>`_
-- `d3-selection, version 1.2.0 <https://github.com/d3/d3-selection>`_
-- `d3-interpolate, version 1.3.0 <https://github.com/d3/d3-interpolate>`_
-- `d3-time-format, version 2.1.1 <https://github.com/d3/d3-time-format>`_
-- `d3-time, version 1.0.8 <https://github.com/d3/d3-time>`_
-- `d3-array, version 1.2.2 <https://github.com/d3/d3-format>`_
-- `d3-format, version 1.3.0 <https://github.com/d3/d3-format>`_
-- `d3-collection, version 1.0.5 <https://github.com/d3/d3-collection>`_
-- `d3-scale, version 1.0.7 <https://github.com/d3/d3-scale>`_
-- `d3-color, version 1.2.1 <https://github.com/d3/d3-color>`_
-- `plotly.js, version 1.58.4 <https://plot.ly/javascript/>`_
+- `d3-axis, version 3.0.0 <https://github.com/d3/d3-axis>`_
+- `d3-ease, version 3.0.1 <https://github.com/d3/d3-ease>`_
+- `d3-dsv, version 3.0.1 <https://github.com/d3/d3-dsv>`_
+- `d3-dispatch, version 3.0.1 <https://github.com/d3/d3-dispatch>`_
+- `d3-transition, version 3.0.1 <https://github.com/d3/d3-interpolate>`_
+- `d3-selection, version 3.0.0 <https://github.com/d3/d3-selection>`_
+- `d3-interpolate, version 3.0.1 <https://github.com/d3/d3-interpolate>`_
+- `d3-time-format, version 4.0.0 <https://github.com/d3/d3-time-format>`_
+- `d3-time, version 3.0.0 <https://github.com/d3/d3-time>`_
+- `d3-array, version 3.0.1 <https://github.com/d3/d3-array>`_
+- `d3-format, version 3.0.1 <https://github.com/d3/d3-format>`_
+- `d3-timer, version 3.0.1 <https://github.com/d3/d3-timer>`_
+- `d3-collection, version 1.0.7 <https://github.com/d3/d3-collection>`_
+- `d3-scale, version 4.0.0 <https://github.com/d3/d3-scale>`_
+- `d3-color, version 3.0.1 <https://github.com/d3/d3-color>`_
+- `d3-brush, version 3.0.0 <https://github.com/d3/d3-brush>`_
+- `d3-drag, version 3.0.0 <https://github.com/d3/d3-drag>`_
+- `d3-shape, version 3.0.1 <https://github.com/d3/d3-shape>`_
+- `d3-zoom, version 3.0.0 <https://github.com/d3/d3-zoom>`_
+- `d3-path, version 3.0.1 <https://github.com/d3/d3-path>`_
+- `plotly.js, version 2.3.0 <https://plot.ly/javascript/>`_
 - `nvd3, version 1.8.6 <http://nvd3.org/>`_
 - `c3, version 0.7.20 <https://c3js.org/>`_
 - `crossfilter, version 1.3.12 <http://square.github.io/crossfilter/>`_
-- `apexcharts, version 3.26.3 <https://apexcharts.com/>`_
+- `svgjs, version 2.6.2 <>`_
+- `apexcharts, version 3.27.1 <https://apexcharts.com/>`_
 - `dc, version 4.2.7 <https://dc-js.github.io/dc.js/examples/>`_
-- `billboard.js, version 3.0.3 <https://naver.github.io/billboard.js/release/latest/doc/>`_
+- `vega, version 5.20.2 <https://vega.github.io/vega-lite/>`_
+- `vega-tooltip, version 0.25.1 <https://github.com/vega/vega-util/>`_
+- `vega-util, version 1.16.1 <https://github.com/vega/vega-util/>`_
+- `vega-lite, version 5.1.0 <https://vega.github.io/vega-lite/>`_
+- `vega-embed, version 6.18.2 <https://vega.github.io/vega-embed/>`_
+- `billboard.js, version 3.1.1 <https://naver.github.io/billboard.js/release/latest/doc/>`_
 - `rough-viz, version 1.0.6 <https://github.com/jwilber/roughViz>`_
 - `frappe-charts, version 1.5.1 <https://frappe.io/charts/docs>`_
 - `@chartshq/muze, version 2.0.0 <https://muzejs.org/>`_
-- `chart.js, version 3.3.2 <https://www.chartjs.org/>`_
+- `chart.js, version 3.5.0 <https://www.chartjs.org/>`_
 - `chartjs-plugin-dragdata, version latest <https://www.chartjs.org/>`_
 - `chartjs-plugin-annotation, version 0.5.7 <https://www.chartjs.org/>`_
 - `chartjs-plugin-datalabels, version 0.7.0 <https://chartjs-plugin-datalabels.netlify.app/>`_
 - `chartjs-plugin-labels, version 1.1.0 <https://github.com/emn178/chartjs-plugin-labels>`_
 - `chartjs-plugin-crosshair, version 1.1.6 <https://www.chartjs.org/>`_
 - `chartjs-plugin-zoom, version 0.7.7 <https://www.chartjs.org/>`_
-- `chartjs-chart-geo, version 2.1.0 <https://github.com/sgratzl/chartjs-chart-geo>`_
+- `chartjs-chart-geo, version 3.1.0 <https://github.com/sgratzl/chartjs-chart-geo>`_
 - `hammer, version 2.0.8 <http://hammerjs.github.io/>`_
 - `@popperjs/core, version 2.9.2 <https://github.com/popperjs/popper-core>`_
 - `bootstrap-select, version 1.13.18 <http://silviomoreto.github.io/bootstrap-select/>`_

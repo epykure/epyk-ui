@@ -31,7 +31,7 @@ Interfaces per Categories:
 There are links to existing Web Framework to rely on their components:
 
 
-Full list of 80 Interfaces:
+Full list of 81 Interfaces:
 *******************************************
 
 .. toctree::
@@ -106,6 +106,7 @@ Full list of 80 Interfaces:
     /report/ui/graphs/CompRoughViz
     /report/ui/graphs/Sparkline
     /report/ui/graphs/SVG
+    /report/ui/graphs/VegaEmbedded
     /report/ui/graphs/Vis
     /report/ui/graphs/Vis2D
     /report/ui/graphs/Vis3D

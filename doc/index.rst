@@ -78,9 +78,9 @@ Please see below the 2021 road map of notifications on Twitter:
         <li><del>W23:  Map and Geo (leaflet and JQV Maps)</del></li>
         <li><del>W24:  Chart review (Introduction of Vega Lite))</del></li>
         <li><del>W25:  Chart bug fixes and alignment</del></li>
-        <li>Chart Shared API - Axis</li>
-        <li>Chart Shared API - Events</li>
-        <li>Epyk - External Libraries for Layouts & components (Bootstrap, Materials, Canvas, ToastUI...)</li>
+        <li><del>Chart Shared API - Axis</del></li>
+        <li><del>Chart Shared API - Events</del></li>
+        <li>Epyk - External Libraries for Layouts & components (Bootstrap, Materials, ToastUI...)</li>
         <li>Epyk with web framework (Vue, Angular or React)</li>
     </ul>
 
@@ -97,6 +97,7 @@ sending pull requests on `Github <https://github.com/epykure/epyk-ui>`_ !
     intro/ready-to-use.rst
     intro/getting-started-with-webdev.rst
     intro/design-architecture-details.rst
+    intro/web-frameworks.rst
     intro/security-control.rst
     intro/advanced-features.rst
     intro/external-packages.rst

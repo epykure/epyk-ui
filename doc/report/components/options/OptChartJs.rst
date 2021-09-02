@@ -73,6 +73,9 @@ OptChartJs Module
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionPieAnimation
 	:members:
 
+.. autoclass:: epyk.core.html.options.OptChartJs.OptionPlugins
+	:members:
+
 .. autoclass:: epyk.core.html.options.OptChartJs.OptionPoint
 	:members:
 

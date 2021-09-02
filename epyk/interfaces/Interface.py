@@ -6,8 +6,6 @@ from epyk.core import html
 
 from epyk.core.css import Defaults_css
 
-from epyk.core.js import Imports
-
 from epyk.interfaces.components import CompLayouts
 from epyk.interfaces.components import CompCodes
 from epyk.interfaces.components import CompButtons
@@ -19,8 +17,6 @@ from epyk.interfaces.components import CompNumbers
 from epyk.interfaces.tables import CompTables
 from epyk.interfaces.graphs import CompCharts
 from epyk.interfaces.geo import CompGeo
-from epyk.interfaces.bs import Bs
-from epyk.interfaces.mt import Mt
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -52,6 +48,7 @@ from epyk.fwk.clr import UI as ClarityUI
 from epyk.fwk.evr import UI as EvergreenUI
 from epyk.fwk.bs import UI as BoostrapUI
 from epyk.fwk.mt import UI as MaterialUI
+from epyk.fwk.jqui import UI as JqueryUI
 
 
 class Components:
@@ -1231,6 +1228,25 @@ class WebComponents:
     if 'ui' not in self.fwks:
       self.fwks["ui"] = Components(self.page)
     return self.fwks["ui"]
+
+  @property
+  def jqui(self):
+    """
+    Description:
+    ------------
+    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery
+    JavaScript Library. Whether you're building highly interactive web applications or you just need to add a date
+    picker to a form control, jQuery UI is the perfect choice.
+
+    Related Pages:
+
+      https://jqueryui.com/
+
+    :rtype: JqueryUI.Components
+    """
+    if 'jqui' not in self.fwks:
+      self.fwks["jqui"] = JqueryUI.Components(self.page)
+    return self.fwks["jqui"]
 
   @property
   def bs(self):

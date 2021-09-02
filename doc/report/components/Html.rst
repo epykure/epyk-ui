@@ -4,6 +4,9 @@ Html Module
 .. autoclass:: epyk.core.html.Html.Body
 	:members:
 
+.. autoclass:: epyk.core.html.Html.Component
+	:members:
+
 .. autoclass:: epyk.core.html.Html.Components
 	:members:
 

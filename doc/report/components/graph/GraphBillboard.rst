@@ -34,6 +34,3 @@ GraphBillboard Module
 .. autoclass:: epyk.core.html.graph.GraphBillboard.ChartSpline
 	:members:
 
-.. autoclass:: epyk.core.data.DataClass.DataClass
-	:members:
-

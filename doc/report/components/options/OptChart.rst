@@ -10,6 +10,3 @@ OptChart Module
 .. autoclass:: epyk.core.html.options.OptChart.OptionsChartShared
 	:members:
 
-.. autoclass:: epyk.core.html.options.OptChart.OptionsChartSharedNVD3
-	:members:
-

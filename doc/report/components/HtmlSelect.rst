@@ -13,3 +13,6 @@ HtmlSelect Module
 .. autoclass:: epyk.core.html.HtmlSelect.Select
 	:members:
 
+.. autoclass:: epyk.core.data.DataPy.SelectionBox
+	:members:
+

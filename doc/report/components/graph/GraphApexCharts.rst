@@ -1,10 +1,16 @@
 GraphApexCharts Module
 ======================
 
+.. autoclass:: epyk.core.html.graph.GraphApexCharts.ApexActivePoints
+	:members:
+
 .. autoclass:: epyk.core.html.graph.GraphApexCharts.Area
 	:members:
 
 .. autoclass:: epyk.core.html.graph.GraphApexCharts.Bar
+	:members:
+
+.. autoclass:: epyk.core.html.graph.GraphApexCharts.Bubble
 	:members:
 
 .. autoclass:: epyk.core.html.graph.GraphApexCharts.Chart

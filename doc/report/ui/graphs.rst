@@ -25,6 +25,7 @@ graphs Interface
     /report/ui/graphs/CompRoughViz
     /report/ui/graphs/Sparkline
     /report/ui/graphs/SVG
+    /report/ui/graphs/VegaEmbedded
     /report/ui/graphs/Vis
     /report/ui/graphs/Vis2D
     /report/ui/graphs/Vis3D

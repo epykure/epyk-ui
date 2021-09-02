@@ -40,6 +40,9 @@ GeoPlotly Module
 .. autoclass:: epyk.core.html.geo.GeoPlotly.LayoutMapBox
 	:members:
 
+.. autoclass:: epyk.core.html.geo.GeoPlotly.LayoutMapBoxLayer
+	:members:
+
 .. autoclass:: epyk.core.html.geo.GeoPlotly.Scatter
 	:members:
 
