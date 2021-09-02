@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.6.0] - 2021-09-02
 
 ### Added
 - Toast Framework (first version).
