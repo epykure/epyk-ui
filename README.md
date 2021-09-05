@@ -264,4 +264,7 @@ Donate
 
 Want to donate? Feel free. Send to [blockchain](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
 
-![](./static/images/blockchain_qrcode.PNG)
+<div align="center" >
+    <img src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/blockchain_qrcode.PNG?raw=true">
+</div>
+
