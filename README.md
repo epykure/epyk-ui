@@ -7,7 +7,7 @@
 [![PyPI version shields.io](https://img.shields.io/pypi/v/epyk.svg)](https://pypi.python.org/pypi/epyk/)
 [![Documentation Status](https://readthedocs.org/projects/epyk-ui/badge/?version=latest)](http://epyk-ui.readthedocs.io/?badge=latest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/epykure/epyk-ui/issues)
-[![Donate](https://img.shields.io/badge/$-support-ff69b4.svg?style=flat)](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)  
+[![Donate](https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white)](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)  
 
 
 **A single module to link Python ecosystem to the Web.
