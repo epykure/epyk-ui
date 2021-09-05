@@ -257,3 +257,11 @@ Feedback and Contribution
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Please get in touch if there is any feature you feel Epyk-UI needs.
+
+
+Donate
+======
+
+Want to donate? Feel free. Send to bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq.
+
+![](./static/images/blockchain_qrcode.PNG)

@@ -351,7 +351,7 @@ class Components:
     component = HtmlJqUIWidgets.JqAccordion(
       self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
     if values is not None:
-      for k, v in reversed(values.items()):
+      for k, v in reversed(list(values.items())):
         component.add_section(k, v)
     return component
 
@@ -387,6 +387,6 @@ class Components:
     component = HtmlJqUIWidgets.JqTabs(
       self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
     if values is not None:
-      for k, v in reversed(values.items()):
+      for k, v in reversed(list(values.items())):
         component.add_panel(k, v)
     return component
