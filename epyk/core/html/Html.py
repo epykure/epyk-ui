@@ -2045,6 +2045,8 @@ class Body(Html):
       page = pk.Page()
       page.body.template.margins(5)
       page.body.template.style.css.background = "white"
+
+    :rtype: Html
     """
     if self._template is None:
       self.header = self.page.ui.div()
@@ -2071,24 +2073,12 @@ class Body(Html):
 
 class Component(Html):
 
-  css_classes = ["btn-group"]
-
-  str_repr = '''
-<div {attrs}>
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    {text}
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    {sub_items}
-  </ul>
-</div>
-'''
-
-  dyn_repr = '''<li>{sub_item}</li>'''
+  css_classes = None
+  str_repr = None
+  dyn_repr = None
 
   def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
     super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
-    self.attr["class"].clear()
     if self.css_classes is not None:
       for cls in self.css_classes:
         self.attr["class"].add(cls)
@@ -2098,10 +2088,15 @@ class Component(Html):
     """
     Description:
     -----------
+    Add the sub item to the list of items.
+    This will also add the component to the page component dictionary.
 
+    Attributes:
+    ----------
     :param component:
     """
     component.attr["class"].add("dropdown-item")
+    component.options.managed = False
     self.components.add(component)
     self.items.append(component)
 

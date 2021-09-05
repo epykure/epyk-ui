@@ -925,6 +925,7 @@ class Table(Html.Html):
 
 class Col(Html.Html):
   name = 'Column'
+  requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
   def __init__(self, report, components, position, width, height, align, helper, options, profile):
@@ -993,7 +994,7 @@ class Col(Html.Html):
     """
     return self.val[0].build(data, options, profile)
 
-  def set_size(self, n):
+  def set_size(self, n, breakpoint="lg"):
     """
     Description:
     ------------
@@ -1007,7 +1008,13 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-    :param n: Integer. The size of the component in the bootstrap row.
+    :param n: Integer. Integer. The size of the component in the bootstrap row.
+    :param breakpoint: String. Optional. Grid system category, with
+      - xs (for phones - screens less than 768px wide)
+      - sm (for tablets - screens equal to or greater than 768px wide)
+      - md (for small laptops - screens equal to or greater than 992px wide)
+      - lg (for laptops and desktops - screens equal to or greater than 1200px wide)
+
     """
     if self.__set_size is None:
       if not n:
@@ -1015,12 +1022,12 @@ class Col(Html.Html):
         return self
 
       if isinstance(n, int) or n.is_integer():
-        self.__set_size = "col-lg-%s" % int(n)
+        self.__set_size = "col-%s-%s" % (breakpoint, int(n))
       else:
-        self.__set_size = "col-lg"
+        self.__set_size = "col-%s" % breakpoint
       self.attr["class"].add(self.__set_size)
       if self.options.responsive:
-        self.attr["class"].add("col-md-%s" % min(int(n) * 2, 12))
+        self.attr["class"].add("col-%s-%s" % (breakpoint, min(int(n) * 2, 12)))
         self.attr["class"].add("col-12")
     return self
 

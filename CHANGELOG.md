@@ -7,6 +7,18 @@
 ### Fixed
 
 
+## [1.6.1] - 2021-09-05
+
+### Added
+- Better integration of the Bootstrap CSS classes.
+- Jquery UI shortcut in the Web frameworks.
+
+### Changed
+
+### Fixed
+- Fix header duplicated stylesheets in the HTML page.
+
+
 ## [1.6.0] - 2021-09-02
 
 ### Added

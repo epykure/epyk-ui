@@ -10,6 +10,7 @@ from epyk.core.css.styles.attributes import Attrs # for the rtype in the documen
 from epyk.core.css.styles.attributes import Commons, Body, Empty
 from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesPage
 from epyk.core.py import OrderedSet
+from epyk.fwk.bs import CssClasses as BsCssClasses
 
 
 class ClassPage:
@@ -696,6 +697,21 @@ class ClassHtml:
           if c.is_page_scope:
             css_frgs[c.get_ref()] = str(c)
     return css_frgs
+
+  @property
+  def bs(self):
+    """
+    Description:
+    ------------
+    Add shortcut to the Bootstrap predefined styles.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/getting-started/introduction/
+    """
+    self.component.page.jsImports.add("bootstrap")
+    self.component.page.cssImport.add("bootstrap")
+    return BsCssClasses.Style(self.component.attr['class'])
 
 
 class ClassHtmlEmpty(ClassHtml):

@@ -458,6 +458,10 @@ class Links:
       for h in href[1:]:
         self.alternative(h, file_type=file_type, media=media)
     else:
+      for header in self.__header._links:
+        if header["href"] == href:
+          return
+
       self.__header._links.append({"href": href, "rel": rel, "crossorigin": crossorigin})
     if file_type:
       self.__header._links[-1]["type"] = file_type

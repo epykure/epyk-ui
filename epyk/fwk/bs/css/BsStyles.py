@@ -1,6 +1,6 @@
 
 
-class BsStyles(object):
+class BsStyles:
 
   def __init__(self, rptObj):
     self._report = rptObj
