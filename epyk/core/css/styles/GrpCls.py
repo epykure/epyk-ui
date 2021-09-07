@@ -72,6 +72,7 @@ class ClassPage:
     """
     Description:
     ------------
+    Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbar
     """
@@ -84,6 +85,7 @@ class ClassPage:
     """
     Description:
     ------------
+    Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
     """
@@ -96,6 +98,7 @@ class ClassPage:
     """
     Description:
     ------------
+    Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
     """
@@ -108,6 +111,7 @@ class ClassPage:
     """
     Description:
     ------------
+    Selection predefined style (background color based on the selected theme).
 
     Related Pages:
 
@@ -124,6 +128,7 @@ class ClassPage:
     """
     Description:
     ------------
+    Selection predefined style (background color based on the selected theme).
 
     Related Pages:
 
@@ -220,7 +225,7 @@ class ClassPage:
     """
     Description:
     ------------
-
+    Attach the predefined styles for the scrollbar and selection then return all the classes.
     """
     self.classList['other'].add(self.scrollbar_webkit)
     self.classList['other'].add(self.scrollbar_webkit_thumb)
@@ -249,7 +254,7 @@ class ClassPage:
     Usage:
     -----
 
-      rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
+      page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
     Attributes:
     ----------
@@ -465,6 +470,7 @@ class ClassHtml:
     """
     Description:
     ------------
+    Add onmousever style.
 
     Attributes:
     ----------

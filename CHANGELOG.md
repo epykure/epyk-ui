@@ -1,6 +1,8 @@
 ## [Unreleased]
 
 ### Added
+- Integrate Moment library to the ase Javascript features.
+- Improve documentation.
 
 ### Changed
 

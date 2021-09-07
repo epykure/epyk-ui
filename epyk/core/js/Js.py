@@ -657,6 +657,28 @@ class JsBase:
 
     return JsQuery.JQuery(self._jquery_ref)
 
+  @property
+  def moment(self):
+    """
+    Description:
+    ------------
+    Parse, validate, manipulate, and display dates and times in JavaScript.
+
+    Usage::
+
+      page.js.moment.new("2021-08-05", varName="momentTime"),
+      page.js.console.log(page.js.moment.var("momentTime").weekYear(1998)),
+      page.js.console.log(page.js.moment.var("momentTime").weekYear()),
+      page.js.console.log(page.js.moment.new("2021-08-05")),
+
+    Related Pages:
+
+      https://momentjs.com/
+    """
+    from epyk.core.js.packages import JsMoment
+
+    return JsMoment.Moment()
+
   def eval(self, jsData, jsConvFnc=None):
     """
     Description:

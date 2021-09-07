@@ -270,6 +270,35 @@ class Components:
     date = HtmlBsDate.BsDatePicker(
       self.page, None, html_code, options or {}, profile,
       {"width": width, "height": height})
+    date.options.formats.date_only()
+    date.options.buttons.showToday = True
+    date.options.buttons.showClose = True
+    return date
+
+  def time(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Toast default date component.
+
+    Related Pages:
+
+      https://nhn.github.io/tui.date-picker/latest/
+
+    Attributes:
+    ----------
+    :param value:
+    :param width:
+    :param height:
+    :param html_code:
+    :param profile:
+    :param options:
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    date = HtmlBsDate.BsDatePicker(
+      self.page, None, html_code, options or {}, profile,
+      {"width": width, "height": height})
     date.options.formats.time_only()
     return date
 
