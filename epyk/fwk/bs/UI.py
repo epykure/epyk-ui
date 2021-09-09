@@ -56,6 +56,19 @@ class BsCompBtns:
 
   def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"), align="left",
              html_code=None, tooltip=None, profile=None, options=None):
+    """
+
+    :param text:
+    :param icon:
+    :param category:
+    :param width:
+    :param height:
+    :param align:
+    :param html_code:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
     button = self.page.web.std.button(text, icon=icon, width=width, height=height, html_code=html_code, tooltip=tooltip,
                                       align=align, options=options, profile=profile)
     button.attr["class"].initialise(["btn"])
@@ -65,6 +78,17 @@ class BsCompBtns:
 
   def radio(self, flag=False, html_code=None, group_name=None, width=(None, '%'), height=(None, "px"), label=None,
             options=None, profile=None):
+    """
+
+    :param flag:
+    :param html_code:
+    :param group_name:
+    :param width:
+    :param height:
+    :param label:
+    :param options:
+    :param profile:
+    """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = HtmlBsForms.BsCheck(
@@ -76,6 +100,18 @@ class BsCompBtns:
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(None, "px"), label=None, icon=None,
             html_code=None, profile=None, options=None):
+    """
+
+    :param flag:
+    :param tooltip:
+    :param width:
+    :param height:
+    :param label:
+    :param icon:
+    :param html_code:
+    :param profile:
+    :param options:
+    """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = HtmlBsForms.BsCheck(
@@ -84,17 +120,16 @@ class BsCompBtns:
     html_but.tooltip(tooltip)
     return html_but
 
-  def switch(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
+  def switch(self, flag=False, label=None, tooltip=None, width=(None, '%'), height=(None, 'px'),
              html_code=None, options=None, profile=None):
     """
     https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    :param record:
+    :param flag:
     :param label:
-    :param color:
+    :param tooltip:
     :param width:
     :param height:
-    :param align:
     :param html_code:
     :param options:
     :param profile:
@@ -104,6 +139,8 @@ class BsCompBtns:
     html_but = HtmlBsForms.BsCheck(
       self.page, {"checked": flag, "label": label or "", "type": "checkbox"}, html_code, options or {}, profile,
       {"width": width, "height": height})
+    html_but.options.switch = True
+    html_but.tooltip(tooltip)
     return html_but
 
   def toggle(self, flag=False, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
