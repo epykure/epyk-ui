@@ -1115,17 +1115,33 @@ class Html:
 
     :return: The Python object self.
     """
-    if value is not None:
-      self.attr.update({'data-html': 'true', 'data-placement': location})
-      # TODO Check with error with 'data-toggle': 'tooltip'
-      if options is not None:
-        self.attr.update(options)
-      self.page.properties.js.add_on_ready(
-        "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
-      if hasattr(value, 'toStr'):
-        self.onReady([self.dom.setattr("title", value), self.dom.setattr("alt", value)])
-      else:
-        self.attr.update({'title': value, 'alt': value})
+    if self.page.imports.pkgs.bootstrap.version[0] > "5.":
+      if value is not None:
+        self.attr.update({'data-bs-html': 'true', 'data-bs-placement': location, "data-bs-toggle": "tooltip"})
+        if options is not None:
+          self.attr.update(options)
+        self.page.properties.js.add_on_ready('''
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})''')
+        if hasattr(value, 'toStr'):
+          self.onReady([self.dom.setattr("title", value), self.dom.setattr("alt", value)])
+        else:
+          self.attr.update({'title': value, 'alt': value})
+
+    else:
+      if value is not None:
+        self.attr.update({'data-html': 'true', 'data-placement': location})
+        # TODO Check with error with 'data-toggle': 'tooltip'
+        if options is not None:
+          self.attr.update(options)
+        self.page.properties.js.add_on_ready(
+          "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+        if hasattr(value, 'toStr'):
+          self.onReady([self.dom.setattr("title", value), self.dom.setattr("alt", value)])
+        else:
+          self.attr.update({'title': value, 'alt': value})
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')

@@ -56,7 +56,8 @@ class BsCompBtns:
 
   def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"), align="left",
              html_code=None, tooltip=None, profile=None, options=None):
-    button = self.page.web.std.button(text)
+    button = self.page.web.std.button(text, icon=icon, width=width, height=height, html_code=html_code, tooltip=tooltip,
+                                      align=align, options=options, profile=profile)
     button.attr["class"].initialise(["btn"])
     if category is not None:
       button.attr["class"].add("btn-%s" % category)
@@ -80,9 +81,7 @@ class BsCompBtns:
     html_but = HtmlBsForms.BsCheck(
       self.page, {"checked": flag, "label": label or "", "type": "checkbox"}, html_code, options or {}, profile,
       {"width": width, "height": height})
-    if tooltip is not None:
-      html_but.attr["data-bs-toggle"] = "tooltip"
-      html_but.attr["title"] = tooltip
+    html_but.tooltip(tooltip)
     return html_but
 
   def switch(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",

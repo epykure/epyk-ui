@@ -1317,7 +1317,7 @@ JS_IMPORTS = {
   '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
     'v_prefix': 'v',
-    'version': '2.9.2',
+    'version': '2.10.1',
     'repository': 'https://github.com/popperjs/popper-core',
     'website': 'https://github.com/popperjs/popper-core',
     'modules': [
