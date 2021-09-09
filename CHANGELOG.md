@@ -4,6 +4,7 @@
 - Integrate Moment library to the ase Javascript features.
 - Improve documentation.
 - Add packages white / black lists shortcuts.
+- Add defer, async property for external packages.
 
 ### Changed
 
