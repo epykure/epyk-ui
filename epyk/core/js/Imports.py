@@ -2200,10 +2200,31 @@ def extend_imports(extension):
 class ImportModule:
   overriden = False
 
-  def __init__(self, name, js, css):
+  def __init__(self, name, js, css, links=None):
     self._name = name
+    self._defer = False
     self._js = js[name]
     self._css = css.get(name, {})
+    if links is not None:
+      links[self._name] = self
+
+  @property
+  def defer(self):
+    """
+    Description:
+    -----------
+    If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
+    and executed after the page has finished parsing.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_script_defer.asp
+    """
+    return self._defer
+
+  @defer.setter
+  def defer(self, flag):
+    self._defer = flag
 
   @property
   def version(self):
@@ -2319,9 +2340,10 @@ class ImportModule:
 
 
 class ImportPackagesPivotExts:
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
   @property
   def c3(self):
@@ -2332,7 +2354,7 @@ class ImportPackagesPivotExts:
     Related Pages:
 
     """
-    return ImportModule("pivot-c3", self._js, self._css)
+    return ImportModule("pivot-c3", self._js, self._css, self.links)
 
   @property
   def plotly(self):
@@ -2343,7 +2365,7 @@ class ImportPackagesPivotExts:
     Related Pages:
 
     """
-    return ImportModule("pivot-plotly", self._js, self._css)
+    return ImportModule("pivot-plotly", self._js, self._css, self.links)
 
   @property
   def d3(self):
@@ -2354,7 +2376,7 @@ class ImportPackagesPivotExts:
     Related Pages:
 
     """
-    return ImportModule("pivot-d3", self._js, self._css)
+    return ImportModule("pivot-d3", self._js, self._css, self.links)
 
   @property
   def subtotal(self):
@@ -2365,13 +2387,14 @@ class ImportPackagesPivotExts:
     Related Pages:
 
     """
-    return ImportModule("subtotal", self._js, self._css)
+    return ImportModule("subtotal", self._js, self._css, self.links)
 
 
 class ImportPackagesCodeMirrorExts:
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
   @property
   def search(self):
@@ -2381,8 +2404,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-search", self._js, self._css)
+    return ImportModule("codemirror-search", self._js, self._css, self.links)
 
   @property
   def placeholder(self):
@@ -2392,8 +2416,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-placeholder", self._js, self._css)
+    return ImportModule("codemirror-placeholder", self._js, self._css, self.links)
 
   @property
   def trailingspace(self):
@@ -2403,8 +2428,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-trailingspace", self._js, self._css)
+    return ImportModule("codemirror-trailingspace", self._js, self._css, self.links)
 
   @property
   def fullscreen(self):
@@ -2414,8 +2440,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-fullscreen", self._js, self._css)
+    return ImportModule("codemirror-fullscreen", self._js, self._css, self.links)
 
   @property
   def highlighter(self):
@@ -2425,8 +2452,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-highlighter", self._js, self._css)
+    return ImportModule("codemirror-highlighter", self._js, self._css, self.links)
 
   @property
   def hint(self):
@@ -2436,8 +2464,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-hint", self._js, self._css)
+    return ImportModule("codemirror-hint", self._js, self._css, self.links)
 
   @property
   def panel(self):
@@ -2447,8 +2476,9 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-panel", self._js, self._css)
+    return ImportModule("codemirror-panel", self._js, self._css, self.links)
 
   @property
   def fold(self):
@@ -2458,14 +2488,16 @@ class ImportPackagesCodeMirrorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror-fold", self._js, self._css)
+    return ImportModule("codemirror-fold", self._js, self._css, self.links)
 
 
 class ImportPackagesD3Exts:
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
   @property
   def tip(self):
@@ -2475,8 +2507,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-tip", self._js, self._css)
+    return ImportModule("d3-tip", self._js, self._css, self.links)
 
   @property
   def axis(self):
@@ -2486,8 +2519,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-axis", self._js, self._css)
+    return ImportModule("d3-axis", self._js, self._css, self.links)
 
   @property
   def ease(self):
@@ -2497,8 +2531,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-ease", self._js, self._css)
+    return ImportModule("d3-ease", self._js, self._css, self.links)
 
   @property
   def dsv(self):
@@ -2508,8 +2543,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-dsv", self._js, self._css)
+    return ImportModule("d3-dsv", self._js, self._css, self.links)
 
   @property
   def dispatch(self):
@@ -2519,8 +2555,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-dispatch", self._js, self._css)
+    return ImportModule("d3-dispatch", self._js, self._css, self.links)
 
   @property
   def transition(self):
@@ -2530,8 +2567,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-transition", self._js, self._css)
+    return ImportModule("d3-transition", self._js, self._css, self.links)
 
   @property
   def selection(self):
@@ -2541,8 +2579,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-selection", self._js, self._css)
+    return ImportModule("d3-selection", self._js, self._css, self.links)
 
   @property
   def interpolate(self):
@@ -2552,8 +2591,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-interpolate", self._js, self._css)
+    return ImportModule("d3-interpolate", self._js, self._css, self.links)
 
   @property
   def time_format(self):
@@ -2563,8 +2603,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-time-format", self._js, self._css)
+    return ImportModule("d3-time-format", self._js, self._css, self.links)
 
   @property
   def time(self):
@@ -2574,8 +2615,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-time", self._js, self._css)
+    return ImportModule("d3-time", self._js, self._css, self.links)
 
   @property
   def array(self):
@@ -2585,8 +2627,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-array", self._js, self._css)
+    return ImportModule("d3-array", self._js, self._css, self.links)
 
   @property
   def format(self):
@@ -2596,8 +2639,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-format", self._js, self._css)
+    return ImportModule("d3-format", self._js, self._css, self.links)
 
   @property
   def timer(self):
@@ -2607,8 +2651,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-timer", self._js, self._css)
+    return ImportModule("d3-timer", self._js, self._css, self.links)
 
   @property
   def collection(self):
@@ -2618,8 +2663,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-collection", self._js, self._css)
+    return ImportModule("d3-collection", self._js, self._css, self.links)
 
   @property
   def scale(self):
@@ -2629,8 +2675,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-scale", self._js, self._css)
+    return ImportModule("d3-scale", self._js, self._css, self.links)
 
   @property
   def color(self):
@@ -2640,8 +2687,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-color", self._js, self._css)
+    return ImportModule("d3-color", self._js, self._css, self.links)
 
   @property
   def brush(self):
@@ -2651,8 +2699,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-brush", self._js, self._css)
+    return ImportModule("d3-brush", self._js, self._css, self.links)
 
   @property
   def drag(self):
@@ -2662,8 +2711,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-drag", self._js, self._css)
+    return ImportModule("d3-drag", self._js, self._css, self.links)
 
   @property
   def shape(self):
@@ -2673,8 +2723,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-shape", self._js, self._css)
+    return ImportModule("d3-shape", self._js, self._css, self.links)
 
   @property
   def zoom(self):
@@ -2684,8 +2735,9 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-zoom", self._js, self._css)
+    return ImportModule("d3-zoom", self._js, self._css, self.links)
 
   @property
   def path(self):
@@ -2695,27 +2747,31 @@ class ImportPackagesD3Exts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("d3-path", self._js, self._css)
+    return ImportModule("d3-path", self._js, self._css, self.links)
 
 
 class ImportPackagesDataTableExts:
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
 
 class ImportPackagesChartJsExts:
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
 
 class ImportPackagesTabulatorExts:
 
-  def __init__(self, js, css):
+  def __init__(self, js, css, links=None):
     self._js = js
     self._css = css
+    self.links = links
 
   @property
   def formatter_inputs(self):
@@ -2725,8 +2781,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-inputs", self._js, self._css)
+    return ImportModule("tabulator-inputs", self._js, self._css, self.links)
 
   @property
   def formatter_icons(self):
@@ -2736,8 +2793,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-icons", self._js, self._css)
+    return ImportModule("tabulator-icons", self._js, self._css, self.links)
 
   @property
   def formatter_numbers(self):
@@ -2747,8 +2805,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-numbers", self._js, self._css)
+    return ImportModule("tabulator-numbers", self._js, self._css, self.links)
 
   @property
   def formatter_drops(self):
@@ -2758,8 +2817,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-drop", self._js, self._css)
+    return ImportModule("tabulator-drop", self._js, self._css, self.links)
 
   @property
   def mutators_inputs(self):
@@ -2769,8 +2829,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-mutators-inputs", self._js, self._css)
+    return ImportModule("tabulator-mutators-inputs", self._js, self._css, self.links)
 
   @property
   def editors_inputs(self):
@@ -2780,8 +2841,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("editors-inputs", self._js, self._css)
+    return ImportModule("editors-inputs", self._js, self._css, self.links)
 
   @property
   def editors_dates(self):
@@ -2791,8 +2853,9 @@ class ImportPackagesTabulatorExts:
 
     Related Pages:
 
+    :rtype: ImportModule
     """
-    return ImportModule("editors-dates", self._js, self._css)
+    return ImportModule("editors-dates", self._js, self._css, self.links)
 
   @property
   def editors_selects(self):
@@ -2803,7 +2866,7 @@ class ImportPackagesTabulatorExts:
     Related Pages:
 
     """
-    return ImportModule("editors-selects", self._js, self._css)
+    return ImportModule("editors-selects", self._js, self._css, self.links)
 
 
 class ImportPackages:
@@ -2811,6 +2874,7 @@ class ImportPackages:
   def __init__(self, js, css):
     self._js = js
     self._css = css
+    self.__linked = {}
 
   def get(self, name):
     """
@@ -2822,8 +2886,13 @@ class ImportPackages:
     Attributes:
     ----------
     :param name: String. The package alias to be loaded.
+
+    :rtype: ImportModule
     """
-    return ImportModule(name, self._js, self._css)
+    if name in self.__linked:
+      return self.__linked[name]
+
+    return ImportModule(name, self._js, self._css, self.__linked)
 
   @property
   def vis(self):
@@ -2837,8 +2906,13 @@ class ImportPackages:
     Related Pages:
 
       http://visjs.org
+
+    :rtype: ImportModule
     """
-    return ImportModule("vis", self._js, self._css)
+    if "vis" in self.__linked:
+      return self.__linked["vis"]
+
+    return ImportModule("vis", self._js, self._css, self.__linked)
 
   @property
   def d3(self):
@@ -2853,7 +2927,10 @@ class ImportPackages:
 
       https://d3js.org/
     """
-    return ImportModule("d3", self._js, self._css)
+    if "d3" in self.__linked:
+      return self.__linked["d3"]
+
+    return ImportModule("d3", self._js, self._css, self.__linked)
 
   @property
   def dc(self):
@@ -2866,8 +2943,13 @@ class ImportPackages:
     Related Pages:
 
       https://dc-js.github.io/dc.js
+
+    :rtype: ImportModule
     """
-    return ImportModule("dc", self._js, self._css)
+    if "dc" in self.__linked:
+      return self.__linked["dc"]
+
+    return ImportModule("dc", self._js, self._css, self.__linked)
 
   @property
   def nvd3(self):
@@ -2880,8 +2962,13 @@ class ImportPackages:
     Related Pages:
 
       http://nvd3.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("nvd3", self._js, self._css)
+    if "nvd3" in self.__linked:
+      return self.__linked["nvd3"]
+
+    return ImportModule("nvd3", self._js, self._css, self.__linked)
 
   @property
   def c3(self):
@@ -2893,8 +2980,13 @@ class ImportPackages:
     Related Pages:
 
       https://c3js.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("c3", self._js, self._css)
+    if "c3" in self.__linked:
+      return self.__linked["c3"]
+
+    return ImportModule("c3", self._js, self._css, self.__linked)
 
   @property
   def billboard(self):
@@ -2906,8 +2998,13 @@ class ImportPackages:
     Related Pages:
 
       https://naver.github.io/billboard.js/
+
+    :rtype: ImportModule
     """
-    return ImportModule("billboard.js", self._js, self._css)
+    if "billboard.js" in self.__linked:
+      return self.__linked["billboard.js"]
+
+    return ImportModule("billboard.js", self._js, self._css, self.__linked)
 
   @property
   def chart_js(self):
@@ -2919,8 +3016,13 @@ class ImportPackages:
     Related Pages:
 
       https://www.chartjs.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("chart.js", self._js, self._css)
+    if "chart.js" in self.__linked:
+      return self.__linked["chart.js"]
+
+    return ImportModule("chart.js", self._js, self._css, self.__linked)
 
   @property
   def chart_js_extensions(self):
@@ -2932,8 +3034,10 @@ class ImportPackages:
     Related Pages:
 
       https://www.chartjs.org/
+
+    :rtype: ImportPackagesChartJsExts
     """
-    return ImportPackagesChartJsExts(self._js, self._css)
+    return ImportPackagesChartJsExts(self._js, self._css, self.__linked)
 
   @property
   def crossfilter(self):
@@ -2945,8 +3049,13 @@ class ImportPackages:
     Related Pages:
 
       http://square.github.io/crossfilter
+
+    :rtype: ImportModule
     """
-    return ImportModule("crossfilter", self._js, self._css)
+    if "crossfilter" in self.__linked:
+      return self.__linked["crossfilters"]
+
+    return ImportModule("crossfilter", self._js, self._css, self.__linked)
 
   @property
   def apexcharts(self):
@@ -2958,8 +3067,13 @@ class ImportPackages:
     Related Pages:
 
       https://apexcharts.com
+
+    :rtype: ImportModule
     """
-    return ImportModule("apexcharts", self._js, self._css)
+    if "apexcharts" in self.__linked:
+      return self.__linked["apexcharts"]
+
+    return ImportModule("apexcharts", self._js, self._css, self.__linked)
 
   @property
   def plotly(self):
@@ -2971,8 +3085,13 @@ class ImportPackages:
     Related Pages:
 
       https://plot.ly/javascript/
+
+    :rtype: ImportModule
     """
-    return ImportModule("plotly.js", self._js, self._css)
+    if "plotly.js" in self.__linked:
+      return self.__linked["plotly.js"]
+
+    return ImportModule("plotly.js", self._js, self._css, self.__linked)
 
   @property
   def ag_grid(self):
@@ -2984,8 +3103,13 @@ class ImportPackages:
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid/
+
+    :rtype: ImportModule
     """
-    return ImportModule("ag-grid-community", self._js, self._css)
+    if "ag-grid-community" in self.__linked:
+      return self.__linked["ag-grid-community"]
+
+    return ImportModule("ag-grid-community", self._js, self._css, self.__linked)
 
   @property
   def bootstrap(self):
@@ -2997,8 +3121,13 @@ class ImportPackages:
     Related Pages:
 
       https://getbootstrap.com/
+
+    :rtype: ImportModule
     """
-    return ImportModule("bootstrap", self._js, self._css)
+    if "bootstrap" in self.__linked:
+      return self.__linked["bootstrap"]
+
+    return ImportModule("bootstrap", self._js, self._css, self.__linked)
 
   @property
   def jquery(self):
@@ -3010,8 +3139,13 @@ class ImportPackages:
     Related Pages:
 
       https://jquery.com
+
+    :rtype: ImportModule
     """
-    return ImportModule("jquery", self._js, self._css)
+    if "jquery" in self.__linked:
+      return self.__linked["jquery"]
+
+    return ImportModule("jquery", self._js, self._css, self.__linked)
 
   @property
   def jqueryui(self):
@@ -3024,8 +3158,13 @@ class ImportPackages:
     Related Pages:
 
       https://jqueryui.com/
+
+    :rtype: ImportModule
     """
-    return ImportModule("jqueryui", self._js, self._css)
+    if "jqueryui" in self.__linked:
+      return self.__linked["jqueryui"]
+
+    return ImportModule("jqueryui", self._js, self._css, self.__linked)
 
   @property
   def jquery_bracket(self):
@@ -3038,8 +3177,13 @@ class ImportPackages:
     Related Pages:
 
       http://www.aropupu.fi/bracket/
+
+    :rtype: ImportModule
     """
-    return ImportModule("jquery-bracket", self._js, self._css)
+    if "jquery-bracket" in self.__linked:
+      return self.__linked["jquery-bracket"]
+
+    return ImportModule("jquery-bracket", self._js, self._css, self.__linked)
 
   @property
   def jquery_sparkline(self):
@@ -3052,8 +3196,13 @@ class ImportPackages:
     Related Pages:
 
       https://omnipotent.net/jquery.sparkline
+
+    :rtype: ImportModule
     """
-    return ImportModule("jquery-sparkline", self._js, self._css)
+    if "jquery-sparkline" in self.__linked:
+      return self.__linked["jquery-sparkline"]
+
+    return ImportModule("jquery-sparkline", self._js, self._css, self.__linked)
 
   @property
   def jqvmap(self):
@@ -3065,8 +3214,13 @@ class ImportPackages:
     Related Pages:
 
       https://www.10bestdesign.com/jqvmap/
+
+    :rtype: ImportModule
     """
-    return ImportModule("jqvmap", self._js, self._css)
+    if "jqvmap" in self.__linked:
+      return self.__linked["jqvmap"]
+
+    return ImportModule("jqvmap", self._js, self._css, self.__linked)
 
   @property
   def qunit(self):
@@ -3078,8 +3232,13 @@ class ImportPackages:
     Related Pages:
 
       https://qunitjs.com/
+
+    :rtype: ImportModule
     """
-    return ImportModule("qunit", self._js, self._css)
+    if "qunit" in self.__linked:
+      return self.__linked["qunit"]
+
+    return ImportModule("qunit", self._js, self._css, self.__linked)
 
   @property
   def accounting(self):
@@ -3091,8 +3250,13 @@ class ImportPackages:
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js
+
+    :rtype: ImportModule
     """
-    return ImportModule("accounting", self._js, self._css)
+    if "accounting" in self.__linked:
+      return self.__linked["accounting"]
+
+    return ImportModule("accounting", self._js, self._css, self.__linked)
 
   @property
   def qrcodejs(self):
@@ -3105,8 +3269,13 @@ class ImportPackages:
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs
+
+    :rtype: ImportModule
     """
-    return ImportModule("qrcodejs", self._js, self._css)
+    if "qrcodejs" in self.__linked:
+      return self.__linked["qrcodejs"]
+
+    return ImportModule("qrcodejs", self._js, self._css, self.__linked)
 
   @property
   def underscore(self):
@@ -3119,8 +3288,13 @@ class ImportPackages:
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
+
+    :rtype: ImportModule
     """
-    return ImportModule("underscore", self._js, self._css)
+    if "underscore" in self.__linked:
+      return self.__linked["underscore"]
+
+    return ImportModule("underscore", self._js, self._css, self.__linked)
 
   @property
   def tabulator(self):
@@ -3132,8 +3306,13 @@ class ImportPackages:
     Related Pages:
 
       http://tabulator.info/
+
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-tables", self._js, self._css)
+    if "tabulator-tables" in self.__linked:
+      return self.__linked["tabulator-tables"]
+
+    return ImportModule("tabulator-tables", self._js, self._css, self.__linked)
 
   @property
   def tabulator_extensions(self):
@@ -3141,8 +3320,10 @@ class ImportPackages:
     Description:
     ------------
     Get all the defined extension for tabulator.
+
+    :rtype: ImportPackagesTabulatorExts
     """
-    return ImportPackagesTabulatorExts(self._js, self._css)
+    return ImportPackagesTabulatorExts(self._js, self._css, self.__linked)
 
   @property
   def datatables(self):
@@ -3154,8 +3335,13 @@ class ImportPackages:
     Related Pages:
 
       https://datatables.net/
+
+    :rtype: ImportModule
     """
-    return ImportModule("tabulator-tables", self._js, self._css)
+    if "datatables" in self.__linked:
+      return self.__linked["datatables"]
+
+    return ImportModule("datatables", self._js, self._css, self.__linked)
 
   @property
   def datatable_extensions(self):
@@ -3163,8 +3349,10 @@ class ImportPackages:
     Description:
     ------------
     Get all the defined extension for DataTable.
+
+    :rtype: ImportPackagesDataTableExts
     """
-    return ImportPackagesDataTableExts(self._js, self._css)
+    return ImportPackagesDataTableExts(self._js, self._css, self.__linked)
 
   @property
   def mathjax(self):
@@ -3176,8 +3364,13 @@ class ImportPackages:
     Related Pages:
 
       https://www.mathjax.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("mathjax", self._js, self._css)
+    if "mathjax" in self.__linked:
+      return self.__linked["mathjax"]
+
+    return ImportModule("mathjax", self._js, self._css, self.__linked)
 
   @property
   def moment(self):
@@ -3187,9 +3380,12 @@ class ImportPackages:
 
     Related Pages:
 
-
+    :rtype: ImportModule
     """
-    return ImportModule("moment", self._js, self._css)
+    if "moment" in self.__linked:
+      return self.__linked["moment"]
+
+    return ImportModule("moment", self._js, self._css, self.__linked)
 
   @property
   def hammer(self):
@@ -3201,8 +3397,13 @@ class ImportPackages:
     Related Pages:
 
       https://hammerjs.github.io/
+
+    :rtype: ImportModule
     """
-    return ImportModule("hammer", self._js, self._css)
+    if "hammer" in self.__linked:
+      return self.__linked["hammer"]
+
+    return ImportModule("hammer", self._js, self._css, self.__linked)
 
   @property
   def popper_js(self):
@@ -3214,8 +3415,13 @@ class ImportPackages:
     Related Pages:
 
       https://github.com/popperjs/popper-core
+
+    :rtype: ImportModule
     """
-    return ImportModule("@popperjs/core", self._js, self._css)
+    if "@popperjs/core" in self.__linked:
+      return self.__linked["@popperjs/core"]
+
+    return ImportModule("@popperjs/core", self._js, self._css, self.__linked)
 
   @property
   def font_awesome(self):
@@ -3228,8 +3434,13 @@ class ImportPackages:
     Related Pages:
 
       https://fontawesome.com
+
+    :rtype: ImportModule
     """
-    return ImportModule("font-awesome", self._js, self._css)
+    if "font-awesome" in self.__linked:
+      return self.__linked["font-awesome"]
+
+    return ImportModule("font-awesome", self._js, self._css, self.__linked)
 
   @property
   def json_formatter(self):
@@ -3241,8 +3452,13 @@ class ImportPackages:
     Related Pages:
 
       https://azimi.me/json-formatter-js/
+
+    :rtype: ImportModule
     """
-    return ImportModule("json-formatter-js", self._js, self._css)
+    if "json-formatter-js" in self.__linked:
+      return self.__linked["json-formatter-js"]
+
+    return ImportModule("json-formatter-js", self._js, self._css, self.__linked)
 
   @property
   def pivottable(self):
@@ -3254,8 +3470,13 @@ class ImportPackages:
     Related Pages:
 
       https://github.com/nicolaskruchten/pivottable
+
+    :rtype: ImportModule
     """
-    return ImportModule("pivottable", self._js, self._css)
+    if "pivottable" in self.__linked:
+      return self.__linked["pivottable"]
+
+    return ImportModule("pivottable", self._js, self._css, self.__linked)
 
   @property
   def require_js(self):
@@ -3268,8 +3489,13 @@ class ImportPackages:
     Related Pages:
 
       https://requirejs.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("requirejs", self._js, self._css)
+    if "requirejs" in self.__linked:
+      return self.__linked["requirejs"]
+
+    return ImportModule("requirejs", self._js, self._css, self.__linked)
 
   @property
   def timepicker(self):
@@ -3281,8 +3507,13 @@ class ImportPackages:
     Related Pages:
 
       https://timepicker.co
+
+    :rtype: ImportModule
     """
-    return ImportModule("timepicker", self._js, self._css)
+    if "timepicker" in self.__linked:
+      return self.__linked["timepicker"]
+
+    return ImportModule("timepicker", self._js, self._css, self.__linked)
 
   @property
   def socket(self):
@@ -3295,8 +3526,13 @@ class ImportPackages:
     Related Pages:
 
       https://github.com/socketio/socket.io
+
+    :rtype: ImportModule
     """
-    return ImportModule("socket.io", self._js, self._css)
+    if "socket.io" in self.__linked:
+      return self.__linked["socket.io"]
+
+    return ImportModule("socket.io", self._js, self._css, self.__linked)
 
   @property
   def codemirror(self):
@@ -3308,15 +3544,23 @@ class ImportPackages:
     Related Pages:
 
       https://codemirror.net
+
+    :rtype: ImportModule
     """
-    return ImportModule("codemirror", self._js, self._css)
+    if "codemirror" in self.__linked:
+      return self.__linked["codemirror"]
+
+    return ImportModule("codemirror", self._js, self._css, self.__linked)
 
   @property
   def codemirror_extensions(self):
     """
+    Description:
+    ------------
 
+    :rtype: ImportPackagesCodeMirrorExts
     """
-    return ImportPackagesCodeMirrorExts(self._js, self._css)
+    return ImportPackagesCodeMirrorExts(self._js, self._css, self.__linked)
 
   @property
   def highlight(self):
@@ -3328,8 +3572,13 @@ class ImportPackages:
     Related Pages:
 
       https://highlightjs.org/
+
+    :rtype: ImportModule
     """
-    return ImportModule("highlight.js", self._js, self._css)
+    if "highlight.js" in self.__linked:
+      return self.__linked["highlight.js"]
+
+    return ImportModule("highlight.js", self._js, self._css, self.__linked)
 
   @property
   def leaflet(self):
@@ -3341,8 +3590,13 @@ class ImportPackages:
     Related Pages:
 
       https://leafletjs.com/
+
+    :rtype: ImportModule
     """
-    return ImportModule("leaflet", self._js, self._css)
+    if "leaflet" in self.__linked:
+      return self.__linked["leaflets"]
+
+    return ImportModule("leaflet", self._js, self._css, self.__linked)
 
   @property
   def showdown(self):
@@ -3354,8 +3608,13 @@ class ImportPackages:
     Related Pages:
 
       https://github.com/showdownjs/showdown
+
+    :rtype: ImportModule
     """
-    return ImportModule("showdown", self._js, self._css)
+    if "showdown" in self.__linked:
+      return self.__linked["showdown"]
+
+    return ImportModule("showdown", self._js, self._css, self.__linked)
 
   @property
   def sortablejs(self):
@@ -3367,8 +3626,13 @@ class ImportPackages:
     Related Pages:
 
       https://github.com/SortableJS/Sortable
+
+    :rtype: ImportModule
     """
-    return ImportModule("sortablejs", self._js, self._css)
+    if "sortablejs" in self.__linked:
+      return self.__linked["sortablejs"]
+
+    return ImportModule("sortablejs", self._js, self._css, self.__linked)
 
 
 class ImportManager:
@@ -3399,7 +3663,7 @@ class ImportManager:
     ----------
     :param report: Report. Optional. The internal report object with all the required external modules.
     """
-    self._report, ovr_version = report, {}
+    self._report, ovr_version, self.__pkgs = report, {}, None
     if report is not None and report.ext_packages is not None:
       extend_imports(report.ext_packages)
     # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
@@ -3751,6 +4015,7 @@ class ImportManager:
 
       if not self.online:
         self.pkgs.get(js_alias).set_local(static_url=self.static_url)
+      print(js_alias, self.pkgs.get(js_alias).defer)
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
         if self._report._node_modules is not None:
@@ -4218,8 +4483,12 @@ class ImportManager:
     ------------
     Shortcut properties to the various package definitions.
     This can be used in the script in order to change the path of the version of any external modules used.
+
+    :rtype: ImportPackages
     """
-    return ImportPackages(self.jsImports, self.cssImports)
+    if self.__pkgs is None:
+      self.__pkgs = ImportPackages(self.jsImports, self.cssImports)
+    return self.__pkgs
 
   def website(self, alias):
     """
