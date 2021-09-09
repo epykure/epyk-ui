@@ -102,7 +102,19 @@ class BsSelect(Component):
     return {}
 
   def add_option(self, value, label, selected=False, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param selected:
+    :param options:
+    """
     o = Option(self.page, value, label, None, selected, options=options)
+    o.options.managed = False
     self.components.add(o)
     self.items.append(o)
     return o
@@ -121,6 +133,17 @@ class BsDataList(Component):
 </datalist>'''
 
   def add_option(self, value, label, selected=False, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param selected:
+    :param options:
+    """
     o = Option(self.page, value, label, None, selected, options=options)
     self.components.add(o)
     self.items.append(o)
@@ -148,6 +171,11 @@ class BsSFloatingLabel(Component):
 </div>'''
 
   def write_values(self):
+    """
+    Description:
+    ------------
+
+    """
     if self._vals['value']:
       self.attr["value"] = self._vals['value']
     self.attr["placeholder"] = self._vals['label']

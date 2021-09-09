@@ -18,6 +18,7 @@ from epyk.core.js import expr as js_expr
 from epyk.core.js.JsUtils import jsWrap as js_callback
 
 from epyk.core.js.Imports import Package as package
+from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
 from epyk.web import jupyter
 
@@ -43,6 +44,56 @@ def rename_css_cls(mappings):
   from epyk.core.css import Classes
 
   Classes.OVERRIDES = mappings
+
+
+def packages_black_list(pkgs_alias, raise_exception=True):
+  """
+  All packages in this list will be considered as forbidden.
+  The other packages will be authorised.
+
+  Attributes:
+  ----------
+  :param pkgs_alias: List<String>. A list of packages reference.
+  :param raise_exception: Boolean. Optional. The kind of error triggered.
+  """
+  global PACKAGE_STATUS
+
+  for pkg in pkgs_alias:
+    if raise_exception:
+      PACKAGE_STATUS[pkg] = {"allowed": False}
+    else:
+      PACKAGE_STATUS[pkg] = {"allowed": True, "info": "Package in Black list"}
+
+
+def packages_white_list(pkgs_alias, raise_exception=True):
+  """
+  Description:
+  -----------
+  All packages not in this lists will be considered as forbidden.
+
+  Attributes:
+  ----------
+  :param pkgs_alias: List<String>. A list of packages reference.
+  :param raise_exception: Boolean. Optional. The kind of error triggered.
+  """
+  global PACKAGE_STATUS
+
+  for js_pkg in JS_IMPORTS:
+    if js_pkg in pkgs_alias:
+      PACKAGE_STATUS[js_pkg] = {"allowed": True}
+    else:
+      if raise_exception:
+        PACKAGE_STATUS[js_pkg] = {"allowed": False}
+      else:
+        PACKAGE_STATUS[js_pkg] = {"allowed": True, "info": "Missing from white list"}
+  for css_pkg in CSS_IMPORTS:
+    if css_pkg in pkgs_alias:
+      PACKAGE_STATUS[css_pkg] = {"allowed": True}
+    else:
+      if raise_exception:
+        PACKAGE_STATUS[css_pkg] = {"allowed": False}
+      else:
+        PACKAGE_STATUS[css_pkg] = {"allowed": True, "info": "Missing from white list"}
 
 
 #

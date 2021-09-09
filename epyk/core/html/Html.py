@@ -2072,6 +2072,21 @@ class Body(Html):
 
 
 class Component(Html):
+  """
+  Description:
+  -----------
+  Component interface.
+
+  This is the main interface to create bridges to external Web frameworks.
+
+  The default self.style, self.options and self.js properties can be overridden in order to respectively set the
+  styles, the options and the event API of the component.
+
+  With:
+    - css_classes: List. Optional. The component classes.
+    - str_repr String. Mandatory. The component HTML definition.
+    - dyn_repr String. Optional. The sub items HTML definition.
+  """
 
   css_classes = None
   str_repr = None
@@ -2093,23 +2108,41 @@ class Component(Html):
 
     Attributes:
     ----------
-    :param component:
+    :param component: HTML | String. The component.
     """
-    component.attr["class"].add("dropdown-item")
-    component.options.managed = False
-    self.components.add(component)
-    self.items.append(component)
+    raise Exception("Needs to be implemented")
 
   def write_item(self, item):
     """
     Description:
     -----------
+    Write an item in the component. This function is call by the __str__ method for each item attached to the
+    HTML component.
 
-    :param item:
+    This method return a dictionary which will be directly used to define the string set in self.dyn_repr.
+    If this string framework is not defined this method will not be called.
+
+    .. tip::
+
+      If more interaction is needed between the component for the writing of the component, this should not be done
+      in self.dyn_repr but the full logic can be implemented in the write_values method. In this case does not need to
+      be defined.
+
+    Attributes:
+    ----------
+    :param item: Object. The item added to the self.items.
     """
     return {"sub_item": item.html()}
 
   def write_values(self):
+    """
+    Description:
+    -----------
+    Prepare the data to be written to the self.str_repr module variable.
+    The keys {attrs} and {htmlCode} will be automatically added by the core framework.
+
+    By default this function will add the values defined for the component to the {text} key.
+    """
     return {"text": self._vals}
 
   def __str__(self):
@@ -2117,9 +2150,7 @@ class Component(Html):
     values["attrs"] = self.get_attrs(pyClassNames=self.style.get_classes())
     values["htmlCode"] = self.htmlCode
     if self.dyn_repr is not None:
-      str_frgs = []
-      for item in self.items:
-        str_frgs.append(self.dyn_repr.format(**self.write_item(item)))
+      str_frgs = [self.dyn_repr.format(**self.write_item(item)) for item in self.items]
       values["sub_items"] = "".join(str_frgs)
     if self._js__builder__ is not None:
       self.page.properties.js.add_builders(self.refresh())

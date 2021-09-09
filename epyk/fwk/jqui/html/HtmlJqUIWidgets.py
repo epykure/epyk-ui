@@ -113,10 +113,12 @@ class JqAccordion(Component):
       content = self.page.web.std.div(content)
       content.attr["class"].clear()
     content.options.managed = False
+    section = {"header": header, "content": content}
     if prepend:
-      self.items.insert(0, {"header": header, "content": content})
+      self.items.insert(0, section)
     else:
-      self.items.append({"header": header, "content": content})
+      self.items.append(section)
+    return section
 
   def write_item(self, item):
     """
@@ -241,12 +243,19 @@ class JqTabs(Component):
     link = self.page.web.std.link(header, url="#%s" % content.htmlCode)
     link.attr["class"].clear()
     link.options.managed = False
+    panel = {"header": link, "content": content}
     if prepend:
-      self.items.insert(0, {"header": link, "content": content})
+      self.items.insert(0, panel)
     else:
-      self.items.append({"header": link, "content": content})
+      self.items.append(panel)
+    return panel
 
   def write_values(self):
+    """
+    Description:
+    -----------
+
+    """
     tabs, panels = [], []
     for item in self.items:
       tabs.append('<li>%s</li>' % item["header"].html())

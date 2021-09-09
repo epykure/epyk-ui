@@ -1,6 +1,7 @@
 
 from epyk.fwk.bs.html import HtmlBsForms
 from epyk.fwk.bs.html import HtmlBsDate
+from epyk.fwk.bs.html import HtmlBsWidgets
 
 from epyk.fwk.bs import PkgImports
 from epyk.interfaces import Arguments
@@ -12,11 +13,24 @@ class BsCompLists:
 
   def select(self, values=None, html_code=None, selected=None, width=(100, "%"), height=(None, "%"),
              profile=None, multiple=False, options=None):
+    """
+
+    :param values:
+    :param html_code:
+    :param selected:
+    :param width:
+    :param height:
+    :param profile:
+    :param multiple:
+    :param options:
+    """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = HtmlBsForms.BsSelect(
-      self.page, values, html_code, options or {}, profile,
+      self.page, [], html_code, options or {}, profile,
       {"width": width, "height": height})
+    for v in values:
+      html_but.add_option(v, v)
     return html_but
 
   def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -202,34 +216,267 @@ class BsCompPanels:
     self.page = ui.page
 
 
+class BsCompModals:
+
+  def __init__(self, ui):
+    self.page = ui.page
+
+  def dialog(self, text, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None, profile=None):
+    pass
+
+  def acknowledge(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    pass
+
+  def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    pass
+
+  def error(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    pass
+
+  def info(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    pass
+
+  def success(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    pass
+
+
+class BsCompVignets:
+  def __init__(self, ui):
+    self.page = ui.page
+
+  def card(self, records=None, width=(70, "px"), height=("auto", ''), color=None, background_color=None,
+             helper=None, options=None, profile=None):
+    """
+    https://getbootstrap.com/docs/5.1/components/card/
+
+    :param records:
+    :param width:
+    :param height:
+    :param color:
+    :param background_color:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+
+
 class BsCompAlerts:
 
   def __init__(self, ui):
     self.page = ui.page
 
-  def primary(self):
-    pass
+  def alert(self, kind=None, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
+            profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
 
-  def secondary(self):
-    pass
+    Templates:
 
-  def success(self):
-    pass
+      https://getbootstrap.com/docs/5.1/components/alerts/
 
-  def danger(self):
-    pass
+    Attributes:
+    ----------
+    :param kind: String. Optional. The Bootstrap predefined category.
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.page.web.std.div(
+      components, width=width, height=height, html_code=html_code, options=options, profile=profile)
+    content.attr["class"].initialise(["alert"])
+    if kind is not None:
+      content.attr["class"].add("alert-%s" % kind)
+    content.attr["role"] = "alert"
+    if options is not None and options.get("close"):
+      btn = self.page.web.std.button()
+      btn.attr["class"].initialise(["btn-close"])
+      btn.attr["data-bs-dismiss"] = "alert"
+      btn.attr["aria-label"] = "Close"
+      btn.attr["type"] = "button"
+      btn.options.managed = False
+      content.val.append(btn)
+    return content
 
-  def warning(self):
-    pass
+  def primary(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
 
-  def info(self):
-    pass
+    Templates:
 
-  def light(self):
-    pass
+      https://getbootstrap.com/docs/5.1/components/alerts/
 
-  def dark(self):
-    pass
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("primary", components, width, height, html_code, options, profile)
+    return content
+
+  def secondary(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("secondary", components, width, height, html_code, options, profile)
+    return content
+
+  def success(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("secondary", components, width, height, html_code, options, profile)
+    return content
+
+  def danger(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("danger", components, width, height, html_code, options, profile)
+    return content
+
+  def warning(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("warning", components, width, height, html_code, options, profile)
+    return content
+
+  def info(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("info", components, width, height, html_code, options, profile)
+    return content
+
+  def light(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("light", components, width, height, html_code, options, profile)
+    return content
+
+  def dark(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add alert to the page.
+
+    Templates:
+
+      https://getbootstrap.com/docs/5.1/components/alerts/
+
+    Attributes:
+    ----------
+    :param components: Component | String. Optional. The alert sub components.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    content = self.alert("dark", components, width, height, html_code, options, profile)
+    return content
 
 
 class Components:
@@ -242,9 +489,13 @@ class Components:
     self.page.imports.pkgs.bootstrap.version = "5.1.0"
     self.page.jsImports.add("bootstrap")
     self.page.cssImport.add("bootstrap")
+    #
     self.select = self.lists.select
     self.check = self.buttons.check
     self.toggle = self.buttons.toggle
+    self.grid = self.page.web.std.grid
+    self.row = self.page.web.std.row
+    self.col = self.page.web.std.col
 
   def date(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
     """
@@ -302,17 +553,34 @@ class Components:
     date.options.formats.time_only()
     return date
 
-  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), html_code=None, options=None,
-                 profile=None):
-    pass
+  def loading(self, text="Loading...", width=(None, "%"), height=(None, "%"), kind=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS,
+    and no JavaScript.
 
-  def loading(self, text="Loading...", color=None, options=None, profile=None):
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/spinners/
+
+    Attributes:
+    ----------
+    :param text:
+    :param width:
+    :param height:
+    :param kind:
+    :param options:
+    :param profile:
+    """
     options = options or {}
-    component = self.web.std.div()
-    component.attr["class"].add("spinner-%s" % options.get("kind", "border"))
+    component = self.page.web.std.div(width=width, height=height, profile=profile)
+    component.attr["class"].initialise(["spinner-%s" % options.get("kind", "border")])
+    if kind is not None:
+      component.attr["class"].add("text-%s" % kind)
     component.attr["role"] = "status"
-    component.span = self.web.std.texts.span(text)
-    component.span.attr["class"].add("visually-hidden")
+    component.span = self.page.web.std.texts.span(text)
+    component.span.attr["class"].initialise(["visually-hidden"])
     return component
 
   @property
@@ -320,11 +588,23 @@ class Components:
     return BootstrapFields(self)
 
   @property
+  def layouts(self):
+    return BootstrapLayouts(self)
+
+  @property
   def lists(self):
     return BsCompLists(self)
 
   @property
   def buttons(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/forms/checks-radios/
+    """
     return BsCompBtns(self)
 
   @property
@@ -346,9 +626,126 @@ class Components:
   @property
   def alerts(self):
     """
+    Description:
+    ------------
     Alerts are available for any length of text, as well as an optional close button.
 
-    https://getbootstrap.com/docs/5.0/components/alerts/
+    Related Pages:
 
+      https://getbootstrap.com/docs/5.0/components/alerts/
     """
     return BsCompAlerts(self)
+
+  @property
+  def modals(self):
+    """
+    Description:
+    ------------
+    Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications,
+    or completely custom content.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/modal/
+
+    Usage::
+
+    """
+    return BsCompModals(self)
+
+  @property
+  def modals(self):
+    """
+    Description:
+    ------------
+    Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications,
+    or completely custom content.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/modal/
+
+    Usage::
+
+    """
+    return BsCompModals(self)
+
+  @property
+  def vignets(self):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+
+    """
+    return BsCompVignets(self)
+
+  def accordion(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+    """
+    Description:
+    ------------
+    Add an Accordion panel.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/accordion/
+
+    Usage::
+
+      acc = page.web.bs.accordion()
+      acc.add_section("Test", "content")
+      acc.header(0).click([
+        acc.panel(0).build("New content")
+      ])
+
+    Attributes:
+    ----------
+    :param values: Dictionary. Optional. Title: content.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsAccordion(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    if values is not None:
+      for k, v in reversed(list(values.items())):
+        component.add_section(k, v)
+    return component
+
+  def breadcrumb(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+    """
+    Description:
+    ------------
+    Add an breadcrumb.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/breadcrumb/
+
+    Usage::
+
+      page.web.bs.breadcrumb(["AAA", "BBBB"])
+
+    Attributes:
+    ----------
+    :param values: List. Optional. Title: content.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsBreadcrumb(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    if values is not None:
+      for v in values:
+        component.add_item(v)
+    return component
