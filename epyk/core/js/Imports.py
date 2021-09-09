@@ -2202,7 +2202,7 @@ class ImportModule:
 
   def __init__(self, name, js, css, links=None):
     self._name = name
-    self._defer, self._async = False, False
+    self._defer, self._async, self.attrs = False, False, {}
     self._js = js[name]
     self._css = css.get(name, {})
     if links is not None:
@@ -2231,8 +2231,8 @@ class ImportModule:
     """
     Description:
     -----------
-    If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
-    and executed after the page has finished parsing.
+    Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available
+    (before parsing completes) (only for external scripts).
 
     Related Pages:
 
@@ -2243,6 +2243,40 @@ class ImportModule:
   @asynchrone.setter
   def asynchrone(self, flag):
     self._async = flag
+
+  @property
+  def nomodule(self):
+    """
+    Description:
+    -----------
+    Specifies that the script should not be executed in browsers supporting ES2015 modules.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_script.asp
+    """
+    return self.attrs.get("nomodule")
+
+  @nomodule.setter
+  def nomodule(self, flag):
+    self.attrs["nomodule"] = flag
+
+  @property
+  def eferrerpolicy(self):
+    """
+    Description:
+    -----------
+    Specifies which referrer information to send when fetching a script.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_script_referrepolicy.asp
+    """
+    return self.attrs.get("eferrerpolicy")
+
+  @eferrerpolicy.setter
+  def eferrerpolicy(self, value):
+    self.attrs["eferrerpolicy"] = value
 
   @property
   def version(self):
