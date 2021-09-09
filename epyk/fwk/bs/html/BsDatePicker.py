@@ -56,5 +56,6 @@ class BsDate(html.Html.Html):
     "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html(), self.span.html())
+    self.page.properties.js.add_builders(self.refresh())
+    return '<div %s>%s%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html(), self.span.html())

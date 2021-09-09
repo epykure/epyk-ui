@@ -2095,8 +2095,7 @@ class Component(Html):
   def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
     super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if self.css_classes is not None:
-      for cls in self.css_classes:
-        self.attr["class"].add(cls)
+      self.attr["class"].initialise(self.css_classes)
     self.items = []
 
   def add_item(self, component):

@@ -54,22 +54,35 @@ class BsCompBtns:
   def __init__(self, ui):
     self.page = ui.page
 
-  def radio(self, record=None, html_code=None, group_name=None, width=(100, '%'), height=(None, "px"),
-            align='left', options=None, profile=None):
+  def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"), align="left",
+             html_code=None, tooltip=None, profile=None, options=None):
+    button = self.page.web.std.button(text)
+    button.attr["class"].initialise(["btn"])
+    if category is not None:
+      button.attr["class"].add("btn-%s" % category)
+    return button
+
+  def radio(self, flag=False, html_code=None, group_name=None, width=(None, '%'), height=(None, "px"), label=None,
+            options=None, profile=None):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = HtmlBsForms.BsCheck(
       self.page, {"checked": flag, "label": label or "", "type": "radio"}, html_code, options or {}, profile,
       {"width": width, "height": height})
+    if group_name is not None:
+      html_but.attr["name"] = group_name
     return html_but
 
-  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None,
+  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(None, "px"), label=None, icon=None,
             html_code=None, profile=None, options=None):
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_but = HtmlBsForms.BsCheck(
       self.page, {"checked": flag, "label": label or "", "type": "checkbox"}, html_code, options or {}, profile,
       {"width": width, "height": height})
+    if tooltip is not None:
+      html_but.attr["data-bs-toggle"] = "tooltip"
+      html_but.attr["title"] = tooltip
     return html_but
 
   def switch(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
@@ -491,6 +504,7 @@ class Components:
     self.page.cssImport.add("bootstrap")
     #
     self.select = self.lists.select
+    self.button = self.buttons.button
     self.check = self.buttons.check
     self.toggle = self.buttons.toggle
     self.grid = self.page.web.std.grid
@@ -586,10 +600,6 @@ class Components:
   @property
   def fields(self):
     return BootstrapFields(self)
-
-  @property
-  def layouts(self):
-    return BootstrapLayouts(self)
 
   @property
   def lists(self):
