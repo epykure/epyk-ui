@@ -324,7 +324,7 @@ class Components(collections.OrderedDict):
     """
     Description:
     -----------
-    Standard way to add a component to the rodered dictionary.
+    Standard way to add a component to the rondered dictionary.
 
     Attributes:
     ----------

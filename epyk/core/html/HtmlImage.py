@@ -449,9 +449,10 @@ class Icon(Html.Html):
       self._vals = value
       value = ""
     elif options['icon_family'] == 'bootstrap-icons':
+      from epyk.fwk.bs import PkgImports
       if self.page.ext_packages is None:
         self.page.ext_packages = {}
-      self.page.ext_packages.update(Imports.BOOTSTRAP)
+      self.page.ext_packages.update(PkgImports.BOOTSTRAP)
       self.page.cssImport.add("bootstrap-icons")
     if value is not None:
       self.attr['class'].add(value)

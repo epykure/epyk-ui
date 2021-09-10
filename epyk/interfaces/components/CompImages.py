@@ -621,6 +621,7 @@ class Images:
     """
     Description:
     ------------
+    Add an icon to the page.
 
     :tags:
     :categories:
