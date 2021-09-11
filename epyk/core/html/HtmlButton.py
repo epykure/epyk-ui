@@ -27,8 +27,8 @@ class Button(Html.Html):
     for obj in text:
       if hasattr(obj, 'options'):
         obj.options.managed = False
-    super(Button, self).__init__(report, text, html_code=html_code, options=options, profile=profile,
-                                 css_attrs={"width": width, "height": height})
+    super(Button, self).__init__(
+      report, text, html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon, html_code=self.htmlCode)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
