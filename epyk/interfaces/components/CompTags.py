@@ -212,6 +212,39 @@ class Tags:
     return html_h3
 
   @html.Html.css_skin()
+  def hn(self, level, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+    """
+    Description:
+    ------------
+    The <h1> to <h6> tags are used to define HTML headings.
+
+    <h1> defines the most important heading. <h6> defines the least important heading.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_hn.asp
+
+    Attributes:
+    ----------
+    :param level: Integer.
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_hn = html.HtmlTags.HtmlGeneric(self.page, "h%s" % level, text, width,
+                                        height, html_code, tooltip, options, profile)
+    html_hn.style.clear_all()
+    return html_hn
+
+  @html.Html.css_skin()
   def delete(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
              profile=None):
     """
@@ -1044,3 +1077,67 @@ class Tags:
     """
     html_comm = html.HtmlTags.HtmlComment(self.page, text)
     return html_comm
+
+  @html.Html.css_skin()
+  def span(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+           profile=None):
+    """
+    Description:
+    ------------
+    The <span> tag is an inline container used to mark up a part of a text, or a part of a document.
+
+    The <span> tag is easily styled by CSS or manipulated with JavaScript using the class or id attribute.
+
+    The <span> tag is much like the <div> element, but <div> is a block-level element and <span> is an inline element.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_span.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_span = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    return html_span
+
+  @html.Html.css_skin()
+  def label(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+            profile=None):
+    """
+    Description:
+    ------------
+    The <label> tag defines a label for several elements.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_label.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_span = html.HtmlTags.HtmlGeneric(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    return html_span

@@ -10,7 +10,9 @@ class Slider(Options):
     Description:
     -----------
 
-    https://getbootstrap.com/docs/5.0/forms/range/
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/forms/range/
     """
     return self.component.attr.get("max")
 
@@ -24,7 +26,9 @@ class Slider(Options):
     Description:
     -----------
 
-    https://getbootstrap.com/docs/5.0/forms/range/
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/forms/range/
     """
     return self.component.attr.get("min")
 
@@ -38,7 +42,9 @@ class Slider(Options):
     Description:
     -----------
 
-    https://getbootstrap.com/docs/5.0/forms/range/
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/forms/range/
     """
     return self.component.attr.get("step")
 
@@ -55,7 +61,12 @@ class Check(Options):
     """
     Description:
     -----------
+    Add the disabled attribute and the associated <label>s are automatically styled to match with a lighter color to
+    help indicate the input’s state.
 
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/forms/checks-radios/#disabled-1
     """
     return self._config_get()
 
@@ -68,7 +79,7 @@ class Check(Options):
     """
     Description:
     -----------
-
+    Change the CSS class of the main container.
     """
     return self._config_get(["form-check"])
 
@@ -81,7 +92,11 @@ class Check(Options):
     """
     Description:
     -----------
+    Change the input style to a switch component.
 
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches
     """
     return self._config_get()
 
@@ -93,7 +108,13 @@ class Check(Options):
   @property
   def inline(self):
     """
-    https://getbootstrap.com/docs/5.0/forms/checks-radios/
+    Description:
+    -----------
+    Group checkboxes or radios on the same horizontal row by adding .form-check-inline to any .form-check.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/forms/checks-radios/#inline
 
     """
     return "form-check-inline" in self.js_tree["container_class"]

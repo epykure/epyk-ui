@@ -38,7 +38,9 @@ class Input(Html.Html):
     super(Input, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     value = text['value'] if isinstance(text, dict) else self._vals
-    self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
+    self.set_attrs(attrs={"type": "text", "value": value, "spellcheck": False})
+    if placeholder:
+      self.attr["placeholder"] = placeholder
     self.set_attrs(attrs=attrs)
     if html_code is not None:
       self.attr["name"] = html_code

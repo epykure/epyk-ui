@@ -459,3 +459,39 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/visibility/
     """
     self.cls.add("invisible")
+
+  def sizing(self, breakpoint):
+    """
+    Description:
+    ------------
+    Set the size of the component.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/buttons/
+
+    Attributes:
+    ----------
+    :param breakpoint: String. Optional. Grid system category, with
+      - xs (for phones - screens less than 768px wide)
+      - sm (for tablets - screens equal to or greater than 768px wide)
+      - md (for small laptops - screens equal to or greater than 992px wide)
+      - lg (for laptops and desktops - screens equal to or greater than 1200px wide)
+    """
+    self.cls.add("%s-%s" % (self.cls[0], breakpoint))
+
+  def justify_content(self, position):
+    """
+    Description:
+    ------------
+    Align component content (start, center, end)
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/navs-tabs/
+
+    Attributes:
+    ----------
+    :param position: String. The position.
+    """
+    self.cls.add("justify-content-%s" % position)

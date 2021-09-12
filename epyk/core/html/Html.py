@@ -1027,7 +1027,7 @@ class Html:
     """
     if self.innerPyHTML is not None:
       if isinstance(self.innerPyHTML, list):
-        return "".join([h.html() for h in self.innerPyHTML])
+        return "".join([h.html() if hasattr(h, "html") else str(h) for h in self.innerPyHTML])
 
       return self.innerPyHTML.html()
 
@@ -1088,6 +1088,31 @@ class Html:
 
       self.attr['css'][key] = value if isinstance(value, str) else json.dumps(value)
     return self
+
+  def add_style(self, css_classes=None, css_attrs=None, clear_first=False):
+    """
+    Description:
+    ------------
+    Add CSS styles (inline and classes) to a li item.
+
+    Attributes:
+    ----------
+    :param css_classes: String | List. Optional. The CSS class reference.
+    :param css_attrs: Dictionary. Optional. The CSS attributes.
+    :param clear_first: Boolean. Optional. Remove all the predefined CSS Inline style and classes for the component.
+    """
+    if clear_first:
+      self.attr["class"].clear()
+      self.style.clear_style()
+    if not isinstance(css_classes, list):
+      css_classes = [css_classes]
+    for classname in css_classes:
+      if classname is not None:
+        if classname == "active":
+          self.aria.current = "true"
+        self.attr["class"].add(classname)
+    if css_attrs is not None:
+      self.css(css_attrs)
 
   @packages.packageImport('bootstrap', 'bootstrap')
   def tooltip(self, value, location='top', options=None):
@@ -1600,6 +1625,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | String. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
+    :param components: List<components>. Optional.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

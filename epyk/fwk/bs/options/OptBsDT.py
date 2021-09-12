@@ -115,7 +115,9 @@ class DTIcons(Options):
     Description:
     -----------
 
-    https://getdatepicker.com/5-4/Usage/#custom-icons
+    Related Pages:
+
+      https://getdatepicker.com/5-4/Usage/#custom-icons
 
     """
     return self._config_get()
@@ -442,7 +444,8 @@ class DT(Options):
     -----------
     Defines if moment should use strict date parsing when considering a date to be valid.
     Returns a boolean of the options.useStrict
-    Takes a boolean. If useStrict is true, moment.js parsing rules will be stricter when determining if a date is valid or not.
+    Takes a boolean. If useStrict is true, moment.js parsing rules will be stricter when determining if a date is
+    valid or not.
 
     Related Pages:
 
@@ -583,7 +586,8 @@ class DT(Options):
     Returns a boolean variable with the currently set options.ignoreReadonly option.
     Takes a boolean value.
 
-    Set this to true to allow the picker to be used even if the input field is readonly. This will not bypass the disabled property
+    Set this to true to allow the picker to be used even if the input field is readonly. This will not bypass
+    the disabled property
 
     Related Pages:
 
@@ -780,7 +784,8 @@ class DT(Options):
     invalid according to the rules you've selected.
 
     Returns the currently set moment of the options.maxDate or false if not set.
-    Takes a [maxDate] string, Date, moment, boolean:false parameter and disallows the user to select a moment that is after that moment.
+    Takes a [maxDate] string, Date, moment, boolean:false parameter and disallows the user to select a moment
+    that is after that moment.
 
     Related Pages:
 
@@ -802,7 +807,8 @@ class DT(Options):
     invalid according to the rules you've selected.
 
     Returns the currently set moment of the options.minDate or false if not set.
-    Takes a [minDate] string, Date, moment, boolean:false parameter and disallows the user to select a moment that is after that moment.
+    Takes a [minDate] string, Date, moment, boolean:false parameter and disallows the user to select a moment
+    that is after that moment.
 
     Related Pages:
 

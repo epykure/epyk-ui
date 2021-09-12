@@ -13,6 +13,7 @@ import json
 import importlib
 import collections
 import logging
+import base64
 
 try:
   from urllib.parse import urlparse, urlencode
@@ -3626,6 +3627,7 @@ class ImportManager:
   """
 
   online = True
+  self_contained = False
   _static_path = None
 
   def __init__(self, report=None):
@@ -3644,13 +3646,17 @@ class ImportManager:
     :param report: Report. Optional. The internal report object with all the required external modules.
     """
     self._report, ovr_version, self.__pkgs = report, {}, None
-    if report is not None and report.ext_packages is not None:
-      extend_imports(report.ext_packages)
+    self.reload()
+
+  def reload(self):
+    ovr_version = {}
+    if self._report is not None and self._report.ext_packages is not None:
+      extend_imports(self._report.ext_packages)
     # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
     # Force the version of some external Javascript or CSS packages
     #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
     #  ovr_version = getattr(packages, 'MODULES', {})
-    if report is not None:
+    if self._report is not None:
       self._report._with_google_imports = False
       # Apply the different reports overrides on the packages versions
       ovr_version.update(self._report._props.get('packages', {}))
@@ -3946,6 +3952,19 @@ class ImportManager:
             if os.path.exists(package_path):
               urlModule = os.path.join(
                 self._report._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
+        if os.path.isabs(urlModule):
+          with open(urlModule, "rb") as fp:
+            base64_bytes = base64.b64encode(fp.read())
+            base64_message = base64_bytes.decode('ascii')
+            urlModule = "data:text/css;base64,%s" % base64_message
+        elif self.self_contained:
+          try:
+            with urlopen(urlModule) as response:
+              base64_bytes = base64.b64encode(response.read())
+              base64_message = base64_bytes.decode('ascii')
+              urlModule = "data:text/css;base64,%s" % base64_message
+          except: pass
+
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
       for localCssFile in local_css:
@@ -3995,7 +4014,6 @@ class ImportManager:
 
       if not self.online:
         self.pkgs.get(js_alias).set_local(static_url=self.static_url)
-      print(js_alias, self.pkgs.get(js_alias).defer)
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
         if self._report._node_modules is not None:
@@ -4012,6 +4030,18 @@ class ImportManager:
         # if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
         mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
+        if os.path.isabs(url_module):
+          with open(url_module, "rb") as fp:
+            base64_bytes = base64.b64encode(fp.read())
+            base64_message = base64_bytes.decode('ascii')
+            url_module = "data:text/js;base64,%s" % base64_message
+        elif self.self_contained:
+          try:
+            with urlopen(url_module) as response:
+              base64_bytes = base64.b64encode(response.read())
+              base64_message = base64_bytes.decode('ascii')
+              url_module = "data:text/js;base64,%s" % base64_message
+          except Exception as err: print(err)
         if self.pkgs.get(js_alias).defer:
           js.append(
             '<script language="javascript" type="%s" src="%s%s" defer></script>' % (mod_type, url_module, extra_configs))

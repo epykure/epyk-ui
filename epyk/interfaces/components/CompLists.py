@@ -42,7 +42,7 @@ class Lists:
     Attributes:
     ----------
     :param records: List. Optional. The list of dictionaries with the input data.
-    :param html_code: String. Optional. The component identifier code (for bot.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param selected: String. Optional. The selected value or values.
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -125,10 +125,11 @@ class Lists:
       self.page, lookup, html_code, width, height, profile, multiple, options)
     return html_select
 
-  def item(self, text=None):
+  def item(self, text=None, tag=None, options=None):
     """
     Description:
     ------------
+    Add a dynamic and configurable list component.
 
     Usage::
 
@@ -142,8 +143,17 @@ class Lists:
 
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
+
+    Attributes:
+    ----------
+    :param text:
+    :param tag:
+    :param options:
     """
-    html_item = html.HtmlList.Li(self.page, text)
+    options = options or {}
+    if tag is not None:
+      options["item_type"] = tag
+    html_item = html.HtmlList.Li(self.page, text, options=options)
     return html_item
 
   def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -151,6 +161,7 @@ class Lists:
     """
     Description:
     ------------
+    Add a static list component.
 
     Usage::
 
@@ -171,7 +182,7 @@ class Lists:
 
     Attributes:
     ----------
-    :param data:
+    :param data: List. Optional. The list items.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

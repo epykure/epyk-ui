@@ -9,6 +9,8 @@ class Components:
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
     self.page.ext_packages.update(PkgImports.MATERIAL_DESIGN_COMPONENTS)
+    self.page.imports.reload()
+
     self.page.jsImports.add("material-components-web")
     self.page.cssImport.add("material-components-web")
     self.page.css.customText('''

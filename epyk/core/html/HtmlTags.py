@@ -14,8 +14,9 @@ class HtmlGeneric(Html.Html):
 
   def __init__(self, report, tag, text, width, height, html_code, tooltip, options, profile):
     self.tag = tag
-    super(HtmlGeneric, self).__init__(report, text, html_code=html_code, css_attrs={"width": width, "height": height},
+    super(HtmlGeneric, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                       options=options, profile=profile)
+    self.add(text)
     if tooltip:
       self.tooltip(tooltip)
     if options is not None and not options.get('managed', True):
@@ -38,13 +39,17 @@ class HtmlGeneric(Html.Html):
 
     return self.val[i]
 
-  def __add__(self, component):
+  def __add__(self, components):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
-    component.options.managed = False
-    if not isinstance(self.val, list):
-      self._vals = [] if self.val is None else [self.val]
-    if component is not None:
+    if not isinstance(components, list):
+      components = [components]
+    for component in components:
+      if component is None:
+        continue
+
+      if hasattr(component, "options"):
+        component.options.managed = False
       self.val.append(component)
     return self
 
@@ -68,7 +73,7 @@ class HtmlGeneric(Html.Html):
 
   def __str__(self):
     if isinstance(self.val, list):
-      str_val = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+      str_val = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
       return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.style.get_classes()), str_val,
                                    self.tag, self.helper)
 

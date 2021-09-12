@@ -215,7 +215,7 @@ class MomentDate(JsPackage):
     ----------
     :param unit: Integer.
     :param value: String.
-    :param varName: String.
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
@@ -238,7 +238,7 @@ class MomentDate(JsPackage):
     ----------
     :param unit: Integer.
     :param value: String.
-    :param varName: String.
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
@@ -275,6 +275,10 @@ class MomentDate(JsPackage):
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/moment-clone/
+
+    Attributes:
+    ----------
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     if varName is not None:
       return MomentDate(selector="%s.clone()" % self.varId, varName=varName, setVar=True)
@@ -864,7 +868,8 @@ class MomentDate(JsPackage):
     """
     Description:
     ------------
-    Check if a moment is before or the same as another moment. The first argument will be parsed as a moment, if not already so.
+    Check if a moment is before or the same as another moment. The first argument will be parsed as a moment,
+    if not already so.
 
     Related Pages:
 
@@ -997,11 +1002,38 @@ class Moment(JsPackage):
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/now/
+
+    Attributes:
+    ----------
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     if varName is not None:
       return MomentDate(selector="moment()", varName=varName, setVar=True)
 
-    return MomentDate(selector="moment()")
+    return MomentDate(selector="moment()", setVar=False)
+
+  def time(self, hour, minute, second, varName=None):
+    """
+    Description:
+    ------------
+    To get the current time, just call moment() with no parameters.
+
+    Related Pages:
+
+      https://momentjs.com/docs/#/parsing/now/
+
+    Attributes:
+    ----------
+    :param hour: Integer. Optional. The hours' value
+    :param minute: Integer. Optional. The minutes' value.
+    :param second: Integer. Optional. The seconds' value.
+    :param varName: String. Optional. The variable name created in the Javascript.
+    """
+    if varName is not None:
+      return MomentDate(
+        selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), varName=varName, setVar=True)
+
+    return MomentDate(selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), setVar=False)
 
   def var(self, varName):
     """
@@ -1012,6 +1044,10 @@ class Moment(JsPackage):
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/now/
+
+    Attributes:
+    ----------
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     return MomentDate(selector=varName, setVar=False)
 
@@ -1029,7 +1065,7 @@ class Moment(JsPackage):
     ----------
     :param date:
     :param format:
-    :param varName:
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     if date is None:
       return self.now()
@@ -1060,6 +1096,7 @@ class Moment(JsPackage):
     ----------
     :param date:
     :param format:
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     if date is None:
       if varName is not None:
@@ -1194,7 +1231,7 @@ class Moment(JsPackage):
     Attributes:
     ----------
     :param value:
-    :param varName:
+    :param varName: String. Optional. The variable name created in the Javascript.
     """
     if value is None:
       if varName is not None:

@@ -2,6 +2,8 @@
 from epyk.core.html.Html import Component
 from epyk.core.html.HtmlSelect import Option
 from epyk.core.html.HtmlInput import Input
+from epyk.core.data.DataPy import SelectionBox
+
 from epyk.fwk.bs.dom import DomBsForms
 from epyk.fwk.bs.options import OptBsForms
 from epyk.fwk.bs.css import BsStyleForms
@@ -86,6 +88,32 @@ class BsSelect(Component):
   dyn_repr = '''{sub_item}'''
 
   @property
+  def parsers(self):
+    """
+    Description:
+    ------------
+    Set of functions to parse the data.
+    """
+    return SelectionBox
+
+  @property
+  def data(self):
+    """
+    Description:
+    ------------
+    Property to the underlying data from the select.
+    """
+    return self.items
+
+  @data.setter
+  def data(self, parsed_values):
+    for rec in parsed_values:
+      if self.init_selected is not None:
+        if rec["value"] == self.init_selected:
+          rec["selected"] = True
+      self.add_option(rec["value"], rec.get("name", rec["value"]), selected=rec.get("selected", False))
+
+  @property
   def style(self):
     """
     Description:
@@ -105,12 +133,13 @@ class BsSelect(Component):
     """
     Description:
     ------------
+    Add an option to the Data list component.
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param selected:
+    :param value: String. The option value.
+    :param label: String. The option label.
+    :param selected: Boolean. Optional.
     :param options:
     """
     o = Option(self.page, value, label, None, selected, options=options)
@@ -122,29 +151,57 @@ class BsSelect(Component):
 
 class BsDataList(Component):
   css_classes = ["form-control"]
-  name = "Bootstrap Select"
+  name = "Bootstrap DataList"
   _option_cls = OptBsForms.Check
 
   str_repr = '''
-<label for="{for}" class="form-label">{label}</label>
 <input {attrs}>
-<datalist id="datalistOptions">
+<datalist id="{htmlCode}Options">
   {sub_items}
 </datalist>'''
+  dyn_repr = '''{sub_item}'''
+
+  @property
+  def parsers(self):
+    """
+    Description:
+    ------------
+    Set of functions to parse the data.
+    """
+    return SelectionBox
+
+  @property
+  def data(self):
+    """
+    Description:
+    ------------
+    Property to the underlying data from the select.
+    """
+    return self.items
+
+  @data.setter
+  def data(self, parsed_values):
+    for rec in parsed_values:
+      if self.init_selected is not None:
+        if rec["value"] == self.init_selected:
+          rec["selected"] = True
+      self.add_option(rec["value"], rec.get("name", rec["value"]), selected=rec.get("selected", False))
 
   def add_option(self, value, label, selected=False, options=None):
     """
     Description:
     ------------
+    Add an option to the Data list component.
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param selected:
+    :param value: String. The option value.
+    :param label: String. The option label.
+    :param selected: Boolean. Optional.
     :param options:
     """
     o = Option(self.page, value, label, None, selected, options=options)
+    o.options.managed = False
     self.components.add(o)
     self.items.append(o)
     return o
@@ -179,7 +236,7 @@ class BsSFloatingLabel(Component):
     if self._vals['value']:
       self.attr["value"] = self._vals['value']
     self.attr["placeholder"] = self._vals['label']
-    return {"label": self._vals['label'], "for": self.htmlCode, "type": self._vals['type']}
+    return {"label": self._vals['label'], "for": self.htmlCode}
 
 
 class BsInputGroup(Component):
@@ -190,17 +247,6 @@ class BsInputGroup(Component):
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
   <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-</div>'''
-
-
-class BsSFloatingTextArea(BsSFloatingLabel):
-  css_classes = ["form-control"]
-  name = "Bootstrap Textarea"
-
-  str_repr = '''
-<div class="form-floating">
-  <textarea {attrs}></textarea>
-  <label for="floatingTextarea">{label}</label>
 </div>'''
 
 

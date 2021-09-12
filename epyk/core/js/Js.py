@@ -1016,6 +1016,10 @@ class JsBase:
     This will load your local javascript file when the report will be built.
     Then you will be able to use the new features in the different Javascript wrappers.
 
+    Usage::
+
+      page.js.customFile("test.js", r"C:\folder")
+
     Attributes:
     ----------
     :param filename: String. The file name.
@@ -2000,7 +2004,7 @@ class JsBase:
     """
     return JsMsgAlerts.Msg(self._src)
 
-  def import_js(self, script, jsFuncs, profile=None):
+  def import_js(self, script, jsFuncs, profile=None, self_contained=False):
     """
     Description:
     ------------
@@ -2015,7 +2019,12 @@ class JsBase:
     :param script: String. A script name. A Js extension.
     :param jsFuncs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param self_contained:
     """
+    #print(os.path.isabs(my_path))
+    if self_contained or script:
+      pass
+
     js_script = JsUtils.jsConvertData(script, None)
     js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
     return JsUtils.jsWrap('''
@@ -2026,7 +2035,7 @@ if (!existingScript && (scriptElementId !== 'pkg_undefined')) {
   document.body.appendChild(script); script.onload = function(){%(fncs)s; };}
 else {%(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
 
-  def import_css(self, script):
+  def import_css(self, script, self_contained=False):
     """
     Description:
     ------------

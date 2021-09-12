@@ -1634,3 +1634,16 @@ class JsHtmlButtonFilter(JsHtml):
       self.component.radios.dom.content.toStr(),
       self.component.select2.dom.content.toStr(),
       self.component.input2.dom.content.toStr()))
+
+
+class JsHtmlTable(JsHtml):
+
+  @property
+  def content(self):
+    return JsObjects.JsArray.JsArray.get('''
+      (function(){
+         var values = []; 
+         %(component)s.querySelectorAll("tr").forEach(function(row){
+            var rec = []; row.childNodes.forEach(function(cell){
+              rec.push(cell.innerText)}); values.push(rec)
+         });return values })()''' % {"component": self._src.dom.varName})

@@ -28,8 +28,12 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
   name = 'Entries'
 
-  def __init__(self, report, text):
+  def __init__(self, report, text, options=None):
     super(Li, self).__init__(report, text)
+    if options is not None:
+      self.item_type = options.get("item_type", "li")
+    else:
+      self.item_type = "li"
     if hasattr(text, 'options'):
       text.options.managed = False
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
@@ -127,7 +131,8 @@ class Li(Html.Html):
     return super(Li, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   def __str__(self):
-    return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
+    return "<%(type)s %(attrs)s>%(content)s</%(type)s>" % {
+      "type": self.item_type, "attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "content": self.content}
 
 
 class List(Html.Html):
@@ -138,6 +143,7 @@ class List(Html.Html):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
+    self.item_type = options.get("item_type", "li")
     self.color = color if color is not None else self._report.theme.greys[-1]
     self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
@@ -242,6 +248,9 @@ class List(Html.Html):
     """
     return self.items[i] if self.items is not None else None
 
+  def item(self, n):
+    return self.items[n]
+
   def add_item(self, d):
     """
     Description:
@@ -253,7 +262,10 @@ class List(Html.Html):
     :param d: HTML component | String. The component to be added.
     """
     self.items = self.items or []
-    li_obj = Li(self._report, d)
+    li_obj = Li(self._report, d, options={"item_type": self.item_type})
+    if self.options.li_class:
+      li_obj.style.clear_style()
+      li_obj.attr["class"].initialise(self.options.li_class)
     if hasattr(d, 'options'):
       d.options.managed = False
     li_obj.options.managed = False
@@ -268,7 +280,10 @@ class List(Html.Html):
     """
     self.items = self.items or []
     for d in self.val:
-      li_obj = Li(self._report, d)
+      li_obj = Li(self._report, d, options={"item_type": self.item_type})
+      if self.options.li_class:
+        li_obj.style.clear_style()
+        li_obj.attr["class"].initialise(self.options.li_class)
       li_obj.options.managed = False
       li_obj.css(self.options.li_css)
       if self.options.li_class:

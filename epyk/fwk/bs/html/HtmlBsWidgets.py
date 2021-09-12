@@ -1,6 +1,7 @@
 
 from epyk.core.html.Html import Component
 from epyk.core.html import HtmlList
+from epyk.fwk.bs.options import OptBsWidget
 
 
 class BsBreadcrumb(Component):
@@ -28,6 +29,34 @@ class BsBreadcrumb(Component):
     component.options.managed = False
     self.components.add(component)
     self.items.append(component)
+    return component
+
+  def add_section(self, text, url="#", active=False):
+    """
+    Description:
+    -----------
+    Add a section to the breadcrumb.
+
+    Attributes:
+    ----------
+    :param text: String. The link to be added.
+    :param url: String. Optional. The link when clicked.
+    :param active: Boolean. Optional. The current page.
+    """
+    if active:
+      component = HtmlList.Li(self.page, text)
+      component.attr["class"].add("breadcrumb-item")
+      component.attr["class"].add("active")
+      component.aria.current = "page"
+    else:
+      link = self.page.web.std.link(text, url)
+      link.attr["class"].clear()
+      component = HtmlList.Li(self.page, link)
+      component.attr["class"].add("breadcrumb-item")
+    component.options.managed = False
+    self.components.add(component)
+    self.items.append(component)
+    return component
 
 
 class BsAccordion(Component):
@@ -203,3 +232,138 @@ class BsModal(Component):
 
   def add_item(self, header, content, prepend=False):
     pass
+
+
+class BsCarousel(Component):
+  css_classes = ["carousel", "slide"]
+  name = "Bootstrap Carousel"
+  _option_cls = OptBsWidget.Carousel
+  str_repr = '''
+<div {attrs}>
+  <div class="carousel-inner">
+    {sub_items}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#{htmlCode}" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#{htmlCode}" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+'''
+  dyn_repr = '''
+<div class="carousel-item {active}">
+  <img src="{image}" class="d-block w-100" alt="...">
+</div>'''
+
+  _js__builder__ = '''var carousel = new bootstrap.Carousel(htmlObj, options)'''
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The component options.
+
+    :rtype: OptBsWidget.Carousel
+    """
+    return super().options
+
+  def add_item(self, image, active=False):
+    self.items.append({"image": image, "active": ""})
+
+  def write_item(self, item):
+    return item
+
+
+class BsNav(Component):
+  css_classes = ["nav"]
+  name = "Bootstrap Nav"
+  str_repr = '''<nav {attrs}>{sub_items}</nav>'''
+  dyn_repr = '''{sub_item}'''
+
+  def add_item(self, component, url="#", active=False, disabled=False):
+    """
+    Description:
+    ------------
+    Add an item to the Nav list.
+
+    https://getbootstrap.com/docs/5.1/components/navs-tabs/
+
+    Attributes:
+    ----------
+    :param component: HTML | String. The item to be added to the Nav.
+    :param url: String. Optional. The url path for the link.
+    :param active: Boolean. Optional. The status of the option item.
+    :param disabled: Boolean. Optional.
+    """
+    link = self.page.web.std.link(component, url=url)
+    link.add_style(["nav-link"], clear_first=True)
+    link.options.managed = False
+    if active:
+      link.attr["class"].add("active")
+      link.aria.current = "page"
+    self.components.add(link)
+    self.items.append(link)
+    return link
+
+  def add_dropdown(self, component, url="#", active=False, disabled=False):
+    pass
+
+
+class BsTabs(BsNav):
+  css_classes = ["nav", "nav-tabs"]
+  name = "Bootstrap Tabs"
+
+
+class BsPills(BsNav):
+  css_classes = ["nav", "nav-pills"]
+  name = "Bootstrap Pills"
+
+
+class BsCard(Component):
+  css_classes = ["card"]
+  name = "Bootstrap Card"
+  str_repr = '''<div {attrs}><div class="card-body">{sub_items}</div></div>'''
+  dyn_repr = '''{sub_item}'''
+
+  def add_header(self, value):
+    title = self.page.web.std.div(value)
+    title.attr["class"].initialise(["card-header"])
+    title.options.managed = False
+    self.items.insert(0, title)
+    return title
+
+  def add_footer(self, value):
+    title = self.page.web.std.div(value)
+    title.attr["class"].initialise(["card-footer"])
+    title.options.managed = False
+    self.items.insert(0, title)
+    return title
+
+  def add_title(self, value):
+    title = self.page.web.std.tags.hn(5, value)
+    title.attr["class"].initialise(["card-title"])
+    title.options.managed = False
+    self.items.append(title)
+    return title
+
+  def add_subtitle(self, value):
+    title = self.page.web.std.tags.hn(6, value)
+    title.attr["class"].initialise(["card-subtitle"])
+    title.options.managed = False
+    self.items.append(title)
+    return title
+
+  def add_text(self, value):
+    pass
+
+  def add_link(self, value, url="#"):
+    link = self.page.web.std.link(value, url)
+    link.attr["class"].initialise(["card-link"])
+    link.options.managed = False
+    self.items.append(link)
+    return link
+

@@ -162,7 +162,7 @@ class Tables:
     """
     return html_tables.HtmlTableConfig.ConfigTable(self.page, html_code, visible, profile)
 
-  def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def basic(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     -----------
@@ -186,8 +186,10 @@ class Tables:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    if len(records) > 0 and not cols and not rows:
+      cols = list(records[0].keys())
     table = html_tables.HtmlTable.Bespoke(
-      self.page, records, cols, rows, width, height, html_code, options, profile)
+      self.page, records, cols or [], rows or [], width, height, html_code, options, profile)
     return table
 
   def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,

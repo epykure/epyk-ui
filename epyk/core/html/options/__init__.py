@@ -412,6 +412,8 @@ class Options(DataClass):
             # Improve this when all options are moved to the js_type model
             if v is None:
               js_attrs.append("%s: %s" % (k, json.dumps(v)))
+            elif hasattr(v, 'toStr'):
+              js_attrs.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
             else:
               js_attrs.append("%s: %s" % (k, v))
           else:

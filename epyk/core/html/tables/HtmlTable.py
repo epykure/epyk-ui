@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.js.html import JsHtml
+from epyk.core.html.options import OptTable
 
 # The list of CSS classes
 # from epyk.core.css.styles import CssGrpClsTable
@@ -9,9 +11,34 @@ from epyk.core.html import Html
 
 class Row(Html.Html):
   name = 'Row'
+  _option_cls = OptTable.OptionsTableRow
 
   def __init__(self, report, cells, options=None):
     super(Row, self).__init__(report, cells,  options=options)
+    self.attr["class"].clear()
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    All table options.
+
+    :rtype: OptTable.OptionsTableRow
+    """
+    return super().options
 
   def __getitem__(self, i):
     return self.val[i]
@@ -36,10 +63,35 @@ class Row(Html.Html):
 
 class Cell(Html.Html):
   name = 'Cell'
+  _option_cls = OptTable.OptionsTableCell
 
   def __init__(self, report, text, is_header, options=None):
     super(Cell, self).__init__(report, text, options=options)
+    self.attr["class"].clear()
     self.is_header = is_header
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    All table options.
+
+    :rtype: OptTable.OptionsTableCell
+    """
+    return super().options
 
   def set_html_content(self, component):
     """
@@ -68,7 +120,7 @@ class Cell(Html.Html):
 
 class Bespoke(Html.Html):
   name = 'Basic Table'
-  # _grpCls = CssGrpClsTable.CssClassTableBespoke
+  _option_cls = OptTable.OptionsBasic
 
   def __init__(self, report, records, cols, rows, width, height, html_code, options, profile):
     data = []
@@ -80,8 +132,18 @@ class Bespoke(Html.Html):
     self.items = None
     self.style.add_classes.table.table()
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
-    self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
     self.set_items()
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    All table options.
+
+    :rtype: OptTable.OptionsBasic
+    """
+    return super().options
 
   @property
   def tableId(self):
@@ -133,13 +195,15 @@ class Bespoke(Html.Html):
     if self.items is None:
       self.items = []
     if self._fields is not None:
-      self._header = Row(self._report, [Cell(self._report, d, is_header=True,
-                                             options={"managed": False}) for d in self._fields])
+      self._header = Row(self.page, [
+        Cell(self.page, d, is_header=True, options={
+          "cssClasses": self.options.colCssClasses, "managed": False}) for d in self._fields])
       self.items.append(self._header)
       self.items[-1].options.managed = False
     for rec in self.val:
-      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False,
-                                                options={"managed": False}) for r in rec]))
+      self.items.append(Row(self.page, [
+        Cell(self.page, r, is_header=False, options={
+          "cssClasses": self.options.rowCssClasses, "managed": False}) for r in rec]))
       self.items[-1].options.managed = False
       self.items[-1].style.add_classes.table.row_hover()
     return self
@@ -180,28 +244,58 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-    Get the table column cells as a generator
+    Get the table column cells as a generator.
 
     Usage::
 
+        for cell in t.col(i=1, header=False):
+          cell
+
     Attributes:
     ----------
-    :param header: String. Optional.
-    :param i: Integer. Optional.
+    :param header: String | Boolean. Optional. Consider or not the header.
+    :param i: Integer. Optional. The column index.
     """
-    for v in self.items:
-      if header is not None:
+    start = 1 if header is False else 0
+    for v in self.items[start:]:
+      if header is not None and header:
         i = self._fields.index(header)
       yield v[i]
 
     return self
+
+  def set_editable_cols(self, col_indices):
+    """
+    Description:
+    ------------
+    Define columns as editable.
+
+    Attributes:
+    ----------
+    :param col_indices: List<Integer>. List of columns to be changed.
+    """
+    for row in self.items:
+      for i in col_indices:
+        row[i].attr["contenteditable"] = "true"
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Dom properties for a table.
+
+    :rtype: JsHtml.JsHtmlTable
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlTable(self, report=self._report)
+    return self._dom
 
   def add(self, row, missing="", is_header=False):
     """
     Description:
     -----------
     Add a row to the table.
-
 
     Usage::
 

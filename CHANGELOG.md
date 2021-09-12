@@ -1,14 +1,27 @@
 ## [Unreleased]
 
 ### Added
-- Integrate Moment library to the ase Javascript features.
-- Improve documentation.
-- Add packages white / black lists shortcuts.
-- Add defer, async property for external packages.
 
 ### Changed
 
 ### Fixed
+
+## [1.6.3] - 2021-09-12
+
+### Added
+- Integrate Moment library to the ase Javascript features.
+- Improve overall framework documentation.
+- Add packages white / black lists shortcuts.
+- Add defer, async property for external packages.
+- add_style function to all components.
+
+### Changed
+- Improved Bootstrap 5 integration.
+- DOM object for basic tables.
+
+### Fixed
+- Fix Bootstrap reference in Image component.
+- Bug fix in the Option base class.
 
 
 ## [1.6.2] - 2021-09-05

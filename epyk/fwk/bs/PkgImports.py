@@ -32,6 +32,13 @@ BOOTSTRAP = {
       {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',
        'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
     ]
-
+  },
+  'bootstrap-autocomplete': {
+    'version': '2.3.7',
+    'website': 'https://bootstrap-autocomplete.readthedocs.io/en/latest/',
+    'modules': [
+      {'script': 'bootstrap-autocomplete.min.js', 'path': 'bootstrap-icons@%(version)s/font/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm/'},
+    ]
   }
 }

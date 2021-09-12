@@ -845,6 +845,7 @@ class Components:
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
     self.page.ext_packages.update(PkgImports.TOAST)
+    self.page.imports.reload()
 
   def time(self, hour=None, minute=None, width=(170, "px"), height=(None, "px"), html_code=None, profile=None,
            options=None):
