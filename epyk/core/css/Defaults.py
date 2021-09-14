@@ -177,7 +177,7 @@ def em_to_px(value, with_unit=True):
 
 #
 DEFAULT_STYLE = "no_border"
-
+FONT_FAMILY = 'font-awesome'
 
 # Default CSS Styles
 BODY_CONTAINER = None   # The body CSS dictionary

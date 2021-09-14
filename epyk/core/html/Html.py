@@ -702,9 +702,11 @@ class Html:
     if family is not None and self.options.verbose and family not in defined_families:
       logging.warning("Family %s not defined in %s" % (family, defined_families))
 
+    if family is None:
+      family = Defaults_css.FONT_FAMILY
     if text is not None:
       html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
-      self.icon = self._report.ui.images.icon(
+      self.icon = self.page.ui.images.icon(
         text, html_code=html_code_icon, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
       if position == "before":
         self.prepend_child(self.icon)

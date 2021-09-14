@@ -562,7 +562,8 @@ class Div(Html.Html):
       else:
         rows.append(str(htmlObj))
 
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
+    return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(helper)s" % {'tag': self.tag or 'div',
+      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "content": "".join(rows), "helper": self.helper}
 
 
 class Td(Html.Html):

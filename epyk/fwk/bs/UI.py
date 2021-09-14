@@ -5,6 +5,7 @@ from epyk.fwk.bs.html import HtmlBsWidgets
 from epyk.fwk.bs import PkgImports
 from epyk.fwk.bs import groups
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Components:
@@ -15,6 +16,7 @@ class Components:
       self.page.ext_packages = {}
     self.page.ext_packages.update(PkgImports.BOOTSTRAP)
     self.page.imports.reload()
+    Defaults_css.FONT_FAMILY = 'bootstrap-icons'   # Set the default family for icons to rely on Bootstrap
 
     self.page.imports.pkgs.bootstrap.version = "5.1.0"
     self.page.jsImports.add("bootstrap")
