@@ -2218,7 +2218,7 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param jsFncs: String or List. The Javascript functions
     """
-    self._js.append("var rect = elm.getBoundingClientRect()" % self.varId)
+    self._js.append("var rect = %s.getBoundingClientRect()" % self.varId)
     return self
 
   def getContext(self, contextType, contextAttributes=None):
@@ -2250,6 +2250,20 @@ class JsDoms(JsObject.JsObject):
 
     contextAttributes = JsUtils.jsConvertData(contextAttributes, None)
     return JsFncs.JsFunction("%s.getContext('%s', %s)" % (self.varId, contextType, contextAttributes))
+
+  def custom(self, strFrg):
+    """
+    Description:
+    ------------
+    Bespoke function to be called from the dom element.
+
+    This can be use if a function is missing from the wrapper interface.
+
+    Attributes:
+    ----------
+    :param strFrg: String. The DOM feature.
+    """
+    return JsObject.JsObject("%s.%s" % (self.varId, strFrg))
 
 
 class JsDomsList(JsArray.JsArray):
