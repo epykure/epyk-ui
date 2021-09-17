@@ -1,6 +1,8 @@
 ## [Unreleased]
 
 ### Added
+- Popper package upgrade.
+- Change Div container tag.
 
 ### Changed
 
