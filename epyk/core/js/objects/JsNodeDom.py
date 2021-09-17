@@ -1318,6 +1318,48 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.outerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
+  def value(self, jsString=None):
+    """
+    Description:
+    ------------
+    The value attribute specifies the value of an <input> element.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_input_value.asp
+
+    Attributes:
+    ----------
+    :param jsString: String. Optional. Set the input value.
+    """
+    if jsString is None:
+      return JsString.JsString("%s.value" % self.varId, isPyData=False)
+
+    self._js.append("%s.value = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
+  def nodeValue(self, jsString=None):
+    """
+    Description:
+    ------------
+    The nodeValue property sets or returns the node value of the specified node.
+
+    If the node is an element node, the nodeValue property will return null.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_nodevalue.asp
+
+    Attributes:
+    ----------
+    :param jsString: String. Optional. Set the node value.
+    """
+    if jsString is None:
+      return JsString.JsString("%s.nodeValue" % self.varId, isPyData=False)
+
+    self._js.append("%s.nodeValue = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
   def attr(self, type, jsObject=None):
     """
     Description:
