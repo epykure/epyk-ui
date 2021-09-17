@@ -399,7 +399,7 @@ class JsDomEvents:
       if options is not None and 'timer' in options:
         return JsFncs.JsFunction(
           "window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)" % {
-            "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": item, 'timer': options['timer'] * 1000})
+            "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": self.varName, 'timer': options['timer'] * 1000})
 
       else:
         return JsFncs.JsFunction(
@@ -1273,6 +1273,51 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
+  def outerText(self, jsString=None):
+    """
+    Description:
+    ------------
+    The outerText property sets or returns the text content of the specified node.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_outertext.asp
+
+    Attributes:
+    ----------
+    :param jsString: Optional, The Javascript String to be set.
+
+    :return: self to allow the chaining
+    """
+    if jsString is None:
+      return JsString.JsString("%s.outerText" % self.varId, isPyData=False)
+
+    self._js.append("%s.outerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
+  def outerHTML(self, jsString=None):
+    """
+    Description:
+    ------------
+    The outerHTML property sets or returns the HTML element and all it's content, including the start tag,
+    it's attributes, and the end tag.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_html_outerhtml.asp
+
+    Attributes:
+    ----------
+    :param jsString: Optional, The Javascript String to be set.
+
+    :return: self to allow the chaining
+    """
+    if jsString is None:
+      return JsString.JsString("%s.outerHTML" % self.varId, isPyData=False)
+
+    self._js.append("%s.outerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
   def attr(self, type, jsObject=None):
     """
     Description:
@@ -2039,6 +2084,23 @@ class JsDoms(JsObject.JsObject):
       https://developer.mozilla.org/fr/docs/Web/API/ChildNode/remove
     """
     return JsFncs.JsFunction("%s.remove()" % self.varId)
+
+  def removeAttribute(self, jsDom):
+    """
+    Description:
+    ------------
+    The removeAttribute() method removes the specified attribute from an element.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/met_element_removeattribute.asp
+
+    Attributes:
+    ----------
+    :param jsDom: String. Required. The name of the attribute you want to remove.
+    """
+    self._js.append("%s.removeAttribute(%s)" % (self.varId, JsUtils.jsConvertData(jsDom, None)))
+    return self
 
   def removeChild(self, jsDom):
     """

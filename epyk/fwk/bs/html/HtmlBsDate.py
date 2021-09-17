@@ -2,6 +2,7 @@
 from epyk.core.html.Html import Component
 from epyk.core.js.packages import JsQuery
 from epyk.fwk.bs.options import OptBsDT
+from epyk.fwk.bs.dom import DomBsDatePicker
 
 
 class BsDatePicker(Component):
@@ -32,3 +33,16 @@ class BsDatePicker(Component):
     :rtype: OptBsDT.DT
     """
     return super().options
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    The common DOM properties.
+
+    :rtype: DomBsDatePicker.DomDate
+    """
+    if self._dom is None:
+      self._dom = DomBsDatePicker.DomDate(self, report=self.page)
+    return self._dom

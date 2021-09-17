@@ -3,8 +3,10 @@
 ### Added
 - Popper package upgrade.
 - Change Div container tag.
+- Exta DOM functions
 
 ### Changed
+- Improve BS components.
 
 ### Fixed
 
