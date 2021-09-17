@@ -452,9 +452,7 @@ class Report:
 
     :rtype: Interface.Components
     """
-    if self._ui is None:
-      self._ui = Interface.WebComponents(self)
-    return self._ui.std
+    return self.web.std
 
   @property
   def web(self):

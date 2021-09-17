@@ -18,6 +18,7 @@ from epyk.core.js.packages import JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsJqueryUI
+from epyk.core.css import Defaults as cssDefaults
 
 
 class ProgressBar(Html.Html):
@@ -673,7 +674,7 @@ class SkillBar(Html.Html):
 
 
 class OptionsBar(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Options'
   _option_cls = OptSliders.OptionBar
 
@@ -720,18 +721,18 @@ class OptionsBar(Html.Html):
 
 
 class SignIn(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'SignIn'
 
   def __init__(self, report, text, size, icon):
     super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
     self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
-    self.css({"text-align": "center", "padding": 0, 'color': self._report.theme.colors[3],
+    self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
               "margin": 0, "border-radius": "%s%s" % (size[0], size[1]),
-              "border": "1px solid %s" % self._report.theme.colors[3], 'cursor': 'pointer'})
+              "border": "1px solid %s" % self.page.theme.colors[3], 'cursor': 'pointer'})
 
   def __str__(self):
-    if not hasattr(self._report, 'user') or self._report.user == 'local':
+    if not hasattr(self.page, 'user') or self.page.user == 'local':
       self.attr["class"].add(self.icon or "fas fa-user-tie")
       self.style.css.font_family = "Font Awesome 5 Free"
       self.style.css.padding = "2px"
@@ -742,23 +743,23 @@ class SignIn(Html.Html):
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="font-size:%(size)s;margin-top:-2px">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user,
+      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self.page.user,
                     'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Filters(Html.Html):
   name = 'Filters'
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   _option_cls = OptList.OptionsTagItems
 
   def __init__(self, report, items, width, height, html_code, helper, options, profile):
     super(Filters, self).__init__(report, items, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "min-height": height})
-    self.input = self._report.ui.input()
+    self.input = self.page.ui.input()
     self.input.style.css.text_align = 'left'
     self.input.style.css.padding = '0 5px'
     self.input.options.managed = False
-    self.selections = self._report.ui.div()
+    self.selections = self.page.ui.div()
     self.selections.options.managed = False
     self.selections.attr["name"] = "panel"
     self.selections.css({'min-height': '30px', 'padding': '5px 2px'})

@@ -10,6 +10,7 @@ from epyk.core.js.html import JsHtmlNetwork
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsNetwork
+from epyk.core.css import Defaults as cssDefaults
 
 
 class Comments(Html.Html):
@@ -560,7 +561,7 @@ class Room(Html.Html):
 
 
 class DropFile(Html.Html):
-  requirements = ('font-awesome',)
+  requirements = (cssDefaults.ICON_FAMILY,)
   name, inputType = 'Drop File Area', "file"
   _option_cls = OptNet.OptionFiles
 

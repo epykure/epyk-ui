@@ -12,12 +12,12 @@ from epyk.core.html.options import OptButton
 from epyk.core.html.options import OptImg
 
 from epyk.core.css.styles import GrpClsImage
+from epyk.core.css import Defaults as cssDefaults
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlTinySlider
 from epyk.core.js import JsUtils
-from epyk.core.js import Imports
 from epyk.core.js.packages import JsTinySlider
 
 from epyk.core import data
@@ -789,7 +789,7 @@ class Emoji(Html.Html):
 
 class Badge(Html.Html):
   name = 'Badge'
-  requirements = ('font-awesome', 'bootstrap')
+  requirements = (cssDefaults.ICON_FAMILY, 'bootstrap')
   _option_cls = OptButton.OptionsBadge
 
   def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):

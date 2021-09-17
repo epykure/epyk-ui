@@ -7,6 +7,8 @@ from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
 
+from epyk.core.css import Defaults as cssDefaults
+
 
 class Radio(Html.Html):
   name = 'Radio Buttons'
@@ -85,7 +87,7 @@ class Radio(Html.Html):
 
 
 class Tick(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Tick'
 
   def __init__(self, report, position, icon, text, tooltip, width, height, html_code, options, profile):

@@ -10,11 +10,12 @@ from epyk.core.js.html import JsHtmlTree
 from epyk.core.html.options import OptTrees
 
 from epyk.core.css.styles import GrpClsList
+from epyk.core.css import Defaults as cssDefaults
 
 
 class Tree(Html.Html):
   name = 'List Expandable'
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   _option_cls = OptTrees.OptionsTree
 
   def __init__(self, report, records, width, height, html_code, helper, options, profile):

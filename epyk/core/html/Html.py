@@ -703,7 +703,7 @@ class Html:
       logging.warning("Family %s not defined in %s" % (family, defined_families))
 
     if family is None:
-      family = Defaults_css.FONT_FAMILY
+      family = Defaults_css.ICON_FAMILY
     if text is not None:
       html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
       self.icon = self.page.ui.images.icon(

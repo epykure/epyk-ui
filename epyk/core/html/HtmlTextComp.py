@@ -11,6 +11,7 @@ from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
+from epyk.core.css import Defaults as cssDefaults
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsText
@@ -18,7 +19,7 @@ from epyk.core.css.styles import GrpClsText
 
 class UpDown(Html.Html):
   name = 'Up and Down'
-  requirements = ('font-awesome', 'accounting')
+  requirements = (cssDefaults.ICON_FAMILY, 'accounting')
   _option_cls = OptText.OptionsNumberMoves
 
   def __init__(self, report, record, components, color, label, width, height, options, helper, profile):
@@ -133,7 +134,7 @@ class UpDown(Html.Html):
 
 
 class BlockText(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Block text'
   _option_cls = OptText.OptionsText
 
@@ -180,7 +181,7 @@ class BlockText(Html.Html):
 
 
 class TextWithBorder(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Text with Border and Icon'
   _option_cls = OptText.OptionsText
 

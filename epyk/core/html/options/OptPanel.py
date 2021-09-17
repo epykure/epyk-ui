@@ -52,9 +52,14 @@ class OptionPanelSliding(Options):
     """
     Description:
     ------------
-
-    :return:
+    Add the open icon item.
     """
+    if "material-design-icons" in self.component.requirements:
+      return self.get("material-icons")
+
+    if "office-ui-fabric-core" in self.component.requirements:
+      return self.get("ms-Icon ms-Icon--CaretSolidDown")
+
     return self.get("fas fa-caret-down")
 
   @icon_expanded.setter
@@ -66,9 +71,14 @@ class OptionPanelSliding(Options):
     """
     Description:
     ------------
-
-    :return:
+    Add the close icon item.
     """
+    if "material-design-icons" in self.component.requirements:
+      return self.get("material-icons")
+
+    if "office-ui-fabric-core" in self.component.requirements:
+      return self.get("ms-Icon ms-Icon--CaretSolidUp")
+
     return self.get("fas fa-caret-up")
 
   @icon_closed.setter

@@ -519,6 +519,7 @@ class Panels:
     """
     Description:
     ------------
+    Add hamburger panel.
 
     :tags:
     :categories:

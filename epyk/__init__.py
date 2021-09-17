@@ -8,6 +8,7 @@ from epyk.core.data import components as inputs
 from epyk.core.html import Defaults as settings
 
 from epyk.core.css import themes
+from epyk.core.css import Defaults as settings_css
 from epyk.core.css import Colors as colors
 from epyk.core.css.themes import palettes
 from epyk.core.css.styles.attributes import CssInline

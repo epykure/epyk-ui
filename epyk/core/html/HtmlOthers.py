@@ -76,7 +76,7 @@ class Newline(Html.Html):
 
 class Stars(Html.Html):
   name = 'Stars'
-  requirements = ('font-awesome', )
+  requirements = (Defaults.ICON_FAMILY, )
 
   def __init__(self, report, val, label, color, align, best, html_code, helper, options, profile):
     super(Stars, self).__init__(report, val, html_code=html_code, profile=profile, options=options)
@@ -157,7 +157,7 @@ class Stars(Html.Html):
 
 
 class Help(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (Defaults.ICON_FAMILY, )
   name = 'Info'
 
   def __init__(self, report, val, width, profile, options):
@@ -188,7 +188,7 @@ class Help(Html.Html):
 
 
 class Loading(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (Defaults.ICON_FAMILY, )
   name = 'Loading'
 
   def __init__(self, report, text, color, size, options, profile):
@@ -409,7 +409,7 @@ class Legend(Html.Html):
 
 
 class Slides(Html.Html):
-  requirements = ('font-awesome', )
+  requirements = (Defaults.ICON_FAMILY, )
   name = 'Slides'
   _option_cls = OptText.OptionsText
 

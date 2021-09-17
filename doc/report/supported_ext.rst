@@ -113,7 +113,7 @@ This will be fully transparent :doc:`all_components` will include to the page th
 - `chartjs-plugin-zoom, version 0.7.7 <https://www.chartjs.org/>`_
 - `chartjs-chart-geo, version 3.1.0 <https://github.com/sgratzl/chartjs-chart-geo>`_
 - `hammer, version 2.0.8 <http://hammerjs.github.io/>`_
-- `@popperjs/core, version 2.9.2 <https://github.com/popperjs/popper-core>`_
+- `@popperjs/core, version 2.10.1 <https://github.com/popperjs/popper-core>`_
 - `bootstrap-select, version 1.13.18 <http://silviomoreto.github.io/bootstrap-select/>`_
 - `ajax-bootstrap-select, version 1.4.5 <https://github.com/truckingsim/Ajax-Bootstrap-Select>`_
 - `vis, version 4.21.0 <http://visjs.org/>`_

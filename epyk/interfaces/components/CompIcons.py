@@ -1620,6 +1620,7 @@ class Icons:
         div[-1].goto(d["url"], target="_blank")
     return div
 
+  @html.Html.css_skin()
   def hamburger(self, width=(15, 'px'), height=(2, 'px'), color=None, options=None, profile=None):
     """
     Description:

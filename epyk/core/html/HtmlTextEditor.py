@@ -13,6 +13,7 @@ from epyk.core.html.options import OptText
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsCodeMirror
+from epyk.core.css import Defaults as cssDefaults
 
 
 class Console(Html.Html):
@@ -69,7 +70,7 @@ class Console(Html.Html):
 
 class Editor(Html.Html):
   name = 'Code Editor'
-  requirements = ('codemirror', 'font-awesome')
+  requirements = ('codemirror', cssDefaults.ICON_FAMILY)
 
   def __init__(self, report, vals, language, width, height, html_code, options, profile):
     super(Editor, self).__init__(report, vals, html_code=html_code, profile=profile,
