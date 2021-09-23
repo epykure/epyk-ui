@@ -230,11 +230,11 @@ class PanelSplit(Html.Html):
 
 
 class PanelSlide(Panel):
-  requirements = ('font-awesome', )
   name = 'Slide Panel'
   _option_cls = OptPanel.OptionPanelSliding
 
   def __init__(self, report, components, title, color, width, height, html_code, helper, options, profile):
+    self.requirements = (cssDefaults.ICON_FAMILY, )
     super(PanelSlide, self).__init__(
       report, components, None, color, width, height, html_code, helper, options, profile)
     self.add_helper(helper)
@@ -344,7 +344,6 @@ class PanelSlide(Panel):
       self.icon.set_icon(self.options.icon_closed)
     if self.options.icon_position == "right":
       self.icon.style.css.float = "right"
-
     click_frg = [self.page.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle()]
     if icon_change and icon_current:
       click_frg.append(self.icon.dom.switchClass(icon_current, icon_change))

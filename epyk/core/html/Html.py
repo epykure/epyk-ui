@@ -2198,3 +2198,65 @@ class Component(Html):
     if self._js__builder__ is not None:
       self.page.properties.js.add_builders(self.refresh())
     return self.str_repr.format(**values)
+
+
+class StructComponent(Html):
+  """
+  Description:
+  -----------
+  Component interface.
+
+  This is the main interface to create bridges to external Web frameworks.
+
+  The default self.style, self.options and self.js properties can be overridden in order to respectively set the
+  styles, the options and the event API of the component.
+
+  With:
+    - css_classes: List. Optional. The component classes.
+    - str_repr String. Mandatory. The component HTML definition.
+  """
+
+  css_classes = None
+  str_repr = None
+
+  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+    super(StructComponent, self).__init__(report, vals, html_code, options, profile, css_attrs)
+    if self.css_classes is not None:
+      self.add_style(self.css_classes, clear_first=True)
+    self.items = {}
+
+  def add_to(self, group, content):
+    """
+    Description:
+    -----------
+    Add sub component to the main component.
+
+    Attributes:
+    ----------
+    :param group: String. The category for the component.
+    :param content: HTML | String. The HTML component to be added.
+    """
+    if hasattr(content, "options"):
+      content = self.page.web.std.div(content)
+      content.options.managed = False
+    self.items.setdefault(group, []).append(content)
+    return content
+
+  def write_values(self):
+    """
+    Description:
+    -----------
+    Prepare the data to be written to the self.str_repr module variable.
+    The keys {attrs} and {htmlCode} will be automatically added by the core framework.
+
+    By default this function will add the values defined for the component to the {text} key.
+    """
+    raise Exception("Method write_values must be defined")
+
+  def __str__(self):
+    values = self.write_values()
+    values["attrs"] = self.get_attrs(pyClassNames=self.style.get_classes())
+    values["htmlCode"] = self.htmlCode
+    if self._js__builder__ is not None:
+      self.page.properties.js.add_builders(self.refresh())
+    return self.str_repr.format(**values)
