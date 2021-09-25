@@ -11,4 +11,6 @@ from . import BsCompIcons
 from . import BsCompImages
 from . import BsCompLayouts
 from . import BsCompTables
+from . import BsCompNavs
+from . import BsCompToasts
 
