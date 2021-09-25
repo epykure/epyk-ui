@@ -2236,8 +2236,9 @@ class StructComponent(Html):
     :param group: String. The category for the component.
     :param content: HTML | String. The HTML component to be added.
     """
-    if hasattr(content, "options"):
+    if not hasattr(content, "options"):
       content = self.page.web.std.div(content)
+      content.style.clear_all(no_default=True)
       content.options.managed = False
     self.items.setdefault(group, []).append(content)
     return content
