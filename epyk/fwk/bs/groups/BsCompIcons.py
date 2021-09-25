@@ -34,7 +34,7 @@ class Components:
     """
     component = self.page.web.std.icon(
       icon, 'bootstrap-icons', width, html_code, height, color, tooltip, align, options, profile)
-    component.attr["class"].initialise(["bi", icon])
+    component.add_style(["bi", icon], clear_first=True)
     return component
 
   def close(self, width=(None, 'px'), html_code=None, height=(None, "px"), color=None, tooltip=None, align="left",

@@ -6,7 +6,6 @@ from . import BsCompPanels
 from . import BsCompInputs
 from . import BsCompAlerts
 from . import BsCompModals
-from . import BsCompVignets
 from . import BsCompIcons
 from . import BsCompImages
 from . import BsCompLayouts

@@ -26,15 +26,15 @@ class Components:
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param html_code:
-    :param tooltip:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -77,15 +77,15 @@ class Components:
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param html_code:
-    :param tooltip:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     component = self.text(value=value, label=label, placeholder=placeholder, width=width, height=height,
                           html_code=html_code, tooltip=tooltip,  options=options, profile=profile)
@@ -108,15 +108,15 @@ class Components:
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param html_code:
-    :param tooltip:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     component = self.text(value=value, label=label, placeholder=placeholder, width=width, height=height,
                           html_code=html_code, tooltip=tooltip,  options=options, profile=profile)
@@ -140,15 +140,15 @@ class Components:
 
     Attributes:
     ----------
-    :param value:
-    :param label:
-    :param placeholder:
-    :param width:
-    :param height:
-    :param html_code:
-    :param tooltip:
-    :param options:
-    :param profile:
+    :param value: String. Optional. The value to be displayed to this component. Default empty.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param placeholder: String. Optional.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -174,3 +174,47 @@ class Components:
       content.tooltip(tooltip)
     return content
 
+
+class TextComponents:
+
+  def __init__(self, ui):
+    self.page = ui.page
+
+  def small(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the component.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    component = self.page.web.std.tags.small(text, width, height, html_code, tooltip, options, profile)
+    component.style.clear_all(no_default=True)
+    return component
+
+  def strong(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
+             profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The value to be displayed to the component.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    component = self.page.web.std.tags.strong(text, width, height, html_code, tooltip, options, profile)
+    component.add_style(["me-auto"], clear_first=True)
+    return component

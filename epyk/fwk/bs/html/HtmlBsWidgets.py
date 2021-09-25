@@ -1,6 +1,7 @@
 
-from epyk.core.html.Html import Component
+from epyk.core.html.Html import Component, StructComponent
 from epyk.core.html import HtmlList
+from epyk.fwk.bs.js import JsBsWidgets
 from epyk.fwk.bs.options import OptBsWidget
 
 
@@ -221,17 +222,141 @@ class BsDropdown(Component):
     return item
 
 
-class BsModal(Component):
-  css_classes = ["modal-dialog"]
+class BsModal(StructComponent):
+  css_classes = ["modal"]
+  _option_cls = OptBsWidget.Modal
   name = "Bootstrap Modal"
-  str_repr = '''<div {attrs}>{sub_items}</div>'''
-  dyn_repr = '''{sub_item}'''
+  str_repr = '''<div {attrs}><div class="modal-dialog"><div class="modal-content border-danger">{content}</div></div></div>'''
 
-  def add_title(self, header, content, prepend=False):
-    pass
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The component options.
 
-  def add_item(self, header, content, prepend=False):
-    pass
+    :rtype: OptBsWidget.Modal
+    """
+    return super().options
+
+  def add_to_header(self, content):
+    """
+    Description:
+    -----------
+    Add an item to the header section.
+
+    Attributes:
+    ----------
+    :param content: String | Component. An item to add to the header section
+    """
+    return self.add_to("header", content)
+
+  def add_to_body(self, content):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param content:
+    """
+    return self.add_to("body", content)
+
+  def add_to_footer(self, content):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param content:
+    """
+    return self.add_to("footer", content)
+
+  def write_values(self):
+    str_frg = []
+    for g in ["header", "body", "footer"]:
+      if self.items.get(g):
+        container = self.page.web.std.div(self.items[g])
+        container.add_style(["modal-%s" % g], clear_first=True)
+        container.options.managed = False
+        str_frg.append(container.html())
+    return {"content": "".join(str_frg)}
+
+
+class BsOffCanvas(StructComponent):
+  css_classes = ["offcanvas"]
+  _option_cls = OptBsWidget.OffCanvas
+  name = "Bootstrap OffCanvas"
+  str_repr = '''<div {attrs}>{content}</div>'''
+
+  _js__builder__ = '''var carousel = new bootstrap.Offcanvas(htmlObj, options)'''
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The component options.
+
+    :rtype: OptBsWidget.OffCanvas
+    """
+    return super().options
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    :rtype: JsBsWidgets.OffCanvas
+    """
+    if self._js is None:
+      self._js = JsBsWidgets.OffCanvas(self, report=self.page)
+    return self._js
+
+  def add_to_header(self, content):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param content:
+    """
+    return self.add_to("header", content)
+
+  def add_to_body(self, content):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param content:
+    """
+    return self.add_to("body", content)
+
+  def add_to_footer(self, content):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param content:
+    """
+    return self.add_to("footer", content)
+
+  def write_values(self):
+    str_frg = []
+    for g in ["header", "body", "footer"]:
+      if self.items.get(g):
+        container = self.page.web.std.div(self.items[g])
+        container.add_style(["offcanvas-%s" % g], clear_first=True)
+        container.options.managed = False
+        str_frg.append(container.html())
+    return {"content": "".join(str_frg)}
 
 
 class BsCarousel(Component):
@@ -367,3 +492,96 @@ class BsCard(Component):
     self.items.append(link)
     return link
 
+
+class BsToast(StructComponent):
+  css_classes = ["toast"]
+  name = "Bootstrap Toast"
+  _option_cls = OptBsWidget.Toast
+  str_repr = '''<div {attrs}>{content}</div>'''
+  flex_container = False
+
+  _js__builder__ = '''window[htmlObj.id] = new bootstrap.Toast(htmlObj, options)'''
+
+  @property
+  def var(self):
+    """
+    Description:
+    -----------
+    Return the JavaScript object reference after the builder.
+    """
+    return "window['%s']" % self.htmlCode
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    :rtype: JsBsWidgets.OffCanvas
+    """
+    if self._js is None:
+      self._js = JsBsWidgets.OffCanvas(self, varName=self.var)
+    return self._js
+
+  def add_to_header(self, content):
+    """
+    Description:
+    -----------
+    Add an item to the header section.
+
+    Attributes:
+    ----------
+    :param content: String | Component. An item to add to the header section.
+    """
+    return self.add_to("header", content)
+
+  def add_to_body(self, content):
+    """
+    Description:
+    -----------
+    Add an item to the body section.
+
+    Attributes:
+    ----------
+    :param content: String | Component. An item to add to the header section.
+    """
+    return self.add_to("body", content)
+
+  def add_to_footer(self, content):
+    """
+    Description:
+    -----------
+    Add an item to the body section.
+
+    Attributes:
+    ----------
+    :param content: String | Component. An item to add to the header section.
+    """
+    return self.add_to("footer", content)
+
+  def write_values(self):
+    components = []
+    for g in ["header", "body", "footer"]:
+      if self.items.get(g):
+        container = self.page.web.std.div(self.items[g])
+        container.add_style(["toast-%s" % g], clear_first=True)
+        container.options.managed = False
+        components.append(container)
+    if self.flex_container:
+      container = self.page.web.std.div(components)
+      container.add_style(["d-flex"], clear_first=True)
+      container.options.managed = False
+      d = self.page.web.bs.toasts.dismiss()
+      d.attr["class"].add("me-2")
+      d.attr["class"].add("m-auto")
+      container.add(d)
+      return {"content": container.html()}
+
+    return {"content": "".join([component.html() for component in components])}
+
+
+class BsNavBar(Component):
+  css_classes = ["navbar"]
+  name = "Bootstrap NavBar"
+  str_repr = '''<nav {attrs}><div class="container-fluid"></div></nav>'''
+  dyn_repr = '''{sub_item}'''

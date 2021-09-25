@@ -19,15 +19,15 @@ class Components:
     Attributes:
     ----------
     :param rows:
-    :param width:
-    :param height:
-    :param align:
-    :param position:
-    :param options:
-    :param profile:
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param position: String. Optional. The position compared to the main component tag.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     grid = self.page.web.std.grid(rows, position, width, height, align, options, profile)
-    grid.attr["class"].initialise(["container"])
+    grid.add_style(["container"], clear_first=True)
     return grid
 
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
@@ -35,6 +35,7 @@ class Components:
     """
     Description:
     ------------
+    Add a row container.
 
     Related Pages:
 
@@ -42,17 +43,17 @@ class Components:
 
     Attributes:
     ----------
-    :param components:
-    :param position:
-    :param width:
-    :param height:
-    :param align:
-    :param helper:
-    :param options:
-    :param profile:
+    :param components: Array<Component>. A list of HTML components.
+    :param position: String. Optional. The position compared to the main component tag.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     row = self.page.web.std.row(components, position, width, height, align, helper, options, profile)
-    row.attr["class"].initialise(["row"])
+    row.add_style(["row"], clear_first=True)
     return row
 
   def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
@@ -60,6 +61,7 @@ class Components:
     """
     Description:
     ------------
+    Add a column container.
 
     Related Pages:
 
@@ -67,14 +69,14 @@ class Components:
 
     Attributes:
     ----------
-    :param components:
-    :param position:
-    :param width:
-    :param height:
-    :param align:
-    :param helper:
-    :param options:
-    :param profile:
+    :param components: Array<Component>. A list of HTML components.
+    :param position: String. Optional. The position compared to the main component tag.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param align: String. The text-align property within this component.
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     col = self.page.web.std.col(components, position, width, height, align, helper, options, profile)
     return col
@@ -95,33 +97,22 @@ class Components:
 
     Attributes:
     ----------
-    :param components:
-    :param label:
-    :param color:
-    :param width:
-    :param icon:
-    :param height:
-    :param editable:
-    :param align:
+    :param components: Array<Component>. A list of HTML components.
+    :param label: String. Optional. The text of label to be added to the component.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param editable: Boolean. Optional.
+    :param align: String. The text-align property within this component.
     :param padding:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
-    :param position:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: String. Optional. The value to be displayed to the helper icon.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param position: String. Optional. The position compared to the main component tag.
     """
     component = self.page.web.std.div(components, label, color, width, icon, height, editable, align, padding,
                                       html_code, 'div', helper, options, profile, position)
-    component.attr["class"].initialise(["container"])
+    component.add_style(["container"], clear_first=True)
     return component
-
-  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code=None, options=None,
-             profile=None):
-    pass
-
-  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code=None,
-               options=None, profile=None):
-    pass
-
-  def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
-    pass

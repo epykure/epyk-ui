@@ -116,6 +116,7 @@ class Components:
     """
     Description:
     -----------
+    Add a simple navigation bar.
 
     Usage::
 
@@ -145,4 +146,3 @@ class Components:
       for item in items:
         component.add_item(item, active=active == item)
     return component
-

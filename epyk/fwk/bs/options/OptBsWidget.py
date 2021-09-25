@@ -1,3 +1,4 @@
+import json
 
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
@@ -107,4 +108,251 @@ class Carousel(Options):
 
   @touch.setter
   def touch(self, flag):
+    self._config(flag)
+
+
+class OffCanvas(Options):
+
+  @property
+  def show(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self._config_get(False)
+
+  @show.setter
+  def show(self, flag):
+    if flag:
+      self.component.attr["class"].add("show")
+    self._config(flag)
+
+  @property
+  def backdrop(self):
+    """
+    Description:
+    -----------
+    Apply a backdrop on body while offcanvas is open.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self.component.attr.get("data-bs-backdrop")
+
+  @backdrop.setter
+  def backdrop(self, flag):
+    self.component.attr["data-bs-backdrop"] = json.dumps(flag)
+
+  @property
+  def scroll(self):
+    """
+    Description:
+    -----------
+    Allow body scrolling while offcanvas is open.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self.component.attr.get("data-bs-scroll")
+
+  @scroll.setter
+  def scroll(self, flag):
+    self.component.attr["data-bs-scroll"] = json.dumps(flag)
+
+  @property
+  def keyboard(self):
+    """
+    Description:
+    -----------
+    Closes the offcanvas when escape key is pressed.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self.component.attr.get("data-bs-keyboard")
+
+  @keyboard.setter
+  def keyboard(self, flag):
+    self.component.attr["data-bs-keyboard"] = json.dumps(flag)
+
+
+class Modal(Options):
+
+  @property
+  def fade(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self._config_get(False)
+
+  @fade.setter
+  def fade(self, flag):
+    if flag:
+      self.component.attr["class"].add("fade")
+      self.component.attr["aria-hidden"] = True
+    self._config(flag)
+
+  @property
+  def focus(self):
+    """
+    Description:
+    -----------
+    Puts the focus on the modal when initialized.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self.component.attr.get("data-bs-focus")
+
+  @focus.setter
+  def focus(self, flag):
+    self.component.attr["data-bs-focus"] = json.dumps(flag)
+
+  @property
+  def keyboard(self):
+    """
+    Description:
+    -----------
+    Closes the modal when escape key is pressed.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+    """
+    return self.component.attr.get("data-bs-keyboard")
+
+  @keyboard.setter
+  def keyboard(self, flag):
+    self.component.attr["data-bs-keyboard"] = json.dumps(flag)
+
+  @property
+  def backdrop(self):
+    """
+    Description:
+    -----------
+    Includes a modal-backdrop element. Alternatively, specify static for a backdrop which doesn't close the modal
+    on click.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/modal/#options
+    """
+    return self.component.attr.get("data-bs-backdrop")
+
+  @backdrop.setter
+  def backdrop(self, flag):
+    self.component.attr["data-bs-backdrop"] = json.dumps(flag)
+
+  @property
+  def scroll(self):
+    """
+    Description:
+    -----------
+    Allow the scrolling for long content.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/modal/#scrolling-long-content
+    """
+    return self._config_get(False)
+
+  @scroll.setter
+  def scroll(self, flag):
+    if flag:
+      self.component.attr["class"].add("modal-dialog-scrollable")
+    self._config(flag)
+
+  @property
+  def centered(self):
+    """
+    Description:
+    -----------
+    Vertically center the modal.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/modal/
+    """
+    return self._config_get(False)
+
+  @centered.setter
+  def centered(self, flag):
+    if flag:
+      self.component.attr["class"].add("modal-dialog-centered")
+    self._config(flag)
+
+  def size(self, breakpoint):
+    """
+    Description:
+    -----------
+    Set the size for the modal.
+
+    Attributes:
+    ----------
+    :param breakpoint: String. The alias for the bootstrap breakpoint.
+    """
+    self.component.attr["class"].add("modal-%s" % breakpoint)
+
+  def full_screen(self, breakpoint):
+    """
+    Description:
+    -----------
+    Set the size for the modal in full screen mode.
+
+    Attributes:
+    ----------
+    :param breakpoint: String. The alias for the bootstrap breakpoint.
+    """
+    self.component.attr["class"].add("modal-fullscreen-%s-down" % breakpoint)
+
+
+class Toast(Options):
+
+  @property
+  def show(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/toasts/
+    """
+    return self._config_get(False)
+
+  @show.setter
+  def show(self, flag):
+    if flag:
+      self.component.attr["class"].add("show")
+    self._config(flag)
+
+  @property
+  def hide(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/toasts/
+    """
+    return self._config_get(False)
+
+  @hide.setter
+  def hide(self, flag):
+    if flag:
+      self.component.attr["class"].add("hide")
     self._config(flag)

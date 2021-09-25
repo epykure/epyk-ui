@@ -70,9 +70,9 @@ class Components:
     ----------
     :param records:
     :param text:
-    :param width:
-    :param height:
-    :param html_code:
+    :param width: Tuple. Optional. Integer for the component width.
+    :param height: Tuple. Optional. Integer for the component height.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -220,11 +220,11 @@ class Components:
     Attributes:
     ----------
     :param values:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. Integer for the component width.
+    :param height: Tuple. Optional. Integer for the component height.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     options = options or {}
     options["li_class"] = ["list-group-item", "d-flex", "justify-content-between", "align-items-center"]
@@ -250,7 +250,7 @@ class Components:
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
-    :param html_code:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """

@@ -7,7 +7,7 @@ class Components:
   def __init__(self, ui):
     self.page = ui.page
 
-  def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"), align="left",
+  def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
              html_code=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -32,15 +32,15 @@ class Components:
     :param category: String. Optional. The Bootstrap predefined category.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: String. Optional. The tooltip text.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     button = self.page.web.std.button(text, icon=icon, width=width, height=height, html_code=html_code, tooltip=tooltip,
-                                      align=align, options=options, profile=profile)
-    button.attr["class"].initialise(["btn"])
+                                      align=None, options=options, profile=profile)
+    button.add_style(["btn"], {"width": "%s%s" % (width[0], width[1]), "height": "%s%s" % (height[0], height[1])},
+                     clear_first=True)
     if category is not None:
       button.attr["class"].add("btn-%s" % category)
     return button
@@ -210,8 +210,8 @@ class Components:
       tooltip=tooltip, profile=profile, options=options)
     return btn
 
-  def close(self, text="", width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-            tooltip=None, profile=None, options=None):
+  def close(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip=None, profile=None,
+            options=None):
     """
     Description:
     -----------
@@ -226,13 +226,12 @@ class Components:
     :param text: String. Optional. The value to be displayed to the button.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param tooltip: String. Optional. The tooltip text.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    btn = self.button(text, width=width, height=height, align=align, html_code=html_code, tooltip=tooltip,
+    btn = self.button(text, width=width, height=height, html_code=html_code, tooltip=tooltip,
                       profile=profile, options=options)
     btn.attr["class"].initialise(["btn-close"])
     btn.style.clear_style()

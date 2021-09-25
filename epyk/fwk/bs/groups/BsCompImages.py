@@ -42,8 +42,8 @@ class Components:
       component.attr["class"].add("img-thumbnail")
     return component
 
-  def badge(self, text="", category="primary", width=(None, "px"), height=(None, "px"),
-            tooltip=None, options=None, profile=None):
+  def badge(self, text="", category="primary", width=(None, "px"), height=(None, "px"), tooltip=None, options=None,
+            profile=None):
     """
     Description:
     -----------
@@ -71,8 +71,8 @@ class Components:
       component.attr["class"].add("bg-%s" % category)
     return component
 
-  def pill(self, text="", category="primary", icon=None, width=(None, "px"), height=(None, "px"),
-           tooltip=None, options=None, profile=None):
+  def pill(self, text="", category="primary", icon=None, width=(None, "px"), height=(None, "px"), tooltip=None,
+           options=None, profile=None):
     """
     Description:
     -----------
@@ -110,8 +110,8 @@ class Components:
       component.attr["class"].add("bg-%s" % category)
     return component
 
-  def carousel(self, images=None, active=None, width=(100, "%"), height=(300, "px"), html_code=None,
-               options=None, profile=None):
+  def carousel(self, images=None, active=None, width=(100, "%"), height=(300, "px"), html_code=None, options=None,
+               profile=None):
     """
     Description:
     -----------

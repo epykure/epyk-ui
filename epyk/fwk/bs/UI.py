@@ -112,7 +112,8 @@ class Components:
     timepicker.options.formats.time_only()
     return timepicker
 
-  def loading(self, text="Loading...", width=(None, "%"), height=(None, "%"), category=None, options=None, profile=None):
+  def loading(self, text="Loading...", width=(None, "%"), height=(None, "%"), category=None, options=None,
+              profile=None):
     """
     Description:
     ------------
@@ -200,6 +201,15 @@ class Components:
     return groups.BsCompFields.Components(self)
 
   @property
+  def texts(self):
+    """
+    Description:
+    ------------
+
+    """
+    return groups.BsCompFields.TextComponents(self)
+
+  @property
   def tables(self):
     """
     Description:
@@ -242,6 +252,19 @@ class Components:
     return groups.BsCompBtns.Components(self)
 
   @property
+  def toasts(self):
+    """
+    Description:
+    ------------
+    Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/toasts/
+    """
+    return groups.BsCompToasts.Components(self)
+
+  @property
   def sliders(self):
     """
     Description:
@@ -261,6 +284,8 @@ class Components:
   @property
   def inputs(self):
     """
+    Description:
+    ------------
     """
     return groups.BsCompInputs.Components(self)
 
@@ -291,20 +316,45 @@ class Components:
 
     Usage::
 
+      oc = page.web.bs.modals.success("Content", "Title")
+      oc.options.scroll = True
+      page.web.bs.modals.button(oc, "Open")
     """
     return groups.BsCompModals.Components(self)
 
   @property
-  def vignets(self):
+  def offcanvas(self):
     """
     Description:
     ------------
+    Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications,
+    or completely custom content.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.1/components/modal/
 
     Usage::
 
+    """
+    return groups.BsCompModals.OffComponents(self)
+
+  @property
+  def navbars(self):
+    """
+    Description:
+    ------------
+    Documentation and examples for Bootstrap’s powerful, responsive navigation header, the navbar.
+    Includes support for branding, navigation, and more, including support for our collapse plugin.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/navbar/
+
+    Usage::
 
     """
-    return groups.BsCompVignets.Components(self)
+    return groups.BsCompNavs.Components(self)
 
   @property
   def panels(self):
@@ -400,3 +450,140 @@ class Components:
       for v in values:
         component.add_section(v, active=v==active)
     return component
+
+  def offcanva(self, values=None, position="start", html_code=None, width=(100, "%"), height=(None, "%"), profile=None,
+               options=None):
+    """
+    Description:
+    ------------
+    Add an off canvas panel.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+
+    Usage::
+
+      oc = page.web.bs.offcanvas(["AAA", "BBB"])
+
+    Attributes:
+    ----------
+    :param values: Dictionary. Optional. Title: content.
+    :param position: String. Optional. The offcanvas position in the page.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsOffCanvas(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    component.add_style(["offcanvas-%s" % position])
+    component.attr["aria-labelledby"] = "offcanvasLabel"
+    component.attr["tabindex"] = "-1"
+    component.add_to_header(self.page.web.bs.offcanvas.dismiss(component))
+    if values is not None:
+      for v in values:
+        component.add_to_body(v)
+    return component
+
+  def modal(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None,
+            options=None):
+    """
+    Description:
+    ------------
+    Add an off canvas panel.
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/offcanvas/
+
+    Usage::
+
+      oc = page.web.bs.offcanvas(["AAA", "BBB"])
+
+    Attributes:
+    ----------
+    :param values: Dictionary. Optional. Title: content.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsModal(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    if values is not None:
+      for v in values:
+        component.add_to_body(v)
+    component.attr["tabindex"] = "-1"
+    component.options.fade = True
+    return component
+
+  def navbar(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param values:
+    :param html_code:
+    :param width:
+    :param height:
+    :param profile:
+    :param options:
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsNavBar(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    component.attr["aria-labelledby"] = "offcanvasLabel"
+    component.attr["tabindex"] = "-1"
+    component.add_to_header(self.page.web.bs.offcanvas.dismiss(component))
+    if values is not None:
+      for v in values:
+        component.add_to_body(v)
+    return component
+
+  def scrollspy(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+    pass
+
+  def toast(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+    """
+    Description:
+    -----------
+    Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
+
+    Usage::
+
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/5.0/components/toasts/
+
+    Attributes:
+    ----------
+    :param values: List<Component>. Optional. Components added to the body.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    component = HtmlBsWidgets.BsToast(
+      self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
+    component.attr["role"] = "alert"
+    component.aria.live = "assertive"
+    component.aria.atomic = "true"
+    if values is not None:
+      for v in values:
+        component.add_to_body(v)
+    return component
+
