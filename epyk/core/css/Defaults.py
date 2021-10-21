@@ -232,6 +232,7 @@ ICON_MAPPINGS = {
     "question": 'fas fa-question-circle',
     "google_plus": 'fab fa-google-plus',
     "circle": 'fas fa-circle',
+    'user': 'fas fa-user-tie'
   }
 }
 

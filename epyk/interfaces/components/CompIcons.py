@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.interfaces import Arguments
+from epyk.core.css import Colors
 from epyk.core.css import Defaults as Defaults_css
 
 
@@ -1337,7 +1338,7 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def signin(self, text, width=(40, "px"), icon=None):
+  def signin(self, text, width=(40, "px"), icon=None, colored=True):
     """
     Description:
     ------------
@@ -1359,9 +1360,13 @@ class Icons:
     :param text:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param icon: String. Optional. The component icon content from font-awesome references.
+    :param colored: Boolean. Optional.
     """
     width = Arguments.size(width, unit="px")
     bar = html.HtmlEvent.SignIn(self.page, text, width, icon)
+    if colored:
+      bar.style.css.color = "white"
+      bar.style.css.background = Colors.randColor(self.page.py.hash(text))
     return bar
 
   @html.Html.css_skin()

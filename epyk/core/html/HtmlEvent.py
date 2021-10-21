@@ -728,12 +728,13 @@ class SignIn(Html.Html):
     super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
     self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
     self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
-              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]),
+              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "display": "inline-block",
               "border": "1px solid %s" % self.page.theme.colors[3], 'cursor': 'pointer'})
 
   def __str__(self):
     if not hasattr(self.page, 'user') or self.page.user == 'local':
-      self.attr["class"].add(self.icon or "fas fa-user-tie")
+      icon_details = cssDefaults.get_icon(self.icon or "user")
+      self.attr["class"].add(icon_details["icon"])
       self.style.css.font_family = "Font Awesome 5 Free"
       self.style.css.padding = "2px"
       self.style.css.font_size = self.size
@@ -742,8 +743,8 @@ class SignIn(Html.Html):
 
     return '''
       <div title="%(user)s" %(attrs)s>
-        <p style="font-size:%(size)s;margin-top:-2px">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self.page.user,
+        <p style="font-size:%(size)s;line-height:%(height)s;margin:0;padding:0">%(letter)s</p>
+      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self._report.user[0].upper(), 'user': self.page.user,
                     'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 

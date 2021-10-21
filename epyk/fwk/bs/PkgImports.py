@@ -98,4 +98,5 @@ ICON_MAPPINGS = {
   "question": None,
   "google_plus": None,
   "circle": None,
+  'user': None
 }

@@ -98,7 +98,7 @@ class HtmlNavBar(Html.Html):
     self.style.css.background_color = self._report.theme.colors[0]
     self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
 
-  def add_right(self, component, css=None):
+  def add_right(self, component, css=None, prepend=False):
     """
     Description:
     -----------
@@ -106,8 +106,9 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. Internal component to the framework
-    :param css: Dictionary. Optional. The CSS attributes
+    :param component: HTML. Internal component to the framework.
+    :param css: Dictionary. Optional. The CSS attributes.
+    :param prepend: Boolean. Optional.
     """
     if not hasattr(component, 'options'):
       component = self._report.ui.text(component, width=("auto", ''))
@@ -126,7 +127,10 @@ class HtmlNavBar(Html.Html):
       self._right.style.css.font_factor(0)
       self._right.options.managed = False
       self._vals.append(self._right)
-    self._right.add(component)
+    if prepend:
+      self._right.insert(0, component)
+    else:
+      self._right.add(component)
     self.buttons.append(component)
     return self
 

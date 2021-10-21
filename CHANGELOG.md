@@ -1,15 +1,23 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.6.4] - 2021-10-21
+
+### Added
 - Popper package upgrade.
 - Change Div container tag.
 - Extra DOM functions
+- First version for the integration of the external frameworks Fluent UI, Toast UI, BootStrap and Material UI
 
 ### Changed
 - Improve BS components.
 - New Icon setup to allow different Icon families.
-
-### Fixed
 
 
 ## [1.6.3] - 2021-09-12

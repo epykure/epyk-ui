@@ -47,8 +47,9 @@ from epyk.fwk.toast import UI as ToastUI
 from epyk.fwk.clr import UI as ClarityUI
 from epyk.fwk.evr import UI as EvergreenUI
 from epyk.fwk.bs import UI as BoostrapUI
-from epyk.fwk.mt import UI as MaterialUI
+from epyk.fwk.mdc import UI as MaterialUI
 from epyk.fwk.jqui import UI as JqueryUI
+from epyk.fwk.ftw import UI as FluentUI
 
 
 class Components:
@@ -1271,7 +1272,7 @@ class WebComponents:
     return self.fwks["bs"]
 
   @property
-  def mt(self):
+  def mdc(self):
     """
     Description:
     ------------
@@ -1284,14 +1285,15 @@ class WebComponents:
     Related Pages:
 
       https://material.io/develop/web/
+      https://material.io/components?platform=web
 
     :rtype: MaterialUI.Components
 
     :return: Python HTML object
     """
-    if 'mt' not in self.fwks:
-      self.fwks["mt"] = MaterialUI.Components(self.page)
-    return self.fwks["mt"]
+    if 'mdc' not in self.fwks:
+      self.fwks["mdc"] = MaterialUI.Components(self.page)
+    return self.fwks["mdc"]
 
   @property
   def tui(self):
@@ -1353,3 +1355,28 @@ class WebComponents:
     if 'evr' not in self.fwks:
       self.fwks["evr"] = EvergreenUI.Components(self.page)
     return self.fwks["evr"]
+
+  @property
+  def ftw(self):
+    """
+    Description:
+    ------------
+    Simple components that focus on appearance and styling while showing the visual language of Office.
+
+    Usage::
+
+      page.web.ftw.check(label="Test Checkbox")
+      page.web.ftw.check(label="Test Checkbox 2")
+      page.web.ftw.buttons.small("Test Checkbox 2")
+      page.web.ftw.icon("add")
+      page.web.ftw.toggle(True)
+      page.web.ftw.loading("add", options={"large": True})
+      select = page.web.ftw.lists.select(selected="value 2")
+      data = ["value 1", "value 2", "value 3"]
+      select.data = select.parsers.from_list(data)
+
+    :rtype: FluentUI.Components
+    """
+    if 'ftw' not in self.fwks:
+      self.fwks["ftw"] = FluentUI.Components(self.page)
+    return self.fwks["ftw"]

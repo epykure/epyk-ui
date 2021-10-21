@@ -1647,21 +1647,6 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'apexcharts.css', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
-  # material design icons
-  'material-design-icons': {
-    'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons', 'npm_path': 'iconfont'},
-    'modules': [{'script': 'material-icons.css', 'version': '3.0.2',
-                 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
-    'assets': [
-      {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.2',
-       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-      {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.2',
-       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-      {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.2',
-       'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
-    ],
-    'website': 'https://google.github.io/material-design-icons/'},
-
   # fluent ui icons
   'office-ui-fabric-core': {
     'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
