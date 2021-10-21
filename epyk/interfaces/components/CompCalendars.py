@@ -291,7 +291,7 @@ class Calendar:
     return self.page.ui.grid([row], position=position, profile=profile)
 
   @html.Html.css_skin()
-  def google(self, task, start, end, details=None, location=None, icon="fab fa-google-plus",
+  def google(self, task, start, end, details=None, location=None, icon="google_plus",
              text="Add to Google Calendar", options=None, profile=None):
     """
     Description:
@@ -343,7 +343,7 @@ class Calendar:
     return link
 
   @html.Html.css_skin()
-  def agenda(self, task, start, end, details=None, location=None, icon="far fa-calendar-alt", text="Add to Calendar",
+  def agenda(self, task, start, end, details=None, location=None, icon="calendar", text="Add to Calendar",
              options=None, profile=None):
     """
     Description:
@@ -381,7 +381,7 @@ class Calendar:
                       'DESCRIPTION': details or '', 'STATUS': 'CONFIRMED', 'SEQUENCE': 3}
 
     str_calendar = "BEGIN:VCALENDAR\n%s\n%%s\nEND:VCALENDAR" % "\n".join(["%s:%s" % (k, v) for k, v in calendar_options.items()])
-    str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT"% "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
+    str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT" % "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
 
     link = self.page.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (
       self.page.body.style.globals.font.normal(5), self.page.theme.greys[-1], icon, text), str_calendar % str_event,

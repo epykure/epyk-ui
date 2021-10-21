@@ -7,6 +7,7 @@
 
 ### Changed
 - Improve BS components.
+- New Icon setup to allow different Icon families.
 
 ### Fixed
 

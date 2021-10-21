@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Icons:
@@ -21,6 +22,8 @@ class Icons:
     """
     Description:
     ------------
+    Generic function to create icon components. Default icon library used is font awesome but this might change
+    depending on the web framework used.
 
     Usage::
 
@@ -37,20 +40,23 @@ class Icons:
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon reference
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: String. Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param icon: String. The font awesome icon reference.
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: String. Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    icon_details = Defaults_css.get_icon(icon)
+    options = options or {}
+    options["icon_family"] = icon_details["icon_family"]
     html_edit = html.HtmlButton.IconEdit(
-      self.page, position, icon, text, tooltip, width, height, html_code, options or {}, profile)
+      self.page, position, icon_details["icon"], text, tooltip, width, height, html_code, options, profile)
     html_edit.css({"margin": 0, 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
@@ -76,8 +82,8 @@ class Icons:
     ----------
     :param icon: String. The fluentui icon reference.
     :param text: String. Optional. The text to be displayed to this component. Default None.
-    :param position: Optional. The position of the icon in the line (left, right, center).
-    :param tooltip: Optional. A string with the value of the tooltip.
+    :param position: String. Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -86,8 +92,11 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    html_edit = html.HtmlButton.IconEdit(self.page, position, icon, text, tooltip, width, height, html_code,
-                                         options or {}, profile)
+    icon_details = Defaults_css.get_icon(icon)
+    options = options or {}
+    options["icon_family"] = icon_details["icon_family"]
+    html_edit = html.HtmlButton.IconEdit(
+      self.page, position, icon_details["icon"], text, tooltip, width, height, html_code, options, profile)
     html_edit.css({"margin": "5px 0", 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
@@ -96,6 +105,19 @@ class Icons:
   @html.Html.css_skin()
   def fixed(self, icon=None, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
             tooltip=None, align="left", options=None, profile=None):
+    """
+
+    :param icon:
+    :param family:
+    :param width:
+    :param html_code:
+    :param height:
+    :param color:
+    :param tooltip:
+    :param align:
+    :param options:
+    :param profile:
+    """
     options = options or {}
     component = self.page.ui.icon(icon, family, width, html_code, height, color, tooltip, align, options, profile)
     component.style.css.fixed(bottom=options.get("bottom", 20), right=options.get("right", 20))
@@ -126,16 +148,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('far fa-edit', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome('edit', text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
@@ -159,16 +181,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-clock', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome('clock', text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
@@ -181,16 +203,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: String. Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-caret-right', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('next', text, tooltip, position, width, height, html_code, options, profile)
     components.icon.style.css.font_factor(10)
     return components
 
@@ -205,16 +227,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-caret-left', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('previous', text, tooltip, position, width, height, html_code, options, profile)
     components.icon.style.css.font_factor(10)
     return components
 
@@ -232,17 +254,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome(
-      'fas fa-play', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('play', text, tooltip, position, width, height, html_code, options, profile)
     return components
 
   @html.Html.css_skin()
@@ -259,17 +280,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome(
-      'fas fa-stop', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('stop', text, tooltip, position, width, height, html_code, options, profile)
     return components
 
   @html.Html.css_skin()
@@ -283,17 +303,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome(
-      'fas fa-search-minus', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('zoom_out', text, tooltip, position, width, height, html_code, options, profile)
     components.style.css.color = self.page.theme.greys[-6]
     return components
 
@@ -309,16 +328,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-search-plus', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('zoom_in', text, tooltip, position, width, height, html_code, options, profile)
     components.style.css.color = self.page.theme.greys[-6]
     return components
 
@@ -333,17 +352,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome(
-      'fas fa-exclamation-triangle', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome("warning", text, tooltip, position, width, height, html_code, options, profile)
     components.style.css.color = self.page.theme.warning[1]
     return components
 
@@ -358,16 +376,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-stop-circle', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome("danger", text, tooltip, position, width, height, html_code, options, profile)
     components.style.css.color = self.page.theme.danger[1]
     return components
 
@@ -382,17 +400,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('fas fa-exclamation-triangle', text, tooltip, position, width, height, html_code,
-                              options, profile)
+    components = self.awesome("error", text, tooltip, position, width, height, html_code, options, profile)
     components.style.css.color = self.page.theme.danger[1]
     return components
 
@@ -407,17 +424,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome(
-      'fas fa-question-circle', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome("info", text, tooltip, position, width, height, html_code, options, profile)
     return components
 
   @html.Html.css_skin()
@@ -432,16 +448,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome("fas fa-save", text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("save", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
@@ -462,16 +478,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-sync-alt', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("refresh", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
@@ -491,16 +507,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('far fa-file-pdf', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("pdf", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
@@ -520,16 +536,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-plus-square', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("plus", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
@@ -549,16 +565,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('far fa-file-excel', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("excel", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
@@ -578,16 +594,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-download', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("download", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def delete(self, text=None, position=None, align='left', tooltip="Delete Component on the page", width=(None, 'px'),
@@ -607,17 +623,17 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
     :param tooltip: Optional. A string with the value of the tooltip.
     :param align: String. The text-align property within this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('far fa-trash-alt', text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("delete", text, tooltip, position, width, height, html_code, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
@@ -641,16 +657,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-search-plus', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("zoom", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
@@ -670,16 +686,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-clipboard', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("capture", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
@@ -699,16 +715,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('fas fa-times-circle', text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("remove", text, tooltip, position, width, height, html_code, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     return component
@@ -732,17 +748,17 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
+    :param text: String. Optional. The text to be displayed to this component. Default None.
     :param align:
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('fas fa-eraser', text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("clear", text, tooltip, position, width, height, html_code, options, profile)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
@@ -766,15 +782,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-table', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("table", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
@@ -794,16 +811,16 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.awesome('fas fa-wrench', text, tooltip, position, width, height, html_code, options, profile)
+    return self.awesome("wrench", text, tooltip, position, width, height, html_code, options, profile)
 
   @html.Html.css_skin()
   def rss(self, text="RSS", position=None, align="left", tooltip="", width=('auto', ''), height=(25, 'px'),
@@ -823,17 +840,17 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text to be displayed to this component. Default None
-    :param position: Optional. The position of the icon in the line (left, right, center)
-    :param tooltip: Optional. A string with the value of the tooltip
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, html_code, options, profile)
+    icon = self.awesome("rss", text, tooltip, position, width, height, html_code, options, profile)
     icon.style.css.color = "#cc9547"
     icon.style.css.display = "inline-block"
     icon.icon.style.css.font_size = self.page.body.style.globals.font.normal(5)
@@ -866,8 +883,8 @@ class Icons:
     :param text:
     :param url:
     :param position:
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -875,7 +892,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("facebook", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding-bottom': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -904,13 +921,13 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {"target": "_blank", "font-factor": self.page.body.style.globals.font.size - 6}
-    icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("messenger", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0078FF', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -939,7 +956,7 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -947,7 +964,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("twitter", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -976,7 +993,7 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -984,8 +1001,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome(
-      'fab fa-twitch', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("twitch", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#6441a5', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1014,7 +1030,7 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1022,8 +1038,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome(
-      'fab fa-instagram-square', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("instagram", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '0px 3px 5px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1052,8 +1067,8 @@ class Icons:
     :param text: String. Optional. The text for the Icon.
     :param url: String. Optional. The url when clicked.
     :param position:
-    :param tooltip: String. Optional. The tooltip when the mouse is hove.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param tooltip: String. Optional. The tooltip when the mouse is hover.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1061,8 +1076,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome(
-      'fab fa-linkedin-in', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("linkedIn", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1091,7 +1105,7 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1099,8 +1113,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome(
-      'fab fa-youtube', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("youtube", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px 3px 8px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1108,8 +1121,8 @@ class Icons:
     return icon
 
   @html.Html.css_skin()
-  def github(self, text=None, url="https://github.com/epykure/epyk-ui", position=None, tooltip="Go the the Github project",
-             width=(None, 'px'), html_code=None, options=None, profile=None):
+  def github(self, text=None, url="https://github.com/epykure/epyk-ui", position=None,
+             tooltip="Go the the Github project", width=(None, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -1131,13 +1144,13 @@ class Icons:
     :param url: String. Optional. The url link.
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {"target": "_blank", "font-factor": -2}
-    icon = self.awesome('fab fa-github', text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("github", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"text-align": "center", "line-height": '%s%s' % (self.page.body.style.globals.font.size, 'px')})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1166,13 +1179,13 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome(
-      "fab fa-python", text, tooltip, position, width if text is None else "auto", None, html_code, options, profile)
+    icon = self.awesome("python", text, tooltip, position, width if text is None else "auto", None, html_code,
+      options, profile)
     icon.css({"border-radius": "%spx" % width[0], "padding-bottom": "3px", "text-align": "center",
               "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
@@ -1202,12 +1215,12 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("fab fa-stack-overflow", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("stackoverflow", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1237,12 +1250,12 @@ class Icons:
     :param url:
     :param position:
     :param tooltip:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("far fa-envelope", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("envelope", text, tooltip, position, width, width, html_code, options, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1266,15 +1279,15 @@ class Icons:
 
     Attributes:
     ----------
-    :param flag: Boolean. The state for the tick component
-    :param text: String. optional. The text for this component. Default none
-    :param icons: Tuple. Optional. The two icons to use for the component state
-    :param position: String. Optional. A string with the vertical position of the component
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param flag: Boolean. Optional. The state for the tick component.
+    :param text: String. optional. The text for this component. Default none.
+    :param icons: Tuple. Optional. The two icons to use for the component state.
+    :param position: String. Optional. A string with the vertical position of the component.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     dftl_options = {"true": icons[0], "false": icons[1]}
@@ -1309,8 +1322,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param format: String. Optional. The type of component (logo, small...)
+    :param align: String. Optional. A string with the horizontal position of the component.
+    :param format: String. Optional. The type of component (logo, small...).
     """
     if format == 'logo':
       img, width, height = "epyklogo.ico", (32, 'px'), (32, 'px')
@@ -1344,8 +1357,8 @@ class Icons:
     Attributes:
     ----------
     :param text:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param icon: String. Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param icon: String. Optional. The component icon content from font-awesome references.
     """
     width = Arguments.size(width, unit="px")
     bar = html.HtmlEvent.SignIn(self.page, text, width, icon)
@@ -1369,11 +1382,11 @@ class Icons:
     Attributes:
     ----------
     :param records:
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -1394,12 +1407,12 @@ class Icons:
 
     Attributes:
     ----------
-    :param img: String. The image full path
-    :param name: String. Optional.The tooltip name
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param img: String. The image full path.
+    :param name: String. Optional.The tooltip name.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     img = img.replace("\\", "/")
     if height[0] is None:
@@ -1439,13 +1452,13 @@ class Icons:
 
     Attributes:
     ----------
-    :param text: The content of the badge
-    :param icon: Optional, A String with the icon to display from font-awesome
-    :param background_color: Optional, The background color of the badge
-    :param color: Optional, The text color of the badge
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param url:
+    :param text: String. Optional. The content of the badge.
+    :param icon: String. Optional. A String with the icon to display from font-awesome.
+    :param background_color: String. Optional. The background color of the badge.
+    :param color: String. Optional. The text color of the badge.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param url: String. Optional.
     :param tooltip: String. Optional. The text to display in the tooltip.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1456,12 +1469,12 @@ class Icons:
       background_color = self.page.theme.greys[0]
     if color is None:
       color = self.page.theme.success[1]
-    html_badge = html.HtmlImage.Badge(self.page, text, width, height, None, icon, background_color, color,
-                                      url, tooltip, options or {}, profile)
+    html_badge = html.HtmlImage.Badge(
+      self.page, text, width, height, None, icon, background_color, color, url, tooltip, options or {}, profile)
     return html_badge
 
   @html.Html.css_skin()
-  def date(self, value=None, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
+  def date(self, value=None, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),
            html_code=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -1495,11 +1508,13 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    icon_details = Defaults_css.get_icon(icon)
+    dftl_options = {'dateFormat': 'yy-mm-dd', "icon_family": icon_details["icon_family"]}
     if options is not None:
       dftl_options.update(options)
     html_dt = html.HtmlDates.DatePicker(
-      self.page, value, label, icon, width, height, color, html_code, profile, dftl_options, helper)
+      self.page, value, label, icon_details["icon"], width, height, color, html_code, profile, dftl_options,
+      helper)
     html_dt.input.style.css.width = 0
     html_dt.input.style.css.min_width = 0
     html_dt.input.style.css.border = 0
@@ -1507,7 +1522,7 @@ class Icons:
     return html_dt
 
   @html.Html.css_skin()
-  def timer(self, time, js_funcs, icon="far fa-clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
+  def timer(self, time, js_funcs, icon="clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -1517,11 +1532,11 @@ class Icons:
 
     Attributes:
     ----------
-    :param time: Integer. Interval time in second
-    :param js_funcs: String | List. The Javascript functions
-    :param icon: String. The font awesome icon reference
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param time: Integer. Interval time in second.
+    :param js_funcs: String | List. The Javascript functions.
+    :param icon: String. The font awesome icon reference.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1537,10 +1552,10 @@ class Icons:
       t.attr["data-active"] = 0
     t.click([
       self.page.js.if_(t.dom.getAttribute("data-active") == 1, [
-        t.icon.dom.removeClass("fa-spin").r, t.dom.setAttribute("data-active", 0),
+        t.icon.dom.removeClass(Defaults_css.get_icon("spin")["icon"]).r, t.dom.setAttribute("data-active", 0),
         self.page.js.window.clearInterval("%s_timer" % t.htmlCode)
       ]).else_([
-        t.icon.dom.addClass("fa-spin"), t.dom.setAttribute("data-active", 1),
+        t.icon.dom.addClass(Defaults_css.get_icon("spin")["icon"]), t.dom.setAttribute("data-active", 1),
         self.page.js.window.setInterval(js_funcs, "%s_timer" % t.htmlCode, time)
       ]),
     ])
@@ -1560,12 +1575,12 @@ class Icons:
     ----------
     :param icon:
     :param family:
-    :param width:
-    :param height:
-    :param html_code:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param color:
     :param tooltip:
-    :param align:
+    :param align: String. Optional. The text-align property within this component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1611,8 +1626,8 @@ class Icons:
     div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
     for d in data:
       div.add(self.page.ui.icons.awesome(
-        icon=d["icon"], tooltip=d.get("tooltip", ""), width=self.page.body.style.globals.icon.normal,
-        options=options, profile=profile))
+        icon=d["icon"], tooltip=d.get("tooltip", ""),
+        width=self.page.body.style.globals.icon.normal, options=options, profile=profile))
       div[-1].style.css.margin_right = dflt_options["margin-right"]
       div[-1].style.css.color = self.page.theme.greys[5]
       div[-1].style.add_classes.div.color_hover()
@@ -1765,7 +1780,7 @@ class Toggles:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def collapse(self, icon_on="fas fa-compress", icon_off="fas fa-expand", family=None, width=(None, 'px'),
+  def collapse(self, icon_on="compress", icon_off="fas fa-expand", family=None, width=(None, 'px'),
                html_code=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
     """
     Description:
@@ -1785,22 +1800,22 @@ class Toggles:
 
     Attributes:
     ----------
-    :param icon_on: String. Optional. The component icon content from font-awesome references
-    :param icon_off: String. Optional. The component icon content from font-awesome references
-    :param family:
+    :param icon_on: String. Optional. The component icon content from font-awesome references.
+    :param icon_off: String. Optional. The component icon content from font-awesome references.
+    :param family: String. Optional. The Icon library reference.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param align: String. Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. Optional. The text-align property within this component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
     options = options or {}
-    options['icon_family'] = family or 'font-awesome'
+    options['icon_family'] = family or Defaults_css.ICON_FAMILY
     html_icon = html.HtmlImage.IconToggle(
       self.page, icon_on, width=width, height=height, color=color, tooltip=tooltip, options=options,
       html_code=html_code, profile=profile)
@@ -1809,7 +1824,7 @@ class Toggles:
     return html_icon
 
   @html.Html.css_skin()
-  def lock(self, icon_on="fas fa-lock-open", icon_off="fas fa-lock", family=None, width=(None, 'px'), html_code=None,
+  def lock(self, icon_on="lock_open", icon_off="fas fa-lock", family=None, width=(None, 'px'), html_code=None,
            height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
     """
     Description:
@@ -1830,22 +1845,22 @@ class Toggles:
 
     Attributes:
     ----------
-    :param icon_on: String. Optional. The component icon content from font-awesome references
-    :param icon_off: String. Optional. The component icon content from font-awesome references
-    :param family:
+    :param icon_on: String. Optional. The component icon content from font-awesome references.
+    :param icon_off: String. Optional. The component icon content from font-awesome references.
+    :param family: String. Optional. The Icon library reference.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param tooltip: String. Optional. A string with the value of the tooltip
-    :param align: String. Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param color: String. Optional. The font color in the component. Default inherit.
+    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param align: String. Optional. The text-align property within this component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
     options = options or {}
-    options['icon_family'] = family or 'font-awesome'
+    options['icon_family'] = family or Defaults_css.ICON_FAMILY
     html_icon = html.HtmlImage.IconToggle(self.page, icon_on, width=width, height=height, color=color,
                                           tooltip=tooltip, options=options, html_code=html_code, profile=profile)
     html_icon.icon_on = icon_on

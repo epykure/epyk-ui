@@ -178,6 +178,80 @@ def em_to_px(value, with_unit=True):
 #
 DEFAULT_STYLE = "no_border"
 ICON_FAMILY = 'font-awesome'
+ICON_MAPPINGS = {
+  "font-awesome": {
+    "danger": "fas fa-stop-circle",
+    "error": 'fas fa-exclamation-triangle',
+    "search": "fas fa-search",
+    "times": "fas fa-times",
+    "close": "fas fa-times-circle",
+    "upload": "fas fa-upload",
+    "word": "fa-file-word",
+    "csv": "fas fa-file-csv",
+    "code": "far fa-file-code",
+    "download": "fas fa-file-download",
+    "info": "fas fa-question-circle",
+    "edit": 'far fa-edit',
+    "clock": "fas fa-clock",
+    "lock_open": "fas fa-lock-open",
+    "compress": "fas fa-compress",
+    "calendar": "far fa-calendar-alt",
+    "spin": "fa-spin",
+    "next": "fas fa-caret-right",
+    "previous": "fas fa-caret-left",
+    "play": "fas fa-play",
+    "stop": "fas fa-stop",
+    "zoom_out": "fas fa-search-minus",
+    "zoom_in": "fas fa-search-plus",
+    "warning": "fas fa-exclamation-triangle",
+    "save": "fas fa-save",
+    "refresh": "fas fa-sync-alt",
+    "pdf": "far fa-file-pdf",
+    "plus": "fas fa-plus-square",
+    "excel": 'far fa-file-excel',
+    "delete": "far fa-trash-alt",
+    "zoom": "fas fa-search-plus",
+    "capture": "far fa-clipboard",
+    "remove": "fas fa-times-circle",
+    "clear": "fas fa-eraser",
+    "table": "fas fa-table",
+    "check": "fas fa-check",
+    "wrench": "fas fa-wrench",
+    "rss": "fas fa-rss-square",
+    "facebook": "fab fa-facebook-f",
+    "messenger": "fab fa-facebook-messenger",
+    "twitter": "fab fa-twitter",
+    "twitch": "fab fa-twitch",
+    "instagram": "fab fa-instagram-square",
+    "linkedIn": "fab fa-linkedin-in",
+    "youtube": 'fab fa-youtube',
+    "github": 'fab fa-github',
+    "python": 'fab fa-python',
+    "stackoverflow": 'fab fa-stack-overflow',
+    "envelope": 'far fa-envelope',
+    "question": 'fas fa-question-circle',
+    "google_plus": 'fab fa-google-plus',
+    "circle": 'fas fa-circle',
+  }
+}
+
+
+def get_icon(alias, family=None):
+  """
+  Return the icon from an alias.
+  This will allow the integration of multiple icon libraries.
+
+  Attributes:
+  ----------
+  :param alias: String. The icon reference in the components.
+  :param family: String. Optional. The defined family (if different from the page icon family).
+  """
+  icon = ICON_MAPPINGS[family or ICON_FAMILY].get(alias, alias)
+  if icon is None:
+    return {"icon": ICON_MAPPINGS['font-awesome'], "icon_family": 'font-awesome'}
+
+  return {"icon": icon, "icon_family": ICON_FAMILY}
+
 
 # Default CSS Styles
 BODY_CONTAINER = None   # The body CSS dictionary

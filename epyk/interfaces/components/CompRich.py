@@ -5,6 +5,7 @@ from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
 from epyk.core.js import Imports
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Rich:
@@ -231,8 +232,8 @@ class Rich:
     return html_cd
 
   @html.Html.css_skin()
-  def update(self, label=None, color=None, align="left", width=(100, "%"), height=(None, "px"), html_code=None, options=None,
-             profile=None):
+  def update(self, label=None, color=None, align="left", width=(100, "%"), height=(None, "px"), html_code=None,
+             options=None, profile=None):
     """
     Description:
     ------------
@@ -465,7 +466,7 @@ class Rich:
     return html_help
 
   @html.Html.css_skin()
-  def markdown(self, text="", width=("cacl(100% - 10px)", ''), height=("auto", ''), html_code=None, options=None,
+  def markdown(self, text="", width=("calc(100% - 10px)", ''), height=("auto", ''), html_code=None, options=None,
                profile=None):
     """
     Description:

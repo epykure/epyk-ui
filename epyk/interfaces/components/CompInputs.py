@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Inputs:
@@ -578,12 +579,12 @@ class Inputs:
     :param label:
     :param group_name:
     :param icon:
-    :param width:
-    :param height:
-    :param html_code:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     html_radio = html.HtmlInput.Radio(self.page, flag, label, group_name, icon, width, height, html_code,
                                       helper, options or {}, profile)
@@ -608,11 +609,11 @@ class Inputs:
     ----------
     :param text:
     :param language:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {
       "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
@@ -641,11 +642,11 @@ class Inputs:
     ----------
     :param text:
     :param language:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True,
                     'autoRefresh': True}
@@ -685,17 +686,18 @@ class Inputs:
     :param placeholder:
     :param align:
     :param color:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code:
     :param tooltip:
     :param extensible:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
+    icon_details = Defaults_css.get_icon("search")
+    dflt_options = {"icon": icon_details["icon"], 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(self.page, text, placeholder, color, width, height, html_code, tooltip,
@@ -750,7 +752,22 @@ class Inputs:
 
   def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
               options=None, autocomplete=False, profile=None):
+    """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
+    :param items:
+    :param button:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code:
+    :param helper:
+    :param autocomplete:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    """
     options = options or {}
     container = self.page.ui.div(width=width)
     container.select = self.page.ui.inputs.autocomplete(
@@ -774,7 +791,7 @@ class Inputs:
       button = self.page.ui.buttons.colored("add")
       button.style.css.margin_left = 10
     container.button = button
-    container.clear = self.page.ui.icon("fas fa-times")
+    container.clear = self.page.ui.icon("times", options=options)
     container.clear.style.css.color = self.page.theme.danger[1]
     container.clear.style.css.margin_left = 20
     container.clear.tooltip("Clear all filters")
@@ -782,9 +799,7 @@ class Inputs:
     container.filters = self.page.ui.panels.filters(
       items, container.select.dom.content, (100, '%'), height, html_code, helper, options, profile)
     container.add(container.filters)
-    container.clear.click([
-      container.filters.dom.clear()
-    ])
+    container.clear.click([container.filters.dom.clear()])
     container.button.click([
       container.filters.dom.add(container.input.dom.content, container.select.dom.content)
     ])

@@ -1609,7 +1609,7 @@ class IconsMenu(Html.Html):
 
     if text is not None:
       html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
-      self._icons.append(self._report.ui.images.icon(text, html_code=html_code_icon, family=family).css(
+      self._icons.append(self.page.ui.images.icon(text, html_code=html_code_icon, family=family).css(
         {"margin-right": '5px', 'cursor': "pointer"}))
       self.icon = self._icons[-1]
       if position == "before":

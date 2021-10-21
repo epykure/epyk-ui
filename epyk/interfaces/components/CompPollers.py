@@ -10,8 +10,8 @@ class Poller:
     self.page = ui.page
 
   @html.Html.css_skin()
-  def toggle(self, time, js_funcs=None, components=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), align="left",
-             html_code=None, options=None, profile=None):
+  def toggle(self, time, js_funcs=None, components=None, label=None, color=None, width=(None, '%'), height=(20, 'px'),
+             align="left", html_code=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -43,7 +43,7 @@ class Poller:
     toggle = self.page.ui.buttons.toggle(None, label, color, width, height, align, html_code, options, profile)
     toggle.style.css.display = "inline-block"
     toggle.switch_text.style.css.hide()
-    icon = self.page.ui.icon("far fa-clock")
+    icon = self.page.ui.icon("clock")
     toggle.toggle(on_funcs=[
       icon.dom.spin(),
       icon.dom.css({"color": self.page.theme.success[1]}).r,
@@ -63,7 +63,7 @@ class Poller:
     return container
 
   @html.Html.css_skin()
-  def live(self, time, js_funcs=None, components=None, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), align="left",
+  def live(self, time, js_funcs=None, components=None, icon="circle", width=(15, "px"), height=(15, "px"), align="left",
            html_code=None, profile=None, options=None):
     """
     Description:

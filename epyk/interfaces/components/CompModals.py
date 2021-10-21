@@ -4,6 +4,7 @@
 
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Modals:
@@ -221,11 +222,12 @@ class Modals:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
+    icon_details = Defaults_css.get_icon("close")
+    dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
     if options is not None:
       dfl_options.update(options)
     if not isinstance(components, list):
@@ -323,7 +325,8 @@ class Modals:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
+    icon_details = Defaults_css.get_icon("close")
+    dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
     if options is not None:
       dfl_options.update(options)
     return html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
@@ -363,7 +366,7 @@ class Modals:
     dfl_options = {"button": {"category": "delete"}}
     if options is not None:
       dfl_options.update(options)
-    popup = self.icon(components=components, icon="fas fa-exclamation-triangle", width=width, height=height,
+    popup = self.icon(components=components, icon="error", width=width, height=height,
                       options=dfl_options, profile=profile)
     popup.window.style.css.border = "3px solid %s" % self.page.theme.danger[0]
     popup.container[0].style.css.color = self.page.theme.danger[1]
@@ -401,7 +404,7 @@ class Modals:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    popup = self.icon(components=components, icon="fas fa-question-circle", width=width, height=height, options=options,
+    popup = self.icon(components=components, icon="question", width=width, height=height, options=options,
                       profile=profile)
     return popup
 
@@ -437,7 +440,8 @@ class Modals:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    popup = self.icon(components=components, icon="fas fa-check", width=width, height=height, options=options, profile=profile)
+    popup = self.icon(
+      components=components, icon="check", width=width, height=height, options=options, profile=profile)
     popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
     popup.container[0].style.css.color = self.page.theme.success[1]
     return popup

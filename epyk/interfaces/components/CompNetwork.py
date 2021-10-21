@@ -6,6 +6,7 @@ import logging
 
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Network:
@@ -23,7 +24,8 @@ class Network:
     Usage::
 
       db = page.db(database="test.db")
-      page.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
+      page.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments',
+        'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
 
     Underlying HTML Objects:
 
@@ -413,8 +415,6 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
-    if icon is None:
-      icon = "fas fa-file-upload"
     file = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     return file
@@ -440,13 +440,13 @@ class Network:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     mapped_file = {
-      "excel": 'far fa-file-excel', 'pdf': 'far fa-file-pdf', 'code': 'far fa-file-code', 'csv': 'fas fa-file-csv',
-      'word': 'fa-file-word'}
+      "excel": Defaults_css.get_icon("excel"), 'pdf': Defaults_css.get_icon("pdf"), 'code':
+      Defaults_css.get_icon("code"), 'csv': Defaults_css.get_icon("csv"), 'word': Defaults_css.get_icon("word")}
     extension = name.split(".")[-1]
     if extension in mapped_file:
       icon = mapped_file[extension]
     if icon is None:
-      icon = "fas fa-file-upload"
+      icon = Defaults_css.get_icon("upload")
     file = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})

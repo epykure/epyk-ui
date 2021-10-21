@@ -22,6 +22,8 @@ from epyk.core.html import Aria
 from epyk.core.html import Component
 from epyk.core.html import KeyCodes
 from epyk.core.html.options import Options
+from epyk.core.py import OrderedSet
+
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -166,7 +168,8 @@ class Required:
         elif mod['script'].endswith(".js"):
           self._page.jsImports.add(package)
           html_types.add('js')
-
+      if "services" in self._page.ext_packages[package]:
+        self._page.cssImport.add(package)
     if not html_types and verbose:
       logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
 
@@ -2138,9 +2141,19 @@ class Component(Html):
 
   def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
     super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
+    self.style.clear_style()   # Clear all default CSS styles.
     if self.css_classes is not None:
-      self.attr["class"].initialise(self.css_classes)
+      self.add_style(self.css_classes, clear_first=True)
     self.items = []
+
+  @property
+  def var(self):
+    """
+    Description:
+    -----------
+    Return the javaScript object reference after the builder.
+    """
+    return "window['%s']" % self.htmlCode
 
   def add_item(self, component):
     """

@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Lists:
@@ -65,8 +66,9 @@ class Lists:
           if rec["value"] in selected:
             rec["selected"] = True
 
+      icon_details = Defaults_css.get_icon("check")
       options["iconBase"] = "iconBase"
-      options["tickIcon"] = "fa fa-check"
+      options["tickIcon"] = icon_details["icon"]
       return html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
 
     if selected is not None:
@@ -762,7 +764,8 @@ class Lists:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dft_options = {"icon": "fas fa-check", 'markdown': True, "items_type": 'icon'}
+    icon_details = Defaults_css.get_icon("check")
+    dft_options = {"icon": icon_details["icon"], 'markdown': True, "items_type": 'icon'}
     if options is not None:
       dft_options.update(options)
     html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
@@ -925,7 +928,7 @@ class Lists:
         menu_items.append(r)
     if save_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "fas fa-save", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
+        "save", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
       r.icon.style.css.font_factor(-5)
       r.style.css.font_factor(-5)
@@ -937,7 +940,7 @@ class Lists:
       menu_items.append(r)
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "fas fa-sync-alt", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
+        "refresh", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
       r.icon.style.css.font_factor(-5)
       r.style.css.font_factor(-5)
@@ -979,7 +982,7 @@ class Lists:
       button = self.page.ui.buttons.colored("add")
       button.style.css.margin_left = 10
     container.button = button
-    container.clear = self.page.ui.icon("fas fa-times")
+    container.clear = self.page.ui.icon("times")
     container.clear.style.css.color = self.page.theme.danger[1]
     container.clear.style.css.margin_left = 20
     container.clear.tooltip("Clear all filters")

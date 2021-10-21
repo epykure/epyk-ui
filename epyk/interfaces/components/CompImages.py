@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.core.css import Colors
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Images:
@@ -562,7 +563,7 @@ class Images:
 
     Attributes:
     ----------
-    :param images: List. With the different picture file names.
+    :param images: List. Optional. With the different picture file names.
     :param path: String. Optional. The common path for the pictures.
     :param width: Tuple. Optional. Tuple. The component width in pixel or percentage.
     :param height: Tuple. Optional. Tuple. The component height in pixel.
@@ -653,9 +654,11 @@ class Images:
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
+
+    icon_details = Defaults_css.get_icon(icon, family)
     options = options or {}
-    options['icon_family'] = family or 'font-awesome'
-    html_icon = html.HtmlImage.Icon(self.page, icon, width=width, height=height, color=color or 'inherit', tooltip=tooltip,
+    options["icon_family"] = family or icon_details["icon_family"]
+    html_icon = html.HtmlImage.Icon(self.page, icon_details["icon"], width=width, height=height, color=color or 'inherit', tooltip=tooltip,
                                     options=options, html_code=html_code, profile=profile)
     if align == "center":
       html_icon.style.css.margin = "auto"
@@ -716,8 +719,11 @@ class Images:
       background_color = self.page.theme.greys[0]
     if color is None:
       color = self.page.theme.success[1]
-    html_badge = html.HtmlImage.Badge(self.page, text, width, height, label, icon, background_color, color,
-                                      url, tooltip, options or {}, profile)
+    icon_details = Defaults_css.get_icon(icon)
+    options = options or {}
+    options["icon_family"] = icon_details["icon_family"]
+    html_badge = html.HtmlImage.Badge(
+      self.page, text, width, height, label, icon_details["icon"], background_color, color, url, tooltip, options, profile)
     return html_badge
 
   @html.Html.css_skin()

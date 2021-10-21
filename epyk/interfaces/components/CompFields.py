@@ -7,6 +7,7 @@ from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 from epyk.core.data import components as cpn
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Fields:
@@ -93,7 +94,7 @@ class Fields:
     return text_comp
 
   @html.Html.css_skin()
-  def date(self, value=None, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"),
+  def date(self, value=None, label=None, icon="calendar", color=None, width=(None, "px"),
            height=(None, "px"), html_code=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -152,7 +153,7 @@ class Fields:
     return html_dt
 
   @html.Html.css_skin()
-  def today(self, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
+  def today(self, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),
             html_code=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -207,7 +208,7 @@ class Fields:
     return html_dt
 
   @html.Html.css_skin()
-  def cob(self, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
+  def cob(self, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),
           html_code=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -258,7 +259,7 @@ class Fields:
     return html_cob
 
   @html.Html.css_skin()
-  def now(self, deltatime=0, label=None, icon="far fa-clock", color=None, html_code=None, profile=None, options=None,
+  def now(self, deltatime=0, label=None, icon="clock", color=None, html_code=None, profile=None, options=None,
           helper=None):
     """
     Description:
@@ -302,7 +303,7 @@ class Fields:
     return html_dt
 
   @html.Html.css_skin()
-  def time(self, value=None, label=None, icon="far fa-clock", color=None, html_code=None, profile=None, options=None,
+  def time(self, value=None, label=None, icon="clock", color=None, html_code=None, profile=None, options=None,
            helper=None):
     """
     Description:

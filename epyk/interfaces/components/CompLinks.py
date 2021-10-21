@@ -4,6 +4,7 @@
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Links:
@@ -52,8 +53,8 @@ class Links:
     if options is not None:
       dft_options.update(options)
     text = self.page.py.encode_html(text)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
-                                            dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
+                                            decoration, html_code, dft_options, profile)
     if align == "center":
       self.page.ui.div(html_link, align=align)
     return html_link
@@ -85,7 +86,7 @@ class Links:
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param html_code:
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -93,8 +94,8 @@ class Links:
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration,
-                                            html_code, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
+                                            decoration, html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     return html_link
@@ -120,13 +121,13 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. Optional. The string url of the link
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param url: String. Optional. The string url of the link.
     :param align: String. Optional. The text-align property within this component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
-    :param tooltip: String. Optional. The tooltip displayed when the mouse is on the component
-    :param helper: String. Optional. A tooltip helper
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param tooltip: String. Optional. The tooltip displayed when the mouse is on the component.
+    :param helper: String. Optional. A tooltip helper.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param decoration:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
@@ -136,8 +137,8 @@ class Links:
     options = options or {}
     if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
       url = "//%s" % url
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
-                                            options, profile)
+    html_link = html.HtmlLinks.ExternalLink(
+      self.page, text, url, icon, helper, height, decoration, html_code, options, profile)
     if tooltip is not None:
       html_link.tooltip(tooltip)
     if align == "center":
@@ -193,23 +194,23 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. Optional. The string url of the link
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
-    :param helper: String. Optional. A tooltip helper
+    :param text: String. Optional. The string value to be displayed in the component.
+    :param url: String. Optional. The string url of the link.
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
+    :param helper: String. Optional. A tooltip helper.
     :param color: String. Optional. The font color in the component. Default inherit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param decoration:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: String. Optional. Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: String. Optional. Optional. A flag to set the component performance storage.
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
-                                            dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(
+      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     html_link.style.css.background = color or self.page.theme.colors[-1]
@@ -223,7 +224,7 @@ class Links:
     return html_link
 
   @html.Html.css_skin()
-  def upload(self, url="#", text="", icon="fas fa-upload", helper=None, height=(None, 'px'), decoration=False,
+  def upload(self, url="#", text="", icon="upload", helper=None, height=(None, 'px'), decoration=False,
              align="left", html_code=None, options=None, profile=None):
     """
     Description:
@@ -242,7 +243,7 @@ class Links:
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param align:
+    :param align: String. Optional. The text-align property within this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
@@ -251,8 +252,8 @@ class Links:
     dft_options = {"target": '_self'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
-                                            dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(
+      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     html_link.style.css.remove("border", set_none=True)
@@ -270,7 +271,7 @@ class Links:
     return html_link
 
   @html.Html.css_skin()
-  def download(self, url="#", text="", icon="fas fa-file-download", helper=None, height=(None, 'px'), decoration=False,
+  def download(self, url="#", text="", icon="download", helper=None, height=(None, 'px'), decoration=False,
                align="left", html_code=None, options=None, profile=None):
     """
     Description:
@@ -289,7 +290,7 @@ class Links:
     :param helper: String. Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param align:
+    :param align: String. Optional. The text-align property within this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
@@ -298,8 +299,8 @@ class Links:
     dft_options = {"target": '_self'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height, decoration, html_code,
-                                            dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(
+      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     html_link.style.css.remove("border", set_none=True)
