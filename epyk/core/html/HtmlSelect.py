@@ -59,9 +59,9 @@ class Select(Html.Html):
     super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
     self._vals, self.button_css = records, None
-    if html_code in self._report.inputs:
+    if html_code in self.page.inputs:
       for v in self._vals:
-        if v['value'] == self._report.inputs[html_code]:
+        if v['value'] == self.page.inputs[html_code]:
           options['selected'] = v['value']
     if width[1] == 'px':
       self.attr["data-width"] = "%spx" % width[0]
@@ -226,17 +226,17 @@ class Select(Html.Html):
   def __str__(self):
     options, opt_groups = [], {}
     if self.options.all:
-      opt = Option(self._report, "all", "All", None,
+      opt = Option(self.page, "all", "All", None,
                    self.options.selected is not None and self.options.selected == "all")
       opt.options.managed = False
       options.append(opt.html())
     if self.options.empty:
-      opt = Option(self._report, "", "", None,
+      opt = Option(self.page, "", "", None,
                    self.options.selected is not None and self.options.selected == "")
       opt.options.managed = False
       options.append(opt.html())
     for val in self.val:
-      opt = Option(self._report, val['value'], val.get('name', val.get('text', '')), None,
+      opt = Option(self.page, val['value'], val.get('name', val.get('text', '')), None,
                    self.options.selected is not None and self.options.selected == val['value'],
                    options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
@@ -246,7 +246,7 @@ class Select(Html.Html):
         options.append(opt.html())
     data = options
     for k in sorted(opt_groups):
-      opt_rp = Optgroup(self._report, opt_groups[k], k)
+      opt_rp = Optgroup(self.page, opt_groups[k], k)
       opt_rp.options.managed = False
       data.append(opt_rp.html())
     self.page.properties.js.add_builders(

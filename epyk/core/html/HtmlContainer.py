@@ -70,7 +70,7 @@ class Panel(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self.page)
     return self._dom
 
   def extend(self, components):
@@ -104,7 +104,7 @@ class Panel(Html.Html):
     self.style.css.min_height = 25
     self.style.css.min_width = 25
     if self.menu is None:
-      self.menu = self._report.ui.div()
+      self.menu = self.page.ui.div()
       self.menu.options.managed = False
       self.menu.style.css.position = "absolute"
       self.menu.style.css.text_align = "right"
@@ -112,32 +112,32 @@ class Panel(Html.Html):
       self.menu.style.css.right = 5
       self.menu.style.css.margin = 0
     if pin:
-      pin_comp = self._report.ui.icon("fas fa-thumbtack")
+      pin_comp = self.page.ui.icon("fas fa-thumbtack")
       pin_comp.style.css.margin_right = 10
       pin_comp.tooltip(info)
-      pin_comp.style.css.color = self._report.theme.greys[6]
+      pin_comp.style.css.color = self.page.theme.greys[6]
       self.menu.add(pin_comp)
     if info is not None:
-      info_comp = self._report.ui.icon("fas fa-question")
+      info_comp = self.page.ui.icon("question")
       info_comp.style.css.margin_right = 10
       info_comp.style.css.font_factor(-5)
       info_comp.tooltip(info)
       info_comp.click([
         self.dom.querySelector("div[name=panel]").toggle()])
-      info_comp.style.css.color = self._report.theme.greys[6]
+      info_comp.style.css.color = self.page.theme.greys[6]
       self.menu.add(info_comp)
     if mini:
-      remove = self._report.ui.icon("far fa-minus-square")
+      remove = self.page.ui.icon("square_minus")
       remove.style.css.margin_right = 10
       remove.click([
         self.dom.querySelector("div[name=panel]").toggle()])
-      remove.style.css.color = self._report.theme.greys[6]
+      remove.style.css.color = self.page.theme.greys[6]
       self.menu.add(remove)
     if close:
-      remove = self._report.ui.icon("fas fa-times")
+      remove = self.page.ui.icon("times")
       remove.style.css.margin_right = 10
       remove.click([self.dom.remove()])
-      remove.style.css.color = self._report.theme.greys[6]
+      remove.style.css.color = self.page.theme.greys[6]
       self.menu.add(remove)
     return self.menu
 
@@ -170,8 +170,8 @@ class PanelSplit(Html.Html):
     self.css_left = {'flex': '0 0 auto', 'overflow': 'auto', 'padding': '5px', 'min-width': '100px',
                      'width': "%s%s" % (self.left_width[0], self.left_width[1]), 'white-space': 'nowrap'}
     self.css_right = {'flex': '0 1 auto', 'overflow': 'auto', 'padding': '5px', 'width': '100%',
-                      'background': self._report.theme.greys[0],
-                      'border-left': '3px solid %s' % self._report.theme.success[1]}
+                      'background': self.page.theme.greys[0],
+                      'border-left': '3px solid %s' % self.page.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
     self.add_helper(helper)
 
@@ -246,7 +246,7 @@ class PanelSlide(Panel):
       self.text.options.managed = False
       self.text.style.css.display = "inline-block"
     else:
-      self.text = self._report.ui.text(
+      self.text = self.page.ui.text(
         title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
       self.text.style.css.bold()
       self.text.style.css.font_factor(2)
@@ -287,7 +287,7 @@ class PanelSlide(Panel):
     :rtype: JsHtmlPanels.JsHtmlSlidingPanel
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self.page)
     return self._dom
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -323,7 +323,7 @@ class PanelSlide(Panel):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.__clicks_open = [self._report.js.if_(self.icon.dom.content.toString().indexOf(
+    self.__clicks_open = [self.page.js.if_(self.icon.dom.content.toString().indexOf(
       self.options.icon_expanded.split(" ")[-1]) >= 0, js_funcs, profile=profile).toStr()]
     return self
 
@@ -440,13 +440,13 @@ class Div(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def __add__(self, component):
     """ Add items to a container """
     if isinstance(component, list):
-      component = self._report.ui.row(component, position=self.options.get(None, "position"))
+      component = self.page.ui.row(component, position=self.options.get(None, "position"))
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
     if self.options.inline:
@@ -473,7 +473,7 @@ class Div(Html.Html):
     :param component: HTML Component | List. The component to be added to the underlying list.
     """
     if isinstance(component, list):
-      component = self._report.ui.row(component)
+      component = self.page.ui.row(component)
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
     if self.options.inline:
@@ -646,7 +646,7 @@ class Tr(Html.Html):
     if not isinstance(component, Td):
       if not isinstance(component, list):
         component = [component]
-      component = Td(self._report, component, self.header, None, (None, "%"), (None, "%"),
+      component = Td(self.page, component, self.header, None, (None, "%"), (None, "%"),
                      'center', self.__options, False)
     super(Tr, self).__add__(component)
     return self
@@ -664,7 +664,7 @@ class Tr(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlTr
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlTr(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlTr(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -726,7 +726,7 @@ class TSection(Html.Html):
   def __add__(self, row_data):
     """ Add items to a container """
     if not isinstance(row_data, Tr):
-      row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center',
+      row_data = Tr(self.page, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center',
                     self.options, False)
 
     super(TSection, self).__add__(row_data)
@@ -751,9 +751,9 @@ class Table(Html.Html):
       "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap', 'border-collapse': 'collapse',
       'box-sizing': 'border-box'}, profile=profile, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.header = TSection(self._report, 'thead', options=options)
-    self.body = TSection(self._report, 'tbody', options=options)
-    self.footer = TSection(self._report, 'tfoot', options=options)
+    self.header = TSection(self.page, 'thead', options=options)
+    self.body = TSection(self.page, 'tbody', options=options)
+    self.footer = TSection(self.page, 'tfoot', options=options)
     self.header.options.managed = False
     self.body.options.managed = False
     self.footer.options.managed = False
@@ -782,9 +782,9 @@ class Table(Html.Html):
       row = row_data
     else:
       if not self.header.val and not self.body.val and self.options.header:
-        row = Tr(self._report, row_data, True, None, (100, "%"), (100, "%"), 'center', self.options, False)
+        row = Tr(self.page, row_data, True, None, (100, "%"), (100, "%"), 'center', self.options, False)
       else:
-        row = Tr(self._report, row_data, False, None, (100, "%"), (100, "%"), 'left', self.options, False)
+        row = Tr(self.page, row_data, False, None, (100, "%"), (100, "%"), 'left', self.options, False)
     if row.header:
       self.header += row
     else:
@@ -824,9 +824,9 @@ class Table(Html.Html):
     :param align: String. Optional. The text-align property within this component.
     :param dim: Integer. Optional. The number of columns in the table.
     """
-    cell = Td(self._report, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
+    cell = Td(self.page, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
     cell.colspan(dim or len(self.body.val[0].val))
-    self += Tr(self._report, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
+    self += Tr(self.page, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
     return cell
 
   def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"), html_code=None, tooltip=None,
@@ -852,7 +852,7 @@ class Table(Html.Html):
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self.caption = Caption(self._report, text, color, align, width, height, html_code, tooltip, options, profile)
+    self.caption = Caption(self.page, text, color, align, width, height, html_code, tooltip, options, profile)
     return self.caption
 
   def get_header(self, i=0):
@@ -976,7 +976,7 @@ class Col(Html.Html):
     :param component:
     """
     if not hasattr(component, 'options'):
-      component = self._report.ui.div(component)
+      component = self.page.ui.div(component)
     super(Col, self).__add__(component)
     return self
 
@@ -1090,7 +1090,7 @@ class Row(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlRow
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlRow(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlRow(self, report=self.page)
     return self._dom
 
   def set_size_cols(self, *args):
@@ -1142,7 +1142,7 @@ class Row(Html.Html):
     if not isinstance(components, Col):
       if not isinstance(components, list):
         components = [components]
-      components = self._report.ui.layouts.col(components, align=self.align, height=(self.css("height"), ''),
+      components = self.page.ui.layouts.col(components, align=self.align, height=(self.css("height"), ''),
                                                position=self.position, options=self.options._attrs)
       components.style.css.margin_left = "auto"
       components.style.css.margin_right = "auto"
@@ -1204,7 +1204,7 @@ class Grid(Html.Html):
     if isinstance(row_data, Row):
       row = row_data
     else:
-      row = self._report.ui.layouts.row(position=self.position, options=self.options._attrs)
+      row = self.page.ui.layouts.row(position=self.position, options=self.options._attrs)
       row.style.clear(no_default=True)
       row.style.css.margin = 'auto'
       row.attr["class"].add("row")
@@ -1232,7 +1232,7 @@ class Grid(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlGrid
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self.page)
     return self._dom
 
   def resize(self):
@@ -1266,7 +1266,7 @@ class Tabs(Html.Html):
                                css_attrs={"width": width, "height": height, 'color': color})
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlCode, "panel_%s" % self.htmlCode
-    self.tabs_container = self._report.ui.div([])
+    self.tabs_container = self.page.ui.div([])
     self.tabs_container.options.managed = False
     self.add_helper(helper)
 
@@ -1297,7 +1297,7 @@ class Tabs(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlTabs
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlTabs(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlTabs(self, report=self.page)
     return self._dom
 
   def __getitem__(self, name):
@@ -1402,7 +1402,7 @@ class Tabs(Html.Html):
     self.__panels.append(name)
     if icon is not None:
       tab = self.page.ui.div([
-        self._report.ui.icon(icon).css(
+        self.page.ui.icon(icon).css(
           {"display": 'block', 'color': 'inherit', "width": '100%',
            "font-size": self.page.body.style.globals.font.normal(4)}),
         name], width=width)
@@ -1491,7 +1491,7 @@ class IFrame(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlIFrame
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlIFrame(self, report=self._report)
+      self._dom = JsHtmlPanels.JsHtmlIFrame(self, report=self.page)
     return self._dom
 
   def scrolling(self, flag=True):
@@ -1786,10 +1786,10 @@ class Modal(Html.Html):
     return self.__body
 
   def show(self):
-    return self._report.js.getElementById(self.htmlCode).css({'display': 'block'})
+    return self.page.js.getElementById(self.htmlCode).css({'display': 'block'})
 
   def close(self):
-    return self._report.js.getElementById(self.htmlCode).css({'display': 'none'})
+    return self.page.js.getElementById(self.htmlCode).css({'display': 'none'})
 
   def close_on_background(self):
     """
@@ -1797,9 +1797,9 @@ class Modal(Html.Html):
     ------------
     Will allow an event to close the modal if a click event is detected anywhere outside the modal.
     """
-    modal = self._report.js.getElementById(self.htmlCode)
-    self._report.js.onReady(self._report.js.window.events.addClickListener(
-      self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), subEvents=['event']))
+    modal = self.page.js.getElementById(self.htmlCode)
+    self.page.js.onReady(self.page.js.window.events.addClickListener(
+      self.page.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), subEvents=['event']))
 
   def __add__(self, component):
     """ Add items to a container """
@@ -1828,7 +1828,7 @@ class Indices(Html.Html):
                                   css_attrs={"width": width, "height": height})
     self.items = []
     for i in range(count):
-      div = self._report.ui.div(i, width=(15, "px"))
+      div = self.page.ui.div(i, width=(15, "px"))
       div.attr["name"] = self.htmlCode
       div.attr["data-position"] = i + 1
       div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
@@ -1837,13 +1837,13 @@ class Indices(Html.Html):
       div.options.managed = False
       self.items.append(div)
 
-    self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.first = self.page.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
     self.first.options.managed = False
-    self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.prev = self.page.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
     self.prev.options.managed = False
-    self.next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.next = self.page.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
     self.next.options.managed = False
-    self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.last = self.page.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
     self.last.options.managed = False
 
   @property
@@ -1878,7 +1878,7 @@ class Indices(Html.Html):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     return self[i].on("click", [
-      self[i].dom.by_name.css({"border-bottom": "1px solid %s" % self._report.theme.colors[0]}).r,
+      self[i].dom.by_name.css({"border-bottom": "1px solid %s" % self.page.theme.colors[0]}).r,
       self[i].dom.css({"border-bottom": "1px solid %s" % self.options.background_color})] + js_funcs, profile)
 
   def __str__(self):
@@ -1936,7 +1936,7 @@ class Points(Html.Html):
     ----------
     :param event: String. The event type for an HTML object.
     :param js_funcs: Array. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """

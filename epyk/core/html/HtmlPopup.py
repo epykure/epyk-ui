@@ -18,7 +18,7 @@ class Popup(Html.Html):
     else:
       self.css({'position': 'absolute', 'margin': 0, 'padding': 0, 'display': 'none', 'z-index': self.options.z_index})
     self.set_attrs(name="name", value="report_popup")
-    self.window = self._report.ui.div(width="auto")
+    self.window = self.page.ui.div(width="auto")
     self.window.options.managed = False
     self.window.style.css.padding = 10
     self.window.style.css.border = "3px solid %s" % report.theme.greys[3]
@@ -103,7 +103,7 @@ class Popup(Html.Html):
     :param options: Specific Python options available for this component.
     """
     if not hasattr(text, 'options'):
-      title = self._report.ui.title(text, align=align, level=level, options=options)
+      title = self.page.ui.title(text, align=align, level=level, options=options)
       title.style.css.margin_top = -3
     else:
       title = text
@@ -115,7 +115,7 @@ class Popup(Html.Html):
       self.style.css.padding_top = self.options.top
     if self.options.closure:
       self.close.style.css.font_factor(3)
-      self.close.style.css.background_color = self._report.theme.greys[0]
+      self.close.style.css.background_color = self.page.theme.greys[0]
       self.close.style.css.border_radius = 20
       self.close.style.css.top = 5
       self.close.style.css.z_index = self.options.z_index + 10

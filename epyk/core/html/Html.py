@@ -688,7 +688,8 @@ class Html:
 
     Usage::
 
-      checks.title.add_icon("fas fa-align-center")
+      checks.title.add_icon("wrench") # For cross family icon definition
+      checks.title.add_icon("fas fa-align-center") # for font awesome icon
 
     Attributes:
     ----------

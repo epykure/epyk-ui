@@ -32,7 +32,7 @@ class Radio(Html.Html):
     :param checked: Boolean. Optional. Check the item.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
-      val = self._report.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
+      val = self.page.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
     val.set_attrs(name="name", value="radio_%s" % self.htmlCode)
     val.options.managed = False
     super(Radio, self).__add__(val)
@@ -76,11 +76,11 @@ class Radio(Html.Html):
     :rtype: JsHtmlSelect.Radio
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.Radio(self, report=self._report)
+      self._dom = JsHtmlSelect.Radio(self, report=self.page)
     return self._dom
 
   def __str__(self):
-    row = self._report.ui.layouts.div(self.val)
+    row = self.page.ui.layouts.div(self.val)
     row.options.managed = False
     row.style.css.text_align = "inherit"
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
@@ -99,7 +99,7 @@ class Tick(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px",
+    self.add_icon(icon, {"color": self.page.theme.success[1], "margin": "2px",
                          'font-size': report.body.style.globals.font.normal()},
                   html_code=self.htmlCode, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()
@@ -122,7 +122,7 @@ class Tick(Html.Html):
     :rtype: JsHtmlSelect.Tick
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.Tick(self, report=self._report)
+      self._dom = JsHtmlSelect.Tick(self, report=self.page)
       self._dom.options = self._options
     return self._dom
 
@@ -174,7 +174,7 @@ class Switch(Html.Html):
     :rtype: JsHtmlSelect.JsHtmlSwitch
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.JsHtmlSwitch(self, report=self._report)
+      self._dom = JsHtmlSelect.JsHtmlSwitch(self, report=self.page)
     return self._dom
 
   _js__builder__ = '''
@@ -196,7 +196,7 @@ class Switch(Html.Html):
     :rtype: JsComponents.Switch
     """
     if self._js is None:
-      self._js = JsComponents.Switch(self, report=self._report)
+      self._js = JsComponents.Switch(self, report=self.page)
     return self._js
 
   def event_fnc(self, event):
@@ -233,7 +233,7 @@ class Switch(Html.Html):
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger("click")])
+      self.page.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, self.switch.toStr())
 
   def toggle(self, on_funcs=None, off_funcs=None, profile=None, on_ready=False):

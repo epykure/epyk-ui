@@ -28,8 +28,8 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
   name = 'Entries'
 
-  def __init__(self, report, text, options=None):
-    super(Li, self).__init__(report, text)
+  def __init__(self, report, text, options=None, html_code=None):
+    super(Li, self).__init__(report, text, html_code=html_code)
     if options is not None:
       self.item_type = options.get("item_type", "li")
     else:
@@ -80,7 +80,7 @@ class Li(Html.Html):
       if css is not None:
         dfl_css.update(css)
       html_code_label = "%s_label" % html_code if html_code is not None else html_code
-      self.label = self._report.ui.texts.label(text, options=options, html_code=html_code_label)
+      self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_
@@ -130,6 +130,22 @@ class Li(Html.Html):
 
     return super(Li, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+    return self._dom
+
   def __str__(self):
     return "<%(type)s %(attrs)s>%(content)s</%(type)s>" % {
       "type": self.item_type, "attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "content": self.content}
@@ -144,7 +160,7 @@ class List(Html.Html):
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
     self.item_type = options.get("item_type", "li")
-    self.color = color if color is not None else self._report.theme.greys[-1]
+    self.color = color if color is not None else self.page.theme.greys[-1]
     self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
     for item in data:
@@ -177,7 +193,7 @@ class List(Html.Html):
     :rtype: JsHtml.JsHtmlList
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlList(self, report=self._report)
+      self._dom = JsHtml.JsHtmlList(self, report=self.page)
     return self._dom
 
   def items_style(self, style):
@@ -192,8 +208,8 @@ class List(Html.Html):
     """
     if style == "bullets":
       bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
-                       'background': self._report.theme.greys[2],
-                       'border': '1px solid %s' % self._report.theme.greys[2], 'border-radius': '10px'}
+                       'background': self.page.theme.greys[2],
+                       'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'}
       self.options.li_css = bullter_style
       self.set_items()
       for item in self.items:
@@ -262,7 +278,7 @@ class List(Html.Html):
     :param d: HTML component | String. The component to be added.
     """
     self.items = self.items or []
-    li_obj = Li(self._report, d, options={"item_type": self.item_type})
+    li_obj = Li(self.page, d, options={"item_type": self.item_type}, html_code="%s_%s" % (self.htmlCode, len(self.items)))
     if self.options.li_class:
       li_obj.style.clear_style()
       li_obj.attr["class"].initialise(self.options.li_class)
@@ -280,7 +296,7 @@ class List(Html.Html):
     """
     self.items = self.items or []
     for d in self.val:
-      li_obj = Li(self._report, d, options={"item_type": self.item_type})
+      li_obj = Li(self.page, d, options={"item_type": self.item_type})
       if self.options.li_class:
         li_obj.style.clear_style()
         li_obj.attr["class"].initialise(self.options.li_class)
@@ -321,8 +337,8 @@ class List(Html.Html):
     js_funcs = JsUtils.jsConvertFncs(js_funcs)
     for i, item in enumerate(self.items):
       fnc = JsUtils.jsConvertFncs([
-        self._report.js.getElementsByName("divs_%s" % self.htmlCode).all(self._report.js.objects.dom("elt").hide().r),
-        self._report.js.getElementsByName("divs_%s" % self.htmlCode)[i].toggle().r])
+        self.page.js.getElementsByName("divs_%s" % self.htmlCode).all(self.page.js.objects.dom("elt").hide().r),
+        self.page.js.getElementsByName("divs_%s" % self.htmlCode)[i].toggle().r])
       item.click(fnc + js_funcs, profile)
     return self
 
@@ -338,7 +354,7 @@ class Groups(Html.Html):
     super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, options=options,
                                  html_code=html_code, profile=profile)
     self.add_helper(helper)
-    self.color = color if color is not None else self._report.theme.greys[9]
+    self.color = color if color is not None else self.page.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
               'margin': "1px", 'padding': '0 2px'})
     self.builder_name, self._lists__map, self._lists__map_index = False, {}, []
@@ -367,7 +383,7 @@ class Groups(Html.Html):
     :param profile:
     """
     self._lists__map[category] = len(self.val)
-    html_li = List(self._report, data, color, width, height, html_code, helper, options, profile)
+    html_li = List(self.page, data, color, width, height, html_code, helper, options, profile)
     html_li.options.managed = False
     html_li.css({"margin-bottom": '5px'})
     self.val.append(html_li)
@@ -488,7 +504,7 @@ class Items(Html.Html):
     :rtype: JsHtmlList.JsItem
     """
     if self._dom is None:
-      self._dom = JsHtmlList.JsItem(self, report=self._report)
+      self._dom = JsHtmlList.JsItem(self, report=self.page)
     return self._dom
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):

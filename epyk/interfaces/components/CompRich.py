@@ -354,7 +354,8 @@ class Rich:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"icon": "fas fa-search", 'position': 'left', 'select': True, "border": 1}
+    icon_details = Defaults_css.get_icon("search")
+    dflt_options = {"icon": icon_details["icon"], "icon_family": icon_details["icon_family"], 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(

@@ -60,7 +60,7 @@ class Comments(Html.Html):
     :rtype: JsComponents.Chat
     """
     if self._js is None:
-      self._js = JsComponents.Chat(self, report=self._report)
+      self._js = JsComponents.Chat(self, report=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -112,7 +112,7 @@ class Comments(Html.Html):
     """
     if self.options.readonly:
       self.options.readonly = False
-      self.input = self._report.ui.input(html_code="%s_input" % self.htmlCode)
+      self.input = self.page.ui.input(html_code="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
     if not isinstance(js_funcs, list):
@@ -136,7 +136,7 @@ class Comments(Html.Html):
     """
     if self.options.readonly:
       self.options.readonly = False
-      self.input = self._report.ui.input()
+      self.input = self.page.ui.input()
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
     if not isinstance(js_funcs, list):
@@ -305,7 +305,7 @@ class Chat(Html.Html):
     :rtype: JsComponents.Chat
     """
     if self._js is None:
-      self._js = JsComponents.Chat(self, report=self._report)
+      self._js = JsComponents.Chat(self, report=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -459,7 +459,7 @@ class News(Html.Html):
   def __init__(self, report, value, width, height, html_code, options, profile):
     super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height},
                                html_code=html_code, profile=profile, options=options)
-    self._report.jsImports.add('moment')
+    self.page.jsImports.add('moment')
 
   _js__builder__ = '''
     var feed = document.createElement("p");
@@ -489,7 +489,7 @@ class News(Html.Html):
     :rtype: JsComponents.News
     """
     if self._js is None:
-      self._js = JsComponents.News(self, report=self._report)
+      self._js = JsComponents.News(self, report=self.page)
     return self._js
 
   @property
@@ -522,12 +522,12 @@ class Room(Html.Html):
               'border': '1px solid %s' % color, 'background-repeat': 'no-repeat', 'z-index': 100,
               'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
               'background-image': 'url(%s)' % img})
-    self.status = self._report.ui.div()
+    self.status = self.page.ui.div()
     self.status.options.managed = False
     self.status.attr['name'] = "status"
     self.status.css({"width": "15px", "height": "15px", "background": color, "border-radius": "20px",
                      "border": "1px solid %s" % color, "bottom": "0px", "position": "absolute", "right": 0})
-    self.dots = self._report.ui.div(".")
+    self.dots = self.page.ui.div(".")
     self.dots.attr['name'] = "dots"
     self.dots.options.managed = False
     self.dots.css({"bottom": "-5px", "position": "absolute", "left": "-25px", 'font-size': '30px', 'display': 'none'})
@@ -552,7 +552,7 @@ class Room(Html.Html):
     :rtype: JsComponents.Room
     """
     if self._js is None:
-      self._js = JsComponents.Room(self, report=self._report)
+      self._js = JsComponents.Room(self, report=self.page)
     return self._js
 
   def __str__(self):
@@ -569,19 +569,19 @@ class DropFile(Html.Html):
     super(DropFile, self).__init__(report, vals, profile=profile, html_code=html_code, options=options,
                                    css_attrs={"width": width, "height": height})
     self.tooltip(tooltip, location='bottom')
-    self.container = self._report.ui.div()
-    self.container.css({"display": "inline-block", 'text-align': 'center', "color": self._report.theme.success[0],
+    self.container = self.page.ui.div()
+    self.container.css({"display": "inline-block", 'text-align': 'center', "color": self.page.theme.success[0],
                         'border': "1px dashed %s" % report.theme.colors[-1]})
     self.container.style.css.bold()
     self.container.style.css.margin = "0 5px"
     self.container.style.css.width = "calc(100% - 10px)"
     self.container.style.css.background = report.theme.greys[0]
-    self.container.add(self._report.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
+    self.container.add(self.page.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
     self.container.options.managed = False
-    self.text = self._report.ui.text()
+    self.text = self.page.ui.text()
     self.text.style.css.italic()
     self.text.style.css.font_factor(-2)
-    self.text.style.css.color = self._report.theme.greys[5]
+    self.text.style.css.color = self.page.theme.greys[5]
     self.text.options.managed = False
     self.text.style.css.margin_bottom = 5
     self.text.style.css.padding_left = 5
@@ -609,7 +609,7 @@ class DropFile(Html.Html):
     self.style.css.border = "1px solid %s" % report.theme.colors[-1]
     self.style.css.position = "relative"
     if self.options.format != 'json':
-      self.icon = self._report.ui.icon("fas fa-paste")
+      self.icon = self.page.ui.icon("fas fa-paste")
       self.icon.options.managed = False
       if "color" in self.icon.attr['css']:
         del self.icon.attr['css']["color"]
@@ -618,7 +618,7 @@ class DropFile(Html.Html):
       self.icon.click(self.dom.events.trigger("paste"))
     self.sync = None
     if options is not None and options.get("sync"):
-      self.sync = self._report.ui.icon("fas fa-sync-alt")
+      self.sync = self.page.ui.icon("fas fa-sync-alt")
       self.sync.options.managed = False
       self.sync.style.css.margin_left = 5
 

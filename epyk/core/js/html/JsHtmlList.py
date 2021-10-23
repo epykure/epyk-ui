@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import json
-
 from epyk.core.js.html import JsHtml
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
@@ -221,7 +219,7 @@ class JsItemsDef:
       badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; 
       badge.style.padding = '0 3px'; badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
       for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
-      item.appendChild(badge)}''' % Defaults.font(-2)
+      item.appendChild(badge)}''' % report.body.style.globals.font.normal(-2)
     return self._item(item_def)
 
   def link(self, report):

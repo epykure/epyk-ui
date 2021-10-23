@@ -56,7 +56,7 @@ class Image(Html.Html):
     :rtype: JsHtml.JsHtmlImg
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlImg(self, report=self._report)
+      self._dom = JsHtml.JsHtmlImg(self, report=self.page)
     return self._dom
 
   def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
@@ -272,20 +272,20 @@ class ImgCarousel(Html.Html):
       self.items.append(div)
     self.__point_display = options.get('points', True)
     self.infinity = options.get('infinity', False)
-    self.container = self._report.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
+    self.container = self.page.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
     self.container.options.managed = False
     if 'arrows' in options:
-      self.next = self._report.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css(
+      self.next = self.page.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css(
         {"position": 'absolute', "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
       self.next.options.managed = False
 
-      self.previous = self._report.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css(
+      self.previous = self.page.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css(
         {"position": 'absolute', "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
       self.previous.options.managed = False
 
       if options.get("keyboard", False):
-        self._report.body.keyup.left([self.previous.dom.events.trigger("click")])
-        self._report.body.keyup.right([self.next.dom.events.trigger("click")])
+        self.page.body.keyup.left([self.previous.dom.events.trigger("click")])
+        self.page.body.keyup.right([self.next.dom.events.trigger("click")])
     else:
       self.next, self.previous = "", ""
     if not options.get('arrows', True):
@@ -493,7 +493,7 @@ class Icon(Html.Html):
     :rtype: JsHtml.JsHtmlIcon
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlIcon(self, report=self._report)
+      self._dom = JsHtml.JsHtmlIcon(self, report=self.page)
     return self._dom
 
   @property
@@ -676,7 +676,7 @@ class Icon(Html.Html):
     :param color_out: String. Optional. The color of the icon when mouse out
     """
     if color_out is None:
-      color_out = self._report.theme.success[1]
+      color_out = self.page.theme.success[1]
     else:
       self.css({"color": color_out})
     self.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)
@@ -752,7 +752,7 @@ class IconToggle(Icon):
         js_funcs_off.append(c.dom.show().r)
     js_funcs_off.append(self.build(self.icon_on))
     return super(Icon, self).click(
-      self._report.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, js_funcs_on).else_(js_funcs_off),
+      self.page.js.if_(self.dom.content.toString().indexOf(self.icon_on) >= 0, js_funcs_on).else_(js_funcs_off),
       profile, source_event, on_ready=on_ready)
 
 
@@ -780,7 +780,7 @@ class Emoji(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -806,11 +806,11 @@ class Badge(Html.Html):
       self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None
     if url is not None:
-      self.link = self._report.ui.links.external(text, url).css(
+      self.link = self.page.ui.links.external(text, url).css(
         {"color": "inherit", 'display': 'inline-block', "padding": "2px", "width": "auto"})
       self.link.options.managed = False
     else:
-      self.link = self._report.ui.text(text).css(
+      self.link = self.page.ui.text(text).css(
         {'display': 'inline-block', "padding": "2px", "width": "auto"})
     self.link.css(self.options.badge_css)
     self.link.css(
@@ -934,7 +934,7 @@ class SlideShow(Html.Html):
     :rtype: JsTinySlider.TinySlider
     """
     if self._js is None:
-      self._js = JsTinySlider.TinySlider(self._report, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsTinySlider.TinySlider(self.page, varName=self.jsonId, setVar=False, parent=self)
     return self._js
 
   @property
@@ -950,7 +950,7 @@ class SlideShow(Html.Html):
     :rtype: JsHtmlTinySlider.JsHtmlTinySlider
     """
     if self._dom is None:
-      self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self._report)
+      self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self.page)
     return self._dom
 
   def _events(self, event, js_funcs, source_event, profile=None, add=True):
@@ -1318,7 +1318,7 @@ class SlideShow(Html.Html):
     :param component: HTML. A component to be added to the slider container
     """
     if not hasattr(component, 'options'):
-      component = self._report.ui.div(component)
+      component = self.page.ui.div(component)
     component.options.managed = False
     self.val.append(component)
     self.components[component.htmlCode] = component

@@ -85,6 +85,10 @@ class Components:
     List groups are a flexible and powerful component for displaying a series of content.
     Modify and extend them to support just about any content within.
 
+    Usage::
+
+      page.web.bs.lists.list(["A", "B"])
+
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/list-group
@@ -112,6 +116,10 @@ class Components:
     Add the .list-group-numbered modifier class (and optionally use an <ol> element) to opt into numbered list group
     items. Numbers are generated via CSS (as opposed to a <ol>s default browser styling) for better placement inside l
     ist group items and to allow for better customization.
+
+    Usage::
+
+      page.web.bs.lists.list(["A", "B"])
 
     Related Pages:
 

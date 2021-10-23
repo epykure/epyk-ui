@@ -23,8 +23,8 @@ class Console(Html.Html):
   def __init__(self, report, data, width, height, html_code, helper, options, profile):
     super(Console, self).__init__(report, data, html_code=html_code, options=options,
                                   css_attrs={"width": width, "height": height}, profile=profile)
-    self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self._report.theme.greys[-1],
-              'background': self._report.theme.colors[0]})
+    self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self.page.theme.greys[-1],
+              'background': self.page.theme.colors[0]})
     self.add_helper(helper)
 
   @property
@@ -40,7 +40,7 @@ class Console(Html.Html):
     :rtype: JsHtmlEditor.Console
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.Console(self, report=self._report)
+      self._dom = JsHtmlEditor.Console(self, report=self.page)
     return self._dom
 
   @property
@@ -70,13 +70,13 @@ class Console(Html.Html):
 
 class Editor(Html.Html):
   name = 'Code Editor'
-  requirements = ('codemirror', cssDefaults.ICON_FAMILY)
+  requirements = ('codemirror', )
 
   def __init__(self, report, vals, language, width, height, html_code, options, profile):
     super(Editor, self).__init__(report, vals, html_code=html_code, profile=profile,
                                  css_attrs={"width": width, "height": height, 'box-sizing': 'border-box',
                                             'margin': '5px 0'})
-    self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
+    self.textarea = self.page.ui.texts.code(vals, height=height, language=language, options=options)
     self.textarea.options.managed = False
     self.actions = []
 
@@ -93,7 +93,7 @@ class Editor(Html.Html):
     :rtype: JsHtmlEditor.Editor
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.Editor(self, report=self._report)
+      self._dom = JsHtmlEditor.Editor(self, report=self.page)
     return self._dom
 
   def action(self, icon, js_funcs, tooltip=None):
@@ -108,12 +108,12 @@ class Editor(Html.Html):
     :param js_funcs: List | String. The Javascript functions.
     :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
-    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
+    icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
     return self
 
-  def toggle(self, js_funcs, icons=("fas fa-eye", "far fa-eye-slash"), tooltip=None):
+  def toggle(self, js_funcs, icons=("show", "hide"), tooltip=None):
     """
     Description:
     ------------
@@ -125,7 +125,7 @@ class Editor(Html.Html):
     :param js_funcs: List | String. Optional. The Javascript functions.
     :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
-    icon_button = self._report.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
+    icon_button = self.page.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
     js_funcs.append(self.textarea.dom.toggle())
     js_funcs.append(icon_button.dom.switchClass(icons[0], icons[1]).r)
     icon_button.click(js_funcs)
@@ -133,7 +133,7 @@ class Editor(Html.Html):
     self.actions.append((icons[0], icon_button))
     return self
 
-  def copy(self, js_funcs, icon="far fa-clipboard", tooltip=None):
+  def copy(self, js_funcs, icon="capture", tooltip=None):
     """
     Description:
     ------------
@@ -149,7 +149,7 @@ class Editor(Html.Html):
     js_funcs.append('document.execCommand("copy")')
     return self.action(icon, js_funcs, tooltip)
 
-  def run(self, js_funcs, icon="fas fa-play", tooltip=None):
+  def run(self, js_funcs, icon="play", tooltip=None):
     """
     Description:
     ------------
@@ -164,7 +164,7 @@ class Editor(Html.Html):
     """
     return self.action(icon, js_funcs, tooltip)
 
-  def save(self, js_funcs, icon="fas fa-save", tooltip=None):
+  def save(self, js_funcs, icon="save", tooltip=None):
     """
     Description:
     ------------
@@ -179,7 +179,7 @@ class Editor(Html.Html):
     """
     return self.action(icon, js_funcs, tooltip)
 
-  def clear(self, js_funcs, icon="fas fa-times-circle", tooltip=None):
+  def clear(self, js_funcs, icon="remove", tooltip=None):
     """
     Description:
     ------------
@@ -212,7 +212,7 @@ class Cell(Html.Html):
   def __init__(self, report, vals, language, width, height, html_code, options, profile):
     super(Cell, self).__init__(report, vals, html_code=html_code, options=options,
                                css_attrs={"width": width, "height": height}, profile=profile)
-    self.textarea = self._report.ui.texts.code(vals, language, height=height, options=options)
+    self.textarea = self.page.ui.texts.code(vals, language, height=height, options=options)
     self.textarea.options.managed = False
     self.textarea.style.add_classes.input.textarea()
     self.textarea.style.add_classes.input.textarea()
@@ -232,11 +232,11 @@ class Cell(Html.Html):
     :param js_funcs: List | String. The Javascript functions.
     :param tooltip: String. Optional. Text to be displayed when mouse is hover.
     """
-    icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
+    icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
 
-  def run(self, js_funcs, icon="fas fa-play", tooltip=None):
+  def run(self, js_funcs, icon="play", tooltip=None):
     """
     Description:
     ------------
@@ -252,7 +252,7 @@ class Cell(Html.Html):
     js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
     return self.action(icon, js_funcs, tooltip)
 
-  def save(self, js_funcs, icon="fas fa-save", tooltip=None):
+  def save(self, js_funcs, icon="save", tooltip=None):
     """
     Description:
     ------------
@@ -329,7 +329,7 @@ class Code(Html.Html):
     :rtype: JsCodeMirror.CM
     """
     if self._js is None:
-      self._js = JsCodeMirror.CM(self, report=self._report)
+      self._js = JsCodeMirror.CM(self, report=self.page)
     return self._js
 
   @property
@@ -345,7 +345,7 @@ class Code(Html.Html):
     :rtype: JsHtmlEditor.CodeMirror
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.CodeMirror(self, report=self._report)
+      self._dom = JsHtmlEditor.CodeMirror(self, report=self.page)
     return self._dom
 
   @property
@@ -457,7 +457,7 @@ class Tags(Html.Html):
 
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {
-      "htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+      "htmlCode": self.htmlCode, "breadCrumVar": self.page.jsGlobal.breadCrumVar}
 
   def jsEmpty(self):
     """
@@ -466,17 +466,25 @@ class Tags(Html.Html):
 
     """
     return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {
-      "htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+      "htmlCode": self.htmlCode, "breadCrumVar": self.page.jsGlobal.breadCrumVar}
 
   def jsAdd(self, jsData):
+    """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
+    :param jsData:
+    """
     jsData = JsUtils.jsConvertData(jsData, None)
-    self.addGlobalFnc('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
+    icon_details = cssDefaults.get_icon("close")
+    self.page.properties.js.add_builders('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
-      $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
-      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self._report.theme.greys[0],
-             "baseColor": self._report.theme.colors[9]}
+      $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='%(close)s'></i></span>")
+      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self.page.theme.greys[0],
+             "baseColor": self.page.theme.colors[9], "close": icon_details["icon"]}
 
   def __str__(self):
     return '''
@@ -485,7 +493,7 @@ class Tags(Html.Html):
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlCode)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
       </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title,
-                   'icon': self.icon, 'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}
+                   'icon': self.icon, 'htmlCode': self.htmlCode, 'greyColor': self.page.theme.greys[2]}
 
 
 class MarkdownReader(Html.Html):
@@ -516,7 +524,7 @@ class MarkdownReader(Html.Html):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   @property
@@ -546,14 +554,14 @@ class MarkdownReader(Html.Html):
     """
     from epyk.core.data import components
 
-    if "markdown_tooltip" not in self._report.components:
-      div = self._report.ui.div(html_code="markdown_tooltip", width=("auto", ""))
+    if "markdown_tooltip" not in self.page.components:
+      div = self.page.ui.div(html_code="markdown_tooltip", width=("auto", ""))
       div.style.css.display = False
       div.style.css.position = "absolute"
-      div.style.css.background = self._report.theme.greys[0]
+      div.style.css.background = self.page.theme.greys[0]
       div.style.css.padding = 5
       div.style.css.border_radius = 5
-      div.style.css.border = "1px solid %s" % self._report.theme.greys[5]
+      div.style.css.border = "1px solid %s" % self.page.theme.greys[5]
       self.onReady('''
         function showTooltip(source, content){
             source.style.cursor = 'help'; document.querySelector('#markdown_tooltip').innerHTML = content;  

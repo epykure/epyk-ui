@@ -52,7 +52,7 @@ class Stepper(Html.Html):
     dflt_options.update(options)
     super(Stepper, self).__init__(
       report, records, options=dflt_options, profile=profile, css_attrs={"list-style-type": 'none', "width": width})
-    self.color = self._report.theme.greys[-1] if color is None else color
+    self.color = self.page.theme.greys[-1] if color is None else color
     self.css({'color': self.color, "margin": 0, 'display': 'inline-block', 'padding': 0})
 
   def __getitem__(self, i):
@@ -69,7 +69,7 @@ class Stepper(Html.Html):
     :rtype: JsHtmlStepper.Stepper
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Stepper(self, report=self._report)
+      self._dom = JsHtmlStepper.Stepper(self, report=self.page)
     return self._dom
 
   @property
@@ -127,9 +127,9 @@ class Stepper(Html.Html):
     if dependencies is not None:
       for d in dependencies:
         if d in Imports.JS_IMPORTS:
-          self._report.jsImports.add(d)
+          self.page.jsImports.add(d)
         if d in Imports.CSS_IMPORTS:
-          self._report.cssImport.add(d)
+          self.page.cssImport.add(d)
     self.page.properties.js.add_constructor(shape, "function %s(htmlObj, options, step){%s}" % (
       shape, JsHtmlStepper.JsShapes().custom(shape_def)))
     self.options.shape = shape

@@ -76,16 +76,18 @@ class Newline(Html.Html):
 
 class Stars(Html.Html):
   name = 'Stars'
-  requirements = (Defaults.ICON_FAMILY, )
 
   def __init__(self, report, val, label, color, align, best, html_code, helper, options, profile):
+    icon_details = Defaults.get_icon("star")
+    if icon_details['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details['icon_family'],)
     super(Stars, self).__init__(report, val, html_code=html_code, profile=profile, options=options)
     # Add the HTML components
     self._spans = []
-    self._jsStyles = {'color': self._report.theme.success[1] if color is None else color}
+    self._jsStyles = {'color': self.page.theme.success[1] if color is None else color}
     for i in range(best):
       self.add_span("", position="after", css=False)
-      self._sub_htmls[-1].attr['class'].add("fa fa-star")
+      self._sub_htmls[-1].attr['class'].add(icon_details["icon"])
       self._sub_htmls[-1].css({"margin": 0, "padding": 0})
       self._sub_htmls[-1].set_attrs(name="data-level", value=i)
       if i < val:
@@ -109,7 +111,7 @@ class Stars(Html.Html):
     :rtype: JsHtmlStars.Stars
     """
     if self._dom is None:
-      self._dom = JsHtmlStars.Stars(self, report=self._report)
+      self._dom = JsHtmlStars.Stars(self, report=self.page)
     return self._dom
 
   def click(self, js_funcs=None, profile=None, source_event=None, on_ready=False):
@@ -157,12 +159,14 @@ class Stars(Html.Html):
 
 
 class Help(Html.Html):
-  requirements = (Defaults.ICON_FAMILY, )
   name = 'Info'
 
   def __init__(self, report, val, width, profile, options):
+    icon_details = Defaults.get_icon("info")
+    if icon_details['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details['icon_family'],)
     super(Help, self).__init__(report, val, css_attrs={"width": width}, profile=profile)
-    self.attr['class'].add("fas fa-question-circle")
+    self.attr['class'].add(icon_details["icon"])
     self.attr['title'] = val
     self._jsStyles = options
 
@@ -188,16 +192,18 @@ class Help(Html.Html):
 
 
 class Loading(Html.Html):
-  requirements = (Defaults.ICON_FAMILY, )
   name = 'Loading'
 
   def __init__(self, report, text, color, size, options, profile):
+    icon_details = Defaults.get_icon("spin")
+    if icon_details['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details['icon_family'],)
     super(Loading, self).__init__(report, text, profile=profile)
-    self.color = self._report.theme.greys[-1] if color is None else color
+    self.color = self.page.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
-    self.add_icon("fas fa-spinner fa-spin", html_code=self.htmlCode, css={"font-size": "%spx" % (self.size+8)},
-                  family=options.get("icon_family"))
+    self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.htmlCode, css={"font-size": "%spx" % (self.size+8)},
+                  family=icon_details["icon_family"])
     if options.get('fixed', False):
       self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
       self.css({"position": 'fixed', 'bottom': '0px', 'right': '5px'})
@@ -253,7 +259,7 @@ class HtmlJson(Html.Html):
     :rtype: JsHtmlJson.JsonFormatter
     """
     if self._dom is None:
-      self._dom = JsHtmlJson.JsonFormatter(self, report=self._report)
+      self._dom = JsHtmlJson.JsonFormatter(self, report=self.page)
     return self._dom
 
   @property
@@ -295,7 +301,7 @@ class HtmlJson(Html.Html):
     :rtype: JsJsonFormatter.Json
     """
     if self._js is None:
-      self._js = JsJsonFormatter.Json(self._report, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsJsonFormatter.Json(self.page, varName=self.jsonId, setVar=False, parent=self)
     return self._js
 
   def __str__(self):
@@ -317,7 +323,9 @@ class Breadcrumb(Html.Html):
       for rec in records:
         if not hasattr(rec, 'options'):
           if isinstance(rec, dict):
-            records = report.ui.div(rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else report.ui.link(rec['text'], rec['url'])
+            records = report.ui.div(
+              rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else report.ui.link(
+              rec['text'], rec['url'])
             records.style.css.vertical_align = 'middle'
           else:
             records = report.ui.div(rec, width=("auto", '')) if options['selected'] == rec else report.ui.link(rec)
@@ -409,15 +417,18 @@ class Legend(Html.Html):
 
 
 class Slides(Html.Html):
-  requirements = (Defaults.ICON_FAMILY, )
   name = 'Slides'
   _option_cls = OptText.OptionsText
 
   def __init__(self, report, start, width, height, options, profile):
+    icon_details_right = Defaults.get_icon("arrow_right")
+    if icon_details_right['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details_right['icon_family'],)
+    icon_details_left = Defaults.get_icon("arrow_left")
     super(Slides, self).__init__(report, [], options=options,
                                  css_attrs={"width": width, 'height': height}, profile=profile)
     self.attr['data-current_slide'] = start
-    self.title = self._report.ui.title("")
+    self.title = self.page.ui.title("")
     self.title.style.css.border_bottom = "1px solid %s" % report.theme.colors[7]
     self.title.style.css.color = report.theme.colors[7]
     self.title.style.css.margin = 0
@@ -428,33 +439,33 @@ class Slides(Html.Html):
       self._content_table = options['contents']
       self._content_table.style.css.z_index = 100
     if 'timer' in options:
-      self._report.ui.calendars.timer(options['timer']).css(
+      self.page.ui.calendars.timer(options['timer']).css(
         {"position": 'fixed', "font-size": '15px', 'top': '8px', "padding": '8px', "right": '15px', 'width': 'none',
          'color': report.theme.greys[5]})
-    self.next = self._report.ui.icon("fas fa-arrow-alt-circle-right").css(
+    self.next = self.page.ui.icon(icon_details_right["icon"]).css(
       {"position": 'fixed', "font-size": '35px', 'bottom': '0',  "padding": '8px', "right": '10px', 'width': 'none'})
-    self.previous = self._report.ui.icon("fas fa-arrow-alt-circle-left").css(
+    self.previous = self.page.ui.icon(icon_details_left["icon"]).css(
       {"position": 'fixed', "font-size": '35px', 'bottom': '0',  "padding": '8px', "left": '10px', 'width': 'none'})
 
-    self.page_number = self._report.ui.text("").css(
+    self.page_number = self.page.ui.text("").css(
       {"position": 'fixed', 'z-index': 101, "font-size": '25px', 'bottom': '0',  "padding": '8px', "left": '50%',
        'width': 'none'})
 
     self.next.click([
-      self._report.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+      self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
         data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(1), 'slide_index'),
 
       self.js.if_(report.js.object('slide_index') <= self.dom.attr('data-last_slide'), [
-        self.title.build(self._report.js.getElementsByName(
+        self.title.build(self.page.js.getElementsByName(
           self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
         self.dom.attr("data-current_slide", report.js.object('slide_index')),
-        self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
-        self._report.js.getElementById(
+        self.page.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+        self.page.js.getElementById(
           "%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
-        self.title.build(self._report.js.getElementsByName(
+        self.title.build(self.page.js.getElementsByName(
           self.htmlCode)[report.js.object('slide_index').add(-1)].attr('data-slide_title')),
-        self._report.js.getElementsByName(
+        self.page.js.getElementsByName(
           self.htmlCode)[report.js.object('slide_index').add(-1)].show(display_value='flex')]),
 
       self.js.if_(report.js.object('slide_index') > 0, [self.previous.dom.show()]),
@@ -462,19 +473,19 @@ class Slides(Html.Html):
     ])
 
     self.previous.click([
-      self._report.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+      self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
       data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(-1), 'slide_index'),
 
       self.js.if_(report.js.object('slide_index') >= 0, [
-        self.title.build(self._report.js.getElementsByName(
+        self.title.build(self.page.js.getElementsByName(
           self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
         self.dom.attr("data-current_slide", report.js.object('slide_index')),
-        self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
-        self._report.js.getElementById(
+        self.page.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+        self.page.js.getElementById(
           "%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
-        self.title.build(self._report.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
-        self._report.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
+        self.title.build(self.page.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
+        self.page.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
 
       self.js.if_(report.js.object('slide_index') == 0, [self.previous.dom.hide()]),
       self.js.if_(report.js.object('slide_index') < self.dom.attr('data-last_slide'), [self.next.dom.show()])
@@ -511,7 +522,7 @@ class Slides(Html.Html):
     :rtype: JsHtmlStars.Slides
     """
     if self._dom is None:
-      self._dom = JsHtmlStars.Slides(self, report=self._report)
+      self._dom = JsHtmlStars.Slides(self, report=self.page)
     return self._dom
 
   def add(self, component):
@@ -528,7 +539,7 @@ class Slides(Html.Html):
       for c in component:
         if hasattr(c, 'options'):
           c.options.managed = False
-      component = self._report.ui.div(component)
+      component = self.page.ui.div(component)
       component.style.css.width = "100%"
       component.style.css.height = "90%"
       component.style.css.display = "flex"
@@ -576,7 +587,7 @@ class Slides(Html.Html):
       '''
 
   def __str__(self):
-    self._report.body.style.css.height = '100%'
+    self.page.body.style.css.height = '100%'
     self.page_number._vals = '<font id="%s_count" ondblclick="this.contentEditable = true" onkeydown="if (event.keyCode == 13){document.getElementById(\'%s\').setAttribute(\'data-current_slide\', Math.min(parseInt(this.innerHTML), %s) -2); %s; this.contentEditable = false}">%s</font> / %s' % (self.htmlCode, self.htmlCode, len(self.val), self.next.dom.events.trigger('click').toStr(), self.attr['data-current_slide']+1, len(self.val))
     comps = []
     self.attr['data-last_slide'] = len(self.val)-1
@@ -642,7 +653,7 @@ class HtmlQRCode(Html.Html):
     :rtype: JsQrCode.QrCode
     """
     if self._js is None:
-      self._js = JsQrCode.QrCode(self._report, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsQrCode.QrCode(self.page, varName=self.jsonId, setVar=False, parent=self)
     return self._js
 
   def __str__(self):

@@ -51,7 +51,7 @@ class Label(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   @property
@@ -141,7 +141,7 @@ class Label(Html.Html):
         res.append(v.html())
       else:
         if self.options.showdown:
-          res.append(self._report.py.markdown.all(self.val))
+          res.append(self.page.py.markdown.all(self.val))
         else:
           res.append(str(v))
     return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(res), self.helper)
@@ -206,7 +206,7 @@ class Span(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
@@ -399,7 +399,7 @@ class Text(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   @property
@@ -446,23 +446,23 @@ class Text(Html.Html):
     """
     value = self.val
     self.val = ""
-    self._report.body.onReady([
-      self._report.js.objects.string(value, varName="%s_writer" % self.htmlCode, setVar=True),
-      self._report.js.objects.number(0, varName="%s_pos" % self.htmlCode, setVar=True),
+    self.page.body.onReady([
+      self.page.js.objects.string(value, varName="%s_writer" % self.htmlCode, setVar=True),
+      self.page.js.objects.number(0, varName="%s_pos" % self.htmlCode, setVar=True),
       self.build(""),
-      self._report.js.window.setInterval([
-        self._report.js.if_(
-          self._report.js.objects.number.get(
-            "window.%s_pos" % self.htmlCode) < self._report.js.objects.string.get(
+      self.page.js.window.setInterval([
+        self.page.js.if_(
+          self.page.js.objects.number.get(
+            "window.%s_pos" % self.htmlCode) < self.page.js.objects.string.get(
             "window.%s_writer" % self.htmlCode).length, [
-            self._report.js.objects.number(
-              self._report.js.objects.number.get(
+            self.page.js.objects.number(
+              self.page.js.objects.number.get(
                 "window.%s_pos" % self.htmlCode) + 1, varName="window.%s_pos" % self.htmlCode, setVar=True),
             self.dom.append(
-              self._report.js.objects.string.get(
+              self.page.js.objects.string.get(
                 "window.%s_writer" % self.htmlCode).charAt(
-                self._report.js.objects.number.get("window.%s_pos" % self.htmlCode)), new_line=False)
-          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+                self.page.js.objects.number.get("window.%s_pos" % self.htmlCode)), new_line=False)
+          ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ])
     return self
@@ -514,7 +514,7 @@ class Pre(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def selectable(self, flag=False):
@@ -586,7 +586,7 @@ class Paragraph(Html.Html):
                                                "background-color": background_color}, profile=profile)
     self.add_helper(helper)
     if border:
-      self.css('border', '1px solid %s' % self._report.theme.greys[9])
+      self.css('border', '1px solid %s' % self.page.theme.greys[9])
     self.css({'text-align': 'justify', 'margin-top': '3px', "text-justify": 'distribute'})
     self.style.css.margin_top = 10
     self.style.css.margin_bottom = 10
@@ -628,7 +628,7 @@ class Paragraph(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -658,7 +658,7 @@ class BlockQuote(Html.Html):
           <div style="padding:5px;border-left:2px solid %s"></div>
           <div style="text-align:right"></div>
       </blockquote>%s''' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self._report.theme.colors[3], self.helper)
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.page.theme.colors[3], self.helper)
 
 
 class Title(Html.Html):
@@ -724,7 +724,7 @@ class Title(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   @property
@@ -868,7 +868,7 @@ class Numeric(Html.Html):
     :rtype: JsHtml.JsHtmlNumeric
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlNumeric(self, report=self._report)
+      self._dom = JsHtml.JsHtmlNumeric(self, report=self.page)
     return self._dom
 
   def to(self, number, timer=1):
@@ -882,16 +882,16 @@ class Numeric(Html.Html):
     :param number:
     :param timer: Integer. the append of the increase in millisecond
     """
-    self._report.body.onReady([
-      self._report.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
-      self._report.js.window.setInterval([
-        self._report.js.if_(
-          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
-            self._report.js.objects.number(
-              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+    self.page.body.onReady([
+      self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.window.setInterval([
+        self.page.js.if_(
+          self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self.page.js.objects.number(
+              self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
               varName="window.%s_counter" % self.htmlCode, setVar=True),
-            self.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
-          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+            self.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ])
     return self
@@ -946,7 +946,7 @@ class Highlights(Html.Html):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height},
                                      html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
-    self.style.css.color = color if color is not None else self._report.theme.greys[-1]
+    self.style.css.color = color if color is not None else self.page.theme.greys[-1]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0},
                    options={'content_table': False})
@@ -999,7 +999,7 @@ class Fieldset(Html.Html):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.add_helper(helper)
-    self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block',
+    self.css({'padding': '5px', 'border': '1px groove %s' % self.page.theme.greys[3], 'display': 'block',
               'margin': '5px 0'})
 
   _js__builder__ = '''htmlObj.firstChild.innerHTML = data; 

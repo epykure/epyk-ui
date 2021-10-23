@@ -50,7 +50,7 @@ class Drawer(Html.Html):
     :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Drawer(self, report=self._report)
+      self._dom = JsHtmlStepper.Drawer(self, report=self.page)
     return self._dom
 
   @property
@@ -77,11 +77,11 @@ class Drawer(Html.Html):
     :param display: String. Optional. The CSS Display property.
     """
     if not hasattr(link, 'options'):
-      link = self._report.ui.div(link)
+      link = self.page.ui.div(link)
       link.style.css.padding = "0 5px"
       link.options.managed = False
     if not hasattr(container, 'options'):
-      container = self._report.ui.div(container)
+      container = self.page.ui.div(container)
     container.style.css.display = display
     container.options.managed = False
     self.panels += container
@@ -110,7 +110,7 @@ class Drawer(Html.Html):
     ----------
     :param component: HTML. An HTML component.
     """
-    self.handle = self._report.ui.div()
+    self.handle = self.page.ui.div()
     self.handle.style.clear_all()
     if self.options.side == 'left':
       component.click([self.drawers.dom.toggle_transition("margin-right", "0px", "-%s" % self.options.width)])
@@ -180,7 +180,7 @@ class DrawerMulti(Html.Html):
     :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Drawer(self, report=self._report)
+      self._dom = JsHtmlStepper.Drawer(self, report=self.page)
     return self._dom
 
   @property
@@ -206,14 +206,14 @@ class DrawerMulti(Html.Html):
     :param container: HTML. The component to be displayed.
     """
     if not hasattr(link, 'options'):
-      link = self._report.ui.div(link)
+      link = self.page.ui.div(link)
     link.style.css.padding = "5px 0"
-    link.style.css.color = self._report.theme.colors[0]
+    link.style.css.color = self.page.theme.colors[0]
     link.style.css.margin = "0 2px"
     link.style.css.cursor = "pointer"
     link.options.managed = False
     if not hasattr(container, 'options'):
-      container = self._report.ui.div(container)
+      container = self.page.ui.div(container)
       container.style.css.padding = 5
     container.options.managed = False
     link.style.css.writing_mode = "vertical-rl"
@@ -221,7 +221,7 @@ class DrawerMulti(Html.Html):
     self.handle += link
     self.drawers += container
     link.click([
-      self._report.js.querySelectorAll(
+      self.page.js.querySelectorAll(
         Selector.Selector(self.drawers).with_child_element("div").excluding(container)).css({"display": 'none'}),
       expr.if_(self.panels.dom.getAttribute("data-panel") == container.htmlCode, [
         self.drawers.dom.toggle_transition(
@@ -229,7 +229,7 @@ class DrawerMulti(Html.Html):
         container.dom.css({"display": 'none'}),
         self.panels.dom.setAttribute("data-panel", '')])
       .else_([
-        expr.if_(self._report.js.querySelector(Selector.Selector(self.drawers)).css("margin-left") != "0px", [
+        expr.if_(self.page.js.querySelector(Selector.Selector(self.drawers)).css("margin-left") != "0px", [
           self.drawers.dom.toggle_transition(
             "margin-right" if self.options.side == 'left' else "margin-left", "0px", "-%s" % self.options.width),
         ]),

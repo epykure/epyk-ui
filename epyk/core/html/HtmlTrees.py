@@ -15,12 +15,14 @@ from epyk.core.css import Defaults as cssDefaults
 
 class Tree(Html.Html):
   name = 'List Expandable'
-  requirements = (cssDefaults.ICON_FAMILY, )
   _option_cls = OptTrees.OptionsTree
 
   def __init__(self, report, records, width, height, html_code, helper, options, profile):
     options['is_root'] = True
-    options['icon_open'] = "fas fa-folder-open"
+    icon_details = cssDefaults.get_icon("folder_open")
+    options['icon_open'] = icon_details["icon"]
+    if icon_details['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details['icon_family'],)
     options['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
     super(Tree, self).__init__(report, records, profile=profile, options=options,
                                css_attrs={"width": width, 'height': height})
@@ -41,7 +43,7 @@ class Tree(Html.Html):
     :rtype: JsHtmlTree.JsHtmlTree
     """
     if self._dom is None:
-      self._dom = JsHtmlTree.JsHtmlTree(self, report=self._report)
+      self._dom = JsHtmlTree.JsHtmlTree(self, report=self.page)
     return self._dom
 
   @property
@@ -165,7 +167,7 @@ class TreeInput(Tree):
     """
     for l in data:
       if l.get('items') is not None:
-        sub_l = self._report.ui.list()
+        sub_l = self.page.ui.list()
         sub_l.options.managed = False
         ul.add_item(sub_l)[-1].no_decoration()
         ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
@@ -177,7 +179,7 @@ class TreeInput(Tree):
           ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
         self.set(sub_l, l.get('items'))
       else:
-        ul.add_item(self._report.ui.text(l['label']).editable().css(
+        ul.add_item(self.page.ui.text(l['label']).editable().css(
           {"width": 'none', 'min-width': 'none'}))[-1].no_decoration()
         ul[-1].css({"color": l.get('color', 'none')})
     return self

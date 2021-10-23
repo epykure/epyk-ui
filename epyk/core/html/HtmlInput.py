@@ -20,6 +20,7 @@ from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsInput
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Output(Html.Html):
@@ -1008,9 +1009,12 @@ class FieldSelect(Field):
                                   "%s_input" % html_code if html_code is not None else html_code,
                                   width=(100, "%"), options=options)
     html_input.options.iconBase = "iconBase"
-    html_input.options.tickIcon = "fa fa-check"
-    super(FieldSelect, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
-                                      profile)
+    icon_details = Defaults_css.get_icon("check")
+    html_input.options.tickIcon = icon_details["icon"]
+    if icon_details['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details['icon_family'],)
+    super(FieldSelect, self).__init__(
+      report, html_input, label, icon, width, height, html_code, helper, options, profile)
     if label is not None:
       self.label.style.css.line_height = None
 
@@ -1220,6 +1224,8 @@ class Search(Html.Html):
   name = 'Search'
 
   def __init__(self, report, text, placeholder, color, width, height, html_code, tooltip, extensible, options, profile):
+    if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
+      self.requirements = (options['icon_family'],)
     super(Search, self).__init__(report, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
     self.color = 'inherit' if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})

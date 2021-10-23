@@ -66,7 +66,7 @@ class HtmlGeneric(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   _js__builder__ = 'htmlObj.innerHTML = data'
@@ -96,15 +96,15 @@ class HtmlGenericLInk(HtmlGeneric):
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self.on('mouseenter', [
-      self._report.js.request_http("test", 'GET', url).send().onSuccess([
-        self._report.js.createElement("div", "popup").innerHTML(
-          self._report.js.object("data")).attr('id', 'popup').css(
+      self.page.js.request_http("test", 'GET', url).send().onSuccess([
+        self.page.js.createElement("div", "popup").innerHTML(
+          self.page.js.object("data")).attr('id', 'popup').css(
           {'color': 'red', 'display': 'block', 'background': 'white', 'width': '250px', 'padding': '10px'}).position(),
-        self._report.body.dom.appendChild(self._report.js.object("popup"))]
+        self.page.body.dom.appendChild(self.page.js.object("popup"))]
       )
     ], profile=profile)
 
-    self.on('mouseleave', [self._report.js.getElementById("popup").remove()], profile=profile)
+    self.on('mouseleave', [self.page.js.getElementById("popup").remove()], profile=profile)
 
 
 class HtmlComment(Html.Html):

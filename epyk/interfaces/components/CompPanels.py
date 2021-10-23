@@ -3,6 +3,7 @@
 
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Panels:
@@ -15,8 +16,8 @@ class Panels:
             helper=None, options=None, profile=False):
     """
     Description:
-    Description:
     ------------
+    Add a simple div panel to the page.
 
     :tags:
     :categories:
@@ -130,7 +131,7 @@ class Panels:
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. The text-align property within this component.
+    :param align: String. Optional. The text-align property within this component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: String. Optional. A tooltip helper.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -142,8 +143,8 @@ class Panels:
                                 'color': self.page.theme.greys[-1]}}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper, dflt_options,
-                                        profile)
+    html_tabs = html.HtmlContainer.Tabs(
+      self.page, color, width, height, html_code, helper, dflt_options, profile)
     html_tabs.options.css_tab_clicked = {
       'color': html_tabs.page.theme.greys[0],
       'background': html_tabs.page.theme.colors[-1]}
@@ -191,12 +192,11 @@ class Panels:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                                'margin': '0 2px 5px 0',
-                                "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+                                'margin': '0 2px 5px 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper,
-                                        dflt_options, profile)
+    html_tabs = html.HtmlContainer.Tabs(
+      self.page, color, width, height, html_code, helper, dflt_options, profile)
     return html_tabs
 
   @html.Html.css_skin()
@@ -233,8 +233,7 @@ class Panels:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                                'margin': '0 2px 0 0',
-                                "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+                                'margin': '0 2px 0 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.TabsArrowsUp(
@@ -243,8 +242,8 @@ class Panels:
       t.style.add_classes.layout.panel_arrow_up()
     html_tabs.options.css_tab["color"] = html_tabs.page.theme.greys[-1]
     html_tabs.options.css_tab["height"] = "30px"
-    html_tabs.options.css_tab_clicked = {"background": html_tabs.page.theme.colors[-1],
-                                         "color": self.page.theme.greys[0]}
+    html_tabs.options.css_tab_clicked = {
+      "background": html_tabs.page.theme.colors[-1], "color": self.page.theme.greys[0]}
     return html_tabs
 
   @html.Html.css_skin()
@@ -285,8 +284,8 @@ class Panels:
                   "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.TabsArrowsDown(self.page, color, width, height, html_code, helper,
-                                                  dflt_options, profile)
+    html_tabs = html.HtmlContainer.TabsArrowsDown(
+      self.page, color, width, height, html_code, helper, dflt_options, profile)
     for t in html_tabs.tabs():
       t.style.add_classes.layout.panel_arrow_down()
     html_tabs.options.css_tab["color"] = html_tabs.page.theme.greys[-1]
@@ -332,8 +331,8 @@ class Panels:
                                 'margin': '0 2px 0 0', 'border-radius': '10px 10px 0 0'}}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper, dflt_options,
-                                        profile)
+    html_tabs = html.HtmlContainer.Tabs(
+      self.page, color, width, height, html_code, helper, dflt_options, profile)
     html_tabs.options.css_tab["color"] = html_tabs.page.theme.greys[-1]
     html_tabs.options.css_tab["background"] = html_tabs.page.theme.greys[0]
     html_tabs.options.css_tab_clicked = {
@@ -347,6 +346,9 @@ class Panels:
     """
     Description:
     ------------
+    Add a sliding panel.
+
+    TODO: Animate the CSS to make a transition.
 
     :tags:
     :categories:
@@ -385,8 +387,8 @@ class Panels:
         components.append(self.page.ui.texts.paragraph(component, options={"markdown": True}))
       else:
         components.append(component)
-    html_slide = html.HtmlContainer.PanelSlide(self.page, components, title, color, width, height,
-                                               html_code, helper, options or {}, profile)
+    html_slide = html.HtmlContainer.PanelSlide(
+      self.page, components, title, color, width, height, html_code, helper, options or {}, profile)
     if align == "center":
       html_slide.style.css.margin = "auto"
       html_slide.style.css.display = "block"
@@ -616,16 +618,20 @@ class Slidings:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    dfl_options = {"icon_position": "right"}
+    if options is not None:
+      dfl_options.update(options)
     sliding = self.page.ui.panels.sliding(
-      components, title=title, align="center", options={"icon_position": "right"})
-    sliding.options.icon_closed = "fas fa-chevron-up"
-    sliding.options.icon_expanded = "fas fa-chevron-down"
+      components, color=color, title=title, align=align, width=width, height=height,
+      html_code=html_code, helper=helper, options=dfl_options, profile=profile)
+    sliding.options.icon_closed = Defaults_css.get_icon("chevron_up")["icon"]
+    sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
     return sliding
 
   @html.Html.css_skin()
-  def left(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
+  def left(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
            helper=None, options=None, profile=False):
     """
     Description:
@@ -650,15 +656,16 @@ class Slidings:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    sliding = self.page.ui.panels.sliding(components, title=title, align="center")
-    sliding.options.icon_closed = "fas fa-chevron-up"
-    sliding.options.icon_expanded = "fas fa-chevron-down"
+    sliding = self.page.ui.panels.sliding(components, color=color, title=title, align=align, width=width, height=height,
+                                          html_code=html_code, helper=helper, options=options, profile=profile)
+    sliding.options.icon_closed = Defaults_css.get_icon("chevron_up")["icon"]
+    sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
     return sliding
 
   @html.Html.css_skin()
-  def plus(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
+  def plus(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
            helper=None, options=None, profile=False):
     """
     Description:
@@ -687,7 +694,7 @@ class Slidings:
       components, title, color, align, width, height, html_code, helper, options, profile)
     html_slide.title.style.css.padding = 0
     html_slide.title[1].style.css.margin_left = 15
-    html_slide.options.icon_closed = "fas fa-plus"
-    html_slide.options.icon_expanded = "fas fa-minus"
+    html_slide.options.icon_closed = Defaults_css.get_icon("plus")["icon"]
+    html_slide.options.icon_expanded = Defaults_css.get_icon("minus")["icon"]
     html_slide.val[1].style.padding_left = 40
     return html_slide

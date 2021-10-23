@@ -57,8 +57,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def headline(self, text="", options=None, tooltip="", align="left", color=True, width=(None, "px"), height=('auto', ""),
-               html_code=None, profile=False):
+  def headline(self, text="", options=None, tooltip="", align="left", color=True, width=(None, "px"),
+               height=('auto', ""), html_code=None, profile=False):
     """
     Description:
     ------------
@@ -101,8 +101,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def title(self, text=None, options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-            html_code=None, profile=False):
+  def title(self, text=None, options=None, tooltip="", align="left", color=None, width=(None, "px"),
+            height=('auto', ""), html_code=None, profile=False):
     """
     Description:
     ------------
@@ -141,13 +141,13 @@ class Titles:
     html_title.style.css.margin_top = 10
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
-    if hasattr(self.page, '_content_table'): # and self.options.content_table:
+    if hasattr(self.page, '_content_table'):   # and self.options.content_table:
       self.page._content_table.add_title(html_title, level=1)
     return html_title
 
   @html.Html.css_skin()
-  def section(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-              html_code=None, profile=False):
+  def section(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
+              height=('auto', ""), html_code=None, profile=False):
     """
     Description:
     ------------
@@ -182,7 +182,7 @@ class Titles:
     html_title.style.css.margin_bottom = 10
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
-    if hasattr(self.page, '_content_table'): # and self.options.content_table:
+    if hasattr(self.page, '_content_table'):   # and self.options.content_table:
       self.page._content_table.add_title(html_title, level=4)
     return html_title
 
@@ -230,8 +230,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def category(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-               html_code=None, profile=False):
+  def category(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
+               height=('auto', ""), html_code=None, profile=False):
     """
     Description:
     ------------
@@ -278,8 +278,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def caption(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-              html_code=None, profile=False):
+  def caption(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
+              height=('auto', ""), html_code=None, profile=False):
     """
     Description:
     ------------
@@ -320,8 +320,8 @@ class Titles:
     return html_title
 
   @html.Html.css_skin()
-  def underline(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-                html_code=None, profile=False):
+  def underline(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
+                height=('auto', ""),  html_code=None, profile=False):
     """
     Description:
     ------------

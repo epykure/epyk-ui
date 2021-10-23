@@ -79,8 +79,8 @@ class Sliders:
     Attributes:
     ----------
     :param value:
-    :param min_val:
-    :param max_val:
+    :param minimum:
+    :param maximum:
     :param width:
     :param height:
     :param html_code:
@@ -112,8 +112,8 @@ class Sliders:
 
     :param value1:
     :param value2:
-    :param min:
-    :param max:
+    :param minimum:
+    :param maximum:
     :param width:
     :param height:
     :param html_code:

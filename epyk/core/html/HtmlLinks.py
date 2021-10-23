@@ -35,7 +35,7 @@ class ExternalLink(Html.Html):
     :rtype: JsHtml.JsHtmlLink
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlLink(self, report=self._report)
+      self._dom = JsHtml.JsHtmlLink(self, report=self.page)
     return self._dom
 
   @property
@@ -92,7 +92,7 @@ class ExternalLink(Html.Html):
     self.style.css.text_decoration = None
     self.style.list_style_type = None
     if color is None:
-      color = self._report.theme.greys[-1]
+      color = self.page.theme.greys[-1]
     self.style.css.color = color
     return self
 

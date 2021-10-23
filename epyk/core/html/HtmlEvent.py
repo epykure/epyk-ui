@@ -31,7 +31,7 @@ class ProgressBar(Html.Html):
     super(ProgressBar, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.add_helper(helper)
-    self.options.background = self._report.theme.success[1]
+    self.options.background = self.page.theme.success[1]
 
   @property
   def options(self):
@@ -60,16 +60,16 @@ class ProgressBar(Html.Html):
     :param number: Number. The final state for the progress bar.
     :param timer: Integer. Optional. the appended of the increase in millisecond.
     """
-    self._report.body.onReady([
-      self._report.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
-      self._report.js.window.setInterval([
-        self._report.js.if_(
-          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
-            self._report.js.objects.number(
-              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+    self.page.body.onReady([
+      self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.window.setInterval([
+        self.page.js.if_(
+          self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self.page.js.objects.number(
+              self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
               varName="window.%s_counter" % self.htmlCode, setVar=True),
-            self.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
-          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+            self.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ])
     return self
@@ -96,7 +96,7 @@ class ProgressBar(Html.Html):
     :rtype: JsQueryUi.ProgressBar
     """
     if self._js is None:
-      self._js = JsQueryUi.ProgressBar(self, report=self._report)
+      self._js = JsQueryUi.ProgressBar(self, report=self.page)
     return self._js
 
   @property
@@ -112,7 +112,7 @@ class ProgressBar(Html.Html):
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -194,7 +194,7 @@ class Menu(Html.Html):
     :rtype: JsQueryUi.Menu
     """
     if self._js is None:
-      self._js = JsQueryUi.Menu(self, report=self._report)
+      self._js = JsQueryUi.Menu(self, report=self.page)
     return self._js
 
   @property
@@ -210,7 +210,7 @@ class Menu(Html.Html):
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -288,7 +288,7 @@ class Dialog(Html.Html):
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
     return self._dom
 
   def __str__(self):
@@ -365,7 +365,7 @@ class Slider(Html.Html):
     :rtype: JsQueryUi.Slider
     """
     if self._js is None:
-      self._js = JsQueryUi.Slider(self, report=self._report)
+      self._js = JsQueryUi.Slider(self, report=self.page)
     return self._js
 
   def change(self, js_funcs, profile=None, on_ready=False):
@@ -460,7 +460,7 @@ class Slider(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlSlider
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self.page)
     return self._dom
 
   _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css)
@@ -530,7 +530,7 @@ class SliderDate(Slider):
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, report=self.page)
     return self._dom
 
 
@@ -554,7 +554,7 @@ class SliderDates(SliderDate):
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, report=self.page)
     return self._dom
 
 
@@ -682,7 +682,7 @@ class OptionsBar(Html.Html):
     super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height},
                                      profile=profile, options=options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
-              'background': self._report.theme.greys[0]})
+              'background': self.page.theme.greys[0]})
     for rec in records:
       self += rec
     if self.options.draggable:
@@ -704,13 +704,13 @@ class OptionsBar(Html.Html):
 
   def __add__(self, icon):
     """ Add items to a container """
-    icon = self._report.ui.icon(icon)
+    icon = self.page.ui.icon(icon)
     icon.style.css.margin = "5px"
     super(OptionsBar, self).__add__(icon)
     return self
 
   def draggable(self, options=None):
-    self.css({'border-radius': '5px', "border": "1px dotted %s" % self._report.theme.success[1]})
+    self.css({'border-radius': '5px', "border": "1px dotted %s" % self.page.theme.success[1]})
     self.page.properties.js.add_builders(self.dom.jquery_ui.draggable(options).toStr())
     return self
 
@@ -744,7 +744,7 @@ class SignIn(Html.Html):
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="font-size:%(size)s;line-height:%(height)s;margin:0;padding:0">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self._report.user[0].upper(), 'user': self.page.user,
+      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self.page.user[0].upper(), 'user': self.page.user,
                     'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -899,7 +899,7 @@ class Filters(Html.Html):
     :rtype: JsHtmlList.Tags
     """
     if self._dom is None:
-      self._dom = JsHtmlList.Tags(self, report=self._report)
+      self._dom = JsHtmlList.Tags(self, report=self.page)
     return self._dom
 
   def __str__(self):

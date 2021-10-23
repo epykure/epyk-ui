@@ -179,7 +179,7 @@ class Camera(Html.Html):
     :rtype: JsHtml.JsMedia
     """
     if self._dom is None:
-      self._dom = JsHtml.JsMedia(self, report=self._report)
+      self._dom = JsHtml.JsMedia(self, report=self.page)
     return self._dom
 
   def __str__(self):

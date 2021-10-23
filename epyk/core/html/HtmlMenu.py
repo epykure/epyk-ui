@@ -49,12 +49,12 @@ class HtmlNavBar(Html.Html):
     """
     super(HtmlNavBar, self).move()
     self.style.css.position = None
-    self._report.body.style.css.padding_top = 0
+    self.page.body.style.css.padding_top = 0
 
   def __add__(self, component):
     """ Add items to the footer """
     if not hasattr(component, 'options'):
-      component = self._report.ui.div(component)
+      component = self.page.ui.div(component)
       component.style.add_classes.div.color_hover()
       component.style.css.user_select = "none"
       component.style.css.margin_left = 5
@@ -86,7 +86,7 @@ class HtmlNavBar(Html.Html):
     self.style.css.background_color = "#11ffee00"
     self.style.css.border_bottom = None
     if to_top:
-      self._report.body.style.css.padding_top = 0
+      self.page.body.style.css.padding_top = 0
     return self
 
   def set_theme(self):
@@ -95,8 +95,8 @@ class HtmlNavBar(Html.Html):
     -----------
 
     """
-    self.style.css.background_color = self._report.theme.colors[0]
-    self.style.css.border_bottom = "1px solid %s" % self._report.theme.greys[0]
+    self.style.css.background_color = self.page.theme.colors[0]
+    self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
 
   def add_right(self, component, css=None, prepend=False):
     """
@@ -111,7 +111,7 @@ class HtmlNavBar(Html.Html):
     :param prepend: Boolean. Optional.
     """
     if not hasattr(component, 'options'):
-      component = self._report.ui.text(component, width=("auto", ''))
+      component = self.page.ui.text(component, width=("auto", ''))
       component.style.add_classes.div.color_hover()
       component.style.css.margin_left = 5
       component.style.css.user_select = "none"
@@ -121,7 +121,7 @@ class HtmlNavBar(Html.Html):
       if css is not None:
         component.css(css)
     if not hasattr(self, '_right'):
-      self._right = self._report.ui.div(width=("auto", ''))
+      self._right = self.page.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
       self._right.style.css.font_factor(0)
@@ -145,7 +145,7 @@ class HtmlNavBar(Html.Html):
     :param text: String | HTML. The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
-      text = self._report.ui.text(text)
+      text = self.page.ui.text(text)
       text.style.css.height = "100%"
       text.style.css.vertical_align = 'middle'
     self.__add__(text)
@@ -158,7 +158,7 @@ class HtmlNavBar(Html.Html):
         self.scroll.style.css.width = None
     str_h = "".join([h.html() for h in self.val])
     if self.style.css.position != 'fixed':
-      self._report.body.style.css.padding_top = 0
+      self.page.body.style.css.padding_top = 0
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
 
 
@@ -217,7 +217,7 @@ class HtmlFooter(Html.Html):
   def __add__(self, component):
     """ Add items to the footer """
     if not hasattr(component, 'options'):
-      component = self._report.ui.div(component)
+      component = self.page.ui.div(component)
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
     self.val.append(component)
@@ -253,8 +253,8 @@ class ContextMenu(Html.Html):
     super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                       profile=profile, options=options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
-              'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
-              'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'})
+              'padding': 0, 'margin': 0, 'background-color': self.page.theme.greys[0],
+              'border': '1px solid %s' % self.page.theme.success[0], 'border-radius': '2px'})
     self.style.configs.shadow()
     for component in components:
       self.__add__(component)
@@ -316,16 +316,16 @@ class ContextMenu(Html.Html):
     if not hasattr(component, 'options'):
       if isinstance(component, dict):
         if component.get('icon') is not None:
-          i = self._report.ui.icon(component['icon'])
+          i = self.page.ui.icon(component['icon'])
           i.css({'display': 'inline', 'margin-right': '5px'})
-          v = self._report.ui.text(component['value'])
+          v = self.page.ui.text(component['value'])
           v.css({'display': 'inline'})
-          component = self._report.ui.div([i, v])
+          component = self.page.ui.div([i, v])
         else:
-          component = self._report.ui.div(component['value'])
+          component = self.page.ui.div(component['value'])
       else:
-        component = self._report.ui.div(component)
-    li_obj = Li(self._report, component) if not isinstance(component, Li) else component
+        component = self.page.ui.div(component)
+    li_obj = Li(self.page, component) if not isinstance(component, Li) else component
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
     li_obj.options.managed = False
     component.options.managed = False
@@ -394,7 +394,7 @@ class PanelsBar(Html.Html):
     """
     content.style.css.padding = "0 5px"
     if not hasattr(text, 'options'):
-      text = self._report.ui.div(text)
+      text = self.page.ui.div(text)
     text.style.css.display = 'inline-block'
     text.style.css.width = 'auto'
     text.style.css.cursor = 'pointer'
@@ -408,17 +408,17 @@ class PanelsBar(Html.Html):
     css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options['position'] == 'top' else {"height": "auto", 'display': 'block', 'margin-bottom': '30px'}
     for menu_item, panel in self.menu_mapping.items():
       menu_item.click([
-        self._report.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css(
+        self.page.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css(
           {"display": 'none'}),
         #
-        expr.if_(self._report.js.querySelector(
+        expr.if_(self.page.js.querySelector(
           Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
-          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
-          self._report.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
+          self.page.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
+          self.page.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
         ]).else_([
-          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", menu_item.htmlCode),
-          self._report.js.querySelector(Selector.Selector(self.panels)).css(css_menu),
-          self._report.js.querySelector(Selector.Selector(panel)).css({'display': 'block'})
+          self.page.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", menu_item.htmlCode),
+          self.page.js.querySelector(Selector.Selector(self.panels)).css(css_menu),
+          self.page.js.querySelector(Selector.Selector(panel)).css({'display': 'block'})
         ])
       ])
 
@@ -463,7 +463,7 @@ class Shortcut(Html.Html):
   def __add__(self, component):
     """ Add items to a container """
     if not hasattr(component, 'options'):
-      component = self._report.ui.icons.awesome(component)
+      component = self.page.ui.icons.awesome(component)
       component.icon.style.css.font_size = 20
       component.style.css.margin_bottom = 5
       component.style.css.margin_top = 5
@@ -500,13 +500,13 @@ class Shortcut(Html.Html):
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     """
-    self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
+    self.logo = self.page.ui.img(icon, path=path, align=align, width=width, height=height)
     self.logo.options.managed = False
     return self
 
   def __str__(self):
     if self.logo is None:
-      self.logo = self._report.ui.icons.epyk()
+      self.logo = self.page.ui.icons.epyk()
     else:
       self.logo.style.css.margin_top = 5
       self.logo.style.css.display = 'block'

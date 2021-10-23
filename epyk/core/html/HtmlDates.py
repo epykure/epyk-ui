@@ -69,7 +69,7 @@ class DatePicker(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self.page)
     return self._dom
 
   def select(self, js_funcs, profile=None):
@@ -175,13 +175,13 @@ class TimePicker(Html.Html):
 
   def __init__(self, report, value, label, icon, color, html_code, profile, options, helper):
     super(TimePicker, self).__init__(report, None, html_code=html_code, profile=profile)
-    self.input = self._report.ui.inputs.d_time(value, options=options,
+    self.input = self.page.ui.inputs.d_time(value, options=options,
          html_code="%s_input" % html_code if html_code is not None else html_code)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     if html_code is not None:
       self.input.attr["name"] = "%s_input" % html_code
     self.prepend_child(self.input)
-    self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self._report.theme.success[1]},
+    self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self.page.theme.success[1]},
                   position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
@@ -206,7 +206,7 @@ class TimePicker(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self.page)
     return self._dom
 
   def change(self, js_funcs, profile=None, on_ready=False):
@@ -336,7 +336,7 @@ class LastUpdated(Html.Html):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   def refresh(self):
@@ -352,7 +352,7 @@ class LastUpdated(Html.Html):
         update.refresh()
       ])
     """
-    return self.dom.innerHTML(self._report.js.objects.date().getStrTimeStamp().prepend(self._label))
+    return self.dom.innerHTML(self.page.js.objects.date().getStrTimeStamp().prepend(self._label))
 
   def __str__(self):
     return '<div %(strAttr)s>%(content)s</div>' % {
@@ -428,7 +428,7 @@ class Calendar(Html.Html):
       else:
         capacity = 100 * capacity / options['unit']
     if name not in self.tasks:
-      self.tasks[name] = self._report.theme.charts[len(self.tasks)]
+      self.tasks[name] = self.page.theme.charts[len(self.tasks)]
       i = 0
       for dt in self._vals:
         if 'date' in dt:
@@ -525,7 +525,7 @@ class Calendar(Html.Html):
         tasks = "<div>%s</div>" % "".join(["<div style='width:100%%;height:20px;display:block;vertical-align:middle'><div style='background:%(color)s;width:100%%;height:%(capacity)s%%;display:inline-block' title='%(name)s: %(capacity)s%%'></div></div>" % t for t in day.get("tasks", [])])
         cell_style = Defaults.inline(self.options.today)
         if day.get("today", False):
-          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s;background:%s'>%s%s</td>" % ("".join(tooltip), cell_style, self._report.theme.success[0], numer_day, tasks))
+          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s;background:%s'>%s%s</td>" % ("".join(tooltip), cell_style, self.page.theme.success[0], numer_day, tasks))
         else:
           row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s'>%s%s</td>" % ("".join(tooltip), cell_style, numer_day, tasks))
       else:

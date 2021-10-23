@@ -38,7 +38,7 @@ class UpDown(Html.Html):
     if components is not None:
       for component in components:
         self.add(component)
-    self.val['color'] = self._report.theme.colors[9] if color is None else color
+    self.val['color'] = self.page.theme.colors[9] if color is None else color
     self.options.label = record.get('label', '')
 
   @property
@@ -134,7 +134,6 @@ class UpDown(Html.Html):
 
 
 class BlockText(Html.Html):
-  requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Block text'
   _option_cls = OptText.OptionsText
 
@@ -191,9 +190,9 @@ class TextWithBorder(Html.Html):
     self.add_helper(helper)
     self.align = align
     if 'colorTitle' not in self.val:
-      self.val['colorTitle'] = self._report.theme.colors[9]
+      self.val['colorTitle'] = self.page.theme.colors[9]
     if 'color' not in self.val:
-      self.val['color'] = self._report.theme.colors[9]
+      self.val['color'] = self.page.theme.colors[9]
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
@@ -291,7 +290,7 @@ class Delta(Html.Html):
                                 css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     if 'color' not in self.val:
-      self.val['color'] = self._report.theme.colors[9]
+      self.val['color'] = self.page.theme.colors[9]
     if 'thresold1' not in self.val:
       self.options.threshold1 = 100
     if 'thresold2' not in self.val:
@@ -364,7 +363,7 @@ class Delta(Html.Html):
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()),
                    "size": self.page.body.style.globals.font.normal(6),
                    'htmlCode': self.htmlCode, "color": self.val['color'], "components": "".join(rows),
-                   "greyColor": self._report.theme.greys[6], "helper": self.helper}
+                   "greyColor": self.page.theme.greys[6], "helper": self.helper}
 
 
 class Formula(Html.Html):
@@ -434,8 +433,8 @@ class TrafficLight(Html.Html):
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
     self.set_attrs(name="data-status", value=color)
-    self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1],
-                      'orange': self._report.theme.warning[1]}
+    self._jsStyles = {'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
+                      'orange': self.page.theme.warning[1]}
     self.action = None
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -453,7 +452,7 @@ class TrafficLight(Html.Html):
     :rtype: JsHtml.JsHtmlBackground
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlBackground(self, report=self._report)
+      self._dom = JsHtml.JsHtmlBackground(self, report=self.page)
     return self._dom
 
   def colors(self, green=None, red=None, neutral=None):
@@ -489,7 +488,7 @@ class TrafficLight(Html.Html):
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self.action = self._report.ui.icon("fas fa-wrench")
+    self.action = self.page.ui.icon("wrench")
     self.action.options.managed = False
     self.action.tooltip("Click to try to resolve the issue")
     self.action.style.css.font_size = 8
@@ -512,11 +511,11 @@ class TrafficLight(Html.Html):
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    success = Colors.getHexToRgb(self._report.theme.success[1])
+    success = Colors.getHexToRgb(self.page.theme.success[1])
     self.style.css.cursor = "pointer"
     js_funcs = [self.dom.querySelector("div").toggle(
       "background-color", "rgb(%s, %s, %s)" % (
-        success[0], success[1], success[2]), self._report.theme.danger[1])] + js_funcs
+        success[0], success[1], success[2]), self.page.theme.danger[1])] + js_funcs
     return super(TrafficLight, self).click(js_funcs, profile, source_event, on_ready)
 
   _js__builder__ = '''
@@ -544,9 +543,9 @@ class ContentsTable(Html.Html):
     super(ContentsTable, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                                         css_attrs={"width": width, "height": height})
     self.style.css.position = "fixed"
-    self.title = self._report.ui.div()
-    self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-    self.title += self._report.ui.text("[hide]").css({
+    self.title = self.page.ui.div()
+    self.title += self.page.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
+    self.title += self.page.ui.text("[hide]").css({
       "width": '30px', 'display': 'inline-block', 'margin-left': '5px',
       'font-size': self.page.body.style.globals.font.normal(-5)})
     self.title[0].style.css.font_size = self.page.body.style.globals.font.normal(6)
@@ -612,11 +611,11 @@ class ContentsTable(Html.Html):
     :param options: String. Optional. The component options for the link.
     """
     if anchor is not None:
-      href = self._report.ui.link(text, url=anchor, options=options)
+      href = self.page.ui.link(text, url=anchor, options=options)
       href.style.css.font_size = self.page.body.style.globals.font.normal(2)
       href.style.add_classes.link.no_decoration()
     else:
-      min_links = self._report.ui.text("-")
+      min_links = self.page.ui.text("-")
       min_links.style.css.margin_left = 10
       min_links.click([
         '''
@@ -633,9 +632,9 @@ class ContentsTable(Html.Html):
         ''' % {'icon': min_links.dom.varName, 'dom': self.dom.varName, 'group': "%s_%s" % (text, level)}
       ])
       if options is not None and options.get("hidden", False):
-        self._report.body.onReady(min_links.dom.events.trigger("click"))
-      href = self._report.ui.div([
-        self._report.ui.text(text, options=options),
+        self.page.body.onReady(min_links.dom.events.trigger("click"))
+      href = self.page.ui.div([
+        self.page.ui.text(text, options=options),
         min_links
       ])
       href.attr["name"] = "%s_%s" % (text, level)
@@ -694,17 +693,17 @@ class ContentsTable(Html.Html):
     :param html_code_content: String. Optional. The Html code of the component Content table.
     """
     # Special attribute set in the base component interface
-    div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
-    if self._report.body.css('padding-top') is None:
+    div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
+    if self.page.body.css('padding-top') is None:
       div.style.css.margin_top = - 10
     else:
-      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+      div.style.css.margin_top = - int(self.page.body.css('padding-top')[:-2]) - 10
     div.style.css.position = "absolute"
     div.style.css.z_index = -1
     link = self.page.components[html_code_content].anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
     self.page.components[html_code_content][-1].click([
       component.dom.transition(
-        ["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
+        ["color", "font-size"], [self.page.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
     return link
 
   def add_url(self, component, url, level=None, options=None, html_code_content="content"):
@@ -723,11 +722,11 @@ class ContentsTable(Html.Html):
     :param html_code_content: String. Optional. The Html code of the component Content table.
     """
     component.options.managed = False
-    div = self._report.ui.div(html_code="%s_anchor" % component.htmlCode)
-    if self._report.body.css('padding-top') is None:
+    div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
+    if self.page.body.css('padding-top') is None:
       div.style.css.margin_top = - 10
     else:
-      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+      div.style.css.margin_top = - int(self.page.body.css('padding-top')[:-2]) - 10
     div.style.css.position = "absolute"
     div.style.css.z_index = -1
     dflt_options = {"target": '_blank'}
@@ -735,7 +734,7 @@ class ContentsTable(Html.Html):
       dflt_options.update(options)
     link = self.page.components[html_code_content].anchor(component.val, level or 4, url, options=dflt_options)
     self.page.components[html_code_content][-1].click([
-      component.dom.transition(["color", "font-size"], [self._report.theme.colors[-1], '101%'], duration=[0.5, 0.5],
+      component.dom.transition(["color", "font-size"], [self.page.theme.colors[-1], '101%'], duration=[0.5, 0.5],
                                reverse=True)])
     return link
 
@@ -854,7 +853,7 @@ class Composite(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self.val, report=self._report)
+      self._dom = JsHtml.JsHtmlRich(self.val, report=self.page)
     return self._dom
 
   @dom.setter
@@ -896,9 +895,9 @@ class Composite(Html.Html):
     ------------
 
     """
-    comp_ui = self._report.ui
-    if hasattr(self._report.ui, 'std'):
-      comp_ui = getattr(self._report.ui, 'std')
+    comp_ui = self.page.ui
+    if hasattr(self.page.ui, 'std'):
+      comp_ui = getattr(self.page.ui, 'std')
     return {
       'div': comp_ui.div,
       'textarea': comp_ui.textarea,
@@ -999,7 +998,7 @@ class Status(Html.Html):
     self.style.css.line_height = 30
     self.style.css.margin = 2
     self.style.css.padding = '10px auto'
-    self.context = self._report.ui.menus.contextual()
+    self.context = self.page.ui.menus.contextual()
     self.contextMenu(self.context, js_funcs=[])
 
   @property
@@ -1024,7 +1023,7 @@ class Status(Html.Html):
         if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    color_map = self._report.js.data.datamap().attrs(self.options.states)
+    color_map = self.page.js.data.datamap().attrs(self.options.states)
     for k, v in self.options.states.items():
       item = self.context.add(k)
       item.click([

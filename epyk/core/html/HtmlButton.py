@@ -69,7 +69,7 @@ class Button(Html.Html):
     :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButton(self, report=self._report)
+      self._dom = JsHtml.JsHtmlButton(self, report=self.page)
     return self._dom
 
   _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
@@ -297,7 +297,7 @@ class Checkbox(Html.Html):
     :rtype: JsHtml.JsHtmlButtonChecks
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonChecks(self, report=self._report)
+      self._dom = JsHtml.JsHtmlButtonChecks(self, report=self.page)
     return self._dom
 
   def tooltip(self, value, location='top', options=None):
@@ -373,7 +373,7 @@ class Checkbox(Html.Html):
 
   def __str__(self):
     if self.options.all_selected:
-      self._report.body.onReady([self.dom.check(True)])
+      self.page.body.onReady([self.dom.check(True)])
     self.page.properties.js.add_builders(self.refresh())
     return '<div %(strAttr)s><div name="checks"></div></div>' % {
       'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
@@ -389,7 +389,7 @@ class CheckButton(Html.Html):
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
       {"width": report.body.style.globals.font.normal()})
-    self.input.style.css.color = self._report.theme.success[1] if flag else self._report.theme.danger[1]
+    self.input.style.css.color = self.page.theme.success[1] if flag else self.page.theme.danger[1]
     self.input.style.css.middle()
     self.input.options.managed = False
     self.add_label(label, {"width": "none", "float": "none"}, html_code=self.htmlCode, position="after")
@@ -418,7 +418,7 @@ class CheckButton(Html.Html):
     :rtype: JsHtml.JsHtmlButtonMenu
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonMenu(self, report=self._report)
+      self._dom = JsHtml.JsHtmlButtonMenu(self, report=self.page)
     return self._dom
 
   @property
@@ -434,7 +434,7 @@ class CheckButton(Html.Html):
     :rtype: JsComponents.CheckButton
     """
     if self._js is None:
-      self._js = JsComponents.CheckButton(self, report=self._report)
+      self._js = JsComponents.CheckButton(self, report=self.page)
     return self._js
 
   _js__builder__ = ''' htmlObj.innerHTML = '';
@@ -494,8 +494,8 @@ class CheckButton(Html.Html):
     elif not isinstance(js_fnc_false, list):
       js_fnc_false = [js_fnc_false]
     if with_colors:
-      js_fnc_true.append(self.input.dom.css({"color": self._report.theme.success[1]}).r)
-      js_fnc_false.append(self.input.dom.css({"color": self._report.theme.danger[1]}).r)
+      js_fnc_true.append(self.input.dom.css({"color": self.page.theme.success[1]}).r)
+      js_fnc_false.append(self.input.dom.css({"color": self.page.theme.danger[1]}).r)
     js_fncs = [
       self.input.dom.switchClass(self.options.icon_check.split(" ")[-1],
                                  self.options.icon_not_check.split(" ")[-1]),
@@ -975,7 +975,7 @@ class ButtonFilter(Html.Html):
     :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonFilter(self, report=self._report)
+      self._dom = JsHtml.JsHtmlButtonFilter(self, report=self.page)
     return self._dom
 
   def __str__(self):
