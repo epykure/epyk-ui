@@ -128,6 +128,9 @@ class Li(Html.Html):
     if self.innerPyHTML is not None:
       return self.innerPyHTML.click(js_funcs, profile)
 
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.insert(0, self.dom.toggleClass("active"))
     return super(Li, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   @property
@@ -140,10 +143,10 @@ class Li(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtmlRich
+    :rtype: JsHtml.JsHtmlLi
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlLi(self, report=self.page)
     return self._dom
 
   def __str__(self):

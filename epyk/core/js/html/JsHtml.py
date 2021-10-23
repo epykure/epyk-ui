@@ -1363,6 +1363,27 @@ class JsHtmlList(JsHtml):
     """
     return JsObjects.JsString.JsString.get("wrapper.innerText")
 
+  def unactive(self, current_index=-1):
+    """
+    Description:
+    -----------
+    Set to unactive all the items in the list.
+
+    Usage::
+
+      bnts = page.web.bs.lists.buttons(["US", "ES", "IT"], html_code="cty")
+      for i, bnt in enumerate(bnts):
+        bnt.click([bnts.dom.unactive(i)])
+
+    Attributes:
+    ----------
+    :param current_index: Integer. Optional. The item of the current item.
+    """
+    return JsObjects.JsVoid('''
+let list_items = %(comp)s.children; for (var i = 0; i < list_items.length; i++) { 
+  if (list_items[i].classList.contains('active') && (i != %(current_index)s)){list_items[i].classList.remove('active')}
+}''' % {"comp": self._src.dom.varName, "current_index": current_index})
+
 
 class JsHtmlBackground(JsHtml):
 
@@ -1647,3 +1668,35 @@ class JsHtmlTable(JsHtml):
             var rec = []; row.childNodes.forEach(function(cell){
               rec.push(cell.innerText)}); values.push(rec)
          });return values })()''' % {"component": self._src.dom.varName})
+
+
+class JsHtmlLi(JsHtmlRich):
+
+  def has_state(self, state, js_funcs, profile=None):
+    """
+    Description:
+    -----------
+    Check if the item in the list has a specific class.
+    If it is the case it will run the function.
+
+    Attributes:
+    ----------
+    :param state: String. The CSS class.
+    :param js_funcs: Array. The function to run if the state is defined.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    return self._src.js.if_("%s.classList.contains(%s)" % (
+      self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
+
+  def is_active(self, js_funcs, profile=None):
+    """
+    Description:
+    -----------
+    Check if the item in the list has the class active.
+
+    Attributes:
+    ----------
+    :param js_funcs: Array. The function to run if the state is defined.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    return self.has_state("active", js_funcs, profile=profile)

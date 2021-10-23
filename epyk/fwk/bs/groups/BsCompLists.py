@@ -154,6 +154,10 @@ class Components:
       list.item(0).add_style("active")
       list.item(2).add_style("disabled")
 
+      bnts = page.web.bs.lists.buttons(["US", "ES", "IT"], html_code="cty")
+      for i, bnt in enumerate(bnts):
+        bnt.click([bnts.dom.unactive(i)])
+
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/list-group/#links-and-buttons
