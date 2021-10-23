@@ -257,6 +257,10 @@ class Components:
     -----------
     Add a list checkboxes.
 
+    Usage::
+
+      page.web.bs.lists.checks(["US", "ES", "IT"])
+
     Attributes:
     ----------
     :param data:

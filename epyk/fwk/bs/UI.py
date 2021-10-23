@@ -246,6 +246,13 @@ class Components:
     Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes,
     states, and more.
 
+    Usage::
+
+      btn = page.web.bs.button("Test")
+      btn.click([
+        page.js.console.log(select.dom.content)
+      ])
+
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/forms/checks-radios/
