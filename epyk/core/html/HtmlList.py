@@ -162,7 +162,10 @@ class List(Html.Html):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
-    self.item_type = options.get("item_type", "li")
+    if options is not None:
+      self.item_type = options.get("item_type", "li")
+    else:
+      self.item_type = "li"
     self.color = color if color is not None else self.page.theme.greys[-1]
     self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None

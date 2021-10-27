@@ -1234,7 +1234,7 @@ class Validators(Enums):
     return self
 
 
-class Extensions(Enums):
+class Extensions(Options):
 
   @property
   def editors(self):
@@ -1421,13 +1421,13 @@ class Column(Options):
     Description:
     -----------
     Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
-    series of modules that provide all of its wonderfull features.
+    series of modules that provide all of its wonderful features.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/modules
     """
-    return Extensions(self._report, self._attrs, parent=self)
+    return Extensions(self._report, self._attrs)
 
   @property
   def editors(self):

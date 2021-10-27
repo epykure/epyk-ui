@@ -1224,7 +1224,7 @@ class Search(Html.Html):
   name = 'Search'
 
   def __init__(self, report, text, placeholder, color, width, height, html_code, tooltip, extensible, options, profile):
-    if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
+    if options.get('icon_family') is not None and options['icon_family'] != 'bootstrap-icons':
       self.requirements = (options['icon_family'],)
     super(Search, self).__init__(report, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
     self.color = 'inherit' if color is None else color

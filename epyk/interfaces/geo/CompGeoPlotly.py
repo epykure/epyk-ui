@@ -221,7 +221,7 @@ class PlotlyBubble:
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code:
     """
-    dftl_options = {'type': 'scattergeo', 'mode': 'markers'}
+    dftl_options = {'type': 'scattergeo'}
     if options is not None:
       dftl_options.update(options)
     map_chart = geo.GeoPlotly.BubbleGeo(self.page, width, height, dftl_options, html_code, profile)
@@ -238,10 +238,10 @@ class PlotlyBubble:
       map_chart.add_trace({p: record[p] for p in points})
       #map_chart.data.marker.colorbar.title = "Test"
       #map_chart.data.marker.line.color = "black"
-      map_chart.data.marker.size = record['marker']['size']
+      map_chart.data.marker.size = record['marker'].get('size', [])
       # map_chart.data.marker.cmin = 0
       # map_chart.data.marker.cmax = max(values)
-      map_chart.data.marker.color = record['marker']['size']
+      map_chart.data.marker.color = record['marker'].get('color', 'black')
       map_chart.data.marker.colorscale = 'Reds'
     map_chart.layout.geo.scope = scope
     map_chart.layout.geo.resolution = 150
@@ -466,8 +466,14 @@ class PlotlyBubble:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     """
-    return self.bubble('world', record, size_col=size_col, country_col=country_col, long_col=long_col, lat_col=lat_col,
-                       profile=profile, options=options, width=width, height=height, html_code=html_code)
+    map_world = self.bubble('world', record, size_col=size_col, country_col=country_col, long_col=long_col, lat_col=lat_col,
+                            profile=profile, options=options, width=width, height=height, html_code=html_code)
+    map_world.layout.geo.showland = True
+    map_world.layout.geo.subunitwidth = 1
+    map_world.layout.geo.countrywidth = 1
+    map_world.layout.geo.projection.type = "earth"
+    map_world.layout.geo.landcolor = 'rgb(217, 217, 217)'
+    return map_world
 
 
 class PlotlyChoropleth:

@@ -448,6 +448,23 @@ class OptionsTagItems(Options):
   def max_height(self, num):
     self._config(num)
 
+  @property
+  def draggable(self):
+    """
+    Description:
+    ------------
+    Set the component draggable and define JavaScript events
+
+    Attributes:
+    ----------
+    :prop js_funcs: String. The JavaScript functions.
+    """
+    return self._config_get()
+
+  @draggable.setter
+  def draggable(self, js_funcs):
+    self._config(js_funcs, js_type=True)
+
 
 class OptionsListBrackets(Options):
 

@@ -1026,7 +1026,7 @@ class Col(Html.Html):
       else:
         self.__set_size = "col-%s" % breakpoint
       self.attr["class"].add(self.__set_size)
-      if self.options.responsive:
+      if self.options.responsive and breakpoint != 'lg':
         self.attr["class"].add("col-%s-%s" % (breakpoint, min(int(n) * 2, 12)))
         self.attr["class"].add("col-12")
     return self
@@ -1142,8 +1142,9 @@ class Row(Html.Html):
     if not isinstance(components, Col):
       if not isinstance(components, list):
         components = [components]
-      components = self.page.ui.layouts.col(components, align=self.align, height=(self.css("height"), ''),
-                                               position=self.position, options=self.options._attrs)
+      components = self.page.ui.layouts.col(
+        components, align=self.align, height=(self.css("height"), ''), position=self.position,
+        options=self.options._attrs)
       components.style.css.margin_left = "auto"
       components.style.css.margin_right = "auto"
       components.options.managed = False

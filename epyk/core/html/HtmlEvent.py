@@ -872,7 +872,7 @@ class Filters(Html.Html):
     """
     Description:
     ------------
-
+    Set the Filters component draggable.
 
     Attributes:
     ----------
@@ -885,7 +885,7 @@ class Filters(Html.Html):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     js_funcs.append('event.dataTransfer.setData("text", value)')
-    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(
+    self.options.draggable = "function(event, value){%s} " % JsUtils.jsConvertFncs(
       js_funcs, toStr=True, profile=profile)
     return self
 
@@ -924,8 +924,7 @@ class Filters(Html.Html):
           icon.addEventListener('click', function(){eval(options.delete)});
           div.appendChild(icon)}
         if(typeof options.draggable !== 'undefined'){
-          div.setAttribute('draggable', true);
-          div.style.cursor = 'grab';
+          div.setAttribute('draggable', true); div.style.cursor = 'grab';
           div.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
         }
         panel.appendChild(div);

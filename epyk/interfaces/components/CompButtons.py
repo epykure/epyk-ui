@@ -31,6 +31,27 @@ class Buttons:
     elif align == "right":
       component.style.css.float = "right"
 
+  def __set_color(self, component, color):
+    """
+    Description:
+    ------------
+    Set the background color for the button.
+    By default it will use the theme's color.
+
+    Attributes:
+    ----------
+    :param component: HTML component. The component to be aligned in the page.
+    :param color: String | Boolean. The color to set.
+    """
+    if color is True:
+      component.style.css.background = self.page.theme.notch(4)
+      component.style.css.border = "1px solid %s" % self.page.theme.colors[-1]
+      component.style.css.color = self.page.theme.colors[0]
+    else:
+      component.style.css.background = color
+      component.style.css.border = color
+      component.style.css.color = self.page.theme.colors[0]
+
   @html.Html.css_skin()
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
              tooltip=None, profile=None, options=None):
@@ -79,6 +100,8 @@ class Buttons:
     text = self.page.py.encode_html(text)
     html_button = html.HtmlButton.Button(
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    if options is not None and options.get("colored", False):
+      self.__set_color(html_button, options["colored"])
     html_button.style.css.margin = "0"
     html_button.style.css.padding = 0
     html_button.style.css.padding_h = 5
@@ -130,9 +153,7 @@ class Buttons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
-    component.style.css.background = color or self.page.theme.notch(4)
-    component.style.css.border = "1px solid %s" % (color or self.page.theme.colors[-1])
-    component.style.css.color = self.page.theme.colors[0]
+    self.__set_color(component, color)
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
     component.style.css.padding_left = 10
@@ -241,6 +262,8 @@ class Buttons:
     html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
                                          tooltip=tooltip, profile=profile, options=options)
     self.__align(html_button, align)
+    if options is not None and options.get("colored", False):
+      self.__set_color(html_button, options["colored"])
     return html_button
 
   @html.Html.css_skin()

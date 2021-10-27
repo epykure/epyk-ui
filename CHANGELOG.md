@@ -7,6 +7,17 @@
 ### Fixed
 
 
+## [1.6.5] - 2021-10-21
+
+### Added
+- Add popular pyks components from Epyk Studio.
+
+### Changed
+- Change way color is managed for Buttons.
+
+### Fixed
+- Fix Plotly and some features in Tabulator wrappers.
+
 ## [1.6.4] - 2021-10-21
 
 ### Added

@@ -51,6 +51,9 @@ from epyk.fwk.mdc import UI as MaterialUI
 from epyk.fwk.jqui import UI as JqueryUI
 from epyk.fwk.ftw import UI as FluentUI
 
+# All the custom modules.
+from epyk.customs import pyks
+
 
 class Components:
 
@@ -1209,6 +1212,10 @@ class Components:
     dots.click([container.dom.hide()])
     component.move()
     return container
+
+  @property
+  def pyk(self):
+    return pyks.Bespoke(self)
 
 
 class WebComponents:

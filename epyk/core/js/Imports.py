@@ -1016,7 +1016,7 @@ JS_IMPORTS = {
     'repository': 'https://github.com/plotly/plotly.js',
     'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
     # 'version': '1.58.4',
-    'version': '2.3.0',
+    'version': '2.4.2',
     'modules': [
       {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
