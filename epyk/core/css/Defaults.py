@@ -196,7 +196,7 @@ ICON_MAPPINGS = {
     "lock_open": "fas fa-lock-open",
     "compress": "fas fa-compress",
     "calendar": "far fa-calendar-alt",
-    "spin": "fa-spin",
+    "spin": "fas fa-spinner",
     "next": "fas fa-caret-right",
     "previous": "fas fa-caret-left",
     "play": "fas fa-play",
@@ -207,7 +207,10 @@ ICON_MAPPINGS = {
     "save": "fas fa-save",
     "refresh": "fas fa-sync-alt",
     "pdf": "far fa-file-pdf",
-    "plus": "fas fa-plus-square",
+    "square_plus": "fas fa-plus-square",
+    "square_minus": "far fa-minus-square",
+    "plus": "fas fa-plus",
+    "minus": "fas fa-minus",
     "excel": 'far fa-file-excel',
     "delete": "far fa-trash-alt",
     "zoom": "fas fa-search-plus",
@@ -232,7 +235,16 @@ ICON_MAPPINGS = {
     "question": 'fas fa-question-circle',
     "google_plus": 'fab fa-google-plus',
     "circle": 'fas fa-circle',
-    'user': 'fas fa-user-tie'
+    'user': 'fas fa-user-tie',
+    'chevron_up': 'fas fa-chevron-up',
+    'chevron_down': 'fas fa-chevron-down',
+    'folder_open': "fas fa-folder-open",
+    'folder_close': "fas fa-folder",
+    'show': "fas fa-eye",
+    'hide': "far fa-eye-slash",
+    'star': "fa fa-star",
+    'arrow_right': "fas fa-arrow-alt-circle-right",
+    'arrow_left': "fas fa-arrow-alt-circle-left",
   }
 }
 

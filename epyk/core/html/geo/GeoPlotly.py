@@ -4,6 +4,7 @@
 from epyk.core.html.graph import GraphPlotly
 
 from epyk.core.js.packages import JsPlotly
+from epyk.core.data.DataClass import DataClass
 
 
 class DataMarkersChoroMapBar(GraphPlotly.DataMarkers):
@@ -191,19 +192,19 @@ class LayoutGeo(GraphPlotly.Layout):
     """
     return self.sub_data("mapbox", LayoutMapBox)
 
-  def margin(self, r=None, t=None, b=None, l=None):
-    self._attrs["margin"] = {}
-    if r is not None:
-      self._attrs["margin"]["r"] = r
-    if t is not None:
-      self._attrs["margin"]["t"] = t
-    if b is not None:
-      self._attrs["margin"]["b"] = b
-    if l is not None:
-      self._attrs["margin"]["l"] = l
-
   def no_margin(self):
-    self.margin(0, 0, 0, 0)
+    self.margin.clear()
+
+
+class LayoutGeoProjection(DataClass):
+
+  @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, val):
+    self._attrs["type"] = val
 
 
 class LayoutGeoMapGeo(LayoutGeo):
@@ -279,6 +280,32 @@ class LayoutGeoMapGeo(LayoutGeo):
   @landcolor.setter
   def landcolor(self, val):
     self._attrs["landcolor"] = val
+
+  @property
+  def subunitwidth(self):
+    return self._attrs["subunitwidth"]
+
+  @subunitwidth.setter
+  def subunitwidth(self, val):
+    self._attrs["subunitwidth"] = val
+
+  @property
+  def countrywidth(self):
+    return self._attrs["countrywidth"]
+
+  @countrywidth.setter
+  def countrywidth(self, val):
+    self._attrs["countrywidth"] = val
+
+  @property
+  def projection(self):
+    """
+    Description:
+    -----------
+
+    :rtype: LayoutGeoProjection
+    """
+    return self.sub_data("projection", LayoutGeoProjection)
 
 
 class LayoutGeoMap(LayoutGeo):

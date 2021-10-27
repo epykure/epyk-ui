@@ -1064,6 +1064,12 @@ class LayoutMargin(DataClass):
   def t(self, val):
     self._attrs["t"] = val
 
+  def clear(self, l=0, r=0, b=0, t=0):
+    self.l = l
+    self.r = r
+    self.b = b
+    self.t = t
+
 
 class LayoutEye(DataClass):
 
@@ -1223,15 +1229,28 @@ class LayoutLegend(DataClass):
     return self.sub_data("font", LayoutFont)
 
 
+class LayoutTitle(DataClass):
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
+
+
 class Layout(DataClass):
+
 
   @property
   def title(self):
-    return self._attrs["title"]
+    """
 
-  @title.setter
-  def title(self, val):
-    self._attrs["title"] = val
+
+    :rtype: LayoutTitle
+    """
+    return self.sub_data("title", LayoutTitle)
 
   @property
   def paper_bgcolor(self):
