@@ -11,6 +11,7 @@
 
 ### Added
 - Add popular pyks components from Epyk Studio.
+- Add more icons to the transversal configuration.
 
 ### Changed
 - Change way color is managed for Buttons.
