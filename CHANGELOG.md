@@ -7,6 +7,12 @@
 ### Fixed
 
 
+## [1.6.6] - 2021-10-29
+
+### Fixed
+Few bug fixes and improvements.
+
+
 ## [1.6.5] - 2021-10-21
 
 ### Added
