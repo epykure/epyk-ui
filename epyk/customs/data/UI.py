@@ -32,8 +32,7 @@ class Components:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {}
-    dflt_options = {"sub_chart": False, "max": {"rows": 1}, "columns": "",
-                    'rows': ""}
+    dflt_options = {"sub_chart": False, "max": {"rows": 1}, "columns": "", 'rows': ""}
     if options is not None:
       dflt_options.update(options)
     component = HtmlDashboard.Pivots(self.page, width, height, html_code, options, profile)

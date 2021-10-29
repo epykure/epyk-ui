@@ -152,8 +152,10 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
-    self.__set_color(component, color)
+    dft_options = {"colored": color or True}
+    if options is not None:
+      dft_options.update(options)
+    component = self.button(text, icon, width, height, align, html_code, tooltip, profile, dft_options)
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
     component.style.css.padding_left = 10

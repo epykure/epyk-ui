@@ -473,9 +473,9 @@ class Panels:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"item_css": {'border': '1px solid %s' % self.page.theme.success[0],
-                                 'border-radius': '5px',
+                                 'border-radius': '5px', "padding": "0 4px",
                                  "margin-left": "5px", "width": 'auto', 'display': 'inline-block',
-                                 'background': 'inherit', 'white-space': 'nowrap'}}
+                                 'background': options.get("colored", 'inherit'), 'white-space': 'nowrap'}}
     if options:
       dflt_options.update(options)
     chip = self.page.ui.chips(

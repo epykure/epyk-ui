@@ -1028,6 +1028,14 @@ class AutocompleteFormats:
 
 class Autocomplete(JQueryUI):
 
+  def empty(self):
+    """
+    Description:
+    ------------
+    Empty the content of the HTML component using the innerHTML JavaScript property.
+    """
+    return '%s.val("")' % self._src.dom.jquery.varId
+
   def close(self):
     """
     Description:

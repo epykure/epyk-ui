@@ -994,7 +994,8 @@ class Lists:
       container.filters.dom.clear()
     ])
     container.button.click([
-      container.filters.dom.add(container.input.dom.content, container.select.dom.content)
+      container.filters.dom.add(container.input.dom.content, container.select.dom.content),
+      container.input.js.empty()
     ])
     container.input.enter(container.button.dom.events.trigger("click"))
     return container

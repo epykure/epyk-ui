@@ -76,22 +76,22 @@ class Pivots(Html.Html):
     if self.sub_rows is not None:
       self.container.add([
         self.page.ui.text(
-          "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)), self.rows,
+          "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)).css({"display": "block"}), self.rows,
         self.page.ui.text(
-          "Sub Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)),
+          "Sub Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)).css({"display": "block"}),
         self.sub_rows])
     else:
       if self.rows.options.max == 1:
         self.container.add([
           self.page.ui.text(
-            "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)), self.rows])
+            "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)).css({"display": "block"}), self.rows])
       else:
         self.container.add([
           self.page.ui.text(
-            "Rows <i style='font-size:%s'>(multiple field)</i>" % self.page.body.style.globals.font.normal(-3)), self.rows])
+            "Rows <i style='font-size:%s'>(multiple field)</i>" % self.page.body.style.globals.font.normal(-3)).css({"display": "block"}), self.rows])
     self.container.add([
       self._report.ui.text(
-        "Values <i style='font-size:%s'>(multiple fields)</i>" % self.page.body.style.globals.font.normal(-3)), self.columns])
+        "Values <i style='font-size:%s'>(multiple fields)</i>" % self.page.body.style.globals.font.normal(-3)).css({"display": "block"}), self.columns])
     html = [h.html() for h in self._vals]
     return "<div %s>%s%s</div>" % (
       self.get_attrs(pyClassNames=self.style.get_classes()), self.container.html(), "".join(html))
