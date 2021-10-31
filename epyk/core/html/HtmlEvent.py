@@ -909,6 +909,8 @@ class Filters(Html.Html):
         var div = document.createElement("div"); 
         for (var key in options.item_css){div.style[key] = options.item_css[key]};
         div.setAttribute('data-category', record.category);
+        if(typeof(record.css !== "undefined")){
+          for (var key in record.css){ div.style[key] = record.css[key]}};
         var content = document.createElement("span"); 
         for (var key in options.value_css){ content.style[key] = options.value_css[key]};
         content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 

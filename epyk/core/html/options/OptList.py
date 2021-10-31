@@ -7,6 +7,17 @@ from epyk.core.js import JsUtils
 
 
 class OptionsLi(Options):
+  component_properties = ("item_type",)
+
+  @property
+  def item_type(self):
+    """
+    """
+    return self._config_get("li")
+
+  @item_type.setter
+  def item_type(self, value):
+    self._config(value)
 
   @property
   def max(self):

@@ -1696,7 +1696,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
         self.builder_name, self._js__builder__))
     self.options.builder = self.builder_name
-
     # check if there is no nested HTML components in the data
     if isinstance(data, dict):
       tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]

@@ -162,10 +162,6 @@ class List(Html.Html):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
-    if options is not None:
-      self.item_type = options.get("item_type", "li")
-    else:
-      self.item_type = "li"
     self.color = color if color is not None else self.page.theme.greys[-1]
     self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
@@ -270,6 +266,12 @@ class List(Html.Html):
     """
     return self.items[i] if self.items is not None else None
 
+  _js__builder__ = ''' htmlObj.innerHTML = "";
+      data.forEach(function(item, i){
+        var li = document.createElement(options.item_type);
+        li.innerHTML = item; htmlObj.appendChild(li)
+      })'''
+
   def item(self, n):
     return self.items[n]
 
@@ -284,7 +286,8 @@ class List(Html.Html):
     :param d: HTML component | String. The component to be added.
     """
     self.items = self.items or []
-    li_obj = Li(self.page, d, options={"item_type": self.item_type}, html_code="%s_%s" % (self.htmlCode, len(self.items)))
+    li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
+                html_code="%s_%s" % (self.htmlCode, len(self.items)))
     if self.options.li_class:
       li_obj.style.clear_style()
       li_obj.attr["class"].initialise(self.options.li_class)
@@ -302,7 +305,7 @@ class List(Html.Html):
     """
     self.items = self.items or []
     for d in self.val:
-      li_obj = Li(self.page, d, options={"item_type": self.item_type})
+      li_obj = Li(self.page, d, options={"item_type": self.options.item_type})
       if self.options.li_class:
         li_obj.style.clear_style()
         li_obj.attr["class"].initialise(self.options.li_class)
@@ -347,6 +350,10 @@ class List(Html.Html):
         self.page.js.getElementsByName("divs_%s" % self.htmlCode)[i].toggle().r])
       item.click(fnc + js_funcs, profile)
     return self
+
+  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+    self.style.css.cursor = "pointer"
+    return super().click(js_funcs, profile=profile, source_event=source_event, on_ready=on_ready)
 
   def __str__(self):
     self._vals = "".join([i.html() for i in self.items]) if self.items is not None else ""
@@ -408,7 +415,7 @@ class Groups(Html.Html):
 
 
 class Items(Html.Html):
-  name = 'List'
+  name = 'Items'
   _option_cls = OptList.OptionsItems
 
   def __init__(self, report, records, width, height, options, html_code, profile, helper):

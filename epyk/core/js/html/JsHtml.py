@@ -1289,7 +1289,7 @@ class JsHtmlList(JsHtml):
       (function(){
          var values = []; %(component)s.querySelectorAll("%(item)s").forEach(function(dom){values.push(dom.innerText)});
          return values
-      })()''' % {"component": self._src.dom.varName, "item": self._src.item_type})
+      })()''' % {"component": self._src.dom.varName, "item": self._src.options.item_type})
 
   @property
   def classList(self):

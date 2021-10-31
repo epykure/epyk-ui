@@ -1254,10 +1254,25 @@ class Search(Html.Html):
       self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '2px'})
       if self.icon:
         self.input.css({'padding-right': '%spx' % Defaults.LINE_HEIGHT})
-        self.icon.css({"margin": '5px 5px 5px 0px', 'cursor': 'pointer', "right": 0,
+        self.icon.css({"margin": '5px 5px 5px 5px', 'cursor': 'pointer', "right": 0,
                        'position': 'absolute', 'vertical-align': 'top'})
+    if options.get("groups") is not None:
+      self.select = self.page.ui.select([{"value": g, "name": g} for g in options.get("groups")], width=(200, 'px'),
+                                        html_code="%s_select" % html_code if html_code is not None else None)
+      self.select.style.clear_all(no_default=True)
+      self.page.properties.css.add_text('''
+.bootstrap-select .btn:focus{
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.075),0 0 0 rgba(102,175,233,.6);
+    box-shadow: inset 0 0 0 rgba(0,0,0,.075),0 0 0 rgba(102,175,233,.6);
+}''')
+      self.prepend_child(self.select)
+      self.input.style.css.width = "calc(100% - 250px)"
+      if self.icon:
+        self.icon.css({"margin": '-35px 5px 5px 205px'})
     self.tooltip(tooltip)
     self.input.style.css.background = "inherit"
+    self.input.style.css.padding_left = 25
     self.input.attr["type"] = "search"
 
   @property

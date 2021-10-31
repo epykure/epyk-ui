@@ -195,8 +195,11 @@ class Lists:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
+    dfl_options = {"item_type": 'li'}
+    if options is not None:
+      dfl_options.update(options)
     html_list = html.HtmlList.List(
-      self.page, data or [], color, width, height, html_code, helper, options or {}, profile)
+      self.page, data or [], color, width, height, html_code, helper, dfl_options, profile)
     html_list.css({"list-style": 'none'})
     return html_list
 
