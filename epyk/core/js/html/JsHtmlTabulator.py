@@ -91,3 +91,6 @@ class JsHtmlTabulator(JsHtml.JsHtml):
 
     """
     return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self._src.tableId)
+
+  def empty(self):
+    return  self._src.js.clearData()

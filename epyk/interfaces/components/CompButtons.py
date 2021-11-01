@@ -869,10 +869,10 @@ class Buttons:
       label = self.page.ui.texts.label(label, options=options, html_code="%s_label" % html_toggle.htmlCode)
       html_toggle.style.css.display = "inline-block"
       html_toggle.style.css.padding_top = 2
-      container = self.page.ui.div([label, html_toggle])
+      container = self.page.ui.div([label, html_toggle], width=width)
       container.label = label
     else:
-      container = self.page.ui.div([html_toggle])
+      container = self.page.ui.div([html_toggle], width=width)
     container.input = html_toggle
     return container
 
