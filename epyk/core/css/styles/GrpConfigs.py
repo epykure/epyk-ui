@@ -145,7 +145,7 @@ class ClsConfigs:
     self.component.style.css.padding = padding
     return self
 
-  def doc(self, percent=5, max_width=650, padding=True, background=None):
+  def doc(self, percent=5, max_width=650, padding=True, background=None, header=None, header_path="/static", top=60):
     """
     Description:
     ------------
@@ -163,7 +163,16 @@ class ClsConfigs:
     :param max_width: Integer. Optional. The max size of the page in pixel.
     :param padding: Boolean. Optional. The top and bottom padding in the doc.
     :param background: String. Optional. The background color.
+    :param header: String. Optional. The header picture.
+    :param header_path: String. Optional. The header path.
+    :param top: Integer. The body top position in the page.
     """
+    if header is not None:
+      self.component.page.body.header.add(self.component.page.ui.img(header, path=header_path))
+      self.component.page.body.header.style.css.left = 0
+      self.component.page.body.header.style.css.top = 0
+      self.component.page.body.header.style.css.z_index = -1
+      self.component.page.body.header.style.css.position = "absolute"
     self.component.style.css.max_width = max_width
     self.component.style.css.min_height = 150
     if padding:
@@ -172,6 +181,7 @@ class ClsConfigs:
     if background is not None:
       self.component.style.css.background = background
     self.component.style.css.margin = "20px auto"
+    self.component.page.body.style.css.margin_top = top
     self.component.page.body.style.css.padding_bottom = 5
     self.component.page.body.style.css.padding_left = "%s%%" % percent
     self.component.page.body.style.css.padding_right = "%s%%" % percent
