@@ -149,3 +149,19 @@ class OptionConfig(OptChart.OptionsChart):
   @scrollZoom.setter
   def scrollZoom(self, val):
     self._config(val)
+
+  @property
+  def mapboxAccessToken(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plot.ly/javascript/configuration-options/
+    """
+    return self._config_get(None)
+
+  @mapboxAccessToken.setter
+  def mapboxAccessToken(self, val):
+    self._config(val)

@@ -252,6 +252,15 @@ class JsPlotly(JsPackage):
     positions = JsUtils.jsConvertData(positions, None)
     return JsObject.JsObject.get("Plotly.deleteTraces(%s, %s)" % (htmlCode or self.src.dom.varName, positions))
 
+  @property
+  def traceCount(self):
+    """
+    Description:
+    ------------
+    Return the number of traces on a chart
+    """
+    return JsObjects.JsNumber.JsNumber.get("%s.data.length" % self.src.dom.varName)
+
   def moveTraces(self, currentPosition, destPosition=None, htmlCode=None):
     """
     Description:

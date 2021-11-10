@@ -170,6 +170,7 @@ class ClsConfigs:
     if header is not None:
       self.component.page.body.header.add(self.component.page.ui.img(header, path=header_path))
       self.component.page.body.header.style.css.left = 0
+      self.component.page.body.header.style.css.right = 0
       self.component.page.body.header.style.css.top = 0
       self.component.page.body.header.style.css.z_index = -1
       self.component.page.body.header.style.css.position = "absolute"
