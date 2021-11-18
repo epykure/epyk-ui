@@ -6,6 +6,14 @@
 
 ### Fixed
 
+## [1.6.10] - 2021-11-18
+
+### Fixed
+- Plotly wrapper enhancements
+- Bug fix in NVD3 date conversion
+- Bug fix in NVD£ candle chart
+- Review Tabulator hierarchy tables (bug https://github.com/olifolkerd/tabulator/issues/3271)
+
 
 ## [1.6.7] - 2021-11-01
 
