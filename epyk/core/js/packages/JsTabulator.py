@@ -981,7 +981,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsPromise("%s.setPageSize(%s)" % (self.varId, i))
 
-  def setGroupBy(self, column):
+  def setGroupBy(self, column=None):
     """
     Description:
     -----------
@@ -996,6 +996,9 @@ class Tabulator(JsPackage):
     ----------
     :param column:
     """
+    if column is None:
+      return JsObjects.JsVoid("%s.setGroupBy()" % (self.varId))
+
     return JsObjects.JsVoid("%s.setGroupBy(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
   def setGroupStartOpen(self, flag):

@@ -8,6 +8,7 @@ from epyk.core.js.packages import JsTabulator
 from epyk.core.html.options import OptTableTabulator
 
 # The list of CSS classes
+from epyk.core.css import Defaults as cssDefaults
 from epyk.core.css.styles import GrpClsTable
 
 
@@ -85,6 +86,8 @@ class Table(Html.Html):
     """
     Description:
     ------------
+    Tabulator configuration options.
+    Deprecated and replaced by component options.
 
     :rtype: TableConfig
     """
@@ -176,10 +179,10 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event:
-    :param on_ready:
+    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -230,31 +233,38 @@ class Table(Html.Html):
       category, type, func_name, func_def))
     return self
 
-  def loading(self, status=True):
-    """
-    Description:
-    ------------
+  def loading(self, status=True, color=None):
+      """
+      Description:
+      ------------
+      Display / hide the loading status for this component.
 
-    Attributes:
-    ----------
-    :param status:
-    """
-    if status:
-      return ''' 
-        if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
-          var divLoading = document.createElement("div"); 
-          window['popup_loading_%(htmlId)s'] = divLoading; 
-          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
-          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; divLoading.style.zIndex = 200;
-          divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; divLoading.style.paddingTop = '50vh';
-          divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
-          document.getElementById('%(htmlId)s').appendChild(divLoading)
-        } ''' % {"htmlId": self.htmlCode, 'color': self.page.theme.success[1], 'background': self.page.theme.greys[0]}
+      Attributes:
+      ----------
+      :param status: Boolean. Optional. The loading status.
+      :param color: String. Optional. The loading text color.
+      """
+      self.require.add(cssDefaults.get_icon(None)["icon_family"])
+      if status:
+        return ''' 
+          if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+            var divLoading = document.createElement("div"); 
+            window['popup_loading_%(htmlId)s'] = divLoading; 
+            divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
+            divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
+            divLoading.style.display = 'flex'; divLoading.style.flexDirectio = 'column'; divLoading.style.justifyContent = 'center';
+            divLoading.style.zIndex = 200; divLoading.style.alignItems = 'center';
+            divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
+            divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+            document.getElementById('%(htmlId)s').appendChild(divLoading)
+          } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success[1],
+                   'background': self.page.theme.greys[0],
+                   "size": self.page.body.style.globals.font.size + 5}
 
-    return '''
-      if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
-        document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
-        window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
+      return '''
+        if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
+          document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
+          window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
@@ -277,6 +287,8 @@ class TableTree(Table):
     """
     Description:
     ------------
+    Tabulator configuration options.
+    Deprecated and replaced by component options.
 
     :rtype: TableTreeConfig
     """

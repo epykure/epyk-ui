@@ -677,6 +677,7 @@ class Nvd3:
     candle_chart = graph.GraphNVD3.ChartCandlestick(self.page, width, height, options, html_code, profile)
     candle_chart.dom.x(column='date').y(column='close')
     candle_chart.dom.xAxis.tickDateFormat()
+    candle_chart.colors(self.page.theme.charts)
     for s in all_series:
       candle_chart.add_trace(s)
     return candle_chart
@@ -722,6 +723,7 @@ class Nvd3:
     ohlc_chart.dom.x(column='date').y(column='close')
     ohlc_chart.colors(self.page.theme.charts)
     ohlc_chart.dom.xAxis.tickDateFormat()
+    ohlc_chart.colors(self.page.theme.charts)
     for s in all_series:
       ohlc_chart.add_trace(s)
     return ohlc_chart

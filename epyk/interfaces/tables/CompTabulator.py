@@ -91,15 +91,6 @@ class Tabulators:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
-    self.page.jsImports.add('tabulator-numbers')
-    self.page.jsImports.add('tabulator-icons')
-    self.page.jsImports.add('tabulator-inputs')
-    self.page.jsImports.add('tabulator-drop')
-    self.page.jsImports.add('tabulator-mutators-inputs')
-    self.page.jsImports.add('editors-inputs')
-    self.page.jsImports.add('editors-dates')
-    self.page.jsImports.add('editors-selects')
-
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:

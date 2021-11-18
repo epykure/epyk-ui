@@ -78,7 +78,7 @@ class JsNvd3Axis:
     ------------
 
     """
-    self._js.append("tickFormat(function(d,i){ return d3.time.format('%x')(new Date(new Date() - (20000 * 86400000) + (d * 86400000))); })")
+    self._js.append("tickFormat(function(d,i){ return d3.time.format('%x')(new Date(d * 86400000)); })")
     return self
 
   @packageImport("accounting")
