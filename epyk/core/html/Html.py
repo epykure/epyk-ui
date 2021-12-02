@@ -742,7 +742,7 @@ class Html:
     self.label = ""
     if text is not None:
       html_code_label = "%s_label" % html_code if html_code is not None else html_code
-      self.label = self._report.ui.texts.label(text, options=options, html_code=html_code_label)
+      self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
       if for_ is not None:
         # Attach the label to another HTML component based on the ID
         self.label.attr['for'] = for_
@@ -778,7 +778,7 @@ class Html:
     setattr(self, key_attr, '')
     if text is not None:
       html_code_span = "%s_span" % html_code if html_code is not None else html_code
-      setattr(self, key_attr, self._report.ui.texts.span(text, html_code=html_code_span))
+      setattr(self, key_attr, self.page.ui.texts.span(text, html_code=html_code_span))
       span = getattr(self, key_attr)
       if position == "before":
         self.prepend_child(span)
@@ -820,9 +820,9 @@ class Html:
       if options is not None:
         dfl_options.update(options)
       if url is not None:
-        self.link = self._report.ui.links.external(text, url, options=dfl_options)
+        self.link = self.page.ui.links.external(text, url, options=dfl_options)
       else:
-        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=dfl_options)
+        self.link = self.page.ui.links.script(text, script_name, report_name, icon=icon, options=dfl_options)
       if position == "before":
         self.prepend_child(self.link)
       else:
@@ -847,7 +847,7 @@ class Html:
     """
     self.title = ""
     if text is not None:
-      self.title = self._report.ui.texts.title(text, level=level, options=options)
+      self.title = self.page.ui.texts.title(text, level=level, options=options)
       if options.get('managed', True):
         if position == "before":
           self.prepend_child(self.title)
@@ -873,7 +873,7 @@ class Html:
     :param css: Dictionary. Optional. The CSS style to be added to the component.
     :param attrs: Dictionary. Optional. The HTML tag attributes.
     :param position: Dictionary. Optional. Specific Python options available for this component.
-    :param options:
+    :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     self.input = ""
     if text is not None:
@@ -883,11 +883,12 @@ class Html:
           del input_options['position']
         del input_options['autocomplete']
 
-        self.input = self._report.ui.inputs.autocomplete(text, width=(100, '%'), html_code="%s_input" % self.htmlCode, options=input_options)
+        self.input = self.page.ui.inputs.autocomplete(
+          text, width=(100, '%'), html_code="%s_input" % self.htmlCode, options=input_options)
         self.input.options.appendTo = "#%s" % self.htmlCode
         self.input.options.position()
       else:
-        self.input = self._report.ui.inputs.input(text, html_code="%s_input" % self.htmlCode, options=options)
+        self.input = self.page.ui.inputs.input(text, html_code="%s_input" % self.htmlCode, options=options)
       if position == "before":
         self.prepend_child(self.input)
       else:
@@ -913,7 +914,7 @@ class Html:
     """
     self.checkbox = ""
     if flag is not None:
-      self.checkbox = self._report.ui.inputs.checkbox(flag)
+      self.checkbox = self.page.ui.inputs.checkbox(flag)
       if position == "before":
         self.prepend_child(self.checkbox)
       else:
@@ -940,7 +941,7 @@ class Html:
     :rtype: self._report.ui.rich.info
     """
     if text is not None:
-      self.helper = self._report.ui.rich.info(text)
+      self.helper = self.page.ui.rich.info(text)
       self.helper.options.managed = False
       if css is not None:
         self.helper.css(css)
@@ -1045,7 +1046,7 @@ class Html:
     -----------
     Move the component to this position in the page.
     """
-    self._report.components.move_to_end(self.htmlCode)
+    self.page.components.move_to_end(self.htmlCode)
 
   def css(self, key=None, value=None, reset=False):
     """
@@ -1827,10 +1828,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     str_result.append(str(self))
     return "".join(str_result)
 
-  def export(self, mode):
-    return {'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
-            'styleUrls': "", "externalVars": "", "componentFunctions": [],
-            'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
+  def export(self):
+    comp_props = {
+      'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
+      'styleUrls': "", "externalVars": "", "componentFunctions": [], "requirements": list(self.requirements),
+      'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
+    if self._js__builder__ is not None:
+      comp_props["builder"] = "%s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
+    return comp_props
 
 
 class Body(Html):

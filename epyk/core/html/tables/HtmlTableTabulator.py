@@ -25,6 +25,8 @@ class Table(Html.Html):
       self.options.data = records
     self.style.css.background = None
 
+  _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
+
   @property
   def cell(self):
     """
@@ -117,7 +119,7 @@ class Table(Html.Html):
     """
     self.options.data = data
 
-  def add_column(self, field, title=None):
+  def add_column(self, field=None, title=None):
     """
     Description:
     ------------
@@ -204,7 +206,7 @@ class Table(Html.Html):
     if data:
       return self.js.setData(data)
 
-    return 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))' % {
+    return self._js__builder__ % {
       "tableId": self.tableId, "htmlCode": self.htmlCode, "config": self._json_config,
       "options": self.options.config_js(options)}
 

@@ -6,6 +6,120 @@ from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
 
 
+class EnumTopCalc(Enums):
+
+  def concat(self):
+    """
+    Description:
+    -----------
+    Join all values into one string.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._set_value()
+
+  def count(self):
+    """
+    Description:
+    -----------
+    A count of all non empty cells in the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._set_value()
+
+  def avg(self, precision=None):
+    """
+    Description:
+    -----------
+    The average value of the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    Attributes:
+    ----------
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    """
+    if precision is not None:
+      if self.key == "bottomCalc":
+        self._set_value("bottomCalcParams", {"precision": precision})
+      else:
+        self._set_value("topCalcParams", {"precision": precision})
+    return self._set_value()
+
+  def max(self, precision=None):
+    """
+    Description:
+    -----------
+    The minimum value in the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    Attributes:
+    ----------
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    """
+    if precision is not None:
+      if self.key == "bottomCalc":
+        self._set_value("bottomCalcParams", {"precision": precision})
+      else:
+        self._set_value("topCalcParams", {"precision": precision})
+    return self._set_value()
+
+  def min(self, precision=None):
+    """
+    Description:
+    -----------
+    The minimum value in the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    Attributes:
+    ----------
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    """
+    if precision is not None:
+      if self.key == "bottomCalc":
+        self._set_value("bottomCalcParams", {"precision": precision})
+      else:
+        self._set_value("topCalcParams", {"precision": precision})
+    return self._set_value()
+
+  def sum(self, precision=None):
+    """
+    Description:
+    -----------
+    The minimum value in the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    Attributes:
+    ----------
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    """
+    if precision is not None:
+      if self.key == "bottomCalc":
+        self._set_value("bottomCalcParams", {"precision": precision})
+      else:
+        self._set_value("topCalcParams", {"precision": precision})
+    return self._set_value()
+
+  def bespoke(self, jsFncs, profile=None):
+    return self._set_value(value=JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+
+
 class EnumLayout(Enums):
 
   def fitDataStretch(self):
@@ -389,27 +503,6 @@ class Persistence(Options):
     self._config(val)
 
 
-class BottomCalcParams(Options):
-
-  @property
-  def precision(self):
-    """
-    Description:
-    -----------
-    the number of decimals to display (default is 2), setting this value to false will display however many decimals
-    are provided with the number.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/column-calcs#func-builtin
-    """
-    return self._config_get()
-
-  @precision.setter
-  def precision(self, val):
-    self._config(val)
-
-
 class ColumnsGroup(Options):
 
   @property
@@ -716,6 +809,9 @@ class Editor(Enums):
 
 class Formattors(Enums):
 
+  def rowSelection(self):
+    self._set_value()
+
   def text(self, **kwargs):
     """
     Description:
@@ -732,7 +828,7 @@ class Formattors(Enums):
     """
     self._set_value(value="plaintext")
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def textarea(self, **kwargs):
@@ -752,7 +848,7 @@ class Formattors(Enums):
     """
     self._set_value(value="textarea")
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def html(self, **kwargs):
@@ -771,14 +867,14 @@ class Formattors(Enums):
     """
     self._set_value()
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
     """
     Description:
     -----------
-    The money formater formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
+    The money formatter formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
 
     Related Pages:
 
@@ -787,15 +883,15 @@ class Formattors(Enums):
     Attributes:
     ----------
     :param decimal: Symbol to represent the decimal point (default ".")
-    :param thousand: Symbol to represent the thousands seperator (default ",")
+    :param thousand: Symbol to represent the thousands separator (default ",")
     :param precision: the number of decimals to display (default is 2), setting this value to false will display however many decimals are provided with the number
     :param symbol: currency symbol (no default)
     :param symbolAfter: position the symbol after the number (default false)
     :param kwargs:
     """
-    self._set_value(value="formatterParams")
+    self._set_value("%sParams" % self.key, "money")
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def image(self, height=None, width=None, **kwargs):
@@ -823,7 +919,7 @@ class Formattors(Enums):
       format_params['width'] = width
     for k, v in kwargs.items():
       format_params[k] = v
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
@@ -850,7 +946,7 @@ class Formattors(Enums):
     format_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     format_params.update(format_params.pop('kwargs'))
     self._set_value()
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)", **kwargs):
@@ -874,7 +970,7 @@ class Formattors(Enums):
     format_params = {"inputFormat": inputFormat, "outputFormat": outputFormat, "invalidPlaceholder": invalidPlaceholder}
     if kwargs:
       format_params.update(kwargs)
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
@@ -901,7 +997,7 @@ class Formattors(Enums):
       'allowEmpty': allowEmpty, 'allowTruthy': allowTruthy, 'tickElement': tickElement, 'crossElement': crossElement}
     if kwargs:
       format_params.update(kwargs)
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def color(self, **kwargs):
@@ -917,7 +1013,7 @@ class Formattors(Enums):
     """
     self._set_value()
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def star(self, starts, **kwargs):
@@ -938,7 +1034,7 @@ class Formattors(Enums):
     format_params = {"starts": starts}
     for k, v in kwargs.items():
       format_params[k] = v
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def progress(self, min=0, max=100, color=None, legend=None, legendColor=None, legendAlign=None, **kwargs):
@@ -958,7 +1054,7 @@ class Formattors(Enums):
     """
     self._set_value()
     if kwargs:
-      self._set_value("formatterParams", kwargs)
+      self._set_value("%sParams" % self.key, kwargs)
     return self
 
   def lookup(self, data, **kwargs):
@@ -981,7 +1077,7 @@ class Formattors(Enums):
     format_params = data
     if kwargs:
       format_params.update(kwargs)
-    self._set_value("formatterParams", format_params)
+    self._set_value("%sParams" % self.key, format_params)
     return self
 
   def custom(self, fncName, fncDef=None, formatterParams=None):
@@ -1005,7 +1101,7 @@ class Formattors(Enums):
       self.component.page.extendModule("format", "formatters", fncName, "function(cell, formatterParams){%s}" % fncDef)
       self._set_value(fncName)
     if formatterParams is not None:
-      self._set_value("formatterParams", formatterParams)
+      self._set_value("%sParams" % self.key, formatterParams)
     return self
 
   def wrapper(self, formatter, css_attrs, formatterParams=None):
@@ -1035,7 +1131,7 @@ class Formattors(Enums):
         return frag; }''' % formatter, js_type=True)
     formatter_params = formatterParams or {}
     formatter_params['css'] = css_attrs
-    self._set_value("formatterParams", formatter_params)
+    self._set_value("%sParams" % self.key, formatter_params)
     return self
 
 
@@ -1319,11 +1415,11 @@ class Column(Options):
 
       http://tabulator.info/docs/4.5/columns
     """
-    return self._config_get()
+    return self._config_get(name="hozAlign")
 
   @align.setter
   def align(self, val):
-    self._config(val)
+    self._config(val, name="hozAlign")
 
   @property
   def accessors(self):
@@ -1340,38 +1436,6 @@ class Column(Options):
     """
     return Accessors(self, "accessor")
 
-  @property
-  def bottomCalc(self):
-    """
-    Description:
-    -----------
-    the column calculation to be displayed at the bottom of this column(see Column Calculations for more details)
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/columns
-    """
-    return self._config_get()
-
-  @bottomCalc.setter
-  def bottomCalc(self, val):
-    self._config(val)
-
-  @property
-  def bottomCalcParams(self):
-    """
-    Description:
-    -----------
-    additional parameters you can pass to the bottomCalc calculation function(see Column Calculations for more details)
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/columns
-
-    :rtype: BottomCalcParams
-    """
-    return self._config_sub_data("bottomCalcParams", BottomCalcParams)
-
   def add_column(self, field, title=None):
     """
     Description:
@@ -1387,6 +1451,9 @@ class Column(Options):
     col_def.field = field
     col_def.title = field if title is None else title
     return col_def
+
+  def cellClick(self, jsFncs, profile=None):
+    self._config("function(event, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
 
   @property
   def cssClass(self):
@@ -1779,17 +1846,174 @@ class Column(Options):
     """
     Description:
     -----------
-    the column calculation to be displayed at the top of this column(see Column Calculations for more details).
+    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    information such as the sum of a columns data.
 
     Related Pages:
 
-      http://tabulator.info/docs/4.5/columns
+      http://tabulator.info/docs/4.0/column-calcs
     """
     return self._config_get()
 
   @topCalc.setter
   def topCalc(self, val):
     self._config(val)
+
+  @property
+  def topCalcFormatter(self):
+    """
+    Description:
+    -----------
+    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    topCalcFormatter and bottomCalcFormatter options in a columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @topCalcFormatter.setter
+  def topCalcFormatter(self, val):
+    self._config(val)
+
+  @property
+  def topCalcFormatterParams(self):
+    """
+    Description:
+    -----------
+    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    topCalcFormatter and bottomCalcFormatter options in a columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @topCalcFormatterParams.setter
+  def topCalcFormatterParams(self, val):
+    self._config(val)
+
+  @property
+  def topCalcParams(self):
+    """
+    Description:
+    -----------
+    The column calculation parameters.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @topCalcParams.setter
+  def topCalcParams(self, val):
+    self._config(val)
+
+  @property
+  def topCalcs(self):
+    """
+    Description:
+    -----------
+    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    information such as the sum of a columns data.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return EnumTopCalc(self, "topCalc")
+
+  @property
+  def bottomCalc(self):
+    """
+    Description:
+    -----------
+    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    information such as the sum of a columns data.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @bottomCalc.setter
+  def bottomCalc(self, val):
+    self._config(val)
+
+  @property
+  def bottomCalcFormatter(self):
+    """
+    Description:
+    -----------
+    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    topCalcFormatter and bottomCalcFormatter options in a columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @bottomCalcFormatter.setter
+  def bottomCalcFormatter(self, val):
+    self._config(val)
+
+  @property
+  def bottomCalcFormatters(self):
+    return Formattors(self, "bottomCalcFormatter")
+
+  @property
+  def bottomCalcFormatterParams(self):
+    """
+    Description:
+    -----------
+    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    topCalcFormatter and bottomCalcFormatter options in a columns definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @bottomCalcFormatterParams.setter
+  def bottomCalcFormatterParams(self, val):
+    self._config(val)
+
+  @property
+  def bottomCalcParams(self):
+    """
+    Description:
+    -----------
+    The column calculation parameters.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @bottomCalcParams.setter
+  def bottomCalcParams(self, val):
+    self._config(val)
+
+  @property
+  def bottomCalcs(self):
+    """
+    Description:
+    -----------
+    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    information such as the sum of a columns data.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return EnumTopCalc(self, "bottomCalc")
 
   @property
   def validator(self):
@@ -2086,6 +2310,23 @@ class TableConfig(Options):
   def clipboard(self, val):
     self._config(val)
 
+  @property
+  def columnCalcs(self):
+    """
+    Description:
+    -----------
+    The columnCalcs option lets you decided where the calculations should be displayed, it can take one of four values:
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return self._config_get()
+
+  @columnCalcs.setter
+  def columnCalcs(self, val):
+    self._config(val)
+
   def cellClick(self, jsFncs, profile=None):
     """
     Description:
@@ -2260,8 +2501,9 @@ class TableConfig(Options):
     :rtype: Column
     """
     column = self._config_sub_data_enum("columns", Column)
-    column.field = field
-    column.title = field if title is None else title
+    if field is not None:
+      column.field = field
+      column.title = field if title is None else title
     return column
 
   def get_column(self, by_field=None, by_title=None):
@@ -2387,6 +2629,26 @@ class TableConfig(Options):
 
   @groupToggleElement.setter
   def groupToggleElement(self, val):
+    self._config(val)
+
+  @property
+  def groupClosedShowCalcs(self):
+    """
+    Description:
+    -----------
+    If you would like column calculations to display when a group is closed, set the groupClosedShowCalcs
+    option to true.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    :prop val:
+    """
+    return self._config_get()
+
+  @groupClosedShowCalcs.setter
+  def groupClosedShowCalcs(self, val):
     self._config(val)
 
   @property

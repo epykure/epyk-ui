@@ -931,6 +931,17 @@ class Tabulator(JsPackage):
 
     return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, clipboardCopySelector))
 
+  def getCalcResults(self):
+    return JsObjects.JsVoid("%s.getCalcResults()" % self.varId)
+
+  def recalc(self):
+    """
+    http://tabulator.info/docs/5.0/column-calcs
+
+    :return:
+    """
+    return JsObjects.JsVoid("%s.recalc()" % self.varId)
+
   def previousPage(self):
     """
     Description:
