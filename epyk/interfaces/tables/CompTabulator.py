@@ -95,7 +95,8 @@ class Tabulators:
     rows = rows or []
     if records is not None and not cols and not rows:
       cols = list(records[0].keys())
-
+      if '_children' in cols:
+        cols.remove('_children')
     table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                            'movableColumns': False}
     if options is not None:

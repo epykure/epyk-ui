@@ -1,10 +1,17 @@
 ## [Unreleased]
 
 ### Added
+- Add bottomCalc / topCalc to tabulator wrapper.
+- Add addTreeChildren event.
+- Link external lib interface.
 
 ### Changed
+- review common component export function
 
 ### Fixed
+- Tabulator formatter definition.
+- Issue in Tabulator hierarchy tables.
+
 
 ## [1.6.10] - 2021-11-18
 

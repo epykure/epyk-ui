@@ -3619,3 +3619,17 @@ class TableTreeConfig(TableConfig):
   @dataTreeChildColumnCalcs.setter
   def dataTreeChildColumnCalcs(self, flag):
     self._config(flag)
+
+  def dataTreeRowExpanded(self, jsFncs, profile=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+
+
+    :param jsFncs:
+    :param profile:
+    """
+    self._config("function(row, level) {%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)

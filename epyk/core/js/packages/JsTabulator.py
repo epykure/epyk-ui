@@ -805,6 +805,16 @@ class RowComponent(JsPackage):
     """
     return self.fnc_closure("unfreeze()")
 
+  def getTreeChildren(self):
+    return JsObjects.JsArray.JsArray("%s.getTreeChildren()" % self._selector)
+
+  def addTreeChild(self, jsData):
+    return JsObjects.JsArray.JsArray("%s.addTreeChild(%s)" % (self._selector, JsUtils.jsConvertData(jsData, None)))
+
+  def addTreeChildren(self, jsData):
+    return JsObjects.JsArray.JsArray("%s.forEach(function(rec){%s.addTreeChild(rec)})" % (
+      JsUtils.jsConvertData(jsData, None), self._selector))
+
 
 class TabRowContextMenu(JsPackage):
   lib_set_var = False
