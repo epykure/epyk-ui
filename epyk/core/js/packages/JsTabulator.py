@@ -932,13 +932,28 @@ class Tabulator(JsPackage):
     return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, clipboardCopySelector))
 
   def getCalcResults(self):
-    return JsObjects.JsVoid("%s.getCalcResults()" % self.varId)
+    """
+    Description:
+    -----------
+    You can retrieve the results of the column calculations at any point using the getCalcResults function.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+    """
+    return JsObjects.JsObject.JsObject("%s.getCalcResults()" % self.varId)
 
   def recalc(self):
     """
-    http://tabulator.info/docs/5.0/column-calcs
+    Description:
+    -----------
+    Calculations will be automatically updated whenever the row data is changed or edited.
+    
+    If you want to trigger an update of the calculation at any point you can call the recalc function on the table.
 
-    :return:
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/column-calcs
     """
     return JsObjects.JsVoid("%s.recalc()" % self.varId)
 
