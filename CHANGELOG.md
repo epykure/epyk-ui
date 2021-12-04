@@ -1,9 +1,18 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [1.6.12] - 2021-12-04
+
+### Added
 - Add bottomCalc / topCalc to tabulator wrapper.
 - Add addTreeChildren event.
 - Link external lib interface.
+- Add object format function.
 
 ### Changed
 - review common component export function
