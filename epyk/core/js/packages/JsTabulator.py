@@ -1716,7 +1716,7 @@ class Tabulator(JsPackage):
     ------------
     You can retrieve the data stored in the table using the getData function.
     """
-    return JsObjects.JsArray.JsArray("%s.getData()" % self.varId)
+    return JsObjects.JsObject.JsObject("%s.getData()" % self.varId)
 
   @property
   def rowContextMenu(self):

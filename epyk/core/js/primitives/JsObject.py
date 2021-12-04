@@ -904,6 +904,16 @@ class JsObject:
               line.split(delimiter).forEach(function(rec, j){row[header[j]] = rec}); results.push(row)}
           }; return results})()''' % {"varName": self.varName, "delimiter": delimiter})
 
+  def format(self, *args, **kwargs):
+    """ Format the underlying string object """
+    if self.varData == 'None':
+      self.varName = self.varName.format(*(JsUtils.jsConvertData(a, None) for a in args),
+                                         **{k: JsUtils.jsConvertData(v, None) for k, v in kwargs.items()})
+    else:
+      self.varData = self.varData.format(*(JsUtils.jsConvertData(a, None) for a in args),
+                                         **{k: JsUtils.jsConvertData(v, None) for k, v in kwargs.items()})
+    return self
+
   def __str__(self):
     """
     Description:
