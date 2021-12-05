@@ -953,6 +953,18 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.getCalcResults()" % self.varId)
 
+  def getAjaxUrl(self):
+    """
+    Description:
+    -----------
+    You can retrieve the current AJAX URL of the table with the getAjaxUrl function.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/data#ajax-filter
+    """
+    return JsObjects.JsString.JsString("%s.getAjaxUrl()" % self.varId)
+
   def recalc(self):
     """
     Description:

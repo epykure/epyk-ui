@@ -2259,6 +2259,42 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def ajaxProgressiveLoadDelay(self):
+    """
+    Description:
+    -----------
+    The ajaxProgressiveLoadDelay option to add a delay in milliseconds between each page request.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/data#ajax-progressive
+    """
+    return self._config_get()
+
+  @ajaxProgressiveLoadDelay.setter
+  def ajaxProgressiveLoadDelay(self, number):
+    self._config(number)
+
+  @property
+  def ajaxProgressiveLoadScrollMargin(self):
+    """
+    Description:
+    -----------
+    The ajaxProgressiveLoadScrollMargin property determines how close to the bottom of the table in pixels,
+    the scroll bar must be before the next page worth of data is loaded, by default it is set to twice the height of
+    the table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/data#ajax-progressive
+    """
+    return self._config_get()
+
+  @ajaxProgressiveLoadScrollMargin.setter
+  def ajaxProgressiveLoadScrollMargin(self, number):
+    self._config(number)
+
+  @property
   def autoColumns(self):
     """
     Description:
@@ -2575,6 +2611,26 @@ class TableConfig(Options):
 
   @data.setter
   def data(self, val):
+    self._config(val)
+
+  @property
+  def debugInvalidOptions(self):
+    """
+    Description:
+    -----------
+    Enabled by default this will provide a console warning if you are trying to set an option on the table that does
+    not exist.
+    With the new optional modular structure this is particularly valuable as it will prompt you if you are trying to
+    use an option for a module that has not been installed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/release
+    """
+    return self._config_get()
+
+  @debugInvalidOptions.setter
+  def debugInvalidOptions(self, val):
     self._config(val)
 
   @property
@@ -3016,6 +3072,23 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def paginationMode(self):
+    """
+    Description:
+    -----------
+    The pagination option is now a boolean that enables pagination and the paginationMode option sets its mode.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/release
+    """
+    return self._config_get()
+
+  @paginationMode.setter
+  def paginationMode(self, val):
+    self._config(val)
+
+  @property
   def paginationSize(self):
     """
     Description:
@@ -3126,6 +3199,30 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def progressiveLoad(self):
+    return self._config_get()
+
+  @progressiveLoad.setter
+  def progressiveLoad(self, val):
+    self._config(val)
+
+  @property
+  def progressiveLoadDelay(self):
+    return self._config_get()
+
+  @progressiveLoadDelay.setter
+  def progressiveLoadDelay(self, number):
+    self._config(number)
+
+  @property
+  def progressiveLoadScrollMargin(self):
+    return self._config_get()
+
+  @progressiveLoadScrollMargin.setter
+  def progressiveLoadScrollMargin(self, number):
+    self._config(number)
+
+  @property
   def reactiveData(self):
     """
     Description:
@@ -3140,6 +3237,23 @@ class TableConfig(Options):
 
   @reactiveData.setter
   def reactiveData(self, val):
+    self._config(val)
+
+  @property
+  def renderVertical(self):
+    """
+    Description:
+    -----------
+    The vertical renderer can now be set using the renderVertical option:
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/release
+    """
+    return self._config_get()
+
+  @renderVertical.setter
+  def renderVertical(self, val):
     self._config(val)
 
   @property
