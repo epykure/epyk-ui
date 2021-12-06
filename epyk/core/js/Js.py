@@ -1009,7 +1009,8 @@ class JsBase:
     self._src.properties.js.add_text(text)
     return self
 
-  def customFile(self, filename, path=None, module_type="text/javascript", absolute_path=False):
+  def customFile(self, filename, path=None, module_type="text/javascript", absolute_path=False, requirements=None,
+                 randomize=False):
     """
     Description:
     ------------
@@ -1025,7 +1026,9 @@ class JsBase:
     :param filename: String. The file name.
     :param path: String. optional. The file path.
     :param module_type: String. Optional. The module type.
-    :param absolute_path: Boolean. Optional. If path is Nont this flag will map to the current main path.
+    :param absolute_path: Boolean. Optional. If path is None this flag will map to the current main path.
+    :param requirements: List. Optional. The list of required packages.
+    :param randomize: Boolean. Optional. Add random suffix to the module to avoid browser caching.
 
     :return: The Js Object to allow the chaining.
     """
@@ -1034,10 +1037,14 @@ class JsBase:
         path = os.getcwd()
       else:
         path = "%s/js" % Imports.STATIC_PATH.replace("\\", "/")
-    self.page.imports.addPackage('local_%s' % filename[:-3], {'version': "",
+    self.page.imports.addPackage('local_%s' % filename[:-3], {'version': "", 'req': requirements or [],
       'register': {'alias': 'local_%s' % filename[:-3], 'module': filename[:-3], 'npm_path': 'dist/maps/continents/'},
-      'modules': [{'script': filename, "path": '', 'type': module_type, 'cdnjs': path}]})
+      'modules': [{'script': filename, "path": '', 'type': module_type, 'cdnjs': path, "config": "version=1"}]})
     self.page.jsImports.add('local_%s' % filename[:-3])
+    if randomize:
+      import random
+
+      self.page.imports.moduleConfigs['local_%s' % filename[:-3]] = "version=%s" % random.random()
     return self
 
   def extendProto(self, pyClass, fncName, jsFncs, pmts=None, profile=False):

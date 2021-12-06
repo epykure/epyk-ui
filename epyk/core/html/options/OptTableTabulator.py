@@ -1527,6 +1527,41 @@ class Column(Options):
     self._config(val)
 
   @property
+  def formatter(self):
+    """
+    Description:
+    -----------
+    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/format#format
+    """
+    return self._config_get()
+
+  @formatter.setter
+  def formatter(self, val):
+    self._config(val)
+
+  @property
+  def formatterParams(self):
+    """
+    Description:
+    -----------
+    You can pass an optional additional parameter with the formatter, formatterParams that should contain an object
+    with additional information for configuring the formatter.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/format#format
+    """
+    return self._config_get()
+
+  @formatterParams.setter
+  def formatterParams(self, val):
+    self._config(val)
+
+  @property
   def formatters(self):
     """
     Description:
