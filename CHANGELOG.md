@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.6.12] - 2021-12-04
+## [1.6.14] - 2021-12-06
 
 ### Added
 - Add bottomCalc / topCalc to tabulator wrapper.
@@ -20,6 +20,7 @@
 ### Fixed
 - Tabulator formatter definition.
 - Issue in Tabulator hierarchy tables.
+- Bug fix in the import manager.
 
 
 ## [1.6.10] - 2021-11-18

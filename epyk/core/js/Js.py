@@ -1009,7 +1009,7 @@ class JsBase:
     self._src.properties.js.add_text(text)
     return self
 
-  def customFile(self, filename, path=None):
+  def customFile(self, filename, path=None, module_type="text/javascript", absolute_path=False):
     """
     Description:
     ------------
@@ -1024,16 +1024,19 @@ class JsBase:
     ----------
     :param filename: String. The file name.
     :param path: String. optional. The file path.
+    :param module_type: String. Optional. The module type.
+    :param absolute_path: Boolean. Optional. If path is Nont this flag will map to the current main path.
 
     :return: The Js Object to allow the chaining.
     """
     if path is None:
-      self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
-    else:
-      self._src.jsLocalImports.add("%s/%s" % (path, filename))
+      if absolute_path:
+        path = os.getcwd()
+      else:
+        path = "%s/js" % Imports.STATIC_PATH.replace("\\", "/")
     self.page.imports.addPackage('local_%s' % filename[:-3], {'version': "",
       'register': {'alias': 'local_%s' % filename[:-3], 'module': filename[:-3], 'npm_path': 'dist/maps/continents/'},
-      'modules': [{'script': filename, "path": '', 'cdnjs': path}]})
+      'modules': [{'script': filename, "path": '', 'type': module_type, 'cdnjs': path}]})
     self.page.jsImports.add('local_%s' % filename[:-3])
     return self
 

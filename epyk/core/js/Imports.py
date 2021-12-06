@@ -4015,7 +4015,7 @@ class ImportManager:
         # if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
         mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
-        if os.path.isabs(url_module):
+        if os.path.isabs(url_module) and not url_module.startswith("/static"):
           with open(url_module, "rb") as fp:
             base64_bytes = base64.b64encode(fp.read())
             base64_message = base64_bytes.decode('ascii')
@@ -4301,9 +4301,11 @@ class ImportManager:
     if len(mod_entry['js']) > 0:
       JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
       JS_IMPORTS[alias]["version"] = config.get("version", "")
-      self.jsImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
+      self.jsImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': [], "type": {}}
       for pkg in mod_entry['js']["modules"]:
         self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config.get("version", ''))
+        if "type" in pkg:
+          self.jsImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
     return self
 
   def to_requireJs(self, data, excluded_packages=None):
