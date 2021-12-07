@@ -630,7 +630,7 @@ class RowComponent(JsPackage):
 
       http://tabulator.info/docs/4.4/components
     """
-    return JsObjects.JsArray.JsArray("%s.getData()" % self.toStr())
+    return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr())
 
   def getElement(self):
     """

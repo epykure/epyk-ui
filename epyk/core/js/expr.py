@@ -165,9 +165,9 @@ def typeof(jsData, type=None):
   :param type: String. The type of object
   """
   if type is None:
-    return JsObjects.JsBoolean.JsBoolean("typeof %s" % jsData)
+    return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(jsData, None))
 
-  return JsObjects.JsVoid("typeof %s === '%s'" % (jsData, type))
+  return JsObjects.JsVoid("typeof %s === %s" % (JsUtils.jsConvertData(jsData, None), JsUtils.jsConvertData(type, None)))
 
 
 def not_(jsCond):

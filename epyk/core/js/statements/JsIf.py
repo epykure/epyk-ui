@@ -25,6 +25,8 @@ class JsIf:
     """
     self._context = context
     js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
+    if hasattr(jsCondition, "toStr"):
+      jsCondition = jsCondition.toStr()
     self._js = [(jsCondition, js_funcs)]
     self.__jsElse = None
 
