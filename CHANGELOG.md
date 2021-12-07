@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.6.16] - 2021-12-06
+## [1.6.17] - 2021-12-06
 
 ### Added
 - Add bottomCalc / topCalc to tabulator wrapper.
