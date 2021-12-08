@@ -1690,6 +1690,24 @@ class Column(Options):
     self._config(val)
 
   @property
+  def hozAlign(self):
+    """
+    Description:
+    -----------
+    By setting the headerVisible option to false you can hide the column headers and present
+    the table as a simple list if needed.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/columns
+    """
+    return self._config_get()
+
+  @hozAlign.setter
+  def hozAlign(self, val):
+    self._config(val)
+
+  @property
   def sorter(self):
     """
     Description:
@@ -1704,6 +1722,23 @@ class Column(Options):
     :rtype: EnumSorter
     """
     return self.sub_data("sorter", EnumSorter)
+
+  @property
+  def titleFormatter(self):
+    """
+    Description:
+    -----------
+    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.0/format#format
+    """
+    return self._config_get()
+
+  @titleFormatter.setter
+  def titleFormatter(self, val):
+    self._config(val)
 
   @property
   def width(self):

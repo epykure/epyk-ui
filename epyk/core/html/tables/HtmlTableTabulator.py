@@ -127,7 +127,7 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param field: String. Mandatory. The key in the row.
+    :param field: String. Optional. The key in the row.
     :param title: String. Optional. The title for the column. Default to the field.
     """
     return self.options.add_column(field, title)
