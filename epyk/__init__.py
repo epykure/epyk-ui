@@ -1,6 +1,7 @@
 import json
 
 from epyk.core import Page as Rpt
+from epyk._version import __version__
 from epyk.core.data import events
 from epyk.core.data import configs
 from epyk.core.data import datamap as js_datamap

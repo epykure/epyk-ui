@@ -196,14 +196,14 @@ page = Report()
 page.headers.dev()
 
 socket.connect(url="127.0.0.1", port=3000, namespace="/news")
-input = rptObj.ui.input()
+input = page.ui.input()
 
-pie = rptObj.ui.charts.chartJs.polar([], y_columns=[1], x_axis="x")
+pie = page.ui.charts.chartJs.polar([], y_columns=[1], x_axis="x")
 
 container.subscribe(socket, 'news received', data=socket.message['content'])
 pie.subscribe(socket, 'news received', data=socket.message['pie'])
 
-rptObj.ui.button("Send").click([
+page.ui.button("Send").click([
   socket.emit("new news", input.dom.content)
 ])
 

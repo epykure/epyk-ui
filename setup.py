@@ -7,8 +7,13 @@ to create the wheels: python.exe setup.py sdist bdist_wheel --universal
 import setuptools
 import os
 
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
+
+with open("epyk/_version.py", "w") as fp:
+  fp.write("__version__ = '%s'" % os.environ["VERSION"])
 
 
 def install_required():
