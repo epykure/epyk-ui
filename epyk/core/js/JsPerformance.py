@@ -12,6 +12,8 @@ Related Pages:
 """
 
 
+from typing import Union, Optional, List
+
 from epyk.core.js import JsUtils
 from epyk.core.js.fncs import JsFncs
 from epyk.core.js.primitives import JsNumber
@@ -25,7 +27,7 @@ class JsPerformance:
     self.__marks = set([])
     self.__count = 0
 
-  def add_profiling(self, jsFnc):
+  def add_profiling(self, js_funcs: Optional[Union[list, str]]):
     """
     Description:
     ------------
@@ -41,19 +43,19 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param jsFnc: The Javascript functions
+    :param Optional[Union[list, str]] js_funcs: The Javascript functions.
 
     :return: The profile variable name
     """
     profile_var = "profile_%s" % self.__count
-    if not isinstance(jsFnc, list):
-      jsFnc = [jsFnc]
-    jsFnc.insert(0, "var %s_start = %s" % (profile_var, self.now))
-    jsFnc.append("var %s = %s - %s_start" % (profile_var, self.now, profile_var))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    js_funcs.insert(0, "var %s_start = %s" % (profile_var, self.now))
+    js_funcs.append("var %s = %s - %s_start" % (profile_var, self.now, profile_var))
     self.__count += 1
     return profile_var
 
-  def clearMarks(self, name=None):
+  def clearMarks(self, name: Optional[str] = None):
     """
     Description:
     ------------
@@ -71,19 +73,19 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param name: String. Optional. The mark name.
+    :param Optional[str] name: Optional. The mark name.
 
     :return: Void, the String for the Javascript side
     """
     if name is not None:
       if name not in self.__marks:
-        raise Exception("Mark %s not defined in the performances" % name)
+        raise ValueError("Mark %s not defined in the performances" % name)
 
       return JsFncs.JsFunction("performance.clearMarks(%s)" % name)
 
     return JsFncs.JsFunction("performance.clearMarks()")
 
-  def clearMeasures(self, name=None):
+  def clearMeasures(self, name: Optional[str] = None):
     """
     Description:
     ------------
@@ -101,7 +103,7 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param name: String. Optional. The name of the mark to be cleared.
+    :param Optional[str] name: Optional. The name of the mark to be cleared.
 
     :return: Void, the String for the Javascript side
     """
@@ -149,7 +151,7 @@ class JsPerformance:
     """
     return JsArray.JsArray("window.performance.getEntries()", isPyData=False)
 
-  def getEntriesByName(self, name, type=None):
+  def getEntriesByName(self, name: str, type: Optional[str] = None):
     """
     Description:
     ------------
@@ -167,13 +169,13 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param name: String. The name of the entry to retrieve.
-    :param type: String. Optional. The type of entry to retrieve such as "mark".
+    :param str name: The name of the entry to retrieve.
+    :param Optional[str] type: Optional. The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified name and type
     """
     if name not in self.__marks:
-      raise Exception("Mark %s not defined in the performances" % name)
+      raise ValueError("Mark %s not defined in the performances" % name)
 
     name = JsUtils.jsConvertData(name, None)
     if type is not None:
@@ -181,7 +183,7 @@ class JsPerformance:
 
     return JsArray.JsArray("window.performance.getEntriesByName(%s)" % name, isPyData=False)
 
-  def getEntriesByType(self, type):
+  def getEntriesByType(self, type: str):
     """
     Description:
     ------------
@@ -199,13 +201,13 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param type: String. The type of entry to retrieve such as "mark".
+    :param str type: The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified type.
     """
     return JsArray.JsArray("window.performance.getEntriesByType('%s')" % type, isPyData=False)
 
-  def mark(self, name):
+  def mark(self, name: str):
     """
     Description:
     ------------
@@ -223,15 +225,15 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param name: String. A DOMString representing the name of the mark.
+    :param str name: A DOMString representing the name of the mark.
 
-    :return: VOid, The String for the Javascript side.
+    :return: Void, The String for the Javascript side.
     """
     self.__marks.add(name)
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunction("performance.mark(%s)" % name)
 
-  def measure(self, name, startMark=None, endMark=None):
+  def measure(self, name: str, startMark: Optional[str] = None, endMark: Optional[str] = None):
     """
     Description:
     ------------
@@ -247,20 +249,20 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param name: String. A DOMString representing the name of the measure.
-    :param startMark: String. Optional. A DOMString representing the name of the measure's starting mark.
-    :param endMark: String. Optional, A DOMString representing the name of the measure's ending mark.
+    :param str name: A DOMString representing the name of the measure.
+    :param Optional[str] startMark: Optional. A DOMString representing the name of the measure's starting mark.
+    :param Optional[str] endMark: Optional, A DOMString representing the name of the measure's ending mark.
 
     :return: Void, The String for the Javascript side
     """
     name = JsUtils.jsConvertData(name, None)
     if startMark is not None:
       if startMark not in self.__marks:
-        raise Exception("Mark %s not defined in the performances" % startMark)
+        raise ValueError("Mark %s not defined in the performances" % startMark)
 
       if endMark is not None:
         if startMark not in self.__marks:
-          raise Exception("Mark %s not defined in the performances" % startMark)
+          raise ValueError("Mark %s not defined in the performances" % startMark)
 
         return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, startMark, endMark))
       else:
@@ -287,7 +289,7 @@ class JsPerformance:
     """
     return JsNumber.JsNumber("performance.now()", isPyData=False)
 
-  def setResourceTimingBufferSize(self, maxSize):
+  def setResourceTimingBufferSize(self, maxSize: int):
     """
     Description:
     ------------
@@ -303,9 +305,9 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param maxSize:
+    :param int maxSize: The buffer meximum size.
 
-    :return: Void, the String for the Javascript side
+    :return: Void, the String for the Javascript side.
     """
     return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % maxSize)
 

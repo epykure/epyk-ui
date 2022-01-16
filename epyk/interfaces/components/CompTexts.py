@@ -10,7 +10,6 @@ class Texts:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def text(self, text="", color=None, align='left', width=('auto', ""), height=(None, "px"),
            html_code=None, tooltip=None, options=None, helper=None, profile=None):
     """
@@ -64,9 +63,9 @@ class Texts:
     if align in ["center", 'right']:
       text_comp.style.css.margin = "auto"
       text_comp.style.css.display = "block"
+    html.Html.set_component_skin(text_comp)
     return text_comp
 
-  @html.Html.css_skin()
   def block(self, text="", color=None, align='left', width=(100, "%"), height=(None, "px"),
             html_code=None, tooltip=None, options=None, helper=None, profile=None):
     """
@@ -113,9 +112,9 @@ class Texts:
     text_comp = self.text(text, color, align, width, height, html_code, tooltip, options, helper, profile)
     text_comp.style.css.display = "inline-block"
     text_comp.style.css.text_align = "left"
+    html.Html.set_component_skin(text_comp)
     return text_comp
 
-  @html.Html.css_skin()
   def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left',
                width=('auto', ""), height=(None, "px"), html_code=None, options=None, profile=None):
     """
@@ -164,9 +163,9 @@ class Texts:
       text_comp.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
+    html.Html.set_component_skin(text_comp)
     return text_comp
 
-  @html.Html.css_skin()
   def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), html_code=None,
             tooltip='', profile=None, options=None):
     """
@@ -214,9 +213,9 @@ class Texts:
     text = self.page.py.encode_html(text)
     html_label = html.HtmlText.Label(self.page, text, color, align, width, height, html_code, tooltip,
                                      profile, dflt_options)
+    html.Html.set_component_skin(html_label)
     return html_label
 
-  @html.Html.css_skin()
   def span(self, text="", color=None, align='center', width=None, height=None, html_code=None,
            tooltip=None, options=None, profile=None):
     """
@@ -258,9 +257,9 @@ class Texts:
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     html_label = html.HtmlText.Span(self.page, text, color, align, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_label)
     return html_label
 
-  @html.Html.css_skin()
   def highlights(self, text=None, title=None, icon=None, type="danger", color=None, width=('auto', ""),
                  height=(None, "px"), html_code=None, helper=None, options=None, profile=None):
     """
@@ -305,9 +304,9 @@ class Texts:
     text = self.page.py.encode_html(text)
     html_light = html.HtmlText.Highlights(self.page, text, title, icon, type, color, width,
                                           height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(html_light)
     return html_light
 
-  @html.Html.css_skin()
   def note(self, text=None, title="", icon=None, type="success", color=None, width=(None, "%"), height=(None, "px"),
            html_code=None, helper=None, options=None, profile=None):
     """
@@ -360,9 +359,9 @@ class Texts:
                                           height, html_code, helper, options or {}, profile)
     html_light.style.css.border_left = "4px solid %s" % getattr(self.page.theme, type)[1]
     html_light.style.css.border_radius = 0
+    html.Html.set_component_skin(html_light)
     return html_light
 
-  @html.Html.css_skin()
   def formula(self, text=None, width=(100, "%"), height=(None, 'px'), html_code=None, color=None, helper=None,
               align="left", options=None, profile=None):
     """
@@ -404,9 +403,9 @@ class Texts:
     if align in ["center", 'right']:
       html_formula.style.css.margin = "auto"
       html_formula.style.css.display = "block"
+    html.Html.set_component_skin(html_formula)
     return html_formula
 
-  @html.Html.css_skin()
   def code(self, text="", language='python', color=None, width=(90, '%'), height=(200, 'px'), html_code=None,
            options=None, helper=None, profile=None):
     """
@@ -450,9 +449,9 @@ class Texts:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(
       self.page, text, color, width, height, html_code, dflt_options, helper, profile)
+    html.Html.set_component_skin(html_code)
     return html_code
 
-  @html.Html.css_skin()
   def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
                 height=(None, 'px'), html_code=None, encoding="UTF-8", helper=None, options=None, profile=None):
     """
@@ -505,9 +504,9 @@ class Texts:
         dflt_options.get("initial-letter"), options.get("initial-letter"), text[0], text[1:])
     html_paragraph = html.HtmlText.Paragraph(self.page, text, color, background_color, border, width, height,
                                              html_code, encoding, helper, dflt_options, profile)
+    html.Html.set_component_skin(html_paragraph)
     return html_paragraph
 
-  @html.Html.css_skin()
   def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), html_code=None, options=None,
                 helper=None, profile=None):
     """
@@ -553,9 +552,9 @@ class Texts:
     text = self.page.py.encode_html(text)
     html_pre = html.HtmlText.Pre(
       self.page, text, color, width, height, html_code, dflt_options, helper, profile)
+    html.Html.set_component_skin(html_pre)
     return html_pre
 
-  @html.Html.css_skin()
   def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
                  html_code=None, helper=None, options=None, profile=None):
     """
@@ -597,9 +596,9 @@ class Texts:
     text = self.page.py.encode_html(text)
     html_blockquote = html.HtmlText.BlockQuote(
       self.page, text, author, color, width, height, html_code, helper, options, profile)
+    html.Html.set_component_skin(html_blockquote)
     return html_blockquote
 
-  @html.Html.css_skin()
   def up_down(self, record=None, components=None, color=None, label=None, width=(100, "%"), height=(330, "px"),
               options=None, helper=None, profile=None):
     """
@@ -644,9 +643,9 @@ class Texts:
       dflt_options.update(options)
     html_up_down = html.HtmlTextComp.UpDown(
       self.page, record, components, color, label, width, height, dflt_options, helper, profile)
+    html.Html.set_component_skin(html_up_down)
     return html_up_down
 
-  @html.Html.css_skin()
   def number(self, number=0, title=None, label=None, icon=None, color=None, align="left", tooltip='', html_code=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
@@ -692,9 +691,9 @@ class Texts:
     if align == "center":
       html_number.style.css.margin = "auto"
       html_number.style.css.display = "block"
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def title(self, text="", level=None, name=None, contents=None, color=None, picture=None, icon=None,
             top=5, html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
@@ -746,9 +745,9 @@ class Texts:
     html_title = html.HtmlText.Title(self.page, text, level, name, contents, color, picture, icon,
                                      top, html_code, width, height, align, dflt_options, profile)
     html_title.style.css.text_transform = "uppercase"
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, options=None, profile=None):
     """
     Description:
@@ -785,9 +784,9 @@ class Texts:
     height = Arguments.size(height, unit="px")
     html_fieldset = html.HtmlText.Fieldset(self.page, legend, width=width, height=height, helper=helper,
                                            options=options, profile=profile)
+    html.Html.set_component_skin(html_fieldset)
     return html_fieldset
 
-  @html.Html.css_skin()
   def col(self, text, label, align='left', width=('auto', ""), height=(None, "px"), html_code=None, options=None,
           profile=None):
     """
@@ -825,9 +824,9 @@ class Texts:
     div.style.css.margin = 4
     div.add(div.label)
     div.add(div.text)
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def alert(self, text=None, title=None, icon=None, type=None, color=None, width=('400', "px"), height=(None, "px"),
             html_code=None, helper=None, options=None, profile=None):
     """
@@ -881,6 +880,7 @@ class Texts:
       html_light.style.css.background_color = self.page.theme.colors[-1]
     html_light.style.css.right = 10
     html_light.style.css.z_index = 1500
+    html.Html.set_component_skin(html_light)
     return html_light
 
   @property
@@ -892,7 +892,6 @@ class Texts:
     """
     return TextReferences(self)
 
-  @html.Html.css_skin()
   def button(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), html_code=None, profile=None,
              options=None):
     """
@@ -924,9 +923,9 @@ class Texts:
     c.style.css.border_radius = 5
     c.style.css.font_size = self.page.body.style.globals.font.normal(-2)
     c.style.css.padding = '1px 2px'
+    html.Html.set_component_skin(c)
     return c
 
-  @html.Html.css_skin()
   def date(self, value=None, label=None, icon=False, color=None, width=(None, "px"),
            height=(None, "px"), html_code=None, profile=None, options=None, helper=None):
     """
@@ -972,6 +971,7 @@ class Texts:
         profile=profile, options=options, helper=helper)
     html_dt.input.style.css.background = "inherit"
     html_dt.input.style.css.border = None
+    html.Html.set_component_skin(html_dt)
     return html_dt
 
 
@@ -980,7 +980,6 @@ class TextReferences:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def book(self, text, author=None, name=None, edition=None, year=None, page=None, html_code=None, profile=None,
            options=None):
     """
@@ -1012,9 +1011,9 @@ class TextReferences:
     text = self.page.ui.text(content % (text, author, name, edition, year, page), html_code=html_code, options=options,
                              profile=profile)
     text.style.css.color = self.page.theme.colors[4]
+    html.Html.set_component_skin(text)
     return text
 
-  @html.Html.css_skin()
   def website(self, author=None, name=None, site=None, url=None, html_code=None, profile=None, options=None):
     """
     Description:
@@ -1053,6 +1052,7 @@ class TextReferences:
       text = self.page.ui.text("%s, <a style='font-style:italic' href='%s'>%s</a>" % (
          name, url, site.upper()), align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
+    html.Html.set_component_skin(text)
     return text
 
   def github(self, url=None, html_code=None, profile=None, options=None):
@@ -1084,4 +1084,5 @@ class TextReferences:
     text = self.page.ui.text("%s, %s: <a style='font-style:italic' href='%s'>%s</a>" % (
       author, site, url, name), align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
+    html.Html.set_component_skin(text)
     return text

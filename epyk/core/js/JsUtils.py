@@ -5,6 +5,7 @@ import os
 import re
 import json
 import functools
+from typing import Union, Optional
 
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
@@ -60,7 +61,7 @@ def fromVersion(data):
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
             if mod.get('version', Imports.JS_IMPORTS[k]['version']) < v:
-              raise Exception("Function %s can only be used from %s version %s (current %s)" % (
+              raise ValueError("Function %s can only be used from %s version %s (current %s)" % (
                 func.__name__, k, v, mod['version']))
 
       return func(*args, **kwargs)
@@ -70,7 +71,7 @@ def fromVersion(data):
   return decorator
 
 
-def untilVersion(data, newFeature):
+def untilVersion(data: str, newFeature: str):
   """
   Description:
   ------------
@@ -86,10 +87,10 @@ def untilVersion(data, newFeature):
 
   Attributes:
   ----------
-  :param data: String. The maximum version number of a package to use this function
-  :param newFeature: String. The new function name
+  :param str data: The maximum version number of a package to use this function.
+  :param str newFeature: The new function name.
 
-  :return: The decorated function
+  :return: The decorated function.
   """
   def decorator(func):
     @functools.wraps(func)
@@ -98,7 +99,7 @@ def untilVersion(data, newFeature):
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
             if mod.get('version', Imports.JS_IMPORTS[k]['version']) > v:
-              raise Exception("Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (func.__name__, k, v, mod['version'], newFeature))
+              raise ValueError("Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (func.__name__, k, v, mod['version'], newFeature))
 
       return func(*args, **kwargs)
     return decorated
@@ -108,7 +109,7 @@ def untilVersion(data, newFeature):
 # --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
-def jsConvertData(jsData, jsFnc, depth=False):
+def jsConvertData(jsData, jsFnc: Optional[Union[list, str]], depth: bool = False):
   """
   Description:
   ------------
@@ -121,8 +122,8 @@ def jsConvertData(jsData, jsFnc, depth=False):
   Attributes:
   ----------
   :param jsData: The Python Javascript data.
-  :param jsFnc: Optional. The conversion function (not used).
-  :param depth: Boolean. Optional. Set to true of it is a nested object.
+  :param Optional[Union[list, str]] jsFnc: Optional. The conversion function (not used).
+  :param bool depth: Optional. Set to true of it is a nested object.
   """
   if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
     if hasattr(jsData, 'toStr'):
@@ -154,7 +155,7 @@ def jsConvertData(jsData, jsFnc, depth=False):
   return jsData
 
 
-def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
+def jsConvert(jsData, jsDataKey, isPyData: bool, jsFnc: Union[list, str]):
   """
   Description:
   ------------
@@ -164,8 +165,8 @@ def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   ----------
   :param jsData:
   :param jsDataKey:
-  :param isPyData:
-  :param jsFnc:
+  :param bool isPyData:
+  :param Union[list, str] jsFnc:
   """
   if isPyData:
     if hasattr(jsData, 'toStr'):
@@ -201,7 +202,7 @@ def jsWrap(data):
   return JsObject.JsObject.get(data)
 
 
-def getJsValid(value, fail=True):
+def getJsValid(value: str, fail: bool = True):
   """
   Description:
   ------------
@@ -227,8 +228,8 @@ def getJsValid(value, fail=True):
 
   Attributes:
   ----------
-  :param value: String. The Javascript variable name.
-  :param fail: Boolean. Optional. . Flat to raise an exception if the name is not valid on the Javascript side.
+  :param str value: The Javascript variable name.
+  :param bool fail: Optional. Flat to raise an exception if the name is not valid on the Javascript side.
 
   :return: The input variable name or a suggested one.
   """
@@ -236,14 +237,15 @@ def getJsValid(value, fail=True):
   cleanName = regex.sub('', value.strip())
   isValid = not value[0].isdigit() and cleanName == value
   if fail and not isValid:
-    raise Exception("Javascript Variable name %s, for example you could use js%s instead" % (value, cleanName))
+    raise ValueError("Javascript Variable name %s, for example you could use js%s instead" % (value, cleanName))
 
   if cleanName[0].isdigit():
     cleanName = "js%s" % cleanName
   return cleanName
 
 
-def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False, profile=False):
+def jsConvertFncs(js_funcs: Union[list, str], isPyData: bool = False, jsFncVal=None, toStr: bool = False,
+                  profile: Optional[Union[bool, dict]] = False):
   """
   Description:
   ------------
@@ -251,51 +253,50 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False, profile=Fa
 
   Attributes:
   ----------
-  :param jsFncs: Array. The PyJs functions
-  :param isPyData: Boolean. Optional. A flag to force the Python conversion using json.
+  :param Union[list, str] js_funcs: The PyJs functions.
+  :param bool isPyData: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
-  :param toStr: Boolean. Optional. A flag to specify if the result should be aggregated.
-  :param profile. Dictionary | Boolean. Optional.
+  :param bool toStr: Optional. A flag to specify if the result should be aggregated.
+  :param Optional[Union[bool, dict]] profile. Optional.
   """
   global PROFILE_COUNT
 
-  if not isinstance(jsFncs, list):
-    jsFncs = [jsFncs]
+  if not isinstance(js_funcs, list):
+    js_funcs = [js_funcs]
 
-  cnvFncs = []
-  for f in jsFncs:
+  cnv_funcs = []
+  for f in js_funcs:
     if f is None:
       continue
 
     if hasattr(f, 'toStr'):
-      strFnc = f.toStr()
+      str_func = f.toStr()
       if jsFncVal is not None:
-        strFnc = strFnc.replace("trans_val", jsFncVal)
-      cnvFncs.append(strFnc)
+        str_func = str_func.replace("trans_val", jsFncVal)
+      cnv_funcs.append(str_func)
     else:
       if isPyData:
-        strVal = json.dumps(f)
+        str_val = json.dumps(f)
         if jsFncVal is not None:
-          strVal = strVal.replace("trans_val", jsFncVal)
-        cnvFncs.append(strVal)
+          str_val = str_val.replace("trans_val", jsFncVal)
+        cnv_funcs.append(str_val)
       else:
         if jsFncVal is not None:
           f = str(f).replace("trans_val", jsFncVal)
-        cnvFncs.append(f)
+        cnv_funcs.append(f)
   if profile is not None and profile:
-    cnvFncs.insert(0, "var t%s = performance.now()" % PROFILE_COUNT)
+    cnv_funcs.insert(0, "var t%s = performance.now()" % PROFILE_COUNT)
     if isinstance(profile, dict):
       profile["id"] = PROFILE_COUNT
-      cnvFncs.append("console.log('%(name)s, start: ' + t%(id)s + ' ms')" % profile)
-      cnvFncs.append("console.log('%(name)s, process: ' + (performance.now() - t%(id)s) + ' ms')" % profile)
+      cnv_funcs.append("console.log('%(name)s, start: ' + t%(id)s + ' ms')" % profile)
+      cnv_funcs.append("console.log('%(name)s, process: ' + (performance.now() - t%(id)s) + ' ms')" % profile)
     else:
-      cnvFncs.append("console.log(performance.now() - t%s)" % PROFILE_COUNT)
+      cnv_funcs.append("console.log(performance.now() - t%s)" % PROFILE_COUNT)
     PROFILE_COUNT += 1
-
   if toStr:
-    return ";".join(cnvFncs)
+    return ";".join(cnv_funcs)
 
-  return cnvFncs
+  return cnv_funcs
 
 
 def cleanFncs(fnc):
@@ -316,7 +317,7 @@ def cleanFncs(fnc):
   return "".join([r.strip() for r in fnc.strip().split('\n')])
 
 
-def isNotDefined(varName):
+def isNotDefined(varName: str):
   """
   Description:
   ------------
@@ -328,7 +329,7 @@ def isNotDefined(varName):
 
   Attributes:
   ----------
-  :param varName: String. The varName.
+  :param str varName: The varName.
 
   :return: A string in Python and a Boolean in Javascript.
   """
@@ -337,14 +338,14 @@ def isNotDefined(varName):
 
 class JsFile:
 
-  def __init__(self, scriptName=None, path=None):
+  def __init__(self, scriptName: Optional[str] = None, path: Optional[str] = None):
     self.scriptName, self.path = scriptName, path
     self.file_path = os.path.join(path, "js") # all the files will be put in a common directory
     if not os.path.exists(self.file_path):
       os.mkdir(self.file_path)
     self.__data = []
 
-  def writeJs(self, jsFncs):
+  def writeJs(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
@@ -359,14 +360,14 @@ class JsFile:
 
     Attributes:
     ----------
-    :param jsFncs: The Javascript fragments.
+    :param Union[list, str] js_funcs: The Javascript fragments.
 
     :return: The File object
     """
-    self.__data.extend(jsConvertFncs(jsFncs))
+    self.__data.extend(jsConvertFncs(js_funcs))
     return self
 
-  def writeReport(self, rptObj):
+  def writeReport(self, page):
     """
     Description:
     ------------
@@ -375,15 +376,15 @@ class JsFile:
 
     Attributes:
     ----------
-    :param rptObj: The report object
+    :param page: The report object
     """
-    props = rptObj._src._props if hasattr(rptObj, '_src') else rptObj._props
+    props = page._src._props if hasattr(page, '_src') else page._props
     for data_id, data in props.get("data", {}).get('sources', {}).items():
       self.__data.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
     for k, v in props.get('js', {}).get('functions', {}).items():
-      sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
-      self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
+      s_pmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
+      self.__data.append("function %s%s{%s}" % (k, s_pmt, v["content"].strip()))
 
     for c, d in props.get('js', {}).get("constructors", {}).items():
       self.__data.append(d)
@@ -401,7 +402,7 @@ class JsFile:
         self.__data.append("if(%s){%s}" % (k, v))
       self.__data.append("})")
 
-  def codepen(self, rptObj, cssObj=None, target='_self'):
+  def codepen(self, page, cssObj=None, target: str = '_self'):
     """
     Description:
     ------------
@@ -413,25 +414,26 @@ class JsFile:
 
     Attributes:
     ----------
-    :param rptObj: The report object
-    :param cssObj: The internal CSS object from the page
-    :param target: A string flag to specify the target page in the browser
+    :param page: The report object.
+    :param cssObj: The internal CSS object from the page.
+    :param str target: A string flag to specify the target page in the browser.
     """
     import webbrowser
 
-    if hasattr(rptObj, '_to_html_obj'):
-      results = rptObj._to_html_obj(content_only=True)
+    if hasattr(page, '_to_html_obj'):
+      results = page._to_html_obj(content_only=True)
       js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
       result = {"js": results["jsFrgs"], "js_external": ";".join(js_external)}
     else:
-      self.writeReport(rptObj)
-      import_obj = Imports.ImportManager(online=True)
-      css_external = import_obj.cssURLs(import_obj.cssResolve(rptObj._src.cssImport))
-      js_external = import_obj.jsURLs(import_obj.jsResolve(rptObj._src.jsImports))
+      self.writeReport(page)
+      import_obj = Imports.ImportManager()
+      import_obj.online = True
+      css_external = import_obj.cssURLs(import_obj.cssResolve(page._src.cssImport))
+      js_external = import_obj.jsURLs(import_obj.jsResolve(page._src.jsImports))
       result = {"js": ";".join(self.__data), "js_external": ";".join(js_external), "css_external": ";".join(css_external)}
     if cssObj is not None:
       result["css"] = cssObj.toCss()
-    data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    data = page.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
     outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
     webbrowser.open(outFile.name)
@@ -456,7 +458,8 @@ class JsFile:
       outFile.write("\n\n//Javascript Global functions \n\n")
       for fnc, details in src_obj._props.get('js', {}).get('functions', {}).items():
         outFile.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
-      import_obj = Imports.ImportManager(online=True)
+      import_obj = Imports.ImportManager()
+      import_obj.online = True
       js_external = import_obj.jsResolve(src_obj.jsImports)
     outFile.write("\n\n")
     outFile.write("//Javascript Data\n\n")

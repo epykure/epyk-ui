@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
+from typing import Union, Optional
+
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsData
 from epyk.core.js.primitives import JsObjects
@@ -27,7 +30,7 @@ class HttpCode:
 
 class WebSocket:
 
-  def __init__(self, htmlCode=None, src=None, secured=False):
+  def __init__(self, htmlCode: Optional[str] = None, src=None, secured: bool = False):
     """
     Description:
     ------------
@@ -88,11 +91,12 @@ class WebSocket:
     return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {
       "varName": self._selector, "connect": self.__connect})
 
-  def connect(self, url=None, port=None, protocol=None, from_config=None):
+  def connect(self, url: str = None, port: Optional[int] = None, protocol: Union[list, str] = None,
+              from_config=None):
     """
     Description:
     ------------
-    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically
+    In order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically
     attempt to open the connection to the server.
 
     Related Pages:
@@ -101,10 +105,10 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
+    :param str url: The URL to which to connect; this should be the URL to which the WebSocket server will respond.
         This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
-    :param port:
-    :param protocol: String or List. Either a single protocol string or an array of protocol strings.
+    :param Optional[int] port: The application port number.
+    :param Union[list, str] protocol: Either a single protocol string or an array of protocol strings.
     :param from_config:
     """
     if from_config is not None:
@@ -125,7 +129,7 @@ class WebSocket:
     self.__connect = "new WebSocket('%s://%s:%s', %s)" % (prefix, url, port, protocol)
     return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
 
-  def onopen(self, jsFncs, profile=None):
+  def onopen(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -136,17 +140,17 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady(
       "%s.onopen = function (event) {%s}" % (
-        self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+        self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def onmessage(self, jsFncs, profile=None):
+  def onmessage(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -157,16 +161,16 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onmessage = function (event) {%s}" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def onerror(self, jsFncs, profile=None):
+  def onerror(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -177,16 +181,16 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onerror = function (event) {%s}" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def onclose(self, jsFncs, profile=None):
+  def onclose(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -197,27 +201,27 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onclose = function (event) {%s}" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def receive(self, jsFncs, profile=None):
+  def receive(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {
-      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def send(self, data):
     """
@@ -237,7 +241,7 @@ class WebSocket:
     return JsObjects.JsVoid("%(varName)s.send(%(data)s)" % {
       "varName": self._selector, "connect": self.__connect, "data": data})
 
-  def sendText(self, components, attrs=None):
+  def sendText(self, components, attrs: dict = None):
     """
     Description:
     ------------
@@ -250,7 +254,7 @@ class WebSocket:
     Attributes:
     ----------
     :param components: List. The list of HTML components (it will get the dom.content automatically)
-    :param attrs: Dictionary. Optional. Attach some static attributes to the request
+    :param dict attrs: Optional. Attach some static attributes to the request
     """
     from epyk.core.data import primitives
     from epyk.core.data import datamap
@@ -262,7 +266,7 @@ class WebSocket:
     return JsObjects.JsVoid("%(varName)s.send(JSON.stringify(%(data)s))" % {
       "varName": self._selector, "connect": self.__connect, "data": data})
 
-  def close(self, code=1000, reason=None):
+  def close(self, code: int = 1000, reason: Optional[str] = None):
     """
     Description:
     ------------
@@ -274,8 +278,8 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param code: Integer. Optional. The HTTP code to be sent to the server for the closure
-    :param reason: String. Optional. The message to be sent to the server for the closure
+    :param int code: Optional. The HTTP code to be sent to the server for the closure
+    :param Optional[str] reason: Optional. The message to be sent to the server for the closure
     """
     if reason is None:
       return JsObjects.JsVoid("%s.close(%s)" % (self._selector, code))
@@ -285,16 +289,16 @@ class WebSocket:
 
 class Worker:
 
-  def __init__(self, htmlCode=None, src=None, server=False):
+  def __init__(self, htmlCode: Optional[str] = None, src: Optional[str] = None, server: bool = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. The Id of the script.
-    :param src: String. Optional.
-    :param server: Boolean. Optional. Specify if the page is running on a server.
+    :param Optional[str] htmlCode: Optional. The Id of the script.
+    :param Optional[str] src: Optional.
+    :param bool server: Optional. Specify if the page is running on a server.
     """
     self._src, self.__server = src, server
     self._selector = htmlCode or "worker_%s" % id(self)
@@ -309,7 +313,7 @@ class Worker:
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
-  def connect(self, script=None, content=None, url=None):
+  def connect(self, script: Optional[str] = None, content: Optional[str] = None, url: Optional[str] = None):
     """
     Description:
     ------------
@@ -330,9 +334,9 @@ class Worker:
 
     Attributes:
     ----------
-    :param script: String. Optional. The full path of the file with the javaScript content.
-    :param content: String. Optional. The JavaScript content.
-    :param url: String. Optional. The link of the worker module to be included to the page.
+    :param Optional[str] script: Optional. The full path of the file with the javaScript content.
+    :param Optional[str] content: Optional. The JavaScript content.
+    :param Optional[str] url: Optional. The link of the worker module to be included to the page.
     """
     if not self.__server or content is not None:
       script_content = [
@@ -380,46 +384,46 @@ class Worker:
       data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
-  def on(self, eventType, jsFncs, profile=None):
+  def on(self, eventType: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType: String. The event type.
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str eventType: The event type.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self._src.js.onReady(self.addEventListener(eventType, jsFncs, profile))
+    self._src.js.onReady(self.addEventListener(eventType, js_funcs, profile))
 
-  def addEventListener(self, eventType, jsFncs, profile=None):
+  def addEventListener(self, eventType: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType: String. The event type.
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str eventType: The event type.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
       "varName": self._selector, 'eventType': eventType, "data":
-        JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+        JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
-  def receive(self, jsFncs, profile=None):
+  def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.onmessage = function (event) {%(data)s}" % {
-      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def terminate(self):
     """
@@ -445,7 +449,7 @@ class Worker:
 
 class ServerSentEvent:
 
-  def __init__(self, htmlCode=None, src=None, server=False):
+  def __init__(self, htmlCode: Optional[str] = None, src=None, server: Optional[str] = False):
     """
     Description:
     ------------
@@ -466,7 +470,8 @@ class ServerSentEvent:
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
-  def connect(self, url=None, port=None, from_config=None, options=None):
+  def connect(self, url: Optional[str] = None, port: Optional[int] = None, from_config=None,
+              options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -479,11 +484,11 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
+    :param Optional[str] url: The URL to which to connect; this should be the URL to which the WebSocket server will respond.
         This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
-    :param port:
-    :param protocol: String or List. Either a single protocol string or an array of protocol strings.
+    :param Optional[int] port:
     :param from_config:
+    :param Optional[dict] options:
     """
     if from_config is not None:
       self._src._props['js']['builders'].add("%s = new EventSource(%s)" % (self._selector, from_config.address))
@@ -494,7 +499,7 @@ class ServerSentEvent:
     self.__connect = "new EventSource('%s:%s')" % (url, port)
     return JsObjects.JsVoid("%s = new EventSource('%s:%s')" % (self._selector, url, port))
 
-  def onmessage(self, jsFncs, profile=None):
+  def onmessage(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -506,20 +511,20 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onmessage = function (event) { %s }" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def onerror(self, jsFncs, profile=None):
+  def onerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
-    When an error occurs
+    When an error occurs.
 
     Related Pages:
 
@@ -527,20 +532,20 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onerror = function (event) {%s}" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def onopen(self, jsFncs, profile=None):
+  def onopen(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
-    When a connection to the server is opened
+    When a connection to the server is opened.
 
     Related Pages:
 
@@ -548,44 +553,44 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._src.js.onReady("%s.onopen = function (event) { %s }" % (
-      self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def addEventListener(self, eventType, jsFncs, profile=None):
+  def addEventListener(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType: String. The event type.
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str event_type: The event type.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
-      "varName": self._selector, 'eventType': eventType,
-      "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+      "varName": self._selector, 'eventType': event_type,
+      "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
-  def on(self, eventType, jsFncs, profile=None):
+  def on(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType: String. The event type.
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str event_type: The event type.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self._src.js.onReady(self.addEventListener(eventType, jsFncs, profile))
+    self._src.js.onReady(self.addEventListener(event_type, js_funcs, profile))
 
-  def receive(self, jsFncs, profile=None):
+  def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -597,11 +602,11 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {
-      "varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)})
+      "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def close(self):
     """

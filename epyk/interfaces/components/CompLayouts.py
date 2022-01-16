@@ -39,6 +39,7 @@ class Layouts:
     :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
     html_new_line = html.HtmlOthers.Newline(self.page, count, profile=profile)
+    html.Html.set_component_skin(html_new_line)
     return html_new_line
 
   def new_line(self, count=1, profile=None):
@@ -74,9 +75,10 @@ class Layouts:
     :param count: Integer. Optional. The number of empty line to put. Default 1.
     :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
-    return self.br(count, profile)
+    html_new_line = self.br(count, profile)
+    html.Html.set_component_skin(html_new_line)
+    return html_new_line
 
-  @html.Html.css_skin()
   def hr(self, count=1, background_color=None, margins=0, width=(100, '%'), height=(None, 'px'), align=None,
          options=None, profile=None):
     """
@@ -132,9 +134,9 @@ class Layouts:
     if margins > 0:
       hr_html.style.css.margin_top = margins
       hr_html.style.css.margin_bottom = margins
+    html.Html.set_component_skin(hr_html)
     return hr_html
 
-  @html.Html.css_skin()
   def underline(self, width=(10, '%'), height=(3, 'px'), align=None, options=None, profile=None):
     """
     Description:
@@ -164,9 +166,9 @@ class Layouts:
     hr.style.css.margin_top = -5
     hr.style.css.border_radius = 10
     hr.style.css.margin_bottom = 10
+    html.Html.set_component_skin(hr)
     return hr
 
-  @html.Html.css_skin()
   def accentuate(self, width=(10, '%'), height=(1, 'px'), align=None, options=None, profile=None):
     """
     Description:
@@ -195,9 +197,9 @@ class Layouts:
     hr.style.css.margin_top = -5
     hr.style.css.border_radius = 10
     hr.style.css.margin_bottom = 10
+    html.Html.set_component_skin(hr)
     return hr
 
-  @html.Html.css_skin()
   def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
     """
@@ -245,9 +247,9 @@ class Layouts:
     height = Arguments.size(height, unit="px")
     options = options or {}
     html_col = html.HtmlContainer.Col(self.page, components, position, width, height, align, helper, options, profile)
+    html.Html.set_component_skin(html_col)
     return html_col
 
-  @html.Html.css_skin()
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
     """
@@ -298,9 +300,9 @@ class Layouts:
       dft_option.update(options)
     html_col = html.HtmlContainer.Row(
       self.page, components, position, width, height, align, helper, dft_option, profile)
+    html.Html.set_component_skin(html_col)
     return html_col
 
-  @html.Html.css_skin()
   def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
     """
     Description:
@@ -333,9 +335,9 @@ class Layouts:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_row = html.HtmlContainer.Table(self.page, components, width, height, helper, options, profile)
+    html.Html.set_component_skin(html_row)
     return html_row
 
-  @html.Html.css_skin()
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
            profile=None):
     """
@@ -374,9 +376,9 @@ class Layouts:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_grid = html.HtmlContainer.Grid(self.page, rows, width, height, align, position, options, profile)
+    html.Html.set_component_skin(html_grid)
     return html_grid
 
-  @html.Html.css_skin()
   def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
@@ -413,9 +415,9 @@ class Layouts:
       components = [components]
     html_panel = html.HtmlContainer.Panel(
       self.page, components or [], title, color, width, height, html_code, helper, options, profile)
+    html.Html.set_component_skin(html_panel)
     return html_panel
 
-  @html.Html.css_skin()
   def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
           height=(None, "px"), editable=False, align='left', padding=None, html_code=None, tag='div', helper=None,
           options=None, profile=None, position=None):
@@ -473,9 +475,9 @@ class Layouts:
                                       editable, align, padding, html_code, tag, helper, dfl_options, profile)
     if width[0] == 'auto' or width[1] == 'px':
       html_div.style.css.display = "inline-block"
+    html.Html.set_component_skin(html_div)
     return html_div
 
-  @html.Html.css_skin()
   def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code=None, options=None,
              profile=None):
     """
@@ -503,9 +505,9 @@ class Layouts:
       components=components, width=width, height=height, align=align, html_code=html_code, options=options,
       profile=profile)
     html_comp.style.css.display = "inline-block"
+    html.Html.set_component_skin(html_comp)
     return html_comp
 
-  @html.Html.css_skin()
   def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code=None,
                options=None, profile=None):
     """
@@ -532,9 +534,9 @@ class Layouts:
     html_comp = self.div(components=components, width=width, height=height, align=align, options=options,
                          html_code=html_code, profile=profile)
     self.div(html_comp, align="center")
+    html.Html.set_component_skin(html_comp)
     return html_comp
 
-  @html.Html.css_skin()
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -572,9 +574,10 @@ class Layouts:
     dfl_options = {'margin': 10, 'closure': "fas fa-times-circle", 'top': 100}
     if options is not None:
       dfl_options.update(options)
-    return html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+    component = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def iframe(self, url="", width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
     Description:
@@ -604,10 +607,10 @@ class Layouts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
-    html_frame = html.HtmlContainer.IFrame(self.page, url, width, height, helper, profile)
-    return html_frame
+    component = html.HtmlContainer.IFrame(self.page, url, width, height, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None,
               profile=None):
     """
@@ -641,10 +644,10 @@ class Layouts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_pr = html.HtmlEvent.Dialog(self.page, text, width, height, helper, options or {}, html_code, profile)
-    return html_pr
+    component = html.HtmlEvent.Dialog(self.page, text, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, profile=None):
     """
     Description:
@@ -682,10 +685,10 @@ class Layouts:
     icon_names = icon_names or None
     if not isinstance(icon_names, list):
       icon_names = [icon_names]
-    html_icon = html.HtmlContainer.IconsMenu(icon_names, self.page, width, height, html_code, helper, profile)
-    return html_icon
+    component = html.HtmlContainer.IconsMenu(icon_names, self.page, width, height, html_code, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def form(self, components=None, helper=None):
     """
     Description:
@@ -707,10 +710,10 @@ class Layouts:
     :param components: List. The different HTML objects to be added to the component.
     :param helper: String. Optional. A tooltip helper.
     """
-    form = html.HtmlContainer.Form(self.page, components, helper)
-    return form
+    component = html.HtmlContainer.Form(self.page, components, helper)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def header(self, components=None, width=(100, "%"),  height=(None, "px"), html_code=None, helper=None, options=None,
              profile=None):
     """
@@ -751,11 +754,11 @@ class Layouts:
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_obj = html.HtmlContainer.Header(self.page, components or [], width, height, html_code, helper,
-                                         options or {}, profile)
-    return html_obj
+    component = html.HtmlContainer.Header(
+      self.page, components or [], width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def section(self, components=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
               profile=None):
     """
@@ -796,11 +799,11 @@ class Layouts:
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_obj = html.HtmlContainer.Section(self.page, components or [], width, height, html_code, helper,
-                                          options or {}, profile)
-    return html_obj
+    component = html.HtmlContainer.Section(
+      self.page, components or [], width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
               profile=None):
     """
@@ -836,9 +839,10 @@ class Layouts:
       row.append(c)
     if len(row):
       rows.append(row)
-    g = self.grid(
+    component = self.grid(
       rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile)
-    return g
+    html.Html.set_component_skin(component)
+    return component
 
 
 class Delimiter:
@@ -870,6 +874,7 @@ class Delimiter:
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     hrs.style.css.margin = "10px 0"
+    html.Html.set_component_skin(hrs)
     return hrs
 
   def double(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
@@ -897,6 +902,7 @@ class Delimiter:
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     for hr in hrs:
       hr.style.css.border = "1px double %s" % self.page.theme.colors[-1]
+    html.Html.set_component_skin(hrs)
     return hrs
 
   def dashed(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
@@ -926,6 +932,7 @@ class Delimiter:
     hrs.style.css.margin_bottom = 10
     for hr in hrs:
       hr.style.css.border = "1px dashed %s" % self.page.theme.colors[-1]
+    html.Html.set_component_skin(hrs)
     return hrs
 
   def dotted(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
@@ -953,4 +960,5 @@ class Delimiter:
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
     for hr in hrs:
       hr.style.css.border = "1px dotted %s" % self.page.theme.colors[-1]
+    html.Html.set_component_skin(hrs)
     return hrs

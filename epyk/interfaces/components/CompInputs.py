@@ -44,6 +44,7 @@ class Inputs:
     html_input = html.HtmlInput.Input(
       self.page, text, placeholder, width, height, html_code, options, attrs, profile)
     html_input.style.css.margin_bottom = '2px'
+    html.Html.set_component_skin(html_input)
     return html_input
 
   def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
@@ -76,6 +77,7 @@ class Inputs:
     attrs = attrs or {}
     html_input = html.HtmlInput.InputRadio(self.page, flag, group_name, placeholder, width, height, html_code,
                                            options, attrs, profile)
+    html.Html.set_component_skin(html_input)
     return html_input
 
   def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
@@ -113,9 +115,9 @@ class Inputs:
     html_search = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code,
                                        options, attrs, profile)
     attrs.update({"type": 'search'})
+    html.Html.set_component_skin(html_search)
     return html_search
 
-  @html.Html.css_skin()
   def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
                attrs=None, profile=None):
     """
@@ -144,8 +146,9 @@ class Inputs:
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
-    return html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs,
-                                profile)
+    component = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs, profile)
+    html.Html.set_component_skin(component)
+    return component
 
   def file(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
            attrs=None, profile=None):
@@ -177,8 +180,9 @@ class Inputs:
     """
     attrs = attrs or {}
     attrs.update({"type": 'file'})
-    return html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs,
-                                profile)
+    component = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs, profile)
+    html.Html.set_component_skin(component)
+    return component
 
   def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), html_code=None, options=None,
              attrs=None, profile=None):
@@ -210,6 +214,7 @@ class Inputs:
     dflt_options.update(options or {})
     html_input_t = html.HtmlInput.InputTime(
       self.page, text, placeholder, width, height, html_code, dflt_options, attrs or {}, profile)
+    html.Html.set_component_skin(html_input_t)
     return html_input_t
 
   def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), html_code=None, options=None,
@@ -237,8 +242,9 @@ class Inputs:
     :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_date = html.HtmlInput.InputDate(self.page, text, placeholder, width, height, html_code, options,
-                                         attrs or {}, profile)
+    html_date = html.HtmlInput.InputDate(
+      self.page, text, placeholder, width, height, html_code, options, attrs or {}, profile)
+    html.Html.set_component_skin(html_date)
     return html_date
 
   def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
@@ -268,8 +274,9 @@ class Inputs:
     """
     attrs = attrs or {}
     attrs.update({"type": 'number'})
-    html_integer = html.HtmlInput.InputInteger(self.page, value, placeholder, width, height, html_code,
-                                               options, attrs, profile)
+    html_integer = html.HtmlInput.InputInteger(
+      self.page, value, placeholder, width, height, html_code, options, attrs, profile)
+    html.Html.set_component_skin(html_integer)
     return html_integer
 
   def d_range(self, value, min_val=0, max_val=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"),
@@ -298,6 +305,7 @@ class Inputs:
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.page, value, min_val, max_val, step, placeholder, width, height,
                                            html_code, options or {"background": False}, attrs, profile)
+    html.Html.set_component_skin(html_range)
     return html_range
 
   def _output(self, value="", options=None, profile=False):
@@ -321,9 +329,9 @@ class Inputs:
     :param profile:
     """
     html_output = html.HtmlInput.Output(self.page, value, options=options, profile=profile)
+    html.Html.set_component_skin(html_output)
     return html_output
 
-  @html.Html.css_skin()
   def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, html_code=None,
                options=None, profile=None):
     """
@@ -355,11 +363,11 @@ class Inputs:
     """
     dflt_options = {"spellcheck": False, 'selectable': False}
     dflt_options.update(options or {})
-    html_t_area = html.HtmlInput.TextArea(self.page, text, width, rows, placeholder, background_color,
-                                          html_code, dflt_options, profile)
+    html_t_area = html.HtmlInput.TextArea(
+      self.page, text, width, rows, placeholder, background_color, html_code, dflt_options, profile)
+    html.Html.set_component_skin(html_t_area)
     return html_t_area
 
-  @html.Html.css_skin()
   def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
                    attrs=None, profile=None):
     """
@@ -395,16 +403,16 @@ class Inputs:
     """
     options = options or {}
     attrs = attrs or {}
-    html_input = html.HtmlInput.AutoComplete(self.page, text, placeholder, width, height, html_code, options,
-                                             attrs, profile)
+    html_input = html.HtmlInput.AutoComplete(
+      self.page, text, placeholder, width, height, html_code, options, attrs, profile)
     html_input.style.css.text_align = "left"
     html_input.style.css.padding_left = 5
     # Take into account the padding left in the width size.
     # TODO: Think about a more flexible way to do this.
     #html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
+    html.Html.set_component_skin(html_input)
     return html_input
 
-  @html.Html.css_skin()
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
             attrs=None, profile=None):
     """
@@ -437,9 +445,10 @@ class Inputs:
     :param attrs: Dictionary. Optional. Specific HTML tags to be added to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
+    component = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def left(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
            attrs=None, profile=None):
     """
@@ -475,9 +484,9 @@ class Inputs:
     component = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
     component.style.css.text_align = "left"
     component.style.css.padding_left = 5
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
              attrs=None, profile=None):
     """
@@ -509,9 +518,9 @@ class Inputs:
     """
     component = self.d_text(text, placeholder, width, height, html_code, options, attrs, profile)
     component.style.css.display = None
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"), html_code=None,
                options=None, attrs=None, profile=None):
     """
@@ -546,11 +555,11 @@ class Inputs:
     height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
-    html_coech = html.HtmlInput.Checkbox(self.page, flag, label, group_name, width, height, html_code,
-                                         options, attrs, profile)
-    return html_coech
+    component = html.HtmlInput.Checkbox(
+      self.page, flag, label, group_name, width, height, html_code, options, attrs, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=None):
     """
@@ -586,11 +595,11 @@ class Inputs:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
-    html_radio = html.HtmlInput.Radio(self.page, flag, label, group_name, icon, width, height, html_code,
-                                      helper, options or {}, profile)
-    return html_radio
+    component = html.HtmlInput.Radio(
+      self.page, flag, label, group_name, icon, width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def editor(self, text="", language='python', width=(100, "%"), height=(300, "px"), html_code=None, options=None,
              profile=None):
     """
@@ -619,11 +628,11 @@ class Inputs:
       "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    editor = html.HtmlTextEditor.Editor(
+    component = html.HtmlTextEditor.Editor(
       self.page, text, language, width, height, html_code, dflt_options, profile)
-    return editor
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def cell(self, text="", language='python', width=(100, "%"), height=(60, "px"), html_code=None, options=None,
            profile=None):
     """
@@ -652,11 +661,11 @@ class Inputs:
                     'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
-    html_cell = html.HtmlTextEditor.Cell(
+    component = html.HtmlTextEditor.Cell(
       self.page, text, language, width, height, html_code, dflt_options, profile)
-    return html_cell
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def search(self, text='', placeholder='Search..', align="left", color=None, width=(100, "%"), height=(None, "px"),
              html_code=None, tooltip='', extensible=False, options=None, profile=None):
     """
@@ -707,9 +716,9 @@ class Inputs:
     if align == "center":
       html_s.style.css.margin = "auto"
       html_s.style.css.display = "block"
+    html.Html.set_component_skin(html_s)
     return html_s
 
-  @html.Html.css_skin()
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
             options=None, attrs=None, profile=None):
     """
@@ -748,6 +757,7 @@ class Inputs:
     html_input.on('blur', [
       "document.getElementById('%s').animate({'marginTop': ['-8px', '10px']}, {duration: 1000, easing: 'linear', iterations: 1, fill: 'both'})" % label.htmlCode,
     ])
+    html.Html.set_component_skin(div)
     return div
 
   def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
@@ -805,4 +815,5 @@ class Inputs:
       container.input.js.empty()
     ])
     container.input.enter(container.button.dom.events.trigger("click"))
+    html.Html.set_component_skin(container)
     return container

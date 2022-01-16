@@ -9,7 +9,6 @@ class Poller:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def toggle(self, time, js_funcs=None, components=None, label=None, color=None, width=(None, '%'), height=(20, 'px'),
              align="left", html_code=None, options=None, profile=None):
     """
@@ -60,9 +59,9 @@ class Poller:
     # icon.spin()
     container.icon = icon
     container.add(icon)
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def live(self, time, js_funcs=None, components=None, icon="circle", width=(15, "px"), height=(15, "px"), align="left",
            html_code=None, profile=None, options=None):
     """
@@ -92,4 +91,5 @@ class Poller:
       for component in components:
         js_funcs.append(component.dom.trigger("click"))
     toggle = self.page.ui.buttons.live(time, js_funcs, icon, width, height, align, html_code, profile, options)
+    html.Html.set_component_skin(toggle)
     return toggle

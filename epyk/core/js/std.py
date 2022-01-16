@@ -1,4 +1,6 @@
 
+from typing import Any
+
 from epyk.core.js.Js import JsConsole
 from epyk.core.js.Js import JsWindow
 from epyk.core.js.Js import JsBase
@@ -42,7 +44,7 @@ window = JsWindow.JsWindow()
 alert = JsWindow.JsWindow().alert
 
 
-def querySelectorAll(selector):
+def querySelectorAll(selector: str):
   """
   Description:
   ------------
@@ -55,12 +57,12 @@ def querySelectorAll(selector):
 
   Attributes:
   ----------
-  :param selector: String. CSS selectors
+  :param str selector: CSS selectors.
   """
   return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
 
 
-def querySelector(selector):
+def querySelector(selector: str):
   """
   Description:
   ------------
@@ -72,7 +74,7 @@ def querySelector(selector):
 
   Attributes:
   ----------
-  :param selector: String. CSS selectors
+  :param str selector: CSS selectors.
   """
   return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
 
@@ -90,7 +92,7 @@ typeof = JsBase.typeof
 maths = JsMaths.JsMaths()
 
 
-def comment(value):
+def comment(value: str):
   """
   Description:
   ------------
@@ -102,12 +104,12 @@ def comment(value):
 
   Attributes:
   ----------
-  :param value: String. the Value
+  :param str value: the Value.
   """
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
-def var(name, value=None, global_scope=False, depth=False):
+def var(name: str, value: Any = None, global_scope: bool = False, depth: bool = False):
   """
   Description:
   ------------
@@ -115,10 +117,10 @@ def var(name, value=None, global_scope=False, depth=False):
 
   Attributes:
   ----------
-  :param name: String. The variable name.
-  :param value: Object. Optional. The object.
-  :param global_scope: Boolean. Optional. The variable scope.
-  :param depth: Boolean. Optional. Set to true of it is a nested object.
+  :param str name: The variable name.
+  :param Any value: Optional. The object.
+  :param bool global_scope: Optional. The variable scope.
+  :param bool depth: Optional. Set to true of it is a nested object.
   """
   if global_scope:
     name = "window['%s']" % name
@@ -131,7 +133,7 @@ def var(name, value=None, global_scope=False, depth=False):
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
-def recordset(name, value=None, global_scope=False):
+def recordset(name: str, value: Any = None, global_scope: bool = False):
   """
   Description:
   ------------
@@ -140,9 +142,9 @@ def recordset(name, value=None, global_scope=False):
 
   Attributes:
   ----------
-  :param name: String. The variable name
-  :param value: Object. Optional. The object
-  :param global_scope: Boolean. Optional. The variable scope
+  :param str name: The variable name.
+  :param Any value: Optional. The object.
+  :param bool global_scope: Optional. The variable scope.
   """
   if global_scope:
     name = "window['%s']" % name
@@ -155,7 +157,7 @@ def recordset(name, value=None, global_scope=False):
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None)))
 
 
-def let(name, value, depth=False):
+def let(name: str, value: Any, depth: bool = False):
   """
   Description:
   ------------
@@ -171,14 +173,14 @@ def let(name, value, depth=False):
 
   Attributes:
   ----------
-  :param name: String. The variable name.
-  :param value: Object. Optional. The object.
-  :param depth: Boolean. Optional. Set to true of it is a nested object.
+  :param str name: The variable name.
+  :param Any value: Optional. The object.
+  :param bool depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("let %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
-def const(name, value=None, depth=False):
+def const(name: str, value: Any = None, depth: bool = False):
   """
   Description:
   ------------
@@ -194,9 +196,9 @@ def const(name, value=None, depth=False):
 
   Attributes:
   ----------
-  :param name: String. The variable name.
-  :param value: Object. Optional. The object.
-  :param depth: Boolean. Optional. Set to true of it is a nested object.
+  :param str name: The variable name.
+  :param Any value: Object. Optional. The object.
+  :param bool depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("const %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 

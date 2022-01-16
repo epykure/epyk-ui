@@ -13,7 +13,6 @@ class Rich:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def delta(self, record=None, components=None, title=None, align="center", width=('auto', ''), height=('auto', ''),
             options=None, helper=None, profile=None):
     """
@@ -64,9 +63,9 @@ class Rich:
     container.build = main_component.build
     if title is not None:
       container.title = title
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def stars(self, val=None, label=None, color=None, align='left', best=5, html_code=None, helper=None, options=None,
             profile=None):
     """
@@ -104,9 +103,9 @@ class Rich:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_star = html.HtmlOthers.Stars(self.page, val, label, color, align, best, html_code, helper, options, profile)
+    html.Html.set_component_skin(html_star)
     return html_star
 
-  @html.Html.css_skin()
   def light(self, color=None, height=(None, 'px'), label=None, align="left", tooltip=None, helper=None, options=None,
             profile=None):
     """
@@ -146,9 +145,9 @@ class Rich:
     if align == "center":
       html_traffic.style.css.margin = "auto"
       html_traffic.style.css.display = "block"
+    html.Html.set_component_skin(html_traffic)
     return html_traffic
 
-  @html.Html.css_skin()
   def info(self, text=None, options=None, profile=None):
     """
     Description:
@@ -178,9 +177,9 @@ class Rich:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     html_help = html.HtmlOthers.Help(self.page, text, width=(10, "px"), profile=profile, options=options or {})
+    html.Html.set_component_skin(html_help)
     return html_help
 
-  @html.Html.css_skin()
   def countdown(self, day, month, year, hour=0, minute=0, second=0, label=None, icon="fas fa-stopwatch",
                 time_ms_factor=1000, width=(None, '%'), height=(None, 'px'), html_code=None, helper=None,
                 options=None, profile=None):
@@ -229,9 +228,9 @@ class Rich:
     html_cd = html.HtmlDates.CountDownDate(
       self.page, day, month, year, hour, minute, second, label, icon, time_ms_factor, width, height, html_code,
       helper, options or {}, profile)
+    html.Html.set_component_skin(html_cd)
     return html_cd
 
-  @html.Html.css_skin()
   def update(self, label=None, color=None, align="left", width=(100, "%"), height=(None, "px"), html_code=None,
              options=None, profile=None):
     """
@@ -275,9 +274,9 @@ class Rich:
       component.style.css.margin = "auto"
       component.style.css.display = "block"
       component.style.css.text_align = align
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def console(self, content="", width=(100, "%"), height=(200, "px"), html_code=None, options=None, profile=None):
     """
     Description:
@@ -314,9 +313,9 @@ class Rich:
     html_div = html.HtmlTextEditor.Console(self.page, content, width, height, html_code, None, dflt_options, profile)
     html_div.css({"border": "1px solid %s" % self.page.theme.greys[4], "background": self.page.theme.greys[2],
                   'padding': '5px'})
+    html.Html.set_component_skin(html_div)
     return html_div
 
-  @html.Html.css_skin()
   def search_input(self, text='', placeholder='Search..', color=None, width=(100, '%'), height=(None, "px"),
                    html_code=None, tooltip=None, extensible=False, options=None, profile=None):
     """
@@ -360,9 +359,9 @@ class Rich:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(
       self.page, text, placeholder, color, width, height, html_code, tooltip, extensible, dflt_options, profile)
+    html.Html.set_component_skin(html_s)
     return html_s
 
-  @html.Html.css_skin()
   def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None,
                      profile=None):
     """
@@ -397,9 +396,9 @@ class Rich:
     html_help = html.HtmlTextComp.SearchResult(
       self.page, records, width=width, height=height, profile=profile,
       options=dfl_options)
+    html.Html.set_component_skin(html_help)
     return html_help
 
-  @html.Html.css_skin()
   def composite(self, schema, width=(None, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
                 profile=None):
     """
@@ -435,9 +434,9 @@ class Rich:
     html_help = html.HtmlTextComp.Composite(
       self.page, schema, width=width, height=height, html_code=html_code, profile=profile, options=options or {},
       helper=helper)
+    html.Html.set_component_skin(html_help)
     return html_help
 
-  @html.Html.css_skin()
   def status(self, status, width=(None, "%"), height=(None, "px"), html_code=None, options=None, profile=None):
     """
     Description:
@@ -464,9 +463,9 @@ class Rich:
       dflt_options.update(options)
     html_help = html.HtmlTextComp.Status(
       self.page, status, width=width, height=height, html_code=html_code, profile=profile, options=dflt_options)
+    html.Html.set_component_skin(html_help)
     return html_help
 
-  @html.Html.css_skin()
   def markdown(self, text="", width=("calc(100% - 10px)", ''), height=("auto", ''), html_code=None, options=None,
                profile=None):
     """
@@ -506,9 +505,9 @@ class Rich:
     md.style.css.margin_left = 5
     md.style.css.margin_right = 5
     md.style.css.padding = 5
+    html.Html.set_component_skin(md)
     return md
 
-  @html.Html.css_skin()
   def adv_text(self, section, title, content, background="", options=None, profile=None):
     """
     Description:
@@ -558,9 +557,9 @@ class Rich:
     container.style.css.text_align = "center"
     container.style.css.background = background
     container.style.css.padding = 10
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def color(self, code, content="data copied to clipboard", width=(20, 'px'), height=(20, 'px'), options=None,
             profile=None):
     """
@@ -596,9 +595,9 @@ class Rich:
       self.page.js.clipboard(Colors.getRgbToHex(code)),
       self.page.js.print(content,  dflt_options.get('popup_timers'), dflt_options.get('popup_css'))])
     d.style.css.background = "rgb(%s, %s, %s)" % (code[0], code[1], code[2])
+    html.Html.set_component_skin(d)
     return d
 
-  @html.Html.css_skin()
   def elapsed(self, day=None, month=None, year=None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
               html_code=None, helper=None, options=None, profile=None):
     """
@@ -627,9 +626,9 @@ class Rich:
     options = options or {}
     md = html.HtmlDates.Elapsed(
       self.page, day, month, year, label, icon, width, height, html_code, helper, options, profile)
+    html.Html.set_component_skin(md)
     return md
 
-  @html.Html.css_skin()
   def powered(self, by=None, width=(100, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
@@ -682,4 +681,5 @@ class Rich:
         badge.style.css.margin = 2
         badge.style.css.border_radius = "0 10px 10px 0"
         container.add(badge)
+    html.Html.set_component_skin(container)
     return container

@@ -6,7 +6,7 @@ from epyk.core.css.styles.attributes import AttrClsMenu
 class ClassNav(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsMenu.NavBar:
     """
     Description:
     -----------

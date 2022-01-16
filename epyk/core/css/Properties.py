@@ -1,4 +1,5 @@
 
+from typing import Union, Optional
 from epyk.core.css import Defaults_css
 from epyk.core.css import FontFamily
 from epyk.interfaces import Arguments
@@ -361,8 +362,8 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"background-image": val})
 
-  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto",
-                     background_position="center"):
+  def background_url(self, val: str, size: str = "contain", repeat: str = "no-repeat", position="relative", margin="auto",
+                     background_position: str = "center"):
     """
     Description:
     ------------
@@ -371,12 +372,12 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param val: String. Optional. The picture CSS url.
-    :param size: String. Optional. The CSS background size property.
-    :param repeat: String. Optional. The CSS repeat property.
-    :param position: String. Optional. The CSS position.
-    :param margin: String. Optional. The CSS margin.
-    :param background_position: String. Optional. The CSS background position.
+    :param str val: Optional. The picture CSS url.
+    :param str size: Optional. The CSS background size property.
+    :param str repeat: Optional. The CSS repeat property.
+    :param str position: Optional. The CSS position.
+    :param str margin: Optional. The CSS margin.
+    :param str background_position: Optional. The CSS background position.
     """
     if val is not None:
       self.css({"background-image": "url(%a)" % val})
@@ -2592,7 +2593,7 @@ class CssMixin:
         val = "%spx" % val
       self.css({"width": val})
 
-  def width_calc(self, width_in_px, container_width=100):
+  def width_calc(self, width_in_px: int, container_width: int = 100):
     """
     Description:
     ------------
@@ -2604,8 +2605,8 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param width_in_px: Integer. The width used by other components in the line.
-    :param container_width: Integer. The percentage width to be used by the component in total. Default 100%.
+    :param int width_in_px: The width used by other components in the line.
+    :param int container_width: The percentage width to be used by the component in total. Default 100%.
     """
     self.display = "inline-block"
     if container_width is None:
@@ -2669,7 +2670,7 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"z-index": val})
 
-  def middle(self, line_height=None):
+  def middle(self, line_height: Optional[int] = None):
     """
     Description:
     ------------
@@ -2686,7 +2687,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param line_height: Integer. Optional. Set the line height CSS property.
+    :param Optional[int] line_height: Optional. Set the line height CSS property.
     """
     self.vertical_align = "middle"
     self.text_align = "center"
@@ -2694,7 +2695,7 @@ class CssMixin:
       self.line_height = line_height
     return self
 
-  def sticky(self, top=0, bottom=None, left=None, right=None, z_index=400):
+  def sticky(self, top: int = 0, bottom: Optional[int] = None, left: Optional[int] = None, right: Optional[int]= None, z_index: int = 400):
     """
     Description:
     ------------
@@ -2710,11 +2711,11 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param top: Integer. The number of pixel from the top
-    :param bottom:
-    :param left:
-    :param right:
-    :param z_index: Integer. Optional. The CSS level of the component.
+    :param int top: The number of pixel from the top
+    :param Optional[int] bottom:
+    :param Optional[int] left:
+    :param Optional[int] right:
+    :param int z_index: Optional. The CSS level of the component.
 
     :return: The CSS object to allow the chaining
     """
@@ -2730,7 +2731,7 @@ class CssMixin:
     self.z_index = z_index
     return self
 
-  def shadow(self, color=None, size=5):
+  def shadow(self, color: Optional[str] = None, size: int = 5):
     """
     Description:
     ------------
@@ -2746,8 +2747,8 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param color: String. The color
-    :param size: Number. The size for the shadow
+    :param Optional[str] color: The color.
+    :param int size: The size for the shadow.
     """
     if color is None:
       color = self.component.page.theme.colors[2]
@@ -2766,7 +2767,7 @@ class CssMixin:
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
     return self
 
-  def fixed_top(self, top=5):
+  def fixed_top(self, top: int = 5):
     """
     Description:
     ------------
@@ -2778,14 +2779,14 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param top: Number. The margin with the page top border
+    :param int top: The margin with the page top border.
     """
     self.position = "fixed"
     self.display = "block"
     self.top = top
     return self
 
-  def fixed_bottom(self, bottom=10):
+  def fixed_bottom(self, bottom: int = 10):
     """
     Description:
     ------------
@@ -2797,14 +2798,14 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param bottom: Number. The margin with the bottom of the page
+    :param int bottom: The margin with the bottom of the page.
     """
     self.position = "fixed"
     self.display = "block"
     self.bottom = bottom
     return self
 
-  def borders(self, color=None, size=1, style="solid"):
+  def borders(self, color: Optional[str] = None, size: int = 1, style: str = "solid"):
     """
     Description:
     ------------
@@ -2816,16 +2817,16 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param color: Optional. The border color. Default the grey from selected theme
-    :param size: Optional. The border size. Default 1pz
-    :param style: Optional. The border style. Default solid - a plain line
+    :param Optional[str] color: Optional. The border color. Default the grey from selected theme
+    :param int size: Optional. The border size. Default 1pz
+    :param str style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
       color = self.component.page.theme.greys[-1]
     self.border = "%spx %s %s" % (size, style, color)
     return self
 
-  def borders_light(self, color=None, size=1, style="solid"):
+  def borders_light(self, color: Optional[str] = None, size: int = 1, style: str = "solid"):
     """
     Description:
     ------------
@@ -2837,9 +2838,9 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param color: Optional. The border color. Default the grey from selected theme
-    :param size: Optional. The border size. Default 1pz
-    :param style: Optional. The border style. Default solid - a plain line
+    :param Optional[str] color: Optional. The border color. Default the grey from selected theme
+    :param int size: Optional. The border size. Default 1pz
+    :param str style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
       color = self.component.page.theme.greys[3]
@@ -2876,15 +2877,20 @@ class CssMixin:
     self.text_decoration = "underline"
     return self
 
-  def absolute(self, top=None, left=None, bottom=None, right=None, transform=True, center=False):
+  def absolute(self, top: Optional[tuple] = None, left: Optional[tuple] = None, bottom: Optional[tuple] = None,
+               right: Optional[tuple] = None, transform: bool = True, center: bool = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param top:
-    :param left:
+    :param Optional[tuple] top:
+    :param Optional[tuple] left:
+    :param Optional[tuple] bottom:
+    :param Optional[tuple] right:
+    :param bool transform:
+    :param bool center:
     """
     if top is not None:
       top = Arguments.size(top, unit="px")
@@ -2908,18 +2914,18 @@ class CssMixin:
     self.position = "absolute"
     return self
 
-  def fixed(self, top=None, left=None, bottom=None, right=None, transform=True):
+  def fixed(self, top: Optional[tuple] = None, left: Optional[tuple] = None, bottom: Optional[tuple] = None, right: Optional[tuple] = None, transform: bool = True):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param top:
-    :param left:
-    :param bottom:
-    :param right:
-    :param transform:
+    :param Optional[tuple] top:
+    :param Optional[tuple] left:
+    :param Optional[tuple] bottom:
+    :param Optional[tuple] right:
+    :param bool transform:
     """
     if top is not None:
       top = Arguments.size(top, unit="px")
@@ -2939,19 +2945,19 @@ class CssMixin:
     self.position = "fixed"
     return self
 
-  def font_factor(self, factor):
+  def font_factor(self, factor: float):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param factor:
+    :param float factor:
     """
     self.font_size = self.component.page.body.style.globals.font.normal(factor)
     return self.component
 
-  def margins(self, top=None, right=None, bottom=None, left=None):
+  def margins(self, top: Optional[tuple] = None, right: Optional[tuple] = None, bottom: Optional[tuple] = None, left: Optional[tuple] = None):
     """
     Description:
     ------------
@@ -2959,10 +2965,10 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param top: Tuple. Optional. The size from the top of the ocmponent with its unit
-    :param right: Tuple. Optional. The size from the right of the ocmponent with its unit
-    :param bottom: Tuple. Optional. The size from the bottom of the ocmponent with its unit
-    :param left: Tuple. Optional. The size from the left of the ocmponent with its unit
+    :param Optional[tuple] top: Optional. The size from the top of the ocmponent with its unit
+    :param Optional[tuple] right: Optional. The size from the right of the ocmponent with its unit
+    :param Optional[tuple] bottom: Optional. The size from the bottom of the ocmponent with its unit
+    :param Optional[tuple] left: Optional. The size from the left of the ocmponent with its unit
     """
     width = self.width or '100%'
     overall_margin, overal_margin_unit = 0, None
@@ -2986,7 +2992,7 @@ class CssMixin:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
 
-  def inline_block(self, width=None):
+  def inline_block(self, width: Optional[Union[tuple, int, str]] = None):
     """
     Description:
     -----------
@@ -3046,7 +3052,7 @@ class CssMixin:
     """
     self.visibility = "hidden"
 
-  def gradient_text(self, from_color, to_color, direction="bottom"):
+  def gradient_text(self, from_color: str, to_color: str, direction: str = "bottom"):
     """
     Description:
     -----------

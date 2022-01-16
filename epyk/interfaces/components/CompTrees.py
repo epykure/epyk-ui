@@ -11,7 +11,6 @@ class Trees:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def tree(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
            profile=None):
     """
@@ -44,9 +43,9 @@ class Trees:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(html_tree)
     return html_tree
 
-  @html.Html.css_skin()
   def inputs(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
              profile=None):
     """
@@ -73,9 +72,9 @@ class Trees:
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.TreeInput(
       self.page, data or [], width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(html_tree)
     return html_tree
 
-  @html.Html.css_skin()
   def menu(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
            profile=None):
     """
@@ -103,9 +102,9 @@ class Trees:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlEvent.Menu(self.page, data or [], width, height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(html_tree)
     return html_tree
 
-  @html.Html.css_skin()
   def dropdown(self, record=None, text="", width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
                options=None, profile=None):
     """
@@ -145,9 +144,9 @@ class Trees:
     dflt_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(
       self.page, record, text, width, height, html_code, helper, dflt_options, profile)
+    html.Html.set_component_skin(html_d)
     return html_d
 
-  @html.Html.css_skin()
   def folder(self, folder=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
              profile=None):
     options = options or {}
@@ -160,4 +159,5 @@ class Trees:
       data, width=width, height=height, html_code=html_code, helper=helper, options=options, profile=profile)
     if height[0] is not None:
       tree.style.css.overflow = "auto"
+    html.Html.set_component_skin(tree)
     return tree

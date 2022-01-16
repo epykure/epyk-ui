@@ -11,7 +11,6 @@ class Tags:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def a(self, text, url, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
         profile=None):
     """
@@ -50,9 +49,9 @@ class Tags:
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html_a.set_attrs(name="href", value=url)
     html_a.style.clear()
+    html.Html.set_component_skin(html_a)
     return html_a
 
-  @html.Html.css_skin()
   def aside(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
             profile=None):
     """
@@ -83,9 +82,9 @@ class Tags:
     html_a = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_a.style.clear()
+    html.Html.set_component_skin(html_a)
     return html_a
 
-  @html.Html.css_skin()
   def b(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -113,9 +112,9 @@ class Tags:
     html_b = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_b.style.clear()
+    html.Html.set_component_skin(html_b)
     return html_b
 
-  @html.Html.css_skin()
   def h1(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -145,9 +144,9 @@ class Tags:
     html_h1 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h1.style.clear_all()
+    html.Html.set_component_skin(html_h1)
     return html_h1
 
-  @html.Html.css_skin()
   def h2(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -177,9 +176,9 @@ class Tags:
     html_h2 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h2.style.clear_all()
+    html.Html.set_component_skin(html_h2)
     return html_h2
 
-  @html.Html.css_skin()
   def h3(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -209,9 +208,9 @@ class Tags:
     html_h3 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h3.style.clear_all()
+    html.Html.set_component_skin(html_h3)
     return html_h3
 
-  @html.Html.css_skin()
   def hn(self, level, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -242,9 +241,9 @@ class Tags:
     html_hn = html.HtmlTags.HtmlGeneric(self.page, "h%s" % level, text, width,
                                         height, html_code, tooltip, options, profile)
     html_hn.style.clear_all()
+    html.Html.set_component_skin(html_hn)
     return html_hn
 
-  @html.Html.css_skin()
   def delete(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
              profile=None):
     """
@@ -267,9 +266,9 @@ class Tags:
     """
     html_d = html.HtmlTags.HtmlGeneric(self.page, 'del', text, width,  height, html_code, tooltip, options, profile)
     html_d.style.clear()
+    html.Html.set_component_skin(html_d)
     return html_d
 
-  @html.Html.css_skin()
   def figcaption(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
                  profile=None):
     """
@@ -300,9 +299,9 @@ class Tags:
     html_f = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_f.style.clear()
+    html.Html.set_component_skin(html_f)
     return html_f
 
-  @html.Html.css_skin()
   def u(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -331,9 +330,9 @@ class Tags:
     html_u = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_u.style.clear()
+    html.Html.set_component_skin(html_u)
     return html_u
 
-  @html.Html.css_skin()
   def p(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -362,9 +361,9 @@ class Tags:
     html_p = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_p.style.clear()
+    html.Html.set_component_skin(html_p)
     return html_p
 
-  @html.Html.css_skin()
   def bdi(self, text, width=(100, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -398,9 +397,9 @@ class Tags:
     """
     html_bdi = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_bdi)
     return html_bdi
 
-  @html.Html.css_skin()
   def bdo(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -432,9 +431,9 @@ class Tags:
     """
     html_bdo = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_bdo)
     return html_bdo
 
-  @html.Html.css_skin()
   def ol(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
          profile=None):
     """
@@ -464,9 +463,9 @@ class Tags:
     """
     html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width, height, html_code,
                                          tooltip, options, profile)
+    html.Html.set_component_skin(html_sup)
     return html_sup
 
-  @html.Html.css_skin()
   def em(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -493,9 +492,9 @@ class Tags:
     """
     html_em = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_em)
     return html_em
 
-  @html.Html.css_skin()
   def strong(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
              profile=None):
     """
@@ -523,9 +522,9 @@ class Tags:
     """
     html_strong = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_strong)
     return html_strong
 
-  @html.Html.css_skin()
   def samp(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -552,9 +551,9 @@ class Tags:
     """
     html_samp = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_samp)
     return html_samp
 
-  @html.Html.css_skin()
   def kbd(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -581,9 +580,9 @@ class Tags:
     """
     html_kbd = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_kbd)
     return html_kbd
 
-  @html.Html.css_skin()
   def var(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -610,9 +609,9 @@ class Tags:
     """
     html_var = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_var)
     return html_var
 
-  @html.Html.css_skin()
   def sup(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -640,9 +639,9 @@ class Tags:
     """
     html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_sup)
     return html_sup
 
-  @html.Html.css_skin()
   def wbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -669,9 +668,9 @@ class Tags:
     """
     html_wbr = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_wbr)
     return html_wbr
 
-  @html.Html.css_skin()
   def time(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -698,9 +697,9 @@ class Tags:
     """
     html_time = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_time)
     return html_time
 
-  @html.Html.css_skin()
   def sub(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -729,9 +728,9 @@ class Tags:
     """
     html_sub = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_sub)
     return html_sub
 
-  @html.Html.css_skin()
   def small(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -758,9 +757,9 @@ class Tags:
     """
     html_small = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_small)
     return html_small
 
-  @html.Html.css_skin()
   def s(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -787,9 +786,9 @@ class Tags:
     """
     html_s = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_s)
     return html_s
 
-  @html.Html.css_skin()
   def i(self, text, width=(None, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -817,9 +816,9 @@ class Tags:
     """
     html_i = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_i)
     return html_i
 
-  @html.Html.css_skin()
   def q(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -848,9 +847,9 @@ class Tags:
     """
     html_q = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_q)
     return html_q
 
-  @html.Html.css_skin()
   def mark(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -879,9 +878,9 @@ class Tags:
     """
     html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_mark)
     return html_mark
 
-  @html.Html.css_skin()
   def nav(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
           profile=None):
     """
@@ -912,9 +911,9 @@ class Tags:
     """
     html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_mark)
     return html_mark
 
-  @html.Html.css_skin()
   def ins(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -941,9 +940,9 @@ class Tags:
     """
     html_ins = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_ins)
     return html_ins
 
-  @html.Html.css_skin()
   def dfn(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -970,9 +969,9 @@ class Tags:
     """
     html_dfn = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_dfn)
     return html_dfn
 
-  @html.Html.css_skin()
   def cite(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -999,9 +998,9 @@ class Tags:
     """
     html_cite = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_cite)
     return html_cite
 
-  @html.Html.css_skin()
   def abbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -1028,9 +1027,9 @@ class Tags:
     """
     html_abbr = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_abbr)
     return html_abbr
 
-  @html.Html.css_skin()
   def meter(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -1058,9 +1057,9 @@ class Tags:
     """
     html_abbr = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_abbr)
     return html_abbr
 
-  @html.Html.css_skin()
   def comment(self, text):
     """
     Description:
@@ -1076,9 +1075,9 @@ class Tags:
     :param text: String with the content to be added to the component
     """
     html_comm = html.HtmlTags.HtmlComment(self.page, text)
+    html.Html.set_component_skin(html_comm)
     return html_comm
 
-  @html.Html.css_skin()
   def span(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
            profile=None):
     """
@@ -1110,9 +1109,9 @@ class Tags:
     """
     html_span = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_span)
     return html_span
 
-  @html.Html.css_skin()
   def label(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
             profile=None):
     """
@@ -1140,4 +1139,5 @@ class Tags:
     """
     html_span = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    html.Html.set_component_skin(html_span)
     return html_span

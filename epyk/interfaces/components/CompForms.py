@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+from typing import Union, Optional
 from epyk.core import html
 
 
@@ -10,8 +11,7 @@ class Forms:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
-  def new(self, components=None, helper=None):
+  def new(self, components=None, helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -30,10 +30,11 @@ class Forms:
     :param components: List. Optional. The different HTML objects to be added to the component.
     """
     form = html.HtmlContainer.Form(self.page, components or [], helper)
+    html.Html.set_component_skin(form)
     return form
 
-  @html.Html.css_skin()
-  def date(self, html_code="Current", profile=None, options=None, helper=None):
+  def date(self, html_code: str = "Current", profile: Optional[Union[dict, bool]] = None,
+           options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -67,9 +68,9 @@ class Forms:
       "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
+    html.Html.set_component_skin(form)
     return form
 
-  @html.Html.css_skin()
   def dates(self, html_code, profile=None, options=None, helper=None):
     """
     Description:
@@ -105,9 +106,9 @@ class Forms:
              "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
+    html.Html.set_component_skin(form)
     return form
 
-  @html.Html.css_skin()
   def input(self, html_code, value="", label=None, placeholder="", icon=None, profile=None, options=None, helper=None):
     """
     Description:
@@ -139,9 +140,9 @@ class Forms:
       options=options)
     inp.input.set_attrs({"name": html_code})
     form = html.HtmlContainer.Form(self.page, [inp], helper)
+    html.Html.set_component_skin(form)
     return form
 
-  @html.Html.css_skin()
   def inputs(self, record, helper=None, html_code=None, options=None, profile=False):
     """
     Description:
@@ -183,9 +184,9 @@ class Forms:
       "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.page, [col], helper)
     form._has_container = True
+    html.Html.set_component_skin(form)
     return form
 
-  @html.Html.css_skin()
   def subscribe(self, value="", placeholder="Enter email address", button="Subscribe", width=(100, '%'),
                 height=(None, 'px'), options=None, profile=False):
     """
@@ -224,4 +225,5 @@ class Forms:
     container.button = button
     container.input = input_component
     input_component.enter(button.dom.events.trigger("click"))
+    html.Html.set_component_skin(container)
     return container

@@ -13,7 +13,6 @@ class Numbers:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def digits(self, text=None, color=None, align='center', width=None, height=None, html_code=None, tooltip=None,
              options=None, profile=None):
     """
@@ -65,9 +64,9 @@ class Numbers:
     html_label.position(3, {"font-size": self.page.body.style.globals.font.normal(5), "font-weight": "bold"})
     html_label.position(4, {"font-size": self.page.body.style.globals.font.normal(5), "font-weight": "bold"})
     html_label.digits(True)
+    html.Html.set_component_skin(html_label)
     return html_label
 
-  @html.Html.css_skin()
   def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
              options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -107,9 +106,9 @@ class Numbers:
       self.page, number, title, label, icon, color, tooltip, html_code, dflt_options, helper, width, profile)
     html_number.style.css.text_align = align
     html_number.style.css.font_factor(5)
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
               helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -145,9 +144,9 @@ class Numbers:
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
     html_number.money("%", fmt="%v%s")
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -183,9 +182,9 @@ class Numbers:
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
     html_number.money("£")
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def euro(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
            helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -221,9 +220,9 @@ class Numbers:
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
     html_number.money("€", fmt="%v %s")
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def dollar(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
              options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -259,9 +258,9 @@ class Numbers:
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
     html_number.money("$", fmt="%v %s")
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def money(self, symbol, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
             options=None, helper=None, width=(100, '%'), align="center", profile=None):
     """
@@ -298,9 +297,9 @@ class Numbers:
     html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
                               profile)
     html_number.money(symbol, fmt="%v %s")
+    html.Html.set_component_skin(html_number)
     return html_number
 
-  @html.Html.css_skin()
   def plotly(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"),
              html_code=None):
     """
@@ -327,9 +326,9 @@ class Numbers:
     """
     ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number")
+    html.Html.set_component_skin(ind)
     return ind
 
-  @html.Html.css_skin()
   def plotly_with_delta(self, value, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), html_code=None):
     """
@@ -357,9 +356,9 @@ class Numbers:
     """
     ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
     ind.add_trace({'value': value}, mode="number+delta")
+    html.Html.set_component_skin(ind)
     return ind
 
-  @html.Html.css_skin()
   def move(self, current, previous=None, components=None, title=None, align="center", width=(100, '%'),
            height=(None, "px"), color=None, label=None, options=None, helper=None, profile=None):
     """
@@ -412,4 +411,5 @@ class Numbers:
       helper, profile)
     if title is not None:
       html_up_down.title = title
+    html.Html.set_component_skin(html_up_down)
     return html_up_down

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
@@ -37,10 +38,10 @@ class JsError:
 
 class JsTry:
 
-  def __init__(self, jsFncs, profile=False):
-    self.__try_jsFnc = jsFncs
-    self.__fin_jsFnc = None
-    self.__catch_jsFnc = None
+  def __init__(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+    self.__try_js_func = js_funcs
+    self.__fin_js_func = None
+    self.__catch_js_func = None
     self.profile = profile
 
   @property
@@ -52,26 +53,26 @@ class JsTry:
     """
     return JsError("err")
 
-  def catch(self, jsFncs, profile=False):
+  def catch(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
     Block of code to handle errors.
 
-    The variable to be used is err in this loop.
+    The variable to be used if error in this loop.
 
     Attributes:
     ----------
-    :param jsFncs: List | String. The JavaScript logic.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__catch_jsFnc = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__catch_js_func = js_funcs
     self.profile = profile
     return self
 
-  def except_(self, jsFncs, profile=False):
+  def except_(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -81,16 +82,16 @@ class JsTry:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. The JavaScript logic.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__catch_jsFnc = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__catch_js_func = js_funcs
     self.profile = profile
     return self
 
-  def finally_(self, jsFncs, profile=False):
+  def finally_(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -98,25 +99,25 @@ class JsTry:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. The JavaScript logic.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__fin_jsFnc = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__fin_js_func = js_funcs
     self.profile = profile
     return self
 
   def toStr(self):
-    a = JsUtils.jsConvertFncs(self.__try_jsFnc, toStr=True, profile=self.profile)
-    if self.__catch_jsFnc is None:
-      raise Exception("Catch must be defined")
+    a = JsUtils.jsConvertFncs(self.__try_js_func, toStr=True, profile=self.profile)
+    if self.__catch_js_func is None:
+      raise ValueError("Catch must be defined")
 
-    b = JsUtils.jsConvertFncs(self.__catch_jsFnc, toStr=True, profile=self.profile)
-    if self.__fin_jsFnc is None:
+    b = JsUtils.jsConvertFncs(self.__catch_js_func, toStr=True, profile=self.profile)
+    if self.__fin_js_func is None:
       return "try{%s} catch(%s){%s}" % (a, self.error, b)
 
-    c = JsUtils.jsConvertFncs(self.__fin_jsFnc, toStr=True, profile=self.profile)
+    c = JsUtils.jsConvertFncs(self.__fin_js_func, toStr=True, profile=self.profile)
     return "try{%s} catch(%s){%s} finally{%s}" % (a, self.error, b, c)
 
   def __str__(self):

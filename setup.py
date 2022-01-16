@@ -46,14 +46,10 @@ setuptools.setup(
       "epyk_project = epyk.core.cli.cli_project:main",   # For project structure
       "epyk_npm = epyk.core.cli.cli_npm:main",   # For Import management
     ]},
-    python_requires=">=2.7",
+    python_requires=">=3.5",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 2.7",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: Implementation :: Jython",
-        "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: IronPython",
     ],
 )

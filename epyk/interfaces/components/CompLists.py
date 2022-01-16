@@ -69,13 +69,16 @@ class Lists:
       icon_details = Defaults_css.get_icon("check")
       options["iconBase"] = "iconBase"
       options["tickIcon"] = icon_details["icon"]
-      return html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
+      html_select = html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
+      html.Html.set_component_skin(html_select)
+      return html_select
 
     if selected is not None:
       for rec in records:
         if rec["value"] == selected:
           rec["selected"] = True
     html_select = html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
+    html.Html.set_component_skin(html_select)
     return html_select
 
   def lookup(self, lookup=None, html_code=None, width=(100, "%"), height=(None, "%"),
@@ -125,6 +128,7 @@ class Lists:
     options = {} if options is None else options
     html_select = html.HtmlSelect.Lookup(
       self.page, lookup, html_code, width, height, profile, multiple, options)
+    html.Html.set_component_skin(html_select)
     return html_select
 
   def item(self, text=None, tag=None, options=None):
@@ -156,6 +160,7 @@ class Lists:
     if tag is not None:
       options["item_type"] = tag
     html_item = html.HtmlList.Li(self.page, text, options=options)
+    html.Html.set_component_skin(html_item)
     return html_item
 
   def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -201,6 +206,7 @@ class Lists:
     html_list = html.HtmlList.List(
       self.page, data or [], color, width, height, html_code, helper, dfl_options, profile)
     html_list.css({"list-style": 'none'})
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -229,6 +235,7 @@ class Lists:
     component.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
                    'border': "1px dashed %s" % self.page.theme.greys[4]})
     component.style.css.padding = 5
+    html.Html.set_component_skin(component)
     return component
 
   def items(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
@@ -264,18 +271,21 @@ class Lists:
       dft_options.update(options)
     html_item = html.HtmlList.Items(self.page, records or [], width, height, dft_options, html_code, profile, helper)
     html_item.css({"list-style-type": 'none'})
+    html.Html.set_component_skin(html_item)
     return html_item
 
   def links(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
             helper=None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "link"
+    html.Html.set_component_skin(component)
     return component
 
   def icons(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
             helper=None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "icon"
+    html.Html.set_component_skin(component)
     return component
 
   def pills(self, records=None, width=(100, "%"), height=(None, "%"), options=None, html_code=None,
@@ -302,6 +312,7 @@ class Lists:
     html_item.options.li_style = {
       "display": "inline-block", "margin": "0 2px", "padding": "1px 4px", "border-radius": "10px",
       "background": self.page.theme.greys[2]}
+    html.Html.set_component_skin(html_item)
     return html_item
 
   def box(self, records=None, width=(100, "%"), height=(None, "%"), options=None, html_code=None,
@@ -337,6 +348,7 @@ class Lists:
     html_item = html.HtmlList.Items(self.page, records, width, height, dflt_options, html_code, profile, helper)
     html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
+    html.Html.set_component_skin(html_item)
     return html_item
 
   def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
@@ -363,6 +375,7 @@ class Lists:
     html_list = self.items(data, width, height, options, html_code, profile, helper)
     html_list.style.css.list_style_type = "decimal"
     html_list.style.css.margin_left = 20
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
@@ -394,6 +407,7 @@ class Lists:
     html_list = self.items(data, width, height, options, html_code, profile, helper)
     html_list.style.css.list_style_type = "lower-alpha"
     html_list.style.css.margin_left = 20
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def roman(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
@@ -425,6 +439,7 @@ class Lists:
     html_list = self.items(data, width, height, options, html_code, profile, helper)
     html_list.style.css.list_style_type = "lower-roman"
     html_list.style.css.margin_left = 20
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def points(self, data=None, width=('auto', ""), height=(None, 'px'), align=None, html_code=None,
@@ -464,6 +479,7 @@ class Lists:
     if align == "center":
       html_list.style.css.margin = "auto"
       html_list.style.css.display = "block"
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def disc(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -503,6 +519,7 @@ class Lists:
     html_list = self.items(data, width, height, options, html_code, profile, helper)
     html_list.style.css.list_style_type = "disc"
     html_list.style.css.margin_left = 20
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def squares(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -538,6 +555,7 @@ class Lists:
     html_list = self.items(data, width, height, options, html_code, profile, helper)
     html_list.style.css.list_style_type = "square"
     html_list.style.css.margin_left = 20
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None,
@@ -584,6 +602,7 @@ class Lists:
         data = [data]
     html_obj = html.HtmlList.Groups(
       self.page, data, None, categories, color, width, height, html_code, helper, options, profile)
+    html.Html.set_component_skin(html_obj)
     return html_obj
 
   def tree(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None, options=None,
@@ -613,6 +632,7 @@ class Lists:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options, profile)
+    html.Html.set_component_skin(html_tree)
     return html_tree
 
   def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -651,9 +671,10 @@ class Lists:
     height = Arguments.size(height, unit="px")
     dftl_options = {"width": 90}
     dftl_options.update(options or {})
-    html_d = html.HtmlTrees.DropDown(self.page, records, text, width, height, html_code, helper,
-                                     dftl_options, profile)
+    html_d = html.HtmlTrees.DropDown(
+      self.page, records, text, width, height, html_code, helper, dftl_options, profile)
     html_d.style.css.display = 'inline-block'
+    html.Html.set_component_skin(html_d)
     return html_d
 
   def checks(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -692,6 +713,7 @@ class Lists:
       dft_options.update(options)
     html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def badges(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -734,6 +756,7 @@ class Lists:
       dft_options.update(options)
     html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def icons(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
@@ -773,6 +796,7 @@ class Lists:
       dft_options.update(options)
     html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)
     html_list.css({"list-style": 'none'})
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def radios(self, data=None, group_name='group', width=('auto', ""), height=(None, "px"), html_code=None,
@@ -809,6 +833,7 @@ class Lists:
     html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code,  profile, helper)
     html_list.options.group = group_name
     html_list.css({"list-style": 'none'})
+    html.Html.set_component_skin(html_list)
     return html_list
 
   def brackets(self, records=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
@@ -833,7 +858,9 @@ class Lists:
     dfp_options = {}
     if options is not None:
       dfp_options.update(options)
-    return html.HtmlList.ListTournaments(self.page, records, width, height, dfp_options, profile)
+    component = html.HtmlList.ListTournaments(self.page, records, width, height, dfp_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
   def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), html_code=None,
             helper=None, options=None, profile=None):
@@ -873,26 +900,26 @@ class Lists:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.page.theme.success[0],
-                                 'border-radius': '5px', 'margin': '2px', "width": 'auto', 'display': 'inline-block',
-                                 'background': 'inherit', 'white-space': 'nowrap'},
-                    'category': category, 'visible': True,
-                    'value_css': {'font-size': self.page.body.style.globals.font.normal(),
-                                  'font-weight': 'bold', 'vertical-align': 'bottom'},
-                    'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top',
-                                     'font-size': self.page.body.style.globals.font.normal(-3)},
-                    'icon_css': {'color': self.page.theme.success[1], 'margin-left': '5px',
-                                 'cursor': 'pointer'}}
+    dfl_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.page.theme.success[0],
+                                'border-radius': '5px', 'margin': '2px', "width": 'auto', 'display': 'inline-block',
+                                'background': 'inherit', 'white-space': 'nowrap'},
+                   'category': category, 'visible': True,
+                   'value_css': {'font-size': self.page.body.style.globals.font.normal(),
+                                 'font-weight': 'bold', 'vertical-align': 'bottom'},
+                   'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top',
+                                    'font-size': self.page.body.style.globals.font.normal(-3)},
+                   'icon_css': {'color': self.page.theme.success[1], 'margin-left': '5px',
+                                'cursor': 'pointer'}}
     if not hasattr(category, 'toStr') and category == 'group':
-      dflt_options['visible'] = False
+      dfl_options['visible'] = False
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     html_f = html.HtmlEvent.Filters(
-      self.page, items or [], width, height, html_code, helper, dflt_options, profile)
+      self.page, items or [], width, height, html_code, helper, dfl_options, profile)
     html_f.input.attr['placeholder'] = placeholder
+    html.Html.set_component_skin(html_f)
     return html_f
 
-  @html.Html.css_skin()
   def menu(self, component, add=False, height=(18, 'px'), save_funcs=None, update_funcs=None, editable=False,
            options=None, profile=None, checks=("fas fa-check-square", "far fa-square")):
 
@@ -959,6 +986,7 @@ class Lists:
       container = self.page.ui.menu(component, menu_items=menu_items)
     else:
       container = self.page.ui.menu(component, menu_items=menu_items, editable=editable)
+    html.Html.set_component_skin(container)
     return container
 
   def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
@@ -1001,4 +1029,5 @@ class Lists:
       container.input.js.empty()
     ])
     container.input.enter(container.button.dom.events.trigger("click"))
+    html.Html.set_component_skin(container)
     return container

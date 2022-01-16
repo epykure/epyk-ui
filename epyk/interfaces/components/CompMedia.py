@@ -10,7 +10,6 @@ class Media:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), html_code=None,
             profile=None, options=None):
     """
@@ -55,9 +54,9 @@ class Media:
     if align == "center":
       html_media.style.css.margin = "auto"
       html_media.style.css.display = "block"
+    html.Html.set_component_skin(html_media)
     return html_media
 
-  @html.Html.css_skin()
   def audio(self, value="", path=None, width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
             options=None):
     """
@@ -98,9 +97,9 @@ class Media:
     if options is not None:
       dft_options.update(options)
     html_audio = html.HtmlMedia.Audio(self.page, value, path, width, height, html_code, profile, dft_options)
+    html.Html.set_component_skin(html_audio)
     return html_audio
 
-  @html.Html.css_skin()
   def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
               options=None):
     """
@@ -143,9 +142,9 @@ class Media:
       dflt_options.update(options)
     html_youtube = html.HtmlMedia.Youtube(self.page, link, width, height, html_code, profile, dflt_options)
     html_youtube.style.css.text_align = align
+    html.Html.set_component_skin(html_youtube)
     return html_youtube
 
-  @html.Html.css_skin()
   def camera(self, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None, options=None):
     """
     Description:
@@ -188,4 +187,5 @@ class Media:
     if align == "center":
       html_media.style.css.margin = "auto"
       html_media.style.css.display = "block"
+    html.Html.set_component_skin(html_media)
     return html_media

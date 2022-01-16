@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+from typing import Union, Optional
 from epyk.core import html
 
 from epyk.core.css import Defaults_css
@@ -115,7 +116,7 @@ class Components:
     self.chart = self.charts.chartJs
     self.analytics = self.charts.c3
 
-  def css(self, css_attrs):
+  def css(self, css_attrs: dict):
     """
     Description:
     ------------
@@ -124,15 +125,15 @@ class Components:
     Usage::
 
 
-
     Attributes:
     ----------
-    :param css_attrs: Dictionary. The CSS attributes to be applied.
+    :param dict css_attrs: The CSS attributes to be applied.
     """
     self.page.properties.css.container_style(css_attrs)
     return self
 
-  def print(self, text=None, end="\n", html_code=None, options=None, profile=None):
+  def print(self, text: Optional[str] = None, end: str = "\n", html_code: Optional[str] = None,
+            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -149,11 +150,11 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The content to be displayed.
-    :param end: String. Optional. The end of line.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[str] text: Optional. The content to be displayed.
+    :param str end: Optional. The end of line.
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if callable(text):
       import inspect
@@ -168,6 +169,7 @@ class Components:
       div.style.css.font_family = 'Courier'
     else:
       div = self.layouts.new_line()
+    html.Html.set_component_skin(div)
     return div
 
   @property
@@ -647,7 +649,8 @@ class Components:
     ------------
     Group all the UI components dedicated to produce charts.
 
-    Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis, Frappe, Vega, Apex or even D3).
+    Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis, Frappe, Vega,
+    Apex or even D3).
 
     Usage::
 
@@ -696,8 +699,10 @@ class Components:
     """
     return CompLayouts.Delimiter(self)
 
-  def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"),
-               html_code=None, options=None, profile=None):
+  def contents(self, title: str = "Contents", top: int = 10, right: int = 10, left=None,
+               width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+               html_code: Optional[str] = None, options: Optional[Union[dict, bool]] = None,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -753,7 +758,7 @@ class Components:
     Description:
     ------------
     Hook to allow the creation of bespoke component using specific configurations.
-    Components can be self contained in a module and rely on external packages.
+    Components can be self-contained in a module and rely on external packages.
 
     Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment.
 
@@ -768,7 +773,9 @@ class Components:
     """
     return html_cls(self.page, *args, **kwargs)
 
-  def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), html_code=None, profile=None):
+  def _tags(self, vals=None, title: str = "", icon: str = "", width: Union[tuple, int] = (100, "%"),
+            height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
+            profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -789,7 +796,8 @@ class Components:
       self.page, vals, title, icon, (self.page.body.style.globals.font.size, 'px'), width, height, html_code,
       profile)
 
-  def loading(self, text="Loading", color=None, options=None, profile=None):
+  def loading(self, text: str = "Loading", color: Union[str, bool] = None, options: Optional[Union[dict, bool]] = None,
+              profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -804,17 +812,20 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text in the component (during the loading).
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text in the component (during the loading).
+    :param Union[str, bool] color: Optional. The font color in the component. Default inherit.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     html_loading = html.HtmlOthers.Loading(
       self.page, text, color, (self.page.body.style.globals.font.size, 'px'), options or {}, profile)
+    html.Html.set_component_skin(html_loading)
     return html_loading
 
-  def breadcrumb(self, values=None, selected=None, width=(100, '%'), height=(30, 'px'), html_code=None, options=None,
-                 profile=None):
+  def breadcrumb(self, values=None, selected: Optional[int] = None, width: Union[tuple, int] = (100, '%'),
+                 height: Union[tuple, int] = (30, 'px'), html_code: Optional[str] = None,
+                 options: Optional[Union[dict, bool]] = None,
+                 profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -851,9 +862,10 @@ class Components:
     html_breadcrumb = html.HtmlOthers.Breadcrumb(
       self.page, values or [], width, height, html_code, dfl_options, profile)
     html_breadcrumb.style.css.margin_top = 5
+    html.Html.set_component_skin(html_breadcrumb)
     return html_breadcrumb
 
-  def form(self, components=None, helper=None, method="POST", action="#", label="Submit"):
+  def form(self, components=None, helper: Optional[str] = None, method: str = "POST", action: str = "#", label: str = "Submit"):
     """
     Description:
     ------------
@@ -866,18 +878,20 @@ class Components:
     Attributes:
     ----------
     :param components: List. Optional. The HTML components to be added to the HTML form.
-    :param helper: String. Optional. The value to be displayed to the helper icon.
-    :param method: String. Optional. The method used to transfer data.
-    :param action: String. Optional. The end point for the submit.
-    :param label: String. Optional. The text on the submit button.
+    :param str helper: Optional. The value to be displayed to the helper icon.
+    :param str method: Optional. The method used to transfer data.
+    :param str action: Optional. The end point for submitting data.
+    :param str label: Optional. The text on the submit button.
     """
     form = html.HtmlContainer.Form(self.page, components or [], helper)
     form.method = method
     form.label = label
     form.action = action
+    html.Html.set_component_skin(form)
     return form
 
-  def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
+  def json(self, data: dict = None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (100, '%'),
+           options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -891,21 +905,23 @@ class Components:
 
     Attributes:
     ----------
-    :param data: Dictionary. Optional. The Json object to be display.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param dict data: Optional. The Json object to be display.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     data = data or {}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    h_json = html.HtmlOthers.HtmlJson(self.page, data, width, height, options, profile)
+    container = html.HtmlOthers.HtmlJson(self.page, data, width, height, options, profile)
     if height[1] != '%':
-      h_json.style.css.overflow = 'auto'
-    return h_json
+      container.style.css.overflow = 'auto'
+    html.Html.set_component_skin(container)
+    return container
 
-  def slideshow(self, components=None, width=(100, "%"), height=('auto', ""), options=None, profile=None):
+  def slideshow(self, components=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = ('auto', ""),
+                options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -922,17 +938,19 @@ class Components:
     Attributes:
     ----------
     :param components: List. Optional. With the different components.
-    :param width: Tuple. Optional. The component width in pixel or percentage.
-    :param height: Tuple. Optional. The component height in pixel.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[tuple, int] width: Optional. The component width in pixel or percentage.
+    :param Union[tuple, int] height: Optional. The component height in pixel.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
-    html_i = html.HtmlImage.SlideShow(self.page, components or [], width, height, options or {}, profile)
-    return html_i
+    container = html.HtmlImage.SlideShow(self.page, components or [], width, height, options or {}, profile)
+    html.Html.set_component_skin(container)
+    return container
 
-  def qrcode(self, data=None, width=(128, 'px'), height=(128, 'px'), options=None, profile=None):
+  def qrcode(self, data=None, width: Union[tuple, int] = (128, 'px'), height: Union[tuple, int] = (128, 'px'),
+             options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -949,10 +967,10 @@ class Components:
     Attributes:
     ----------
     :param data: String. Optional. The value to be converted to QR Code.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     data = data or {}
     width = Arguments.size(width, unit="px")
@@ -960,9 +978,12 @@ class Components:
     h_qrcode = html.HtmlOthers.HtmlQRCode(self.page, data, width, height, options, profile)
     if height[1] != '%':
       h_qrcode.style.css.overflow = 'auto'
+    html.Html.set_component_skin(h_qrcode)
     return h_qrcode
 
-  def captcha(self, text="Submit", width=(None, 'px'), height=(None, 'px'), options=None, profile=None):
+  def captcha(self, text: str = "Submit", width: Union[tuple, int] = (None, 'px'),
+              height: Union[tuple, int] = (None, 'px'), options: Optional[Union[dict, bool]] = None,
+              profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -972,18 +993,20 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The button content for the captcha validation.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The button content for the captcha validation.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     captcha = html.HtmlOthers.HtmlCaptcha(self.page, text, width, height, options or {}, profile)
+    html.Html.set_component_skin(captcha)
     return captcha
 
-  def postit(self, components=None, anchor=None, options=None, profile=None):
+  def postit(self, components=None, anchor=None,
+             options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -998,8 +1021,8 @@ class Components:
     ----------
     :param components: Components. Optional.
     :param anchor: Component. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     postit = self.page.ui.div(options=options, profile=profile)
     if anchor is None:
@@ -1018,9 +1041,10 @@ class Components:
       [
         popup.dom.css({"display": 'none'}).r]
     )
+    html.Html.set_component_skin(postit)
     return postit
 
-  def extension(self, package_name, alias=None):
+  def extension(self, package_name: str, alias: str = None):
     """
     Description:
     ------------
@@ -1030,8 +1054,8 @@ class Components:
 
     Attributes:
     ----------
-    :param package_name: String. The package name.
-    :param alias: String. Optional. The alias for the link in report.ui.
+    :param str package_name: The package name.
+    :param str alias: Optional. The alias for the link in report.ui.
     """
     mod = __import__(package_name)
     __import__("%s.components" % package_name)
@@ -1039,8 +1063,9 @@ class Components:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
 
-  def asterix(self, tooltip, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
-              align="left", options=None, profile=None):
+  def asterix(self, tooltip, family=None, width: Union[tuple, int] = (None, 'px'), html_code=None,
+              height: Union[tuple, int] = (None, "px"), color=None,
+              align: str = "left", options=None, profile=None):
     """
     Description:
     ------------
@@ -1062,9 +1087,9 @@ class Components:
     component = self.icon("fas fa-asterisk", family, width, html_code, height, color, tooltip, align, options, profile)
     component.style.css.vertical_align = "top"
     component.style.css.color = self.page.theme.greys[5]
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def menu(self, component, copy="fas fa-copy", editable=("fas fa-user-edit", "fas fa-user-lock"),
            refresh="fas fa-redo-alt", visible=('fas fa-eye-slash', "fas fa-eye"), post=None,
            height=(18, 'px'), save_funcs=None, update_funcs=None, menu_items=None, options=None, profile=None):
@@ -1211,6 +1236,7 @@ class Components:
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
     dots.click([container.dom.hide()])
     component.move()
+    html.Html.set_component_skin(container)
     return container
 
   @property
@@ -1225,7 +1251,7 @@ class WebComponents:
     self.fwks = {}
 
   @property
-  def std(self):
+  def std(self) -> Components:
     """
     Description:
     ------------

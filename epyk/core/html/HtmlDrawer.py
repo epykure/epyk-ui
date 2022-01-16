@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type, List, Any
 from epyk.core.html import Html
 
 from epyk.core.js import expr
@@ -41,7 +42,7 @@ class Drawer(Html.Html):
     self.drawers.attr['name'] = 'drawer_content'
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlStepper.Drawer:
     """
     Description:
     ------------
@@ -54,7 +55,7 @@ class Drawer(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionDrawer:
     """
     Description:
     ------------
@@ -64,7 +65,7 @@ class Drawer(Html.Html):
     """
     return super().options
 
-  def add_panel(self, link, container, display=False):
+  def add_panel(self, link: Union[Type[Html.Html], str], container: Type[Html.Html], display: bool = False):
     """
     Description:
     ------------
@@ -72,9 +73,9 @@ class Drawer(Html.Html):
 
     Attributes:
     ----------
-    :param link: String | HTML. The value in the drawer.
-    :param container: HTML. The component to be displayed.
-    :param display: String. Optional. The CSS Display property.
+    :param Union[Type[Html.Html], str] link: The value in the drawer.
+    :param Type[Html.Html] container: The component to be displayed.
+    :param bool display: Optional. The CSS Display property.
     """
     if not hasattr(link, 'options'):
       link = self.page.ui.div(link)
@@ -88,7 +89,7 @@ class Drawer(Html.Html):
     self.drawers += link
 
   @property
-  def style(self):
+  def style(self) -> GrpClsContainer.ClassDrawer:
     """
     Description:
     ------------
@@ -100,7 +101,7 @@ class Drawer(Html.Html):
       self._styleObj = GrpClsContainer.ClassDrawer(self)
     return self._styleObj
 
-  def set_handle(self, component):
+  def set_handle(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -108,7 +109,7 @@ class Drawer(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. An HTML component.
+    :param Type[Html.Html] component: An HTML component.
     """
     self.handle = self.page.ui.div()
     self.handle.style.clear_all()
@@ -194,7 +195,7 @@ class DrawerMulti(Html.Html):
     """
     return super().options
 
-  def add_drawer(self, link, container):
+  def add_drawer(self, link: Union[str, Type[Html.Html]], container: Type[Html.Html]):
     """
     Description:
     ------------
@@ -202,8 +203,8 @@ class DrawerMulti(Html.Html):
 
     Attributes:
     ----------
-    :param link: String | HTML. The value in the drawer.
-    :param container: HTML. The component to be displayed.
+    :param Union[str, Type[Html.Html] link: The value in the drawer.
+    :param Type[Html.Html] container: The component to be displayed.
     """
     if not hasattr(link, 'options'):
       link = self.page.ui.div(link)
@@ -239,7 +240,7 @@ class DrawerMulti(Html.Html):
     ])
 
   @property
-  def style(self):
+  def style(self) -> GrpClsContainer.ClassDrawer:
     """
     Description:
     ------------

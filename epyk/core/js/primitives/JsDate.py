@@ -7,18 +7,20 @@ Related Pages:
 """
 
 
+from typing import Optional
 import json
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsUtils
 
-MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
+          'December']
 
 
 class JsDate(JsObject.JsObject):
   _jsClass = "Date"
 
-  def __init__(self, data=None, varName=None, setVar=False, isPyData=False):
+  def __init__(self, data=None, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = False):
     """
     Description:
     -----------
@@ -32,9 +34,9 @@ class JsDate(JsObject.JsObject):
     Attributes:
     ----------
     :param data: Required,
-    :param varName: String. Optional.
-    :param setVar: String. Optional.
-    :param isPyData: Boolean. Optional.
+    :param Optional[str] varName: Optional.
+    :param bool setVar: Optional.
+    :param bool isPyData: Optional.
     """
     if setVar:
       if data is not None:
@@ -49,7 +51,7 @@ class JsDate(JsObject.JsObject):
     super(JsDate, self).__init__(data=data, varName=varName, setVar=setVar, isPyData=isPyData)
 
   @classmethod
-  def get(cls, varName):
+  def get(cls, varName: str):
     """
     Description:
     -----------
@@ -66,7 +68,7 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param varName: String. The Javascript object reference.
+    :param str varName: The Javascript object reference.
 
     :return: The python Javascript object
     """
@@ -267,7 +269,7 @@ class JsDate(JsObject.JsObject):
     from epyk.core.js.primitives import JsNumber
     return JsNumber.JsNumber("(function(x){return %s[x]})(%s.getMonth())" % (MONTHS, self.varId), isPyData=False)
 
-  def setDate(self, day):
+  def setDate(self, day: int):
     """
     Description:
     -----------
@@ -284,13 +286,13 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param day: Integer. Required. An integer representing the day of a month.
+    :param int day: An integer representing the day of a month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
     return JsDate("%s.setDate(%s)" % (self.varId, day), isPyData=False)
 
-  def setMonth(self, month, day=None):
+  def setMonth(self, month: int, day: int = None):
     """
     Description:
     -----------
@@ -308,8 +310,8 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param month: Integer. Required. An integer representing the month.
-    :param day: Integer. Optional. An integer representing the day of month.
+    :param int month: Required. An integer representing the month.
+    :param int day: Optional. An integer representing the day of month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
@@ -402,7 +404,7 @@ class JsDate(JsObject.JsObject):
 
     return JsString.JsString("%s.toISOString().replace('T', ' ').slice(0, 19)" % self.varId, isPyData=False)
 
-  def getTime(self, in_seconds=True):
+  def getTime(self, in_seconds: bool = True):
     """
     Description:
     -----------
@@ -414,7 +416,7 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param in_seconds: Boolean. In second conversion of the Javascript timestamp
+    :param bool in_seconds: In second conversion of the Javascript timestamp
     """
     from epyk.core.js.primitives import JsNumber
 
@@ -423,7 +425,7 @@ class JsDate(JsObject.JsObject):
 
     return JsNumber.JsNumber("%s.getTime()" % self.varId, isPyData=False)
 
-  def add(self, n):
+  def add(self, n: int):
     """
     Description:
     -----------
@@ -438,14 +440,14 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. the number of days.
+    :param int n: the number of days.
 
     :return: A Python Js object
     """
     jsData = JsUtils.jsConvertData(n, None)
     return super(JsDate, self).add(jsData)
 
-  def addDays(self, jsObj, n, weekend=False):
+  def addDays(self, jsObj, n: int, weekend: bool = False):
     """
     Description:
     -----------
@@ -462,8 +464,8 @@ class JsDate(JsObject.JsObject):
     Attributes:
     ----------
     :param jsObj: The internal JS object used to store the prototype extension.
-    :param n: Integer. The number of days to be added.
-    :param weekend: Boolean. Optional. flag to specify if the weekends should be considered in the count. Default False.
+    :param int n: The number of days to be added.
+    :param bool weekend: Optional. flag to specify if the weekends should be considered in the count. Default False.
 
     :type jsObj: epyk.Lib.js.Js.JsBase
     """

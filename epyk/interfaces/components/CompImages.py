@@ -12,7 +12,6 @@ class Images:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def img(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", html_code=None,
           profile=None, tooltip=None, options=None):
     """
@@ -66,9 +65,9 @@ class Images:
       html_image.tooltip(tooltip)
     if width[0] is None:
       html_image.style.css.max_width = '100%'
+    html.Html.set_component_skin(html_image)
     return html_image
 
-  @html.Html.css_skin()
   def figure(self, image=None, caption=None, path=None, width=(100, "%"), height=(None, "px"), align="center",
              html_code=None, profile=None, tooltip=None, options=None):
     """
@@ -114,9 +113,9 @@ class Images:
       container.add(container.caption)
     if width[0] == 'auto':
       container.style.css.display = "inline-block"
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def container(self, components, max_width=(900, 'px'), align="center", profile=None, options=None):
     """
     Description:
@@ -143,9 +142,9 @@ class Images:
     container.style.css.text_align = align
     if align == 'center':
       container.style.css.margin = "0 auto"
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center",
                  html_code=None, position="middle", profile=None, options=None):
     """
@@ -181,9 +180,9 @@ class Images:
     div.style.css.text_align = align
     div.style.css.vertical_align = position
     div.style.css.padding = "auto"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def wallpaper(self, url=None, width=(100, "%"), height=(100, "%"), size="cover", margin=0, align="center",
                 html_code=None, position="middle", profile=None, options=None):
     """
@@ -223,9 +222,9 @@ class Images:
     div.style.css.vertical_align = position
     div.style.css.padding = "auto"
     self.page.body.style.css.height = "100%"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def logo(self, url, width=(160, "px"), height=(60, "px"), top=(16, "px"), left=(16, "px"), profile=None,
            options=None):
     """
@@ -261,9 +260,9 @@ class Images:
     div.style.css.text_align = "center"
     div.style.css.vertical_align = "middle"
     div.style.css.padding = "auto"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def youtube(self, video_id=None, width=(100, "%"), height=(None, "px"), align="center", html_code=None, profile=None,
               options=None):
     """
@@ -287,10 +286,11 @@ class Images:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width),
+    component = self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width),
                     Arguments.size(height, 'px'), align, html_code, profile, options)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def circular(self, image=None, path=None, width=(200, "px"), height=(200, "px"), align="center", html_code=None,
                profile=None, options=None):
     """
@@ -342,9 +342,9 @@ class Images:
     html_image.style.css.padding = 5
     html_image.style.css.borders_light()
     html_image.style.css.border_radius = width[0]
+    html.Html.set_component_skin(html_image)
     return html_image
 
-  @html.Html.css_skin()
   def avatar(self, text="", image="", path=None, status=None, width=(30, "px"), height=(30, "px"), align="center",
              html_code=None, profile=None, options=None):
     """
@@ -432,9 +432,9 @@ class Images:
     if align == 'center':
       div.style.css.margin = "auto"
       div.style.css.display = "block"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px"), profile=None,
               options=None):
     """
@@ -486,9 +486,9 @@ class Images:
       div.style.css.cursor = 'pointer'
       div.click([self.page.js.location.href(url)])
     div.style.add_classes.div.border_bottom()
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def animated(self, image="", text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
                html_code=None, options=None, profile=None):
     """
@@ -528,11 +528,11 @@ class Images:
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-    html_id = html.HtmlImage.AnimatedImage(
+    component = html.HtmlImage.AnimatedImage(
       self.page, image, text, title, html_code, url, path, width, height, options, profile)
-    return html_id
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def carousel(self, images=None, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None,
                profile=None):
     """
@@ -576,11 +576,11 @@ class Images:
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
-    html_i = html.HtmlImage.ImgCarousel(
+    component = html.HtmlImage.ImgCarousel(
       self.page, images or [], path, selected, width, height, options or {}, profile)
-    return html_i
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def emoji(self, symbol=None, top=(20, 'px'), options=None, profile=None):
     """
     Description:
@@ -613,10 +613,10 @@ class Images:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     top = Arguments.size(top, "px")
-    html_emoji = html.HtmlImage.Emoji(self.page, symbol, top, options, profile)
-    return html_emoji
+    component = html.HtmlImage.Emoji(self.page, symbol, top, options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def icon(self, icon=None, family=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
            tooltip=None, align="left", options=None, profile=None):
     """
@@ -658,14 +658,14 @@ class Images:
     icon_details = Defaults_css.get_icon(icon, family)
     options = options or {}
     options["icon_family"] = family or icon_details["icon_family"]
-    html_icon = html.HtmlImage.Icon(self.page, icon_details["icon"], width=width, height=height, color=color or 'inherit', tooltip=tooltip,
+    component = html.HtmlImage.Icon(self.page, icon_details["icon"], width=width, height=height, color=color or 'inherit', tooltip=tooltip,
                                     options=options, html_code=html_code, profile=profile)
     if align == "center":
-      html_icon.style.css.margin = "auto"
-      html_icon.style.css.display = "block"
-    return html_icon
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None,
             color=None, url=None, tooltip=None, options=None, profile=None):
     """
@@ -722,11 +722,12 @@ class Images:
     icon_details = Defaults_css.get_icon(icon)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
-    html_badge = html.HtmlImage.Badge(
-      self.page, text, width, height, label, icon_details["icon"], background_color, color, url, tooltip, options, profile)
-    return html_badge
+    component = html.HtmlImage.Badge(
+      self.page, text, width, height, label, icon_details["icon"], background_color, color, url, tooltip, options,
+      profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def color(self, code, color=None, width=(110, 'px'), height=(25, 'px'), options=None, helper=None, profile=None):
     """
     Description:
@@ -765,6 +766,7 @@ class Images:
     div.style.css.text_align = "center"
     div.style.css.border = "1px solid black"
     div.style.css.vertical_align = "middle"
+    html.Html.set_component_skin(div)
     return div
 
   def gallery(self, images=None, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):

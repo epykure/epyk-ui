@@ -10,7 +10,6 @@ class Menus:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def top(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None, options=None,
           profile=None):
     """
@@ -77,10 +76,9 @@ class Menus:
             items.append(link)
         col.add(items)
       panels.append(col)
-    html_list = html.HtmlList.List(self.page, [], color, width, height, html_code, helper, options or {},
-                                   profile)
+    html_list = html.HtmlList.List(
+      self.page, [], color, width, height, html_code, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-
     html_div = self.page.ui.div()
     html_div.style.css.background = self.page.theme.greys[1]
     html_div.css({"position": "fixed", "margin": 0, "left": 0})
@@ -97,9 +95,9 @@ class Menus:
       self.page.body.style.css.padding_top = int(self.page.body.style.css.padding_top[:-2]) + height[0] + 5
     else:
       self.page.body.style.css.padding_top = height[0] + 5
+    html.Html.set_component_skin(html_div)
     return html_div
 
-  @html.Html.css_skin()
   def bottom(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None,
              options=None, profile=None):
     """
@@ -166,10 +164,9 @@ class Menus:
             items.append(link)
         col.add(items)
       panels.append(col)
-    html_list = html.HtmlList.List(self.page, [], color, width, height, html_code, helper,
-                                   options or {}, profile)
+    html_list = html.HtmlList.List(
+      self.page, [], color, width, height, html_code, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-
     html_div = self.page.ui.div()
     html_div.style.css.background = self.page.theme.greys[1]
     html_div.css({"position": "fixed", "margin": 0, "left": 0})
@@ -182,13 +179,12 @@ class Menus:
       html_div.add(cont)
     html_div.style.css.line_height = height[0]
     if self.page.body.style.css.padding_bottom is not None:
-      self.page.body.style.css.padding_bottom = int(self.page.body.style.css.padding_bottom[:-2]) + \
-                                                       height[0] + 5
+      self.page.body.style.css.padding_bottom = int(self.page.body.style.css.padding_bottom[:-2]) + height[0] + 5
     else:
       self.page.body.style.css.padding_bottom = height[0] + 5
+    html.Html.set_component_skin(html_div)
     return html_div
 
-  @html.Html.css_skin()
   def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
            options=None, profile=None):
     """
@@ -261,9 +257,9 @@ class Menus:
         + [self.page.js.objects.dom("this").setAttribute("data-select", "true")])
     col = self.page.ui.col([html_list, *menu_divs])
     col.css({"background-color": self.page.theme.greys[0], "margin": 0})
+    html.Html.set_component_skin(col)
     return col
 
-  @html.Html.css_skin()
   def bar(self, data=None, align="left", position="top", color=None, width=(350, "px"), height=(None, 'px'),
           options=None, profile=None):
     """
@@ -299,17 +295,16 @@ class Menus:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
     records = []
-    dflt_options = {"target": '_self'}
+    dfl_options = {"target": '_self'}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     for k in data:
       if not isinstance(k, dict):
         records.append({'value': k})
       else:
         records.append(k)
-
     row = self.page.ui.row(
-      color, width=width, height=height, options=dflt_options, profile=profile, position=position)
+      color, width=width, height=height, options=dfl_options, profile=profile, position=position)
     for _ in range(len(records)):
       col = self.page.ui.col(align=align, position=position)
       col.options.responsive = False
@@ -325,7 +320,7 @@ class Menus:
         for child in k.get("children", []):
           if isinstance(child, dict):
             if 'target' not in child:
-              child['options'] = {'target': dflt_options['target']}
+              child['options'] = {'target': dfl_options['target']}
             else:
               child['options'] = {'target': child['target']}
               del child['target']
@@ -337,9 +332,9 @@ class Menus:
             li = self.page.ui.lists.item(child)
             items.add(li)
         row[i].add(items)
+    html.Html.set_component_skin(row)
     return row
 
-  @html.Html.css_skin()
   def icons(self, data, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
     """
     Description:
@@ -359,16 +354,16 @@ class Menus:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
-    dflt_options = {"margin-right": 5}
+    dfl_options = {"margin-right": 5}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
     for d in data:
       div.add(self.page.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'}))
-      div[-1].style.css.margin_right = dflt_options["margin-right"]
+      div[-1].style.css.margin_right = dfl_options["margin-right"]
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
               options=None, profile=None):
     """
@@ -404,11 +399,10 @@ class Menus:
     dfl_button_css.update(options)
     component = html.HtmlButton.Buttons(
       self.page, data or [], color, width, height, html_code, helper, dfl_button_css, profile)
-    component.css({
-      "border": "1px solid %s" % component.page.theme.greys[4], "padding": "2px"})
+    component.css({"border": "1px solid %s" % component.page.theme.greys[4], "padding": "2px"})
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def images(self, data, path=None, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
     """
     Description:
@@ -428,12 +422,12 @@ class Menus:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
-    dflt_options = {"margin-left": 20, "margin-right": 20, 'image-width': 50}
+    dfl_options = {"margin-left": 20, "margin-right": 20, 'image-width': 50}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
     for d in data:
-      img_attrs = {'width': (dflt_options['image-width'], 'px')}
+      img_attrs = {'width': (dfl_options['image-width'], 'px')}
       if not isinstance(d, dict):
         img_attrs['image'] = d
       else:
@@ -449,10 +443,10 @@ class Menus:
         img.goto(url)
       img.style.css.display = 'inline-block'
       div.add(img)
-      div[-1].style.css.margin_right = dflt_options["margin-right"]
+      div[-1].style.css.margin_right = dfl_options["margin-right"]
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def right(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None,
             options=None, profile=None):
     """
@@ -476,16 +470,16 @@ class Menus:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"tab_width": 100}
+    dfl_options = {"tab_width": 100}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     titles, panels = [], []
     for k in data:
       if not isinstance(k, dict):
         k = {"value": k}
-      titles.append(self.page.ui.text(k["value"], width=(dflt_options['tab_width'], 'px'), align="center"))
+      titles.append(self.page.ui.text(k["value"], width=(dfl_options['tab_width'], 'px'), align="center"))
       children = k.get("children", [])
-      col = self.page.ui.div(width=(dflt_options['tab_width'], 'px'))
+      col = self.page.ui.div(width=(dfl_options['tab_width'], 'px'))
       col.style.css.display = None
       col.style.css.bottom = height[0]
       col.style.css.padding = "0 2px"
@@ -503,10 +497,9 @@ class Menus:
             items.append(link)
         col.add(items)
       panels.append(col)
-    html_list = html.HtmlList.List(self.page, [], color, width, height, html_code, helper, options or {},
-                                   profile)
+    html_list = html.HtmlList.List(
+      self.page, [], color, width, height, html_code, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-
     html_div = self.page.ui.div()
     html_div.style.css.background = self.page.theme.greys[0]
     html_div.css({"position": "fixed", "margin": 0, "left": 0})
@@ -519,17 +512,12 @@ class Menus:
       html_div.add(cont)
     html_div.style.css.line_height = height[0]
     if self.page.body.style.css.padding_bottom is not None:
-      self.page.body.style.css.padding_bottom = int(self.page.body.style.css.padding_bottom[:-2]) + \
-                                                       height[0] + 5
+      self.page.body.style.css.padding_bottom = int(self.page.body.style.css.padding_bottom[:-2]) + height[0] + 5
     else:
       self.page.body.style.css.padding_bottom = height[0] + 5
+    html.Html.set_component_skin(html_div)
     return html_div
 
-  @html.Html.css_skin()
-  def left(self):
-    pass
-
-  @html.Html.css_skin()
   def divisor(self, data, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -566,12 +554,11 @@ class Menus:
       div += div.texts[-1]
       div += self.page.ui.text(divider).css({
         "display": 'inline-block', 'margin': '0 5px', 'font-size': self.page.body.style.globals.font.normal(-2)})
-
     rec = {"text": data[-1]} if not isinstance(data[-1], dict) else data[-1]
     div += self.page.ui.link(*rec).css({"display": 'inline-block'})
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def button(self, value, components, symbol=None, width=("auto", ''), height=(None, 'px'), options=None,
              profile=False):
     """
@@ -613,9 +600,9 @@ class Menus:
     div += content
     div.on("mouseover", [content.dom.css({"display": 'block'}).r])
     div.on("mouseout", [content.dom.css({"display": 'none'}).r])
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -663,9 +650,9 @@ class Menus:
       div[-1].style.css.cursor = 'pointer'
       div[-1].style.css.margin = 0
       div[-1].icon.style.css.float = None
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code=None, helper=None, options=None,
                  profile=None):
     """
@@ -711,11 +698,11 @@ class Menus:
         new_data.append({"value": d})
       else:
         new_data.append(d)
-    html_pr = html.HtmlEvent.Menu(self.page, new_data, width, height, helper, options or {}, html_code,
-                                  profile)
+    html_pr = html.HtmlEvent.Menu(
+      self.page, new_data, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_pr)
     return html_pr
 
-  @html.Html.css_skin()
   def contextual(self, record=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
     """
     Description:
@@ -745,9 +732,9 @@ class Menus:
     height = Arguments.size(height, unit="px")
     html_menu = html.HtmlMenu.ContextMenu(
       self.page, record or [], width, height, visible, options or {}, profile)
+    html.Html.set_component_skin(html_menu)
     return html_menu
 
-  @html.Html.css_skin()
   def pills(self, data, width=(100, '%'), height=(50, 'px'), html_code=None, helper=None, options=None, profile=False):
     """
     Description:
@@ -783,4 +770,5 @@ class Menus:
     container.style.css.display = "inline-block"
     container.style.css.margin_top = 10
     container.style.css.margin_bottom = 10
+    html.Html.set_component_skin(container)
     return container

@@ -1,6 +1,10 @@
 
 import time
 import datetime
+from typing import Union, Optional, List
+
+
+DFL_DATE_FORMAT = '%Y-%m-%d'
 
 
 class PyDates:
@@ -43,7 +47,7 @@ class PyDates:
 
     :return: A string date in the format YYYY-MM-DD
     """
-    return datetime.datetime.today().strftime('%Y-%m-%d')
+    return datetime.datetime.today().strftime(DFL_DATE_FORMAT)
 
   @property
   def now(self):
@@ -62,9 +66,9 @@ class PyDates:
 
     :return: Return a string timestamp
     """
-    return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.datetime.fromtimestamp(time.time()).strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def path(self, with_time=False):
+  def path(self, with_time: bool = False):
     """
     Description:
     ------------
@@ -75,7 +79,7 @@ class PyDates:
 
     Attributes:
     ----------
-    :param with_time: Boolean. Optional. Specify if the time should be added to the path.
+    :param bool with_time: Optional. Specify if the time should be added to the path.
     """
     if with_time:
       return datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
@@ -132,7 +136,7 @@ class PyDates:
     :return: A list of String dates
     """
     date_split = list(map(lambda x: int(x), self.today.split("-")))
-    return self.month_ends(datetime.datetime(date_split[0], 1, 1).strftime('%Y-%m-%d'), self.today)
+    return self.month_ends(datetime.datetime(date_split[0], 1, 1).strftime(DFL_DATE_FORMAT), self.today)
 
   @property
   def quarters(self):
@@ -155,7 +159,7 @@ class PyDates:
         results.append(v)
     return results
 
-  def date_from_alias(self, alias, from_date=None):
+  def date_from_alias(self, alias: str, from_date: Optional[str] = None):
     """
     Description:
     ------------
@@ -168,8 +172,8 @@ class PyDates:
 
     Attributes:
     ----------
-    :param alias: String. The alias of the operation (T-3, M-2....)
-    :param from_date: String. Optional. The start date from which the time operation is applied. Today by default
+    :param str alias: The alias of the operation (T-3, M-2....)
+    :param Optional[str] from_date: Optional. The start date from which the time operation is applied. Today by default
 
     :return: The converted date or a list of dates.
     """
@@ -196,7 +200,7 @@ class PyDates:
           cob_date = cob_date - datetime.timedelta(days=1)
           while cob_date.weekday() in [5, 6]:
             cob_date = cob_date - datetime.timedelta(days=1)
-      return cob_date.strftime('%Y-%m-%d')
+      return cob_date.strftime(DFL_DATE_FORMAT)
 
     if f_type == 'M':
       month = cob_date.month - int(f_count)
@@ -208,25 +212,25 @@ class PyDates:
       end_month_date = end_month_date - datetime.timedelta(days=1)
       while end_month_date.weekday() in [5, 6]:
         end_month_date = end_month_date - datetime.timedelta(days=1)
-      return end_month_date.strftime('%Y-%m-%d')
+      return end_month_date.strftime(DFL_DATE_FORMAT)
 
     if f_type == 'W':
       cob_date = cob_date - datetime.timedelta(days=1)
       while cob_date.weekday() != 4:
         cob_date = cob_date - datetime.timedelta(days=1)
       cob_date = cob_date - datetime.timedelta(days=(int(f_count) * 7))
-      return cob_date.strftime('%Y-%m-%d')
+      return cob_date.strftime(DFL_DATE_FORMAT)
 
     if f_type == 'Y':
       end_year_date = datetime.datetime(cob_date.year - int(f_count), 1, 1)
       end_year_date = end_year_date - datetime.timedelta(days=1)
       while end_year_date.weekday() in [5, 6]:
         end_year_date = end_year_date - datetime.timedelta(days=1)
-      return end_year_date.strftime('%Y-%m-%d')
+      return end_year_date.strftime(DFL_DATE_FORMAT)
 
     return alias
 
-  def date_from_excel(self, xlDate):
+  def date_from_excel(self, xl_date: int):
     """
     Description:
     ------------
@@ -243,14 +247,14 @@ class PyDates:
 
     Attributes:
     ----------
-    :param xlDate: Integer. An date in the excel format.
+    :param int xl_date: A date in the Excel format.
 
     :return: The date as a String in the common format YYYY-MM-DD
     """
-    dt = datetime.datetime.fromordinal(datetime.datetime(1900, 1, 1).toordinal() + xlDate - 2)
-    return dt.strftime('%Y-%m-%d')
+    dt = datetime.datetime.fromordinal(datetime.datetime(1900, 1, 1).toordinal() + xl_date - 2)
+    return dt.strftime(DFL_DATE_FORMAT)
 
-  def month_ends(self, from_dt, to_dt, weekdays=True):
+  def month_ends(self, from_dt: str, to_dt: str, weekdays: bool = True):
     """
     Description:
     ------------
@@ -263,9 +267,9 @@ class PyDates:
 
     Attributes:
     ----------
-    :param from_dt: String. The start date in format YYYY-MM-DD
-    :param to_dt: String. The end date in format YYYY-MM-DD
-    :param weekdays: Boolean. Optional. remove the weekends from the potential dates (take the day before). Default True
+    :param str from_dt: The start date in format YYYY-MM-DD.
+    :param str to_dt: The end date in format YYYY-MM-DD.
+    :param bool weekdays: Optional. remove the weekends from the potential dates (take the day before). Default True.
 
     :return: A list of dates.
     """
@@ -278,7 +282,7 @@ class PyDates:
     end_dt = datetime.datetime(*map(lambda x: int(x), to_dt.split("-")))
     dt = datetime.datetime(date_split[0], date_split[1]+1, 1) - datetime.timedelta(days=1)
     while dt < end_dt:
-      results.append(dt.strftime('%Y-%m-%d'))
+      results.append(dt.strftime(DFL_DATE_FORMAT))
       dt = datetime.datetime(dt.year + int((dt.month + 1) / 12), (dt.month + 1) % 12 + 1, 1)
       dt = dt - datetime.timedelta(days=1)
       if weekdays:
@@ -286,7 +290,7 @@ class PyDates:
           dt = dt - datetime.timedelta(days=1)
     return results
 
-  def range_dates(self, to_dt, from_dt=None, weekdays=True):
+  def range_dates(self, to_dt: str, from_dt: Optional[str] = None, weekdays: bool = True):
     """
     Description:
     ------------
@@ -302,14 +306,14 @@ class PyDates:
 
     Attributes:
     ----------
-    :param from_dt: String. The start date in format YYYY-MM-DD.
-    :param to_dt: String. Optional. The end date in format YYYY-MM-DD.
-    :param weekdays: Boolean. Optional. Remove the weekends from the potential dates (take the day before). Default True
+    :param str from_dt: The start date in format YYYY-MM-DD.
+    :param Optional[str] to_dt: Optional. The end date in format YYYY-MM-DD.
+    :param bool weekdays: Optional. Remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
     """
     if from_dt is None:
-      from_dt = datetime.datetime.today().strftime('%Y-%m-%d')
+      from_dt = datetime.datetime.today().strftime(DFL_DATE_FORMAT)
     start_date = self.date_from_alias(from_dt)
     end_date = self.date_from_alias(to_dt, from_date=start_date)
     if start_date < end_date:
@@ -321,10 +325,10 @@ class PyDates:
     while dt > target_date:
       dt = dt - datetime.timedelta(days=1)
       if not dt.weekday() in [5, 6] or not weekdays:
-        dates.append(dt.strftime('%Y-%m-%d'))
+        dates.append(dt.strftime(DFL_DATE_FORMAT))
     return dates
 
-  def from_timestamp(self, timestamp, offset=0, reference=60, factor=1000):
+  def from_timestamp(self, timestamp: int, offset: int = 0, reference: int = 60, factor: int = 1000):
     """
     Description:
     ------------
@@ -336,18 +340,18 @@ class PyDates:
 
     Attributes:
     ----------
-    :param timestamp: Integer. The timestamp in milliseconds
-    :param offset: Integer. Optional. The time zone
-    :param reference: Integer. Optional. The reference shift in minutes
-    :param factor:
+    :param int timestamp: The timestamp in milliseconds.
+    :param int offset: Optional. The time zone.
+    :param int reference:  Optional. The reference shift in minutes.
+    :param int factor:
 
     :return: The server timestamp string
     """
     date = datetime.datetime.fromtimestamp(timestamp / factor)
     date = date + datetime.timedelta(minutes=(int(offset) + reference))
-    return date.strftime('%Y-%m-%d %H:%M:%S')
+    return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def to_server_time(self, timestamp, offset=0, reference=60):
+  def to_server_time(self, timestamp: str, offset: int = 0, reference: int = 60):
     """
     Description:
     ------------
@@ -361,17 +365,17 @@ class PyDates:
 
     Attributes:
     ----------
-    :param timestamp: String. The client timestamp.
-    :param offset: Integer. optional. The client offset time to be applied before storage in hour.
-    :param reference: Integer. optional. The reference time used on the server side.
+    :param str timestamp: The client timestamp.
+    :param int offset: Optional. The client offset time to be applied before storage in hour.
+    :param int reference: Optional. The reference time used on the server side.
 
     :return: The server timestamp string
     """
-    date = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+    date = datetime.datetime.strptime(timestamp, DFL_DATE_FORMAT + ' %H:%M:%S')
     date = date + datetime.timedelta(minutes=(int(offset) + reference))
-    return date.strftime('%Y-%m-%d %H:%M:%S')
+    return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def to_user_time(self, timestamp, offset, reference=60):
+  def to_user_time(self, timestamp: str, offset: int, reference: int = 60):
     """
     Description:
     ------------
@@ -385,18 +389,18 @@ class PyDates:
 
     Attributes:
     ----------
-    :param timestamp: String. The server timestamp.
-    :param offset: Integer. The client offset time to be applied before storage.
-    :param reference: Integer. Optional. The reference time used on the server side (default 20).
+    :param str timestamp: The server timestamp.
+    :param int offset: The client offset time to be applied before storage.
+    :param int reference: Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
     """
-    date = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
+    date = datetime.datetime.strptime(timestamp, DFL_DATE_FORMAT + ' %H:%M:%S')
     date = date + datetime.timedelta(minutes=-1 * (int(offset) + reference))
-    return date.strftime('%Y-%m-%d %H:%M:%S')
+    return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
   @staticmethod
-  def elapsed(delta_time, with_time=False):
+  def elapsed(delta_time, with_time: bool = False):
     """
     Description:
     ------------
@@ -406,7 +410,7 @@ class PyDates:
     Attributes:
     ----------
     :param delta_time: delta_time. The delta time between two python dates.
-    :param with_time: Boolean. Optional. A flag to mention if the time should be computed.
+    :param bool with_time: Optional. A flag to mention if the time should be computed.
     """
     year = delta_time.days // 365
     months = (delta_time.days - year * 365) // 12

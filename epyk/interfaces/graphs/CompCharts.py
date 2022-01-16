@@ -63,7 +63,6 @@ class Graphs:
     return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                     options=options, html_code=html_code)
 
-  @html.Html.css_skin()
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
                 height=(None, 'px'), html_code=None, options=None, profile=False):
     """
@@ -98,16 +97,16 @@ class Graphs:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if y_column is None or x_axis is None:
-      raise Exception("seriesName and axis must be defined")
+      raise ValueError("seriesName and axis must be defined")
 
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
     html_skillbar = html.HtmlEvent.SkillBar(
       self.page, records, y_column, x_axis, title, width, height, html_code, options, profile)
+    html.Html.set_component_skin(html_skillbar)
     return html_skillbar
 
-  @html.Html.css_skin()
   def sparkline(self, chart_type, data, title=None, options=None, width=(None, "%"), height=(None, "px"),
                 profile=False):
     """
@@ -144,6 +143,7 @@ class Graphs:
     html_chart = html.graph.GraphSparklines.Sparklines(
       self.page, data, title, width, height, dfl_options, profile)
     html_chart.color(self.page.theme.charts[0])
+    html.Html.set_component_skin(html_chart)
     return html_chart
 
   @property
@@ -164,7 +164,7 @@ class Graphs:
 
       https://plotly.com/javascript/
 
-    :return: A Python Plolty object
+    :return: A Python Plotly object
     """
     return CompChartsSparkline.Sparkline(self)
 
@@ -184,7 +184,7 @@ class Graphs:
 
       https://plotly.com/javascript/
 
-    :return: A Python Plolty object
+    :return: A Python Plotly object
     """
     return CompChartsPlotly.Plotly(self)
 
@@ -493,7 +493,6 @@ class Graphs:
     """
     return CompChartsVega.VegaEmbedded(self)
 
-  @html.Html.css_skin()
   def menu(self, chart, height=(18, 'px'), options=None, post=None, profile=None):
     """
     Description:
@@ -528,6 +527,7 @@ class Graphs:
           r.click([chart.js.clearData()])
         menu_items.append(r)
     container = self.page.ui.menu(chart, menu_items=menu_items, copy=False, post=post, editable=False)
+    html.Html.set_component_skin(container)
     return container
 
 

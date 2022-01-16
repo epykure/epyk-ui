@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional
 from epyk.core.html import Defaults
 
 
@@ -11,7 +12,7 @@ class Component:
     self.name = html.__class__.__name__
     self.folder = self.name.lower()
 
-  def rename(self, name):
+  def rename(self, name: str):
     """
     Description:
     -----------
@@ -19,7 +20,7 @@ class Component:
 
     Attributes:
     ----------
-    :param name: String. The name of the file.
+    :param str name: The name of the file.
     """
     self.name = name.capitalize()
     self.folder = self.name.lower()
@@ -34,7 +35,7 @@ class Component:
     """
     return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
-  def ts(self, name=None):
+  def ts(self, name: Optional[str] = None):
     """
     Description:
     -----------
@@ -43,7 +44,7 @@ class Component:
 
     Attributes:
     ----------
-    :param name: String. Optional. The component name. Can be set to define test components.
+    :param Optional[str] name: Optional. The component name. Can be set to define test components.
     """
     if name is not None:
       self.rename(name)

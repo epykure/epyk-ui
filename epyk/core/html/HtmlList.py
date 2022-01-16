@@ -12,6 +12,8 @@ information to manipulate them in your report
 
 """
 
+from typing import Union, Optional, Type
+
 from epyk.core.js import Imports
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsQuery
@@ -41,7 +43,7 @@ class Li(Html.Html):
   def __add__(self, component):
     """ Add items to a container """
     if not hasattr(component, 'options'):
-      raise Exception("This can only be used for HTML components")
+      raise ValueError("This can only be used for HTML components")
 
     self.set_html_content(component)
     return self
@@ -55,7 +57,8 @@ class Li(Html.Html):
     self.css({"text-decoration": "none", "list-style-type": 'none'})
     return self
 
-  def add_label(self, text, css=None, position="before", for_=None, html_code=None, options=None):
+  def add_label(self, text: str, css: Optional[dict] = None, position: str = "before",
+                for_: Optional[Type[Html.Html]] = None, html_code: Optional[str] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -67,12 +70,12 @@ class Li(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The label content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
-    :param position: String. Optional. The position.
-    :param for_: Specifies which form element a label is bound to
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str text: The label content.
+    :param Optional[dict] css: Optional. A dictionary with the CSS style to be added to the component.
+    :param str position: Optional. The position.
+    :param Optional[Type[Html.Html]] for_: Optional. Specifies which form element a label is bound to
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
     self.label = ""
     if text is not None:
@@ -91,7 +94,7 @@ class Li(Html.Html):
       self.label.css(dfl_css)
     return self
 
-  def set_html_content(self, component):
+  def set_html_content(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -99,7 +102,7 @@ class Li(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. Python HTML object.
+    :param Type[Html.Html] component: Python HTML object.
 
     :return: self, the cell object to allow the chaining
     """
@@ -112,7 +115,7 @@ class Li(Html.Html):
       self.innerPyHTML = component
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -120,10 +123,10 @@ class Li(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.innerPyHTML is not None:
       return self.innerPyHTML.click(js_funcs, profile)
@@ -134,7 +137,7 @@ class Li(Html.Html):
     return super(Li, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlLi:
     """
     Description:
     ------------
@@ -171,7 +174,7 @@ class List(Html.Html):
       self.set_items()
 
   @property
-  def options(self):
+  def options(self) -> OptList.OptionsLi:
     """
     Description:
     ------------
@@ -185,7 +188,7 @@ class List(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlList:
     """
     Description:
     ------------
@@ -198,7 +201,7 @@ class List(Html.Html):
       self._dom = JsHtml.JsHtmlList(self, report=self.page)
     return self._dom
 
-  def items_style(self, style):
+  def items_style(self, style: str):
     """
     Description:
     ------------
@@ -206,7 +209,7 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param style. String. Mandatory. The alias of the style to apply.
+    :param str style. The alias of the style to apply.
     """
     if style == "bullets":
       bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
@@ -218,7 +221,8 @@ class List(Html.Html):
         item.css(self.options.li_css)
     return self
 
-  def drop(self, js_funcs=None, prevent_default=True, profile=None):
+  def drop(self, js_funcs: Union[list, str] = None, prevent_default: bool = True,
+           profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -226,9 +230,9 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param prevent_default: Boolean. Optional. Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param bool prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -242,10 +246,10 @@ class List(Html.Html):
         self.dom.add(JsObjects.JsObjects.get("(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))] + js_funcs
     return super(List, self).drop(js_funcs, prevent_default, profile)
 
-  def __add__(self, component):
+  def __add__(self, component: Li):
     """ Add items to a container """
     if not isinstance(component, Li):
-      raise Exception("This can only be used for Li")
+      raise ValueError("This can only be used for Li")
 
     self.items = self.items or []
     component.options.managed = False
@@ -272,10 +276,10 @@ class List(Html.Html):
         li.innerHTML = item; htmlObj.appendChild(li)
       })'''
 
-  def item(self, n):
+  def item(self, n: int):
     return self.items[n]
 
-  def add_item(self, d):
+  def add_item(self, d: Union[Type[Html.Html], str]):
     """
     Description:
     ------------
@@ -283,7 +287,7 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param d: HTML component | String. The component to be added.
+    :param Union[Type[Html.Html], str] d:  The component to be added.
     """
     self.items = self.items or []
     li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
@@ -316,7 +320,7 @@ class List(Html.Html):
       self.items.append(li_obj)
     return self
 
-  def on_items(self, event, js_funcs, profile=None):
+  def on_items(self, event: Optional[str], js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -324,15 +328,15 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param event: String. The event type.
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[str] event: The event type.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     for i in self.items:
       i.on(event, js_funcs, profile)
     return self
 
-  def click_items(self, js_funcs, profile=None):
+  def click_items(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -340,8 +344,8 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs)
     for i, item in enumerate(self.items):
@@ -351,7 +355,8 @@ class List(Html.Html):
       item.click(fnc + js_funcs, profile)
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     self.style.css.cursor = "pointer"
     return super().click(js_funcs, profile=profile, source_event=source_event, on_ready=on_ready)
 
@@ -425,7 +430,7 @@ class Items(Html.Html):
     self.__external_item = False
 
   @property
-  def style(self):
+  def style(self) -> GrpClsList.ClassItems:
     """
     Description:
     -----------
@@ -437,7 +442,7 @@ class Items(Html.Html):
       self._styleObj = GrpClsList.ClassItems(self)
     return self._styleObj
 
-  def record(self, values):
+  def record(self, values: Union[dict, list]):
     """
     Description:
     -----------
@@ -445,7 +450,7 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param values: Dict | List. The items to be added to the list.
+    :param Union[dict, list] values: The items to be added to the list.
     """
     records = []
     if isinstance(values, dict):
@@ -493,7 +498,7 @@ class Items(Html.Html):
         htmlObj.appendChild(li)})''' % JsQuery.decorate_var("info", convert_var=False)
 
   @property
-  def options(self):
+  def options(self) -> OptList.OptionsItems:
     """
     Description:
     ------------
@@ -507,7 +512,7 @@ class Items(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlList.JsItem:
     """
     Description:
     ------------
@@ -520,7 +525,8 @@ class Items(Html.Html):
       self._dom = JsHtmlList.JsItem(self, report=self.page)
     return self._dom
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -528,17 +534,18 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = []
     self.options.click = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def draggable(self, js_funcs=None, options=None, profile=None, source_event=None):
+  def draggable(self, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+                profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -546,10 +553,10 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -559,7 +566,8 @@ class Items(Html.Html):
       js_funcs, toStr=True, profile=profile)
     return self
 
-  def add_type(self, name, item_def=None, func_name=None, dependencies=None):
+  def add_type(self, name: str, item_def: Optional[str] = None, func_name: Optional[str] = None,
+               dependencies: Optional[List[str]] = None):
     """
     Description:
     ------------
@@ -569,10 +577,10 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The reference of this type name in the framework.
-    :param item_def: String. The definition of the items (examples in JsHtmlList.py).
-    :param func_name: String. The external function name used to build the items.
-    :param dependencies: List. Optional. The external module dependencies.
+    :param str name: The reference of this type name in the framework.
+    :param Optional[str] item_def: The definition of the items (examples in JsHtmlList.py).
+    :param Optional[str] func_name: The external function name used to build the items.
+    :param Optional[List[str]] dependencies: Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:
@@ -594,7 +602,7 @@ class Items(Html.Html):
         item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def)))
     return self
 
-  def select_type(self, name=None, style=None, selected_style=None):
+  def select_type(self, name: Optional[str] = None, style: Optional[dict] = None, selected_style: Optional[dict] = None):
     """
     Description:
     ------------
@@ -605,9 +613,9 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. Optional. The list type name to be used.
-    :param style: Dictionary. Optional. The CSS style to be applied to the item.
-    :param selected_style: Dictionary. Optional. The css style to be applied when selected.
+    :param Optional[str] name: Optional. The list type name to be used.
+    :param Optional[dict] style: Optional. The CSS style to be applied to the item.
+    :param Optional[dict] selected_style: Optional. The css style to be applied when selected.
     """
     li_attrs = self.options.style
     if style is None:

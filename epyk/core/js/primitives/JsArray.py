@@ -10,6 +10,7 @@ Related Pages:
 		https://www.w3schools.com/jsref/jsref_obj_array.asp
 """
 
+from typing import Union, Optional
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.fncs import JsFncs
 
@@ -36,7 +37,7 @@ class JsArray(JsObject.JsObject):
     return JsNumber.JsNumber("%s.length" % self.varId, isPyData=False)
 
   @classmethod
-  def set(cls, varName, data=None, report=None):
+  def set(cls, varName: str, data: Optional[list] = None, report=None):
     """
     Description:
     -----------
@@ -44,8 +45,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param varName:
-    :param data:
+    :param str varName:
+    :param Optional[list] data:
     :param report:
     """
     if data is None:
@@ -55,7 +56,7 @@ class JsArray(JsObject.JsObject):
   # ------------------------------------------------------------------
   #                     ARRAY TRANSFORMATION FUNCTIONS
   #
-  def some_(self, jsFnc):
+  def some_(self, js_funcs: Union[list, str]):
     """
     Description:
     -----------
@@ -69,15 +70,15 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param js_funcs: function(currentValue, index, arr) A function to be run for each element in the array.
 
     :return: A Javascript Boolean
     """
     from epyk.core.js.primitives import JsBoolean
 
-    return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, jsFnc), isPyData=False)
+    return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, js_funcs), isPyData=False)
 
-  def every_(self, jsFncs, jsValue=None, profile=False):
+  def every_(self, js_funcs: Union[list, str], jsValue: Optional[str] = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -92,19 +93,19 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFncs: A function to be run for each element in the array
-    :param jsValue: Optional. A value to be passed to the function to be used as its "this" value.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: A function to be run for each element in the array
+    :param Optional[str] jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: None
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    jsFncs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if jsValue is None:
       return JsFncs.JsFunction("%s.every(function(val, index, arr){%s})" % (self.varId, jsFncs))
 
     return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, jsFncs, jsValue))
 
-  def filter_(self, jsFncs, jsValue=None, profile=False):
+  def filter_(self, js_funcs: Union[list, str], jsValue: Optional[str] = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -118,19 +119,19 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFncs: A function to be run for each element in the array
-    :param jsValue: Optional. A value to be passed to the function to be used as its "this" value.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: A function to be run for each element in the array
+    :param Optional[str] jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: None
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if jsValue is None:
-      return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s))" % (self.varId, jsFncs))
+      return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s))" % (self.varId, js_funcs))
 
-    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, jsFncs, jsValue))
+    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, js_funcs, jsValue))
 
-  def find(self, jsFnc):
+  def find(self, js_funcs: Union[list, str]):
     """
     Description:
     -----------
@@ -144,14 +145,14 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
 
     :return: Returns the array element value if any of the elements in the array pass the test, otherwise it
     returns undefined
     """
-    return "%s.find(%s)" % (self.varId, jsFnc)
+    return "%s.find(%s)" % (self.varId, js_funcs)
 
-  def findIndex(self, jsFnc, profile=False):
+  def findIndex(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -170,15 +171,15 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: Returns the array element index if any of the elements in the array pass the test, otherwise it returns -1
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-    return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, jsFnc))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, js_funcs))
 
-  def forEach(self, jsFnc, value="value", profile=False):
+  def forEach(self, js_funcs: Union[list, str], value: str = "value", profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -195,15 +196,16 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: A function to be run for each element in the array
+    :param Optional[str] value: Optional. A value to be passed to the function to be used as its "this" value.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: Void, The Javascript String
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-    return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, jsFnc))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, js_funcs))
 
-  def map(self, jsFnc, profile=False):
+  def map(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -221,19 +223,19 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if self.varName is not None:
       return JsArray("%s = %s" % (self.varId, JsArray("%s.map(function(value, index, arr){%s; return value})" % (
-        self.varId, jsFnc), isPyData=False)), isPyData=False)
+        self.varId, js_funcs), isPyData=False)), isPyData=False)
 
-    return JsArray("%s.map(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)), isPyData=False)
+    return JsArray("%s.map(function(value, index, arr){%s})" % (self.varId, ";".join(js_funcs)), isPyData=False)
 
-  def sort(self, jsFnc=None, profile=False):
+  def sort(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -248,17 +250,22 @@ class JsArray(JsObject.JsObject):
 
       https://www.w3schools.com/js/js_array_sort.asp
 
+    Attributes:
+    ----------
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+
     :return: An Array object, representing the joined array
     """
-    if jsFnc is not None:
-      if not isinstance(jsFnc, list):
-        jsFnc = [jsFnc]
-      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-      return JsArray("%s.sort(function(a, b){%s})" % (self.varId, jsFnc))
+    if js_funcs is not None:
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
+      js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+      return JsArray("%s.sort(function(a, b){%s})" % (self.varId, js_funcs))
 
     return JsArray("%s.sort()" % self.varId, isPyData=False)
 
-  def reduce(self, jsFnc, profile=False):
+  def reduce(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -276,14 +283,15 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: The Javascript function used by the reduce method
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: A Python / Javascript Number
     """
     from epyk.core.js.primitives import JsNumber
 
-    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-    return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, jsFnc))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, js_funcs))
 
   #------------------------------------------------------------------
   #             ARRAY TRANSFORMATION ON DATA
@@ -308,7 +316,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsObject.JsObject("%s.shift()" % self.varId, isPyData=False)
 
-  def slice(self, start, end):
+  def slice(self, start: int, end: int):
     """
     Description:
     -----------
@@ -325,8 +333,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param start: The index number in the array
-    :param end: The index number in the array
+    :param int start: The index number in the array
+    :param int end: The index number in the array
 
     :return: A new Array, containing the selected elements
     """
@@ -353,7 +361,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsObject.JsObject("%s.pop()" % self.varId, isPyData=False)
 
-  def delete(self, jsNumber):
+  def delete(self, jsNumber: Union[float, int]):
     """
     Description:
     -----------
@@ -378,7 +386,7 @@ class JsArray(JsObject.JsObject):
     jsNumber = JsUtils.jsConvertData(jsNumber, None)
     return JsFncs.JsFunction("delete %s[%s]" % (self.varId, jsNumber))
 
-  def join(self, sep):
+  def join(self, sep: str):
     """
     Description:
     -----------
@@ -394,7 +402,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param sep: Optional. The separator to be used. If omitted, the elements are separated with a comma
+    :param str sep: Optional. The separator to be used. If omitted, the elements are separated with a comma
     :return: A String, representing the array values, separated by the specified separator
     """
     from epyk.core.js.primitives import JsString
@@ -402,7 +410,7 @@ class JsArray(JsObject.JsObject):
     sep = JsUtils.jsConvertData(sep, None)
     return JsString.JsString("%s.join(%s)" % (self.varId, JsUtils.jsConvertData(sep, None)), isPyData=False)
 
-  def copyWithin(self, start=0, end=None):
+  def copyWithin(self, start: int = 0, end: Optional[int] = None):
     """
     Description:
     -----------
@@ -418,8 +426,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param start: Optional. The index position to start copying elements from  (default is 0)
-    :param end: Optional. The index position to stop copying elements from (default is array.length)
+    :param int start: Optional. The index position to start copying elements from  (default is 0)
+    :param Optional[int] end: Optional. The index position to stop copying elements from (default is array.length)
 
     :return: An Array, the changed array
     """
@@ -427,7 +435,7 @@ class JsArray(JsObject.JsObject):
       end = self.length
     return JsArray("%s.copyWithin(%s, %s)" % (self.varId, start, end), setVar=True, isPyData=False)
 
-  def fill(self, jsData, start=0, end=None, jsFnc=None, jsObj=None):
+  def fill(self, jsData, start: int = 0, end: Optional[int] = None, jsFnc: Union[list, str] = None, jsObj=None):
     """
     Description:
     -----------
@@ -446,9 +454,9 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param jsData: Required. The value to fill the array with
-    :param start: Optional. The index to start filling the array (default is 0)
-    :param end: Optional. The index to stop filling the array (default is array.length)
-    :param jsFnc:
+    :param int start: Optional. The index to start filling the array (default is 0)
+    :param Optional[int] end: Optional. The index to stop filling the array (default is array.length)
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
     :param jsObj: Optional, The base Python Javascript object to add the polyfill
 
     :return: An Array, the changed array
@@ -498,7 +506,7 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    Equivalent to the append Python function for the Javascript
+    Equivalent to append Python function for the Javascript
 
     Usage::
 
@@ -508,7 +516,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
-    https://www.w3schools.com/python/ref_list_append.asp
+      https://www.w3schools.com/python/ref_list_append.asp
 
     Attributes:
     ----------
@@ -583,7 +591,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsArray("%s.reverse()" % self.varId, isPyData=False)
 
-  def flat(self, depth=1):
+  def flat(self, depth: int = 1):
     """
     Description:
     -----------
@@ -596,11 +604,11 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param depth: Integer. The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+    :param int depth: The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
     """
     return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), isPyData=False)
 
-  def flatMap(self, jsFnc, profile=False):
+  def flatMap(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -614,20 +622,20 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
-    jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if self.varName is not None:
       return JsArray("%s = %s" % (self.varId, JsArray(
-        "%s.flatMap(function(value, index, arr){%s; return value})" % (self.varId, jsFnc), isPyData=False)),
+        "%s.flatMap(function(value, index, arr){%s; return value})" % (self.varId, js_funcs), isPyData=False)),
                      isPyData=False)
 
-    return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, jsFnc), isPyData=False)
+    return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, js_funcs), isPyData=False)
 
-  def includes(self, element, start=0):
+  def includes(self, element, start: int = 0):
     """
     Description:
     -----------
@@ -644,7 +652,7 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param element: Object. Required. The element to search for
-    :param start: Integer. Optional. Default 0. At which position in the array to start the search
+    :param int start: Optional. Default 0. At which position in the array to start the search
     """
     from epyk.core.js.primitives import JsBoolean
 
@@ -674,7 +682,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsArray("%s.unshift(%s)" % (self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])))
 
-  def splice(self, i, j, jsData, jsFnc=None):
+  def splice(self, i: int, j: int, jsData, js_funcs: Optional[Union[list, str]] = None):
     """
     Description:
     -----------
@@ -689,16 +697,17 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param i: Required. An integer that specifies at what position to add/remove items, Use negative values to specify the position from the end of the array
-    :param j: Optional. The number of items to be removed. If set to 0, no items will be removed
+    :param int i: Required. An integer that specifies at what position to add/remove items, Use negative values to specify the position from the end of the array
+    :param int j: Optional. The number of items to be removed. If set to 0, no items will be removed
     :param jsData: Optional. The new item(s) to be added to the array
+    :param Optional[Union[list, str]] js_funcs: Optional. The Javascript functions.
 
     :return: A new Array, containing the removed items (if any)
     """
-    jsData = JsUtils.jsConvertData(jsData, jsFnc)
+    jsData = JsUtils.jsConvertData(jsData, js_funcs)
     return JsArray("%s.splice(%s, %s, %s)" % (self.varId, i, j, jsData))
 
-  def __getitem__(self, index):
+  def __getitem__(self, index: int):
     if not isinstance(index, int):
       return JsObject.JsObject("%s[%s]" % (self.varId, index), report=self._report)
 
@@ -765,18 +774,20 @@ class JsArray(JsObject.JsObject):
     """
     return JsObject.JsObject("...%s" % self.varId)
 
-  def toDict(self, header):
+  def toDict(self, header: list):
     """
     Description:
     -----------
 
-    :param header:
+    Attributes:
+    ----------
+    :param list header:
     """
     return JsObject.JsObject(
       "(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (
         self.varId, header))
 
-  def sample(self, n=None, report=None):
+  def sample(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -792,8 +803,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An index
-    :param report: Optional. The report object
+    :param int n: An index.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -808,7 +819,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.sample(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def first(self, n=None, report=None):
+  def first(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -823,13 +834,12 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An index
-    :param report: Optional. The report object
+    :param int n: An index.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
     if n is not None:
-      print(self.varName)
       if self.varName is None:
         return JsArray("(function(){return _.first(%s, %s)})()" % (self.toStr(), n), report=report)
 
@@ -840,7 +850,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.first(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def last(self, n=None, report=None):
+  def last(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -855,8 +865,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An index
-    :param report: Optional. The report object
+    :param int n: An index.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -871,7 +881,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.last(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def chunk(self, n=None, report=None):
+  def chunk(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -886,8 +896,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An length of the sub lists
-    :param report: Optional. The report object
+    :param int n: The length of the sub lists.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -902,7 +912,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.chunk(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def initial(self, n=None, report=None):
+  def initial(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -918,8 +928,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An index
-    :param report: Optional. The report object
+    :param int n: An index.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -934,7 +944,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.initial(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def rest(self, n=None, report=None):
+  def rest(self, n: int = None, report=None):
     """
     Description:
     -----------
@@ -949,8 +959,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param n: Integer. An index
-    :param report: Optional. The report object
+    :param int n: An index.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -965,7 +975,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.rest(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def where(self, values=None, report=None):
+  def where(self, values: list = None, report=None):
     """
     Description:
     -----------
@@ -980,8 +990,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param values: List. All the values to be removed
-    :param report: Optional. The report object
+    :param list values: All the values to be removed.
+    :param report: Optional. The report object.
     """
     values = JsUtils.jsConvertData(values, None)
     report = report or self._report
@@ -991,7 +1001,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.where(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
 
-  def without(self, values=None, report=None):
+  def without(self, values: list = None, report=None):
     """
     Description:
     -----------
@@ -1005,8 +1015,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param values: List. All the values to be removed
-    :param report: Optional. The report object
+    :param list values: All the values to be removed.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1015,7 +1025,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.without(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
 
-  def union(self, arrays=None, report=None):
+  def union(self, arrays: list = None, report=None):
     """
     Description:
     -----------
@@ -1030,7 +1040,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param arrays:
+    :param list arrays: The list of lists to sum.
     :param report: Optional. The report object
     """
     report = report or self._report
@@ -1041,7 +1051,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.union(%s, ...%s)})()" % (self.toStr, self.varName, arrays), report=report)
 
-  def intersection(self, arrays=None, report=None):
+  def intersection(self, arrays: list = None, report=None):
     """
     Description:
     -----------
@@ -1056,8 +1066,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param arrays:
-    :param report: Optional. The report object
+    :param list arrays: The list of lists to process.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1068,7 +1078,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.intersection(%s, ...%s)})()" % (
       self.toStr, self.varName, arrays), report=report)
 
-  def uniq(self, is_sorted=False, report=None):
+  def uniq(self, is_sorted: bool = False, report=None):
     """
     Description:
     -----------
@@ -1083,8 +1093,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param is_sorted:
-    :param report: Optional. The report object
+    :param bool is_sorted: Flag to specify if the list is sorted.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1135,7 +1145,7 @@ class JsArray(JsObject.JsObject):
     """
     return JaArrayRejector("filter", self.toStr(), self.varName, self._report)
 
-  def range(self, stop, start=0, step=1, report=None):
+  def range(self, stop: int, start: int= 0, step: int= 1, report=None):
     """
     Description:
     -----------
@@ -1154,16 +1164,16 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param stop: Integer. The index of the last value
-    :param start: Integer. The index of the first value
-    :param step: Integer. The step
+    :param int stop: The index of the last value
+    :param int start: The index of the first value
+    :param int step: The step
     :param report: Optional. The report object
     """
     report = report or self._report
     report.jsImports.add('underscore')
     return JsArray("_.range(%s, %s, %s)" % (start, stop, step), report=report)
 
-  def object(self, keys, report=None):
+  def object(self, keys: list, report=None):
     """
     Description:
     -----------
@@ -1177,8 +1187,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param keys: List. the keys for the dictionary
-    :param report: Optional. The report object
+    :param list keys: The keys for the dictionary.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1187,17 +1197,17 @@ class JsArray(JsObject.JsObject):
 
 class JaArrayRejector:
 
-  def __init__(self, fncName, data, varName, report):
+  def __init__(self, fncName: str, data, varName: str, report):
     self._report, self.varName, self.data, self.fncName = report, varName, data, fncName
 
-  def modulo(self, n):
+  def modulo(self, n: int):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param n:
+    :param int n:
     """
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (
@@ -1223,14 +1233,14 @@ class JaArrayRejector:
     return JsArray("(function(){%s; return _.%s(%s, function(num){ return num == %s; })})()" % (
       self.data, self.fncName, self.varName, val), report=self._report)
 
-  def includes(self, values):
+  def includes(self, values: list):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param values:
+    :param list values:
     """
     values = JsUtils.jsConvertData(values, None)
     if self.varName is None:
@@ -1240,14 +1250,14 @@ class JaArrayRejector:
     return JsArray("(function(){%s; return _.%s(%s, function(num){ return %s.includes(num); })})()" % (
       self.data, self.fncName, self.varName, values), report=self._report)
 
-  def custom(self, js_expr):
+  def custom(self, js_expr: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_expr:
+    :param str js_expr: The JavaScript expression.
     """
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ %s; })" % (self.fncName, self.data, js_expr), report=self._report)
@@ -1258,7 +1268,7 @@ class JaArrayRejector:
 
 class JsRecordSet(JsArray):
 
-  def distinct(self, colName):
+  def distinct(self, col_name: str):
     """
     Description:
     -----------
@@ -1267,12 +1277,12 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param colName: String. The column in the dictionary.
+    :param str col_name: The column in the dictionary.
     """
-    colName = JsUtils.jsConvertData(colName, None)
-    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (colName, self.toStr()))
+    col_name = JsUtils.jsConvertData(col_name, None)
+    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (col_name, self.toStr()))
 
-  def to_dict(self, colName, valueName):
+  def to_dict(self, col_name: str, value_name: str):
     """
     Description:
     -----------
@@ -1280,10 +1290,10 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param colName: String. The column in the dictionary.
-    :param valueName: String. The column in the dictionary.
+    :param str col_name: The column in the dictionary.
+    :param str value_name: The column in the dictionary.
     """
-    colName = JsUtils.jsConvertData(colName, None)
-    valueName = JsUtils.jsConvertData(valueName, None)
-    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){if (!(rec[%(col)s] in result)){result[rec[%(col)s]] = 0}; result[rec[%(col)s]] += parseFloat(rec[%(val)s])}); return result })(%(record)s)" % {"col": colName, "val": valueName, "record": self.toStr()})
+    col_name = JsUtils.jsConvertData(col_name, None)
+    value_name = JsUtils.jsConvertData(value_name, None)
+    return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){if (!(rec[%(col)s] in result)){result[rec[%(col)s]] = 0}; result[rec[%(col)s]] += parseFloat(rec[%(val)s])}); return result })(%(record)s)" % {"col": col_name, "val": value_name, "record": self.toStr()})
 

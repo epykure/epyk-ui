@@ -21,7 +21,6 @@ class Sliders:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), html_code=None,
              helper=None, options=None, profile=None):
     """
@@ -61,9 +60,9 @@ class Sliders:
       number = minimum
     html_slider = html.HtmlEvent.Slider(
       self.page, number, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def date(self, value=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'), html_code=None,
            helper=None, options=None, profile=None):
     """
@@ -95,9 +94,9 @@ class Sliders:
       value = minimum
     html_slider = html.HtmlEvent.SliderDate(
       self.page, value, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def date_range(self, value1=None, value2=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'),
                  html_code=None, helper=None, options=None, profile=None):
     """
@@ -131,9 +130,9 @@ class Sliders:
       value2 = maximum
     html_slider = html.HtmlEvent.SliderDates(
       self.page, [value1, value2], minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def range(self, values=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
             options=None, profile=None):
     """
@@ -163,9 +162,9 @@ class Sliders:
     options['range'] = True
     html_slider = html.HtmlEvent.Range(
       self.page, values, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def upper(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
             options=None, profile=None):
     """
@@ -196,9 +195,9 @@ class Sliders:
     options['range'] = 'max'
     html_slider = html.HtmlEvent.Slider(
       self.page, value or 0, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def lower(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
             options=None, profile=None):
     """
@@ -227,9 +226,9 @@ class Sliders:
     options['range'] = 'min'
     html_slider = html.HtmlEvent.Slider(
       self.page, value or 0, minimum, maximum, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_slider)
     return html_slider
 
-  @html.Html.css_skin()
   def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
                   options=None, profile=None):
     """
@@ -264,9 +263,9 @@ class Sliders:
     height = Arguments.size(height, unit="px")
     html_pr = html.HtmlEvent.ProgressBar(
       self.page, number, total, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_pr)
     return html_pr
 
-  @html.Html.css_skin()
   def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
                options=None, profile=None):
     """
@@ -292,4 +291,5 @@ class Sliders:
     progress.style.css.border_radius = '50px'
     progress.style.css.background = self.page.theme.greys[4]
     progress.options.css({"border-radius": "50px", "border-color": self.page.theme.greys[5]})
+    html.Html.set_component_skin(progress)
     return progress

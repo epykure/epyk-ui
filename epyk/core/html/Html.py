@@ -6,6 +6,8 @@ import json
 import collections
 import functools
 import logging
+import inspect
+from typing import Union, Optional, Type, List, Any
 
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
@@ -36,7 +38,7 @@ except ImportError:  # For Python 2
 regex = re.compile('[^a-zA-Z0-9_]')
 
 
-def cleanData(value):
+def cleanData(value: str):
   """ Function to clean the javascript data to allow the use of variables """
   return regex.sub('', value.strip())
 
@@ -45,7 +47,7 @@ def cleanData(value):
 #                                          FRAMEWORK DECORATORS
 #
 # ---------------------------------------------------------------------------------------------------------
-def deprecated(comment):
+def deprecated(comment: str):
   """
   Description:
   -----------
@@ -54,7 +56,7 @@ def deprecated(comment):
 
   Attributes:
   ----------
-  :param func: Function. A python function.
+  :param str comment:
   """
 
   def decorator(func):
@@ -92,39 +94,34 @@ def inprogress(func):
   return new_func
 
 
-def css_skin():
-  """
-  Description:
-  ------------
-  In dev. Transversal way to change the skin of all the HTML Interfaces.
-  This override is done just after the interface call in order to allow specific style definition in the reports.
-  
-  """
-  def decorator(func):
-    @functools.wraps(func)
-    def decorated(*args, **kwargs):
-      component = func(*args, **kwargs)
-      if component.page.ui.components_skin is not None:
-        shortcuts = {"button": "buttons.button", "title": "texts.title"}
-        for sc, msc in shortcuts.items():
-          if sc in component.page.ui.components_skin:
-            component.page.ui.components_skin[msc] = component.page.ui.components_skin[sc]
-        alias = func.__qualname__.lower()
-        if alias in component.page.ui.components_skin:
-          comp_skin = component.page.ui.components_skin[alias]
-          if 'clear' in comp_skin:
-            if comp_skin["clear"].get("css"):
-              component.style.clear_style()
-            if comp_skin["clear"].get("cls"):
-              component.style.clear(True)
-          component.css(component.page.ui.components_skin[alias].get('css', {}))
-          for cls in comp_skin.get("cls", []):
-            component.attr["class"].add(cls)
-      return component
+def set_component_skin(component):
+    """
+    Description:
+    ------------
 
-    return decorated
+    Attributes:
+    ----------
+    :param component:
 
-  return decorator
+    :return:
+    """
+    if component.page.ui.components_skin is not None:
+      shortcuts = {"button": "buttons.button", "title": "texts.title"}
+      for sc, msc in shortcuts.items():
+        if sc in component.page.ui.components_skin:
+          component.page.ui.components_skin[msc] = component.page.ui.components_skin[sc]
+      alias = inspect.stack()[1].function.lower()
+      if alias in component.page.ui.components_skin:
+        comp_skin = component.page.ui.components_skin[alias]
+        if 'clear' in comp_skin:
+          if comp_skin["clear"].get("css"):
+            component.style.clear_style()
+          if comp_skin["clear"].get("cls"):
+            component.style.clear(True)
+        component.css(component.page.ui.components_skin[alias].get('css', {}))
+        for cls in comp_skin.get("cls", []):
+          component.attr["class"].add(cls)
+    return component
 
 
 class Required:
@@ -134,7 +131,7 @@ class Required:
     self.js, self.css = {}, {}
     self._page = page
 
-  def add(self, package, version=None, verbose=True):
+  def add(self, package: str, version: Optional[str] = None, verbose: bool = True):
     """
     Description:
     -----------
@@ -142,14 +139,11 @@ class Required:
 
     TODO: Use the version number
 
-    Usage::
-
-
     Attributes:
     ----------
-    :param package: String. The package alias.
-    :param version: String. Optional. The package version number.
-    :param verbose: Boolean. Optional. Display version details (default True).
+    :param str package: The package alias.
+    :param Optional[str] version: Optional. The package version number.
+    :param bool verbose: Optional. Display version details (default True).
     """
     html_types = set()
     if package in Imports.JS_IMPORTS:
@@ -179,7 +173,8 @@ class EventTouch:
   def __init__(self, page):
     self._page = page
 
-  def start(self, js_funcs, profile=False, source_event=None):
+  def start(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+            source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -199,14 +194,15 @@ class EventTouch:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :paramOptional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     self._page.on("touchstart", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def move(self, js_funcs, profile=False, source_event=None):
+  def move(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+           source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -225,14 +221,15 @@ class EventTouch:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     self._page.on("touchmove", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def cancel(self, js_funcs, profile=False, source_event=None):
+  def cancel(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+             source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -251,14 +248,15 @@ class EventTouch:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     self._page.on("touchcancel", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def end(self, js_funcs, profile=False, source_event=None):
+  def end(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+          source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -278,14 +276,15 @@ class EventTouch:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     self._page.on("touchend", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def swap(self, js_funcs_left, js_funcs_right, profile=False, source_event=None):
+  def swap(self, js_funcs_left: Optional[Union[list, str]], js_funcs_right: Optional[Union[list, str]],
+           profile: Optional[Union[dict, bool]] = False, source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -293,10 +292,10 @@ class EventTouch:
 
     Attributes:
     ----------
-    :param js_funcs_left: List | String. Javascript functions.
-    :param js_funcs_right: List | String. Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs_left: Javascript functions.
+    :param Optional[Union[list, str]] js_funcs_right: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"],
                profile=profile, source_event=source_event)
@@ -309,7 +308,7 @@ class EventTouch:
 
 class Components(collections.OrderedDict):
 
-  def css(self, attrs):
+  def css(self, attrs: dict):
     """
     Description:
     -----------
@@ -317,7 +316,7 @@ class Components(collections.OrderedDict):
 
     Attributes:
     ----------
-    :param attrs: Dictionary. The CSS attributes.
+    :param dict attrs: The CSS attributes.
     """
     for component in self.values():
       if hasattr(component, "css"):
@@ -348,7 +347,8 @@ class Html:
   builder_name, _js__builder__, async_builder = None, None, False
   _option_cls = Options
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
     """ Create an python HTML object """
     # Child component for this component
     self.components = Components()
@@ -384,14 +384,14 @@ class Html:
 
     if html_code is not None:
       if html_code[0].isdigit() or cleanData(html_code) != html_code:
-        raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (
+        raise ValueError("htmlCode %s cannot start with a number or contain, suggestion %s " % (
           html_code, cleanData(html_code)))
 
       if html_code in self.page.components:
         if html_code in ["content", "content_page", "page_nav_bar"]:
-          raise Exception("Duplicated Html code '%s', this is used internally in the framework !" % html_code)
+          raise ValueError("Duplicated Html code '%s', this is used internally in the framework !" % html_code)
 
-        raise Exception("Duplicated Html code '%s' in the script !" % html_code)
+        raise ValueError("Duplicated Html code '%s' in the script !" % html_code)
 
       self.__htmlCode = html_code
       if html_code in self.page.inputs:
@@ -402,16 +402,17 @@ class Html:
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
     self._internal_components = [self.htmlCode]
 
-  def with_profile(self, profile, event=None, element_id=None):
+  def with_profile(self, profile: Optional[Union[dict, bool]], event: Optional[str] = None,
+                   element_id: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param event: String. Optional. The event name.
-    :param element_id: String. Optional. A DOM component reference in the page.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] event: Optional. The event name.
+    :param Optional[str] element_id: Optional. A DOM component reference in the page.
     """
     if profile is None and self.profile:
       if event is None:
@@ -463,7 +464,7 @@ class Html:
     return self.val[i]
 
   @property
-  def style(self):
+  def style(self) -> GrpCls.ClassHtml:
     """
     Description:
     -----------
@@ -482,7 +483,7 @@ class Html:
     return self._styleObj
 
   @property
-  def htmlCode(self):
+  def htmlCode(self) -> str:
     """
     Description:
     -----------
@@ -516,7 +517,7 @@ class Html:
     return self._report
 
   @property
-  def js(self):
+  def js(self) -> Js.JsBase:
     """
     Description:
     -----------
@@ -541,7 +542,7 @@ class Html:
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtml:
     """
     Description:
     -----------
@@ -577,7 +578,7 @@ class Html:
     """
     return self.__options
 
-  def prepend_child(self, component, profile=None):
+  def prepend_child(self, component, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -596,7 +597,7 @@ class Html:
     Attributes:
     ----------
     :param component: HTML. The html component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
     """
@@ -609,7 +610,7 @@ class Html:
       self.dom.insertBefore(component.dom)], toStr=True, profile=profile))
     return self
 
-  def append_child(self, component, profile=None):
+  def append_child(self, component, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -628,7 +629,7 @@ class Html:
     Attributes:
     ----------
     :param component: HTML. The html component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
     """
@@ -680,7 +681,7 @@ class Html:
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
-  def add_icon(self, text, css=None, position="before", family=None, html_code=None):
+  def add_icon(self, text, css: Optional[dict] = None, position="before", family=None, html_code=None):
     """
     Description:
     ------------
@@ -1048,7 +1049,7 @@ class Html:
     """
     self.page.components.move_to_end(self.htmlCode)
 
-  def css(self, key=None, value=None, reset=False):
+  def css(self, key: Optional[str, dict] = None, value: Optional[str] = None, reset: bool = False):
     """
     Description:
     -----------
@@ -1060,9 +1061,9 @@ class Html:
 
     Attributes:
     ----------
-    :param key: String. Optional. The key style in the CSS attributes (Can also be a dictionary).
-    :param value: String. Optional. The value corresponding to the key style.
-    :param reset: Boolean. Optional. Specify if the CSS styles need to be emptied first.
+    :param Optional[str, dict] key: Optional. The key style in the CSS attributes (Can also be a dictionary).
+    :param Optional[str] value: Optional. The value corresponding to the key style.
+    :param bool reset: Optional. Specify if the CSS styles need to be emptied first.
 
     :return: The python object itself.
     """
@@ -1096,7 +1097,7 @@ class Html:
       self.attr['css'][key] = value if isinstance(value, str) else json.dumps(value)
     return self
 
-  def add_style(self, css_classes=None, css_attrs=None, clear_first=False):
+  def add_style(self, css_classes=None, css_attrs: Optional[dict] = None, clear_first: bool = False):
     """
     Description:
     ------------
@@ -1105,8 +1106,8 @@ class Html:
     Attributes:
     ----------
     :param css_classes: String | List. Optional. The CSS class reference.
-    :param css_attrs: Dictionary. Optional. The CSS attributes.
-    :param clear_first: Boolean. Optional. Remove all the predefined CSS Inline style and classes for the component.
+    :param Optional[dict] css_attrs: Optional. The CSS attributes.
+    :param bool clear_first: Optional. Remove all the predefined CSS Inline style and classes for the component.
     """
     if clear_first:
       self.attr["class"].clear()
@@ -1122,7 +1123,7 @@ class Html:
       self.css(css_attrs)
 
   @packages.packageImport('bootstrap', 'bootstrap')
-  def tooltip(self, value, location='top', options=None):
+  def tooltip(self, value, location: str = 'top', options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1142,8 +1143,8 @@ class Html:
     Attributes:
     ----------
     :param value: String. The tooltip text.
-    :param location: String. Optional. The position of the tooltip.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str location: Optional. The position of the tooltip.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
 
     :return: The Python object self.
     """
@@ -1177,7 +1178,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
-  def popover(self, content, title=None, options=None):
+  def popover(self, content: str, title: Optional[str] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1189,9 +1190,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param content: String. The tooltip content.
-    :param title: String. Optional. The tooltip title.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str content: The tooltip content.
+    :param Optional[str] title: Optional. The tooltip title.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
     if content is not None:
       self.attr["data-content"] = content
@@ -1205,7 +1206,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         "%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
-  def draggable(self, js_funcs=None, options=None, profile=None, source_event=None):
+  def draggable(self, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+                profile: Union[bool, dict] = None, source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -1213,10 +1215,10 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param Optional[str] options: Optional. Specific Python options available for this component.
+    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -1225,7 +1227,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self.on("dragstart", js_funcs + [
       'event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
 
-  def sticky(self, anchor, css_attrs=None):
+  def sticky(self, anchor, css_attrs: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1237,10 +1239,10 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param anchor: Component. the component which will be used to check the position.
-    :param css_attrs: Dictionary. Optional. The CSS attributes of the component once sticky.
+    :param Optional[dict css_attrs: Optional. The CSS attributes of the component once sticky.
     """
     if anchor.htmlCode == self.htmlCode:
-      raise Exception("Anchor cannot be the moving component")
+      raise ValueError("Anchor cannot be the moving component")
 
     css_attrs = css_attrs or {"bottom": "10px", "left": "10px", "height": "200px !IMPORTANT"}
     css_attrs["position"] = "fixed"
@@ -1255,7 +1257,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           self.dom.classList.add(cls_name)])])
     ])
 
-  def add_options(self, options=None, name=None, value=None):
+  def add_options(self, options: Optional[dict] = None, name: Optional[str] = None, value: Optional[str] = None):
     """
     Description:
     -----------
@@ -1264,14 +1266,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. the extra options to be added to the component.
-    :param name: String. Optional. The key. The option name.
-    :param value: String. Optional. The value. The option value.
+    :param Optional[dict] options: Optional. the extra options to be added to the component.
+    :param Optional[str] name: Optional. The key. The option name.
+    :param Optional[str] value: Optional. The value. The option value.
 
     :return: self to allow the chains
     """
     if options is None and name is None:
-      raise Exception("Either the attrs or the name should be specified")
+      raise ValueError("Either the attrs or the name should be specified")
 
     if options is None:
       options = {name: value}
@@ -1279,7 +1281,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self._jsStyles[k] = v
     return self
 
-  def set_attrs(self, attrs=None, name=None, value=None):
+  def set_attrs(self, attrs: Optional[dict] = None, name: Optional[str] = None, value: Optional[Any] = None):
     """
     Description:
     -----------
@@ -1299,12 +1301,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param attrs: Dictionary. Optional. All the HTML tags attributes.
-    :param name: String. Optional. A python string with the name of the attribute.
-    :param value: String. Optional. A python string with the value of the attribute.
+    :param Optional[dict] attrs: Optional. All the HTML tags attributes.
+    :param Optional[str] name: Optional. A python string with the name of the attribute.
+    :param Optional[str] value: Optional. A python string with the value of the attribute.
     """
     if attrs is None and name is None:
-      raise Exception("Either the attrs or the name should be specified")
+      raise ValueError("Either the attrs or the name should be specified")
 
     if attrs is None:
       attrs = {name: value}
@@ -1334,7 +1336,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           self.attr[k] = v
     return self
 
-  def get_attrs(self, withId=True, pyClassNames=None):
+  def get_attrs(self, withId: bool = True, pyClassNames: List[str] = None):
     """
     Description:
     -----------
@@ -1345,8 +1347,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param withId: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
-    :param pyClassNames: List. Optional. The Python class names.
+    :param bool withId: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
+    :param List[str] pyClassNames: Optional. The Python class names.
 
     :return: A string with the dom attributes
     """
@@ -1380,7 +1382,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
+  def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+         source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -1399,11 +1402,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param event: String. The Javascript event type from the dom_obj_event.asp.
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param str event: The Javascript event type from the dom_obj_event.asp.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param bool profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param str on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: self to allow the chains.
     """
@@ -1420,7 +1423,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self._report.body.onReady([self.dom.events.trigger(event)])
     return self
 
-  def event_fnc(self, event):
+  def event_fnc(self, event: str):
     """
     Description:
     ------------
@@ -1429,11 +1432,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param event: String. The event function.
+    :param str event: The event function.
     """
     return list(self._browser_data['mouse'][event][self.dom.varId]["content"])
 
-  def drop(self, js_funcs, prevent_default=True, profile=None):
+  def drop(self, js_funcs: Union[list, str], prevent_default: bool = True, profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -1446,9 +1449,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param prevent_default: Boolean. Optional. Specify if the event should have a default behaviour on the page.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param bool prevent_default: Optional. Specify if the event should have a default behaviour on the page.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
 
     :return: Return self to allow the chaining
     """
@@ -1470,7 +1473,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
 
-  def hover(self, js_funcs, profile=None, source_event=None):
+  def hover(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1485,13 +1489,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     return self.on("mouseover", js_funcs, profile, source_event)
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -1510,16 +1515,17 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
       self._report.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, source_event)
 
-  def focusout(self, js_funcs, profile=None, source_event=None):
+  def focusout(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+               source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1538,16 +1544,17 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     js_funcs.insert(0, "if(%(dom)s.contains(event.relatedTarget)) {return ;}" % {"dom": source_event or self.dom.varId})
     return self.on("focusout", js_funcs, profile, source_event)
 
-  def dblclick(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def dblclick(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+               source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -1559,8 +1566,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[dict, bool]] profile. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -1568,7 +1575,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self._report.body.onReady([self.dom.events.trigger("dblclick")])
     return self.on("dblclick", js_funcs, profile, source_event)
 
-  def scroll(self, js_funcs, profile=None, source_event=None):
+  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+             source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1580,13 +1588,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     return self.on("scroll", js_funcs, profile, source_event)
 
-  def mouse(self, on_funcs=None, out_funcs=None, profile=None, source_event=None):
+  def mouse(self, on_funcs: Optional[Union[list, str]] = None,
+            out_funcs=None, profile: Optional[Union[dict, bool]] = None, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1621,7 +1630,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, js_funcs, profile=None, source_event=None, components=None):
+  def paste(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event=None, components=None):
     """
     Description:
     -----------
@@ -1629,9 +1638,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param str source_event: Optional. The source target for the event.
     :param components: List<components>. Optional.
     """
     if not isinstance(js_funcs, list):
@@ -1641,7 +1650,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       ["var data = %s" % data_map.toStr()] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
-  def contextMenu(self, menu, js_funcs=None, profile=None):
+  def contextMenu(self, menu, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -1652,8 +1661,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param menu:
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Optional. The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
       menu = self._report.ui.menus.contextual(menu)
@@ -1686,9 +1695,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return EventTouch(self)
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None, component_id=None):
     if not self.builder_name or self._js__builder__ is None:
-      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
+      raise ValueError("No builder defined for this HTML component %s" % self.__class__.__name__)
 
     if self.async_builder:
       self.page.properties.js.add_constructor(self.builder_name, "async function %s(htmlObj, data, options){%s}" % (
@@ -1724,7 +1733,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return self.build(self.val, None)
 
-  def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
+  def subscribe(self, socket, channel: str, data=None, options: Optional[dict] = None,
+                js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -1740,11 +1750,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param socket: Socket. A python socket object.
-    :param channel: String. The channel on which events will be received.
+    :param str channel: The channel on which events will be received.
     :param data:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Union[list, str] js_funcs: Optional. Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if data is None:
       data = socket.message
@@ -1753,7 +1763,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   @packageImport('sortablejs')
-  def sortable(self, options=None, propagate=True, propagate_only=False):
+  def sortable(self, options: Optional[dict] = None, propagate: bool = True, propagate_only: bool = False):
     """
     Description:
     ------------
@@ -1765,9 +1775,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param options: Dictionary. The sortable options.
-    :param propagate: Boolean. Specify if the sub children should get the draggable property.
-    :param propagate_only: Boolean. Specify if the first level of child is draggable.
+    :param Optional[dict] options: Optional. The sortable options.
+    :param bool propagate: Optional. Specify if the sub children should get the draggable property.
+    :param bool propagate_only: Optional. Specify if the first level of child is draggable.
 
     :rtype: JsSortable.Sortable
     """
@@ -1828,7 +1838,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     str_result.append(str(self))
     return "".join(str_result)
 
-  def export(self):
+  def export(self) -> dict:
     comp_props = {
       'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
       'styleUrls': "", "externalVars": "", "componentFunctions": [], "requirements": list(self.requirements),
@@ -1841,7 +1851,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 class Body(Html):
   name = "Body"
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None, css_attrs=None):
     super(Body, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if Defaults_css.BODY_STYLE is not None:
       for attrs in Defaults_css.BODY_STYLE.split(";"):
@@ -1850,7 +1861,7 @@ class Body(Html):
     self._template = None
 
   @property
-  def style(self):
+  def style(self) -> GrpCls.ClassPage:
     """
     Description:
     -----------
@@ -1864,7 +1875,7 @@ class Body(Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtml:
     """
     Description:
     -----------
@@ -1880,7 +1891,7 @@ class Body(Html):
       self._dom.varName = "document.body"
     return self._dom
 
-  def scroll(self, js_funcs, profile=None, source_event=None):
+  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1888,16 +1899,16 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._report.js.onReady(
       self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
 
-  def onReady(self, js_funcs, profile=None):
+  def onReady(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -1913,14 +1924,14 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript function to be added once the object is built.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript function to be added once the object is built.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.page.js.onReady(js_funcs)
 
-  def onLoad(self, js_funcs, profile=None):
+  def onLoad(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -1928,14 +1939,15 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.page.properties.js.add_builders(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
-  def fromConfig(self, js_funcs=None, components=None, lang="eng", end_point="/static/configs", sync=True):
+  def fromConfig(self, js_funcs: Optional[Union[list, str]] = None, components=None, lang: str = "eng",
+                 end_point: str = "/static/configs", sync: bool = True):
     """
     Description:
     -----------
@@ -1953,14 +1965,14 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Optional. The various transformations to be triggered from the configuration data.
+    :param Optional[Union[list, str]] js_funcs: Optional. The various transformations to be triggered from the configuration data.
     :param components: List. Optional. The various HTML Components to be updated from the configuration file.
-    :param lang: String. Optional. The default lang for the configuration.
-    :param end_point: String. Optional. The url for the configuration files.
-    :param sync: Boolean. Optional. Specify if the type of loading event.
+    :param str lang: Optional. The default lang for the configuration.
+    :param str end_point: Optional. The url for the configuration files.
+    :param bool sync: Optional. Specify if the type of loading event.
     """
     if self.page.json_config_file is None:
-      raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
+      raise ValueError("json_config_file must be attached to the page to load the corresponding configuration")
 
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -1988,7 +2000,7 @@ class Body(Html):
       'json': self.page.json_config_file,
       'fncs': JsUtils.jsConvertFncs(js_funcs + builders, toStr=True)}
 
-  def set_content(self, page, page_content):
+  def set_content(self, page, page_content: str):
     """
     Description:
     ------------
@@ -1998,14 +2010,15 @@ class Body(Html):
     Attributes:
     ----------
     :param page: Report. The main report object.
-    :param page_content: String. The html content of the page.
+    :param str page_content: The html content of the page.
 
     :return: The Body HTML object
     """
     self._html_content = page_content
     return self
 
-  def set_background(self, start_color=None, end_color=None, from_theme=False):
+  def set_background(self, start_color: Optional[str] = None, end_color: Optional[str] = None,
+                     from_theme: bool = False):
     """
     Description:
     ------------
@@ -2017,9 +2030,9 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param start_color: String. Optional. The first code color.
-    :param end_color: String. Optional. The last code color.
-    :param from_theme: Boolean. Optional. Default to the code colors defined in the theme.
+    :param Optional[str] start_color: Optional. The first code color.
+    :param Optional[str] end_color: Optional. The last code color.
+    :param bool from_theme: Optional. Default to the code colors defined in the theme.
     """
     if from_theme or (start_color is None and end_color is None):
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (
@@ -2031,7 +2044,7 @@ class Body(Html):
     self.style.css.background_repeat = "no-repeat"
     self.style.css.background_color = self._report.theme.colors[2]
 
-  def loading(self, status=True, z_index=500):
+  def loading(self, status: bool = True, z_index: int = 500):
     """
     Description:
     -----------
@@ -2045,8 +2058,8 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param status: Boolean. Optional. A flag to specify the status of the loading event.
-    :param z_index: Integer. Optional. Specifies the stack order of an element.
+    :param bool status: Optional. A flag to specify the status of the loading event.
+    :param int z_index: Optional. Specifies the stack order of an element.
     """
     if status:
       return ''' 
@@ -2061,7 +2074,7 @@ class Body(Html):
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
-  def add_template(self, css=None, defined_style=None):
+  def add_template(self, css: Optional[dict] = None, defined_style: Optional[str] = None):
     """
     Description:
     ------------
@@ -2075,8 +2088,8 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component.
-    :param defined_style: String. Optional. A predefined style attached to the style property.
+    :param Optional[dict] css: Optional. The CSS attributes to be added to the HTML component.
+    :param Optional[str] defined_style: Optional. A predefined style attached to the style property.
     """
     if css is not None:
       self.template.css(css)
@@ -2144,7 +2157,8 @@ class Component(Html):
   str_repr = None
   dyn_repr = None
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
     super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
     self.style.clear_style()   # Clear all default CSS styles.
     if self.css_classes is not None:
@@ -2160,7 +2174,7 @@ class Component(Html):
     """
     return "window['%s']" % self.htmlCode
 
-  def add_item(self, component):
+  def add_item(self, component: Union[Html, str]):
     """
     Description:
     -----------
@@ -2169,9 +2183,9 @@ class Component(Html):
 
     Attributes:
     ----------
-    :param component: HTML | String. The component.
+    :param Union[Html, str] component: The component.
     """
-    raise Exception("Needs to be implemented")
+    raise ValueError("Needs to be implemented")
 
   def write_item(self, item):
     """
@@ -2237,13 +2251,14 @@ class StructComponent(Html):
   css_classes = None
   str_repr = None
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
     super(StructComponent, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if self.css_classes is not None:
       self.add_style(self.css_classes, clear_first=True)
     self.items = {}
 
-  def add_to(self, group, content):
+  def add_to(self, group: str, content: Union[Type[Html], str]):
     """
     Description:
     -----------
@@ -2251,8 +2266,8 @@ class StructComponent(Html):
 
     Attributes:
     ----------
-    :param group: String. The category for the component.
-    :param content: HTML | String. The HTML component to be added.
+    :param str group: The category for the component.
+    :param Union[Type[Html], str] content: The HTML component to be added.
     """
     if not hasattr(content, "options"):
       content = self.page.web.std.div(content)
@@ -2270,7 +2285,7 @@ class StructComponent(Html):
 
     By default this function will add the values defined for the component to the {text} key.
     """
-    raise Exception("Method write_values must be defined")
+    raise ValueError("Method write_values must be defined")
 
   def __str__(self):
     values = self.write_values()

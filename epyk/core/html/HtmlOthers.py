@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
 from epyk.core.html.options import OptText
@@ -31,7 +33,7 @@ class Hr(Html.Html):
     if align == "center":
       self.style.css.margin = "auto"
 
-  def margin(self, left=0, right=0, unit='%'):
+  def margin(self, left: int = 0, right: int = 0, unit: str = '%'):
     """
     Description:
     ------------
@@ -39,9 +41,9 @@ class Hr(Html.Html):
 
     Attributes:
     ----------
-    :param left: Integer. Optional. The margin left.
-    :param right: Integer. Optional. The margin right.
-    :param unit: String. Optional. The unit by default percentage.
+    :param int left: Optional. The margin left.
+    :param int right: Optional. The margin right.
+    :param str unit: Optional. The unit by default percentage.
     """
     if left:
       self.style.css.margin_left = "%s%s" % (left, unit)
@@ -51,7 +53,7 @@ class Hr(Html.Html):
     return self
 
   @property
-  def style(self):
+  def style(self) -> GrpClsLayout.ClassStandard:
     """
     Description:
     ------------
@@ -102,7 +104,7 @@ class Stars(Html.Html):
     self.css({'text-align': align, "display": 'block'})
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlStars.Stars:
     """
     Description:
     ------------
@@ -114,7 +116,8 @@ class Stars(Html.Html):
       self._dom = JsHtmlStars.Stars(self, report=self.page)
     return self._dom
 
-  def click(self, js_funcs=None, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Optional[Union[list, str]] = None,
+            profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -128,10 +131,10 @@ class Stars(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param Optional[Union[list, str]] js_funcs: The Javascript functions
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: self to allow the chains
     """
@@ -171,7 +174,7 @@ class Help(Html.Html):
     self._jsStyles = options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsLayout.ClassHelp:
     """
     Description:
     ------------
@@ -211,7 +214,7 @@ class Loading(Html.Html):
     else:
       self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
 
-  def fixed(self, css=None, icon_css=None):
+  def fixed(self, css: Optional[dict] = None, icon_css: Optional[dict] = None):
     """
     Description:
     ------------
@@ -220,8 +223,8 @@ class Loading(Html.Html):
 
     Attributes:
     ----------
-    :param css: Dictionary. Optional. The css attributes.
-    :param icon_css: Dictionary. Optional. The CSS attributes.
+    :param Optional[dict] css: Optional. The css attributes.
+    :param Optional[dict] icon_css: Optional. The CSS attributes.
 
     :return: self to allow the chains.
     """
@@ -229,7 +232,7 @@ class Loading(Html.Html):
     if css is not None:
       dflt_css.update(css)
     dflt_css_icon = {"margin-right": '5px', "font-size": 'inherit'}
-    if dflt_css_icon is not None:
+    if icon_css is not None:
       dflt_css_icon.update(icon_css)
     self.icon.css(dflt_css_icon)
     self.css(dflt_css)
@@ -249,7 +252,7 @@ class HtmlJson(Html.Html):
                                    css_attrs={"height": height, "width": width})
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJson.JsonFormatter:
     """
     Description:
     ------------
@@ -276,7 +279,7 @@ class HtmlJson(Html.Html):
       htmlObj.appendChild(window[ htmlObj.id + '_obj'].render())'''
 
   @property
-  def options(self):
+  def options(self) -> OptJsonFormatter.OptionsJsonFmt:
     """
     Description:
     ------------
@@ -290,7 +293,7 @@ class HtmlJson(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsJsonFormatter.Json:
     """
     Description:
     -----------
@@ -335,7 +338,7 @@ class Breadcrumb(Html.Html):
     self.style.background = report.theme.greys[1]
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptBreadCrumb:
     """
     Description:
     ------------
@@ -372,7 +375,7 @@ class Breadcrumb(Html.Html):
             if (i < data.length-1){htmlObj.appendChild(text)}
       })}}'''
 
-  def __add__(self, component):
+  def __add__(self, component: Union[Type[Html.Html], str]):
     """ Add items to a container """
     if hasattr(component, 'htmlCode'):
       component.options.managed = False
@@ -394,7 +397,7 @@ class Legend(Html.Html):
                                  css_attrs={"width": width, "height": height}, profile=profile)
 
   @property
-  def options(self):
+  def options(self) -> OptJsonFormatter.OptionsLegend:
     """
     Description:
     -----------
@@ -498,7 +501,7 @@ class Slides(Html.Html):
     self.style.css.padding = "0 20px 20px 20px"
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -512,7 +515,7 @@ class Slides(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlStars.Slides:
     """
     Description:
     ------------
@@ -525,7 +528,7 @@ class Slides(Html.Html):
       self._dom = JsHtmlStars.Slides(self, report=self.page)
     return self._dom
 
-  def add(self, component):
+  def add(self, component: Union[Type[Html.Html], str]):
     """
     Description:
     ------------
@@ -533,7 +536,7 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. The HTML component to be added to this component.
+    :param Union[Type[Html.Html], str] component: The HTML component to be added to this component.
     """
     if isinstance(component, list):
       for c in component:
@@ -554,7 +557,7 @@ class Slides(Html.Html):
     self.val.append(component)
     return self
 
-  def add_slide(self, title, component, options=None):
+  def add_slide(self, title: str, component: Union[Type[Html.Html], str], options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -562,9 +565,9 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param title: String. The title value in the slide.
-    :param component: HTML. The HTML component.
-    :param options: Dictionary. Optional. The various component options.
+    :param str title: The title value in the slide.
+    :param Union[Type[Html.Html], str] component: The HTML component.
+    :param Optional[dict] options: Optional. The various component options.
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
@@ -615,7 +618,7 @@ class HtmlQRCode(Html.Html):
     self.options.height = height[0]
 
   @property
-  def options(self):
+  def options(self) -> OptQrCode.OptionsQrCode:
     """
     Description:
     ------------
@@ -642,7 +645,7 @@ class HtmlQRCode(Html.Html):
        window[ htmlObj.id + '_obj']._el.querySelector("img").style["margin"] = 0'''
 
   @property
-  def js(self):
+  def js(self) -> JsQrCode.QrCode:
     """
     Description:
     -----------

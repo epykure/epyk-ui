@@ -1,10 +1,14 @@
 
+from typing import Union, Optional
 from epyk.core.js import JsUtils
+
+
+PARSE_FLOAT_EXPR = "parseFloat({})"
 
 
 class JsFor:
 
-  def __init__(self, end, options=None, profile=None):
+  def __init__(self, end, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -20,16 +24,17 @@ class JsFor:
     Attributes:
     ----------
     :param end:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     self.options = {"var": 'i', 'start': 0, 'step': 1, 'end': end}
     if options is not None:
       self.options.update(options)
-    self.__jsFncs = []
+    self.__js_funcs = []
     self.profile = profile
 
   @property
-  def var(self):
+  def var(self) -> str:
     """
     Description:
     -----------
@@ -53,14 +58,14 @@ class JsFor:
     """
     Description:
     -----------
-
+    Set the start value for the for loop.
     """
     return self.options['start']
 
   @start.setter
   def start(self, value):
     if hasattr(value, 'toStr'):
-      self.options['start'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+      self.options['start'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
       self.options['start'] = value
 
@@ -69,14 +74,14 @@ class JsFor:
     """
     Description:
     -----------
-
+    Set the end value for the for loop.
     """
     return self.options['end']
 
   @end.setter
   def end(self, value):
     if hasattr(value, 'toStr'):
-      self.options['end'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+      self.options['end'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
       self.options['end'] = value
 
@@ -85,18 +90,18 @@ class JsFor:
     """
     Description:
     -----------
-
+    Set the step value to be used in the for loop to increment the variable.
     """
     return self.options['step']
 
   @step.setter
   def step(self, value):
     if hasattr(value, 'toStr'):
-      self.options['step'] = "parseFloat(%s)" % JsUtils.jsConvertData(value, None)
+      self.options['step'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
       self.options['step'] = value
 
-  def fncs(self, jsFncs, reset=True, profile=None):
+  def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -104,40 +109,42 @@ class JsFor:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param reset: Boolean. Optional. Reset the functions in the for loop.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param bool reset: Optional. Reset the JavaScript functions for this loop.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if reset:
-      self.__jsFncs = jsFncs
+      self.__js_funcs = js_funcs
     else:
-      self.__jsFncs.extend(jsFncs)
+      self.__js_funcs.extend(js_funcs)
     self.profile = profile
     return self
 
   def toStr(self):
-    self.options['expr'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True, profile=self.profile)
+    self.options['expr'] = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
     return "for(var %(var)s = %(start)s; %(var)s < %(end)s; %(var)s += %(step)s){%(expr)s}" % self.options
 
 
 class JsIterable:
 
-  def __init__(self, jsIterable, options=None, profile=None):
+  def __init__(self, iterable, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsIterable:
+    :param iterable:
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self.__js_it = jsIterable
+    self.__js_it = iterable
     self.options = {"var": 'x', 'type': 'in'}
     if options is not None:
       self.options.update(options)
-    self.profile = False
+    self.profile = profile
 
   @property
   def var(self):
@@ -161,27 +168,28 @@ class JsIterable:
     """
     self.options['var'] = value
 
-  def fncs(self, jsFncs, reset=True, profile=None):
+  def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
+    Add expression to the for loop.
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param reset:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param bool reset: Optional. Reset the JavaScript functions for this loop.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if reset:
-      self.__jsFncs = jsFncs
+      self.__js_funcs = js_funcs
     else:
-      self.__jsFncs.extend(jsFncs)
+      self.__js_funcs.extend(js_funcs)
     self.profile = profile
     return self
 
   def toStr(self):
-    jsNfncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True, profile=self.profile)
-    jsIter = JsUtils.jsConvertData(self.__js_it, None)
-    return "for(var %s %s %s){%s}" % (self.var, self.options['type'], jsIter, jsNfncs)
+    js_n_funcs = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
+    js_iter = JsUtils.jsConvertData(self.__js_it, None)
+    return "for(var %s %s %s){%s}" % (self.var, self.options['type'], js_iter, js_n_funcs)

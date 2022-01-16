@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # TODO Add JS builder to Button Filter
 
+from typing import Union, Optional
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptButton
 
@@ -19,8 +21,9 @@ class Button(Html.Html):
   name = 'button'
   _option_cls = OptButton.OptionsButton
 
-  def __init__(self, report, text=None, icon=None, width=None, height=None, html_code=None, tooltip=None, profile=None,
-               options=None):
+  def __init__(self, report, text: str = None, icon: str = None, width: Optional[tuple] = None,
+               height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: str = None,
+               profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None):
     text = text or []
     if not isinstance(text, list):
       text = [text]
@@ -38,7 +41,7 @@ class Button(Html.Html):
     self.set_attrs(name="data-count", value=0)
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptionsButton:
     """
     Description:
     -----------
@@ -54,7 +57,7 @@ class Button(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlButton:
     """
     Description:
     -----------
@@ -74,7 +77,7 @@ class Button(Html.Html):
 
   _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
 
-  def loading(self, status=True):
+  def loading(self, status: bool = True):
     """
     Description:
     -----------
@@ -87,7 +90,7 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param status: Boolean. Optional. A flag to specify the status of the loading event.
+    :param bool status: Optional. A flag to specify the status of the loading event.
     """
     if status:
       self.dom.setAttribute("data-content", self.dom.content)
@@ -114,7 +117,8 @@ class Button(Html.Html):
     self.style.css.background_color = "#11ffee00"
     return self
 
-  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
+  def goto(self, url: str, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[dict, bool]] = None,
+           target: str = "_blank", source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -127,11 +131,11 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. The destination path.
-    :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param target: String. Optional. The type of link to the next page.
-    :param source_event: String. Optional. The event source.
+    :param str url: The destination path.
+    :param Optional[Union[list, str]] js_funcs: The Javascript Events triggered before the redirection.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param str target: Optional. The type of link to the next page.
+    :param Optional[str] source_event: Optional. The event source.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -140,7 +144,7 @@ class Button(Html.Html):
     return self.click(js_funcs, profile, source_event)
 
   @property
-  def style(self):
+  def style(self) -> GrpClsButton.ClassButton:
     """
     Description:
     -----------
@@ -157,7 +161,7 @@ class Button(Html.Html):
       self._styleObj = GrpClsButton.ClassButton(self)
     return self._styleObj
 
-  def disable(self, background_color=None, color=None):
+  def disable(self, background_color: Optional[str] = None, color: Optional[str] = None):
     """
     Description:
     -----------
@@ -170,8 +174,8 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param background_color: String. Optional. An hexadecimal color code.
-    :param color: String. Optional. An hexadecimal color code.
+    :param Optional[str] background_color: Optional. An hexadecimal color code.
+    :param Optional[str] color: Optional. A hexadecimal color code.
 
     :return: The htmlObj to allow the chaining
     """
@@ -184,7 +188,8 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, js_press_funcs=None, js_release_funcs=None, profile=None, on_ready=False):
+  def press(self, js_press_funcs: Optional[list] = None, js_release_funcs: Optional[list] = None,
+            profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -196,7 +201,7 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param js_press_funcs: List | String. Optional. Javascript functions.
+    :param Optional[list] js_press_funcs: Optional. Javascript functions.
     :param js_release_funcs: List | String. Optional. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param on_ready: Boolean. Optional.
@@ -211,7 +216,7 @@ class Button(Html.Html):
       str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
     if js_release_funcs is not None:
       if js_press_funcs is None:
-        raise Exception("Press Event must be defined")
+        raise ValueError("Press Event must be defined")
 
       if not isinstance(js_release_funcs, list):
         js_release_funcs = [js_release_funcs]
@@ -219,7 +224,7 @@ class Button(Html.Html):
       str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
     return self.on("click", str_fnc, profile, on_ready=on_ready)
 
-  def color(self, color):
+  def color(self, color: str):
     """
     Description:
     -----------
@@ -231,9 +236,9 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param color: String. the color of the component (text and borders).
+    :param str color: the color of the component (text and borders).
     """
-    self.style.css.border = "1px solid %s" % color
+    self.style.css.border = "1px solid {}".format(color)
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
     self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
@@ -255,7 +260,8 @@ class Button(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
+    return '<button {attrs}>{content}</button>'.format(attrs=self.get_attrs(pyClassNames=self.style.get_classes()),
+                                                       content=str_div)
 
 
 class Checkbox(Html.Html):
@@ -276,7 +282,7 @@ class Checkbox(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptCheckboxes:
     """
     Description:
     -----------
@@ -287,7 +293,7 @@ class Checkbox(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlButtonChecks:
     """
     Description:
     -----------
@@ -300,7 +306,7 @@ class Checkbox(Html.Html):
       self._dom = JsHtml.JsHtmlButtonChecks(self, report=self.page)
     return self._dom
 
-  def tooltip(self, value, location='top', options=None):
+  def tooltip(self, value: str, location: str = 'top', options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -316,9 +322,9 @@ class Checkbox(Html.Html):
 
     Attributes:
     ----------
-    :param value: String. The tooltip value.
-    :param location: String. Optional. The location of the tooltip compared to the HTML component.
-    :param options: Dictionary. Optional. The tooltip options (not used yet)
+    :param str value: The tooltip value.
+    :param str location: Optional. The location of the tooltip compared to the HTML component.
+    :param Optional[dict] options: Optional. The tooltip options (not used yet)
     """
     self.options.tooltip = value
     self.options.tooltip_options = options
@@ -340,7 +346,8 @@ class Checkbox(Html.Html):
           tip.tooltip(); htmlObj.append($("<div style='width:100%%;text-align:right'></div>").append(tip) )}
       ''' % {"jquery": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def click(self, js_funcs, profile=None, source_event="$(document)", on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+            source_event: str = "$(document)", on_ready: bool = False):
     """
     Description:
     -----------
@@ -350,10 +357,10 @@ class Checkbox(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param str source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -383,8 +390,8 @@ class CheckButton(Html.Html):
   name = 'Check Button'
   _option_cls = OptButton.OptCheck
 
-  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, html_code=None,
-               options=None, profile=None):
+  def __init__(self, report, flag: bool = False, tooltip: Optional[str] = None, width=None, height=None, icon=None, label=None, html_code=None,
+               options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
@@ -398,7 +405,7 @@ class CheckButton(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptCheck:
     """
     Description:
     -----------
@@ -409,7 +416,7 @@ class CheckButton(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlButtonMenu:
     """
     Description:
     ------------
@@ -422,7 +429,7 @@ class CheckButton(Html.Html):
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.CheckButton:
     """
     Description:
     -----------
@@ -451,7 +458,7 @@ class CheckButton(Html.Html):
       }'''
 
   @property
-  def style(self):
+  def style(self) -> GrpClsButton.ClassButtonCheckBox:
     """
     Description:
     ------------
@@ -463,7 +470,8 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, js_fnc_true, js_fnc_false=None, with_colors=True, profile=None, on_ready=False):
+  def click(self, js_fnc_true: Union[list, str], js_fnc_false: Optional[Union[list, str]] = None, with_colors: bool = True,
+            profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -476,11 +484,11 @@ class CheckButton(Html.Html):
 
     Attributes:
     ----------
-    :param js_fnc_true: List | String. Js function or a list of JsFunction to be triggered when checked
-    :param js_fnc_false: Boolean. Optional. Js function or a list of JsFunction to be triggered when unchecked
-    :param with_colors: Boolean. Optional. Add default colors to the icons.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param Union[list, str] js_fnc_true: Js function or a list of JsFunction to be triggered when checked
+    :param Optional[Union[list, str]] js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when unchecked
+    :param bool with_colors: Optional. Add default colors to the icons.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The htmlObj to allow the chaining
     """
@@ -580,7 +588,7 @@ class IconEdit(Html.Html):
     self.icon.border()
     return self
 
-  def rotate(self, angle):
+  def rotate(self, angle: int):
     """
     Description:
     ------------
@@ -597,12 +605,12 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param angle: Integer. The rotation angle.
+    :param int angle: The rotation angle.
     """
     self.icon.rotate(angle)
     return self
 
-  def pull(self, position='left'):
+  def pull(self, position: str = 'left'):
     """
     Description:
     ------------
@@ -619,12 +627,13 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param position: String. Optional. The position of the icon in the page.
+    :param str position: Optional. The position of the icon in the page.
     """
     self.icon.pull(position)
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -632,10 +641,10 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.hover_color:
       if self.hover_color == 'danger':
@@ -711,7 +720,8 @@ class ButtonMenuItem:
       self._js = JsComponents.Menu(self._src, varName=self._selector, report=self.page)
     return self._js
 
-  def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
+  def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+         source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -719,11 +729,11 @@ class ButtonMenuItem:
 
     Attributes:
     ----------
-    :param event: String. The JavaScript event.
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean. Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. Override the source component on which the component is defined.
-    :param on_ready: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param str event: The JavaScript event.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. Override the source component on which the component is defined.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -733,7 +743,8 @@ class ButtonMenuItem:
       self.page.body.onReady([self._selector.dom.events.trigger(event)])
     return self._src
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -741,10 +752,10 @@ class ButtonMenuItem:
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean. Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. Override the source component on which the component is defined.
-    :param on_ready: Boolean. Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Boolean. Optional. A flag to set the component performance storage.
+    :param str source_event: Optional. Override the source component on which the component is defined.
+    :param bool on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     return self.on("click", js_funcs, profile, source_event, on_ready)
 
@@ -846,7 +857,8 @@ class ButtonMore(Html.Html):
       self.page.js.objects.event.stopPropagation(), self.page.js.objects.event.preventDefault(),
       self.menu.dom.invisible()])
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     return self.text.click(js_funcs, profile, source_event, on_ready)
 
   def __str__(self):

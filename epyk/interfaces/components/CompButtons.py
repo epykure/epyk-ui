@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import os
+from typing import Union
 
 from epyk.core import html
 from epyk.core.html import Defaults_html
 from epyk.interfaces import Arguments
+
+
+COLOR_EXPR = "1px solid {}"
 
 
 class Buttons:
@@ -14,7 +18,7 @@ class Buttons:
     self.page = ui.page
 
   @staticmethod
-  def __align(component, align):
+  def __align(component, align: str):
     """
     Description:
     ------------
@@ -31,7 +35,7 @@ class Buttons:
     elif align == "right":
       component.style.css.float = "right"
 
-  def __set_color(self, component, color):
+  def __set_color(self, component, color: Union[str, bool]):
     """
     Description:
     ------------
@@ -41,20 +45,20 @@ class Buttons:
     Attributes:
     ----------
     :param component: HTML component. The component to be aligned in the page.
-    :param color: String | Boolean. The color to set.
+    :param str color: The color to set.
     """
     if color is True:
       component.style.css.background = self.page.theme.notch(4)
-      component.style.css.border = "1px solid %s" % self.page.theme.colors[-1]
+      component.style.css.border = COLOR_EXPR.format(self.page.theme.colors[-1])
       component.style.css.color = self.page.theme.colors[0]
     else:
       component.style.css.background = color
       component.style.css.border = color
       component.style.css.color = self.page.theme.colors[0]
 
-  @html.Html.css_skin()
-  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-             tooltip=None, profile=None, options=None):
+  def button(self, text: str = "", icon: Union[str, bool] = None, width: Union[tuple, int] = (None, "%"),
+             height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Union[str, bool] = None,
+             tooltip: Union[str, bool] = None, profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -85,9 +89,9 @@ class Buttons:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param str text: Optional. The value to be displayed to the button.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. A string with the horizontal position of the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
@@ -98,18 +102,18 @@ class Buttons:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     text = self.page.py.encode_html(text)
-    html_button = html.HtmlButton.Button(
+    component = html.HtmlButton.Button(
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     if options is not None and options.get("colored", False):
-      self.__set_color(html_button, options["colored"])
-    html_button.style.css.margin = "0"
-    html_button.style.css.padding = 0
-    html_button.style.css.padding_h = 5
-    self.__align(html_button, align)
-    return html_button
+      self.__set_color(component, options["colored"])
+    component.style.css.margin = "0"
+    component.style.css.padding = 0
+    component.style.css.padding_h = 5
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def colored(self, text="", icon=None, color=None, width=(None, "%"), height=(None, "px"), align="left",
+  def colored(self, text: str = "", icon=None, color=None, width=(None, "%"), height=(None, "px"), align="left",
               html_code=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -160,11 +164,13 @@ class Buttons:
     component.style.css.margin_bottom = 5
     component.style.css.padding_left = 10
     component.style.css.padding_right = 10
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
-  def clear(self, text="", icon="fas fa-eraser", color=None, width=(None, "%"), height=(None, "px"), align="left",
-            html_code=None, tooltip=None, profile=None, options=None):
+  def clear(self, text: str = "", icon: str = "fas fa-eraser", color: Union[str, None] = None,
+            width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+            align: str = "left", html_code: Union[str, None] = None, tooltip: Union[str, None] = None,
+            profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -208,16 +214,17 @@ class Buttons:
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
     component.style.css.background = color or self.page.theme.danger[-1]
-    component.style.css.border = "1px solid %s" % (color or self.page.theme.danger[-1])
+    component.style.css.border = COLOR_EXPR.format(color or self.page.theme.danger[-1])
     component.style.css.color = self.page.theme.colors[0]
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
     component.style.hover({"background-color": "%s !IMPORTANT" % self.page.theme.danger[0]})
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
-  def large(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-            tooltip=None, profile=None, options=None):
+  def large(self, text: str = "", icon: str = None, width: Union[tuple, int] = (None, "%"),
+            height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Union[str, None] = None,
+            tooltip: Union[str, None] = None, profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -261,14 +268,14 @@ class Buttons:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     text = self.page.py.encode_html(text)
-    html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
-                                         tooltip=tooltip, profile=profile, options=options)
-    self.__align(html_button, align)
+    component = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
+                                       tooltip=tooltip, profile=profile, options=options)
+    self.__align(component, align)
     if options is not None and options.get("colored", False):
-      self.__set_color(html_button, options["colored"])
-    return html_button
+      self.__set_color(component, options["colored"])
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def absolute(self, text, size_notch=None, icon="", top=(50, "%"), left=(50, "%"), bottom=None, width=('auto', ""),
                height=(None, "px"), html_code=None, options=None, profile=None):
     """
@@ -310,23 +317,23 @@ class Buttons:
     top = Arguments.size(top, unit="%")
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
-                                         tooltip=None, profile=profile, options=options)
-    html_button.style.position = "absolute"
-    html_button.style.display = "block"
+    component = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
+                                       tooltip=None, profile=profile, options=options)
+    component.style.position = "absolute"
+    component.style.display = "block"
     if bottom is not None:
-      html_button.style.bottom = "%s%s" % (bottom[0], bottom[1])
+      component.style.bottom = "%s%s" % (bottom[0], bottom[1])
     else:
-      html_button.style.top = "%s%s" % (top[0], top[1])
-    html_button.style.left = "%s%s" % (left[0], left[1])
-    html_button.style.transform = "translate(-%s, -%s)" % (html_button.style.left, html_button.style.top)
+      component.style.top = "%s%s" % (top[0], top[1])
+    component.style.left = "%s%s" % (left[0], left[1])
+    component.style.transform = "translate(-%s, -%s)" % (component.style.left, component.style.top)
     if size_notch is not None:
-      html_button.style.font_size = self.page.body.style.globals.font.normal(size_notch)
+      component.style.font_size = self.page.body.style.globals.font.normal(size_notch)
     if width[0] == 'auto':
-      html_button.style.css.display = "inline-block"
-    return html_button
+      component.style.css.display = "inline-block"
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
             tooltip=None, profile=None, options=None):
     """
@@ -363,14 +370,14 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
-                                         tooltip=tooltip, profile=profile, options=options)
-    html_button.style.css.line_height = 12
-    html_button.style.css.padding = 2
-    self.__align(html_button, align)
-    return html_button
+    component = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
+                                       tooltip=tooltip, profile=profile, options=options)
+    component.style.css.line_height = 12
+    component.style.css.padding = 2
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def normal(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
              tooltip=None, profile=None, options=None):
     """
@@ -407,13 +414,13 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
-                                         tooltip=tooltip, profile=profile, options=options)
-    html_button.style.css.line_height = 18
-    self.__align(html_button, align)
-    return html_button
+    component = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
+                                       tooltip=tooltip, profile=profile, options=options)
+    component.style.css.line_height = 18
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
                 tooltip=None, profile=None, options=None):
     """
@@ -459,13 +466,13 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
-                                         tooltip=tooltip, profile=profile, options=options)
-    html_button.style.add_classes.button.important()
-    self.__align(html_button, align)
-    return html_button
+    component = html.HtmlButton.Button(self.page, text, icon, width, height, html_code=html_code,
+                                       tooltip=tooltip, profile=profile, options=options)
+    component.style.add_classes.button.important()
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def validate(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
                profile=None, options=None):
     """
@@ -510,9 +517,9 @@ class Buttons:
     component = html.HtmlButton.Button(self.page, text, 'fas fa-check-circle', width, height,
                                        html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     self.__align(component, align)
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def run(self, text="", width=(None, "%"), height=(None, "px"), align="left", html_code=None, tooltip=None,
           profile=None, options=None):
     """
@@ -562,7 +569,7 @@ class Buttons:
                                        tooltip=tooltip, profile=profile, options=options)
     if options.get("colored"):
       component.style.css.background = self.page.theme.colors[-1]
-      component.style.css.border = "1px solid %s" % self.page.theme.colors[-1]
+      component.style.css.border = COLOR_EXPR.format(self.page.theme.colors[-1])
       component.style.css.color = self.page.theme.colors[0]
       component.style.css.margin_top = 5
       component.style.css.margin_bottom = 5
@@ -574,9 +581,9 @@ class Buttons:
       component.style.css.padding = "0 20px"
       component.style.css.display = "inline-block"
       component.style.css.line_height = Defaults_html.LINE_HEIGHT
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def remove(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
              profile=None, options=None):
     """
@@ -623,9 +630,9 @@ class Buttons:
     component = html.HtmlButton.Button(self.page, text, 'fas fa-trash-alt', width, height,
                                        html_code=html_code, tooltip=tooltip, profile=profile, options=dflt_options)
     self.__align(component, align)
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def cancel(self, text="Cancel", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
              profile=None, options=None):
     """
@@ -672,9 +679,9 @@ class Buttons:
     component = html.HtmlButton.Button(self.page, text, 'fas fa-window-close', width, height,
                                        html_code=html_code, tooltip=tooltip, profile=profile, options=dflt_options)
     self.__align(component, align)
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def phone(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
             profile=None, options=None):
     """
@@ -715,12 +722,12 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.Button(self.page, text, 'fas fa-phone', width, height, html_code=html_code,
+    component = html.HtmlButton.Button(self.page, text, 'fas fa-phone', width, height, html_code=html_code,
                                          tooltip=tooltip, profile=profile, options=options)
-    self.__align(html_button, align)
-    return html_button
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def mail(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
            profile=None, options=None):
     """
@@ -761,12 +768,12 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_but = html.HtmlButton.Button(self.page, text, 'fas fa-envelope', width, height, html_code=html_code,
-                                      tooltip=tooltip, profile=profile, options=options)
-    self.__align(html_but, align)
-    return html_but
+    component = html.HtmlButton.Button(self.page, text, 'fas fa-envelope', width, height, html_code=html_code,
+                                       tooltip=tooltip, profile=profile, options=options)
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def radio(self, record=None, html_code=None, group_name=None, width=(100, '%'), height=(None, "px"),
             align='left', options=None, profile=None):
     """
@@ -809,16 +816,16 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_radio = html.HtmlRadio.Radio(
+    component = html.HtmlRadio.Radio(
       self.page, record or [], html_code, group_name, width, height, options or {}, profile)
-    for c in html_radio:
+    for c in component:
       c.style.css.display = "inline-block"
       c.style.css.margin = "0 2px"
       c.style.css.padding = "0 2px"
-    html_radio.style.css.text_align = align
-    return html_radio
+    component.style.css.text_align = align
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
              html_code=None, options=None, profile=None):
     """
@@ -869,14 +876,14 @@ class Buttons:
       label = self.page.ui.texts.label(label, options=options, html_code="%s_label" % html_toggle.htmlCode)
       html_toggle.style.css.display = "inline-block"
       html_toggle.style.css.padding_top = 2
-      container = self.page.ui.div([label, html_toggle], width=width)
-      container.label = label
+      component = self.page.ui.div([label, html_toggle], width=width)
+      component.label = label
     else:
-      container = self.page.ui.div([html_toggle], width=width)
-    container.input = html_toggle
-    return container
+      component = self.page.ui.div([html_toggle], width=width)
+    component.input = html_toggle
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def checkboxes(self, record=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                  html_code=None, tooltip='', options=None, profile=None):
     """
@@ -920,11 +927,11 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_boxes = html.HtmlButton.Checkbox(
+    component = html.HtmlButton.Checkbox(
       self.page, record or [], color, width, height, align, html_code, tooltip, options or {}, profile)
-    return html_boxes
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None,
             html_code=None, profile=None, options=None):
     """
@@ -964,12 +971,12 @@ class Buttons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    html_but = html.HtmlButton.CheckButton(
+    component = html.HtmlButton.CheckButton(
       self.page, flag, tooltip, width, height, icon, label, html_code, options or {}, profile)
-    html_but.css({'display': 'inline-block', 'margin-right': '10px'})
-    return html_but
+    component.css({'display': 'inline-block', 'margin-right': '10px'})
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), html_code=None, tooltip=None,
            profile=None, options=None):
     """
@@ -1011,12 +1018,12 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_button = html.HtmlButton.ButtonMenu(self.page, record, text, icon, width, height,
-                                             html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    html_button.container.css({"display": "none", "position": "absolute", "z-index": 5})
-    return html_button
+    component = html.HtmlButton.ButtonMenu(self.page, record, text, icon, width, height,
+                                           html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    component.container.css({"display": "none", "position": "absolute", "z-index": 5})
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), html_code=None, align="left", options=None,
             profile=None):
     """
@@ -1056,14 +1063,14 @@ class Buttons:
     width = Arguments.size(width, unit="rem")
     height = Arguments.size(height, unit="rem")
     split_url = os.path.split(image)
-    badge = self.page.ui.img(split_url[1], path=split_url[0], width=width, height=height, html_code=html_code,
-                             options=options, profile=profile)
-    badge.style.css.display = "inline-block"
-    badge.goto(url)
-    self.__align(badge, align)
-    return badge
+    component = self.page.ui.img(split_url[1], path=split_url[0], width=width, height=height, html_code=html_code,
+                                 options=options, profile=profile)
+    component.style.css.display = "inline-block"
+    component.goto(url)
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def live(self, time, js_funcs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), align="left",
            html_code=None, profile=None, options=None):
     """
@@ -1096,45 +1103,45 @@ class Buttons:
     dflt_options = {"started": True}
     if options is not None:
       dflt_options.update(options)
-    live = self.page.ui.icons.awesome(
+    component = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
-    live.style.css.border_radius = "50px"
-    live.style.css.padding = 0
-    live.style.css.margin = 0
-    live.icon.style.css.font_factor(2)
-    live.icon.style.css.margin_right = 0
-    live.icon.style.css.margin = "-2px 0 0 -2px"
-    live.icon.style.css.padding_bottom = 10
+    component.style.css.border_radius = "50px"
+    component.style.css.padding = 0
+    component.style.css.margin = 0
+    component.icon.style.css.font_factor(2)
+    component.icon.style.css.margin_right = 0
+    component.icon.style.css.margin = "-2px 0 0 -2px"
+    component.icon.style.css.padding_bottom = 10
     if dflt_options["started"]:
-      live.attr["data-active"] = 1
-      live.icon.style.css.color = self.page.theme.success[1]
-      live.icon.style.effects.blink(2)
-      live.style.css.border = "1px solid %s" % self.page.theme.success[1]
+      component.attr["data-active"] = 1
+      component.icon.style.css.color = self.page.theme.success[1]
+      component.icon.style.effects.blink(2)
+      component.style.css.border = "1px solid %s" % self.page.theme.success[1]
       self.page.body.onReady([
-        self.page.js.window.setInterval(js_funcs, "%s_timer" % live.htmlCode, time * 1000)], profile=profile)
+        self.page.js.window.setInterval(js_funcs, "%s_timer" % component.htmlCode, time * 1000)], profile=profile)
     else:
-      live.icon.style.css.color = self.page.theme.danger[1]
-      live.style.css.border = "1px solid %s" % self.page.theme.danger[1]
-      live.attr["data-active"] = 0
-    live.click([
-      self.page.js.if_(live.dom.getAttribute("data-active") == 1, [
-        live.dom.setAttribute("data-active", 0).r,
-        live.dom.css("border-color", self.page.theme.danger[1]).r,
-        live.icon.dom.css("color", self.page.theme.danger[1]).r,
-        live.icon.dom.css("animation", 'none').r,
-        self.page.js.window.clearInterval("%s_timer" % live.htmlCode)
+      component.icon.style.css.color = self.page.theme.danger[1]
+      component.style.css.border = "1px solid %s" % self.page.theme.danger[1]
+      component.attr["data-active"] = 0
+    component.click([
+      self.page.js.if_(component.dom.getAttribute("data-active") == 1, [
+        component.dom.setAttribute("data-active", 0).r,
+        component.dom.css("border-color", self.page.theme.danger[1]).r,
+        component.icon.dom.css("color", self.page.theme.danger[1]).r,
+        component.icon.dom.css("animation", 'none').r,
+        self.page.js.window.clearInterval("%s_timer" % component.htmlCode)
       ]).else_([
-        live.dom.setAttribute("data-active", 1).r,
-        live.dom.css("border-color", self.page.theme.success[1]).r,
-        live.icon.dom.css("color", self.page.theme.success[1]).r,
-        live.icon.dom.effects.blink(2),
-        self.page.js.window.setInterval(js_funcs, "%s_timer" % live.htmlCode, time * 1000, profile=profile)
+        component.dom.setAttribute("data-active", 1).r,
+        component.dom.css("border-color", self.page.theme.success[1]).r,
+        component.icon.dom.css("color", self.page.theme.success[1]).r,
+        component.icon.dom.effects.blink(2),
+        self.page.js.window.setInterval(js_funcs, "%s_timer" % component.htmlCode, time * 1000, profile=profile)
       ]),
     ])
-    self.__align(live, align)
-    return live
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def text(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), align="left", html_code=None,
            profile=None, options=None):
     """
@@ -1160,13 +1167,13 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    c = self.page.ui.text(
+    component = self.page.ui.text(
       text, tooltip=tooltip, width=width, html_code=html_code, height=height, profile=profile, options=options)
-    c.add_icon(icon, html_code=c.htmlCode)
-    self.__align(c, align)
-    return c
+    component.add_icon(icon, html_code=component.htmlCode)
+    self.__align(component, align)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def thumbs_up(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None, profile=None,
                 options=None):
     """
@@ -1191,15 +1198,15 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    but = self.button(icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip,
+    component = self.button(icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip,
                       profile=profile, options=options, align=align)
-    but.style.css.background = self.page.theme.success[1]
-    but.style.css.border_color = self.page.theme.success[1]
-    but.style.css.padding = "0 10px"
-    but.icon.style.css.color = "white"
-    return but
+    component.style.css.background = self.page.theme.success[1]
+    component.style.css.border_color = self.page.theme.success[1]
+    component.style.css.padding = "0 10px"
+    component.icon.style.css.color = "white"
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def thumbs_down(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None,
                   profile=None, options=None):
     """
@@ -1224,15 +1231,15 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    but = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
+    component = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
                       profile=profile, options=options, align=align)
-    but.style.css.background = self.page.theme.danger[1]
-    but.style.css.border_color = self.page.theme.danger[1]
-    but.style.css.padding = "0 10px"
-    but.icon.style.css.color = "white"
-    return but
+    component.style.css.background = self.page.theme.danger[1]
+    component.style.css.border_color = self.page.theme.danger[1]
+    component.style.css.padding = "0 10px"
+    component.icon.style.css.color = "white"
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), align="left", html_code=None,
            tooltip=None, profile=None, options=None):
     """
@@ -1259,23 +1266,23 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    but = self.page.ui.text(
+    component = self.page.ui.text(
       text, width=width, height=height, align=align, html_code=html_code, tooltip=tooltip, profile=profile,
       options=options)
-    but.style.css.background = self.page.theme.greys[3]
-    but.options.style_select = "pill_selected"
-    but.style.css.border_radius = 20
-    but.style.css.padding = "0 5px"
-    but.attr["data-value"] = value or text
-    but.style.add_classes.div.color_background_hover()
+    component.style.css.background = self.page.theme.greys[3]
+    component.options.style_select = "pill_selected"
+    component.style.css.border_radius = 20
+    component.style.css.padding = "0 5px"
+    component.attr["data-value"] = value or text
+    component.style.add_classes.div.color_background_hover()
     if group is not None:
       self.page.body.style.custom_class({
         "background": self.page.theme.colors[6], "color": self.page.theme.greys[0],
       }, classname="pill_selected", important=True)
-      but.attr["data-group"] = group
-    return but
+      component.attr["data-group"] = group
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def more(self, items, text="More", width=("auto", ""), height=(None, "px"), html_code=None,
            tooltip=None, profile=None, options=None):
     """
@@ -1314,11 +1321,11 @@ class Buttons:
     height = Arguments.size(height, unit="px")
     options = options or {}
     # report, record, text, width, height, html_code, tooltip, profile, options
-    html_button = html.HtmlButton.ButtonMore(
+    component = html.HtmlButton.ButtonMore(
       self.page, items, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    return html_button
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def filter(self, text, is_number=False, width=("auto", ""), height=(None, "px"), html_code=None,
              tooltip=None, profile=None, options=None):
     """
@@ -1355,11 +1362,11 @@ class Buttons:
     if options is not None:
       dfl_options.update(options)
     # report, record, text, width, height, html_code, tooltip, profile, options
-    html_button = html.HtmlButton.ButtonFilter(
+    component = html.HtmlButton.ButtonFilter(
       self.page, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=dfl_options)
-    return html_button
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def refresh(self, text="Refresh", icon="fas fa-sync-alt", width=(None, "%"), height=(None, "px"), align="left",
               html_code=None, tooltip=None, profile=None, options=None):
     """
@@ -1404,18 +1411,18 @@ class Buttons:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_but = html.HtmlButton.Button(
+    component = html.HtmlButton.Button(
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    self.__align(html_but, align)
-    html_but.style.css.padding = "5px 10px"
-    html_but.style.css.margin_top = "5px !IMPORTANT"
-    html_but.style.css.color = self.page.theme.greys[0]
-    html_but.style.css.line_height = 0
-    html_but.style.css.background = self.page.theme.colors[-1]
-    html_but.style.css.border_color = self.page.theme.colors[-1]
-    return html_but
+    self.__align(component, align)
+    component.style.css.padding = "5px 10px"
+    component.style.css.margin_top = "5px !IMPORTANT"
+    component.style.css.color = self.page.theme.greys[0]
+    component.style.css.line_height = 0
+    component.style.css.background = self.page.theme.colors[-1]
+    component.style.css.border_color = self.page.theme.colors[-1]
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def data(self, filename, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left",
            html_code=None, tooltip=None, profile=None, options=None):
     """
@@ -1468,13 +1475,14 @@ class Buttons:
       extension = filename.split(".")[-1]
       if extension in mapped_file:
         icon = mapped_file[extension]
-    html_but = html.HtmlButton.ButtonData(
+    component = html.HtmlButton.ButtonData(
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    self.__align(html_but, align)
-    html_but.filename = filename
-    html_but.style.css.padding = 5
-    html_but.style.css.visibility = "hidden"
-    html_but.style.css.margin_top = "5px !IMPORTANT"
-    html_but.style.css.line_height = 0
-    html_but.style.css.color = self.page.theme.colors[-1]
-    return html_but
+    self.__align(component, align)
+    component.filename = filename
+    component.style.css.padding = 5
+    component.style.css.visibility = "hidden"
+    component.style.css.margin_top = "5px !IMPORTANT"
+    component.style.css.line_height = 0
+    component.style.css.color = self.page.theme.colors[-1]
+    html.Html.set_component_skin(component)
+    return component

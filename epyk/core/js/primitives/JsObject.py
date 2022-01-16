@@ -6,6 +6,7 @@ Module dedicated to wrap the Javascript Object
 
 """
 
+from typing import Union, Optional
 import json
 
 from epyk.core.js import JsUtils
@@ -27,7 +28,7 @@ class JsKeyword:
 class JsObject:
   _jsClass = "Object"
 
-  def __init__(self, data, varName=None, setVar=False, isPyData=False, report=None):
+  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = False, report=None):
     """
     Description:
     ------------
@@ -38,10 +39,10 @@ class JsObject:
 
     Attributes:
     ----------
-    :param varName:
+    :param Optional[str] varName:
     :param data:
-    :param setVar:
-    :param isPyData:
+    :param bool setVar:
+    :param bool isPyData:
     :param report: The internal report object
     """
     global _JSVARS
@@ -56,7 +57,7 @@ class JsObject:
       self.setVar(self.varName)
 
   @classmethod
-  def new(cls, data=None, varName=None, isPyData=True, report=None):
+  def new(cls, data=None, varName: Optional[str] = None, isPyData: bool = True, report=None):
     """
     Description:
     ------------
@@ -73,8 +74,8 @@ class JsObject:
     Attributes:
     ----------
     :param data: Optional, The object data
-    :param varName: Optional, The object variable name
-    :param isPyData: Optional, Boolean to specify if it is a Python reference and if it should be converted to Json
+    :param Optional[str] varName: Optional, The object variable name
+    :param bool isPyData: Optional, To specify if it is a Python reference and if it should be converted to Json
     :param report: The internal report object
 
     :return: The Python Javascript Date primitive
@@ -108,7 +109,7 @@ class JsObject:
     return cls.get("this", report=report)
 
   @classmethod
-  def get(cls, varName, report=None):
+  def get(cls, varName: str, report=None):
     """
     Description:
     ------------
@@ -125,7 +126,7 @@ class JsObject:
 
     Attributes:
     ----------
-    :param varName: The Javascript object reference.
+    :param str varName: The Javascript object reference.
     :param report: The internal report object.
 
     :return: The python Javascript object
@@ -143,18 +144,18 @@ class JsObject:
     """
     return self.varData if self.varName is None else self.varName
 
-  def setVar(self, varName, varType="var"):
+  def setVar(self, varName: str, var_type: str = "var"):
     """
     Description:
     ------------
-    The setVar() method will defined the variable name and use this reference in the future.
+    The setVar() method will define the variable name and use this reference in the future.
 
     Usage::
 
     Attributes:
     ----------
-    :param varName: Required, The variable name
-    :param varType: The type of variable to be set on the Javascript side
+    :param str varName: Required, The variable name.
+    :param str var_type: The type of variable to be set on the Javascript side.
 
     :return: The Python Javascript Object
     """
@@ -162,21 +163,21 @@ class JsObject:
       return self
 
     if (self.varName is not None and (self.varName.startswith("window.") or self.varName.startswith("window["))) or (varName is not None and (varName.startswith("window.") or varName.startswith("window["))):
-      varType = ""
+      var_type = ""
     if varName != self.varName:
       if len(self._js) == 1:
         if self._js[0].startswith("var "):
           # Remove the entry used to define by default the javascript object
-          self._js = ["%s %s = %s" % (varType, varName, self.varData)]
+          self._js = ["%s %s = %s" % (var_type, varName, self.varData)]
         else:
-          self._js.append("%s %s = %s" % (varType, varName, self.varName))
+          self._js.append("%s %s = %s" % (var_type, varName, self.varName))
       else:
-        self._js.append("%s %s = %s" % (varType, varName, self.varName or self.varData))
+        self._js.append("%s %s = %s" % (var_type, varName, self.varName or self.varData))
     else:
-      self._js.append("%s %s = %s" % (varType, varName, self.varData))
+      self._js.append("%s %s = %s" % (var_type, varName, self.varData))
     return self
 
-  def prototype(self, name, value):
+  def prototype(self, name: str, value):
     """
     Description:
     ------------
@@ -188,14 +189,14 @@ class JsObject:
 
     Attributes:
     ----------
-    :param name: The objects property name
+    :param str name: The objects property name
     :param value: The objects property values
 
     :return: A reference to the String.prototype object
     """
     return "%s.prototype.%s = %s" % (self.varName, name, value)
 
-  def add(self, n):
+  def add(self, n: float):
     """
     Description:
     ------------
@@ -208,7 +209,7 @@ class JsObject:
 
     Attributes:
     ----------
-    :param n: The number value
+    :param float n: The number value
 
     :return: A new Python Javascript Number
     """
@@ -343,7 +344,7 @@ class JsObject:
     :return: A Python Javascript Boolean
     """
     if self.varName is None:
-      raise Exception("Cannot freeze an object without variable name")
+      raise ValueError("Cannot freeze an object without variable name")
 
     from epyk.core.js.primitives import JsBoolean
     return JsBoolean.JsBoolean("Object.isFrozen(%s)" % self.varName, isPyData=False)
@@ -369,7 +370,7 @@ class JsObject:
     :return: The object that was passed to the function
     """
     if self.varName is None:
-      raise Exception("Cannot freeze an object without variable name")
+      raise ValueError("Cannot freeze an object without variable name")
 
     self._frozen = True
     return JsObject("Object.freeze(%s)" % self.varName, isPyData=False)
@@ -398,7 +399,7 @@ class JsObject:
     self._sealed = True
     return JsBoolean.JsBoolean("Object.isSealed(%s)" % self.varId, isPyData=False)
 
-  def defineProperty(self, obj, prop, descriptor):
+  def defineProperty(self, obj, prop: str, descriptor: str):
     """
     Description:
     ------------
@@ -412,8 +413,8 @@ class JsObject:
     Attributes:
     ----------
     :param obj: The object on which to define the property.
-    :param prop: The name or Symbol of the property to be defined or modified.
-    :param descriptor: The descriptor for the property being defined or modified.
+    :param str prop: The name or Symbol of the property to be defined or modified.
+    :param str descriptor: The descriptor for the property being defined or modified.
 
     :return: The object that was passed to the function.
     """
@@ -459,7 +460,7 @@ class JsObject:
     :return: The Python Javascript object being sealed.
     """
     if self.varName is None:
-      raise Exception("Variable name must be defined")
+      raise ValueError("Variable name must be defined")
 
     return JsObject("Object.seal(%s)" % self.varName)
 
@@ -532,7 +533,7 @@ class JsObject:
 
     return JsArray.JsArray("Object.entries(%s)" % self.varId)
 
-  def setattr(self, key, value):
+  def setattr(self, key: str, value):
     """
     Description:
     ------------
@@ -548,13 +549,13 @@ class JsObject:
 
     Attributes:
     ----------
-    :param key: The key to add to the object
+    :param str key: The key to add to the object
     :param value: The value corresponding to the key. Can be a Python object or a Javascript reference
 
     :return: The Python Javascript object
     """
     if self.varName is None:
-      raise Exception("Not name defined for this object")
+      raise ValueError("Not name defined for this object")
 
     if getattr(self, '_frozen', False):
       print("Warning, try to change a frozen variable")
@@ -643,11 +644,11 @@ class JsObject:
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (
       self.varId, dico)
 
-  def toString(self, explicit=True):
+  def toString(self, explicit: bool = True):
     """
     Description:
     ------------
-    Converts a Object to a string, and returns the result
+    Converts an Object to a string, and returns the result
 
     Usage::
 
@@ -659,7 +660,7 @@ class JsObject:
 
     Attributes:
     ----------
-    :param explicit: Optional, default True. Parameter to force the String conversion on the Js side
+    :param bool explicit: Optional, default True. Parameter to force the String conversion on the Js side
 
     :return: A Javascript String
     """
@@ -717,7 +718,7 @@ class JsObject:
 
     return self.varData if self.varName is None else self.varName
 
-  def fromArrayToRecord(self, header=None):
+  def fromArrayToRecord(self, header: list = None):
     """
     Description:
     ------------
@@ -735,7 +736,7 @@ class JsObject:
         data.slice(1).forEach(function(rec){var row = []; rec.forEach(function(r, i){row[header[i]] = r}); 
         results.push(row)}); return results})(%s)''' % self.varName)
 
-  def toRecord(self, header, varName):
+  def toRecord(self, header: list, varName: str):
     """
     Description:
     ------------
@@ -747,8 +748,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param header:
-    :param varName:
+    :param list header:
+    :param str varName:
     """
     from epyk.core.js.primitives import JsArray
     from epyk.core.js.objects import JsData
@@ -796,7 +797,7 @@ class JsObject:
 
     return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), isPyData=False)
 
-  def defaults(self, attrs, report=None):
+  def defaults(self, attrs: dict, report=None):
     """
     Description:
     -----------
@@ -809,7 +810,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param report: Optional. The report object
+    :param dict attrs:
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -834,6 +836,7 @@ class JsObject:
     Attributes:
     ----------
     :param keys:
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -873,7 +876,7 @@ class JsObject:
     """
     return JsObject("JSON.stringify(%s)" % self.varName)
 
-  def fileParse(self, delimiter):
+  def fileParse(self, delimiter: str):
     """
     Description:
     -----------
@@ -881,16 +884,22 @@ class JsObject:
 
     Attributes:
     ----------
-    :param delimiter: String. Mandatory. The line delimiter in the file
+    :param str delimiter: The line delimiter in the file
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     return JsObject('''(function(){var results = []; 
       %s.split('\\n').forEach(function(rec){ results.push(String(rec).replace(/^\s+|\s+$/g, '').split(%s)); }); 
       return results})()''' % (self.varName, delimiter))
 
-  def fileToDict(self, delimiter, columns=None):
+  def fileToDict(self, delimiter: str, columns: Optional[list] = None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
+    :param str delimiter: The line delimiter in the file
+    :param Optional[list] columns:
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     columns = JsUtils.jsConvertData(columns, None)

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsDate
@@ -124,7 +125,7 @@ class JsObjects:
     return JsQuery.JQuery(self._jsObj._src, selector="jQuery(this)", setVar=False)
 
   @classmethod
-  def get(cls, varName):
+  def get(cls, varName: str):
     """
     Description:
     -----------
@@ -139,7 +140,7 @@ class JsObjects:
     return JsObject.JsObject.get(varName)
 
   @classmethod
-  def new(cls, data=None, varName=None, isPyData=False, report=None):
+  def new(cls, data=None, varName: Optional[str] = None, isPyData: bool = False, report=None):
     """
     Description:
     -----------
@@ -148,15 +149,15 @@ class JsObjects:
     Attributes:
     ----------
     :param data: Object. Optional. The value.
-    :param varName: String. Optional. The variable name.
-    :param isPyData: Boolean. Optional. The data type.
+    :param Optional[str] varName: Optional. The variable name.
+    :param bool isPyData: Optional. The data type.
     :param report: Page. Optional. The underlying page object (the context).
 
     :return: A Python generic JsObject primitive.
     """
     return JsObject.JsObject.new(data, varName, isPyData, report=report)
 
-  def time(self, varName, report=None):
+  def time(self, varName: str, report=None):
     """
     Description:
     -----------
@@ -164,7 +165,7 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param varName: String. The variable name.
+    :param str varName: The variable name.
     :param report: Report. Optional. The report object.
     """
     return JsObject.JsObject.new("performance.now()", varName, False, report=report)
@@ -346,7 +347,7 @@ class JsObjects:
     """
     return JsBoolean.JsBoolean.get('false')
 
-  def record(self, varName):
+  def record(self, varName: str):
     """
     Description:
     -----------
@@ -354,11 +355,11 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param varName: String. A string with of the existing variable name.
+    :param str varName: A string with of the existing variable name.
     """
     return JsData.RawData.get(self._jsObj, varName)
 
-  def incr(self, incr):
+  def incr(self, incr: str):
     """
     Description:
     -----------
@@ -366,11 +367,11 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param incr: String, the variable name used to store the counter.
+    :param str incr: the variable name used to store the counter.
     """
     return JsObject.JsObject("%s++" % incr)
 
-  def function(self, args, returns, eval=False):
+  def function(self, args, returns: str, eval: bool = False):
     """
     Description:
     -----------
@@ -378,8 +379,8 @@ class JsObjects:
     Attributes:
     ----------
     :param args:
-    :param returns:
-    :param eval:
+    :param str returns:
+    :param bool eval:
     """
     params, values = [], []
     for i, v in enumerate(args):
@@ -398,31 +399,31 @@ class JsPromiseRecords:
   def __init__(self, promise):
     self.promise = promise
 
-  def get(self, jsFncs, profile=None):
+  def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.promise.then("function(data){%s}" % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.promise.then("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
     return self
 
-  def cast(self, columns, to="float", profile=None):
+  def cast(self, columns: list, to: str = "float", profile: Union[dict, bool] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param columns:
-    :param to:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param list columns:
+    :param str to:
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
     cast_cols = {}
     str_frg = []
@@ -436,25 +437,25 @@ class JsPromiseRecords:
         str_frg.append("row['%(col)s'] = parseFloat(row['%(col)s'])" % {"col": col})
       elif kind == "int":
         str_frg.append("row['%(col)s'] = parseInt(row['%(col)s'])" % {"col": col})
-    return self.row(str_frg)
+    return self.row(str_frg, profile=profile)
 
-  def row(self, jsFncs, profile=False):
+  def row(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = []
+    if not isinstance(js_funcs, list):
+      js_funcs = []
     self.promise.then(
-      "function(data){let result = []; data.forEach(function(row){%s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile))
+      "function(data){let result = []; data.forEach(function(row){%s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
     return self
 
-  def filterCol(self, column, value, operator="==", keep=True):
+  def filterCol(self, column, value, operator: str = "==", keep: bool = True):
     """
     Description:
     -----------
@@ -463,8 +464,8 @@ class JsPromiseRecords:
     ----------
     :param column:
     :param value:
-    :param operator:
-    :param keep:
+    :param str operator:
+    :param bool keep:
     """
     column = JsUtils.jsConvertData(column, None)
     value = JsUtils.jsConvertData(value, None)
@@ -485,11 +486,11 @@ class JsPromiseRecords:
 
 class JsPromise:
 
-  def __init__(self, jsObj, profile=False, async_await=False):
+  def __init__(self, jsObj, profile: Optional[Union[dict, bool]] = False, async_await: bool = False):
     self._jsObj, self.profile, self.async_await = jsObj, profile, async_await
     self.__thens, self.__catch = [], []
 
-  def then(self, jsFncs, profile=None):
+  def then(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -497,41 +498,41 @@ class JsPromise:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__thens.append(JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__thens.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def csvRows(self, jsFncs, profile=None):
+  def csvRows(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.then(["function(response){ return response.text()}"], profile)
-    return self.then(["function(data){let result = []; data.split('\\n').forEach(function(line){let row = line.split(','); %s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)], profile)
+    return self.then(["function(data){let result = []; data.split('\\n').forEach(function(line){let row = line.split(','); %s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)], profile)
 
-  def csvtoRecords(self, jsFncs=None, profile=None):
+  def csvtoRecords(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.then(["function(response){ return response.text()}"], profile)
     return JsPromiseRecords(self.then(['''function(response){
     let fileContent = response.split(/\\r?\\n/); let data = [];
@@ -540,20 +541,20 @@ class JsPromise:
       let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
       %s; data.push(row)}; 
     return data}
-    ''' % JsUtils.jsConvertFncs(jsFncs or [], toStr=True, profile=profile)], profile))
+    ''' % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile)], profile))
 
-  def catch(self, jsFncs):
+  def catch(self, js_funcs: Union[list, str]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param Union[list, str] js_funcs: The Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__catch.extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__catch.extend(js_funcs)
     return self
 
   @property
@@ -582,86 +583,91 @@ class XMLHttpRequestErrors:
     self._http = http_request
     self.profile = None
 
-  def e404(self, jsFncs=None, default=True, profile=None):
+  def e404(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
+           profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param default: Boolean. Optional. Use the default messages.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param bool default: Optional. Use the default messages.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    jsFncs = list(jsFncs or [])
+    js_funcs = list(js_funcs or [])
     if default:
-      jsFncs.append(self._src.js.msg.text(
+      js_funcs.append(self._src.js.msg.text(
         "Service [%s] not found" % self._http.url,
         cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 404){%s}" % (
-      self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def e405(self, jsFncs=None, default=True, profile=None):
+  def e405(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
+           profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param default: Boolean. Optional. Use the default messages.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param bool default: Optional. Use the default messages.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    jsFncs = list(jsFncs or [])
+    js_funcs = list(js_funcs or [])
     if default:
-      jsFncs.append(
+      js_funcs.append(
         self._src.js.msg.text("Service [%s] failed to return response" % self._http.url,
                               cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 405){%s}" % (
-      self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def e200(self, jsFncs=None, default=True, profile=None):
+  def e200(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
+           profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param default: Boolean. Optional. Use the default messages.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param bool default: Optional. Use the default messages.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    jsFncs = list(jsFncs or [])
+    js_funcs = list(js_funcs or [])
     if default:
-      jsFncs.append(
+      js_funcs.append(
         self._src.js.msg.text("Service [%s] completed successfully" % self._http.url,
                               cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
     self.__onerrors.append(
-      "if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      "if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def commons(self, jsFncs=None, default=True, profile=None):
+  def commons(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
+              profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param default: Boolean. Optional. Use the default messages.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_funcs: Javascript functions.
+    :param bool default: Optional. Use the default messages.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self.e405(jsFncs, default, profile)
-    self.e404(jsFncs, default, profile)
-    self.e200(jsFncs, default, profile)
+    self.e405(js_funcs, default, profile)
+    self.e404(js_funcs, default, profile)
+    self.e200(js_funcs, default, profile)
     return self._http
 
 
 class XMLHttpRequest:
 
-  def __init__(self, report, varName, method_type, url, data=None, asynchronous=False):
+  def __init__(self, report, varName: str, method_type: Optional[str], url: Optional[str], data=None,
+               asynchronous: bool = False):
     self.data = JsData.Datamap() if data is None else data
     self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
@@ -673,7 +679,7 @@ class XMLHttpRequest:
       self.open(method_type, url)
 
   @classmethod
-  def get(cls, varName):
+  def get(cls, varName: str):
     """
     Description:
     ------------
@@ -681,7 +687,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param varName: String. The variable name on tje JavaScript side.
+    :param str varName: The variable name on tje JavaScript side.
 
     :return: The requested Python JsObject primitive.
     """
@@ -715,7 +721,7 @@ class XMLHttpRequest:
     return JsNumber.JsNumber("%s.status" % self.varId)
 
   @property
-  def responseType(self, value=None):
+  def responseType(self, value: Optional[str] = None):
     """
     Description:
     ------------
@@ -728,7 +734,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param value: String. Optional. The response type.
+    :param Optional[str] value: Optional. The response type.
     """
     if value is not None:
       self.__responseType = value
@@ -762,7 +768,7 @@ class XMLHttpRequest:
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
-  def addEventListener(self, event, jsFncs, options=None):
+  def addEventListener(self, event: str, jsFncs: Union[list, str], options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -778,12 +784,13 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param event: String. A case-sensitive string representing the event type to listen for.
-    :param jsFncs: String | List. Optional. The Javascript functions.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str event: A case-sensitive string representing the event type to listen for.
+    :param Union[list, str] jsFncs: Optional. The Javascript functions.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
 
-  def open(self, method_type, url, _async=True, user=None, password=None):
+  def open(self, method_type: str, url: str, _async: bool = True, user: Optional[str] = None,
+           password: Optional[str] = None):
     """
     Description:
     ------------
@@ -795,16 +802,16 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param method_type: String. The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
-    :param url: String. A DOMString representing the URL to send the request to.
-    :param _async: Boolean. Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
-    :param user: String. Optional. The optional user name to use for authentication purposes; by default, this is the null value.
-    :param password: String. Optional. The optional password to use for authentication purposes; by default, this is the null value.
+    :param str method_type: The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
+    :param str url: A DOMString representing the URL to send the request to.
+    :param bool _async: Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
+    :param Optional[str] user: Optional. The optional user name to use for authentication purposes; by default, this is the null value.
+    :param Optional[str] password: Optional. The optional password to use for authentication purposes; by default, this is the null value.
     """
     self.url, self.method = url, method_type
     return self
 
-  def setHeaders(self, headers):
+  def setHeaders(self, headers: dict):
     """
     Description:
     ------------
@@ -816,12 +823,12 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param headers: Dictionary. The different attributes to be added to the header.
+    :param dict headers: The different attributes to be added to the header.
     """
     self.__headers.update(headers)
     return self
 
-  def setRequestHeader(self, name, value):
+  def setRequestHeader(self, name: str, value: str):
     """
     Description:
     ------------
@@ -833,13 +840,13 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param name: String. The header name.
-    :param value: String. The header value.
+    :param str name: The header name.
+    :param str value: The header value.
     """
     self.__headers[name] = value
     return self
 
-  def onSuccess(self, jsFncs, profile=None):
+  def onSuccess(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -852,20 +859,20 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__req_success = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__req_success = js_funcs
     if self.profile is not None and self.profile:
       self.__req_success.insert(0, "console.log('Start[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
       self.__req_success.append("console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
     return self
 
-  def onerror(self, jsFncs, profile=None):
+  def onerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -878,24 +885,24 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if self.__on.get("onerror") is None:
-      self.__on["onerror"] = jsFncs
+      self.__on["onerror"] = js_funcs
     else:
-      self.__on["onerror"] = jsFncs
+      self.__on["onerror"] = js_funcs
     return self
 
-  def onFail(self, jsFncs, status_code=404, profile=None):
+  def onFail(self, js_funcs: Union[list, str], status_code: int = 404, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
-    The loadend event is fired when a request has completed, whether successfully (after load) or unsuccessfully
+    The loaded event is fired when a request has completed, whether successfully (after load) or unsuccessfully
     (after abort or error).
 
     Related Pages:
@@ -904,16 +911,16 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param status_code: Integer. Optional. The status code for the failure condition.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param int status_code: Optional. The status code for the failure condition.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if "onloadend" not in self.__on:
       self.__on["onloadend"] = []
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.__on["onloadend"].append("if(%s.status == %s){%s}" % (
-      self.varId, status_code, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile or self.profile)))
+      self.varId, status_code, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile or self.profile)))
     return self
 
   @property
@@ -927,7 +934,7 @@ class XMLHttpRequest:
       self.__on["onloadend"] = []
     return XMLHttpRequestErrors(self.__on["onloadend"], self._src, self)
 
-  def ontimeout(self, jsFncs, timeout=2000, profile=None):
+  def ontimeout(self, js_funcs: Union[list, str], timeout: int = 2000, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -939,19 +946,19 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param timeout: Integer. Optional. Time in milliseconds.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param int timeout: Optional. Time in milliseconds.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
     self.timeout = timeout
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__on["ontimeout"] = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__on["ontimeout"] = js_funcs
     return self
 
-  def onloadend(self, jsFncs, profile=None):
+  def onloadend(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -959,17 +966,17 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__on["onloadend"] = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__on["onloadend"] = js_funcs
     return self
 
-  def onloadstart(self, jsFncs, profile=None):
+  def onloadstart(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -978,17 +985,17 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__on["onloadstart"] = jsFncs
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__on["onloadstart"] = js_funcs
     return self
 
-  def withCredentials(self, flag):
+  def withCredentials(self, flag: bool):
     """
     Description:
     ------------
@@ -1003,10 +1010,10 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param flag: Boolean. Flag to specify the use of credentials.
+    :param bool flag: Flag to specify the use of credentials.
     """
 
-  def send(self, jsonData=None, encodeURIData=None, stringify=True):
+  def send(self, jsonData=None, encodeURIData=None, stringify: bool = True):
     """
     Description:
     ------------
@@ -1023,7 +1030,7 @@ class XMLHttpRequest:
     ----------
     :param jsonData:
     :param encodeURIData:
-    :param stringify: Boolean
+    :param bool stringify:
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if jsonData:
@@ -1083,7 +1090,8 @@ class XMLHttpRequest:
       request.append("%(varId)s.%(name)s = function(){%(jsFncs)s}" % {
         'name': k, 'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(fncs, toStr=True, profile=self.profile)})
     if self.__req_send is None:
-      raise Exception("The send method must be called")
+      raise ValueError("The send method must be called")
+
     request.append(self.__req_send)
     if self.profile is not None and self.profile:
       JsUtils.PROFILE_COUNT += 1

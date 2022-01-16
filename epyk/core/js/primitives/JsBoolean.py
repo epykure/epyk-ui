@@ -10,6 +10,7 @@ Related Pages:
 		https://www.w3schools.com/jsref/jsref_valueof_boolean.asp
 """
 
+from typing import Optional
 import json
 
 from epyk.core.js.primitives import JsObject
@@ -18,7 +19,7 @@ from epyk.core.js.primitives import JsObject
 class JsBoolean(JsObject.JsObject):
   _jsClass = "Boolean"
 
-  def __init__(self, data, varName=None, setVar=False, isPyData=True, report=None):
+  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = True, report=None):
     if not hasattr(data, 'varName') and isPyData:
       isPyData = True
       data = json.dumps(data)

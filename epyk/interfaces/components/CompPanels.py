@@ -11,7 +11,6 @@ class Panels:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
@@ -47,9 +46,9 @@ class Panels:
       components = [components]
     html_panel = html.HtmlContainer.Panel(self.page, components or [], title, color, width, height, html_code,
                                           helper, options, profile)
+    html.Html.set_component_skin(html_panel)
     return html_panel
 
-  @html.Html.css_skin()
   def pills(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", html_code=None, helper=None,
             options=None, profile=False):
     """
@@ -99,9 +98,9 @@ class Panels:
     html_tabs.style.css.overflow_x = "auto"
     html_tabs.tabs_container.style.css.text_align = align
     html_tabs.style.css.white_space = "nowrap"
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def boxes(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", html_code=None, helper=None,
             options=None, profile=False):
     """
@@ -152,9 +151,9 @@ class Panels:
     html_tabs.tabs_container.style.css.text_align = align
     html_tabs.tabs_container.style.css.border_bottom = "1px solid %s" % html_tabs._report.theme.colors[-1]
     html_tabs.style.css.white_space = "nowrap"
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
            profile=False):
     """
@@ -197,9 +196,9 @@ class Panels:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
       self.page, color, width, height, html_code, helper, dflt_options, profile)
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
                 profile=False):
     """
@@ -244,9 +243,9 @@ class Panels:
     html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {
       "background": html_tabs.page.theme.colors[-1], "color": self.page.theme.greys[0]}
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
                   profile=False):
     """
@@ -292,9 +291,9 @@ class Panels:
     html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {
       "background": html_tabs.page.theme.colors[-1], "color": self.page.theme.greys[0]}
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def menu(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
            profile=False):
     """
@@ -338,9 +337,9 @@ class Panels:
     html_tabs.options.css_tab_clicked = {
       'color': html_tabs.page.theme.greys[0], 'background': html_tabs.page.theme.colors[-1]}
     html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.page.theme.colors[-1]})
+    html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  @html.Html.css_skin()
   def sliding(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"),
               html_code=None, helper=None, options=None, profile=False):
     """
@@ -392,9 +391,9 @@ class Panels:
     if align == "center":
       html_slide.style.css.margin = "auto"
       html_slide.style.css.display = "block"
+    html.Html.set_component_skin(html_slide)
     return html_slide
 
-  @html.Html.css_skin()
   def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
             helper=None, options=None, profile=None):
     """
@@ -434,9 +433,9 @@ class Panels:
     height = Arguments.size(height, unit="px")
     html_split = html.HtmlContainer.PanelSplit(self.page, width, height, left_width, left, right, resizable,
                                                helper, options, profile)
+    html.Html.set_component_skin(html_split)
     return html_split
 
-  @html.Html.css_skin()
   def filters(self, items=None, category='group', width=(100, "%"), height=(60, "px"), html_code=None, helper=None,
               options=None, profile=None):
     """
@@ -482,9 +481,9 @@ class Panels:
       items, category, width=width, height=height, html_code=html_code, helper=helper, options=dflt_options,
       profile=profile)
     chip.input.style.css.display = False
+    html.Html.set_component_skin(chip)
     return chip
 
-  @html.Html.css_skin()
   def nav(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
     """
     Description:
@@ -513,9 +512,9 @@ class Panels:
     if options is not None:
       dflt_options.update(options)
     h_drawer = html.HtmlMenu.PanelsBar(self.page, width, height, dflt_options, helper, profile)
+    html.Html.set_component_skin(h_drawer)
     return h_drawer
 
-  @html.Html.css_skin()
   def hamburger(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"),
                 html_code=None, helper=None, options=None, profile=False):
     """
@@ -575,6 +574,7 @@ class Panels:
     if align == "center":
       html_slide.style.css.margin = "5px auto"
       html_slide.style.css.display = "block"
+    html.Html.set_component_skin(html_slide)
     return html_slide
 
   @property
@@ -592,7 +592,6 @@ class Slidings:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def right(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
@@ -628,9 +627,9 @@ class Slidings:
     sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
+    html.Html.set_component_skin(sliding)
     return sliding
 
-  @html.Html.css_skin()
   def left(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
            helper=None, options=None, profile=False):
     """
@@ -662,9 +661,9 @@ class Slidings:
     sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
+    html.Html.set_component_skin(sliding)
     return sliding
 
-  @html.Html.css_skin()
   def plus(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
            helper=None, options=None, profile=False):
     """
@@ -697,4 +696,5 @@ class Slidings:
     html_slide.options.icon_closed = Defaults_css.get_icon("plus")["icon"]
     html_slide.options.icon_expanded = Defaults_css.get_icon("minus")["icon"]
     html_slide.val[1].style.padding_left = 40
+    html.Html.set_component_skin(html_slide)
     return html_slide

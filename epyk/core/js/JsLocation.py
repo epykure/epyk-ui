@@ -9,6 +9,7 @@ Related Pages:
 
 """
 
+from typing import Any, Optional, List
 from epyk.core.js import JsUtils
 
 # All the predefined variable types
@@ -20,10 +21,10 @@ from epyk.core.js.primitives import JsString
 
 class URLSearchParams:
 
-  def __init__(self, queryString):
+  def __init__(self, queryString: str):
     self.queryString = queryString
 
-  def get(self, key, default=None):
+  def get(self, key: str, default: Any = None):
     """
     Description:
     ------------
@@ -35,16 +36,16 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: String. The url parameter.
-    :param default: String. Optional. The default value.
+    :param str key: The url parameter.
+    :param Any default: Optional. The default value.
     """
     key = JsUtils.jsConvertData(key, None)
     default = JsUtils.jsConvertData(default, None)
     return JsString.JsString.get(
-      "(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else {return pmt }})()" % (
+      "(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else { return pmt }})()" % (
         self.queryString, key, default))
 
-  def getAll(self, key):
+  def getAll(self, key: str):
     """
     Description:
     ------------
@@ -56,12 +57,12 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: String. The url parameter.
+    :param str key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.queryString, key))
 
-  def has(self, key):
+  def has(self, key: str):
     """
     Description:
     ------------
@@ -73,12 +74,12 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: String. The url parameter.
+    :param str key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.queryString, key))
 
-  def append(self, key, value):
+  def append(self, key: str, value: Any):
     """
     Description:
     ------------
@@ -90,8 +91,8 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: String. The url parameter.
-    :param value: String. The value to be appended to the URL.
+    :param str key: The url parameter.
+    :param Any value: The value to be appended to the URL.
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -240,7 +241,7 @@ class JsLocation:
     """
     return JsString.JsString("location.origin", isPyData=False)
 
-  def href(self, href=None, secured=False):
+  def href(self, href: Optional[str] = None, secured: bool = False):
     """
     Description:
     ------------
@@ -256,8 +257,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param href: String. Optional. Set the href property.
-    :param secured: Boolean. Optional.
+    :param Optional[str] href:Optional. Set the href property.
+    :param bool secured: Optional.
 
     :return: A String, representing the entire URL of the page, including the protocol (like http://).
     """
@@ -268,7 +269,8 @@ class JsLocation:
       href = r"http:\\%s" % href if not secured else r"https:\\%s" % href
     return JsObject.JsObject("location.href = %s" % JsUtils.jsConvertData(href, None))
 
-  def open_new_tab(self, url, name="_blank", specs=None, replace=None, windowId="window", secured=False):
+  def open_new_tab(self, url: str, name: str = "_blank", specs: Optional[str] = None, replace=None,
+                   windowId: str = "window", secured: bool = False):
     """
     Description:
     ------------
@@ -284,12 +286,12 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: String. Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
-    :param name: String. Optional. Specifies the target attribute or the name of the window. Default _blank.
-    :param specs: String. Optional. A comma-separated list of items, no whitespaces.
+    :param str url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
+    :param str name: Optional. Specifies the target attribute or the name of the window. Default _blank.
+    :param Optional[str] specs: Optional. A comma-separated list of items, no whitespaces.
     :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
-    :param windowId: The JavaScript window object
-    :param secured:
+    :param str windowId: The JavaScript window object
+    :param bool secured:
     """
     if not hasattr(url, 'toStr') and url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
@@ -302,7 +304,7 @@ class JsLocation:
     replace = JsUtils.jsConvertData(replace, None)
     return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (windowId, url, name, specs, replace))
 
-  def download(self, url, name='download'):
+  def download(self, url: str, name: str = 'download'):
     """
     Description:
     ------------
@@ -310,8 +312,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: String. The url of the image.
-    :param name: String. Optional. The name of the file.
+    :param str url: The url of the image.
+    :param str name: Optional. The name of the file.
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
@@ -319,7 +321,7 @@ class JsLocation:
       var link = document.createElement('a'); document.body.appendChild(link);
       link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % {'name': name, 'url': url})
 
-  def mail(self, mails, subject, body):
+  def mail(self, mails: List[str], subject: str, body: str):
     """
     Description:
     ------------
@@ -336,9 +338,9 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param mails: List. The email addresses.
-    :param subject: String. The email's subject.
-    :param body: String. The email's content.
+    :param list[str] mails: The email addresses.
+    :param str subject: The email's subject.
+    :param str body: The email's content.
 
     :return: THe Javascript string.
     """
@@ -347,7 +349,7 @@ class JsLocation:
     return self.href(JsString.JsString(
       "'mailto:%s?subject=%s&body='+ encodeURIComponent('%s')" % (mails, subject, body), isPyData=False))
 
-  def reload(self, forceGet=False):
+  def reload(self, forceGet: bool = False):
     """
     Description:
     ------------
@@ -361,7 +363,7 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param forceGet: Optional. Specifies the type of reloading:
+    :param bool forceGet: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
           true - Reloads the current page from the server.
 
@@ -370,7 +372,7 @@ class JsLocation:
     forceGet = JsUtils.jsConvertData(forceGet, None)
     return JsFncs.JsFunction("location.reload(%s)" % forceGet)
 
-  def assign(self, url):
+  def assign(self, url: str):
     """
     Description:
     ------------
@@ -382,14 +384,14 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: String. Required. Specifies the URL of the page to navigate to.
+    :param str url: Specifies the URL of the page to navigate to.
 
     :return: Void
     """
     jsData = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.assign(%s)" % jsData)
 
-  def replace(self, url, secured=False):
+  def replace(self, url: str, secured: bool = False):
     """
     Description:
     ------------
@@ -405,8 +407,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: String. Required. Specifies the URL of the page to navigate to.
-    :param secured: Boolean. Optional. If the http is missing. This will be used to fix the url.
+    :param str url: Specifies the URL of the page to navigate to.
+    :param bool secured: Optional. If the http is missing. This will be used to fix the url.
 
     :return: Void
     """
@@ -415,11 +417,11 @@ class JsLocation:
     js_data = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.replace(%s)" % js_data)
 
-  def postTo(self, url, data, method="POST", target="_blank"):
+  def postTo(self, url: str, data: dict, method: str = "POST", target: str = "_blank"):
     """
     Description:
     ------------
-    This method will create a internal form and submit the response exactly like a post of a form to another page.
+    This method will create an internal form and submit the response exactly like a post of a form to another page.
 
     Related Pages:
 
@@ -427,10 +429,10 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: String. The target url.
-    :param data: A python dictionary
-    :param method: String. Optional. The method used to send the data. Default POST.
-    :param target: String. Optional.
+    :param str url: The target url.
+    :param dict data:
+    :param str method: Optional. The method used to send the data. Default POST.
+    :param str target: Optional.
     """
     inputs = []
     for k, v in data.items():
@@ -440,7 +442,7 @@ class JsLocation:
       var form = document.createElement("form"); form.method = "%s"; form.target = "%s"; form.action = "%s"; %s;
       document.body.appendChild(form); form.submit()''' % (method, target, url, "".join(inputs))
 
-  def getUrlFromData(self, data, options=None):
+  def getUrlFromData(self, data: dict, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -452,7 +454,7 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param data: Dictionary | JsData. Input data to be converted.
+    :param dict data: Input data to be converted.
     :param options: Dictionary | JsData. Optional. Blob definition properties.
     """
     data = JsUtils.jsConvertData(data, None)
@@ -462,7 +464,7 @@ class JsLocation:
 
     return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s]))" % data)
 
-  def getUrlFromArrays(self, data, options=None):
+  def getUrlFromArrays(self, data, options: Optional[dict] = None):
     """
     Description:
     ------------

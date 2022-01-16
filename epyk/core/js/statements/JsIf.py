@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
+from typing import Union, Optional
 
 
 class JsIf:
 
-  def __init__(self, jsCondition, jsFncs, context=None, profile=False):
+  def __init__(self, condition: str, js_funcs: Union[list, str], context: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -18,19 +20,19 @@ class JsIf:
 
     Attributes:
     ----------
-    :param jsCondition: String. The Javascript condition. Can be a JsBoolean object.
-    :param jsFncs: List | String. Optional. The Javascript functions.
-    :param context: Page. Optional. Dictionary. Meta data concerning the context.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param str condition: The Javascript condition. Can be a JsBoolean object.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[dict] context: Page. Optional. Meta data concerning the context.
+    :param Optional[Union[dict, bool]] profile: Boolean. Optional. A flag to set the component performance storage.
     """
     self._context = context
-    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
-    if hasattr(jsCondition, "toStr"):
-      jsCondition = jsCondition.toStr()
-    self._js = [(jsCondition, js_funcs)]
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, False, profile=profile)
+    if hasattr(condition, "toStr"):
+      condition = condition.toStr()
+    self._js = [(condition, js_funcs)]
     self.__jsElse = None
 
-  def elif_(self, jsCondition, jsFncs, profile=False):
+  def elif_(self, condition: str, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -40,17 +42,17 @@ class JsIf:
 
     Attributes:
     ----------
-    :param jsCondition: String. The Javascript condition. Can be a JsBoolean object.
-    :param jsFncs: List | String. Optional. The Javascript functions.
+    :param str condition: The Javascript condition. Can be a JsBoolean object.
+    :param Union[list, str] js_funcs: The Javascript functions.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
 
     :return: The If object to allow the chaining.
     """
-    js_funcs = JsUtils.jsConvertFncs(jsFncs, False, profile=profile)
-    self._js.append((jsCondition, js_funcs))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, False, profile=profile)
+    self._js.append((condition, js_funcs))
     return self
 
-  def else_(self, jsFncs, profile=False):
+  def else_(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -62,12 +64,12 @@ class JsIf:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. The Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
 
     :return: The If object to allow the chaining.
     """
-    self.__jsElse = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
+    self.__jsElse = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def toStr(self):

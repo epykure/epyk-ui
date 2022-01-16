@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type
+
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptText
@@ -23,7 +25,7 @@ class ExternalLink(Html.Html):
       self.options.url = self.val['url']
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlLink:
     """
     Description:
     ------------
@@ -39,7 +41,7 @@ class ExternalLink(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsLink:
     """
     Description:
     ------------
@@ -64,7 +66,7 @@ class ExternalLink(Html.Html):
         htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
       else {htmlObj.innerHTML = text}; if(typeof data.url !== 'undefined'){htmlObj.href = data.url}'''
 
-  def anchor(self, component):
+  def anchor(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -73,13 +75,13 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. A link to this HTML component.
+    :param Type[Html.Html] component: A link to this HTML component.
     """
     self.val["url"] = "#%s" % component.htmlCode
     self.options.url = "#%s" % component.htmlCode
     return self
 
-  def no_decoration(self, color=None):
+  def no_decoration(self, color: Optional[str] = None):
     """
     Description:
     -----------
@@ -87,7 +89,7 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param color: String. Optional. The color code.
+    :param Optional[str] color: Optional. The color code.
     """
     self.style.css.text_decoration = None
     self.style.list_style_type = None
@@ -96,7 +98,8 @@ class ExternalLink(Html.Html):
     self.style.css.color = color
     return self
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None,
+            profile: Optional[Union[bool, dict]] = False, component_id: Optional[str] = None):
     """
     Description:
     -----------
@@ -105,9 +108,9 @@ class ExternalLink(Html.Html):
     Attributes:
     ----------
     :param data: String | object. The component expected content.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional. The component reference (the htmlCode).
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] component_id: Optional. The component reference (the htmlCode).
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):

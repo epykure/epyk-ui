@@ -12,7 +12,6 @@ class Vignets:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def bubble(self, records=None, width=(70, "px"), height=("auto", ''), color=None, background_color=None,
              helper=None, options=None, profile=None):
     """
@@ -80,9 +79,9 @@ class Vignets:
     div.style.css.text_align = "center"
     div += bubble
     div += div.title
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def number(self, number, label="", title=None, align="center", components=None, width=('auto', ""),
              height=(None, "px"), profile=None, options=None, helper=None):
     """
@@ -151,9 +150,9 @@ class Vignets:
     container.build = pre_components[-1].build
     if title is not None:
       container.title = title
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def block(self, records=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
             helper=None, options=None, profile=None):
     """
@@ -189,11 +188,11 @@ class Vignets:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_blocktext = html.HtmlTextComp.BlockText(
+    container = html.HtmlTextComp.BlockText(
       self.page, records, color, border, width, height, helper, options, profile)
-    return html_blocktext
+    html.Html.set_component_skin(container)
+    return container
 
-  @html.Html.css_skin()
   def text(self, records=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None,
            profile=None):
     """
@@ -223,9 +222,9 @@ class Vignets:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     html_text = html.HtmlTextComp.TextWithBorder(self.page, records, width, height, align, helper, options, profile)
+    html.Html.set_component_skin(html_text)
     return html_text
 
-  @html.Html.css_skin()
   def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'),
             height=(None, "px"), options=None, profile=None):
     """
@@ -312,9 +311,9 @@ class Vignets:
         container.add(self.page.ui.col([title, content]))
       else:
         container.add(content)
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
             options=None, profile=None):
     """
@@ -392,9 +391,9 @@ class Vignets:
         container.video = video_content
         container.add(container.video)
       container.add(self.page.ui.col([title, content]))
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center",
                  position="middle", options=None, profile=None):
     """
@@ -427,9 +426,9 @@ class Vignets:
     if align == "center":
       div.style.css.margin = "10px auto"
       div.style.css.display = "block"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None,
              profile=None):
     """
@@ -494,9 +493,9 @@ class Vignets:
           container.add(icon)
       container.add(self.page.ui.col([title, content]))
       container[-1].style.css.border_left = "1px solid %s" % self.page.theme.greys[3]
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def price(self, value, title, items=None, components=None, url=None, align="center", width=(250, 'px'),
             height=("auto", ''), currency="£", options=None, profile=None, helper=None):
     """
@@ -555,9 +554,9 @@ class Vignets:
         items.style.css.margin = "auto 20%"
         items.style.css.text_align = "left"
       container.add(items)
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def slides(self, start=0, width=(100, '%'), height=(100, "%"), options=None, profile=None):
     """
     Description:
@@ -582,4 +581,5 @@ class Vignets:
     if options is not None:
       dflt_options.update(options)
     html_slides = html.HtmlOthers.Slides(self.page, start, width, height, dflt_options, profile)
+    html.Html.set_component_skin(html_slides)
     return html_slides

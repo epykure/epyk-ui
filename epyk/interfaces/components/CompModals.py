@@ -12,7 +12,6 @@ class Modals:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def forms(self, components, action, method, header=None, footer=None, helper=None):
     """
     Description:
@@ -51,9 +50,9 @@ class Modals:
     modal = html.HtmlContainer.Modal(self.page, [], header, footer, False, helper)
     modal += form
     modal.form = form
+    html.Html.set_component_skin(modal)
     return modal
 
-  @html.Html.css_skin()
   def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None,
                  add_buttons=None, to_html=True, helper=None):
     """
@@ -100,9 +99,9 @@ class Modals:
           submitBtn.click(modal.close())
         submitRow + submitBtn
       modal.col + submitRow
+    html.Html.set_component_skin(modal)
     return modal
 
-  @html.Html.css_skin()
   def dialog(self, text, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -133,9 +132,9 @@ class Modals:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_pr = html.HtmlEvent.Dialog(self.page, text, width, height, helper, options or {}, html_code, profile)
+    html.Html.set_component_skin(html_pr)
     return html_pr
 
-  @html.Html.css_skin()
   def icon(self, components=None, icon=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -186,14 +185,12 @@ class Modals:
     acknowledgement = self.page.ui.button("Ok", align="center", options=dfl_options.get("button", {}))
     acknowledgement.style.css.margin_top = 10
     components.append(acknowledgement)
-
     popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.acknowledgement = acknowledgement
-
     acknowledgement.click([popup.dom.hide()])
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def validation(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -237,14 +234,13 @@ class Modals:
     row = self.page.ui.row([validate, cancel], position="top", align="center")
     row.options.autoSize = False
     components.append(row)
-
     popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.validate = validate
     popup.cancel = cancel
     cancel.click([popup.dom.hide()])
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def acknowledge(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -289,9 +285,9 @@ class Modals:
     popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
     popup.acknowledgement = acknowledgement
     acknowledgement.click([popup.dom.hide()])
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -329,9 +325,10 @@ class Modals:
     dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
     if options is not None:
       dfl_options.update(options)
-    return html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+    popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+    html.Html.set_component_skin(popup)
+    return popup
 
-  @html.Html.css_skin()
   def error(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -370,9 +367,9 @@ class Modals:
                       options=dfl_options, profile=profile)
     popup.window.style.css.border = "3px solid %s" % self.page.theme.danger[0]
     popup.container[0].style.css.color = self.page.theme.danger[1]
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def info(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -404,11 +401,11 @@ class Modals:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
-    popup = self.icon(components=components, icon="question", width=width, height=height, options=options,
-                      profile=profile)
+    popup = self.icon(
+      components=components, icon="question", width=width, height=height, options=options, profile=profile)
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def success(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -444,9 +441,9 @@ class Modals:
       components=components, icon="check", width=width, height=height, options=options, profile=profile)
     popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
     popup.container[0].style.css.color = self.page.theme.success[1]
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def loading(self, text="", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
@@ -489,13 +486,17 @@ class Modals:
       return component.build(data, options, profile)
 
     popup.build = build_text
+    html.Html.set_component_skin(popup)
     return popup
 
-  @html.Html.css_skin()
   def stepper(self, records=None, components=None, shape="arrow", title=None, width=(100, '%'), height=(None, 'px'),
               options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param records:
     :param components:
     :param shape:
@@ -524,4 +525,5 @@ class Modals:
     popup.window.style.css.min_width = "auto"
     popup.window.style.css.width = "auto"
     popup.stepper = stepper
+    html.Html.set_component_skin(popup)
     return popup

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,7 +11,9 @@ class Drawers:
   def __init__(self, ui):
     self.page = ui.page
 
-  def drawer(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
+  def drawer(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, '%'),
+             options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
+             helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -31,19 +34,22 @@ class Drawers:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. A dictionary with the components properties.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    h_drawer = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
-    h_drawer.style.css.min_height = 200
-    return h_drawer
+    component = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
+    component.style.css.min_height = 200
+    html.Html.set_component_skin(component)
+    return component
 
-  def left(self, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
+  def left(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
+           options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
+           helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -56,21 +62,24 @@ class Drawers:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"side": "left"}
+    dfl_options = {"side": "left"}
     if options is not None:
-      dflt_options.update(options)
-    h_drawer = html.HtmlDrawer.Drawer(self.page, width, height, dflt_options, helper, profile)
-    return h_drawer
+      dfl_options.update(options)
+    component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  def right(self, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
+  def right(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
+            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
+            helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -89,21 +98,24 @@ class Drawers:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. A dictionary with the components properties.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"side": "right"}
+    dfl_options = {"side": "right"}
     if options is not None:
-      dflt_options.update(options)
-    h_drawer = html.HtmlDrawer.Drawer(self.page, width, height, dflt_options, helper, profile)
-    return h_drawer
+      dfl_options.update(options)
+    component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  def multi(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
+  def multi(self, component, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
+            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
+            helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -120,21 +132,24 @@ class Drawers:
     Attributes:
     ----------
     :param component: Html component. Object in charge of managing the panel display..
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"side": "right"}
+    dfl_options = {"side": "right"}
     if options is not None:
-      dflt_options.update(options)
-    h_drawer = html.HtmlDrawer.DrawerMulti(self.page, component, width, height, dflt_options, helper, profile)
-    return h_drawer
+      dfl_options.update(options)
+    drawer = html.HtmlDrawer.DrawerMulti(self.page, component, width, height, dfl_options, helper, profile)
+    html.Html.set_component_skin(drawer)
+    return drawer
 
-  def no_handle(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
+  def no_handle(self, component, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
+                options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
+                helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -151,16 +166,17 @@ class Drawers:
     Attributes:
     ----------
     :param component: Html component. Object in charge of managing the panel display.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. A dictionary with the components properties.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
     options["side"] = 'right'
-    h_drawer = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
-    h_drawer.set_handle(component)
-    return h_drawer
+    drawer = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
+    drawer.set_handle(component)
+    html.Html.set_component_skin(drawer)
+    return drawer

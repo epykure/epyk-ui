@@ -7,6 +7,7 @@ It will rely on the external package cryptography
 import os
 import base64
 import uuid
+from typing import Union, Optional, List
 
 # Internal key used for the token generation in the URL (during the sharing)
 KEY = 'bAvGUC_7oazo4cIeNBt8t23bPe3Hvq8livGqQxSV-z0='
@@ -19,7 +20,7 @@ class PyCrypto:
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()
 
-  def encrypt(self, data, token=None, salt=None):
+  def encrypt(self, data: str, token: Optional[str] = None, salt: Optional[str] = None):
     """
     Description:
     ------------
@@ -30,9 +31,9 @@ class PyCrypto:
 
     Attributes:
     ----------
-    :param data: String. The data to be encrypted.
-    :param token: String. Optional. The token used to encrypt the data.
-    :param salt: String. Optional. The salt id.
+    :param str data: The data to be encrypted.
+    :param Optional[str] token: Optional. The token used to encrypt the data.
+    :param Optional[str] salt: Optional. The salt id.
 
     :return: The encrypted data with the salt used.
     """
@@ -53,7 +54,7 @@ class PyCrypto:
       encrypted_key = token
     return Fernet(encrypted_key).encrypt(bytes(data.encode('latin1'))).decode('latin1'), salt.decode('latin1')
 
-  def decrypt(self, encrypted, token=None, salt=None, label=''):
+  def decrypt(self, encrypted: str, token: Optional[str] = None, salt: Optional[str] = None, label: str =''):
     """
     Description:
     ------------
@@ -66,10 +67,10 @@ class PyCrypto:
 
     Attributes:
     ----------
-    :param encrypted: The encrypted data.
-    :param token: String. Optional. The token used to encrypt the data.
-    :param salt: String. Optional. The salt id.
-    :param label: String. Optional. A label used to store the reference in the log file.
+    :param str encrypted: The encrypted data.
+    :param Optional[str] token: Optional. The token used to encrypt the data.
+    :param Optional[str] salt: Optional. The salt id.
+    :param str label: Optional. A label used to store the reference in the log file.
 
     :return: A string with the decrypted data.
     """
@@ -131,7 +132,7 @@ class PyCrypto:
     return Fernet.generate_key()
 
   @classmethod
-  def b64encode(cls, text, salt=None):
+  def b64encode(cls, text: str, salt: Optional[str] = None):
     """
     Description:
     ------------
@@ -146,8 +147,8 @@ class PyCrypto:
 
     Attributes:
     ----------
-    :param text: String. The text to be encrypted
-    :param salt: String. Optional. The salt used for the encryption (default None)
+    :param str text: The text to be encrypted.
+    :param Optional[str] salt: Optional. The salt used for the encryption (default None).
     """
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives import hashes

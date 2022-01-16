@@ -1,4 +1,5 @@
 
+from typing import Union, Optional
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
@@ -10,7 +11,7 @@ from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsWhile
 
 
-def if_(jsCond, jsFnc):
+def if_(condition: Union[list, str], js_funcs: Union[list, str]):
   """
   Description:
   ------------
@@ -22,12 +23,12 @@ def if_(jsCond, jsFnc):
 
   Attributes:
   ----------
-  :param jsCond:
-  :param jsFnc:
+  :param Union[list, str] condition: The JavaScript conditions.
+  :param Union[list, str] js_funcs: The Javascript functions.
   """
-  if isinstance(jsCond, list):
-    jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
-  return JsIf.JsIf(jsCond, jsFnc)
+  if isinstance(condition, list):
+    condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
+  return JsIf.JsIf(condition, js_funcs)
 
 
 def switch(variable):
@@ -50,7 +51,8 @@ def switch(variable):
   return JsSwitch.JsSwitch(variable)
 
 
-def while_(pivot, jsFnc=None, options=None):
+def while_(pivot, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+           profile: Optional[Union[dict, bool]] = False):
   """
   Description:
   ------------
@@ -61,17 +63,19 @@ def while_(pivot, jsFnc=None, options=None):
 
   Attributes:
   ----------
-  :param pivot:
-  :param jsFnc:
-  :param options:
+  :param str pivot: The JavaScript expression.
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
+  :param Optional[dict] options: Optional. Specific Python options available for this component.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
-  js_while = JsWhile.JsWhile(pivot, options=options)
-  if jsFnc is not None:
-    js_while.fncs(jsFnc)
+  js_while = JsWhile.JsWhile(pivot, options=options, profile=profile)
+  if js_funcs is not None:
+    js_while.fncs(js_funcs)
   return js_while
 
 
-def whileOf(jsIterable, jsFnc=None, options=None):
+def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+            profile: Optional[Union[dict, bool]] = None):
   """
   Description:
   ------------
@@ -82,18 +86,21 @@ def whileOf(jsIterable, jsFnc=None, options=None):
 
   Attributes:
   ----------
-  :param jsIterable:
-  :param jsFnc:
+  :param iterable:
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
+  :param Optional[dict] options: Optional. Specific Python options available for this component.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
-  if hasattr(jsIterable, 'dom'):
-    jsIterable = jsIterable.dom.content
-  js_for = JsWhile.JsWhileIterable(jsIterable, options=options)
-  if jsFnc is not None:
-    js_for.fncs(jsFnc)
+  if hasattr(iterable, 'dom'):
+    iterable = iterable.dom.content
+  js_for = JsWhile.JsWhileIterable(iterable, options=options, profile=profile)
+  if js_funcs is not None:
+    js_for.fncs(js_funcs)
   return js_for
 
 
-def for_(end, jsFnc=None, options=None):
+def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+         profile: Optional[Union[dict, bool]] = None):
   """
   Description:
   ------------
@@ -106,50 +113,66 @@ def for_(end, jsFnc=None, options=None):
   Attributes:
   ----------
   :param end:
-  :param jsFnc:
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
+  :param Optional[dict] options: Optional. Specific Python options available for this component.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(end, 'dom'):
     end = end.dom.content.number
-  js_for = JsFor.JsFor(end, options=options)
-  if jsFnc is not None:
-    js_for.fncs(jsFnc)
+  js_for = JsFor.JsFor(end, options=options, profile=profile)
+  if js_funcs is not None:
+    js_for.fncs(js_funcs)
   return js_for
 
 
-def forIn(jsObj, jsFnc=None, options=None):
+def forIn(jsObj, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+          profile: Optional[Union[dict, bool]] = None):
   """
+  Description:
+  ------------
   The JavaScript for/in statement loops through the properties of an object
 
+  Attributes:
+  ----------
   :param jsObj:
-  :param jsFnc:
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
+  :param Optional[dict] options: Optional. Specific Python options available for this component.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(jsObj, 'dom'):
     jsObj = jsObj.dom.content
-  js_for = JsFor.JsIterable(jsObj, options=options)
-  if jsFnc is not None:
-    js_for.fncs(jsFnc)
+  js_for = JsFor.JsIterable(jsObj, options=options, profile=profile)
+  if js_funcs is not None:
+    js_for.fncs(js_funcs)
   return js_for
 
 
-def forOf(jsIterable, jsFnc=None, options=None):
+def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+          profile: Optional[Union[dict, bool]] = None):
   """
-  The JavaScript for/of statement loops through the values of an iterable objects
+  Description:
+  ------------
+  The JavaScript for/of statement loops through the values of an iterable objects.
 
-  :param jsIterable:
-  :param jsFnc:
+  Attributes:
+  ----------
+  :param iterable:
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
+  :param Optional[dict] options: Optional. Specific Python options available for this component.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
-  if hasattr(jsIterable, 'dom'):
-    jsIterable = jsIterable.dom.content
-  dflt_options = {"type": 'of'}
+  if hasattr(iterable, 'dom'):
+    iterable = iterable.dom.content
+  dfl_options = {"type": 'of'}
   if options is not None:
-    dflt_options.update(options)
-  js_for = JsFor.JsIterable(jsIterable, options=dflt_options)
-  if jsFnc is not None:
-    js_for.fncs(jsFnc)
+    dfl_options.update(options)
+  js_for = JsFor.JsIterable(iterable, options=dfl_options, profile=profile)
+  if js_funcs is not None:
+    js_for.fncs(js_funcs)
   return js_for
 
 
-def typeof(jsData, type=None):
+def typeof(jsData, type: str = None):
   """
   Description:
   ------------
@@ -161,8 +184,8 @@ def typeof(jsData, type=None):
 
   Attributes:
   ----------
-  :param jsData: String. A String corresponding to a JavaScript object
-  :param type: String. The type of object
+  :param jsData: String. A String corresponding to a JavaScript object.
+  :param type: String. The type of object.
   """
   if type is None:
     return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(jsData, None))
@@ -170,23 +193,24 @@ def typeof(jsData, type=None):
   return JsObjects.JsVoid("typeof %s === %s" % (JsUtils.jsConvertData(jsData, None), JsUtils.jsConvertData(type, None)))
 
 
-def not_(jsCond):
+def not_(condition: str):
   """
   Description:
   ------------
+  Add a not JavaScript expression to a JavaScript string.
 
   Attributes:
   ----------
-  :param jsCond:
+  :param str condition: The JavaScript expression.
   """
-  return "!(%s)" % JsUtils.jsConvertData(jsCond, None)
+  return "!(%s)" % JsUtils.jsConvertData(condition, None)
 
 
-def try_(jsFncs):
+def try_(js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
   """
   Description:
   ------------
-  Block of code to try
+  Block of code to try.
 
   Related Pages:
 
@@ -194,17 +218,19 @@ def try_(jsFncs):
 
   Attributes:
   ----------
-  :param jsFncs: List.
+  :param Union[list, str] js_funcs: The PyJs functions.
+  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
-  if not isinstance(jsFncs, list):
-    jsFncs = [jsFncs]
-  return JsErrors.JsTry(jsFncs)
+  if not isinstance(js_funcs, list):
+    js_funcs = [js_funcs]
+  return JsErrors.JsTry(js_funcs, profile=profile)
 
 
 def and_(*args):
   """
   Description:
   ------------
+  Add a and expression to a JavaScript chain.
 
   Attributes:
   ----------
@@ -213,7 +239,7 @@ def and_(*args):
   return "(%s)" % ") && (".join([JsUtils.jsConvertData(x, None) for x in args])
 
 
-def throw(value):
+def throw(value: str):
   """
   Description:
   ------------
@@ -227,7 +253,7 @@ def throw(value):
 
   Attributes:
   ----------
-  :param value: String. The message displayed with the exception
+  :param str value: The message displayed with the exception.
   """
   return JsObjects.JsObject.JsObject.get("throw %s" % JsUtils.jsConvertData(value, None))
 
@@ -236,6 +262,7 @@ def or_(*args):
   """
   Description:
   ------------
+  Add a Or expression to a JavaScript chain.
 
   Attributes:
   ----------

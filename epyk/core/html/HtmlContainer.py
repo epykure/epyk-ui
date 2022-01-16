@@ -45,7 +45,7 @@ class Panel(Html.Html):
     container.set_attrs(name="name", value="panel_%s" % self.htmlCode)
 
   @property
-  def style(self):
+  def style(self) -> GrpClsContainer.ClassDiv:
     """
     Description:
     ------------
@@ -58,7 +58,7 @@ class Panel(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlPane:
     """
     Description:
     ------------

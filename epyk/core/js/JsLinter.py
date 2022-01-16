@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional
 
-def indent(level=0, spaces=None):
+
+def indent(level: int = 0, spaces: Optional[int] = None):
   """
   Description:
   ------------
@@ -10,14 +12,14 @@ def indent(level=0, spaces=None):
 
   Attributes:
   ----------
-  :param level: Integer. Optional. The level for the line indent.
-  :param spaces: Integer. Optional. The number of spaces. (Default 2).
+  :param int level: Optional. The level for the line indent.
+  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
   spaces = spaces or 2
   return "".join((level * spaces) * [" "])
 
 
-def parse_statements(line, level, delimiter=";", spaces=None):
+def parse_statements(line: str, level: int, delimiter: str = ";", spaces: Optional[int] = None):
   """
   Description:
   ------------
@@ -25,10 +27,10 @@ def parse_statements(line, level, delimiter=";", spaces=None):
 
   Attributes:
   ----------
-  :param line: String. The JavaScript statements.
-  :param level: Integer. The level of indent to be added to this line.
-  :param delimiter: String. Optional. The statement delimiter. Default ;.
-  :param spaces: Integer. Optional. The number of spaces. (Default 2).
+  :param str line: The JavaScript statements.
+  :param int level: The level of indent to be added to this line.
+  :param str delimiter: Optional. The statement delimiter. Default ;.
+  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
   row = []
   one_liner = "".join([l.strip() for l in line.split("\n")])
@@ -43,7 +45,7 @@ def parse_statements(line, level, delimiter=";", spaces=None):
   return row
 
 
-def parse(data, minify=None, toStr=True, spaces=None):
+def parse(data: str, minify: Optional[bool] = None, toStr: bool = True, spaces: Optional[int] = None):
   """
   Description:
   ------------
@@ -51,10 +53,10 @@ def parse(data, minify=None, toStr=True, spaces=None):
 
   Attributes:
   ----------
-  :param data: String. The Javascript statements.
-  :param minify: Boolean. Optional. Specify the type of formatting. (Default minify True).
-  :param toStr: Boolean. Optional. Specify the type of data returned by this function (string or list).
-  :param spaces: Integer. Optional. The number of spaces. (Default 2).
+  :param str data: The Javascript statements.
+  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
+  :param bool toStr: Optional. Specify the type of data returned by this function (string or list).
+  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
   level, frgs, k = 0, [], 0
   if minify:
@@ -86,7 +88,7 @@ def parse(data, minify=None, toStr=True, spaces=None):
   return "\n".join(frgs) if toStr else frgs
 
 
-def builder(cls, minify=None, toStr=True, spaces=None):
+def builder(cls, minify: Optional[bool] = None, toStr: bool = True, spaces: Optional[int] = None):
   """
   Description:
   ------------
@@ -95,20 +97,20 @@ def builder(cls, minify=None, toStr=True, spaces=None):
   Attributes:
   ----------
   :param cls: Class. An internal HTML component class.
-  :param minify: Boolean. Optional. Specify the type of formatting. (Default minify True).
-  :param toStr: Boolean. Optional. Specify the type of data returned by this function (string or list).
-  :param spaces: Integer. Optional. The number of spaces. (Default 2).
+  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
+  :param bool toStr: Optional. Specify the type of data returned by this function (string or list).
+  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
   builder_name = cls.builder_name if cls.builder_name is not None else cls.__name__
   return parse(
     "function %s(htmlObj, data, options){%s}" % (builder_name, cls._js__builder__), minify, toStr, spaces=spaces)
 
 
-def events(component, minify=None, toStr=True, spaces=None):
+def events(component, minify: Optional[bool] = None, toStr: bool = True, spaces: Optional[int] = None) -> str:
   """
   Description:
   ------------
-  Extract the JavaSscript events from an HTML component.
+  Extract the JavaScript events from an HTML component.
 
   Usage::
 
@@ -121,9 +123,9 @@ def events(component, minify=None, toStr=True, spaces=None):
   Attributes:
   ----------
   :param component: HTML Component. An internal component in the framework.
-  :param minify: Boolean. Optional. Specify the type of formatting. (Default minify True).
-  :param toStr: Boolean. Optional. Specify the type of data returned by this function (string or list).
-  :param spaces: Integer. Optional. The number of spaces. (Default 2).
+  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
+  :param bool toStr: Optional. Specify the type of data returned by this function (string or list).
+  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
   results = []
   for event_type, fnc_details in component._browser_data.get('mouse', {}).items():

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import Union, Optional, Type, List, Any
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
@@ -34,7 +35,7 @@ class ProgressBar(Html.Html):
     self.options.background = self.page.theme.success[1]
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionsProgBar:
     """
     Description:
     -----------
@@ -49,7 +50,7 @@ class ProgressBar(Html.Html):
     """
     return super().options
 
-  def to(self, number, timer=10):
+  def to(self, number: float, timer: int = 10):
     """
     Description:
     ------------
@@ -57,8 +58,8 @@ class ProgressBar(Html.Html):
 
     Attributes:
     ----------
-    :param number: Number. The final state for the progress bar.
-    :param timer: Integer. Optional. the appended of the increase in millisecond.
+    :param float number: The final state for the progress bar.
+    :param int timer: Optional. the appended of the increase in millisecond.
     """
     self.page.body.onReady([
       self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
@@ -80,7 +81,7 @@ class ProgressBar(Html.Html):
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.ProgressBar:
     """
     Description:
     -----------
@@ -100,7 +101,7 @@ class ProgressBar(Html.Html):
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlProgressBar:
     """
     Description:
     ------------
@@ -133,7 +134,7 @@ class Menu(Html.Html):
     self.style.css.position = 'relative'
 
   @property
-  def style(self):
+  def style(self) -> GrpClsJqueryUI.ClassMenu:
     """
     Description:
     -----------
@@ -146,7 +147,7 @@ class Menu(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionsMenu:
     """
     Description:
     -----------
@@ -178,7 +179,7 @@ class Menu(Html.Html):
       }); if(isRoot){jqHtmlObj.menu(options)}'''
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.Menu:
     """
     Description:
     -----------
@@ -198,7 +199,7 @@ class Menu(Html.Html):
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
     """
     Description:
     -----------
@@ -234,7 +235,7 @@ class Dialog(Html.Html):
       self._vals = ""
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionDialog:
     """
     Description:
     -----------
@@ -257,7 +258,7 @@ class Dialog(Html.Html):
     "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.Dialog:
     """
     Description:
     -----------
@@ -276,7 +277,7 @@ class Dialog(Html.Html):
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
     """
     Description:
     -----------
@@ -285,7 +286,7 @@ class Dialog(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtmlProgressBar
+    :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
@@ -322,7 +323,7 @@ class Slider(Html.Html):
     self.add_helper(helper)
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionsSlider:
     """
     Description:
     ------------
@@ -336,7 +337,7 @@ class Slider(Html.Html):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsJqueryUI.ClassSlider:
     """
     Description:
     ------------
@@ -349,7 +350,7 @@ class Slider(Html.Html):
     return self._styleObj
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.Slider:
     """
     Description:
     -----------
@@ -368,7 +369,7 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, report=self.page)
     return self._js
 
-  def change(self, js_funcs, profile=None, on_ready=False):
+  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -381,8 +382,8 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param on_ready: Boolean. Optional. Trigger the change event when page is ready.
     """
     if not isinstance(js_funcs, list):
@@ -390,7 +391,7 @@ class Slider(Html.Html):
     self.options.change(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def start(self, js_funcs, profile=None):
+  def start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -402,15 +403,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["start"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def slide(self, js_funcs, profile=None):
+  def slide(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -422,15 +423,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["slide"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def stop(self, js_funcs, profile=None):
+  def stop(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -442,8 +443,8 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -451,7 +452,7 @@ class Slider(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlSlider:
     """
     Description:
     -----------
@@ -521,7 +522,7 @@ class SliderDate(Slider):
       ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDate:
     """
     Description:
     -----------
@@ -545,7 +546,7 @@ class SliderDates(SliderDate):
       ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDates:
     """
     Description:
     -----------
@@ -589,7 +590,7 @@ class SkillBar(Html.Html):
     self.options.set_thresholds()
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionsSkillbars:
     """
     Description:
     ------------
@@ -603,7 +604,7 @@ class SkillBar(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.SkillBar:
     """
     Description:
     -----------
@@ -689,7 +690,7 @@ class OptionsBar(Html.Html):
       self.draggable()
 
   @property
-  def options(self):
+  def options(self) -> OptSliders.OptionBar:
     """
     Description:
     ------------
@@ -709,7 +710,7 @@ class OptionsBar(Html.Html):
     super(OptionsBar, self).__add__(icon)
     return self
 
-  def draggable(self, options=None):
+  def draggable(self, options: Optional[dict] = None):
     self.css({'border-radius': '5px', "border": "1px dotted %s" % self.page.theme.success[1]})
     self.page.properties.js.add_builders(self.dom.jquery_ui.draggable(options).toStr())
     return self
@@ -768,7 +769,7 @@ class Filters(Html.Html):
     self.__enter_def = False
 
   @property
-  def options(self):
+  def options(self) -> OptList.OptionsTagItems:
     """
     Description:
     -----------
@@ -794,7 +795,7 @@ class Filters(Html.Html):
         chipAdd(panel, val, options)})}
         '''
 
-  def enter(self, js_funcs, profile=None):
+  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -802,8 +803,8 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. The JavaScript events.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The JavaScript events.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     self.__enter_def = True
     if not isinstance(js_funcs, list):
@@ -812,7 +813,7 @@ class Filters(Html.Html):
                         self.dom.add(self.dom.input)] + js_funcs + [self.input.dom.empty()], profile)
     return self
 
-  def drop(self, js_funcs, prevent_default=True, profile=None):
+  def drop(self, js_funcs: Union[list, str], prevent_default: bool = True, profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -820,15 +821,15 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param prevent_default:
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param bool prevent_default:
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     self.style.css.border = "1px dashed black"
     self.tooltip("Drag and drop values here")
     return super(Filters, self).drop(js_funcs, prevent_default, profile)
 
-  def delete(self, js_funcs, profile=None):
+  def delete(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -836,11 +837,11 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if self.__enter_def:
-      raise Exception("delete on chip must be triggered before enter")
+      raise ValueError("delete on chip must be triggered before enter")
 
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -868,7 +869,8 @@ class Filters(Html.Html):
     rec['name'] = name or rec['category']
     self._vals.append(rec)
 
-  def draggable(self, js_funcs=None, options=None, profile=None, source_event=None):
+  def draggable(self, js_funcs: Union[list, str] = None, options: Optional[dict] = None,
+                profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -876,10 +878,10 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -890,7 +892,7 @@ class Filters(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlList.Tags:
     """
     Description:
     -----------

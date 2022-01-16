@@ -14,7 +14,6 @@ class Network:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def comments(self, html_code, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
     Description:
@@ -50,9 +49,10 @@ class Network:
     dflt_options = {'readonly': True, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
-    return html.HtmlNetwork.Comments(self.page, record, width, height, html_code, dflt_options, profile)
+    component = html.HtmlNetwork.Comments(self.page, record, width, height, html_code, dflt_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def chat(self, html_code, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
     Description:
@@ -79,12 +79,13 @@ class Network:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
+    dfl_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
-      dflt_options.update(options)
-    return html.HtmlNetwork.Chat(self.page, record, width, height, html_code, dflt_options, profile)
+      dfl_options.update(options)
+    component = html.HtmlNetwork.Chat(self.page, record, width, height, html_code, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def bot(self, html_code, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
     Description:
@@ -110,12 +111,13 @@ class Network:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
+    dfl_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
-      dflt_options.update(options)
-    return html.HtmlNetwork.Bot(self.page, width, height, html_code, dflt_options, profile)
+      dfl_options.update(options)
+    component = html.HtmlNetwork.Bot(self.page, width, height, html_code, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def alert(self, type, value="", width=(320, 'px'), height=(None, None), html_code=None, options=None, profile=False):
     """
     Description:
@@ -164,10 +166,10 @@ class Network:
     if self.page.verbose or dflt_options.get("verbose"):
       if type not in alert_types:
         logging.warning("Alert type not recognized: %s, %s " % (type, alert_types))
+    component = html.HtmlNetwork.Alert(self.page, value, width, height, html_code, dflt_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-    return html.HtmlNetwork.Alert(self.page, value, width, height, html_code, dflt_options, profile)
-
-  @html.Html.css_skin()
   def danger(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
     Description:
@@ -201,9 +203,10 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.alert('danger', value, width, height, html_code, options, profile)
+    component = self.alert('danger', value, width, height, html_code, options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def info(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
     Description:
@@ -233,9 +236,10 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.alert('info', value, width, height, html_code, options, profile)
+    component = self.alert('info', value, width, height, html_code, options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def success(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
     Description:
@@ -265,9 +269,10 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.alert('success', value, width, height, html_code, options, profile)
+    component = self.alert('success', value, width, height, html_code, options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def warning(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
     Description:
@@ -297,9 +302,10 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    return self.alert('warning', value, width, height, html_code, options, profile)
+    component = self.alert('warning', value, width, height, html_code, options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def news(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
     Description:
@@ -330,12 +336,13 @@ class Network:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"dated": True, 'markdown': True}
+    dfl_options = {"dated": True, 'markdown': True}
     if options is not None:
-      dflt_options.update(options)
-    return html.HtmlNetwork.News(self.page, value, width, height, html_code, dflt_options, profile)
+      dfl_options.update(options)
+    component = html.HtmlNetwork.News(self.page, value, width, height, html_code, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def room(self, img, html_code=None, width=(60, 'px'), height=(60, 'px'), options=None, profile=False):
     """
     Description:
@@ -355,12 +362,13 @@ class Network:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"dated": True, 'markdown': True}
+    dfl_options = {"dated": True, 'markdown': True}
     if options is not None:
-      dflt_options.update(options)
-    return html.HtmlNetwork.Room(self.page, img, width, height, html_code, dflt_options, profile)
+      dfl_options.update(options)
+    component = html.HtmlNetwork.Room(self.page, img, width, height, html_code, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def dropfile(self, placeholder='', delimiter="TAB", width=(100, '%'), height=('auto', ''), tooltip=None,
                html_code=None, options=None, profile=None):
     """
@@ -396,9 +404,9 @@ class Network:
     """
     component = html.HtmlNetwork.DropFile(
       self.page, placeholder, delimiter, tooltip, width, height, html_code, options, profile)
+    html.Html.set_component_skin(component)
     return component
 
-  @html.Html.css_skin()
   def upload(self, icon=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
@@ -417,9 +425,9 @@ class Network:
     """
     file = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
+    html.Html.set_component_skin(file)
     return file
 
-  @html.Html.css_skin()
   def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None,
                profile=None):
     """
@@ -460,9 +468,9 @@ class Network:
         link.click();
         document.body.removeChild(link);
         ''' % {"path": os.path.join(path, name), "name": name}])
+    html.Html.set_component_skin(file)
     return file
 
-  @html.Html.css_skin()
   def assistant(self, image, name="", path=None, html_code=None, size=(50, 'px'), profile=None, options=None):
     """
     Description:
@@ -480,14 +488,15 @@ class Network:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
+    dfl_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     image = self.page.ui.images.avatar(image, path=path, width=size, height=size, align='left')
     image.options.managed = False
-    container = html.HtmlNetwork.Assistant(image, name, self.page, html_code, dflt_options, profile)
+    container = html.HtmlNetwork.Assistant(image, name, self.page, html_code, dfl_options, profile)
     container.style.css.position = 'fixed'
     container.style.css.bottom = 0
     container.style.css.right = 0
     container.style.css.z_index = 200
+    html.Html.set_component_skin(container)
     return container

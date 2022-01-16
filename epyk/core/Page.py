@@ -3,6 +3,7 @@ import json
 import collections
 import time
 import inspect
+from typing import Union, Optional, Type
 
 try:
   basestring
@@ -43,7 +44,7 @@ class JsProperties:
     """
     return self._context["text"]
 
-  def add_text(self, text):
+  def add_text(self, text: str):
     """
     Description:
     ------------
@@ -51,11 +52,11 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param text: String. JavaScript fragments to be directly included to the page.
+    :param str text: JavaScript fragments to be directly included to the page.
     """
     self._context["text"].append(text)
 
-  def add_builders(self, builder_def):
+  def add_builders(self, builder_def: str):
     """
     Description:
     ------------
@@ -63,7 +64,7 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param builder_def: String. The builder definition.
+    :param str builder_def: The builder definition.
     """
     if isinstance(builder_def, list):
       for builder in builder_def:
@@ -74,33 +75,37 @@ class JsProperties:
       else:
         self._context['builders'].append(builder_def)
 
-  def add_on_ready(self, builder_def):
+  def add_on_ready(self, builder_def: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param builder_def:
+    :param str builder_def: The builder definition function.
     """
     self._context['onReady'].add(builder_def)
 
-  def add_constructor(self, name, content):
+  def add_constructor(self, name: str, content: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name:
-    :param content:
+    :param str name:
+    :param str content:
     """
     self._context['constructors'][name] = content
 
-  def has_constructor(self, name):
+  def has_constructor(self, name: str):
     """
+    Description:
+    ------------
 
-    :param name:
+    Attributes:
+    ----------
+    :param str name:
     """
     return name in self._context['constructors']
 
@@ -119,7 +124,7 @@ class CssProperties:
     """
     return "\n".join(self._context['css']["text"])
 
-  def add_text(self, text):
+  def add_text(self, text: str):
     """
     Description:
     ------------
@@ -127,11 +132,11 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param text: String. CSS Style to be directly included to the page.
+    :param str text: CSS Style to be directly included to the page.
     """
     self._context['css']["text"].append(text)
 
-  def add_builders(self, builder_def):
+  def add_builders(self, builder_def: str):
     """
     Description:
     ------------
@@ -139,7 +144,7 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param builder_def: String. The builder definition.
+    :param str builder_def: The builder definition.
     """
     if 'builders_css' not in self._context['js']:
       self._context['js']['builders_css'] = OrderedSet()
@@ -148,29 +153,30 @@ class CssProperties:
     else:
       self._context['js']['builders_css'].append(builder_def)
 
-  def container_style(self, css):
+  def container_style(self, css: dict):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param css: Dictionary. The CSS attributes to be applied.
+    :param dict css: The CSS attributes to be applied.
     """
     self._context['css']['container'].update(css)
 
-  def font_face(self, font_family, src, stretch="normal", style="normal", weight="normal"):
+  def font_face(self, font_family: str, src, stretch: str = "normal", style: str = "normal", weight: str = "normal"):
     """
     Description:
     ------------
+    Set the font.
 
     Attributes:
     ----------
-    :param font_family: String. Required. Defines the name of the font.
-    :param src: String. Required. Defines the URL(s) where the font should be downloaded from.
-    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal".
-    :param style: String. Optional. Defines how the font should be styled. Default value is "normal".
-    :param weight: String. Optional. Defines the boldness of the font. Default value is "normal".
+    :param str font_family: Defines the name of the font.
+    :param str src: Defines the URL(s) where the font should be downloaded from.
+    :param str stretch: Optional. Defines how the font should be stretched. Default value is "normal".
+    :param str style: Optional. Defines how the font should be styled. Default value is "normal".
+    :param str weight: Optional. Defines the boldness of the font. Default value is "normal".
     """
     self._context['css']["font-face"][font_family] = {
       'src': "url(%s)" % src, 'font-stretch': stretch, 'font-style': style, 'font-weight': weight}
@@ -222,15 +228,15 @@ class Report:
   ext_packages = None    # For extension modules
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
-  def __init__(self, inputs=None):
+  def __init__(self, inputs: Optional[dict] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param inputs: Dictionary. The global input data for the defined components in the page.
-                               Passing data for a given component with an htmlCode will override the value.
+    :param Optional[dict] inputs: The global input data for the defined components in the page.
+                                  Passing data for a given component with an htmlCode will override the value.
     """
     self._css = {}
     self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
@@ -282,7 +288,7 @@ class Report:
     return Properties(self._props)
 
   @property
-  def body(self):
+  def body(self) -> html.Html.Body:
     """
     Description:
     ------------
@@ -319,14 +325,14 @@ class Report:
       page = Report()
       page.theme = themes.ThemeBlue.Blue
 
-    :rtype: Theme.ThemeDefault
+    :rtype: themes.Theme.ThemeDefault
     """
     if self._theme is None:
       self._theme = themes.Theme.ThemeDefault()
     return self._theme
 
   @theme.setter
-  def theme(self, theme):
+  def theme(self, theme: Type[themes.Theme.ThemeDefault]):
     if isinstance(theme, dict):
       self._theme = themes.Theme.ThemeCustom()
       self._theme = theme
@@ -349,7 +355,7 @@ class Report:
     """
     return skins.Skins(self)
 
-  def node_modules(self, path, alias=None, install=False, update=False):
+  def node_modules(self, path: str, alias: Optional[str] = None, install: bool = False, update: bool = False):
     """
     Description:
     ------------
@@ -358,16 +364,16 @@ class Report:
 
     Attributes:
     ----------
-    :param path: String. Optional.
-    :param alias: String. Optional.
-    :param install: Boolean. Optional.
-    :param update: Boolean. Optional.
+    :param str path: Optional. The nodeJs path.
+    :param Optional[str] alias: Optional.
+    :param bool install: Optional.
+    :param bool update: Optional.
     """
     if path is not None:
       self._node_modules = (path, alias or path, install, update)
 
   @property
-  def imports(self):
+  def imports(self) -> Imports.ImportManager:
     """
     Description:
     ------------
@@ -432,7 +438,7 @@ class Report:
     return entities.Entities()
 
   @property
-  def ui(self):
+  def ui(self) -> Interface.Components:
     """
     Description:
     ------------
@@ -455,7 +461,7 @@ class Report:
     return self.web.std
 
   @property
-  def web(self):
+  def web(self) -> Interface.WebComponents:
     """
     Description:
     ------------
@@ -498,7 +504,7 @@ class Report:
     return cls_obj
 
   @property
-  def js(self):
+  def js(self) -> js.Js.JsBase:
     """
     Description:
     ------------
@@ -523,12 +529,12 @@ class Report:
     return self._js
 
   @property
-  def py(self):
+  def py(self) -> PyExt.PyExt:
     """
     Description:
     ------------
     Python external module section.
-    Those are pre defined Python function to simplify the use of the various components.
+    Those are pre-defined Python function to simplify the use of the various components.
 
     Usage::
 
@@ -541,14 +547,14 @@ class Report:
 
     :rtype: PyExt.PyExt
 
-    :return: Python HTML object
+    :return: Python HTML object.
     """
     if self._py is None:
       self._py = PyExt.PyExt(self)
     return self._py
 
   @property
-  def auth(self):
+  def auth(self) -> auth.Auth:
     """
     Description:
     ------------
@@ -617,11 +623,11 @@ class Report:
     for comp in ext_components:
 
       if comp.htmlCode in self.components:
-        raise Exception("Duplicated Html Code %s in the script !" % comp.htmlCode)
+        raise ValueError("Duplicated Html Code %s in the script !" % comp.htmlCode)
 
       self.components[comp.htmlCode] = comp
 
-  def get_components(self, html_codes):
+  def get_components(self, html_codes: Union[list, str]):
     """
     Description:
     ------------
@@ -636,14 +642,14 @@ class Report:
 
     Attributes:
     ----------
-    :param html_codes: List | String. The reference of the HTML components loaded on the page.
+    :param Union[list, str] html_codes: The reference of the HTML components loaded on the page.
     """
     if not isinstance(html_codes, list):
       return self.components[html_codes]
 
     return [self.components[html_code] for html_code in html_codes]
 
-  def framework(self, name):
+  def framework(self, name: str):
     """
     Description:
     ------------
@@ -665,7 +671,7 @@ class Report:
 
     Attributes:
     ----------
-    :param name: String. The destination framework for the page.
+    :param str name: The destination framework for the page.
     """
     self._props['context']['framework'] = name.upper()
 
@@ -688,7 +694,7 @@ class Report:
     return PyOuts.PyOuts(self)
 
   @property
-  def headers(self):
+  def headers(self) -> html.Header.Header:
     """
     Description:
     ------------
@@ -705,7 +711,7 @@ class Report:
       self._header_obj = html.Header.Header(self)
     return self._header_obj
 
-  def dumps(self, result):
+  def dumps(self, result: dict):
     """
     Description:
     ------------
@@ -728,7 +734,7 @@ class Report:
 
     Attributes:
     ----------
-    :param result: Dictionary. The python dictionary or data structure.
+    :param dict result: The python dictionary or data structure.
 
     :return: The serialised data
     """

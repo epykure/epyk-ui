@@ -10,7 +10,6 @@ class Steppers:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def stepper(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=False):
     """
     Description:
@@ -46,9 +45,9 @@ class Steppers:
         '.cssdivstepper li line': {'stroke-width': 0},
         '.cssdivstepper li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen',
         {"and": [{'max-width': '600px'}]})
+    html.Html.set_component_skin(st)
     return st
 
-  @html.Html.css_skin()
   def arrow(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
@@ -68,9 +67,10 @@ class Steppers:
     dft_options = {"shape": 'arrow'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def rectangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
@@ -90,9 +90,10 @@ class Steppers:
     dft_options = {"shape": 'rectangle'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def triangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
     """
     Description:
@@ -112,9 +113,10 @@ class Steppers:
     dft_options = {"shape": 'triangle'}
     if options is not None:
       dft_options.update(options)
-    return self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def vertical(self, records, shape='circle', width=("auto", ''), height=(70, 'px'), color=None, options=None,
                profile=None):
     """
@@ -145,4 +147,5 @@ class Steppers:
     if options is not None:
       dft_options.update(options)
     st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile)
+    html.Html.set_component_skin(st)
     return st

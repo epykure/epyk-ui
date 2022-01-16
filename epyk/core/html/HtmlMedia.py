@@ -58,7 +58,7 @@ class Media(Html.Html):
     self.options.controls = True
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptMedia:
     """
     Description:
     -----------
@@ -131,7 +131,7 @@ class Youtube(Html.Html):
       ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "iframe": self.video.html()}
 
   @staticmethod
-  def get_embed_link(youtube_link):
+  def get_embed_link(youtube_link: str):
     """
     Description:
     -------------
@@ -143,7 +143,7 @@ class Youtube(Html.Html):
 
     Attributes:
     ----------
-    :param youtube_link: String. The youtube link of the online video.
+    :param str youtube_link: The Youtube link of the online video.
     """
     return 'https://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
 
@@ -159,7 +159,7 @@ class Camera(Html.Html):
     self.options.autoplay = True
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptMedia:
     """
     Description:
     -----------
@@ -170,7 +170,7 @@ class Camera(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsMedia:
     """
     Description:
     -----------

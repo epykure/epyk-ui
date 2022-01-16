@@ -9,13 +9,15 @@ from epyk.interfaces import Arguments
 from epyk.core.data import components as cpn
 from epyk.core.css import Defaults as Defaults_css
 
+HTML_CODE_LABEL = "{}_label"
+FIELD_FULL_WIDTH_VALUE = "calc(100% - 30px)"
+
 
 class Fields:
 
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def text(self, text="", label=None, color=None, align='left', width=(None, "px"), height=(None, "px"),
            html_code=None, tooltip=None, options=None, helper=None, profile=None):
     """
@@ -62,38 +64,38 @@ class Fields:
     """
     width = Arguments.size(width, unit="px")
     if width[0] is None:
-      width = (Defaults.TEXTS_SPAN_WIDTH, width[1])
+        width = (Defaults.TEXTS_SPAN_WIDTH, width[1])
     height = Arguments.size(height, unit="px")
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
-      dfl_options.update(options)
+        dfl_options.update(options)
     text = self.page.py.encode_html(text)
     if label is not None:
-      text_comp = self.page.ui.div(width=width, height=height, profile=profile)
-      text_comp.label = self.page.ui.texts.label(
-        label, options=options, html_code="%s_label" % html_code if html_code is not None else html_code)
-      text_comp.label.style.css.display = "inline-block"
-      text_comp.label.css({'height': 'auto', 'margin-top': '1px',  'margin-bottom': '1px'})
-      text_comp.input = html.HtmlText.Text(
-        self.page, text, color, align, width, height, html_code, tooltip, dfl_options, helper, profile)
-      text_comp.input.style.css.display = "inline-block"
-      text_comp.extend([text_comp.label, text_comp.input])
+        component = self.page.ui.div(width=width, height=height, profile=profile)
+        component.label = self.page.ui.texts.label(
+            label, options=options, html_code=HTML_CODE_LABEL.format(html_code) if html_code is not None else html_code)
+        component.label.style.css.display = "inline-block"
+        component.label.css({'height': 'auto', 'margin-top': '1px',  'margin-bottom': '1px'})
+        component.input = html.HtmlText.Text(
+            self.page, text, color, align, width, height, html_code, tooltip, dfl_options, helper, profile)
+        component.input.style.css.display = "inline-block"
+        component.extend([component.label, component.input])
     else:
-      text_comp = html.HtmlText.Text(
-        self.page, text, color, align, width, height, html_code, tooltip, dfl_options, helper, profile)
+        component = html.HtmlText.Text(
+            self.page, text, color, align, width, height, html_code, tooltip, dfl_options, helper, profile)
     if width[0] == 'auto':
-      text_comp.style.css.display = "inline-block"
+        component.style.css.display = "inline-block"
     if align in ["center", 'right']:
-      text_comp.style.css.margin = "auto"
-      text_comp.style.css.display = "block"
-    text_comp.style.css.display = "inline-block"
-    text_comp.style.css.text_align = "left"
-    text_comp.style.css.vertical_align = "top"
-    text_comp.style.css.margin = "0 5px"
-    text_comp.style.css.line_height = Defaults.LINE_HEIGHT
-    return text_comp
+        component.style.css.margin = "auto"
+        component.style.css.display = "block"
+    component.style.css.display = "inline-block"
+    component.style.css.text_align = "left"
+    component.style.css.vertical_align = "top"
+    component.style.css.margin = "0 5px"
+    component.style.css.line_height = Defaults.LINE_HEIGHT
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def date(self, value=None, label=None, icon="calendar", color=None, width=(None, "px"),
            height=(None, "px"), html_code=None, profile=None, options=None, helper=None):
     """
@@ -135,24 +137,24 @@ class Fields:
     :param helper: String. Optional. A tooltip helper.
     """
     if value is None:
-      return self.today(label=label, icon=icon, color=color, width=width, height=height, html_code=html_code,
-                        profile=profile, options=options, helper=helper)
+        return self.today(label=label, icon=icon, color=color, width=width, height=height, html_code=html_code,
+                          profile=profile, options=options, helper=helper)
 
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    dft_options = {'dateFormat': 'yy-mm-dd'}
     if value is not None and (
-      value.startswith("T-") or value.startswith("W-") or value.startswith("M-") or value.startswith("Y-")):
-      value = self.page.py.dates.date_from_alias(value)
+        value.startswith("T-") or value.startswith("W-") or value.startswith("M-") or value.startswith("Y-")):
+        value = self.page.py.dates.date_from_alias(value)
     if options is not None:
-      dftl_options.update(options)
-    html_dt = html.HtmlDates.DatePicker(
-      self.page, value, label, icon, width, height, color, html_code, profile, dftl_options, helper)
+        dft_options.update(options)
+    component = html.HtmlDates.DatePicker(
+        self.page, value, label, icon, width, height, color, html_code, profile, dft_options, helper)
     if width[0] == 100 and width[1] == "%" and icon:
-      html_dt.style.css.width = "calc(100% - 30px)"
-    return html_dt
+        component.style.css.width = FIELD_FULL_WIDTH_VALUE
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def today(self, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),
             html_code=None, profile=None, options=None, helper=None):
     """
@@ -197,17 +199,17 @@ class Fields:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    dft_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
-      dftl_options.update(options)
+      dft_options.update(options)
     value = self.page.py.dates.today
-    html_dt = html.HtmlDates.DatePicker(
-      self.page, value, label, icon, width, height, color, html_code, profile, dftl_options, helper)
+    component = html.HtmlDates.DatePicker(
+      self.page, value, label, icon, width, height, color, html_code, profile, dft_options, helper)
     if width[0] == 100 and width[1] == "%" and icon:
-      html_dt.style.css.width = "calc(100% - 30px)"
-    return html_dt
+      component.style.css.width = FIELD_FULL_WIDTH_VALUE
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def cob(self, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),
           html_code=None, profile=None, options=None, helper=None):
     """
@@ -248,17 +250,17 @@ class Fields:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    dft_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
-      dftl_options.update(options)
+      dft_options.update(options)
     value = self.page.py.dates.cob
-    html_cob = html.HtmlDates.DatePicker(
-      self.page, value, label, icon, width, height, color, html_code, profile, dftl_options, helper)
+    component = html.HtmlDates.DatePicker(
+      self.page, value, label, icon, width, height, color, html_code, profile, dft_options, helper)
     if width[0] == 100 and width[1] == "%" and icon:
-      html_cob.style.css.width = "calc(100% - 30px)"
-    return html_cob
+      component.style.css.width = FIELD_FULL_WIDTH_VALUE
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def now(self, deltatime=0, label=None, icon="clock", color=None, html_code=None, profile=None, options=None,
           helper=None):
     """
@@ -298,11 +300,11 @@ class Fields:
     :param helper: String. Optional. A tooltip helper.
     """
     date = datetime.datetime.now() + datetime.timedelta(minutes=deltatime)
-    html_dt = html.HtmlDates.TimePicker(
+    component = html.HtmlDates.TimePicker(
       self.page, str(date).split(" ")[1].split(".")[0], label, icon, color, html_code, profile, options or {}, helper)
-    return html_dt
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def time(self, value=None, label=None, icon="clock", color=None, html_code=None, profile=None, options=None,
            helper=None):
     """
@@ -342,11 +344,11 @@ class Fields:
     :param helper: String. Optional. A tooltip helper.
     """
     options = options or {}
-    html_dt = html.HtmlDates.TimePicker(
+    component = html.HtmlDates.TimePicker(
       self.page, value, label, icon, color, html_code, profile, options, helper)
-    return html_dt
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
             html_code=None, helper=None, options=None, profile=None):
     """
@@ -384,14 +386,14 @@ class Fields:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    html_input = html.HtmlInput.FieldInput(
+    component = html.HtmlInput.FieldInput(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options, profile)
     if options.get("format") == "column":
-      html_input.input.style.css.text_align = "left"
-      html_input.input.style.css.padding_left = 3
-    return html_input
+      component.input.style.css.text_align = "left"
+      component.input.style.css.padding_left = 3
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def number(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
              html_code=None, helper=None, options=None, profile=None):
     """
@@ -429,16 +431,16 @@ class Fields:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    html_input = html.HtmlInput.FieldInput(
+    component = html.HtmlInput.FieldInput(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options, profile)
-    html_input.input.attr["type"] = "number"
+    component.input.attr["type"] = "number"
     if not options.get("scroll", True):
-      html_input.style.add_classes.input.textfield_appearance()
-      html_input.style.add_classes.input.textfield_appearance_inner()
-      html_input.style.add_classes.input.textfield_appearance_outer()
-    return html_input
+      component.style.add_classes.input.textfield_appearance()
+      component.style.add_classes.input.textfield_appearance_inner()
+      component.style.add_classes.input.textfield_appearance_outer()
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
                    html_code=None, helper=None, options=None, profile=None):
     """
@@ -475,11 +477,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldAutocomplete(
+    component = html.HtmlInput.FieldAutocomplete(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def static(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
              html_code=None, helper=None, options=None, profile=None):
     """
@@ -516,12 +518,12 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldInput(
+    component = html.HtmlInput.FieldInput(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    html_input.input.readonly(True)
-    return html_input
+    component.input.readonly(True)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def hidden(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
              html_code=None, helper=None, options=None, profile=None):
     """
@@ -560,13 +562,13 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldInput(
+    component = html.HtmlInput.FieldInput(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    html_input.input.readonly(True)
-    html_input.style.css.display = False
-    return html_input
+    component.input.readonly(True)
+    component.style.css.display = False
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
               html_code=None, helper=None, options=None, profile=None):
     """
@@ -603,11 +605,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldInteger(
+    component = html.HtmlInput.FieldInteger(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def file(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
            html_code=None, helper=None, options=None, profile=None):
     """
@@ -648,11 +650,11 @@ class Fields:
       '::-webkit-file-upload-button {border: 1px solid %(c)s; background: %(c)s; color: %(fc)s; font-family: %(fm)s; font-sie: %(size)spx}' % {
         "c": self.page.theme.notch(4), "fc": self.page.theme.white,
         "fm": self.page.body.style.globals.font.family, "size": self.page.body.style.globals.font.size})
-    html_input = html.HtmlInput.FieldFile(
+    component = html.HtmlInput.FieldFile(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
                html_code=None, helper=None, options=None, profile=None):
     """
@@ -689,11 +691,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldPassword(
+    component = html.HtmlInput.FieldPassword(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"),
                html_code=None, helper=None, options=None, profile=None):
     """
@@ -730,11 +732,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldTextArea(
+    component = html.HtmlInput.FieldTextArea(
       self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def checkbox(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
                helper=None, options=None, profile=None):
     """
@@ -774,11 +776,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldCheckBox(
+    component = html.HtmlInput.FieldCheckBox(
       self.page, value, label, icon, width, height, html_code, helper, options or {}, profile)
-    return html_input
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def radio(self, value=False, label=None, group_name=None, icon=None, width=(100, "%"), height=(None, "px"),
             html_code=None, helper=None, options=None, profile=None):
     """
@@ -823,13 +825,13 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.Radio(self.page, value, label, group_name, icon, width, height, html_code,
-                                      helper, options or {}, profile)
-    html_input.label.css({"width": '100px', 'float': 'left'})
-    html_input.css({"display": 'inline-block'})
-    return html_input
+    component = html.HtmlInput.Radio(self.page, value, label, group_name, icon, width, height, html_code,
+                                     helper, options or {}, profile)
+    component.label.css({"width": '100px', 'float': 'left'})
+    component.css({"display": 'inline-block'})
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def range(self, value="", min=0, max=100, step=1, label=None, placeholder="", icon=None, width=(100, "%"),
             height=(None, "px"), html_code=None, helper=None, options=None, profile=None):
     """
@@ -879,11 +881,11 @@ class Fields:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_input = html.HtmlInput.FieldRange(self.page, value, min, max, step, label, placeholder, icon, width,
-                                           height, html_code, helper, options or {}, profile)
-    return html_input
+    component = html.HtmlInput.FieldRange(self.page, value, min, max, step, label, placeholder, icon, width,
+                                          height, html_code, helper, options or {}, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def select(self, value=False, label=None, icon=None, selected=None, width=(100, "%"), height=(None, "px"),
              html_code=None, helper=None, options=None, multiple=False, profile=None):
     """
@@ -924,19 +926,20 @@ class Fields:
     options = options or {}
     if options is not None and 'align' in options:
       self.page.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
-    html_input = html.HtmlInput.FieldSelect(self.page, value, label, icon, width, height, html_code,
-                                            helper, options or {}, profile)
+    component = html.HtmlInput.FieldSelect(self.page, value, label, icon, width, height, html_code,
+                                           helper, options or {}, profile)
     if multiple:
-      html_input.input.attr['multiple'] = None
-    html_input.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
-    html_input.input.button_css = {"background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
+      component.input.attr['multiple'] = None
+    component.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
+    component.input.button_css = {
+      "background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
     if width[0] == "auto":
-      html_input.style.css.display = "inline-block"
+      component.style.css.display = "inline-block"
     if selected is not None:
-      html_input.input.options.selected = selected
-    return html_input
+      component.input.options.selected = selected
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def months(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
              helper=None, options=None, profile=None):
     """
@@ -980,14 +983,14 @@ class Fields:
     if options is not None and 'align' in options:
       self.page.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     values = [{"name": calendar.month_name[i], 'value': i} for i in range(12)]
-    html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
-                                            options or {}, profile)
-    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.options.selected is None:
-      html_input.input.options.selected = value
-    return html_input
+    component = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
+                                           options or {}, profile)
+    component.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if component.input.options.selected is None:
+      component.input.options.selected = value
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def weeks(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=None):
     """
@@ -1035,14 +1038,14 @@ class Fields:
         i+1, start_date.strftime('%d/%m'), end_date.strftime('%d/%m'))})
     if options is not None and 'align' in options:
       self.page.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
-    html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
-                                            options or {}, profile)
-    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.options.selected is None:
-      html_input.input.options.selected = value
-    return html_input
+    component = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
+                                           options or {}, profile)
+    component.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if component.input.options.selected is None:
+      component.input.options.selected = value
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def years(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=None):
     """
@@ -1085,14 +1088,14 @@ class Fields:
     if options is not None and 'align' in options:
       self.page.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     values = [{"name": i, 'value': i} for i in range(dt.year+1)][::-1]
-    html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
-                                            options or {}, profile)
-    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.options.selected is None:
-      html_input.input.options.selected = value
-    return html_input
+    component = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
+                                           options or {}, profile)
+    component.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if component.input.options.selected is None:
+      component.input.options.selected = value
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def days(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
            helper=None, options=None, profile=None):
     """
@@ -1136,14 +1139,14 @@ class Fields:
     if options is not None and 'align' in options:
       self.page.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     values = [{"name": calendar.day_name[i], 'value': i} for i in range(7)]
-    html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
-                                            options or {}, profile)
-    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
-    if html_input.input.options.selected is None:
-      html_input.input.options.selected = value
-    return html_input
+    component = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
+                                           options or {}, profile)
+    component.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if component.input.options.selected is None:
+      component.input.options.selected = value
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def column_text(self, label, text="", align='left', width=('auto', ""), height=(None, "px"), html_code=None,
                   options=None, profile=None):
     """
@@ -1166,24 +1169,24 @@ class Fields:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    div = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
-    div.label = self.page.ui.text(
-      label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
-    div.label.style.css.display = 'block'
-    div.label.style.css.margin_bottom = 10
-    div.label.style.css.color = self.page.theme.greys[6]
-    div.text = self.page.ui.inputs.input(text, options=options, html_code=html_code, profile=profile)
-    div.text.style.css.bold()
-    div.text.style.css.margin_bottom = 10
-    div.text.style.css.display = 'block'
-    div.text.style.css.font_factor(5)
-    div.style.css.margin = 4
-    div.style.css.display = 'inline-block'
-    div.add(div.label)
-    div.add(div.text)
-    return div
+    component = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    component.label = self.page.ui.text(
+      label, options=options, html_code=html_code if html_code is None else HTML_CODE_LABEL.format(html_code), profile=profile)
+    component.label.style.css.display = 'block'
+    component.label.style.css.margin_bottom = 10
+    component.label.style.css.color = self.page.theme.greys[6]
+    component.text = self.page.ui.inputs.input(text, options=options, html_code=html_code, profile=profile)
+    component.text.style.css.bold()
+    component.text.style.css.margin_bottom = 10
+    component.text.style.css.display = 'block'
+    component.text.style.css.font_factor(5)
+    component.style.css.margin = 4
+    component.style.css.display = 'inline-block'
+    component.add(component.label)
+    component.add(component.text)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def column_date(self, label, value="T", align='left', width=('auto', ""), height=(None, "px"), html_code=None,
                   options=None, profile=None):
     """
@@ -1206,27 +1209,27 @@ class Fields:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    div = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
-    div.label = self.page.ui.text(
-      label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
-    div.label.style.css.display = 'block'
-    div.label.style.css.margin_bottom = 10
-    div.label.style.css.color = self.page.theme.greys[6]
+    component = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    component.label = self.page.ui.text(
+      label, options=options, html_code=html_code if html_code is None else HTML_CODE_LABEL.format(html_code), profile=profile)
+    component.label.style.css.display = 'block'
+    component.label.style.css.margin_bottom = 10
+    component.label.style.css.color = self.page.theme.greys[6]
     if value is None:
-      div.text = self.date(value, options=options, html_code=html_code, profile=profile)
+      component.text = self.date(value, options=options, html_code=html_code, profile=profile)
     else:
-      div.text = self.today(options=options, html_code=html_code, profile=profile)
-    div.text.style.css.bold()
-    div.text.style.css.margin_bottom = 10
-    div.text.style.css.display = 'block'
-    div.text.style.css.font_factor(5)
-    div.style.css.margin = 4
-    div.style.css.display = 'inline-block'
-    div.add(div.label)
-    div.add(div.text)
-    return div
+      component.text = self.today(options=options, html_code=html_code, profile=profile)
+    component.text.style.css.bold()
+    component.text.style.css.margin_bottom = 10
+    component.text.style.css.display = 'block'
+    component.text.style.css.font_factor(5)
+    component.style.css.margin = 4
+    component.style.css.display = 'inline-block'
+    component.add(component.label)
+    component.add(component.text)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def toggle(self, record=None, label=None, is_on=False, color=None, width=(100, '%'), height=(20, 'px'),
              html_code=None, options=None, profile=None):
     """
@@ -1273,19 +1276,19 @@ class Fields:
     dfl_options = {"is_on": is_on}
     if options is not None:
       dfl_options.update(options)
-    div = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
-    div.input = html.HtmlRadio.Switch(self.page, record, color, ("auto", ''), height, html_code, dfl_options, profile)
+    component = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
+    component.input = html.HtmlRadio.Switch(self.page, record, color, ("auto", ''), height, html_code, dfl_options, profile)
     if label is not None:
-      div.input.style.css.display = 'inline-block'
-      div.label = self.page.ui.text(
-        label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
-      div.label.style.css.display = 'inline-block'
-      div.label.style.css.margin = '0 5px'
-      div.label.style.css.width = '%spx' % Defaults.TEXTS_SPAN_WIDTH
-      div.extend([div.label, div.input])
-    return div
+      component.input.style.css.display = 'inline-block'
+      component.label = self.page.ui.text(
+        label, options=options, html_code=html_code if html_code is None else HTML_CODE_LABEL.format(html_code), profile=profile)
+      component.label.style.css.display = 'inline-block'
+      component.label.style.css.margin = '0 5px'
+      component.label.style.css.width = '{}px'.format(Defaults.TEXTS_SPAN_WIDTH)
+      component.extend([component.label, component.input])
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def slider(self, value=0, min=0, max=10, step=1, orientation='horizontal', label=None, width=(100, '%'),
              height=(None, 'px'), html_code=None, options=None, range=False, profile=None):
     """
@@ -1312,52 +1315,55 @@ class Fields:
     dfl_options = {"show_min_max": False, "force_show_current": True}
     if options is not None:
       dfl_options.update(options)
-    div = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
+    component = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
     if range:
-      div.input = self.page.ui.sliders.range(
+      component.input = self.page.ui.sliders.range(
         values=value, minimum=min, maximum=max, width=(Defaults.INPUTS_MIN_WIDTH, 'px'), height=None,
         html_code=html_code, options=dfl_options)
     else:
-      div.input = self.page.ui.slider(number=value, minimum=min, maximum=max, width=(Defaults.INPUTS_MIN_WIDTH, 'px'),
-                                      height=None, html_code=html_code, options=dfl_options)
-    div.input.style.css.margin = 0
-    div.style.css.margin_top = 5
-    div.input.options.step = step
+      component.input = self.page.ui.slider(number=value, minimum=min, maximum=max,
+                                            width=(Defaults.INPUTS_MIN_WIDTH, 'px'),
+                                            height=None, html_code=html_code, options=dfl_options)
+    component.input.style.css.margin = 0
+    component.style.css.margin_top = 5
+    component.input.options.step = step
     if label is not None:
-      div.input.style.css.display = 'inline-block'
-      div.label = self.page.ui.text(
-        label, options=options, html_code=html_code if html_code is None else "%s_label" % html_code, profile=profile)
-      div.label.style.css.display = 'inline-block'
-      div.label.style.css.margin = '0 5px'
-      div.label.style.css.width = '%spx' % Defaults.TEXTS_SPAN_WIDTH
-      div.extend([div.label, div.input])
+      component.input.style.css.display = 'inline-block'
+      component.label = self.page.ui.text(
+        label, options=options, html_code=html_code if html_code is None else HTML_CODE_LABEL.format(html_code), profile=profile)
+      component.label.style.css.display = 'inline-block'
+      component.label.style.css.margin = '0 5px'
+      component.label.style.css.width = '{}px'.format(Defaults.TEXTS_SPAN_WIDTH)
+      component.extend([component.label, component.input])
     if orientation == "vertical":
-      div.input.style.css.height = div.input.style.css.width
-      div.input.style.css.width = div.input.style.css.height
-      div.input.options.css = {"width": "5px", "background": "#bdbdbd"}
-      div.input.options.handler_css = {
+      component.input.style.css.height = component.input.style.css.width
+      component.input.style.css.width = component.input.style.css.height
+      component.input.options.css = {"width": "5px", "background": "#bdbdbd"}
+      component.input.options.handler_css = {
         "left": "-7px", "border-radius": '60px', "border": "1px solid grey", "background": "white"}
     else:
-      div.input.style.css.line_height = height[0]
-      div.input.options.css = {"height": "5px", "background": "#bdbdbd"}
-      div.input.options.handler_css = {
+      component.input.style.css.line_height = height[0]
+      component.input.options.css = {"height": "5px", "background": "#bdbdbd"}
+      component.input.options.handler_css = {
         "top": "-7px", "border-radius": '60px', "border": "1px solid grey", "background": "white"}
-    div.input.options.orientation = orientation
-    return div
+    component.input.options.orientation = orientation
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
               options=None, autocomplete=False, kind='select', profile=None):
     if kind == 'select':
-      comp = self.page.ui.lists.filters(items, button, width, height, html_code, helper, options, autocomplete, profile)
-      comp.select.button_css = {
+      component = self.page.ui.lists.filters(items, button, width, height, html_code, helper, options, autocomplete, profile)
+      component.select.button_css = {
         "background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
     elif kind == 'input':
-      comp = self.page.ui.inputs.filters(items, button, width, height, html_code, helper, options, autocomplete, profile)
+      component = self.page.ui.inputs.filters(
+        items, button, width, height, html_code, helper, options, autocomplete, profile)
     else:
-      raise Exception("Kind %s not defined" % kind)
+      raise ValueError("Kind {} not defined".format(kind))
 
-    return comp
+    html.Html.set_component_skin(component)
+    return component
 
 
 class Timelines:
@@ -1365,7 +1371,6 @@ class Timelines:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def view(self, start_date, end_date, width=(100, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
@@ -1398,20 +1403,20 @@ class Timelines:
         if dt >= today:
           remaining_days += 1
       dt += datetime.timedelta(days=1)
-    div = self.page.ui.div("%s - %s" % (
+    component = self.page.ui.div("{} - {}".format(
       start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options,
                            profile=profile)
-    div.style.css.background = self.page.theme.colors[1]
-    div.style.css.border_radius = 20
-    div.style.css.padding = 2
-    div.style.css.text_align = 'center'
-    div.tooltip("%s days remaining" % remaining_days)
+    component.style.css.background = self.page.theme.colors[1]
+    component.style.css.border_radius = 20
+    component.style.css.padding = 2
+    component.style.css.text_align = 'center'
+    component.tooltip("{} days remaining".format(remaining_days))
     if end_date < today:
-      div.style.css.background = self.page.theme.greys[6]
-      div.style.css.color = self.page.theme.greys[0]
-    return div
+      component.style.css.background = self.page.theme.greys[6]
+      component.style.css.color = self.page.theme.greys[0]
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def period(self, start_date, days, width=(100, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
@@ -1446,20 +1451,20 @@ class Timelines:
         end_date += datetime.timedelta(days=1)
     if end_date >= today:
       remaining_days += 1
-    div = self.page.ui.div("%s - %s" % (
+    component = self.page.ui.div("{} - {}".format(
       start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options,
                            profile=profile)
-    div.style.css.background = self.page.theme.colors[1]
-    div.style.css.border_radius = 20
-    div.style.css.padding = 2
-    div.style.css.text_align = 'center'
-    div.tooltip("%s days remaining" % remaining_days)
+    component.style.css.background = self.page.theme.colors[1]
+    component.style.css.border_radius = 20
+    component.style.css.padding = 2
+    component.style.css.text_align = 'center'
+    component.tooltip("{} days remaining".format(remaining_days))
     if end_date < today:
-      div.style.css.background = self.page.theme.greys[6]
-      div.style.css.color = self.page.theme.greys[0]
-    return div
+      component.style.css.background = self.page.theme.greys[6]
+      component.style.css.color = self.page.theme.greys[0]
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def week(self, start_date, width=(100, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
@@ -1492,17 +1497,17 @@ class Timelines:
 
         remaining_days += 1
         next_day += datetime.timedelta(days=1)
-    div = self.page.ui.div("%s - %s" % (
+    component = self.page.ui.div("{} - {}".format(
       start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options,
                            profile=profile)
-    div.style.css.background = self.page.theme.colors[1]
-    div.style.css.border_radius = 20
-    div.style.css.padding = 2
-    div.style.css.text_align = 'center'
-    div.tooltip("%s days remaining" % remaining_days)
-    return div
+    component.style.css.background = self.page.theme.colors[1]
+    component.style.css.border_radius = 20
+    component.style.css.padding = 2
+    component.style.css.text_align = 'center'
+    component.tooltip("{} days remaining".format(remaining_days))
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def categories(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
                  helper=None, options=None, profile=None):
     """
@@ -1530,13 +1535,13 @@ class Timelines:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     values = cpn.select.from_list(["Documentation", 'Analysis', 'Design', 'Implementation', 'Training'])
-    html_input = html.HtmlInput.FieldSelect(self.page, values, label, icon, width, height, html_code, helper,
-                                            options or {}, profile)
-    if html_input.input.options.selected is None:
-      html_input.input.selected = value
-    return html_input
+    component = html.HtmlInput.FieldSelect(
+      self.page, values, label, icon, width, height, html_code, helper, options or {}, profile)
+    if component.input.options.selected is None:
+      component.input.selected = value
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def milestone(self, completion_date, icon=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None,
                 profile=None):
     """
@@ -1564,7 +1569,7 @@ class Timelines:
       completion_date = datetime.datetime(*[int(x) for x in completion_date.split("-")])
     if icon is None:
       icon = "fas fa-fire-alt"
-    ms = self.page.ui.icons.awesome(
+    component = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     if completion_date > today:
       next_day = today
@@ -1575,14 +1580,14 @@ class Timelines:
 
         remaining_days += 1
         next_day += datetime.timedelta(days=1)
-      ms.tooltip("to be completed in %s (%s days left)" % (completion_date.strftime("%b %d"), remaining_days))
-      ms.icon.style.css.color = self.page.theme.danger[1]
+      component.tooltip("to be completed in {} ({} days left)".format(completion_date.strftime("%b %d"), remaining_days))
+      component.icon.style.css.color = self.page.theme.danger[1]
     else:
-      ms.tooltip("Completed in %s" % completion_date.strftime("%b %d"))
-      ms.icon.style.css.color = self.page.theme.greys[6]
-    return ms
+      component.tooltip("Completed in {}".format(completion_date.strftime("%b %d")))
+      component.icon.style.css.color = self.page.theme.greys[6]
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def meeting(self, time, icon=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
@@ -1604,16 +1609,16 @@ class Timelines:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    dflt_options = {"working_hours": 8}
+    dfl_options = {"working_hours": 8}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     if icon is None:
       icon = "far fa-handshake"
-    ms = self.page.ui.icons.awesome(icon, width=width, height=height, html_code=html_code, profile=profile)
-    ms.tooltip("%s hours (%s days)" % (time, time / dflt_options["working_hours"]))
-    return ms
+    component = self.page.ui.icons.awesome(icon, width=width, height=height, html_code=html_code, profile=profile)
+    component.tooltip("{} hours ({} days)".format(time, time / dfl_options["working_hours"]))
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def workload(self, value, width=(25, 'px'), html_code=None, options=None, profile=None):
     """
     Description:
@@ -1638,16 +1643,17 @@ class Timelines:
       dflt_options.update(options)
     width = (width[0] * (value / dflt_options["working_hours"]), 'px')
     height = width
-    ms = self.page.ui.div(value, width=width, height=height, html_code=html_code, profile=profile)
-    ms.style.css.border_radius = 20
-    ms.style.css.text_align = "center"
-    ms.style.css.color = "white"
-    ms.style.css.line_height = "%s%s" % (height[0], height[1])
-    ms.style.css.vertical_align = "middle"
+    component = self.page.ui.div(value, width=width, height=height, html_code=html_code, profile=profile)
+    component.style.css.border_radius = 20
+    component.style.css.text_align = "center"
+    component.style.css.color = "white"
+    component.style.css.line_height = "{}{}".format(height[0], height[1])
+    component.style.css.vertical_align = "middle"
     if value < (dflt_options["working_hours"] - 2):
-      ms.style.css.background = self.page.theme.success[1]
+      component.style.css.background = self.page.theme.success[1]
     elif value < dflt_options["working_hours"]:
-      ms.style.css.background = self.page.theme.warning[1]
+      component.style.css.background = self.page.theme.warning[1]
     else:
-      ms.style.css.background = self.page.theme.danger[1]
-    return ms
+      component.style.css.background = self.page.theme.danger[1]
+    html.Html.set_component_skin(component)
+    return component

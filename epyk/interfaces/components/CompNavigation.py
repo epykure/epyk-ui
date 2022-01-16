@@ -14,7 +14,6 @@ class Navigation:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'), height=(25, 'px'),
          options=None, profile=False):
     """
@@ -60,9 +59,9 @@ class Navigation:
     du.click([
       self.page.js.window.scrollUp(),
       self.page.js.objects.this.hide()])
+    html.Html.set_component_skin(du)
     return du
 
-  @html.Html.css_skin()
   def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
            height=(25, 'px'), options=None, profile=False):
     """
@@ -108,9 +107,9 @@ class Navigation:
     dd.click([
       self.page.js.window.scrollTo(),
       self.page.js.objects.this.hide()])
+    html.Html.set_component_skin(dd)
     return dd
 
-  @html.Html.css_skin()
   def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
          height=(25, 'px'), options=None, profile=False):
     """
@@ -157,9 +156,9 @@ class Navigation:
     dd.click([
       self.page.js.window.scrollTo(x=x, y=y),
       self.page.js.objects.this.hide()])
+    html.Html.set_component_skin(dd)
     return dd
 
-  @html.Html.css_skin()
   def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None,
           width=(25, 'px'), height=(25, 'px'), options=None, profile=False):
     """
@@ -204,9 +203,9 @@ class Navigation:
     div.on("mouseout", [h_url.dom.css({"display": 'none', "padding-left": "0px"})])
     if tooltip is not None:
       div.tooltip(tooltip)
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def scroll(self, progress=0, height=(3, 'px'), options=None, profile=False):
     """
     Description:
@@ -232,9 +231,9 @@ class Navigation:
     self.page.js.onReady(
       self.page.js.window.events.addScrollListener([
         p.build(self.page.js.window.scrollPercentage)]))
+    html.Html.set_component_skin(p)
     return p
 
-  @html.Html.css_skin()
   def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
               profile=False):
     """
@@ -263,9 +262,9 @@ class Navigation:
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_indices = html.HtmlContainer.Indices(self.page, count, width, height, html_code, dflt_options, profile)
+    html.Html.set_component_skin(html_indices)
     return html_indices
 
-  @html.Html.css_skin()
   def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
              profile=False):
     """
@@ -296,9 +295,9 @@ class Navigation:
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.page, count, width, height, html_code, dflt_options, profile)
+    html.Html.set_component_skin(html_points)
     return html_points
 
-  @html.Html.css_skin()
   def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), html_code=None,
            options=None, profile=False):
     """
@@ -328,9 +327,9 @@ class Navigation:
     dflt_options = {"div_css": {"margin": "2px", "float": position}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.page, count, width, height, html_code, dflt_options, profile)
+    html.Html.set_component_skin(html_points)
     return html_points
 
-  @html.Html.css_skin()
   def path(self, record, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -362,10 +361,10 @@ class Navigation:
         {"display": 'inline-block', 'margin': '0 5px', 'font-size': self.page.body.style.globals.font.normal(-2)})
     div += self.page.ui.link(record[-1]['text'], url=record[-1].get('url', '#')).css(
       {"display": 'inline-block'})
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
-  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
     Description:
     ------------
@@ -375,6 +374,8 @@ class Navigation:
 
     Usage::
 
+      page.ui.components_skin = {"nav": {"css": {"background-color": 'pink'}}}
+      nav = page.ui.navigation.nav(height=60, options={"center": True, "logo_height": 50})
 
     Attributes:
     ----------
@@ -385,6 +386,8 @@ class Navigation:
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options:  Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+
+    :rtype: html.HtmlMenu.HtmlNavBar
     """
     comp_id = 'page_nav_bar'
     if comp_id not in self.page.components:
@@ -394,9 +397,10 @@ class Navigation:
     if components is not None:
       for component in components:
         nav_bar.add(component)
+    html.Html.set_component_skin(nav_bar)
+    html.Html.set_component_skin(nav_bar)
     return nav_bar
 
-  @html.Html.css_skin()
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
           profile=False):
     """
@@ -434,7 +438,7 @@ class Navigation:
     options['logo_width'] = tuple(height) if 'logo_width' not in options else Arguments.size(options['logo_width'], unit="px")
 
     if logo is None:
-      logo = self.page.ui.icons.epyk()
+      logo = self.page.ui.icons.epyk(size=options['logo_height'])
       components.append(logo)
     else:
       if not hasattr(logo, 'options'):    # if it is not an option it is considered as a path
@@ -443,7 +447,6 @@ class Navigation:
         if logo_url:
           logo.style.css.background_url(logo_url) #, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
-    components[-1].style.css.margin_right = 20
     if title is not None:
       title = self.page.ui.div(title, height=(100, "%"))
       title.style.css.text_transform = "uppercase"
@@ -471,16 +474,20 @@ if (window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"}
 else {%(dom)s.style.top = "-%(height)spx"};
 window.prevScrollpos = currentScrollPos;
 ''' % {"dom": html_nav.dom.varName, "height": height[0]}])
-
+    if logo and options.get("center") is not None:
+        html_nav.logo.style.css.margin = "auto"
+        html_nav.logo.style.css.display = "block"
+    else:
+        html_nav.logo.style.css.margin_right = 20
+        html_nav.logo.style.css.display = "inline-block"
     html_nav.title = title
-    html_nav.logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
     Defaults_css.BODY_CONTAINER = {"padding-top": height[0] + scroll_height}
     self.page.body.style.custom_class({
       "padding-top": '%spx' % (height[0] + 5 + scroll_height)}, "body", is_class=False)
+    html.Html.set_component_skin(html_nav)
     return html_nav
 
-  @html.Html.css_skin()
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -522,9 +529,9 @@ window.prevScrollpos = currentScrollPos;
     div.style.css.font_size = self.page.body.style.globals.font.normal(5)
     div.style.css.text_align = 'center'
     div.style.css.padding = "5px 15px"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def footer(self, components=None, width=(100, '%'), height=(80, 'px'), fixed=False, options=None, profile=False):
     """
     Description:
@@ -558,9 +565,9 @@ window.prevScrollpos = currentScrollPos;
       self.page.body.style.css.padding_bottom = height[0]
     else:
       footer.style.css.position = None
+    html.Html.set_component_skin(footer)
     return footer
 
-  @html.Html.css_skin()
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
     """
     Description:
@@ -626,9 +633,9 @@ window.prevScrollpos = currentScrollPos;
         anchor.click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
       else:
         anchor.click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+    html.Html.set_component_skin(d)
     return d
 
-  @html.Html.css_skin()
   def pilcrow(self, text="", html_code=None, options=None, profile=None):
     """
     Description:
@@ -651,9 +658,9 @@ window.prevScrollpos = currentScrollPos;
     p.style.css.font_size = self.page.body.style.globals.font.normal(5)
     p.style.css.cursor = "pointer"
     p.click([self.page.js.window.scrollTo(y=self.page.js.objects.this.offsetTop)])
+    html.Html.set_component_skin(p)
     return p
 
-  @html.Html.css_skin()
   def panel(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
     """
     Description:
@@ -678,13 +685,13 @@ window.prevScrollpos = currentScrollPos;
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
-    dflt_options = {"position": 'top'}
+    dfl_options = {"position": 'top'}
     if options is not None:
-      dflt_options.update(options)
-    h_drawer = html.HtmlMenu.PanelsBar(self.page, width, height, dflt_options, helper, profile)
+      dfl_options.update(options)
+    h_drawer = html.HtmlMenu.PanelsBar(self.page, width, height, dfl_options, helper, profile)
+    html.Html.set_component_skin(h_drawer)
     return h_drawer
 
-  @html.Html.css_skin()
   def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None, profile=None, html_code=None):
     """
     Description:
@@ -705,18 +712,19 @@ window.prevScrollpos = currentScrollPos;
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     """
     size = Arguments.size(size, unit="px")
-    dflt_options = {"position": 'left'}
+    dfl_options = {"position": 'left'}
     if options is not None:
-      dflt_options.update(options)
-    if dflt_options["position"] in ['top', 'bottom']:
+      dfl_options.update(options)
+    if dfl_options["position"] in ['top', 'bottom']:
       width = (100, '%')
       height = size
     else:
       width = size
       height = (100, '%')
     h_drawer = html.HtmlMenu.Shortcut(
-      self.page, components or [], logo, width, height, html_code, dflt_options, profile)
+      self.page, components or [], logo, width, height, html_code, dfl_options, profile)
     h_drawer.style.css.padding = "5px 10px"
+    html.Html.set_component_skin(h_drawer)
     return h_drawer
 
 
@@ -725,7 +733,6 @@ class Banners:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def top(self, data="", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -763,9 +770,9 @@ class Banners:
     div.style.css.left = 0
     div.style.css.z_index = 500
     div.style.css.padding = "5px 15px"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def bottom(self, data="", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
              profile=False):
     """
@@ -806,9 +813,9 @@ class Banners:
     div.style.css.position = "fixed"
     div.style.css.padding = "5px 15px"
     div.style.css.bottom = 0
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
     Description:
@@ -844,9 +851,9 @@ class Banners:
     button.click([container.dom.hide()])
     container.button = button
     container.link = link
+    html.Html.set_component_skin(container)
     return container
 
-  @html.Html.css_skin()
   def corner(self, data="", background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
              profile=False):
     """
@@ -895,9 +902,9 @@ class Banners:
       div.style.css.top = 0
       div.style.css.transform = "rotate(40deg)"
       div.style.css.margin = "20px -45px 0 0"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None,
            profile=False):
     """
@@ -934,9 +941,9 @@ class Banners:
     div.style.css.font_size = self.page.body.style.globals.font.normal(4)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
            options=None, html_code=None, profile=False):
     """
@@ -974,9 +981,9 @@ class Banners:
     div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def title(self, title, content, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
             options=None, profile=False):
     """
@@ -1021,9 +1028,9 @@ class Banners:
     div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def quote(self, content, author, avatar=None, background=None, size_notch=0, width=(100, '%'), align="center",
             height=(None, 'px'), options=None, profile=False):
     """
@@ -1067,9 +1074,9 @@ class Banners:
       author = self.page.ui.div(author, width=("auto", ""))
       author.style.css.display = "inline-block"
     div.add(self.page.ui.div([line, author]))
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def disclaimer(self, copyright=None, links=None, width=(100, '%'), height=("auto", ''), align="center", options=None,
                  profile=False):
     """
@@ -1111,9 +1118,9 @@ class Banners:
     div.style.css.left = 0
     div.style.css.margin_top = 40
     div.style.css.position = "absolute"
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def follow(self, text, width=(100, '%'), height=("auto", ''), align="left", options=None, profile=False,
              youtube=True, twitter=True, facebook=True, twitch=True, instagram=True, linkedIn=True):
     """
@@ -1181,9 +1188,9 @@ class Banners:
       div.style.css.display = "block"
     else:
       div.style.css.background_color = self.page.theme.greys[2]
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def row(self, headers, links, size_notch=0, background=None, width=(100, '%'), align="left", height=(None, 'px'),
           options=None, profile=False):
     """
@@ -1224,9 +1231,9 @@ class Banners:
     div.style.css.font_size = self.page.body.style.globals.font.normal(size_notch)
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
                  html_code="contactus", options=None, profile=False):
     """
@@ -1272,9 +1279,9 @@ class Banners:
     div.style.css.margin_bottom = 10
     div._internal_components = ["%s_email" % html_code, "%s_first_name" % html_code, "%s_last_name" % html_code,
                                 "%s_subject" % html_code, "%s_message" % html_code]
+    html.Html.set_component_skin(div)
     return div
 
-  @html.Html.css_skin()
   def sponsor(self, logos, title="Sponsors", content='', background=None, width=(100, '%'), height=("auto", ''),
               align="center", options=None, profile=False):
     """
@@ -1331,6 +1338,7 @@ class Banners:
     div.style.css.margin = "auto"
     div.style.css.color = self.page.theme.greys[-1]
     div.style.css.top = 0
+    html.Html.set_component_skin(div)
     return div
 
 
@@ -1339,7 +1347,6 @@ class NavBars:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def fixed(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
@@ -1360,9 +1367,9 @@ class NavBars:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     bar = self.page.ui.navbar(logo, title, width, height, options, profile)
+    html.Html.set_component_skin(bar)
     return bar
 
-  @html.Html.css_skin()
   def top(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
@@ -1384,9 +1391,9 @@ class NavBars:
     """
     bar = self.page.ui.navbar(logo, title, width, height, options, profile)
     bar.style.css.position = False
+    html.Html.set_component_skin(bar)
     return bar
 
-  @html.Html.css_skin()
   def transparent(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
@@ -1410,9 +1417,9 @@ class NavBars:
     bar.style.css.position = "absolute"
     bar.style.css.top = 0
     bar.no_background()
+    html.Html.set_component_skin(bar)
     return bar
 
-  @html.Html.css_skin()
   def dark(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
@@ -1438,4 +1445,5 @@ class NavBars:
     bar.no_background()
     bar.style.css.opacity = 0.5
     bar.style.css.background = 'black'
+    html.Html.set_component_skin(bar)
     return bar

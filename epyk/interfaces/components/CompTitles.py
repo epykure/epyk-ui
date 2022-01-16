@@ -10,7 +10,6 @@ class Titles:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def head(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
            html_code=None, profile=False):
     """
@@ -54,9 +53,9 @@ class Titles:
     html_title.style.css.margin_left = 2
     html_title.style.css.padding_left = 2
     html_title.style.css.bold()
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def headline(self, text="", options=None, tooltip="", align="left", color=True, width=(None, "px"),
                height=('auto', ""), html_code=None, profile=False):
     """
@@ -98,9 +97,9 @@ class Titles:
     html_title.style.css.text_align = align
     html_title.style.css.margin_top = 5
     html_title.style.css.font_style = 'italic'
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def title(self, text=None, options=None, tooltip="", align="left", color=None, width=(None, "px"),
             height=('auto', ""), html_code=None, profile=False):
     """
@@ -143,9 +142,9 @@ class Titles:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
     if hasattr(self.page, '_content_table'):   # and self.options.content_table:
       self.page._content_table.add_title(html_title, level=1)
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def section(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
               height=('auto', ""), html_code=None, profile=False):
     """
@@ -184,9 +183,9 @@ class Titles:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
     if hasattr(self.page, '_content_table'):   # and self.options.content_table:
       self.page._content_table.add_title(html_title, level=4)
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def rubric(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
              html_code=None, profile=False):
     """
@@ -227,9 +226,9 @@ class Titles:
     html_title.style.css.font_size = self.page.body.style.globals.font.normal(2)
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def category(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
                height=('auto', ""), html_code=None, profile=False):
     """
@@ -275,9 +274,9 @@ class Titles:
     html_title.style.css.text_transform = "uppercase"
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def caption(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
               height=('auto', ""), html_code=None, profile=False):
     """
@@ -317,9 +316,9 @@ class Titles:
     html_title.style.css.text_align = align
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def underline(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
                 height=('auto', ""),  html_code=None, profile=False):
     """
@@ -362,9 +361,9 @@ class Titles:
     html_title.style.css.border_bottom = '2px solid %s' % color
     html_title.style.css.margin_bottom = 10
     html_title.style.css.text_align = align
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def bold(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
            html_code=None, profile=False):
     """
@@ -405,9 +404,9 @@ class Titles:
     if color:
       html_title.style.css.color = self.page.theme.notch() if color is True else color
     html_title.style.css.text_align = align
+    html.Html.set_component_skin(html_title)
     return html_title
 
-  @html.Html.css_skin()
   def subtitle(self, text="", name=None, contents=None, color=None, picture=None, icon=None, top=5,
                html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
@@ -442,9 +441,9 @@ class Titles:
                                profile=profile)
     title.style.css.font_size = self.page.body.style.globals.font.normal(2)
     title.style.css.bold()
+    html.Html.set_component_skin(title)
     return title
 
-  @html.Html.css_skin()
   def upper(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
             html_code=None, profile=False):
     """
@@ -497,4 +496,5 @@ class Titles:
     html_title.style.css.border_bottom = "3px solid %s" % u_color
     if color:
       html_title.style.css.color = self.page.theme.notch(2) if color is True else color
+    html.Html.set_component_skin(html_title)
     return html_title

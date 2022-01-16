@@ -12,7 +12,6 @@ class Calendar:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def days(self, month=None, content=None, year=None, width=(None, "%"), height=(None, "px"), align=None, options=None,
            html_code=None, profile=None):
     """
@@ -90,13 +89,13 @@ class Calendar:
       days_data.append({'today': today == start, "number": start.day, 'tasks': tasks_view, 'date': start.isoformat(),
                         'weekend': start.weekday() >= 5})
       start += datetime.timedelta(days=1)
-    html_table = html.HtmlDates.Calendar(
+    component = html.HtmlDates.Calendar(
       self.page, days_data, width, height, align, dfl_options, html_code, profile)
-    html_table.tasks = tasks
-    html_table.caption = "%s %s" % (datetime.date(year, month, 1).strftime("%B"), year)
-    return html_table
+    component.tasks = tasks
+    component.caption = "%s %s" % (datetime.date(year, month, 1).strftime("%B"), year)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def timer(self, minutes, text="", width=(None, "%"), height=(None, "px"), align=None, options=None, html_code=None,
             profile=None):
     """
@@ -123,10 +122,10 @@ class Calendar:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_timer = html.HtmlDates.Timer(self.page, minutes, text, width, height, align, options, html_code, profile)
-    return html_timer
+    component = html.HtmlDates.Timer(self.page, minutes, text, width, height, align, options, html_code, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def months(self, content=None, width=(None, "%"), height=(None, "px"), align=None, options=None,
              html_code=None, profile=None):
     """
@@ -187,13 +186,13 @@ class Calendar:
       pie.options.title.fontSize = self.page.body.style.globals.font.normal(5)
       pie.options.title.fontColor = self.page.theme.colors[-1]
       rows.append(pie)
-    row = self.page.ui.row(rows, width=width, height=height, align=align, options=options, profile=profile)
-    row.tasks = tasks
-    row.pies = rows
-    row[today.month-1].style.css.border = "1px solid %s" % self.page.theme.success[0]
-    return row
+    component = self.page.ui.row(rows, width=width, height=height, align=align, options=options, profile=profile)
+    component.tasks = tasks
+    component.pies = rows
+    component[today.month-1].style.css.border = "1px solid %s" % self.page.theme.success[0]
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def legend(self, record, width=(None, "%"), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
@@ -241,10 +240,10 @@ class Calendar:
     height = Arguments.size(height, unit="px")
     if options is not None:
       dfl_options.update(options)
-    html_legend = html.HtmlOthers.Legend(self.page, data, width, height, dfl_options, profile)
-    return html_legend
+    component = html.HtmlOthers.Legend(self.page, data, width, height, dfl_options, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def forecast(self, month_period, content=None, width=(100, "%"), height=(None, "px"), position="top", options=None,
                profile=None):
     """
@@ -288,9 +287,10 @@ class Calendar:
         row.append([calendar, self.page.ui.calendars.legend(calendar.tasks)])
       else:
         row.append(calendar)
-    return self.page.ui.grid([row], position=position, profile=profile)
+    component = self.page.ui.grid([row], position=position, profile=profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def google(self, task, start, end, details=None, location=None, icon="google_plus",
              text="Add to Google Calendar", options=None, profile=None):
     """
@@ -331,18 +331,18 @@ class Calendar:
     icon.icon.style.css.color = self.page.theme.greys[-1]
     icon.options.managed = False
     google_url = "http://www.google.com/calendar/event?action=TEMPLATE"
-    link = self.page.ui.link("%s %s" % (icon.html(), text),
+    component = self.page.ui.link("%s %s" % (icon.html(), text),
       self.page.js.objects.get("%(url)s&text=%(task)s&dates=%(start)s/%(end)s&details=%(details)s&location=%(location)s" % {'url': google_url, "task": task, 'start': start, 'end': end, 'details': details or task, 'location': location or ''}))
-    link.style.css.background = self.page.theme.greys[0]
-    link.style.css.color = self.page.theme.greys[-1]
-    link.style.css.padding = '2px 5px'
-    link.style.css.margin = 2
-    link.style.css.display = 'inline-block'
-    link.style.css.border = "1px solid %s" % self.page.theme.greys[3]
-    link.style.css.border_radius = 20
-    return link
+    component.style.css.background = self.page.theme.greys[0]
+    component.style.css.color = self.page.theme.greys[-1]
+    component.style.css.padding = '2px 5px'
+    component.style.css.margin = 2
+    component.style.css.display = 'inline-block'
+    component.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    component.style.css.border_radius = 20
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def agenda(self, task, start, end, details=None, location=None, icon="calendar", text="Add to Calendar",
              options=None, profile=None):
     """
@@ -383,20 +383,20 @@ class Calendar:
     str_calendar = "BEGIN:VCALENDAR\n%s\n%%s\nEND:VCALENDAR" % "\n".join(["%s:%s" % (k, v) for k, v in calendar_options.items()])
     str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT" % "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
 
-    link = self.page.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (
+    component = self.page.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (
       self.page.body.style.globals.font.normal(5), self.page.theme.greys[-1], icon, text), str_calendar % str_event,
                                    options=options, profile=profile)
-    link.attr['download'] = 'event.ics'
-    link.style.css.background = self.page.theme.greys[0]
-    link.style.css.color = self.page.theme.greys[-1]
-    link.style.css.padding = '2px 5px'
-    link.style.css.margin = 2
-    link.style.css.display = 'inline-block'
-    link.style.css.border = "1px solid %s" % self.page.theme.greys[3]
-    link.style.css.border_radius = 20
-    return link
+    component.attr['download'] = 'event.ics'
+    component.style.css.background = self.page.theme.greys[0]
+    component.style.css.color = self.page.theme.greys[-1]
+    component.style.css.padding = '2px 5px'
+    component.style.css.margin = 2
+    component.style.css.display = 'inline-block'
+    component.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+    component.style.css.border_radius = 20
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
   def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), html_code=None, tooltip=None,
            profile=None, options=None):
     """
@@ -425,13 +425,13 @@ class Calendar:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    but = self.page.ui.text(
+    component = self.page.ui.text(
       text, width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
-    but.style.css.background = self.page.theme.greys[3]
-    but.options.style_select = "pill_selected"
-    but.style.css.border_radius = 20
-    but.style.css.padding = "0 5px"
-    but.style.css.margin_right = 5
+    component.style.css.background = self.page.theme.greys[3]
+    component.options.style_select = "pill_selected"
+    component.style.css.border_radius = 20
+    component.style.css.padding = "0 5px"
+    component.style.css.margin_right = 5
     date = datetime.date.today()
     if value is None and text.endswith("D"):
       date = date - datetime.timedelta(days=int(text[:-1]))
@@ -446,12 +446,13 @@ class Calendar:
     elif value is None and text.endswith("Y"):
       date = datetime.date(date.year - int(text[:-1]), date.month, date.day)
       value = date.isoformat()
-    but.attr["data-value"] = value or text
-    but.style.add_classes.div.color_background_hover()
+    component.attr["data-value"] = value or text
+    component.style.add_classes.div.color_background_hover()
     if group is not None:
       self.page.body.style.custom_class({
         "background": "%s !IMPORTANT" % self.page.theme.colors[6],
         "color": "%s !IMPORTANT" % self.page.theme.greys[0],
       }, classname="pill_selected")
-      but.attr["data-group"] = group
-    return but
+      component.attr["data-group"] = group
+    html.Html.set_component_skin(component)
+    return component

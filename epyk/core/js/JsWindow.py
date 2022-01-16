@@ -40,7 +40,7 @@ class JsUrl:
 
 class JsLocalStorage:
 
-  def key(self, i):
+  def key(self, i: int):
     """
     Description:
     ------------
@@ -59,26 +59,26 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param i: Integer. Required. A Number representing the index of the key you want to get the name of.
+    :param int i: A Number representing the index of the key you want to get the name of.
 
     :return: A String, representing the name of the specified key
     """
     i = JsUtils.jsConvertData(i, None)
     return JsObject.JsObject("localStorage.key(%s)" % i)
 
-  def __setitem__(self, key, data):
+  def __setitem__(self, key: str, data):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param key: String. The key attribute.
+    :param str key: The key attribute.
     :param data: Object. The value to store.
     """
     self.setItem(key, data)
 
-  def __getitem__(self, item):
+  def __getitem__(self, item: str):
     """
     Description:
     ------------
@@ -90,11 +90,11 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param item: String. The item name.
+    :param str item: The item name.
     """
     return self.getItem(item)
 
-  def setItem(self, key, data):
+  def setItem(self, key: str, data):
     """
     Description:
     ------------
@@ -113,8 +113,8 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param key: String. Required. A String specifying the name of the key you want to set the value of.
-    :param data: String. Required. A String specifying the value of the key you want to set the value of.
+    :param str key: A String specifying the name of the key you want to set the value of.
+    :param data: A String specifying the value of the key you want to set the value of.
 
     :return: A String, representing the inserted value.
     """
@@ -122,7 +122,7 @@ class JsLocalStorage:
     data = JsUtils.jsConvertData(data, None)
     return JsObject.JsObject("localStorage.setItem(%s, %s)" % (key, data))
 
-  def getItem(self, key):
+  def getItem(self, key: str):
     """
     Description:
     ------------
@@ -141,14 +141,14 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param key: String. Required. A String specifying the name of the key you want to get the value of.
+    :param str key: A String specifying the name of the key you want to get the value of.
 
     :return: A String, representing the value of the specified key.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("localStorage.getItem(%s)" % key)
 
-  def removeItem(self, key):
+  def removeItem(self, key: str):
     """
     Description:
     ------------
@@ -167,7 +167,7 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param key: String. Required. A String specifying the name of the item you want to remove.
+    :param str key: A String specifying the name of the item you want to remove.
 
     :return: Void
     """
@@ -210,7 +210,7 @@ class JsSessionStorage:
     https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
   """
 
-  def key(self, i):
+  def key(self, i: int):
     """
     Description:
     ------------
@@ -218,19 +218,19 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param i: Integer. The key number.
+    :param int i: The key number.
     """
     i = JsUtils.jsConvertData(i, None)
     return JsObject.JsObject("sessionStorage.key(%s)" % i)
 
-  def __setitem__(self, key, data):
+  def __setitem__(self, key: str, data):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param key: String. The key attribute.
+    :param str key: The key attribute.
     :param data: Object. The value to store.
     """
     self.setItem(key, data)
@@ -251,7 +251,7 @@ class JsSessionStorage:
     """
     return self.getItem(item)
 
-  def setItem(self, key, data):
+  def setItem(self, key: str, data):
     """
     Description:
     ------------
@@ -270,14 +270,14 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param key: The key used to store the data in the session cache.
+    :param str key: The key used to store the data in the session cache.
     :param data:
     """
     key = JsUtils.jsConvertData(key, None)
     data = JsUtils.jsConvertData(data, None)
     return JsObject.JsObject("sessionStorage.setItem(%s, %s)" % (key, data))
 
-  def getItem(self, key):
+  def getItem(self, key: str):
     """
     Description:
     ------------
@@ -292,12 +292,12 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param key:
+    :param str key:
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("sessionStorage.getItem(%s)" % key)
 
-  def removeItem(self, jsData, jsDataKey=None, isPyData=False, jsFnc=None):
+  def removeItem(self, jsData, jsDataKey=None, isPyData: bool = False, jsFnc=None):
     """
     Description:
     ------------
@@ -404,7 +404,7 @@ class JsHistory:
     """
     return JsFncs.JsFunction("window.history.forward()")
 
-  def go(self, number):
+  def go(self, number: int):
     """
     Description:
     ------------
@@ -416,7 +416,7 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param number: Required. The parameter can either be a number which goes to the URL within the specific position (-1 goes back one page, 1 goes forward one page), or a string.
+    :param int number: The parameter can either be a number which goes to the URL within the specific position (-1 goes back one page, 1 goes forward one page), or a string.
 
     :return: The Javascript String to be added to the page
     """
@@ -461,7 +461,7 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param stateObj: he state object is a JavaScript object which is associated with the new history entry created by pushState()
+    :param stateObj: The state object is a JavaScript object which is associated with the new history entry created by pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
                   Passing the empty string here should be safe against future changes to the method.
                   Alternatively, you could pass a short title for the state to which you're moving.

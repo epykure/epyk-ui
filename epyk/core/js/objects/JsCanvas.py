@@ -833,7 +833,7 @@ class Canvas(JsNodeDom.JsDoms):
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
     return self._jquery_ui
 
-  def toDataURL(self, format='image/jpeg'):
+  def toDataURL(self, format: str = 'image/jpeg'):
     """
     Description:
     ------------

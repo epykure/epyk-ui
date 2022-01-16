@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
@@ -20,7 +21,7 @@ class Radio(Html.Html):
     for v in vals:
       self.add(v['value'], v.get('checked', False))
 
-  def add(self, val, checked=False):
+  def add(self, val: Union[Type[Html.Html], str], checked: bool = False):
     """
     Description:
     ------------
@@ -28,8 +29,8 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param val: HTML | String. The item to be added.
-    :param checked: Boolean. Optional. Check the item.
+    :param Union[Type[Html.Html], str] val: The item to be added.
+    :param checked:  Optional. Check the item.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
       val = self.page.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
@@ -38,28 +39,28 @@ class Radio(Html.Html):
     super(Radio, self).__add__(val)
     return self
 
-  def set_disable(self, text):
+  def set_disable(self, text: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param text: String. The item value to disable.
+    :param str text: The item value to disable.
     """
     for v in self.val:
       if v.val["text"] == text:
         self.page.properties.js.add_builders(v.dom.attr("disabled", 'true').r)
     return self
 
-  def set_checked(self, text):
+  def set_checked(self, text: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param text: String. The item value to set as checked.
+    :param str text: The item value to set as checked.
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -67,7 +68,7 @@ class Radio(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlSelect.Radio:
     """
     Description:
     ------------
@@ -113,7 +114,7 @@ class Tick(Html.Html):
                    "color": 'blue', "line-height": '%s%s' % (25, width[1])})
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlSelect.Tick:
     """
     Description:
     ------------
@@ -164,7 +165,7 @@ class Switch(Html.Html):
     self.page.properties.js.add_builders("var %s_data = %s" % (self.htmlCode, records))
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
     """
     Description:
     ------------
@@ -184,7 +185,7 @@ class Switch(Html.Html):
       window[htmlObj.getAttribute('id') +"_data"] = data '''
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Switch:
     """
     Description:
     -----------
@@ -199,7 +200,7 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self.page)
     return self._js
 
-  def event_fnc(self, event):
+  def event_fnc(self, event: str):
     """
     Description:
     ------------
@@ -208,11 +209,12 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param event: String. The event function.
+    :param str event: The event function.
     """
     return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -227,16 +229,17 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, self.switch.toStr())
 
-  def toggle(self, on_funcs=None, off_funcs=None, profile=None, on_ready=False):
+  def toggle(self, on_funcs: Optional[Union[list, str]] = None, off_funcs: Optional[Union[list, str]] = None,
+             profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -252,10 +255,10 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param on_funcs: String | List. Optional. The Javascript functions.
-    :param off_funcs: String | List. Optional. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Optional[Union[list, str]] on_funcs: Optional. The Javascript functions.
+    :param Optional[Union[list, str]] off_funcs: Optional. The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self._clicks['profile'] = profile
     if on_funcs is not None:

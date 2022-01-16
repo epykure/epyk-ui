@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,9 +11,10 @@ class Code:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
-  def css(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-          profile=None):
+  def css(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+          options: Optional[dict] = None, helper: Optional[str] = None,
+          profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -40,28 +42,30 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True,
-                    'autoRefresh': True}
+    dfl_options = {
+      "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(
+      self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def xml(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-          profile=None):
+  def xml(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+          profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -84,28 +88,30 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'xml', 'matchBrackets': True, 'styleActiveLine': True,
-                    'autoRefresh': True}
+    dfl_options = {
+      "lineNumbers": True, 'mode': 'xml', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(
+      self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def sql(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-          profile=None):
+  def sql(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+          profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -128,28 +134,29 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'sql', 'matchBrackets': True, 'styleActiveLine': True,
-                    'autoRefresh': True}
+    dfl_options = {
+      "lineNumbers": True, 'mode': 'sql', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dflt_options,
-                                         helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def r(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-        profile=None):
+  def r(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+        height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+        options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+        profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -172,28 +179,29 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {
+    dfl_options = {
       "lineNumbers": True, 'mode': 'r', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def python(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-             profile=None):
+  def python(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+             height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+             options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+             profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -216,27 +224,29 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'python', 'styleActiveLine': True, 'autoRefresh': False}
+    dfl_options = {"lineNumbers": True, 'mode': 'python', 'styleActiveLine': True, 'autoRefresh': False}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text.strip(), color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(
+      self.page, text.strip(), color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def javascript(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None,
-                 helper=None, profile=None):
+  def javascript(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+                 height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+                 options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+                 profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -259,27 +269,28 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'javascript', 'autoRefresh': True, 'styleActiveLine': True}
+    dfl_options = {"lineNumbers": True, 'mode': 'javascript', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dflt_options,
-                                         helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def markdown(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None,
-               helper=None, profile=None):
+  def markdown(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+               height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+               options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -299,27 +310,28 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'markdown', 'autoRefresh': True, 'styleActiveLine': True}
+    dfl_options = {"lineNumbers": True, 'mode': 'markdown', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def rst(self, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None, helper=None,
-          profile=None):
+  def rst(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+          profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -339,27 +351,28 @@ class Code:
 
     Attributes:
     ----------
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': 'rst', 'autoRefresh': True, 'styleActiveLine': True}
+    dfl_options = {"lineNumbers": True, 'mode': 'rst', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dflt_options,
-                                         helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component
 
-  @html.Html.css_skin()
-  def code(self, language, text="", color=None, width=(90, '%'), height=(200, 'px'), html_code=None, options=None,
-           helper=None, profile=None):
+  def code(self, language: str, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
+           height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
+           options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
+           profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -379,21 +392,21 @@ class Code:
 
     Attributes:
     ----------
-    :param language: String. The language.
-    :param text: String. Optional. The text.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. The with details in the format(value, unit).
-    :param height: Tuple. Optional. The height details in the format(value, unit).
-    :param html_code: String. Optional. The unique component ID.
-    :param options: Dictionary. Optional. The object properties.
-    :param helper: String. Optional. The helper message.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str language: The language.
+    :param str text: Optional. The text.
+    :param Union[str, bool] color: Optional. The color code.
+    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
+    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
+    :param Optional[str] html_code: Optional. The unique component ID.
+    :param Optional[Union[dict, bool]] options: Optional. The object properties.
+    :param Optional[str] helper: Optional. The helper.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"lineNumbers": True, 'mode': language, 'autoRefresh': True, 'styleActiveLine': True}
+    dfl_options = {"lineNumbers": True, 'mode': language, 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
-      dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
-    return html_code
+      dfl_options.update(options)
+    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    html.Html.set_component_skin(component)
+    return component

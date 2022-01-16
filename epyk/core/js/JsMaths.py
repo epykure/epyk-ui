@@ -109,7 +109,7 @@ class JsMaths:
     return JsNumber.JsNumber("Math.SQRT1_2", isPyData=False)
 
   @property
-  def SQRT2(self):
+  def SQRT2(self) -> JsNumber:
     """
     Description:
     ------------
@@ -118,9 +118,6 @@ class JsMaths:
     Usage::
 
       jsObj.math.SQRT2
-
-    Example
-    rptObj.js.math.SQRT2
 
     Related Pages:
 
@@ -143,7 +140,7 @@ class JsMaths:
     """
     return JsNumber.JsNumber("Math.PI", isPyData=False)
 
-  def random(self, min_val=0, max_val=1):
+  def random(self, min_val: int = 0, max_val: int = 1):
     """
     Description:
     ------------
@@ -160,8 +157,8 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param min_val: Integer. Optional The minimum value for the random function.
-    :param max_val: Integer. Optional The maximum value for the random function.
+    :param int min_val: Optional The minimum value for the random function.
+    :param int max_val: Optional The maximum value for the random function.
 
     :return: A Number, representing a number from 0 up to but not including 1.
     """
@@ -188,7 +185,7 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param args: Optional. One or more numbers to compare
+    :param args: Optional. One or more numbers to compare.
 
     :return: A Number, representing the lowest number of the arguments, or Infinity
     if no arguments are given, or NaN if one or more arguments are not numbers
@@ -213,7 +210,7 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param args: Optional. One or more numbers to compare
+    :param args: Optional. One or more numbers to compare.
 
     :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
     if one or more arguments are not numbers
@@ -224,7 +221,7 @@ class JsMaths:
       jsArgs[0] = "...%s" % jsArgs[0]
     return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in jsArgs]), isPyData=False)
 
-  def floor(self, number):
+  def floor(self, number: float):
     """
     Description:
     ------------
@@ -240,14 +237,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. The number you want to round.
+    :param float number: Required. The number you want to round.
 
     :return: A Number, representing the nearest integer when rounding downwards
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.floor(%s)" % number, isPyData=False)
 
-  def trunc(self, number):
+  def trunc(self, number: float):
     """
     Description:
     ------------
@@ -270,7 +267,7 @@ class JsMaths:
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.trunc(%s)" % number, isPyData=False)
 
-  def abs(self, number):
+  def abs(self, number: float):
     """
     Description:
     ------------
@@ -282,14 +279,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Required. A number
+    :param float number: Required. A number.
 
-    :return: Returns the absolute value of x
+    :return: Returns the absolute value of x.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.abs(%s)" % number, isPyData=False)
 
-  def cos(self, number):
+  def cos(self, number: float):
     """
     Description:
     ------------
@@ -301,14 +298,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Returns the cosine of x (x is in radians).
+    :param float number: Number. Returns the cosine of x (x is in radians).
 
     :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.cos(%s)" % number, isPyData=False)
 
-  def sin(self, number):
+  def sin(self, number: float):
     """
     Description:
     ------------
@@ -320,14 +317,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Returns the sinus of x (x is in radians).
+    :param float number: Returns the sinus of x (x is in radians).
 
     :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sin(%s)" % number, isPyData=False)
 
-  def log(self, number):
+  def log(self, number: float):
     """
     Description:
     ------------
@@ -339,14 +336,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. A number.
+    :param float number: Number. Required. A number.
 
     :return: Returns the natural logarithm (base E) of x.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.log(%s)" % number, isPyData=False)
 
-  def exp(self, number):
+  def exp(self, number: float):
     """
     Description:
     ------------
@@ -359,14 +356,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. A number,
+    :param float number: Number. Required. A number,
 
     :return: Returns the value of exponential of x,
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.exp(%s)" % number, isPyData=False)
 
-  def round(self, number):
+  def round(self, number: float):
     """
     Description:
     ------------
@@ -385,14 +382,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. The number to be rounded.
+    :param float number: Number. Required. The number to be rounded.
 
     :return: Rounds x to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.round(%s)" % number, isPyData=False)
 
-  def sqrt(self, number):
+  def sqrt(self, number: float):
     """
     Description:
     ------------
@@ -409,14 +406,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. A number
+    :param float number: Number. Required. A number.
 
     :return: A Number. If x is a negative number, NaN is returned.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sqrt(%s)" % number, isPyData=False)
 
-  def ceil(self, number):
+  def ceil(self, number: float):
     """
     Description:
     ------------
@@ -432,7 +429,7 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. The number you want to round.
+    :param float number: Number. Required. The number you want to round.
 
     :return: Returns x, rounded upwards to the nearest integer.
     """
@@ -440,7 +437,7 @@ class JsMaths:
     return JsNumber.JsNumber("Math.ceil(%s)" % number, isPyData=False)
 
   @staticmethod
-  def pow(number, power):
+  def pow(number: float, power: int):
     """
     Description:
     ------------
@@ -457,8 +454,8 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. The base.
-    :param power: Number. Required. The exponent
+    :param float number: Number. Required. The base.
+    :param int power: Number. Required. The exponent.
 
     :return: Returns the value of x to the power of y.
     """

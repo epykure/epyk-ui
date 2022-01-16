@@ -12,7 +12,6 @@ class Links:
   def __init__(self, ui):
     self.page = ui.page
 
-  @html.Html.css_skin()
   def external(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False,
                html_code=None, options=None, profile=None):
     """
@@ -57,9 +56,9 @@ class Links:
                                             decoration, html_code, dft_options, profile)
     if align == "center":
       self.page.ui.div(html_link, align=align)
+    html.Html.set_component_skin(html_link)
     return html_link
 
-  @html.Html.css_skin()
   def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, html_code=None,
              options=None, profile=None):
     """
@@ -98,9 +97,9 @@ class Links:
                                             decoration, html_code, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
+    html.Html.set_component_skin(html_link)
     return html_link
 
-  @html.Html.css_skin()
   def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'),
            decoration=False, html_code=None, options=None, profile=None):
     """
@@ -143,9 +142,9 @@ class Links:
       html_link.tooltip(tooltip)
     if align == "center":
       self.page.ui.div(html_link, align=align)
+    html.Html.set_component_skin(html_link)
     return html_link
 
-  @html.Html.css_skin()
   def data(self, text, value, width=(None, '%'), height=(None, 'px'), fmt='txt', options=None, profile=None):
     """
     Description:
@@ -178,9 +177,9 @@ class Links:
     height = Arguments.size(height, unit="px")
     html_data = html.HtmlLinks.DataLink(self.page, text, value, width=width, height=height, fmt=fmt, options=options,
                                         profile=profile)
+    html.Html.set_component_skin(html_data)
     return html_data
 
-  @html.Html.css_skin()
   def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False,
               html_code=None, options=None, profile=None):
     """
@@ -221,9 +220,9 @@ class Links:
     html_link.style.css.margin_top = 5
     html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
     html_link.style.css.margin_bottom = 5
+    html.Html.set_component_skin(html_link)
     return html_link
 
-  @html.Html.css_skin()
   def upload(self, url="#", text="", icon="upload", helper=None, height=(None, 'px'), decoration=False,
              align="left", html_code=None, options=None, profile=None):
     """
@@ -268,9 +267,9 @@ class Links:
       html_link.style.css.display = "block"
     elif align == "right":
       html_link.style.css.float = align
+    html.Html.set_component_skin(html_link)
     return html_link
 
-  @html.Html.css_skin()
   def download(self, url="#", text="", icon="download", helper=None, height=(None, 'px'), decoration=False,
                align="left", html_code=None, options=None, profile=None):
     """
@@ -317,4 +316,5 @@ class Links:
       html_link.style.css.display = "block"
     elif align == "right":
       html_link.style.css.float = align
+    html.Html.set_component_skin(html_link)
     return html_link

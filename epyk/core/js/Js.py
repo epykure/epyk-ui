@@ -3,6 +3,7 @@
 
 import json
 import os
+from typing import Union, Optional
 
 from epyk.core.html import KeyCodes
 
@@ -15,6 +16,8 @@ from epyk.core.js import JsUtils
 from epyk.core.js import JsWindow
 from epyk.core.js import JsWebSocket
 from epyk.core.js import JsMsgAlerts
+from epyk.core.js import JsMediaRecorder
+from epyk.core.js import JsSpeechRecognition
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -31,6 +34,9 @@ from epyk.core.js.statements import JsIf
 from epyk.core.js.statements import JsWhile
 from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsFor
+
+
+_CONSOLE_LOG_EXPR = "console.log({})"
 
 
 class JsConsole:
@@ -86,7 +92,7 @@ class JsConsole:
     """
     return JsFncs.JsFunction("console.clear()")
 
-  def log(self, jsData, jsConvFnc=None, skip_data_convert=False):
+  def log(self, jsData, jsConvFnc=None, skip_data_convert: bool = False):
     """
     Description:
     ------------
@@ -104,20 +110,20 @@ class JsConsole:
     ----------
     :param jsData: String | Object. The Javascript fragment.
     :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
-    :param skip_data_convert: Boolean. Optional. Flag to specify to the framework if a Json conversion is needed.
+    :param bool skip_data_convert:  Optional. Flag to specify to the framework if a Json conversion is needed.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if skip_data_convert:
-      return JsFncs.JsFunction("console.log(%s)" % jsData)
+      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(jsData))
 
     if isinstance(jsData, list):
       jsData = JsUtils.jsWrap(JsUtils.jsConvertFncs(jsData, toStr=True))
     # display directly the content of the component
     if hasattr(jsData, 'dom'):
-      return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData.dom.content, jsConvFnc))
+      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(jsData.dom.content, jsConvFnc)))
 
-    return JsFncs.JsFunction("console.log(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
+    return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(jsData, jsConvFnc)))
 
   def info(self, jsData, jsConvFnc=None):
     """
@@ -176,7 +182,7 @@ class JsConsole:
     """
     return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def table(self, jsData, jsHeader=None):
+  def table(self, jsData, jsHeader: Optional[list] = None):
     """
     Description:
     ------------
@@ -189,7 +195,7 @@ class JsConsole:
     Attributes:
     ----------
     :param jsData: String | Object. Required. The data to fill the table with.
-    :param jsHeader: List. Optional. An array containing the names of the columns to be included in the table.
+    :param Optional[list] jsHeader: Optional. An array containing the names of the columns to be included in the table.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
@@ -198,7 +204,7 @@ class JsConsole:
 
     return JsFncs.JsFunction("console.table(%s)" % jsData)
 
-  def time(self, htmlCode):
+  def time(self, htmlCode: str):
     """
     Description:
     ------------
@@ -210,13 +216,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param htmlCode: String. Use the label parameter to give the timer a name.
+    :param str htmlCode: Use the label parameter to give the timer a name.
 
     :return: A Python Javascript Number.
     """
     return JsNumber.JsNumber("console.time('%s')" % htmlCode, isPyData=False)
 
-  def timeEnd(self, htmlCode):
+  def timeEnd(self, htmlCode: str):
     """
     Description:
     ------------
@@ -228,13 +234,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param htmlCode: String. The name of the timer to end.
+    :param str htmlCode: The name of the timer to end.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
     return JsFncs.JsFunction("console.timeEnd('%s')" % htmlCode)
 
-  def _assert(self, jsData, strInfo, jsConvFnc=None):
+  def _assert(self, jsData, strInfo: str, jsConvFnc: Optional[str] = None):
     """
     Description:
     ------------
@@ -247,12 +253,13 @@ class JsConsole:
     Attributes:
     ----------
     :param jsData: String | Object. The Javascript fragment.
-    :param strInfo: String. The JavaScript result.
-    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param str strInfo: The JavaScript result.
+    :param Optional[str] jsConvFnc: Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction("console.assert('%s', '%s')" % (JsUtils.jsConvertData(jsData, jsConvFnc), strInfo))
 
-  def tryCatch(self, jsFncs, jsFncsErrs="console.warn(err.message)", profile=False):
+  def tryCatch(self, jsFncs, jsFncsErrs: Union[str, list] = "console.warn(err.message)",
+               profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -265,8 +272,8 @@ class JsConsole:
     Attributes:
     ----------
     :param jsFncs: String or List. The Javascript functions.
-    :param jsFncsErrs: String or List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[str, list] jsFncsErrs: The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -275,7 +282,7 @@ class JsConsole:
     return JsFncs.JsFunction(
       "try{%s} catch(err){%s}" % (JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), jsFncsErrs))
 
-  def perf(self, varName, label=None):
+  def perf(self, varName: str, label: Optional[str] = None):
     """
     Description:
     ------------
@@ -284,15 +291,15 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param varName: String. The variable var name use to compute the performance.
-    :param label: String. Optional. The description.
+    :param str varName: The variable var name use to compute the performance.
+    :param Optional[str] label: Optional. The description.
     """
     if label is not None:
       return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, varName))
 
     return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % varName)
 
-  def service(self, msg, headers=None):
+  def service(self, msg: str, headers: Optional[dict] = None):
     """
     Description:
     ------------
@@ -300,13 +307,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param msg: String. The log message to be sent to the backend.
-    :param headers: Dictionary the service headers.
+    :param str msg: The log message to be sent to the backend.
+    :param Optional[dict] headers: the service headers.
     """
     from epyk import LOG_SERVICE
 
     if LOG_SERVICE is None:
-      raise Exception("Log service must be defined pk.LOG_SERVICE = <service_url>")
+      raise ValueError("Log service must be defined pk.LOG_SERVICE = <service_url>")
 
     return self.page.post(LOG_SERVICE, {"content": msg}, headers=headers, asynchronous=True)
 
@@ -325,7 +332,7 @@ class JsJson:
     https://www.w3schools.com/js/js_json_intro.asp
   """
 
-  def parse(self, jsData, jsResultFnc=None, jsConvFnc=None):
+  def parse(self, jsData, jsResultFnc=None, jsConvFnc: Optional[str] = None):
     """
     Description:
     ------------
@@ -341,7 +348,7 @@ class JsJson:
     :param jsData: String. A String corresponding to a JavaScript object.
     :param jsResultFnc: Optional. A function used to transform the result. The function is called for each item.
                                   Any nested objects are transformed before the parent.
-    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param Optional[str] jsConvFnc: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript string method
     """
@@ -351,7 +358,7 @@ class JsJson:
 
     return JsFncs.JsFunction("JSON.parse(%s)" % jsData)
 
-  def stringify(self, jsData, replacer=None, space=0, jsConvFnc=None):
+  def stringify(self, jsData, replacer=None, space: int = 0, jsConvFnc=None):
     """
     Description:
     ------------
@@ -366,7 +373,7 @@ class JsJson:
     :param jsData: String. Required. The value to convert to a string.
     :param replacer: Optional. Either a function or an array used to transform the result.
                                The replacer is called for each item.
-    :param space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
+    :param int space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
       or a Number, from 0 to 10, to indicate how many space characters to use as white space.
     :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
 
@@ -399,7 +406,7 @@ class JsBreadCrumb:
     """
     return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, JsUtils.jsConvertData(jsData, jsConvFnc)))
 
-  def get(self, key=None):
+  def get(self, key: Optional[str] = None):
     """
     Description:
     ------------
@@ -407,7 +414,7 @@ class JsBreadCrumb:
 
     Attributes:
     ----------
-    :param key: String. Optional. The key in the Breadcrumb dictionary.
+    :param Optional[str] key: Optional. The key in the Breadcrumb dictionary.
 
     :return: A Python object.
     """
@@ -416,7 +423,7 @@ class JsBreadCrumb:
 
     return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
 
-  def hash(self, jsData, jsConvFnc=None):
+  def hash(self, jsData, jsConvFnc: Optional[str] = None):
     """
     Description:
     ------------
@@ -429,9 +436,9 @@ class JsBreadCrumb:
     Attributes:
     ----------
     :param jsData: String. A String corresponding to a JavaScript object.
-    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param Optional[str] jsConvFnc: Optional. A specific JavaScript data conversion function.
     """
-    return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, jsConvFnc)))
+    return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(jsData, jsConvFnc)))
 
   @property
   def url(self):
@@ -699,7 +706,7 @@ class JsBase:
     """
     return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def socketio(self, htmlCode=None):
+  def socketio(self, htmlCode: Optional[str] = None):
     """
     Description:
     ------------
@@ -714,13 +721,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param Optional[str] htmlCode: Optional. The WebSocket id (variable name) on the JavaScript side.
     """
     from epyk.core.js.packages import JsSocketIO
 
     return JsSocketIO.SocketIO(htmlCode, self._src)
 
-  def websocket(self, htmlCode=None, secured=False):
+  def websocket(self, htmlCode: Optional[str] = None, secured: bool = False):
     """
     Description:
     ------------
@@ -734,12 +741,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. The WebSocket id (variable name) on the JavaScript side.
-    :param secured: Boolean. Optional. To define the right protocol for the WebSocket connection we or wss.
+    :param Optional[str] htmlCode: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param bool secured: Optional. To define the right protocol for the WebSocket connection we or wss.
     """
     return JsWebSocket.WebSocket(htmlCode, self._src, secured)
 
-  def worker(self, htmlCode=None, server=False):
+  def worker(self, htmlCode: Optional[str] = None, server: bool = False):
     """
     Description:
     ------------
@@ -751,12 +758,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param htmlCode: String. The WebSocket id (variable name) on the JavaScript side.
-    :param server: Boolean.
+    :param Optional[str] htmlCode: The WebSocket id (variable name) on the JavaScript side.
+    :param bool server: Boolean.
     """
     return JsWebSocket.Worker(htmlCode, self._src, server)
 
-  def serverSentEvent(self, htmlCode=None):
+  def serverSentEvent(self, htmlCode: Optional[str] = None):
     """
     Description:
     ------------
@@ -773,7 +780,7 @@ class JsBase:
 
     Attributes:
     ----------
-    :param htmlCode: String. The EventSource id (variable name) on the JavaScript side.
+    :param Optional[str] htmlCode: The EventSource id (variable name) on the JavaScript side.
     """
     return JsWebSocket.ServerSentEvent(htmlCode, self._src)
 
@@ -796,7 +803,7 @@ class JsBase:
 
     return JsD3.JsD3(self._src, "d3")
 
-  def not_(self, data, jsConvFnc=None):
+  def not_(self, data, jsConvFnc: Optional[str] = None):
     """
     Description:
     ------------
@@ -814,13 +821,13 @@ class JsBase:
     Attributes:
     ----------
     :param data: String. A String corresponding to a JavaScript object.
-    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
+    :param Optional[str] jsConvFnc: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript fragment string.
     """
     return JsFncs.JsFunction("!%s" % JsUtils.jsConvertData(data, jsConvFnc))
 
-  def if_(self, jsCond, jsFncs, profile=False):
+  def if_(self, jsCond, jsFncs: Union[list, str], profile: Optional[Union[dict, bool]]= False):
     """
     Description:
     ------------
@@ -833,15 +840,16 @@ class JsBase:
     Attributes:
     ----------
     :param jsCond: String. The Javascript condition. Can be a JsBoolean object.
-    :param jsFncs: List | String. Optional. The Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param Union[list, str] jsFncs: Optional. The Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if isinstance(jsCond, list):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
     self.__if = JsIf.JsIf(jsCond, jsFncs, self._src, profile)
     return self.__if
 
-  def while_(self, jsCond, jsFnc, options=None, profile=False):
+  def while_(self, jsCond, jsFnc: Union[list, str], options: Optional[dict] = None,
+             profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -854,16 +862,17 @@ class JsBase:
     Attributes:
     ----------
     :param jsCond: String. The JavaScript condition.
-    :param jsFnc: List | String. Javascript functions.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param Union[list, str] jsFnc: Javascript functions.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     if isinstance(jsCond, list):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
     self.__while = JsWhile.JsWhile(jsCond, options, self._src).fncs(jsFnc, profile=profile)
     return self.__while
 
-  def for_(self, jsFnc, step=1, start=0, end=10, options=None, profile=False):
+  def for_(self, jsFnc: Union[list, str], step: int = 1, start: int = 0, end: int = 10, options: Optional[dict]=None,
+           profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -875,12 +884,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
-    :param step: Integer. The increment index. Default 1.
-    :param start: Integer. The first index in the for loop.
-    :param end: Integer. The last index in the for loop.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param Union[list, str] jsFnc: Javascript functions.
+    :param int step: The value to increment. Default 1.
+    :param int start: The first index in the for loop.
+    :param int end: The last index in the for loop.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     for_statment = JsFor.JsFor(end, options)
     for_statment.start = start
@@ -942,7 +951,7 @@ class JsBase:
         document.execCommand('copy', false, elInput.select()); elInput.remove()
         ''' % JsUtils.jsConvertData(jsData, jsConvFnc))
 
-  def _addImport(self, importAlias):
+  def _addImport(self, importAlias: str):
     """
     Description:
     ------------
@@ -951,13 +960,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param importAlias: String. Alias reference of a JavaScript module.
+    :param str importAlias: Alias reference of a JavaScript module.
     """
     self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
     return self
 
   @staticmethod
-  def typeof(jsData, type=None):
+  def typeof(jsData, type: Optional[str] = None):
     """
     Description:
     ------------
@@ -970,14 +979,14 @@ class JsBase:
     Attributes:
     ----------
     :param jsData: String. A String corresponding to a JavaScript object.
-    :param type: String. Optional. The type of object.
+    :param Optional[str] type: Optional. The type of object.
     """
     if type is None:
       return JsObjects.JsBoolean.JsBoolean("typeof %s" % jsData)
 
     return JsObjects.JsVoid("typeof %s === '%s'" % (jsData, type))
 
-  def custom(self, jsData, jsDataKey=None, isPyData=False, jsFnc=None):
+  def custom(self, jsData, jsDataKey: Optional[str] = None, isPyData: bool = False, jsFnc=None):
     """
     Description:
     ------------
@@ -993,7 +1002,7 @@ class JsBase:
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
 
-  def customText(self, text):
+  def customText(self, text: str):
     """
     Description:
     ------------
@@ -1002,15 +1011,16 @@ class JsBase:
 
     Attributes:
     ----------
-    :param text: String. The Javascript fragment.
+    :param str text: The Javascript fragment.
 
     :return: self to allow the chaining.
     """
     self._src.properties.js.add_text(text)
     return self
 
-  def customFile(self, filename, path=None, module_type="text/javascript", absolute_path=False, requirements=None,
-                 randomize=False):
+  def customFile(self, filename: str, path: Optional[str] = None, module_type: str = "text/javascript",
+                 absolute_path: bool = False, requirements: Optional[list] = None,
+                 randomize: bool = False):
     """
     Description:
     ------------
@@ -1023,12 +1033,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param filename: String. The file name.
-    :param path: String. optional. The file path.
-    :param module_type: String. Optional. The module type.
-    :param absolute_path: Boolean. Optional. If path is None this flag will map to the current main path.
-    :param requirements: List. Optional. The list of required packages.
-    :param randomize: Boolean. Optional. Add random suffix to the module to avoid browser caching.
+    :param str filename: The filename.
+    :param Optional[str] path: Optional. The file path.
+    :param str module_type: Optional. The module type.
+    :param bool absolute_path: Optional. If path is None this flag will map to the current main path.
+    :param Optional[list] requirements: Optional. The list of required packages.
+    :param bool randomize: Optional. Add random suffix to the module to avoid browser caching.
 
     :return: The Js Object to allow the chaining.
     """
@@ -1047,7 +1057,7 @@ class JsBase:
       self.page.imports.moduleConfigs['local_%s' % filename[:-3]] = "version=%s" % random.random()
     return self
 
-  def extendProto(self, pyClass, fncName, jsFncs, pmts=None, profile=False):
+  def extendProto(self, pyClass: str, fncName: str, jsFncs, pmts=None, profile=False):
     """
     Description:
     ------------
@@ -2058,6 +2068,7 @@ else {%(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
     Attributes:
     ----------
     :param script: String. A script name. A CSS extension.
+    :param bool self_contained:
     """
     css_script = JsUtils.jsConvertData(script, None)
     return JsUtils.jsWrap('''

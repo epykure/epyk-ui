@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
 
@@ -34,7 +36,7 @@ class Comments(Html.Html):
         self.input.style.css.background = options["background"]
 
   @property
-  def options(self):
+  def options(self) -> OptNet.OptionsChat:
     """
     Description:
     ------------
@@ -48,7 +50,7 @@ class Comments(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Chat:
     """
     Description:
     -----------
@@ -83,7 +85,7 @@ class Comments(Html.Html):
           })
         }'''
 
-  def add(self, text, time):
+  def add(self, text: str, time: str):
     """
     Description:
     ------------
@@ -91,13 +93,14 @@ class Comments(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The text message.
-    :param time: String the timestamp.
+    :param str text: The text message.
+    :param str time: the timestamp.
     """
     self.val.append({"text": text, "time": time})
     return self
 
-  def enter(self, js_funcs=None, profile=None, source_event=None, on_ready=False):
+  def enter(self, js_funcs=None, profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -105,10 +108,10 @@ class Comments(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -206,7 +209,7 @@ class Bot(Html.Html):
               "padding": "5px",  "z-index": 200})
 
   @property
-  def style(self):
+  def style(self) -> GrpClsNetwork.ClassNetworkBot:
     """
     Description:
     ------------
@@ -281,7 +284,7 @@ class Chat(Html.Html):
       self.input.style.css.text_align = 'left'
 
   @property
-  def options(self):
+  def options(self) -> OptNet.OptionsChat:
     """
     Description:
     ------------
@@ -295,7 +298,7 @@ class Chat(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Chat:
     """
     Description:
     -----------
@@ -412,7 +415,7 @@ class Alert(Html.Html):
     self.css({"padding": '5px', 'position': 'fixed', 'top': '20px', 'right': '20px'})
 
   @property
-  def options(self):
+  def options(self) -> OptNet.OptionsAlert:
     """
     Description:
     ------------
@@ -479,7 +482,7 @@ class News(Html.Html):
     '''
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.News:
     """
     Description:
     -----------
@@ -493,7 +496,7 @@ class News(Html.Html):
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptNet.OptionsNews:
     """
     Description:
     ------------
@@ -542,7 +545,7 @@ class Room(Html.Html):
     self.dots.style.css_class.keyframes(keyframe_name, attrs)
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Room:
     """
     Description:
     -----------
@@ -623,7 +626,7 @@ class DropFile(Html.Html):
       self.sync.style.css.margin_left = 5
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlNetwork.JsHtmlDropFiles:
     """
     Description:
     ------------
@@ -636,7 +639,7 @@ class DropFile(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptNet.OptionFiles:
     """
     Description:
     ------------
@@ -649,7 +652,7 @@ class DropFile(Html.Html):
     """
     return super().options
 
-  def transfer(self, url):
+  def transfer(self, url: str):
     """
     Description:
     -----------
@@ -657,7 +660,7 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. The transfer end point on the server
+    :param str url: The transfer end point on the server.
     """
     # TODO add if else statement for the allowed and forbidden extensions
     form_data = self.page.js.data.formdata.get("form_data")

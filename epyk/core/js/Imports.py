@@ -14,6 +14,7 @@ import importlib
 import collections
 import logging
 import base64
+from typing import Union, Optional, List
 
 try:
   from urllib.parse import urlparse, urlencode
@@ -31,7 +32,7 @@ PCK_REPO = ''
 STATIC_PATH = "/static"
 
 
-def requires(name, reason='Missing Package', install=None, package=None, raise_except=False, source_script=None,
+def requires(name: str, reason: str = 'Missing Package', install=None, package=None, raise_except=False, source_script=None,
              pip_attrs=None):
   """
   Description:
@@ -41,8 +42,8 @@ def requires(name, reason='Missing Package', install=None, package=None, raise_e
 
   Attributes:
   ----------
-  :param name:
-  :param reason:
+  :param str name:
+  :param str reason:
   :param install:
   :param package:
   :param raise_except:
@@ -80,7 +81,7 @@ def requires(name, reason='Missing Package', install=None, package=None, raise_e
     if AUTOLOAD:
       if isinstance(AUTOLOAD, dict) and not AUTOLOAD.get(install, False):
         # Module not set in the configuration to be automatically loaded
-        raise Exception(err)
+        raise ValueError(err)
 
       logging.warning("Error with %s in script %s, autoload set to %s" % (name, source_script, AUTOLOAD))
       import subprocess
@@ -95,14 +96,14 @@ def requires(name, reason='Missing Package', install=None, package=None, raise_e
       if install:
         logging.warning("Command to fix this error:")
         logging.warning(">>> pip install %s" % install)
-      raise Exception(err)
+      raise ValueError(err)
 
 
-def load_package(package_name, pip_attrs=None, action='install'):
+def load_package(package_name: str, pip_attrs: Optional[list] = None, action: str = 'install'):
   """
   Description:
   ------------
-  Force the package to be installed manually to the currently python distribution.
+  Force the package to be installed manually to the current python distribution.
   This will run a pip command to the running python set up.
 
   Usage::
@@ -115,9 +116,9 @@ def load_package(package_name, pip_attrs=None, action='install'):
 
   Attributes:
   ----------
-  :param package_name: String. The external package reference (e.g. pandas).
-  :param pip_attrs: List. Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/.
-  :param action: String. Optional. The pip command (default install).
+  :param str package_name: The external package reference (e.g. pandas).
+  :param Optional[list] pip_attrs: Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/.
+  :param str action: Optional. The pip command (default install).
   """
   import subprocess
 
@@ -2032,7 +2033,7 @@ GOOGLE_EXTENSIONS = {
 }
 
 
-def script_version(alias, script_details, with_prefix=False):
+def script_version(alias: str, script_details: dict, with_prefix: bool = False):
   """
   Description:
   -----------
@@ -2041,9 +2042,9 @@ def script_version(alias, script_details, with_prefix=False):
 
   Attributes:
   ----------
-  :param alias: String. The package reference alias in the framework and in NPM.
-  :param script_details: Dictionary. The script definition in the framework.
-  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  :param str alias: The package reference alias in the framework and in NPM.
+  :param dict script_details: The script definition in the framework.
+  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   if "version" in script_details:
     if with_prefix:
@@ -2063,7 +2064,7 @@ def script_version(alias, script_details, with_prefix=False):
     return JS_IMPORTS[alias]["version"]
 
 
-def script_cdnjs_path(alias, script_details, with_prefix=False):
+def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False):
   """
   Description:
   -----------
@@ -2074,9 +2075,9 @@ def script_cdnjs_path(alias, script_details, with_prefix=False):
 
   Attributes:
   ----------
-  :param alias: String. The package reference alias in the framework and in NPM.
-  :param script_details: Dictionary. The script definition in the framework.
-  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  :param str alias: The package reference alias in the framework and in NPM.
+  :param dict script_details: The script definition in the framework.
+  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
@@ -2084,17 +2085,17 @@ def script_cdnjs_path(alias, script_details, with_prefix=False):
   return "%(cdnjs)s/%(path)s%(script)s" % details
 
 
-def script_npm_path(alias, script_details, static_path, with_prefix=False):
+def script_npm_path(alias: str, script_details: dict, static_path: str, with_prefix: bool = False):
   """
   Description:
   -----------
 
   Attributes:
   ----------
-  :param alias: String. The package reference alias in the framework and in NPM.
-  :param script_details: Dictionary. The script definition in the framework.
-  :param static_path: String.
-  :param with_prefix: Boolean. Optional. Flag to specify if the full version number is required (with the prefix)
+  :param str alias: The package reference alias in the framework and in NPM.
+  :param dict script_details: The script definition in the framework.
+  :param str static_path:
+  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
@@ -2106,7 +2107,7 @@ def script_npm_path(alias, script_details, static_path, with_prefix=False):
   return r"%(static)s\%(alias)s\%(node_path)s%(script)s" % details
 
 
-def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
+def extend(reference: str, module_path, version: str, cdnjs_url: str = CDNJS_REPO, required: Optional[list] = None):
   """
   Description:
   ------------
@@ -2118,11 +2119,11 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
 
   Attributes:
   ----------
-  :param reference: String. The internal reference in the framework.
+  :param str reference: The internal reference in the framework.
   :param module_path: List of tuple. The different modules and location.
-  :param version: String. The version number. Can be an internal module reference to point to follow its version number.
-  :param cdnjs_url: String. The CDNJS reference path.
-  :param required: List. The list of dependency modules.
+  :param str version: String. The version number. Can be an internal module reference to point to follow its version number.
+  :param str cdnjs_url: String. The CDNJS reference path.
+  :param Optional[list] required: The list of dependency modules.
   """
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
@@ -2137,7 +2138,7 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
     config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
 
-def extend_imports(extension):
+def extend_imports(extension: dict):
   """
   Description:
   ------------
@@ -2147,7 +2148,7 @@ def extend_imports(extension):
 
   Attributes:
   ----------
-  :param extension: Dictionary. The list of packages to be added grouped by alias
+  :param dict extension: The list of packages to be added grouped by alias.
   """
   global CSS_IMPORTS, JS_IMPORTS
 
@@ -2186,7 +2187,7 @@ def extend_imports(extension):
 class ImportModule:
   overriden = False
 
-  def __init__(self, name, js, css, links=None):
+  def __init__(self, name, js, css, links: Optional[dict] = None):
     self._name = name
     self._defer, self._async, self.attrs = False, False, {}
     self._js = js[name]
@@ -2195,7 +2196,7 @@ class ImportModule:
       links[self._name] = self
 
   @property
-  def defer(self):
+  def defer(self) -> bool:
     """
     Description:
     -----------
@@ -2209,11 +2210,11 @@ class ImportModule:
     return self._defer
 
   @defer.setter
-  def defer(self, flag):
+  def defer(self, flag: bool):
     self._defer = flag
 
   @property
-  def asynchrone(self):
+  def asynchrone(self) -> bool:
     """
     Description:
     -----------
@@ -2227,11 +2228,11 @@ class ImportModule:
     return self._async
 
   @asynchrone.setter
-  def asynchrone(self, flag):
+  def asynchrone(self, flag: bool):
     self._async = flag
 
   @property
-  def nomodule(self):
+  def nomodule(self) -> bool:
     """
     Description:
     -----------
@@ -2244,11 +2245,11 @@ class ImportModule:
     return self.attrs.get("nomodule")
 
   @nomodule.setter
-  def nomodule(self, flag):
+  def nomodule(self, flag: bool):
     self.attrs["nomodule"] = flag
 
   @property
-  def eferrerpolicy(self):
+  def eferrerpolicy(self) -> str:
     """
     Description:
     -----------
@@ -2261,7 +2262,7 @@ class ImportModule:
     return self.attrs.get("eferrerpolicy")
 
   @eferrerpolicy.setter
-  def eferrerpolicy(self, value):
+  def eferrerpolicy(self, value: str):
     self.attrs["eferrerpolicy"] = value
 
   @property
@@ -2289,7 +2290,7 @@ class ImportModule:
       self._css["main"] = new_css
 
   @property
-  def path(self):
+  def path(self) -> str:
     """
     Description:
     -----------
@@ -2301,7 +2302,7 @@ class ImportModule:
     return "%(cdnjs)s/%(path)s" % mod
 
   @path.setter
-  def path(self, full_path):
+  def path(self, full_path: str):
     if full_path.endswith("/"):
       full_path = full_path[:-1]
     for mod in JS_IMPORTS[self._name]['modules']:
@@ -2328,11 +2329,11 @@ class ImportModule:
     return self._js["main"].keys() | self._css["main"].keys()
 
   @property
-  def js(self):
+  def js(self) -> list:
     return list(self._js["main"].keys())
 
   @property
-  def css(self):
+  def css(self) -> list:
     return list(self._css["main"].keys())
 
   def from_cdnjs(self):
@@ -2344,7 +2345,7 @@ class ImportModule:
     """
     self.overriden = True
 
-  def set_local(self, static_url="/static"):
+  def set_local(self, static_url: str = "/static"):
     """
     Description:
     -----------
@@ -2353,7 +2354,7 @@ class ImportModule:
 
     Attributes:
     ----------
-    :param static_url: String. Optional. The static root on the server. (default value /static/).
+    :param str static_url: Optional. The static root on the server. (default value /static/).
     """
     if self.overriden:
       return
@@ -2378,12 +2379,12 @@ class ImportModule:
 
 
 class ImportPackagesPivotExts:
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
 
-  def get(self, name):
+  def get(self, name: str):
     if name in self.__linked:
       return self.__linked[name]
 
@@ -2435,7 +2436,7 @@ class ImportPackagesPivotExts:
 
 
 class ImportPackagesCodeMirrorExts:
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
@@ -2447,7 +2448,7 @@ class ImportPackagesCodeMirrorExts:
     return ImportModule(name, self._js, self._css, self.__linked)
 
   @property
-  def search(self):
+  def search(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2459,7 +2460,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-search")
 
   @property
-  def placeholder(self):
+  def placeholder(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2471,7 +2472,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-placeholder")
 
   @property
-  def trailingspace(self):
+  def trailingspace(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2483,7 +2484,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-trailingspace")
 
   @property
-  def fullscreen(self):
+  def fullscreen(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2495,7 +2496,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-fullscreen")
 
   @property
-  def highlighter(self):
+  def highlighter(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2507,7 +2508,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-highlighter")
 
   @property
-  def hint(self):
+  def hint(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2519,7 +2520,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-hint")
 
   @property
-  def panel(self):
+  def panel(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2531,7 +2532,7 @@ class ImportPackagesCodeMirrorExts:
     return self.get("codemirror-panel")
 
   @property
-  def fold(self):
+  def fold(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2544,19 +2545,19 @@ class ImportPackagesCodeMirrorExts:
 
 
 class ImportPackagesD3Exts:
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
 
-  def get(self, name):
+  def get(self, name: str):
     if name in self.__linked:
       return self.__linked[name]
 
     return ImportModule(name, self._js, self._css, self.__linked)
 
   @property
-  def tip(self):
+  def tip(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2568,7 +2569,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-tip")
 
   @property
-  def axis(self):
+  def axis(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2580,7 +2581,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-axis")
 
   @property
-  def ease(self):
+  def ease(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2592,7 +2593,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-ease")
 
   @property
-  def dsv(self):
+  def dsv(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2604,7 +2605,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-dsv")
 
   @property
-  def dispatch(self):
+  def dispatch(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2616,7 +2617,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-dispatch")
 
   @property
-  def transition(self):
+  def transition(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2628,7 +2629,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-transition")
 
   @property
-  def selection(self):
+  def selection(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2640,7 +2641,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-selection")
 
   @property
-  def interpolate(self):
+  def interpolate(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2652,7 +2653,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-interpolate")
 
   @property
-  def time_format(self):
+  def time_format(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2664,7 +2665,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-time-format")
 
   @property
-  def time(self):
+  def time(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2676,7 +2677,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-time")
 
   @property
-  def array(self):
+  def array(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2688,7 +2689,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-array")
 
   @property
-  def format(self):
+  def format(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2700,7 +2701,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-format")
 
   @property
-  def timer(self):
+  def timer(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2712,7 +2713,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-timer")
 
   @property
-  def collection(self):
+  def collection(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2724,7 +2725,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-collection")
 
   @property
-  def scale(self):
+  def scale(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2736,7 +2737,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-scale")
 
   @property
-  def color(self):
+  def color(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2748,7 +2749,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-color")
 
   @property
-  def brush(self):
+  def brush(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2760,7 +2761,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-brush")
 
   @property
-  def drag(self):
+  def drag(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2772,7 +2773,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-drag")
 
   @property
-  def shape(self):
+  def shape(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2784,7 +2785,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-shape")
 
   @property
-  def zoom(self):
+  def zoom(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2796,7 +2797,7 @@ class ImportPackagesD3Exts:
     return self.get("d3-zoom")
 
   @property
-  def path(self):
+  def path(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2809,12 +2810,12 @@ class ImportPackagesD3Exts:
 
 
 class ImportPackagesDataTableExts:
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
 
-  def get(self, name):
+  def get(self, name: str):
     if name in self.__linked:
       return self.__linked[name]
 
@@ -2822,7 +2823,7 @@ class ImportPackagesDataTableExts:
 
 
 class ImportPackagesChartJsExts:
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.links = links
@@ -2830,12 +2831,12 @@ class ImportPackagesChartJsExts:
 
 class ImportPackagesTabulatorExts:
 
-  def __init__(self, js, css, links=None):
+  def __init__(self, js, css, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
 
-  def get(self, name):
+  def get(self, name: str):
     """
     Description:
     ------------
@@ -2844,7 +2845,7 @@ class ImportPackagesTabulatorExts:
 
     Attributes:
     ----------
-    :param name: String. The package alias to be loaded.
+    :param str name: The package alias to be loaded.
 
     :rtype: ImportModule
     """
@@ -2854,7 +2855,7 @@ class ImportPackagesTabulatorExts:
     return ImportModule(name, self._js, self._css, self.__linked)
 
   @property
-  def formatter_inputs(self):
+  def formatter_inputs(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2866,7 +2867,7 @@ class ImportPackagesTabulatorExts:
     return self.get("tabulator-inputs")
 
   @property
-  def formatter_icons(self):
+  def formatter_icons(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2878,7 +2879,7 @@ class ImportPackagesTabulatorExts:
     return self.get("tabulator-icons")
 
   @property
-  def formatter_numbers(self):
+  def formatter_numbers(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2890,7 +2891,7 @@ class ImportPackagesTabulatorExts:
     return self.get("tabulator-numbers")
 
   @property
-  def formatter_drops(self):
+  def formatter_drops(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2902,7 +2903,7 @@ class ImportPackagesTabulatorExts:
     return self.get("tabulator-drop")
 
   @property
-  def mutators_inputs(self):
+  def mutators_inputs(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2914,7 +2915,7 @@ class ImportPackagesTabulatorExts:
     return self.get("tabulator-mutators-inputs")
 
   @property
-  def editors_inputs(self):
+  def editors_inputs(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2926,7 +2927,7 @@ class ImportPackagesTabulatorExts:
     return self.get("editors-inputs")
 
   @property
-  def editors_dates(self):
+  def editors_dates(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2938,7 +2939,7 @@ class ImportPackagesTabulatorExts:
     return self.get("editors-dates")
 
   @property
-  def editors_selects(self):
+  def editors_selects(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2956,7 +2957,7 @@ class ImportPackages:
     self._css = css
     self.__linked = {}
 
-  def get(self, name):
+  def get(self, name: str) -> ImportModule:
     """
     Description:
     ------------
@@ -2975,7 +2976,7 @@ class ImportPackages:
     return ImportModule(name, self._js, self._css, self.__linked)
 
   @property
-  def vis(self):
+  def vis(self) -> ImportModule:
     """
     Description:
     ------------
@@ -2992,7 +2993,7 @@ class ImportPackages:
     return self.get("vis")
 
   @property
-  def d3(self):
+  def d3(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3007,7 +3008,7 @@ class ImportPackages:
     return self.get("d3")
 
   @property
-  def dc(self):
+  def dc(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3023,7 +3024,7 @@ class ImportPackages:
     return self.get("dc")
 
   @property
-  def nvd3(self):
+  def nvd3(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3039,7 +3040,7 @@ class ImportPackages:
     return self.get("nvd3")
 
   @property
-  def c3(self):
+  def c3(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3054,7 +3055,7 @@ class ImportPackages:
     return self.get("c3")
 
   @property
-  def billboard(self):
+  def billboard(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3069,7 +3070,7 @@ class ImportPackages:
     return self.get("billboard.js")
 
   @property
-  def chart_js(self):
+  def chart_js(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3099,7 +3100,7 @@ class ImportPackages:
     return ImportPackagesChartJsExts(self._js, self._css, self.__linked)
 
   @property
-  def crossfilter(self):
+  def crossfilter(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3114,7 +3115,7 @@ class ImportPackages:
     return self.get("crossfilter")
 
   @property
-  def apexcharts(self):
+  def apexcharts(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3129,7 +3130,7 @@ class ImportPackages:
     return self.get("apexcharts")
 
   @property
-  def plotly(self):
+  def plotly(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3144,7 +3145,7 @@ class ImportPackages:
     return self.get("plotly.js")
 
   @property
-  def ag_grid(self):
+  def ag_grid(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3159,7 +3160,7 @@ class ImportPackages:
     return self.get("ag-grid-community")
 
   @property
-  def bootstrap(self):
+  def bootstrap(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3174,7 +3175,7 @@ class ImportPackages:
     return self.get("bootstrap")
 
   @property
-  def jquery(self):
+  def jquery(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3189,7 +3190,7 @@ class ImportPackages:
     return self.get("jquery")
 
   @property
-  def jqueryui(self):
+  def jqueryui(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3205,7 +3206,7 @@ class ImportPackages:
     return self.get("jqueryui")
 
   @property
-  def jquery_bracket(self):
+  def jquery_bracket(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3221,7 +3222,7 @@ class ImportPackages:
     return self.get("jquery-bracket")
 
   @property
-  def jquery_sparkline(self):
+  def jquery_sparkline(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3237,7 +3238,7 @@ class ImportPackages:
     return self.get("jquery-sparkline")
 
   @property
-  def jqvmap(self):
+  def jqvmap(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3252,7 +3253,7 @@ class ImportPackages:
     return self.get("jqvmap")
 
   @property
-  def qunit(self):
+  def qunit(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3267,7 +3268,7 @@ class ImportPackages:
     return self.get("qunit")
 
   @property
-  def accounting(self):
+  def accounting(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3282,7 +3283,7 @@ class ImportPackages:
     return self.get("accounting")
 
   @property
-  def qrcodejs(self):
+  def qrcodejs(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3298,7 +3299,7 @@ class ImportPackages:
     return self.get("qrcodejs")
 
   @property
-  def underscore(self):
+  def underscore(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3314,7 +3315,7 @@ class ImportPackages:
     return self.get("underscore")
 
   @property
-  def tabulator(self):
+  def tabulator(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3340,7 +3341,7 @@ class ImportPackages:
     return ImportPackagesTabulatorExts(self._js, self._css, self.__linked)
 
   @property
-  def datatables(self):
+  def datatables(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3366,7 +3367,7 @@ class ImportPackages:
     return ImportPackagesDataTableExts(self._js, self._css, self.__linked)
 
   @property
-  def mathjax(self):
+  def mathjax(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3381,7 +3382,7 @@ class ImportPackages:
     return self.get("mathjax")
 
   @property
-  def moment(self):
+  def moment(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3393,7 +3394,7 @@ class ImportPackages:
     return self.get("moment")
 
   @property
-  def hammer(self):
+  def hammer(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3408,7 +3409,7 @@ class ImportPackages:
     return self.get("hammer")
 
   @property
-  def popper_js(self):
+  def popper_js(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3423,7 +3424,7 @@ class ImportPackages:
     return self.get("@popperjs/core")
 
   @property
-  def font_awesome(self):
+  def font_awesome(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3439,7 +3440,7 @@ class ImportPackages:
     return self.get("font-awesome")
 
   @property
-  def json_formatter(self):
+  def json_formatter(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3454,7 +3455,7 @@ class ImportPackages:
     return self.get("json-formatter-js")
 
   @property
-  def pivottable(self):
+  def pivottable(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3469,7 +3470,7 @@ class ImportPackages:
     return self.get("pivottable")
 
   @property
-  def require_js(self):
+  def require_js(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3485,7 +3486,7 @@ class ImportPackages:
     return self.get("requirejs")
 
   @property
-  def timepicker(self):
+  def timepicker(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3500,7 +3501,7 @@ class ImportPackages:
     return self.get("timepicker")
 
   @property
-  def socket(self):
+  def socket(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3516,7 +3517,7 @@ class ImportPackages:
     return self.get("socket.io")
 
   @property
-  def codemirror(self):
+  def codemirror(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3541,7 +3542,7 @@ class ImportPackages:
     return ImportPackagesCodeMirrorExts(self._js, self._css, self.__linked)
 
   @property
-  def highlight(self):
+  def highlight(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3556,7 +3557,7 @@ class ImportPackages:
     return self.get("highlight.js")
 
   @property
-  def leaflet(self):
+  def leaflet(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3571,7 +3572,7 @@ class ImportPackages:
     return self.get("leaflet")
 
   @property
-  def showdown(self):
+  def showdown(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3586,7 +3587,7 @@ class ImportPackages:
     return self.get("showdown")
 
   @property
-  def sortablejs(self):
+  def sortablejs(self) -> ImportModule:
     """
     Description:
     ------------
@@ -3637,7 +3638,8 @@ class ImportManager:
     ovr_version = {}
     if self._report is not None and self._report.ext_packages is not None:
       extend_imports(self._report.ext_packages)
-    # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
+    # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None
+    # and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
     # Force the version of some external Javascript or CSS packages
     #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
     #  ovr_version = getattr(packages, 'MODULES', {})
@@ -3648,7 +3650,7 @@ class ImportManager:
     self.jsImports, self.cssImports, self.moduleConfigs, self.reqVersion = {}, {}, {}, {}
     self.__add_imports([('js', self.jsImports, JS_IMPORTS), ('css', self.cssImports, CSS_IMPORTS)])
 
-  def __add_imports(self, modules, ovr_version=None):
+  def __add_imports(self, modules: list, ovr_version: Optional[dict] = None):
     for folder, import_dict, import_type in modules:
       if folder is None and import_type is None:
         continue
@@ -3707,16 +3709,16 @@ class ImportManager:
           import_dict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions, "type": main_types}
 
   @property
-  def static_url(self):
+  def static_url(self) -> str:
     return self._static_path
 
   @static_url.setter
-  def static_url(self, path):
+  def static_url(self, path: str):
     if path is not None:
       self.online = False
     self._static_path = path
 
-  def add(self, alias):
+  def add(self, alias: str):
     """
     Description:
     ------------
@@ -3724,14 +3726,14 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The external module alias.
+    :param str alias: The external module alias.
     """
     if alias in JS_IMPORTS:
       self._report.jsImports.add(alias)
     if alias in CSS_IMPORTS:
       self._report.cssImport.add(alias)
 
-  def extend(self, aliases):
+  def extend(self, aliases: List[str]):
     """
     Description:
     ------------
@@ -3739,13 +3741,13 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param aliases: List. The list of package aliases to be added.
+    :param List[str] aliases: The list of package aliases to be added.
     """
     for alias in aliases:
       self.add(alias)
 
   @property
-  def requirements(self):
+  def requirements(self) -> set:
     """
     Description:
     ------------
@@ -3760,7 +3762,8 @@ class ImportManager:
       module_alias.add(css)
     return module_alias
 
-  def getModules(self, modules, alias, folder=None, module_details=None):
+  def getModules(self, modules: dict, alias: Union[str, dict], folder: Optional[str] = None,
+                 module_details: Optional[dict] = None):
     """
     Description:
     ------------
@@ -3774,10 +3777,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param modules: List. The list of modules.
-    :param alias: String. The module reference in the above JS and CSS dictionaries.
-    :param folder: String. Optional. The folder name.
-    :param module_details: Optional. The module definition. Default check in the Javascript modules.
+    :param dict modules: The ordered definition of modules.
+    :param Union[str, dict] alias: The module reference in the above JS and CSS dictionaries.
+    :param Optional[str] folder: Optional. The folder name.
+    :param Optional[dict] module_details: The module definition. Default check in the Javascript modules.
 
     :return: The list of modules
     """
@@ -3803,7 +3806,8 @@ class ImportManager:
       self.getModules(modules, req, folder, module_details)
     return modules
 
-  def getReq(self, mod, modules, import_hierarchy=None, use_require_js=False):
+  def getReq(self, mod: str, modules: List[dict], import_hierarchy: Optional[dict] = None,
+             use_require_js: bool = False):
     """
     Description:
     ------------
@@ -3817,10 +3821,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param mod: String. The alias of the external package.
-    :param modules: List. The list of packages aliases in the inverse dependency order.
-    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
-    :param use_require_js: Boolean. Optional. Define if this is using requirejs to load imports. Default False.
+    :param str mod: The alias of the external package.
+    :param List[dict] modules: The list of packages aliases in the inverse dependency order.
+    :param Optional[dict] import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
+    :param bool use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
     """
     import_hierarchy = import_hierarchy or JS_IMPORTS
     if isinstance(mod, dict):
@@ -3856,7 +3860,7 @@ class ImportManager:
     for req in import_hierarchy.get(mod, {}).get(req_key, []):
       self.getReq(req, modules, import_hierarchy, use_require_js=use_require_js)
 
-  def cleanImports(self, imports, import_hierarchy=None, use_require_js=False):
+  def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False):
     """
     Description:
     ------------
@@ -3869,9 +3873,9 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param imports: List. An array with the list of aliases for the external packages.
-    :param import_hierarchy: Dictionary. Optional. The package definition (Javascript | CSS) from the above import list.
-    :param use_require_js: Boolean. Optional. Define if this is using requirejs to load imports. Default False.
+    :param List[str] imports: An array with the list of aliases for the external packages.
+    :param Optional[dict] import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
+    :param bool use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
 
     :return: Return the list with the full list of aliases (including dependencies)
     """
@@ -3881,7 +3885,8 @@ class ImportManager:
     for a in set(import_resolved):
       if a in PACKAGE_STATUS:
         if not PACKAGE_STATUS[a].get("allowed", True):
-          raise Exception("Package %s not allowed" % a)
+          raise ValueError("Package %s not allowed" % a)
+
         if self._report is not None and "info" in PACKAGE_STATUS[a]:
           logging.warning("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
       occurrences = [j for j, x in enumerate(import_resolved) if x == a]
@@ -3890,7 +3895,7 @@ class ImportManager:
           import_resolved.pop(j)
     return import_resolved[::-1]
 
-  def cssResolve(self, css_aliases, local_css=None, excluded=None):
+  def cssResolve(self, css_aliases: List[str], local_css: Optional[dict] = None, excluded: List[str] = None):
     """
     Description:
     ------------
@@ -3903,10 +3908,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param css_aliases: List. An array with the list of aliases for the external packages.
-    :param local_css: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks
-                     already onboarding modules).
+    :param List[str] css_aliases: An array with the list of aliases for the external packages.
+    :param Optional[dict] local_css: Optional. The external file overrides with the full path.
+    :param List[str] excluded: Optional. Packages excluded from the result object (mandatory for some frameworks
+    already onboarding modules).
 
     :return: The string to be added to the header.
     """
@@ -3952,11 +3957,11 @@ class ImportManager:
 
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
-      for localCssFile in local_css:
-        css.append('<link rel="stylesheet" href="%s" type="text/css">' % localCssFile)
+      for css_file in local_css:
+        css.append('<link rel="stylesheet" href="%s" type="text/css">' % css_file)
     return "\n".join(css)
 
-  def cssURLs(self, css_str):
+  def cssURLs(self, css_str: str):
     """
     Description:
     ------------
@@ -3964,13 +3969,13 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param css_str: String. The CSS String in the page.
+    :param str css_str: The CSS String in the page.
 
     :return: A Python list with all the CSS external URL to be imported.
     """
     return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
-  def jsResolve(self, js_aliases, local_js=None, excluded=None):
+  def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None):
     """
     Description:
     ------------
@@ -3983,9 +3988,9 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param js_aliases: List. An array with the list of aliases for the external packages.
-    :param local_js: Dictionary. Optional. The external file overrides with the full path.
-    :param excluded: List. Optional. Packages excluded from the result object (mandatory for some frameworks already
+    :param List[str] js_aliases: An array with the list of aliases for the external packages.
+    :param Optional[dict] local_js: Optional. The external file overrides with the full path.
+    :param Optional[List[str]] excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already
                      onboarding modules).
 
     :return: The string to be added to the header
@@ -4042,7 +4047,7 @@ class ImportManager:
         js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)
     return "\n".join(js)
 
-  def jsURLs(self, js_str):
+  def jsURLs(self, expr: str):
     """
     Description:
     ------------
@@ -4050,13 +4055,13 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param js_str: String. The Javascript String in the page.
+    :param expr: String. The Javascript String in the page.
 
     :return: A Python list with all the Javascript external URL to be imported.
     """
-    return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', js_str)
+    return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', expr)
 
-  def getFiles(self, cssAlias, jsAlias):
+  def getFiles(self, css_alias: List[str], js_alias: List[str]):
     """
     Description:
     ------------
@@ -4069,8 +4074,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param cssAlias: List. An array with the list of aliases for the CSS external packages.
-    :param jsAlias: List. An array with the list of aliases for the Js external packages.
+    :param List[str] css_alias: An array with the list of aliases for the CSS external packages.
+    :param List[str] js_alias: An array with the list of aliases for the Js external packages.
 
     :return: A dictionary with the CSS and JS files definition.
     """
@@ -4088,9 +4093,9 @@ class ImportManager:
         mod_js[alias].append(
           {'version': module.get('version', ''), 'alias': alias, 'file': module, 'website': details.get('website', ''),
            'status': details.get('status', '')})
-    for css_file in self.cleanImports(cssAlias, CSS_IMPORTS):
+    for css_file in self.cleanImports(css_alias, CSS_IMPORTS):
       files['css'].extend(mod_css[css_file])
-    for js_file in self.cleanImports(jsAlias, JS_IMPORTS):
+    for js_file in self.cleanImports(js_alias, JS_IMPORTS):
       files['js'].extend(mod_js[js_file])
     return files
 
@@ -4128,7 +4133,8 @@ class ImportManager:
     """
     return self.jsResolve(set(JS_IMPORTS.keys()))
 
-  def getFullPackage(self, alias, version=None, static_path=None, reload=False):
+  def getFullPackage(self, alias: str, version: Optional[str] = None, static_path: Optional[str] = None,
+                     reload: bool = False):
     """
     Description:
     ------------
@@ -4140,10 +4146,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The package reference in the above list.
-    :param version: String. Optional. The package version to retrieve.
-    :param static_path: String. Optional. The path in which the files should be copied to.
-    :param reload: Boolean. Optional. Flag to force the package reloading if the folder already exists. Default False.
+    :param str alias: The package reference in the above list.
+    :param Optional[str] version: Optional. The package version to retrieve.
+    :param str static_path: Optional. The path in which the files should be copied to.
+    :param bool reload: Optional. Flag to force the package reloading if the folder already exists. Default False.
 
     :return: The Python Import manager.
     """
@@ -4196,7 +4202,7 @@ class ImportManager:
         logging.warning("  < Package %s already loaded " % alias)
     return self
 
-  def setVersion(self, alias, version, js=None, css=None):
+  def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None):
     """
     Description:
     ------------
@@ -4206,10 +4212,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The package reference in the above list.
-    :param version: String. The new version to be used globally.
-    :param js: Dictionary. Optional.
-    :param css: Dictionary. Optional.
+    :param str alias: The package reference in the above list.
+    :param str version: The new version to be used globally.
+    :param Optional[dict] js: Optional.
+    :param Optional[dict] css: Optional.
     """
     self.reqVersion[alias] = version
     for modType in [CSS_IMPORTS, JS_IMPORTS]:
@@ -4244,7 +4250,7 @@ class ImportManager:
           self.cssImports.setdefault(alias, {}).setdefault('main', {})[
             "%(cdnjs)s/%(path)s%(script)s" % module] = version
 
-  def addPackage(self, alias, config):
+  def addPackage(self, alias: str, config: dict):
     """
     Description:
     ------------
@@ -4264,8 +4270,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The package alias.
-    :param config: Dictionary. The Python dictionary with the package details.
+    :param str alias: The package alias.
+    :param dict config: The Python dictionary with the package details.
 
     :return: The import Manager.
     """
@@ -4308,15 +4314,15 @@ class ImportManager:
           self.jsImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
     return self
 
-  def to_requireJs(self, data, excluded_packages=None):
+  def to_requireJs(self, data: dict, excluded_packages: Optional[list] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param data: Dictionary. The Report modules to resolve.
-    :param excluded_packages: List. Optional. The packages to exclude.
+    :param dict data: The Report modules to resolve.
+    :param Optional[list] excluded_packages: Optional. The packages to exclude.
     """
     deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'],
                                                                                        'paths': {}}
@@ -4389,7 +4395,7 @@ class ImportManager:
         "', '".join([g for g, _ in group]), ", ".join([g for _, g in group]), results['jsFrgs'])
     return results
 
-  def show(self, all=False):
+  def show(self, all: bool = False):
     """
     Description:
     ------------
@@ -4397,7 +4403,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param all: Boolean. Optional. A flag to specify if only the one requested in the report should be displayed.
+    :param bool all: Optional. A flag to specify if only the one requested in the report should be displayed.
     """
     packages = {}
     if not all:
@@ -4419,7 +4425,8 @@ class ImportManager:
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     return packages
 
-  def google_products(self, products, api_key=None, site_key="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
+  def google_products(self, products: List[str], api_key: Optional[str] = None,
+                      site_key: str = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
     """
     Description:
     ------------
@@ -4439,9 +4446,9 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param products: List. The various Google products to enable in the report.
-    :param api_key: String. Optional. The Google developer API key.
-    :param site_key: String. Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
+    :param List[str] products: The various Google products to enable in the report.
+    :param str api_key: Optional. The Google developer API key.
+    :param str site_key: Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
     """
     global JS_IMPORTS
 
@@ -4454,19 +4461,17 @@ class ImportManager:
         self._report._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
     self._report._with_google_imports = True
 
-  def locals(self, aliases, end_points=None):
+  def locals(self, aliases: List[str], end_points: Optional[str] = None):
     """
     Description:
     ------------
     Short circuit the import mechanism and retrieve the selected ones from a local static path.
     This could help on the debugging and the improvement of the packages before submitting them for review.
 
-    Usage::
-
     Attributes:
     ----------
-    :param aliases: List. Mandatory. The list of aliases.
-    :param end_points: String. Optional. The end point on the server (The module static_path as default).
+    :param List[str] aliases: The list of aliases.
+    :param Optional[str] end_points: Optional. The end point on the server (The module static_path as default).
     """
     global JS_IMPORTS
     global CSS_IMPORTS
@@ -4482,7 +4487,7 @@ class ImportManager:
           m.update({'path': '', 'cdnjs': end_points or self.static_url})
 
   @property
-  def pkgs(self):
+  def pkgs(self) -> ImportPackages:
     """
     Description:
     ------------
@@ -4495,7 +4500,7 @@ class ImportManager:
       self.__pkgs = ImportPackages(self.jsImports, self.cssImports)
     return self.__pkgs
 
-  def website(self, alias):
+  def website(self, alias: str):
     """
     Description:
     ------------
@@ -4503,7 +4508,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param alias: String. The JavaScript module alias (usually the one used by npm).
+    :param str alias: The JavaScript module alias (usually the one used by npm).
     """
     if alias not in JS_IMPORTS:
       return ""
@@ -4524,7 +4529,7 @@ class Package:
     return ImportManager().pkgs
 
   @classmethod
-  def avoid_cache(cls, name):
+  def avoid_cache(cls, name: str):
     """
     Description:
     ------------
@@ -4538,7 +4543,7 @@ class Package:
 
     Attributes:
     ----------
-    :param name: String. The package name.
+    :param str name: The package name.
     """
     import random
 
