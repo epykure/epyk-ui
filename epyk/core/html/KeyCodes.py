@@ -1,26 +1,28 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core.js import JsUtils
 
 
 class KeyCode:
 
-  def __init__(self, component=None, source_event=None, page=None):
+  def __init__(self, component=None, source_event: Optional[str] = None, page=None):
     self.__events_per_source, self._component, self.source_event = {}, component, source_event or component.dom.varId
     self._page = page or self._component.page
 
-  def custom(self, rule, js_funcs, profile=None, source_event=None):
+  def custom(self, rule: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+             source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param rule: String. Bespoke keys combination.
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source component for the event
+    :param str rule: Bespoke keys combination.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source component for the event
     """
     if not profile and self._page.profile:
       if self._component is not None:
@@ -35,18 +37,19 @@ class KeyCode:
     self.__events_per_source[source_event].setdefault(rule, {})["content"] = js_funcs
     self.__events_per_source[source_event][rule]['profile'] = profile
 
-  def key(self, key_code, js_funcs, profile=None, reset=False, source_event=None):
+  def key(self, key_code: int, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+          reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param key_code:
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. Optional. Flag to reset the events sequence.
-    :param source_event: String. Optional. The source component for the event.
+    :param int key_code: The key code.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     if not profile and self._page.profile:
       if self._component is not None:
@@ -62,7 +65,8 @@ class KeyCode:
     self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(js_funcs)
     self.__events_per_source[source_event][tag]['profile'] = profile
 
-  def any(self, js_funcs, profile=None, source_event=None):
+  def any(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+          source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -70,127 +74,136 @@ class KeyCode:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.custom("true", js_funcs, profile, source_event)
 
-  def enter(self, js_funcs, profile=None, reset=False, source_event=None):
+  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(13, js_funcs, profile, reset, source_event)
 
-  def tab(self, js_funcs, profile=None, reset=False, source_event=None):
+  def tab(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+          reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(9, js_funcs, profile, reset, source_event)
 
-  def backspace(self, js_funcs, profile=None, reset=False, source_event=None):
+  def backspace(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+                reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(8, js_funcs, profile, reset, source_event)
 
-  def shift_with(self, key, js_funcs, profile=None, source_event=None):
+  def shift_with(self, key: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+                 source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param key:
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source component for the event
+    :param str key:
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.custom("(event.shiftKey) && (event.which == %s)" % ord(key), js_funcs, profile, source_event)
 
-  def save(self, js_funcs, profile=None, source_event=None):
+  def save(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+           source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.custom("(event.ctrlKey) && (event.which == 83)", ["event.preventDefault()"] + js_funcs + ["return false"],
                 profile, source_event)
 
-  def shift(self, js_funcs, profile=None, reset=False, source_event=None):
+  def shift(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(16, js_funcs, profile, reset, source_event)
 
-  def control(self, js_funcs, profile=None, reset=False, source_event=None):
+  def control(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+              reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(17, js_funcs, profile, reset, source_event)
 
-  def alt(self, js_funcs, profile=None, reset=False, source_event=None):
+  def alt(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+          reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(18, js_funcs, profile, reset, source_event)
 
-  def space(self, js_funcs, profile=None, reset=False, source_event=None):
+  def space(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -198,70 +211,75 @@ class KeyCode:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event:
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(32, js_funcs, profile, reset, source_event)
 
-  def right(self, js_funcs, profile=None, reset=False, source_event=None):
+  def right(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(39, js_funcs, profile, reset, source_event)
 
-  def left(self, js_funcs, profile=None, reset=False, source_event=None):
+  def left(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+           reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(37, js_funcs, profile, reset, source_event)
 
-  def up(self, js_funcs, profile=None, reset=False, source_event=None):
+  def up(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+         reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(38, js_funcs, profile, reset, source_event)
 
-  def down(self, js_funcs, profile=None, reset=False, source_event=None):
+  def down(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+           reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(40, js_funcs, profile, reset, source_event)
 
-  def delete(self, js_funcs, profile=None, reset=False, source_event=None):
+  def delete(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+             reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -269,14 +287,15 @@ class KeyCode:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(46, js_funcs, profile, reset, source_event)
 
-  def escape(self, js_funcs, profile=None, reset=False, source_event=None):
+  def escape(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+             reset: bool = False, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -284,10 +303,10 @@ class KeyCode:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param reset: Boolean. To set if the event should be refreshed.
-    :param source_event: String. Optional. The source component for the event
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool reset: Optional. Flag to reset the events sequence.
+    :param Optional[str] source_event: Optional. The source component for the event.
     """
     self.key(27, js_funcs, profile, reset, source_event)
 
@@ -298,9 +317,9 @@ class KeyCode:
     Return the complete definition for the key event.
     """
     event = {}
-    for source, event_fncs in self.__events_per_source.items():
+    for source, event_funcs in self.__events_per_source.items():
       event[source] = {"content": [], 'profile': self._page.profile}
-      for rule, js_funcs in event_fncs.items():
+      for rule, js_funcs in event_funcs.items():
         event[source]["content"].append("if(%s){%s}" % (rule, JsUtils.jsConvertFncs(
           js_funcs['content'], toStr=True, profile=js_funcs['profile'])))
     return event

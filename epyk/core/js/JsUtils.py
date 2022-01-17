@@ -109,7 +109,7 @@ def untilVersion(data: str, newFeature: str):
 # --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
-def jsConvertData(jsData, jsFnc: Optional[Union[list, str]], depth: bool = False):
+def jsConvertData(jsData, js_funcs: Optional[Union[list, str]], depth: bool = False):
   """
   Description:
   ------------
@@ -122,23 +122,24 @@ def jsConvertData(jsData, jsFnc: Optional[Union[list, str]], depth: bool = False
   Attributes:
   ----------
   :param jsData: The Python Javascript data.
-  :param Optional[Union[list, str]] jsFnc: Optional. The conversion function (not used).
+  :param Optional[Union[list, str]] js_funcs: Optional. The conversion function (not used).
   :param bool depth: Optional. Set to true of it is a nested object.
   """
   if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
     if hasattr(jsData, 'toStr'):
       return jsData.toStr()
+
     else:
       try:
         if depth:
           if isinstance(jsData, dict):
             result = []
             for k, v in jsData.items():
-              result.append("%s: %s" % (k, jsConvertData(v, jsFnc, depth=depth)))
+              result.append("%s: %s" % (k, jsConvertData(v, js_funcs, depth=depth)))
             return "{%s}" % ", ".join(result)
 
           else:
-            result = [jsConvertData(v, jsFnc, depth=depth) for v in jsData]
+            result = [jsConvertData(v, js_funcs, depth=depth) for v in jsData]
             return "[%s]" % ", ".join(result)
 
         return JsObject.JsObject(json.dumps(jsData))

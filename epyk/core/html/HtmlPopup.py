@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional, Type, List
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
 
@@ -38,7 +39,7 @@ class Popup(Html.Html):
     if not self.options.background and self.options.draggable:
       report.body.onReady([self.window.dom.jquery_ui.draggable()])
 
-  def add(self, component):
+  def add(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -51,7 +52,7 @@ class Popup(Html.Html):
     """
     return self.container.add(component)
 
-  def extend(self, components):
+  def extend(self, components: List[Type[Html.Html]]):
     """
     Description:
     ------------
@@ -63,7 +64,7 @@ class Popup(Html.Html):
     """
     return self.container.extend(components)
 
-  def insert(self, n, component):
+  def insert(self, n: int, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -77,7 +78,7 @@ class Popup(Html.Html):
     return self.container.insert(n, component)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionPopup:
     """
     Description:
     ------------
@@ -87,7 +88,8 @@ class Popup(Html.Html):
     """
     return self.__options
 
-  def add_title(self, text, align='center', level=None, css=None, position="before", options=None):
+  def add_title(self, text: str, align: str = 'center', level: Optional[int] = None, css: Optional[dict] = None,
+                position: str = "before", options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -95,12 +97,12 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The value to be displayed to the component.
-    :param align: String. Optional. The text-align property within this component.
-    :param level: Integer. Optional.
-    :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component
-    :param position: String. Optional. The position compared to the main component tag.
-    :param options: Specific Python options available for this component.
+    :param str text: The value to be displayed to the component.
+    :param str align: Optional. The text-align property within this component.
+    :param Optional[int] level: Optional.
+    :param Optional[dict] css: Optional. The CSS attributes to be added to the HTML component
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[dict] options: Specific Python options available for this component.
     """
     if not hasattr(text, 'options'):
       title = self.page.ui.title(text, align=align, level=level, options=options)

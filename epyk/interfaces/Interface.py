@@ -326,7 +326,7 @@ class Components:
     """
     Description:
     ------------
-    Group all the built in pictogram.
+    Group all the built-in pictogram.
     """
     return CompPictos.Pictogram(self)
 
@@ -1264,7 +1264,7 @@ class WebComponents:
     return self.fwks["ui"]
 
   @property
-  def jqui(self):
+  def jqui(self) -> JqueryUI.Components:
     """
     Description:
     ------------

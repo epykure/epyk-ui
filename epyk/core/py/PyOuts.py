@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import json
+from typing import Optional, List
 
 from epyk.core.js import Imports
 from epyk.core.js import Js
@@ -15,7 +16,7 @@ class OutBrowsers:
   def __init__(self, context):
     self._context = context
 
-  def codepen(self, path=None, target="_blank", open_browser=True):
+  def codepen(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
     """
     Description:
     ------------
@@ -34,9 +35,9 @@ class OutBrowsers:
 
     Attributes:
     ----------
-    :param path: String. Optional. Output path in which the static files will be generated.
-    :param target: String. Optional. Load the data in a new tab in the browser.
-    :param open_browser: Boolean. Optional. Flag to open the browser automatically.
+    :param Optional[str] path: Optional. Output path in which the static files will be generated.
+    :param str target: Optional. Load the data in a new tab in the browser.
+    :param bool open_browser: Optional. Flag to open the browser automatically.
 
     :return: The output launcher full file name.
     """
@@ -65,7 +66,7 @@ class OutBrowsers:
       webbrowser.open(launcher_file)
     return launcher_file
 
-  def stackblitz(self, path=None, target="_blank", open_browser=True):
+  def stackblitz(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
     """
     Description:
     ------------
@@ -83,9 +84,9 @@ class OutBrowsers:
 
     Attributes:
     ----------
-    :param path: String. Optional. Output path in which the static files will be generated.
-    :param target: String. Optional. Load the data in a new tab in the browser.
-    :param open_browser: Boolean. Optional. Flag to open the browser automatically.
+    :param Optional[str] path: Optional. Output path in which the static files will be generated.
+    :param str target: Optional. Load the data in a new tab in the browser.
+    :param bool open_browser: Optional. Flag to open the browser automatically.
     """
     import webbrowser
 
@@ -125,12 +126,13 @@ class OutBrowsers:
 
 
 class PyOuts:
-  def __init__(self, report=None, options=None):
+  def __init__(self, report=None, options: Optional[dict] = None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
     self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False
 
-  def _to_html_obj(self, htmlParts=None, cssParts=None, split_js=False):
+  def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[List[str]] = None,
+                   split_js: bool = False):
     """
     Description:
     ------------
@@ -138,9 +140,9 @@ class PyOuts:
 
     Attributes:
     ----------
-    :param htmlParts: List. Optional. HTML Content of the page.
-    :param cssParts: List. Optional. CSS classes content of the page.
-    :param split_js: Boolean. Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
+    :param Optional[List[str]] htmlParts: Optional. HTML Content of the page.
+    :param Optional[List[str]] cssParts: Optional. CSS classes content of the page.
+    :param bool split_js: Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
 
     :return: A python dictionary with the HTML results
     """
@@ -289,7 +291,8 @@ class PyOuts:
     self.excluded_packages = ['bootstrap']
     return self
 
-  def jupyter(self, verbose=False, requireJs=None, closure=True, requirejs_path=None, requirejs_func=None):
+  def jupyter(self, verbose: bool = False, requireJs: Optional[dict] = None, closure: bool = True,
+              requirejs_path: Optional[dict] = None, requirejs_func: Optional[dict] = None):
     """
     Description:
     ------------
@@ -308,11 +311,11 @@ class PyOuts:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Get the excluded packages.
-    :param requireJs: Dictionary. Optional. The requirements overrides from the apps property.
-    :param closure: Boolean. Optional.
-    :param requirejs_path: Dictionary. Optional.
-    :param requirejs_func: String. Optional.
+    :param bool verbose: Optional. Get the excluded packages.
+    :param Optional[dict] requireJs: Optional. The requirements overrides from the apps property.
+    :param bool closure: Optional.
+    :param Optional[dict] requirejs_path: Optional.
+    :param Optional[str] requirejs_func: Optional.
 
     :return: The output object with the function _repr_html_
     """
@@ -366,7 +369,7 @@ if (typeof icon === "undefined"){
       self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax']
     return self
 
-  def w3cTryIt(self, path=None, name=None):
+  def w3cTryIt(self, path: Optional[str] = None, name: Optional[str] = None):
     """
     Description:
     ------------
@@ -384,8 +387,8 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param path: String. Optional. The path in which the output files will be created
-    :param name: String. Optional. The filename without the extension
+    :param Optional[str] path: Optional. The path in which the output files will be created.
+    :param Optional[str] name: Optional. The filename without the extension.
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", "w3schools")
@@ -400,7 +403,7 @@ if (typeof icon === "undefined"){
       f.write(self._repr_html_())
     return file_path
 
-  def codepen(self, path=None, name=None):
+  def codepen(self, path: Optional[str] = None, name: Optional[str] = None):
     """
     Description:
     ------------
@@ -418,8 +421,8 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param path: String. Optional. The path in which the output files will be created.
-    :param name: String. Optional. The filename without the extension.
+    :param Optional[str] path: Optional. The path in which the output files will be created.
+    :param Optional[str] name: Optional. The filename without the extension.
 
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
@@ -428,7 +431,7 @@ if (typeof icon === "undefined"){
     """
     self.jsfiddle(path, name, framework="codepen")
 
-  def jsfiddle(self, path=None, name=None, framework="jsfiddle"):
+  def jsfiddle(self, path: Optional[str] = None, name: Optional[str] = None, framework: str = "jsfiddle"):
     """
     Description:
     ------------
@@ -448,9 +451,9 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param path: String. Optional. The path in which the output files will be created
-    :param name: String. Optional. The filename without the extension
-    :param framework: String. optional. The framework in which the result page will be used.
+    :param Optional[str] path: Optional. The path in which the output files will be created.
+    :param Optional[str] name: Optional. The filename without the extension.
+    :param str framework: optional. The framework in which the result page will be used.
 
     :return: The file path
     """
@@ -479,7 +482,7 @@ if (typeof icon === "undefined"){
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path=None, name=None, options=None):
+  def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -497,9 +500,9 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param path: String. Optional. The path in which the output files will be created.
-    :param name: String. Optional. The filename without the extension.
-    :param options: Dictionary. Optional.
+    :param Optional[str] path: Optional. The path in which the output files will be created.
+    :param Optional[str] name: Optional. The filename without the extension.
+    :param Optional[dict] options: Optional.
 
     :return: The file full path.
     """
@@ -597,7 +600,8 @@ if (typeof icon === "undefined"){
     results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
     return results
 
-  def publish(self, server, app_path, selector, name=None, module=None, target_folder="apps", auto_route=False):
+  def publish(self, server: str, app_path: str, selector: str, name: Optional[str] = None, module: Optional[str] = None,
+              target_folder: str = "apps", auto_route: bool = False):
     """
     Description:
     ------------
@@ -611,13 +615,13 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param server: String. The webserver type (angular, react, vue, node, deno).
-    :param app_path: String. The webserver path.
-    :param selector:
-    :param name: String. Optional. The application name in the webserver.
-    :param module:
-    :param target_folder:
-    :param auto_route:
+    :param str server: The webserver type (angular, react, vue, node, deno).
+    :param str app_path: The webserver path.
+    :param str selector:
+    :param Optional[str] name: Optional. The application name in the webserver.
+    :param Optional[str] module:
+    :param str target_folder:
+    :param bool auto_route:
     """
     from epyk.web import angular, node, vue, react, deno
 
@@ -649,7 +653,7 @@ if (typeof icon === "undefined"){
     app.publish()
     return app
 
-  def markdown_file(self, path=None, name=None):
+  def markdown_file(self, path: Optional[str] = None, name: Optional[str] = None):
     """
     Description:
     ------------
@@ -657,8 +661,8 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param path: The path in which the output files will be created.
-    :param name: The filename without the extension.
+    :param Optional[str] path: The path in which the output files will be created.
+    :param Optional[str] name: The filename without the extension.
 
     :return: The file path
     """
@@ -671,8 +675,8 @@ if (typeof icon === "undefined"){
     if os.path.exists(path):
       if name is None:
         name = "md_%s.amd" % int(time.time())
-      file_Path = os.path.join(path, name)
-      with open(file_Path, "w") as f:
+      file_path = os.path.join(path, name)
+      with open(file_path, "w") as f:
         order_components = list(self._report.components.keys())
         for component_id in order_components:
           component = self._report.components[component_id]
@@ -681,7 +685,7 @@ if (typeof icon === "undefined"){
 
           if hasattr(component, "to_markdown"):
             f.write("%s\n" % component.to_markdown(component.vals))
-      return file_Path
+      return file_path
 
   def html(self):
     """

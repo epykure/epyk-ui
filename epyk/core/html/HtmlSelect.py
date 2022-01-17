@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 import json
 
 from epyk.core.html import Html
@@ -71,7 +72,7 @@ class Select(Html.Html):
       self.style.add_classes.select.toggle()
 
   @property
-  def options(self):
+  def options(self) -> OptSelect.OptionsSelectJs:
     """
     Description:
     -----------
@@ -82,7 +83,7 @@ class Select(Html.Html):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsList.ClassSelect:
     """
     Description:
     -----------
@@ -96,7 +97,7 @@ class Select(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlSelect.DomSelect:
     """
     Description:
     -----------
@@ -112,7 +113,7 @@ class Select(Html.Html):
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsSelect.JSelect:
     """
     Description:
     -----------
@@ -172,7 +173,9 @@ class Select(Html.Html):
       selectObj.selectpicker(options).selectpicker('refresh');
       selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, js_funcs, empty_funcs=None, profile=None, source_event=None, on_ready=False):
+  def change(self, js_funcs: Union[list, str], empty_funcs: Optional[Union[list, str]] = None,
+             profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None,
+             on_ready: bool = False):
     """
     Description:
     -----------
@@ -180,11 +183,11 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Set of Javascript function to trigger on this event
-    :param empty_funcs: List | String. Set of Js function to trigger if the value is empty
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item)
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Set of Javascript function to trigger on this event.
+    :param Optional[Union[list, str]] empty_funcs: Optional. Set of Js function to trigger if the value is empty.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -194,7 +197,8 @@ class Select(Html.Html):
       js_funcs.append("if (%s === ''){%s}" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(empty_funcs, toStr=True)))
     return self.on("change", js_funcs, profile, source_event, on_ready)
 
-  def ajax(self, url, js_data="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
+  def ajax(self, url: str, js_data = "function (){return {q: '{{{q}}}'}}", is_json: bool = True,
+           method: str = "POST", options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -206,11 +210,11 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. The request URL for the ajax call.
+    :param str url: The request URL for the ajax call.
     :param js_data: String | Js Object. The value of the item to be removed from the list.
-    :param is_json: Boolean. Optional. A flag to specific if the data are json (default True).
-    :param method: String. Optional. The HTTP request method. Default Post
-    :param options: Dictionary. Optional. The specific properties for the ajax request.
+    :param bool is_json: Optional. A flag to specific if the data are json (default True).
+    :param str method: Optional. The HTTP request method. Default Post
+    :param Optional[dict] options: Optional. The specific properties for the ajax request.
     """
     self.options.liveSearch = True
     options = options or {}

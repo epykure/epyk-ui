@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from typing import Union, Optional
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlEditor, JsHtml
@@ -28,7 +29,7 @@ class Console(Html.Html):
     self.add_helper(helper)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlEditor.Console:
     """
     Description:
     ------------
@@ -44,7 +45,7 @@ class Console(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsConsole:
     """
     Description:
     ------------
@@ -81,7 +82,7 @@ class Editor(Html.Html):
     self.actions = []
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlEditor.Editor:
     """
     Description:
     ------------
@@ -96,7 +97,7 @@ class Editor(Html.Html):
       self._dom = JsHtmlEditor.Editor(self, report=self.page)
     return self._dom
 
-  def action(self, icon, js_funcs, tooltip=None):
+  def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -104,16 +105,16 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
     return self
 
-  def toggle(self, js_funcs, icons=("show", "hide"), tooltip=None):
+  def toggle(self, js_funcs: Union[list, str], icons: tuple = ("show", "hide"), tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -121,9 +122,9 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icons: Tuple. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param tuple icons: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self.page.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
     js_funcs.append(self.textarea.dom.toggle())
@@ -133,7 +134,7 @@ class Editor(Html.Html):
     self.actions.append((icons[0], icon_button))
     return self
 
-  def copy(self, js_funcs, icon="capture", tooltip=None):
+  def copy(self, js_funcs: Union[list, str], icon: str = "capture", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -141,15 +142,15 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.textarea.dom.select())
     js_funcs.append('document.execCommand("copy")')
     return self.action(icon, js_funcs, tooltip)
 
-  def run(self, js_funcs, icon="play", tooltip=None):
+  def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -158,13 +159,13 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
-  def save(self, js_funcs, icon="save", tooltip=None):
+  def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -173,13 +174,13 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
-  def clear(self, js_funcs, icon="remove", tooltip=None):
+  def clear(self, js_funcs: Union[list, str], icon: str = "remove", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -187,9 +188,9 @@ class Editor(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.textarea.dom.clear())
     return self.action(icon, js_funcs, tooltip)
@@ -220,7 +221,7 @@ class Cell(Html.Html):
     self.css({'padding': '10px', "min-height": "30px", 'box-sizing': 'border-box', 'display': 'inline-block'})
     self.actions = []
 
-  def action(self, icon, js_funcs, tooltip=None):
+  def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -228,15 +229,15 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
 
-  def run(self, js_funcs, icon="play", tooltip=None):
+  def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -245,14 +246,14 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
     return self.action(icon, js_funcs, tooltip)
 
-  def save(self, js_funcs, icon="save", tooltip=None):
+  def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
     """
     Description:
     ------------
@@ -261,9 +262,9 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon.
-    :param js_funcs: List | String. Optional. The Javascript functions.
-    :param tooltip: String. Optional. Text to be displayed when mouse is hover.
+    :param str icon: The font awesome icon.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
     return self.action(icon, js_funcs, tooltip)
 
@@ -291,7 +292,7 @@ class Code(Html.Html):
     self.css({'display': 'block', 'margin': '5px 0'})
 
   @property
-  def style(self):
+  def style(self) -> GrpClsCodeMirror.Code:
     """
     Description:
     ------------
@@ -304,7 +305,7 @@ class Code(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptCodeMirror.OptionsCode:
     """
     Description:
     ------------
@@ -315,7 +316,7 @@ class Code(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsCodeMirror.CM:
     """
     Description:
     -----------
@@ -333,7 +334,7 @@ class Code(Html.Html):
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlEditor.CodeMirror:
     """
     Description:
     ------------
@@ -362,7 +363,7 @@ class Code(Html.Html):
     """
     return self.options.addons
 
-  def placeholder(self, text):
+  def placeholder(self, text: str):
     """
     Description:
     ------------
@@ -370,13 +371,13 @@ class Code(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The text displayed if empty editor.
+    :param str text: The text displayed if empty editor.
     """
     self.options.addons.placeholder()
     self.attr["placeholder"] = text
     return self
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
     """
     Description:
     ------------
@@ -386,9 +387,9 @@ class Code(Html.Html):
     Attributes:
     ----------
     :param data: String. Optional. The component input data.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id:
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] component_id:
     """
     return super().build(data, options, profile, component_id=self.htmlCode)
 
@@ -468,22 +469,22 @@ class Tags(Html.Html):
     return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {
       "htmlCode": self.htmlCode, "breadCrumVar": self.page.jsGlobal.breadCrumVar}
 
-  def jsAdd(self, jsData):
+  def jsAdd(self, data):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     icon_details = cssDefaults.get_icon("close")
     self.page.properties.js.add_builders('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
       $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='%(close)s'></i></span>")
-      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self.page.theme.greys[0],
+      ''' % {"htmlCode": self.htmlCode, "jsData": data, 'whiteColor': self.page.theme.greys[0],
              "baseColor": self.page.theme.colors[9], "close": icon_details["icon"]}
 
   def __str__(self):
@@ -507,7 +508,7 @@ class MarkdownReader(Html.Html):
     self.actions = []
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     -----------
@@ -521,14 +522,14 @@ class MarkdownReader(Html.Html):
 
     :return: A Javascript Dom object.
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------

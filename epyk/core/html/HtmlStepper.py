@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core.html import Html
 
 from epyk.core.js import Imports
@@ -16,7 +17,7 @@ class Step:
     self._src = src
     self._selector = selector
 
-  def click(self, js_funcs, profile=None):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -24,8 +25,8 @@ class Step:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -55,11 +56,11 @@ class Stepper(Html.Html):
     self.color = self.page.theme.greys[-1] if color is None else color
     self.css({'color': self.color, "margin": 0, 'display': 'inline-block', 'padding': 0})
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     return Step(self, selector=self.dom[i])
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlStepper.Stepper:
     """
     Description:
     ------------
@@ -73,7 +74,7 @@ class Stepper(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsStepper:
     """
     Description:
     ------------
@@ -112,7 +113,7 @@ class Stepper(Html.Html):
       })    
       '''
 
-  def add_shape(self, shape, shape_def, dependencies=None):
+  def add_shape(self, shape: str, shape_def: str, dependencies: Optional[list] = None):
     """
     Description:
     ------------
@@ -120,9 +121,9 @@ class Stepper(Html.Html):
 
     Attributes:
     ----------
-    :param shape: String. The shape reference.
-    :param shape_def: String. The shape JavaScript definition.
-    :param dependencies: List. Optional. The external module dependencies.
+    :param str shape: The reference of the shape.
+    :param str shape_def: The shape JavaScript definition.
+    :param Optional[list] dependencies: Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:

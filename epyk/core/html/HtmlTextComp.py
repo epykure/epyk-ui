@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional, Type
+
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js.packages import JsQuery
@@ -42,7 +44,7 @@ class UpDown(Html.Html):
     self.options.label = record.get('label', '')
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsNumberMoves:
     """
     Description:
     ------------
@@ -100,14 +102,14 @@ class UpDown(Html.Html):
     Object.keys(options.css).forEach(function(attr){htmlObj.style[attr] = options.css[attr]})
     '''
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
     self.components[component.htmlCode] = component
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -115,10 +117,10 @@ class UpDown(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
     self.style.add_classes.div.color_light_background_hover()
@@ -146,7 +148,7 @@ class BlockText(Html.Html):
       self.css('border', str(border))
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -196,7 +198,7 @@ class TextWithBorder(Html.Html):
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -261,13 +263,15 @@ class Number(Html.Html):
       for component in components:
         self.add(component)
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     return self.span.click(js_funcs, profile, source_event, on_ready)
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None,
+            profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
     return self.span.build(data, options, profile, self.span.htmlCode)
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
@@ -309,7 +313,7 @@ class Delta(Html.Html):
       for component in components:
         self.add(component)
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
@@ -317,7 +321,7 @@ class Delta(Html.Html):
     return self
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsNumberDelta:
     """
     Description:
     ------------
@@ -379,7 +383,7 @@ class Formula(Html.Html):
     htmlObj.innerHTML = data; MathJax.typeset([htmlObj])'''
 
   @property
-  def style(self):
+  def style(self) -> GrpClsText.ClsFormula:
     """
     Description:
     ------------
@@ -392,7 +396,7 @@ class Formula(Html.Html):
     return self._styleObj
 
   @property
-  def js(self):
+  def js(self) -> JsMathjax.Mathjax:
     """
     Description:
     -----------
@@ -407,7 +411,7 @@ class Formula(Html.Html):
     ----------
     :return: A Javascript Dom object
 
-    :rtype: JsSelect.JSelect
+    :rtype: JsMathjax.Mathjax
     """
     if self._js is None:
       self._js = JsMathjax.Mathjax(self, selector=self.dom.varId)
@@ -440,7 +444,7 @@ class TrafficLight(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlBackground:
     """
     Description:
     ------------
@@ -455,7 +459,7 @@ class TrafficLight(Html.Html):
       self._dom = JsHtml.JsHtmlBackground(self, report=self.page)
     return self._dom
 
-  def colors(self, green=None, red=None, neutral=None):
+  def colors(self, green: Optional[str] = None, red: Optional[str] = None, neutral: Optional[str] = None):
     """
     Description:
     ------------
@@ -463,9 +467,9 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param green: String. Optional. The color used in case of result true.
-    :param red: String. Optional. The color used in case of result false.
-    :param neutral: String. Optional. The color used in case of null.
+    :param Optional[str] green: Optional. The color used in case of result true.
+    :param Optional[str] red: Optional. The color used in case of result false.
+    :param Optional[str] neutral: Optional. The color used in case of null.
 
     :return: self to allow the chains.
     """
@@ -477,7 +481,7 @@ class TrafficLight(Html.Html):
       self._jsStyles['red'] = red
     return self
 
-  def resolve(self, js_funcs, profile=None):
+  def resolve(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -485,8 +489,8 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     self.action = self.page.ui.icon("wrench")
     self.action.options.managed = False
@@ -498,7 +502,8 @@ class TrafficLight(Html.Html):
     self.action.click(js_funcs, profile)
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -506,10 +511,10 @@ class TrafficLight(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     success = Colors.getHexToRgb(self.page.theme.success[1])
     self.style.css.cursor = "pointer"
@@ -554,7 +559,7 @@ class ContentsTable(Html.Html):
     self.title.style.css.white_space = "nowrap"
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptContents:
     """
     Description:
     ------------
@@ -566,7 +571,7 @@ class ContentsTable(Html.Html):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsText.ContentTable:
     """
     Description:
     ------------
@@ -593,7 +598,7 @@ class ContentsTable(Html.Html):
           menu.appendChild(link)
       })} '''
 
-  def anchor(self, text, level=0, anchor='#', options=None):
+  def anchor(self, text: str, level: int = 0, anchor: str = '#', options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -605,10 +610,10 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The link label.
-    :param level: Integer. Optional. The depth of the link in the document tree.
-    :param anchor: String. Optional. The internal reference to another component in the page.
-    :param options: String. Optional. The component options for the link.
+    :param str text: The link label.
+    :param int level: Optional. The depth of the link in the document tree.
+    :param str anchor: Optional. The internal reference to another component in the page.
+    :param Optional[dict] options: Optional. The component options for the link.
     """
     if anchor is not None:
       href = self.page.ui.link(text, url=anchor, options=options)
@@ -661,8 +666,10 @@ class ContentsTable(Html.Html):
     super(ContentsTable, self).move()
     self.style.css.position = None
     self.style.css.margin = 5
+    return self
 
-  def add_category(self, text, level=None, options=None, html_code_content="content"):
+  def add_category(self, text: str, level: Optional[int] = None, options: Optional[dict] = None,
+                   html_code_content: str = "content"):
     """
     Description:
     ------------
@@ -670,14 +677,15 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The text visible on the page.
-    :param level: Integer. Optional. The depth for the title in the document.
-    :param options: Dictionary. Optional. The options for the title component.
-    :param html_code_content: String. Optional. The Html code of the component Content table.
+    :param str text: The text visible on the page.
+    :param Optional[int] level: Optional. The depth for the title in the document.
+    :param Optional[dict] options: Optional. The options for the title component.
+    :param str html_code_content: Optional. The Html code of the component Content table.
     """
     return self.page.components[html_code_content].anchor(text, level or 4, None, options=options)
 
-  def add_title(self, component, level=None, css=None, position="before", options=None, html_code_content="content"):
+  def add_title(self, component: Type[Html.Html], level: Optional[int] = None, css: Optional[dict] = None,
+                position: str = "before", options: Optional[dict] = None, html_code_content: str = "content"):
     """
     Description:
     ------------
@@ -685,12 +693,12 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. An HTML component.
-    :param level: Integer. Optional. The depth for the title in the document.
-    :param css: Dictionary. Optional. The CSS style for the link.
-    :param position: String. Optional. The position in the content table (append or prepend).
-    :param options: Dictionary. Optional. The options for the title component.
-    :param html_code_content: String. Optional. The Html code of the component Content table.
+    :param Type[Html.Html] component: An HTML component.
+    :param Optional[int] level: Optional. The depth for the title in the document.
+    :param Optional[dict] css: Optional. The CSS style for the link.
+    :param str position: Optional. The position in the content table (append or prepend).
+    :param Optional[dict] options: Optional. The options for the title component.
+    :param str html_code_content: Optional. The Html code of the component Content table.
     """
     # Special attribute set in the base component interface
     div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -706,7 +714,8 @@ class ContentsTable(Html.Html):
         ["color", "font-size"], [self.page.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
     return link
 
-  def add_url(self, component, url, level=None, options=None, html_code_content="content"):
+  def add_url(self, component: Type[Html.Html], url: str, level: Optional[int] = None,
+              options: Optional[dict] = None, html_code_content: str = "content"):
     """
     Description:
     ------------
@@ -715,11 +724,11 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. An HTML component.
-    :param url: String. The url link with component clicked.
-    :param level: Integer. Optional. The depth for the title in the document.
-    :param options: Dictionary. Optional. The options for the title component.
-    :param html_code_content: String. Optional. The Html code of the component Content table.
+    :param Type[Html.Html] component: An HTML component.
+    :param str url: The url link with component clicked.
+    :param Optional[int] level: Optional. The depth for the title in the document.
+    :param Optional[dict] options: Optional. The options for the title component.
+    :param str html_code_content: Optional. The Html code of the component Content table.
     """
     component.options.managed = False
     div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -754,8 +763,8 @@ class SearchResult(Html.Html):
   _option_cls = OptText.OptSearchResult
 
   def __init__(self, report, records, width, height, options, profile):
-    super(SearchResult, self).__init__(report, records, options=options, profile=profile,
-                                       css_attrs={"width": width, "height": height})
+    super(SearchResult, self).__init__(
+      report, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
 
   _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
@@ -825,7 +834,7 @@ class Composite(Html.Html):
     self._styleObj = self.val._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsComposite:
     """
     Description:
     ------------
@@ -834,12 +843,12 @@ class Composite(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: ptText.OptionsComposite
+    :rtype: OptText.OptionsComposite
     """
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -861,7 +870,7 @@ class Composite(Html.Html):
     self._dom = js_html
 
   @property
-  def style(self):
+  def style(self) -> GrpCls.ClassHtmlEmpty:
     """
     Description:
     ------------
@@ -873,13 +882,14 @@ class Composite(Html.Html):
       self._styleObj = GrpCls.ClassHtmlEmpty(self)
     return self._styleObj
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     return self.val.click(js_funcs, profile, source_event, on_ready)
 
   def __getitem__(self, i):
     return self.val.val[i]
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
@@ -924,7 +934,7 @@ class Composite(Html.Html):
       'hr': comp_ui.layouts.hr,
     }
 
-  def _set_comp(self, comp, schema_child, builders, ref_map):
+  def _set_comp(self, comp: Optional[Type[Html.Html]], schema_child, builders, ref_map):
     """
     Description:
     ------------
@@ -979,7 +989,7 @@ class Composite(Html.Html):
     if self.main is None:
       self.main = self.val
 
-  def set_builder(self, builder):
+  def set_builder(self, builder: str):
     self.page.properties.js.add_builders(builder)
 
   def __str__(self):
@@ -1002,7 +1012,7 @@ class Status(Html.Html):
     self.contextMenu(self.context, js_funcs=[])
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsStatus:
     """
     Description:
     ------------
@@ -1011,7 +1021,7 @@ class Status(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: ptText.OptionsStatus
+    :rtype: OptText.OptionsStatus
     """
     return super().options
 

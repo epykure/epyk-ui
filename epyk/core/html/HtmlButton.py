@@ -243,7 +243,7 @@ class Button(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
 
-  def properties(self):
+  def properties(self) -> dict:
     """
     Description:
     -----------

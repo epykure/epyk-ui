@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from typing import Union, Optional, Type, List
 from epyk.core.html.options import OptText
 
 from epyk.core.html import Html
@@ -23,7 +23,7 @@ class HtmlGeneric(Html.Html):
       self.options.managed = False
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -33,13 +33,13 @@ class HtmlGeneric(Html.Html):
     """
     return super().options
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     if not isinstance(self.val, list):
       return self.val
 
     return self.val[i]
 
-  def __add__(self, components):
+  def __add__(self, components: Union[List[Type[Html.Html]], Type[Html.Html]]):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     if not isinstance(components, list):
@@ -54,7 +54,7 @@ class HtmlGeneric(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -84,7 +84,7 @@ class HtmlGeneric(Html.Html):
 class HtmlGenericLInk(HtmlGeneric):
   name = 'tag'
 
-  def preview(self, url, profile=None):
+  def preview(self, url: str, profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -92,8 +92,8 @@ class HtmlGenericLInk(HtmlGeneric):
 
     Attributes:
     ----------
-    :param url: String. The url path.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str url: The url path.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     self.on('mouseenter', [
       self.page.js.request_http("test", 'GET', url).send().onSuccess([

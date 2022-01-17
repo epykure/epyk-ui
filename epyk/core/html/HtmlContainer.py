@@ -4,6 +4,7 @@
 # TODO PanelSliding: find a way to introduce CSS transform for the panel display
 
 import logging
+from typing import Union, Optional, List, Type
 
 from epyk.interfaces import Arguments
 
@@ -58,7 +59,7 @@ class Panel(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self) -> JsHtmlPanels.JsHtmlPane:
+  def dom(self) -> JsHtmlPanels.JsHtmlPanel:
     """
     Description:
     ------------
@@ -73,7 +74,7 @@ class Panel(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self.page)
     return self._dom
 
-  def extend(self, components):
+  def extend(self, components: List[Type[Html.Html]]):
     """
     Description:
     ------------
@@ -81,13 +82,13 @@ class Panel(Html.Html):
 
     Attributes:
     ----------
-    :param components: List. The list of components
+    :param List[Type[Html.Html]] components: The list of components
     """
     for component in components:
       self.add(component)
     return self
 
-  def add_menu(self, close=True, mini=True, info=None, pin=False):
+  def add_menu(self, close: bool = True, mini: bool = True, info: Optional[bool] = None, pin: Optional[bool] = False):
     """
     Description:
     ------------
@@ -95,10 +96,10 @@ class Panel(Html.Html):
 
     Attributes:
     ----------
-    :param close: Boolean. Optional. Add a close button to the panel.
-    :param mini: Boolean. Optional. Add a minimize button to the panel.
-    :param info: Boolean. Optional. Add a info button to the panel.
-    :param pin: Boolean. Optional. Add a pin button to the panel.
+    :param bool close: Optional. Add a close button to the panel.
+    :param bool mini: Optional. Add a minimize button to the panel.
+    :param Optional[bool] info: Optional. Add a info button to the panel.
+    :param Optional[bool] pin: Optional. Add a pin button to the panel.
     """
     self.style.css.position = "relative"
     self.style.css.min_height = 25
@@ -175,7 +176,7 @@ class PanelSplit(Html.Html):
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
     self.add_helper(helper)
 
-  def left(self, component):
+  def left(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -188,13 +189,13 @@ class PanelSplit(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. An HTML component.
+    :param Type[Html.Html] component: An HTML component.
     """
     component.options.managed = False
     self.html_left = component
     return self
 
-  def right(self, component):
+  def right(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -207,7 +208,7 @@ class PanelSplit(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML. An HTML component.
+    :param Type[Html.Html] component: An HTML component.
     """
     component.options.managed = False
     self.html_right = component
@@ -261,7 +262,7 @@ class PanelSlide(Panel):
     return self.val[1]
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionPanelSliding:
     """
     Description:
     ------------
@@ -275,7 +276,7 @@ class PanelSlide(Panel):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlSlidingPanel:
     """
     Description:
     ------------
@@ -290,7 +291,8 @@ class PanelSlide(Panel):
       self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self.page)
     return self._dom
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -299,17 +301,17 @@ class PanelSlide(Panel):
 
     Attributes:
     ----------
-    :param js_funcs: String or List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.__clicks = js_funcs
     return self
 
-  def open(self, js_funcs, profile=None, on_ready=False):
+  def open(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: str = False):
     """
     Description:
     ------------
@@ -317,9 +319,9 @@ class PanelSlide(Panel):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -327,7 +329,7 @@ class PanelSlide(Panel):
       self.options.icon_expanded.split(" ")[-1]) >= 0, js_funcs, profile=profile).toStr()]
     return self
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     self.val[1] += component
     return self
@@ -402,7 +404,8 @@ class Div(Html.Html):
   def __exit__(self, type, value, traceback):
     return True
 
-  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
+  def goto(self, url: str, js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None,
+           target: str = "_blank", source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -414,11 +417,11 @@ class Div(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. the url.
-    :param js_funcs: List. Optional. The Javascript Events triggered before the redirection.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
-    :param target: String. Optional. The target attribute specifies where to open the linked document.
-    :param source_event: String. Optional. The event source.
+    :param str url: the url.
+    :param Union[list, str] js_funcs: Optional. The Javascript Events triggered before the redirection.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param str target: Optional. The target attribute specifies where to open the linked document.
+    :param Optional[str] source_event: Optional. The event source.
     """
     self.style.css.cursor = "pointer"
     js_funcs = js_funcs or []
@@ -428,7 +431,7 @@ class Div(Html.Html):
     return self.click(js_funcs, profile, source_event)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -443,7 +446,7 @@ class Div(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     if isinstance(component, list):
       component = self.page.ui.row(component, position=self.options.get(None, "position"))
@@ -461,7 +464,7 @@ class Div(Html.Html):
       self.components[component.htmlCode] = component
     return self
 
-  def insert(self, n, component):
+  def insert(self, n: int, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -469,8 +472,8 @@ class Div(Html.Html):
 
     Attributes:
     ----------
-    :param n: Integer. The expected position of the component in the list.
-    :param component: HTML Component | List. The component to be added to the underlying list.
+    :param int n: The expected position of the component in the list.
+    :param Type[Html.Html] component: The component to be added to the underlying list.
     """
     if isinstance(component, list):
       component = self.page.ui.row(component)
@@ -485,7 +488,7 @@ class Div(Html.Html):
     self.components[component.htmlCode] = component
     return self
 
-  def extend(self, components):
+  def extend(self, components: Type[Html.Html]):
     """
     Description:
     ------------
@@ -493,14 +496,14 @@ class Div(Html.Html):
 
     Attributes:
     ----------
-    :param components: List. The list of components.
+    :param Type[Html.Html] components: The list of components.
     """
     for component in components:
       self.add(component)
     return self
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsDiv:
     """
     Description:
     ------------
@@ -511,7 +514,7 @@ class Div(Html.Html):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsContainer.ClassDiv:
     """
     Description:
     ------------
@@ -523,7 +526,8 @@ class Div(Html.Html):
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
+            component_id: Optional[str] = None):
     """
     Description:
     ------------
@@ -533,9 +537,9 @@ class Div(Html.Html):
     Attributes:
     ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional. A DOM component reference in the page.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] component_id: Optional. A DOM component reference in the page.
     """
     # check if there is no nested HTML components in the data
     if isinstance(data, dict):
@@ -578,7 +582,7 @@ class Td(Html.Html):
       for component in components:
         self.__add__(component)
 
-  def colspan(self, i):
+  def colspan(self, i: int):
     """
     Description:
     ------------
@@ -590,12 +594,12 @@ class Td(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The column span value for the cell object.
+    :param int i: The column span value for the cell object.
     """
     self.attr['colspan'] = i
     return self
 
-  def rowspan(self, i):
+  def rowspan(self, i: int):
     """
     Description:
     ------------
@@ -607,7 +611,7 @@ class Td(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The row span value for the cell.
+    :param int i: The row span value for the cell.
     """
     self.attr['rowspan'] = i
     return self
@@ -633,7 +637,7 @@ class Tr(Html.Html):
         self.__add__(component)
     self.style.justify_content = self.position
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """
     Description:
     -----------
@@ -641,7 +645,7 @@ class Tr(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML Component. The underlying HTML component to be added this container.
+    :param Type[Html.Html] component: The underlying HTML component to be added this container.
     """
     if not isinstance(component, Td):
       if not isinstance(component, list):
@@ -652,7 +656,7 @@ class Tr(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlTr:
     """
     Description:
     -----------
@@ -683,7 +687,7 @@ class Caption(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -710,7 +714,7 @@ class TSection(Html.Html):
         self.__add__(row)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionPanelTable:
     """
     Description:
     ------------
@@ -723,7 +727,7 @@ class TSection(Html.Html):
     """
     return super().options
 
-  def __add__(self, row_data):
+  def __add__(self, row_data: Union[Tr, str]):
     """ Add items to a container """
     if not isinstance(row_data, Tr):
       row_data = Tr(self.page, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center',
@@ -763,7 +767,7 @@ class Table(Html.Html):
         self.__add__(row)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionPanelTable:
     """
     Description:
     ------------
@@ -791,7 +795,7 @@ class Table(Html.Html):
       self.body += row
     return self
 
-  def from_array(self, data, dim):
+  def from_array(self, data: list, dim: int):
     """
     Description:
     ------------
@@ -799,8 +803,8 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param data: Array. The list of data.
-    :param dim: Integer. The number of columns in the table.
+    :param list data: The list of data.
+    :param int dim: The number of columns in the table.
     """
     v_count = len(data)
     modulo_rest = v_count % dim
@@ -811,7 +815,7 @@ class Table(Html.Html):
     if modulo_rest:
       self += data[-modulo_rest:]
 
-  def line(self, text="&nbsp;", align="left", dim=None):
+  def line(self, text: str = "&nbsp;", align: str = "left", dim: Optional[int] = None):
     """
     Description:
     ------------
@@ -820,17 +824,17 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param align: String. Optional. The text-align property within this component.
-    :param dim: Integer. Optional. The number of columns in the table.
+    :param str text: Optional. The value to be displayed to the component.
+    :param str align: Optional. The text-align property within this component.
+    :param Optional[int] dim: Optional. The number of columns in the table.
     """
     cell = Td(self.page, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
     cell.colspan(dim or len(self.body.val[0].val))
     self += Tr(self.page, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
     return cell
 
-  def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"), html_code=None, tooltip=None,
-                  options=None, profile=None):
+  def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"),
+                  html_code=None, tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -855,18 +859,18 @@ class Table(Html.Html):
     self.caption = Caption(self.page, text, color, align, width, height, html_code, tooltip, options, profile)
     return self.caption
 
-  def get_header(self, i=0):
+  def get_header(self, i: int = 0):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param i: Integer. Optional.
+    :param int i: Optional.
     """
     return self.header.val[i]
 
-  def get_footer(self, i=0):
+  def get_footer(self, i: int = 0):
     """
     Description:
     ------------
@@ -874,18 +878,18 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. Optional. The table footer component position.
+    :param int i: Optional. The table footer component position.
     """
     return self.footer.val[i]
 
-  def col(self, i):
+  def col(self, i: int):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param i: Integer. The column index.
+    :param int i: The column index.
     """
     cells = []
     if self.header:
@@ -900,7 +904,7 @@ class Table(Html.Html):
     for c in cells:
       yield c
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     """
     Description:
     ------------
@@ -908,7 +912,7 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The internal row based on the index.
+    :param int i: Integer. The internal row based on the index.
 
     :rtype: Tr
     """
@@ -954,7 +958,7 @@ class Col(Html.Html):
     return True
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionGrid:
     """
     Description:
     ------------
@@ -965,7 +969,7 @@ class Col(Html.Html):
     """
     return super().options
 
-  def add(self, component):
+  def add(self, component: Type[Html.Html]):
     """
     Description:
     ------------
@@ -973,14 +977,15 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-    :param component:
+    :param Type[Html.Html] component:
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)
     super(Col, self).__add__(component)
     return self
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
+            component_id: Optional[str] = None):
     """
     Description:
     ------------
@@ -988,13 +993,13 @@ class Col(Html.Html):
     Attributes:
     ----------
     :param data:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional. A DOM component reference in the page.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] component_id: Optional. A DOM component reference in the page.
     """
     return self.val[0].build(data, options, profile)
 
-  def set_size(self, n, breakpoint="lg"):
+  def set_size(self, n: int, breakpoint: str = "lg"):
     """
     Description:
     ------------
@@ -1008,8 +1013,8 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-    :param n: Integer. Integer. The size of the component in the bootstrap row.
-    :param breakpoint: String. Optional. Grid system category, with
+    :param int n: The size of the component in the bootstrap row.
+    :param str breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
       - md (for small laptops - screens equal to or greater than 992px wide)
@@ -1064,7 +1069,7 @@ class Row(Html.Html):
     return True
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionGrid:
     """
     Description:
     ------------
@@ -1078,7 +1083,7 @@ class Row(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlRow:
     """
     Description:
     ------------
@@ -1187,7 +1192,7 @@ class Grid(Html.Html):
     return True
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionGrid:
     """
     Description:
     ------------
@@ -1221,7 +1226,7 @@ class Grid(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlGrid:
     """
     Description:
     ------------
@@ -1272,7 +1277,7 @@ class Tabs(Html.Html):
     self.add_helper(helper)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionPanelTabs:
     """
     Description:
     ------------
@@ -1286,7 +1291,7 @@ class Tabs(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlTabs:
     """
     Description:
     ------------
@@ -1304,7 +1309,7 @@ class Tabs(Html.Html):
   def __getitem__(self, name):
     return self.__panel_objs[name]
 
-  def select(self, name):
+  def select(self, name: str):
     """
     Description:
     ------------
@@ -1312,12 +1317,12 @@ class Tabs(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The selected value.
+    :param str name: The selected value.
     """
     self.__selected = name
     return self
 
-  def panel(self, name):
+  def panel(self, name: str):
     """
     Description:
     ------------
@@ -1325,13 +1330,13 @@ class Tabs(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The tab name.
+    :param str name: The tab name.
 
     :rtype: Div
     """
     return self.__panel_objs[name]["content"]
 
-  def tab(self, name):
+  def tab(self, name: str):
     """
     Description:
     ------------
@@ -1339,13 +1344,13 @@ class Tabs(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The tab name.
+    :param str name: The tab name.
 
     :rtype: Div
     """
     return self.__panel_objs[name]["tab"][0]
 
-  def tab_holder(self, name):
+  def tab_holder(self, name: str):
     """
     Description:
     ------------
@@ -1353,7 +1358,7 @@ class Tabs(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The tab name.
+    :param str name: The tab name.
 
     :rtype: Div
     """
@@ -1480,7 +1485,7 @@ class IFrame(Html.Html):
   _js__builder__ = 'htmlObj.src = data'
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlPanels.JsHtmlIFrame:
     """
     Description:
     ------------
@@ -1495,7 +1500,7 @@ class IFrame(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlIFrame(self, report=self.page)
     return self._dom
 
-  def scrolling(self, flag=True):
+  def scrolling(self, flag: bool = True):
     """
     Description:
     ------------
@@ -1506,7 +1511,7 @@ class IFrame(Html.Html):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param bool flag: Optional.
     """
     if flag:
       self.style.css.overflow_y = "visible"
@@ -1515,7 +1520,7 @@ class IFrame(Html.Html):
       self.attr["scrolling"] = "no"
     return self
 
-  def sandbox(self, text):
+  def sandbox(self, text: str):
     """
     Description:
     ------------
@@ -1527,12 +1532,12 @@ class IFrame(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. Mandatory. Enables an extra set of restrictions for the content in an <iframe>
+    :param str text: Enables an extra set of restrictions for the content in an <iframe>.
     """
     self.attr["sandbox"] = text
     return self
 
-  def allowfullscreen(self, flag=True):
+  def allowfullscreen(self, flag: bool = True):
     """
     Description:
     ------------
@@ -1544,12 +1549,12 @@ class IFrame(Html.Html):
 
     Attributes:
     ----------
-    :param flag: Boolean. optional. The <iframe> can activate fullscreen mode by calling the requestFullscreen() method.
+    :param bool flag: optional. The <iframe> can activate fullscreen mode by calling the requestFullscreen() method.
     """
     self.attr["allowfullscreen"] = 'true' if flag else 'false'
     return self
 
-  def referrerpolicy(self, text):
+  def referrerpolicy(self, text: str):
     """
     Description:
     ------------
@@ -1560,7 +1565,7 @@ class IFrame(Html.Html):
 
     Attributes:
     ----------
-    :param text:
+    :param str text:
     """
     self.attr["referrerpolicy"] = text
     return self
@@ -1586,7 +1591,8 @@ class IconsMenu(Html.Html):
   def __getitem__(self, i):
     return self._icons[i]
 
-  def add_icon(self, text, css=None, position="after", family=None, html_code=None):
+  def add_icon(self, text: str, css: Optional[dict] = None, position: str = "after", family: Optional[str] = None,
+               html_code: Optional[str] = None):
     """
     Description:
     -----------
@@ -1598,11 +1604,11 @@ class IconsMenu(Html.Html):
 
     Attributes:
     ----------
-    :param text: String. The icon reference from font-awesome website.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param family: String. Optional. The icon framework to be used (preferred one is font-awesome).
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param str text: The icon reference from font-awesome website.
+    :param Optional[dict] css: Optional. A dictionary with the CSS style to be added to the component.
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[str] family: Optional. The icon framework to be used (preferred one is font-awesome).
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     defined_families = ('office-ui-fabric-core', 'material-design-icons')
     if family is not None and self.options.verbose and family not in defined_families:
@@ -1621,7 +1627,7 @@ class IconsMenu(Html.Html):
         self.icon.css(css)
     return self
 
-  def add_select(self, action, data, width=150):
+  def add_select(self, action, data, width: int = 150):
     """
     Description:
     -----------
@@ -1630,7 +1636,7 @@ class IconsMenu(Html.Html):
     ----------
     :param action:
     :param data:
-    :param width:
+    :param int width:
     """
     options = ["<option>%s</option>" % d for d in data]
     self._jsActions[action] = '<select id="inputState" class="form-control" style="width:%spx;display:inline-block">%s</select>' % (width, "".join(options))
@@ -1654,13 +1660,13 @@ class Form(Html.Html):
     for i, component in enumerate(components):
       self.__add__(component)
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     component.css({'text-align': 'left'})
     super(Form, self).__add__(component)
     return self
 
-  def extend(self, components):
+  def extend(self, components: List[Type[Html.Html]]):
     """
     Description:
     ------------
@@ -1668,7 +1674,7 @@ class Form(Html.Html):
 
     Attributes:
     ----------
-    :param components: List. The list of components.
+    :param List[Type[Html.Html]] components: The list of components.
     """
     for component in components:
       self.add(component)
@@ -1681,7 +1687,7 @@ class Form(Html.Html):
     if self.__submit is None:
       self.submit(self.method, self.action, self.label)
 
-  def submit(self, method=None, action=None, text=None):
+  def submit(self, method: str = None, action: str = None, text: str = None):
     """
     Description:
     -----------
@@ -1689,9 +1695,9 @@ class Form(Html.Html):
 
     Attributes:
     ----------
-    :param method: String. Optional. The method used to transfer data.
-    :param action: String. Optional. The end point for the submit.
-    :param text: String. Optional. The text on the submit button.
+    :param str method: Optional. The method used to transfer data.
+    :param str action: Optional. The end point for the submit.
+    :param str text: Optional. The text on the submit button.
     """
     self.attr.update({"action": action or self.action, "method": method or self.method})
     self.__submit = self.page.ui.button(text).set_attrs({"type": 'submit'})
@@ -1703,7 +1709,7 @@ class Form(Html.Html):
 
   def __str__(self):
     if self.__submit is None:
-      raise Exception("Submit must be defined in a form ")
+      raise ValueError("Submit must be defined in a form ")
 
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     return '<form %s>%s%s</form>%s' % (
@@ -1762,13 +1768,13 @@ class Modal(Html.Html):
     self.__outOfScopeClose = val
 
   @property
-  def style(self):
+  def style(self) -> GrpClsContainer.ClassModal:
     """
     Description:
     -----------
     Property to the CSS Style of the component.
 
-    :rtype: GrpClsButton.ClassButton
+    :rtype: GrpClsContainer.ClassModal
     """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassModal(self)
@@ -1802,7 +1808,7 @@ class Modal(Html.Html):
     self.page.js.onReady(self.page.js.window.events.addClickListener(
       self.page.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), subEvents=['event']))
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     # Has to be defined here otherwise it is set too late
     component.options.managed = False
@@ -1848,7 +1854,7 @@ class Indices(Html.Html):
     self.last.options.managed = False
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsPanelPoints:
     """
     Description:
     -----------
@@ -1864,7 +1870,7 @@ class Indices(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click_item(self, i, js_funcs, profile=None):
+  def click_item(self, i: int, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -1872,9 +1878,9 @@ class Indices(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer.
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param int i:
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1910,7 +1916,7 @@ class Points(Html.Html):
     self.items[self.options.selected].css({"background-color": self.options.background_color})
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsPanelPoints:
     """
     Description:
     ------------
@@ -1923,7 +1929,8 @@ class Points(Html.Html):
     """
     return super().options
 
-  def on(self, event, js_funcs, profile=None, source_event=None, on_ready=False):
+  def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+         source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -1935,11 +1942,11 @@ class Points(Html.Html):
 
     Attributes:
     ----------
-    :param event: String. The event type for an HTML object.
-    :param js_funcs: Array. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param str event: The event type for an HTML object.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1952,7 +1959,9 @@ class Points(Html.Html):
         self.on_item(i, event, str_fnc)
     return self
 
-  def on_item(self, i, event, js_funcs, profile=False, source_event=None, on_ready=False):
+  def on_item(self, i: int, event: Union[list, str], js_funcs: Union[list, str],
+              profile: Optional[Union[bool, dict]] = False, source_event: Optional[str] = None,
+              on_ready: bool = False):
     """
     Description:
     ------------
@@ -1960,20 +1969,20 @@ class Points(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The item index in the container.
-    :param event: List | String. The Javascript event type from the dom_obj_event.asp.
-    :param js_funcs: List | String. A Javascript Python function.
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param int i: The item index in the container.
+    :param Union[list, str] event: The Javascript event type from the dom_obj_event.asp.
+    :param Union[list, str] js_funcs: A Javascript Python function.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     return self[i].on(event, [
       'var data = {position: this.getAttribute("data-position")}'] + js_funcs, profile, source_event, on_ready)
 
-  def click_item(self, i, js_funcs, profile=None, on_ready=False):
+  def click_item(self, i: int, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+                 on_ready: bool = False):
     """
     Description:
     ------------
@@ -1981,10 +1990,10 @@ class Points(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The item index.
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param int i: The item index.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1993,7 +2002,7 @@ class Points(Html.Html):
       self.items[i].dom.by_name.css({"background-color": ""}).r,
       self.items[i].dom.css({"background-color": self.options.background_color})] + js_funcs, profile, on_ready=on_ready)
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     return self.items[i]
 
   def __str__(self):
@@ -2011,7 +2020,7 @@ class Header(Html.Html):
     self.add_helper(helper)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsDiv:
     """
     Description:
     ------------
@@ -2024,7 +2033,7 @@ class Header(Html.Html):
     """
     return super().options
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
@@ -2048,7 +2057,7 @@ class Section(Html.Html):
     self.add_helper(helper)
 
   @property
-  def options(self):
+  def options(self) -> OptPanel.OptionsDiv:
     """
     Description:
     ------------
@@ -2061,7 +2070,7 @@ class Section(Html.Html):
     """
     return super().options
 
-  def __add__(self, component):
+  def __add__(self, component: Type[Html.Html]):
     """ Add items to a container """
     if self.options.inline:
       component.style.css.display = 'inline-block'

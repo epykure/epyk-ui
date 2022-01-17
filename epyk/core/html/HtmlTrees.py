@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
@@ -31,7 +32,7 @@ class Tree(Html.Html):
     self._jsStyles['click_node'] = None
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlTree.JsHtmlTree:
     """
     Description:
     ------------
@@ -47,7 +48,7 @@ class Tree(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptTrees.OptionsTree:
     """
     Description:
     -----------
@@ -115,15 +116,15 @@ class Tree(Html.Html):
         htmlObj.appendChild(li)
       })'''
 
-  def click_node(self, js_funcs, profile=None):
+  def click_node(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -131,17 +132,18 @@ class Tree(Html.Html):
       js_funcs, toStr=True, profile=profile)
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -204,7 +206,7 @@ class DropDown(Html.Html):
     self.style.css.border = "1px solid %s" % page.theme.greys[2]
 
   @property
-  def style(self):
+  def style(self) -> GrpClsList.ClassDropDown:
     """
     Description:
     -----------
@@ -218,7 +220,7 @@ class DropDown(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptTrees.OptDropDown:
     """
     Description:
     -----------
@@ -228,7 +230,8 @@ class DropDown(Html.Html):
     """
     return super().options
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -236,10 +239,10 @@ class DropDown(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: A Javascript Python function
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.options.onClick(js_funcs)
     return self

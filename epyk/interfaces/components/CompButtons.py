@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Union
+from typing import Union, Optional
 
 from epyk.core import html
 from epyk.core.html import Defaults_html
@@ -44,7 +44,7 @@ class Buttons:
 
     Attributes:
     ----------
-    :param component: HTML component. The component to be aligned in the page.
+    :param component: The component to be aligned in the page.
     :param str color: The color to set.
     """
     if color is True:
@@ -56,9 +56,10 @@ class Buttons:
       component.style.css.border = color
       component.style.css.color = self.page.theme.colors[0]
 
-  def button(self, text: str = "", icon: Union[str, bool] = None, width: Union[tuple, int] = (None, "%"),
-             height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Union[str, bool] = None,
-             tooltip: Union[str, bool] = None, profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
+  def button(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
+             height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
+             tooltip: Optional[str] = None, profile: Optional[Union[dict, bool]] = None,
+             options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -92,12 +93,12 @@ class Buttons:
     :param str text: Optional. The value to be displayed to the button.
     :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
     :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str align: Optional. A string with the horizontal position of the component.
+    :param Optional[Union[str, bool]] icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param Optional[str] html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param Optional[str] tooltip: Optional. A string with the value of the tooltip.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -113,8 +114,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def colored(self, text: str = "", icon=None, color=None, width=(None, "%"), height=(None, "px"), align="left",
-              html_code=None, tooltip=None, profile=None, options=None):
+  def colored(self, text: str = "", icon: Optional[Union[str, bool]] = None, color: Optional[str] = None,
+              width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"), align: str = "left",
+              html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+              options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -167,10 +170,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def clear(self, text: str = "", icon: str = "fas fa-eraser", color: Union[str, None] = None,
+  def clear(self, text: str = "", icon: Optional[Union[str, bool]] = "fas fa-eraser", color: Optional[str] = None,
             width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
-            align: str = "left", html_code: Union[str, None] = None, tooltip: Union[str, None] = None,
-            profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
+            align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
+            profile: Union[dict, bool] = None, options: Union[dict] = None):
     """
     Description:
     ------------
@@ -222,9 +225,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def large(self, text: str = "", icon: str = None, width: Union[tuple, int] = (None, "%"),
-            height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Union[str, None] = None,
-            tooltip: Union[str, None] = None, profile: Union[dict, bool] = None, options: Union[dict, bool] = None):
+  def large(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
+            height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
+            tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Union[dict] = None):
     """
     Description:
     ------------
@@ -276,8 +279,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def absolute(self, text, size_notch=None, icon="", top=(50, "%"), left=(50, "%"), bottom=None, width=('auto', ""),
-               height=(None, "px"), html_code=None, options=None, profile=None):
+  def absolute(self, text: str, size_notch=None, icon: Optional[Union[str, bool]] = "", top=(50, "%"), left=(50, "%"),
+               bottom=None, width: Union[tuple, int] = ('auto', ""),
+               height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
+               options: Optional[dict] = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -334,8 +339,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-            tooltip=None, profile=None, options=None):
+  def small(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
+            height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
+            tooltip=None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -378,8 +384,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def normal(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-             tooltip=None, profile=None, options=None):
+  def normal(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
+             height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
+             tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -421,8 +428,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", html_code=None,
-                tooltip=None, profile=None, options=None):
+  def important(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
+                height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
+                tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -473,8 +481,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def validate(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
-               profile=None, options=None):
+  def validate(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+               html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
+               profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -520,8 +529,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def run(self, text="", width=(None, "%"), height=(None, "px"), align="left", html_code=None, tooltip=None,
-          profile=None, options=None):
+  def run(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+          align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
+          profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -584,8 +594,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def remove(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
-             profile=None, options=None):
+  def remove(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+             html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
+             profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -633,8 +644,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def cancel(self, text="Cancel", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
-             profile=None, options=None):
+  def cancel(self, text: str = "Cancel", width: Union[tuple, int] = (None, "%"),
+             height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None, align: str = "left",
+             tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -682,8 +694,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def phone(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
-            profile=None, options=None):
+  def phone(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+            html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
+            profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -728,8 +741,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def mail(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, align="left", tooltip=None,
-           profile=None, options=None):
+  def mail(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+           html_code: Optional[str] = None, align: str = "left", tooltip=None,
+           profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -774,8 +788,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def radio(self, record=None, html_code=None, group_name=None, width=(100, '%'), height=(None, "px"),
-            align='left', options=None, profile=None):
+  def radio(self, record=None, html_code: Optional[str] = None, group_name: Optional[str] = None,
+            width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), align: str = 'left',
+            options: Optional[dict] = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -826,8 +841,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def toggle(self, record=None, label=None, color=None, width=(None, '%'), height=(None, 'px'), align="left",
-             html_code=None, options=None, profile=None):
+  def toggle(self, record=None, label: Optional[str] = None, color: Optional[str] = None,
+             width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "left",
+             html_code: Optional[str] = None, options: Optional[dict] = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -884,8 +900,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def checkboxes(self, record=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
-                 html_code=None, tooltip='', options=None, profile=None):
+  def checkboxes(self, record=None, color: Optional[str] = None, width: Union[tuple, int] = (100, "%"),
+                 height: Union[tuple, int] = (None, "px"), align: str = 'left',
+                 html_code: Optional[str] = None, tooltip: Optional[str] = '', options: Optional[dict] = None,
+                 profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -932,8 +950,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None,
-            html_code=None, profile=None, options=None):
+  def check(self, flag: bool = False, tooltip: Optional[str] = None, width: Union[tuple, int] = (None, "px"),
+            height: Union[tuple, int] = (20, "px"), label: Optional[str] = None, icon: Optional[str] = None,
+            html_code: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -977,8 +996,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), html_code=None, tooltip=None,
-           profile=None, options=None):
+  def menu(self, record, text: str = "", icon: Optional[Union[str, bool]] = None,
+           width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+           html_code: Optional[str] = None, tooltip: Optional[str] = None,
+           profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1024,8 +1045,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), html_code=None, align="left", options=None,
-            profile=None):
+  def store(self, image, url, width: Union[tuple, int] = (7.375, "rem"), height: Union[tuple, int] = (2.375, "rem"),
+            html_code: Optional[str] = None, align: str = "left", options: Optional[dict] = None,
+            profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -1071,8 +1093,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def live(self, time, js_funcs, icon="fas fa-circle", width=(15, "px"), height=(15, "px"), align="left",
-           html_code=None, profile=None, options=None):
+  def live(self, time, js_funcs, icon: Optional[Union[str, bool]] = "fas fa-circle",
+           width: Union[tuple, int] = (15, "px"), height: Union[tuple, int] = (15, "px"), align: str = "left",
+           html_code: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1142,8 +1165,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def text(self, text, icon=None, width=('auto', ""), tooltip=None, height=(None, "px"), align="left", html_code=None,
-           profile=None, options=None):
+  def text(self, text: str, icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = ('auto', ""),
+           tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
+           align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
+           options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1174,8 +1199,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def thumbs_up(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None, profile=None,
-                options=None):
+  def thumbs_up(self, width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"),
+                align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
+                profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1207,8 +1233,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def thumbs_down(self, width=("auto", ""), height=(None, "px"), align="left", html_code=None, tooltip=None,
-                  profile=None, options=None):
+  def thumbs_down(self, width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"),
+                  align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
+                  profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1240,8 +1267,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), align="left", html_code=None,
-           tooltip=None, profile=None, options=None):
+  def pill(self, text: str, value=None, group: Optional[str] = None,
+           width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"), align: str = "left",
+           html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+           options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1283,8 +1312,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def more(self, items, text="More", width=("auto", ""), height=(None, "px"), html_code=None,
-           tooltip=None, profile=None, options=None):
+  def more(self, items, text: str = "More", width: Union[tuple, int] = ("auto", ""),
+           height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
+           tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1326,8 +1356,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def filter(self, text, is_number=False, width=("auto", ""), height=(None, "px"), html_code=None,
-             tooltip=None, profile=None, options=None):
+  def filter(self, text: str, is_number: bool = False, width: Union[tuple, int] = ("auto", ""),
+             height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
+             tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1367,8 +1398,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def refresh(self, text="Refresh", icon="fas fa-sync-alt", width=(None, "%"), height=(None, "px"), align="left",
-              html_code=None, tooltip=None, profile=None, options=None):
+  def refresh(self, text: str = "Refresh", icon: Optional[Union[str, bool]] = "fas fa-sync-alt",
+              width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"), align: str = "left",
+              html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+              options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -1423,8 +1456,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def data(self, filename, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left",
-           html_code=None, tooltip=None, profile=None, options=None):
+  def data(self, filename, text: str = "", icon: Optional[Union[str, bool]] = None,
+           width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"), align: str = "left",
+           html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+           options: Optional[dict] = None):
     """
     Description:
     ------------

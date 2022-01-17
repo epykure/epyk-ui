@@ -3,6 +3,7 @@
 
 import datetime
 import json
+from typing import Union, Optional, List
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
@@ -53,7 +54,7 @@ class Input(Html.Html):
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsInput:
     """
     Description:
     -----------
@@ -64,7 +65,7 @@ class Input(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsHtmlField.InputText:
     """
     Description:
     -----------
@@ -77,7 +78,7 @@ class Input(Html.Html):
     return self._js
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlInput.Inputs:
     """
     Description:
     -----------
@@ -98,7 +99,7 @@ class Input(Html.Html):
     return self._dom
 
   @property
-  def style(self):
+  def style(self) -> GrpClsInput.ClassInput:
     """
     Description:
     ------------
@@ -155,7 +156,7 @@ class Input(Html.Html):
       js_funcs.append(self.dom.select())
     return self.on("focus", js_funcs, profile, source_event, on_ready)
 
-  def validation(self, pattern, required=True):
+  def validation(self, pattern: str, required: bool = True):
     """
     Description:
     -----------
@@ -167,8 +168,8 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param pattern: String.
-    :param required: Boolean. Optional.
+    :param str pattern:
+    :param bool required: Optional.
 
     :return: Self to allow the chaining
     """
@@ -203,7 +204,8 @@ class Input(Html.Html):
     self.keydown.enter(js_funcs, profile, source_event=source_event)
     return self
 
-  def leave(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def leave(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -228,7 +230,8 @@ class Input(Html.Html):
     self.on("blur", js_funcs, profile, source_event=source_event)
     return self
 
-  def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -249,7 +252,7 @@ class Input(Html.Html):
       self.page.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
-  def readonly(self, flag=True):
+  def readonly(self, flag: bool = True):
     """
     Description:
     ------------
@@ -325,7 +328,7 @@ class AutoComplete(Input):
     ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionAutoComplete:
     """
     Description:
     ------------
@@ -370,7 +373,7 @@ class AutoComplete(Input):
     return self.on("focus", js_funcs, profile, source_event, on_ready)
 
   @property
-  def style(self):
+  def style(self) -> GrpClsInput.ClassInputAutocomplete:
     """
     Description:
     ------------
@@ -383,7 +386,7 @@ class AutoComplete(Input):
     return self._styleObj
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.Autocomplete:
     """
     Description:
     -----------
@@ -417,7 +420,7 @@ class InputTime(Input):
     self.style.css.text_align = "center"
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsTimePicker:
     """
     Description:
     ------------
@@ -432,7 +435,7 @@ class InputTime(Input):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsInput.ClassInputTime:
     """
     Description:
     ------------
@@ -445,7 +448,7 @@ class InputTime(Input):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlTimePicker:
     """
     Description:
     ------------
@@ -458,7 +461,7 @@ class InputTime(Input):
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsTimepicker.Timepicker:
     """
     Description:
     -----------
@@ -544,7 +547,7 @@ class InputDate(Input):
     return self._js
 
   @property
-  def style(self):
+  def style(self) -> GrpClsInput.ClassInputDate:
     """
     Description:
     ------------
@@ -557,7 +560,7 @@ class InputDate(Input):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlDatePicker:
     """
     Description:
     ------------
@@ -569,7 +572,8 @@ class InputDate(Input):
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self.page)
     return self._dom
 
-  def excluded_dates(self, dts=None, js_funcs=None, profile=None):
+  def excluded_dates(self, dts: List[str] = None, js_funcs: Optional[Union[list, str]] = None,
+                     profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -577,9 +581,9 @@ class InputDate(Input):
 
     Attributes:
     ----------
-    :param dts: List. Optional. Dates excluded format YYYY-MM-DD.
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param List[str] dts: Optional. Dates excluded format YYYY-MM-DD.
+    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self.options.beforeShowDay([''' var utc = value.getTime() - value.getTimezoneOffset()*60000; 
       var newDate = new Date(utc); const dts = %(dts)s; %(jsFnc)s; 
@@ -588,7 +592,8 @@ class InputDate(Input):
         "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
                                profile=profile)
 
-  def included_dates(self, dts=None, selected=None, js_funcs=None, profile=None):
+  def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: Optional[Union[list, str]] = None,
+                     profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -596,10 +601,10 @@ class InputDate(Input):
 
     Attributes:
     ----------
-    :param dts: List. Optional. Dates included format YYYY-MM-DD.
-    :param selected: String. Optional. The selected date from the range. Default max.
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param List[str] dts: Optional. Dates included format YYYY-MM-DD.
+    :param str selected: Optional. The selected date from the range. Default max.
+    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self._vals = selected or sorted(dts)[-1]
     self.options.beforeShowDay(['''
@@ -609,7 +614,8 @@ class InputDate(Input):
         "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
                                profile=profile)
 
-  def format_dates(self, class_name, dts=None, css=None, tooltip="", profile=None):
+  def format_dates(self, class_name: str, dts: List[str] = None, css: Optional[dict] = None, tooltip: str = "",
+                   profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     ------------
@@ -618,11 +624,11 @@ class InputDate(Input):
 
     Attributes:
     ----------
-    :param class_name: String. The name of the CSS added to the page with the CSS attributes.
-    :param dts: List. Optional. A list of dates format YYYY-MM-DD.
-    :param css: Dictionary. Optional. The CSS Attributes for the CSS class.
-    :param tooltip: String. Optional. The tooltip when the mouse is hover.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param str class_name: The name of the CSS added to the page with the CSS attributes.
+    :param List[str] dts: Optional. A list of dates format YYYY-MM-DD.
+    :param Optional[dict] css: Optional. The CSS Attributes for the CSS class.
+    :param str tooltip: Optional. The tooltip when the mouse is hover.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     dts = dts or []
     if css is not None:
@@ -654,7 +660,7 @@ class InputInteger(Input):
     super(InputInteger, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsInputInteger:
     """
     Description:
     -----------
@@ -699,18 +705,18 @@ class InputRange(Input):
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsInputRange:
     """
     Description:
     ------------
     Property to set input range properties.
 
-    :rtype: OptSelect.OptionsInputRange
+    :rtype: OptInputs.OptionsInputRange
     """
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsInput.ClassInputRange:
     """
     Description:
     ------------
@@ -756,7 +762,7 @@ class Field(Html.Html):
     self.css({"margin-top": '5px'})
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlField.JsHtmlFields:
     """
     Description:
     -----------
@@ -795,7 +801,7 @@ class FieldAutocomplete(Field):
     super(FieldAutocomplete, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
                                             profile)
 
-  def change(self, js_funcs, profile=None):
+  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -810,15 +816,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["change"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def search(self, js_funcs, profile=None):
+  def search(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -839,7 +845,7 @@ class FieldAutocomplete(Field):
     self._jsStyles["search"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def focus(self, js_funcs, profile=None):
+  def focus(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -854,15 +860,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["focus"] = "function( event, ui ){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def close(self, js_funcs, profile=None):
+  def close(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -874,15 +880,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["close"] = "function( event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def select(self, js_funcs, profile=None):
+  def select(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -896,15 +902,15 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["select"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def response(self, js_funcs, profile=None):
+  def response(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -920,8 +926,8 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1035,7 +1041,7 @@ class Checkbox(Html.Html):
     self.style.add_classes.div.no_focus_outline()
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlField.Check:
     """
     Description:
     -----------
@@ -1049,7 +1055,7 @@ class Checkbox(Html.Html):
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Radio:
     """
     Description:
     -----------
@@ -1097,7 +1103,7 @@ class Radio(Html.Html):
                   css={"margin-left": '5px', 'color': self.page.theme.success[1]})
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlField.Radio:
     """
     Description:
     -----------
@@ -1111,7 +1117,7 @@ class Radio(Html.Html):
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Radio:
     """
     Description:
     -----------
@@ -1146,7 +1152,7 @@ class TextArea(Html.Html):
     self.__options = OptInputs.OptionsTextarea(self, options)
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsTextarea:
     """
     Description:
     -----------
@@ -1156,7 +1162,7 @@ class TextArea(Html.Html):
     """
     return self.__options
 
-  def selectable(self, js_funcs=None, profile=None):
+  def selectable(self, js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]]= None):
     """
     Description:
     -----------
@@ -1164,8 +1170,8 @@ class TextArea(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Optional. Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
 
     :return: self. to allow the function chaining
     """
@@ -1175,7 +1181,7 @@ class TextArea(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlField.Textarea:
     """
     Description:
     -----------
@@ -1192,7 +1198,8 @@ class TextArea(Html.Html):
       self._dom = JsHtmlField.Textarea(self, report=self.page)
     return self._dom
 
-  def change(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -1204,10 +1211,10 @@ class TextArea(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("input")])
@@ -1276,7 +1283,7 @@ class Search(Html.Html):
     self.input.attr["type"] = "search"
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlField.JsHtmlFields:
     """
     Description:
     -----------
@@ -1291,21 +1298,23 @@ class Search(Html.Html):
 
   _js__builder__ = '''htmlObj.find('input').val(data)'''
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     return self.icon.click(js_funcs, profile, source_event, on_ready=on_ready)
 
-  def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -1317,10 +1326,10 @@ class Search(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The python object itself
     """

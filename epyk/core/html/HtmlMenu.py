@@ -136,7 +136,7 @@ class HtmlNavBar(Html.Html):
     self.buttons.append(component)
     return self
 
-  def add_text(self, text: Union[Type[Html.Html], str]):
+  def add_text(self, text: Union[Type[Html.Html], str]) -> Type[Html.Html]:
     """
     Description:
     -----------
@@ -294,7 +294,7 @@ class ContextMenu(Html.Html):
     self += {"value": value, 'icon': icon}
     return self
 
-  def add(self, component: Type[Html.Html]):
+  def add(self, component: Type[Html.Html]) -> Type[Html.Html]:
     """
     Description:
     ------------
@@ -334,13 +334,13 @@ class ContextMenu(Html.Html):
     self.val.append(li_obj)
     return self
 
-  def __getitem__(self, i):
+  def __getitem__(self, i) -> Type[Html.Html]:
     return self.val[i].val
 
   def __str__(self):
     # TODO: Add a condition in the init to display the context menu only for some columns or rows when table for example
     if getattr(self, 'source') is None:
-      raise Exception("Context Menu should be added to a component with the function contextMenu")
+      raise ValueError("Context Menu should be added to a component with the function contextMenu")
 
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     # hide when mouse leave the component
